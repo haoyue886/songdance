@@ -12,7 +12,7 @@
 | Phase 2 | 已完成 | 上传、波形和截取；代码审查 Stage 1/2 PASS |
 | Phase 3 | 已完成 | 任务 API、存储和队列 |
 | Phase 4 | 已完成 | AI 转录与乐谱产物；真人质量门禁 10/10；代码审查 Stage 1/2 PASS |
-| Phase 5 | 未开始 | 结果工作台与导出 |
+| Phase 5 | 已完成 | 结果工作台与导出；代码审查 Stage 1/2 PASS |
 | Phase 6 | 未开始 | 匿名安全、生命周期和可观测性 |
 | Phase 7 | 未开始 | YouTube P1 与示例体验 |
 | Phase 8 | 未开始 | 公网部署与生产验收 |

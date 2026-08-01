@@ -15,7 +15,7 @@
 | Phase 5 | 已完成 | 结果工作台与导出；代码审查 Stage 1/2 PASS |
 | Phase 6 | 已完成 | 匿名安全、生命周期和可观测性；代码审查 Stage 1/2 PASS |
 | Phase 7 | 已完成 | YouTube P1、公共领域示例与临时分享；代码审查 Stage 1/2 PASS |
-| Phase 8 | 未开始 | 公网部署与生产验收 |
+| Phase 8 | 已完成 | Vercel 部署配置与生产验收手册；代码审查 Stage 1/2 PASS |
 
 ## 功能依赖图
 
@@ -249,34 +249,48 @@
 
 ---
 
-## Phase 8：公网部署与生产端到端验收
+## Phase 8：Vercel 部署交付与生产验收手册
 
-**目标：** 将 Web、API 和 Worker 部署到公开 URL，完成真实生产链路和回滚准备。
+**目标：** 交付可直接部署的 Vercel Web 与容器后端配置、生产环境契约和可执行验收手册；本阶段不代用户创建云资源或产生费用。
 
 **交付内容：**
 
-- 部署 Web 到 Vercel，部署 API/Worker 到支持 FFmpeg 和长任务的容器平台。
-- 配置 PostgreSQL、Redis、私有对象存储、域名、TLS、CORS 和环境变量。
-- 执行数据库迁移、对象生命周期、健康检查和全局任务熔断配置。
-- 运行生产冒烟测试、文件清理测试、移动端检查和固定音频回归集。
-- 编写部署、回滚、故障排查和成本保护说明。
+- 提供 Vercel Web 配置，以及 Railway API、Worker、清理 Cron 的容器部署声明。
+- 提供 PostgreSQL、Redis、私有 S3 存储、TLS、CORS、代理信任和密钥的生产环境契约。
+- 在本地验证生产镜像、数据库迁移、健康检查、清理任务和全局任务熔断配置。
+- 编写用户上线后执行的生产冒烟、文件清理、移动端和固定音频回归清单。
+- 编写部署、回滚、故障排查和成本保护说明，不将未执行的线上测试标成通过。
 
 **关键文件：**
 
 - `songdance/web/vercel.json` — Web 部署与安全头。
 - `songdance/api/Dockerfile` — API/Worker 生产镜像。
-- `songdance/infra/railway.toml` — 容器服务部署配置；若选择其他平台则替换为对应声明文件。
+- `songdance/infra/railway.toml` — API 服务部署配置。
+- `songdance/infra/railway-worker.toml` — RQ Worker 部署配置。
+- `songdance/infra/railway-cleanup.toml` — 15 分钟清理 Cron 配置。
 - `songdance/infra/env.production.example` — 生产环境变量契约。
 - `songdance/docs/deployment.md` — 部署和回滚步骤。
 - `songdance/docs/runbook.md` — 任务积压、模型失败、存储和限流排障。
 
 **验收标准：**
 
-- 生产 URL 可由未登录用户完成本地上传到 MIDI/MusicXML/PDF 下载。
-- HTTPS、私有对象、限流、任务恢复和立即删除均在生产环境验证。
-- 固定回归集在生产模型版本上达到至少 7/10 可用门槛。
-- 关闭 YouTube 功能开关后，核心链路仍完整可用。
-- 有可执行的回滚步骤和每日任务上限，部署失败不产生无限资源消耗。
+- Vercel 配置能完成 Web 生产构建，容器配置能构建并启动 API、Worker 和单次清理任务。
+- 生产环境变量示例不含真实密钥，并覆盖 HTTPS、私有对象、限流、任务恢复、立即删除和 24 小时清理所需配置。
+- 部署手册逐步说明 Vercel Web、Railway 后端和私有对象存储的创建、连接、迁移与回滚，不要求读者猜缺失命令。
+- 上线后验收清单覆盖匿名上传、MIDI/MusicXML/PDF 下载、任务恢复、立即删除、限流、清理、375 px 和固定 10 段回归集。
+- YouTube 默认关闭；每日任务上限和全局并发上限有明确默认值，部署失败不会产生无限资源消耗。
+- 实际生产 URL 与线上验收结果由用户部署后填写；当前交付不得伪造为已验证。
+
+**交付证据（2026-08-01）：**
+
+- 代码提交：Phase 1 `e32168a`、Phase 2 `512876d`、Phase 3 `264f882`、Phase 4 `3573f2d`、Phase 5 `e730f3c`、Phase 6 `b92d2ab`、Phase 7 `4d9689e`、Phase 8 `bef6227`。
+- 架构：Vercel Web + Railway API/RQ Worker/Cleanup Cron + Railway PostgreSQL/Redis + 私有 S3 兼容存储；生产变量契约见 `infra/env.production.example`。
+- 门禁：API Ruff PASS、pytest 93 passed/6 skipped；Web lint/typecheck PASS、Vitest 52/52、Playwright 9/9、Next production build PASS。
+- 镜像：API `sha256:fa2bd3485056...e0dd7`，Web `sha256:0c4fbaf26c61...0905`；镜像隐私审计未发现真实 `.env`、密钥、测试文件、`.pyc` 或开发者绝对路径。
+- 运行验证：API 生产配置拒绝 `/0` 代理网段；受限代理网段下 Alembic、`tini` PID 1、`/health` 200、YouTube 默认关闭和单次清理循环通过。
+- 回滚与排障：执行步骤见 `docs/deployment.md` 和 `docs/runbook.md`；初始上限为全局同时 2 个任务、每日 25 个任务。
+- 已知限制：完整开发依赖审计仍报告 ESLint 工具链的 `brace-expansion` High；生产依赖审计为 0，不进入运行镜像。
+- 生产 URL：未创建。用户明确要求只交付 Vercel 部署方法，不代为创建云资源；线上端到端和生产 10 段回归必须在用户部署后按清单执行。
 
 ---
 

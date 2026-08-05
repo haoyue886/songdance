@@ -16,6 +16,7 @@
 | Phase 6 | 已完成 | 匿名安全、生命周期和可观测性；代码审查 Stage 1/2 PASS |
 | Phase 7 | 已完成 | YouTube P1、公共领域示例与临时分享；代码审查 Stage 1/2 PASS |
 | Phase 8 | 已完成 | Vercel 部署配置与生产验收手册；代码审查 Stage 1/2 PASS |
+| Phase 9 | 进行中 | 转录召回率修复、阈值版本化与乐谱默认规则透明化 |
 
 ## 功能依赖图
 
@@ -291,6 +292,35 @@
 - 回滚与排障：执行步骤见 `docs/deployment.md` 和 `docs/runbook.md`；初始上限为全局同时 2 个任务、每日 25 个任务。
 - 已知限制：完整开发依赖审计仍报告 ESLint 工具链的 `brace-expansion` High；生产依赖审计为 0，不进入运行镜像。
 - 生产 URL：未创建。用户明确要求只交付 Vercel 部署方法，不代为创建云资源；线上端到端和生产 10 段回归必须在用户部署后按清单执行。
+
+---
+
+## Phase 9：转录质量校准与结果可信度
+
+**目标：** 消除当前 Basic Pitch 配置造成的快速复调系统性漏音，并让乐谱默认规则不再被误认为原曲结构识别结果。
+
+**交付内容：**
+
+- 将检测阈值纳入类型化配置，采用 Basic Pitch 默认阈值作为召回基线，并将生效配置写入模型版本。
+- 为转录调用补充单元测试，防止高阈值配置再次悄悄进入生产。
+- 增加可重复的真实 Bach 样本 A/B 评估，记录原始 MIDI 音符数、阈值与产物可解析性。
+- 在结果元数据中标记 4/4 拍号与中央 C 分手为基础排版默认规则，避免将其描述成可靠识别。
+
+**关键文件：**
+
+- `songdance/api/app/settings.py` — 检测阈值与模型版本配置。
+- `songdance/api/app/pipeline/transcribe.py` — Basic Pitch 推理与模型版本标识。
+- `songdance/api/app/pipeline/score.py` — 乐谱默认规则和质量标记。
+- `songdance/api/tests/test_transcribe.py` — 推理参数与模型版本单元测试。
+- `songdance/api/tests/test_score.py` — 乐谱默认规则和质量标记测试。
+- `songdance/api/scripts/evaluate_transcription.py` — 固定样本 A/B 评估输出。
+
+**验收标准：**
+
+- Bach 基准在召回基线下输出的原始 MIDI 音符数不少于当前确认的 275，且 MIDI、MusicXML 与时间线均可解析。
+- 检测阈值来自类型化设置，默认值与 Basic Pitch 0.4.0 的默认参数一致；模型版本包含实际阈值。
+- 乐谱质量标记明确包含拍号与手部分配的默认规则，不冒充原曲结构识别。
+- API 静态检查、测试与固定真实钢琴集回归均通过；人工质量评审不低于变更前等级。
 
 ---
 

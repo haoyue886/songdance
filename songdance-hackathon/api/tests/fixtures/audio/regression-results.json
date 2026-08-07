@@ -1,0 +1,3604 @@
+{
+  "generated_at": "2026-08-06T16:48:17.074338+00:00",
+  "model_version": "basic-pitch-0.4.0/icassp-2022-onnx/o0.5-f0.3",
+  "dependencies": {
+    "basic-pitch": "0.4.0",
+    "librosa": "0.11.0",
+    "mir-eval": "0.8.2",
+    "music21": "10.5.0",
+    "pretty_midi": "0.2.11"
+  },
+  "evaluation": "Automated note matching on synthesized audio; not the product quality gate",
+  "product_quality_gate": false,
+  "automated_usable_count": 1,
+  "total_count": 16,
+  "automated_passed": false,
+  "cleanup_gate": {
+    "status": "passed",
+    "minimum_recall_delta": -0.05
+  },
+  "evaluation_set_id": "646db0d67394a1536c139a0029fbd349e8fdc53f9cec1444e5fee64b98a86e13",
+  "machine_summary": {
+    "precision": 0.523909,
+    "recall": 0.977931,
+    "f1": 0.674127,
+    "structure_error_count": 0,
+    "raw_recall": 0.977931,
+    "cleanup_recall_delta": 0.0,
+    "analysis_fallback_count": 4,
+    "parser_failure_count": 0,
+    "reconstruction_fallback_count": 0
+  },
+  "threshold": "At most 10 unmatched notes and F1 >= 0.75",
+  "human_evaluation": {
+    "status": "not_evaluated",
+    "reason": "STALE_SUITE_FINGERPRINT",
+    "rating_counts": {}
+  },
+  "results": [
+    {
+      "id": "01-slow-melody",
+      "description": "Slow monophonic melody",
+      "reference_notes": 30,
+      "raw_estimated_notes": 54,
+      "estimated_notes": 54,
+      "matched_notes": 30,
+      "corrections": 24,
+      "precision": 0.555556,
+      "recall": 1.0,
+      "f1": 0.714286,
+      "overlap": 0.672095,
+      "mean_onset_error_ms": 5.113197,
+      "mean_pitch_error_semitones": 0.0,
+      "raw_metrics": {
+        "status": "evaluated",
+        "reference_note_count": 30,
+        "estimated_note_count": 54,
+        "matched_note_count": 30,
+        "precision": 0.555556,
+        "recall": 1.0,
+        "f1": 0.714286,
+        "overlap": 0.672095,
+        "mean_onset_error_ms": 5.113197,
+        "mean_pitch_error_semitones": 0.0
+      },
+      "cleanup": {
+        "status": "applied",
+        "version": "note-cleanup-v3/b83e55947b32",
+        "config": {
+          "min_confidence": 0.1,
+          "min_duration_seconds": 0.04,
+          "adjacent_same_pitch_gap_seconds": 0.03,
+          "max_note_duration_seconds": 30.0
+        },
+        "source_note_count": 54,
+        "output_note_count": 54,
+        "removed_note_count": 0,
+        "clipped_note_count": 0,
+        "merged_note_count": 0,
+        "reason_counts": {
+          "LOW_CONFIDENCE_REMOVED": 0,
+          "SHORT_NOTE_REMOVED": 0,
+          "DUPLICATE_NOTE_REMOVED": 0,
+          "EXCESSIVE_DURATION_CLIPPED": 0,
+          "NOTE_PRESERVED": 54,
+          "ADJACENT_SAME_PITCH_PRESERVED": 14,
+          "OVERLAPPING_SAME_PITCH_PRESERVED": 0
+        },
+        "fallback_used": false,
+        "error_code": null
+      },
+      "analysis": {
+        "status": "analyzed",
+        "version": "structure-analysis-v2/8d2475ced611",
+        "source": "librosa-0.11.0",
+        "bpm": 60.09266,
+        "bpm_confidence": 1.0,
+        "beat_grid_seconds": [
+          1.021678,
+          2.020136,
+          3.018594,
+          4.017052,
+          5.01551,
+          6.037188,
+          7.035646,
+          8.034104,
+          9.032562,
+          10.03102,
+          11.029478,
+          12.027937,
+          13.026395,
+          14.024853,
+          15.023311,
+          16.021769,
+          17.020227,
+          18.018685,
+          19.017143,
+          20.015601,
+          21.037279,
+          22.035737,
+          23.034195,
+          24.032653,
+          25.031111,
+          26.029569,
+          27.028027,
+          28.026485,
+          29.024943
+        ],
+        "downbeat_grid_seconds": [
+          3.018594,
+          7.035646,
+          11.029478,
+          15.023311,
+          19.017143,
+          23.034195,
+          27.028027
+        ],
+        "downbeat_phase_index": 2,
+        "time_signature": "4/4",
+        "time_signature_confidence": 0.784567,
+        "time_signature_source": "librosa_onset_accent",
+        "time_signature_candidates": [
+          {
+            "value": "4/4",
+            "confidence": 0.784567,
+            "phase": 2
+          },
+          {
+            "value": "3/4",
+            "confidence": 0.21499,
+            "phase": 1
+          },
+          {
+            "value": "6/8",
+            "confidence": 0.000443,
+            "phase": 1
+          }
+        ],
+        "key_signature": "G major",
+        "key_confidence": 0.532092,
+        "key_signature_source": "librosa_chroma_krumhansl",
+        "key_candidates": [
+          {
+            "value": "G major",
+            "confidence": 0.532092
+          },
+          {
+            "value": "E minor",
+            "confidence": 0.0
+          },
+          {
+            "value": "C major",
+            "confidence": 0.0
+          }
+        ],
+        "duration_seconds": 30.0,
+        "elapsed_seconds": 3.07851,
+        "reason_codes": []
+      },
+      "cleanup_recall_delta": 0.0,
+      "human_rating": {
+        "status": "not_evaluated",
+        "rating": null
+      },
+      "musicxml_parse": {
+        "status": "passed"
+      },
+      "parser_validation": {
+        "music21": {
+          "status": "passed"
+        },
+        "osmd": {
+          "status": "passed",
+          "measure_count": 8,
+          "svg_count": 1
+        },
+        "xmllint": {
+          "status": "passed",
+          "error": null
+        }
+      },
+      "reconstruction": {
+        "status": "reconstructed",
+        "version": "music21-10.5.0/beat-grid/meter-key-v1/harmony-v1/e59dc7bc9a81/voicing-v1/82652e2a152b",
+        "fallback_used": false,
+        "error_code": null,
+        "voicing": {
+          "version": "voicing-v1/82652e2a152b",
+          "left_count": 43,
+          "right_count": 9,
+          "unknown_count": 2,
+          "mean_confidence": 0.683278
+        },
+        "chord_count": 0,
+        "voice_count": 18
+      },
+      "structure": {
+        "part_count": 2,
+        "measure_count": 16,
+        "chord_count": 0,
+        "voice_count": 18,
+        "rest_count": 57,
+        "short_rest_count": 0,
+        "measure_duration_error_count": 0,
+        "partial_final_measure_count": 0,
+        "time_signatures": [
+          "4/4"
+        ],
+        "key_signatures": [
+          1
+        ],
+        "key_signature_status": "detected",
+        "errors": []
+      },
+      "rating": "needs_redo"
+    },
+    {
+      "id": "02-fast-scale",
+      "description": "Fast major scales",
+      "reference_notes": 119,
+      "raw_estimated_notes": 204,
+      "estimated_notes": 204,
+      "matched_notes": 113,
+      "corrections": 97,
+      "precision": 0.553922,
+      "recall": 0.94958,
+      "f1": 0.69969,
+      "overlap": 0.514039,
+      "mean_onset_error_ms": 5.296603,
+      "mean_pitch_error_semitones": 0.0,
+      "raw_metrics": {
+        "status": "evaluated",
+        "reference_note_count": 119,
+        "estimated_note_count": 204,
+        "matched_note_count": 113,
+        "precision": 0.553922,
+        "recall": 0.94958,
+        "f1": 0.69969,
+        "overlap": 0.514039,
+        "mean_onset_error_ms": 5.296603,
+        "mean_pitch_error_semitones": 0.0
+      },
+      "cleanup": {
+        "status": "applied",
+        "version": "note-cleanup-v3/b83e55947b32",
+        "config": {
+          "min_confidence": 0.1,
+          "min_duration_seconds": 0.04,
+          "adjacent_same_pitch_gap_seconds": 0.03,
+          "max_note_duration_seconds": 30.0
+        },
+        "source_note_count": 204,
+        "output_note_count": 204,
+        "removed_note_count": 0,
+        "clipped_note_count": 0,
+        "merged_note_count": 0,
+        "reason_counts": {
+          "LOW_CONFIDENCE_REMOVED": 0,
+          "SHORT_NOTE_REMOVED": 0,
+          "DUPLICATE_NOTE_REMOVED": 0,
+          "EXCESSIVE_DURATION_CLIPPED": 0,
+          "NOTE_PRESERVED": 204,
+          "ADJACENT_SAME_PITCH_PRESERVED": 80,
+          "OVERLAPPING_SAME_PITCH_PRESERVED": 0
+        },
+        "fallback_used": false,
+        "error_code": null
+      },
+      "analysis": {
+        "status": "analyzed_with_defaults",
+        "version": "structure-analysis-v2/8d2475ced611",
+        "source": "librosa-0.11.0",
+        "bpm": 117.453835,
+        "bpm_confidence": 1.0,
+        "beat_grid_seconds": [
+          0.766259,
+          1.277098,
+          1.787937,
+          2.275556,
+          2.786395,
+          3.274014,
+          3.784853,
+          4.295692,
+          4.783311,
+          5.29415,
+          5.781769,
+          6.269388,
+          6.780227,
+          7.291066,
+          7.778685,
+          8.289524,
+          8.777143,
+          9.287982,
+          9.775601,
+          10.28644,
+          10.797279,
+          11.284898,
+          11.795737,
+          12.283356,
+          12.770975,
+          13.281814,
+          13.769433,
+          14.280272,
+          14.791111,
+          15.27873,
+          15.789569,
+          16.277188,
+          16.788027,
+          17.275646,
+          17.786485,
+          18.297324,
+          18.784943,
+          19.295782,
+          19.783401,
+          20.27102,
+          20.781859,
+          21.292698,
+          21.780317,
+          22.291156,
+          22.778776,
+          23.289615,
+          23.777234,
+          24.288073,
+          24.798912,
+          25.286531,
+          25.77415,
+          26.284989,
+          26.772608,
+          27.283447,
+          27.771066,
+          28.281905,
+          28.792744,
+          29.280363
+        ],
+        "downbeat_grid_seconds": [
+          1.787937,
+          3.784853,
+          5.781769,
+          7.778685,
+          9.775601,
+          11.795737,
+          13.769433,
+          15.789569,
+          17.786485,
+          19.783401,
+          21.780317,
+          23.777234,
+          25.77415,
+          27.771066
+        ],
+        "downbeat_phase_index": 2,
+        "time_signature": "4/4",
+        "time_signature_confidence": 0.629491,
+        "time_signature_source": "librosa_onset_accent",
+        "time_signature_candidates": [
+          {
+            "value": "4/4",
+            "confidence": 0.629491,
+            "phase": 2
+          },
+          {
+            "value": "6/8",
+            "confidence": 0.370509,
+            "phase": 0
+          },
+          {
+            "value": "3/4",
+            "confidence": 0.0,
+            "phase": 0
+          }
+        ],
+        "key_signature": "C major",
+        "key_confidence": 0.173187,
+        "key_signature_source": "default",
+        "key_candidates": [
+          {
+            "value": "C major",
+            "confidence": 0.173187
+          },
+          {
+            "value": "A minor",
+            "confidence": 0.0
+          },
+          {
+            "value": "G major",
+            "confidence": 0.0
+          }
+        ],
+        "duration_seconds": 30.0,
+        "elapsed_seconds": 3.144042,
+        "reason_codes": [
+          "KEY_SIGNATURE_DEFAULTED_C_MAJOR"
+        ]
+      },
+      "cleanup_recall_delta": 0.0,
+      "human_rating": {
+        "status": "not_evaluated",
+        "rating": null
+      },
+      "musicxml_parse": {
+        "status": "passed"
+      },
+      "parser_validation": {
+        "music21": {
+          "status": "passed"
+        },
+        "osmd": {
+          "status": "passed",
+          "measure_count": 15,
+          "svg_count": 1
+        },
+        "xmllint": {
+          "status": "passed",
+          "error": null
+        }
+      },
+      "reconstruction": {
+        "status": "reconstructed",
+        "version": "music21-10.5.0/beat-grid/meter-key-v1/harmony-v1/e59dc7bc9a81/voicing-v1/82652e2a152b",
+        "fallback_used": false,
+        "error_code": null,
+        "voicing": {
+          "version": "voicing-v1/82652e2a152b",
+          "left_count": 146,
+          "right_count": 17,
+          "unknown_count": 41,
+          "mean_confidence": 0.53396
+        },
+        "chord_count": 18,
+        "voice_count": 96
+      },
+      "structure": {
+        "part_count": 2,
+        "measure_count": 30,
+        "chord_count": 20,
+        "voice_count": 96,
+        "rest_count": 141,
+        "short_rest_count": 0,
+        "measure_duration_error_count": 0,
+        "partial_final_measure_count": 0,
+        "time_signatures": [
+          "4/4"
+        ],
+        "key_signatures": [
+          0
+        ],
+        "key_signature_status": "detected",
+        "errors": []
+      },
+      "rating": "needs_redo"
+    },
+    {
+      "id": "03-block-chords",
+      "description": "Repeated triads",
+      "reference_notes": 80,
+      "raw_estimated_notes": 128,
+      "estimated_notes": 128,
+      "matched_notes": 80,
+      "corrections": 48,
+      "precision": 0.625,
+      "recall": 1.0,
+      "f1": 0.769231,
+      "overlap": 0.819882,
+      "mean_onset_error_ms": 4.687347,
+      "mean_pitch_error_semitones": 0.0,
+      "raw_metrics": {
+        "status": "evaluated",
+        "reference_note_count": 80,
+        "estimated_note_count": 128,
+        "matched_note_count": 80,
+        "precision": 0.625,
+        "recall": 1.0,
+        "f1": 0.769231,
+        "overlap": 0.819882,
+        "mean_onset_error_ms": 4.687347,
+        "mean_pitch_error_semitones": 0.0
+      },
+      "cleanup": {
+        "status": "applied",
+        "version": "note-cleanup-v3/b83e55947b32",
+        "config": {
+          "min_confidence": 0.1,
+          "min_duration_seconds": 0.04,
+          "adjacent_same_pitch_gap_seconds": 0.03,
+          "max_note_duration_seconds": 30.0
+        },
+        "source_note_count": 128,
+        "output_note_count": 128,
+        "removed_note_count": 0,
+        "clipped_note_count": 0,
+        "merged_note_count": 0,
+        "reason_counts": {
+          "LOW_CONFIDENCE_REMOVED": 0,
+          "SHORT_NOTE_REMOVED": 0,
+          "DUPLICATE_NOTE_REMOVED": 0,
+          "EXCESSIVE_DURATION_CLIPPED": 0,
+          "NOTE_PRESERVED": 128,
+          "ADJACENT_SAME_PITCH_PRESERVED": 28,
+          "OVERLAPPING_SAME_PITCH_PRESERVED": 0
+        },
+        "fallback_used": false,
+        "error_code": null
+      },
+      "analysis": {
+        "status": "analyzed_with_defaults",
+        "version": "structure-analysis-v2/8d2475ced611",
+        "source": "librosa-0.11.0",
+        "bpm": 39.753606,
+        "bpm_confidence": 1.0,
+        "beat_grid_seconds": [
+          1.532517,
+          3.041814,
+          4.527891,
+          6.037188,
+          7.523265,
+          9.032562,
+          10.541859,
+          12.027937,
+          13.537234,
+          15.023311,
+          16.532608,
+          18.041905,
+          19.527982,
+          21.037279,
+          22.523356,
+          24.032653,
+          25.51873,
+          27.028027,
+          28.537324
+        ],
+        "downbeat_grid_seconds": [
+          1.532517,
+          7.523265,
+          13.537234,
+          19.527982,
+          25.51873
+        ],
+        "downbeat_phase_index": 0,
+        "time_signature": "4/4",
+        "time_signature_confidence": 0.94789,
+        "time_signature_source": "librosa_onset_accent",
+        "time_signature_candidates": [
+          {
+            "value": "4/4",
+            "confidence": 0.94789,
+            "phase": 0
+          },
+          {
+            "value": "3/4",
+            "confidence": 0.052069,
+            "phase": 1
+          },
+          {
+            "value": "6/8",
+            "confidence": 4.1e-05,
+            "phase": 1
+          }
+        ],
+        "key_signature": "C major",
+        "key_confidence": 0.172859,
+        "key_signature_source": "default",
+        "key_candidates": [
+          {
+            "value": "C major",
+            "confidence": 0.172859
+          },
+          {
+            "value": "G major",
+            "confidence": 0.0
+          },
+          {
+            "value": "C minor",
+            "confidence": 0.0
+          }
+        ],
+        "duration_seconds": 30.0,
+        "elapsed_seconds": 3.027602,
+        "reason_codes": [
+          "KEY_SIGNATURE_DEFAULTED_C_MAJOR"
+        ]
+      },
+      "cleanup_recall_delta": 0.0,
+      "human_rating": {
+        "status": "not_evaluated",
+        "rating": null
+      },
+      "musicxml_parse": {
+        "status": "passed"
+      },
+      "parser_validation": {
+        "music21": {
+          "status": "passed"
+        },
+        "osmd": {
+          "status": "passed",
+          "measure_count": 6,
+          "svg_count": 1
+        },
+        "xmllint": {
+          "status": "passed",
+          "error": null
+        }
+      },
+      "reconstruction": {
+        "status": "reconstructed",
+        "version": "music21-10.5.0/beat-grid/meter-key-v1/harmony-v1/e59dc7bc9a81/voicing-v1/82652e2a152b",
+        "fallback_used": false,
+        "error_code": null,
+        "voicing": {
+          "version": "voicing-v1/82652e2a152b",
+          "left_count": 52,
+          "right_count": 47,
+          "unknown_count": 29,
+          "mean_confidence": 0.38773
+        },
+        "chord_count": 33,
+        "voice_count": 30
+      },
+      "structure": {
+        "part_count": 2,
+        "measure_count": 12,
+        "chord_count": 33,
+        "voice_count": 30,
+        "rest_count": 58,
+        "short_rest_count": 0,
+        "measure_duration_error_count": 0,
+        "partial_final_measure_count": 0,
+        "time_signatures": [
+          "4/4"
+        ],
+        "key_signatures": [
+          0
+        ],
+        "key_signature_status": "detected",
+        "errors": []
+      },
+      "rating": "needs_redo"
+    },
+    {
+      "id": "04-arpeggios",
+      "description": "Continuous broken chords",
+      "reference_notes": 119,
+      "raw_estimated_notes": 326,
+      "estimated_notes": 326,
+      "matched_notes": 119,
+      "corrections": 207,
+      "precision": 0.365031,
+      "recall": 1.0,
+      "f1": 0.534831,
+      "overlap": 0.601298,
+      "mean_onset_error_ms": 4.614836,
+      "mean_pitch_error_semitones": 0.0,
+      "raw_metrics": {
+        "status": "evaluated",
+        "reference_note_count": 119,
+        "estimated_note_count": 326,
+        "matched_note_count": 119,
+        "precision": 0.365031,
+        "recall": 1.0,
+        "f1": 0.534831,
+        "overlap": 0.601298,
+        "mean_onset_error_ms": 4.614836,
+        "mean_pitch_error_semitones": 0.0
+      },
+      "cleanup": {
+        "status": "applied",
+        "version": "note-cleanup-v3/b83e55947b32",
+        "config": {
+          "min_confidence": 0.1,
+          "min_duration_seconds": 0.04,
+          "adjacent_same_pitch_gap_seconds": 0.03,
+          "max_note_duration_seconds": 30.0
+        },
+        "source_note_count": 326,
+        "output_note_count": 326,
+        "removed_note_count": 0,
+        "clipped_note_count": 0,
+        "merged_note_count": 0,
+        "reason_counts": {
+          "LOW_CONFIDENCE_REMOVED": 0,
+          "SHORT_NOTE_REMOVED": 0,
+          "DUPLICATE_NOTE_REMOVED": 0,
+          "EXCESSIVE_DURATION_CLIPPED": 0,
+          "NOTE_PRESERVED": 326,
+          "ADJACENT_SAME_PITCH_PRESERVED": 154,
+          "OVERLAPPING_SAME_PITCH_PRESERVED": 0
+        },
+        "fallback_used": false,
+        "error_code": null
+      },
+      "analysis": {
+        "status": "analyzed",
+        "version": "structure-analysis-v2/8d2475ced611",
+        "source": "librosa-0.11.0",
+        "bpm": 117.453835,
+        "bpm_confidence": 1.0,
+        "beat_grid_seconds": [
+          0.766259,
+          1.277098,
+          1.787937,
+          2.275556,
+          2.786395,
+          3.274014,
+          3.784853,
+          4.272472,
+          4.783311,
+          5.27093,
+          5.781769,
+          6.269388,
+          6.780227,
+          7.291066,
+          7.778685,
+          8.289524,
+          8.777143,
+          9.287982,
+          9.775601,
+          10.28644,
+          10.774059,
+          11.284898,
+          11.772517,
+          12.283356,
+          12.770975,
+          13.281814,
+          13.792653,
+          14.280272,
+          14.791111,
+          15.27873,
+          15.789569,
+          16.277188,
+          16.788027,
+          17.275646,
+          17.786485,
+          18.274104,
+          18.784943,
+          19.272562,
+          19.783401,
+          20.27102,
+          20.781859,
+          21.269478,
+          21.780317,
+          22.267937,
+          22.778776,
+          23.289615,
+          23.777234,
+          24.288073,
+          24.775692,
+          25.286531,
+          25.77415,
+          26.284989,
+          26.772608,
+          27.283447,
+          27.771066,
+          28.281905,
+          28.792744,
+          29.280363
+        ],
+        "downbeat_grid_seconds": [
+          0.278639,
+          2.275556,
+          4.272472,
+          6.269388,
+          8.289524,
+          10.28644,
+          12.283356,
+          14.280272,
+          16.277188,
+          18.274104,
+          20.27102,
+          22.267937,
+          24.288073,
+          26.284989,
+          28.281905
+        ],
+        "downbeat_phase_index": 3,
+        "time_signature": "4/4",
+        "time_signature_confidence": 0.979299,
+        "time_signature_source": "librosa_onset_accent",
+        "time_signature_candidates": [
+          {
+            "value": "4/4",
+            "confidence": 0.979299,
+            "phase": 3
+          },
+          {
+            "value": "6/8",
+            "confidence": 0.020701,
+            "phase": 1
+          },
+          {
+            "value": "3/4",
+            "confidence": 0.0,
+            "phase": 1
+          }
+        ],
+        "key_signature": "C major",
+        "key_confidence": 0.738722,
+        "key_signature_source": "librosa_chroma_krumhansl",
+        "key_candidates": [
+          {
+            "value": "C major",
+            "confidence": 0.738722
+          },
+          {
+            "value": "E minor",
+            "confidence": 0.0
+          },
+          {
+            "value": "G major",
+            "confidence": 0.0
+          }
+        ],
+        "duration_seconds": 30.0,
+        "elapsed_seconds": 2.989443,
+        "reason_codes": []
+      },
+      "cleanup_recall_delta": 0.0,
+      "human_rating": {
+        "status": "not_evaluated",
+        "rating": null
+      },
+      "musicxml_parse": {
+        "status": "passed"
+      },
+      "parser_validation": {
+        "music21": {
+          "status": "passed"
+        },
+        "osmd": {
+          "status": "passed",
+          "measure_count": 16,
+          "svg_count": 1
+        },
+        "xmllint": {
+          "status": "passed",
+          "error": null
+        }
+      },
+      "reconstruction": {
+        "status": "reconstructed",
+        "version": "music21-10.5.0/beat-grid/meter-key-v1/harmony-v1/e59dc7bc9a81/voicing-v1/82652e2a152b",
+        "fallback_used": false,
+        "error_code": null,
+        "voicing": {
+          "version": "voicing-v1/82652e2a152b",
+          "left_count": 242,
+          "right_count": 44,
+          "unknown_count": 40,
+          "mean_confidence": 0.486916
+        },
+        "chord_count": 53,
+        "voice_count": 147
+      },
+      "structure": {
+        "part_count": 2,
+        "measure_count": 32,
+        "chord_count": 56,
+        "voice_count": 147,
+        "rest_count": 219,
+        "short_rest_count": 0,
+        "measure_duration_error_count": 0,
+        "partial_final_measure_count": 0,
+        "time_signatures": [
+          "4/4"
+        ],
+        "key_signatures": [
+          0
+        ],
+        "key_signature_status": "detected",
+        "errors": []
+      },
+      "rating": "needs_redo"
+    },
+    {
+      "id": "05-two-hand",
+      "description": "Independent bass and melody",
+      "reference_notes": 90,
+      "raw_estimated_notes": 229,
+      "estimated_notes": 229,
+      "matched_notes": 90,
+      "corrections": 139,
+      "precision": 0.393013,
+      "recall": 1.0,
+      "f1": 0.564263,
+      "overlap": 0.577094,
+      "mean_onset_error_ms": 5.972527,
+      "mean_pitch_error_semitones": 0.0,
+      "raw_metrics": {
+        "status": "evaluated",
+        "reference_note_count": 90,
+        "estimated_note_count": 229,
+        "matched_note_count": 90,
+        "precision": 0.393013,
+        "recall": 1.0,
+        "f1": 0.564263,
+        "overlap": 0.577094,
+        "mean_onset_error_ms": 5.972527,
+        "mean_pitch_error_semitones": 0.0
+      },
+      "cleanup": {
+        "status": "applied",
+        "version": "note-cleanup-v3/b83e55947b32",
+        "config": {
+          "min_confidence": 0.1,
+          "min_duration_seconds": 0.04,
+          "adjacent_same_pitch_gap_seconds": 0.03,
+          "max_note_duration_seconds": 30.0
+        },
+        "source_note_count": 229,
+        "output_note_count": 229,
+        "removed_note_count": 0,
+        "clipped_note_count": 0,
+        "merged_note_count": 0,
+        "reason_counts": {
+          "LOW_CONFIDENCE_REMOVED": 0,
+          "SHORT_NOTE_REMOVED": 0,
+          "DUPLICATE_NOTE_REMOVED": 0,
+          "EXCESSIVE_DURATION_CLIPPED": 0,
+          "NOTE_PRESERVED": 229,
+          "ADJACENT_SAME_PITCH_PRESERVED": 32,
+          "OVERLAPPING_SAME_PITCH_PRESERVED": 0
+        },
+        "fallback_used": false,
+        "error_code": null
+      },
+      "analysis": {
+        "status": "analyzed",
+        "version": "structure-analysis-v2/8d2475ced611",
+        "source": "librosa-0.11.0",
+        "bpm": 117.453835,
+        "bpm_confidence": 1.0,
+        "beat_grid_seconds": [
+          0.534059,
+          1.021678,
+          1.532517,
+          2.020136,
+          2.530975,
+          3.018594,
+          3.529433,
+          4.040272,
+          4.527891,
+          5.03873,
+          5.526349,
+          6.037188,
+          6.524807,
+          7.035646,
+          7.523265,
+          8.034104,
+          8.521723,
+          9.032562,
+          9.520181,
+          10.03102,
+          10.518639,
+          11.029478,
+          11.540317,
+          12.027937,
+          12.538776,
+          13.026395,
+          13.537234,
+          14.024853,
+          14.535692,
+          15.023311,
+          15.53415,
+          16.021769,
+          16.532608,
+          17.020227,
+          17.531066,
+          18.018685,
+          18.529524,
+          19.040363,
+          19.527982,
+          20.038821,
+          20.52644,
+          21.037279,
+          21.524898,
+          22.035737,
+          22.523356,
+          23.034195,
+          23.521814,
+          24.032653,
+          24.520272,
+          25.031111,
+          25.51873,
+          26.029569,
+          26.517188,
+          27.028027,
+          27.538866,
+          28.026485,
+          28.537324,
+          29.024943,
+          29.535782
+        ],
+        "downbeat_grid_seconds": [
+          0.02322,
+          2.020136,
+          4.040272,
+          6.037188,
+          8.034104,
+          10.03102,
+          12.027937,
+          14.024853,
+          16.021769,
+          18.018685,
+          20.038821,
+          22.035737,
+          24.032653,
+          26.029569,
+          28.026485
+        ],
+        "downbeat_phase_index": 3,
+        "time_signature": "4/4",
+        "time_signature_confidence": 0.943761,
+        "time_signature_source": "librosa_onset_accent",
+        "time_signature_candidates": [
+          {
+            "value": "4/4",
+            "confidence": 0.943761,
+            "phase": 3
+          },
+          {
+            "value": "3/4",
+            "confidence": 0.052081,
+            "phase": 0
+          },
+          {
+            "value": "6/8",
+            "confidence": 0.004159,
+            "phase": 0
+          }
+        ],
+        "key_signature": "C major",
+        "key_confidence": 1.0,
+        "key_signature_source": "librosa_chroma_krumhansl",
+        "key_candidates": [
+          {
+            "value": "C major",
+            "confidence": 1.0
+          },
+          {
+            "value": "G major",
+            "confidence": 0.0
+          },
+          {
+            "value": "C minor",
+            "confidence": 0.0
+          }
+        ],
+        "duration_seconds": 30.0,
+        "elapsed_seconds": 2.976388,
+        "reason_codes": []
+      },
+      "cleanup_recall_delta": 0.0,
+      "human_rating": {
+        "status": "not_evaluated",
+        "rating": null
+      },
+      "musicxml_parse": {
+        "status": "passed"
+      },
+      "parser_validation": {
+        "music21": {
+          "status": "passed"
+        },
+        "osmd": {
+          "status": "passed",
+          "measure_count": 15,
+          "svg_count": 1
+        },
+        "xmllint": {
+          "status": "passed",
+          "error": null
+        }
+      },
+      "reconstruction": {
+        "status": "reconstructed",
+        "version": "music21-10.5.0/beat-grid/meter-key-v1/harmony-v1/e59dc7bc9a81/voicing-v1/82652e2a152b",
+        "fallback_used": false,
+        "error_code": null,
+        "voicing": {
+          "version": "voicing-v1/82652e2a152b",
+          "left_count": 104,
+          "right_count": 89,
+          "unknown_count": 36,
+          "mean_confidence": 0.404718
+        },
+        "chord_count": 43,
+        "voice_count": 156
+      },
+      "structure": {
+        "part_count": 2,
+        "measure_count": 30,
+        "chord_count": 47,
+        "voice_count": 156,
+        "rest_count": 241,
+        "short_rest_count": 0,
+        "measure_duration_error_count": 0,
+        "partial_final_measure_count": 0,
+        "time_signatures": [
+          "4/4"
+        ],
+        "key_signatures": [
+          0
+        ],
+        "key_signature_status": "detected",
+        "errors": []
+      },
+      "rating": "needs_redo"
+    },
+    {
+      "id": "06-sustain",
+      "description": "Overlapping sustained harmony",
+      "reference_notes": 60,
+      "raw_estimated_notes": 111,
+      "estimated_notes": 111,
+      "matched_notes": 60,
+      "corrections": 51,
+      "precision": 0.540541,
+      "recall": 1.0,
+      "f1": 0.701754,
+      "overlap": 0.645428,
+      "mean_onset_error_ms": 4.640998,
+      "mean_pitch_error_semitones": 0.0,
+      "raw_metrics": {
+        "status": "evaluated",
+        "reference_note_count": 60,
+        "estimated_note_count": 111,
+        "matched_note_count": 60,
+        "precision": 0.540541,
+        "recall": 1.0,
+        "f1": 0.701754,
+        "overlap": 0.645428,
+        "mean_onset_error_ms": 4.640998,
+        "mean_pitch_error_semitones": 0.0
+      },
+      "cleanup": {
+        "status": "applied",
+        "version": "note-cleanup-v3/b83e55947b32",
+        "config": {
+          "min_confidence": 0.1,
+          "min_duration_seconds": 0.04,
+          "adjacent_same_pitch_gap_seconds": 0.03,
+          "max_note_duration_seconds": 30.0
+        },
+        "source_note_count": 111,
+        "output_note_count": 111,
+        "removed_note_count": 0,
+        "clipped_note_count": 0,
+        "merged_note_count": 0,
+        "reason_counts": {
+          "LOW_CONFIDENCE_REMOVED": 0,
+          "SHORT_NOTE_REMOVED": 0,
+          "DUPLICATE_NOTE_REMOVED": 0,
+          "EXCESSIVE_DURATION_CLIPPED": 0,
+          "NOTE_PRESERVED": 111,
+          "ADJACENT_SAME_PITCH_PRESERVED": 11,
+          "OVERLAPPING_SAME_PITCH_PRESERVED": 0
+        },
+        "fallback_used": false,
+        "error_code": null
+      },
+      "analysis": {
+        "status": "analyzed",
+        "version": "structure-analysis-v2/8d2475ced611",
+        "source": "librosa-0.11.0",
+        "bpm": 30.04633,
+        "bpm_confidence": 1.0,
+        "beat_grid_seconds": [
+          2.020136,
+          4.040272,
+          6.037188,
+          8.034104,
+          10.03102,
+          12.027937,
+          14.024853,
+          16.021769,
+          18.041905,
+          20.038821,
+          22.035737,
+          24.032653,
+          26.029569,
+          28.026485
+        ],
+        "downbeat_grid_seconds": [
+          2.020136,
+          8.034104,
+          14.024853,
+          20.038821,
+          26.029569
+        ],
+        "downbeat_phase_index": 0,
+        "time_signature": "3/4",
+        "time_signature_confidence": 0.769645,
+        "time_signature_source": "librosa_onset_accent",
+        "time_signature_candidates": [
+          {
+            "value": "3/4",
+            "confidence": 0.769645,
+            "phase": 0
+          },
+          {
+            "value": "4/4",
+            "confidence": 0.229966,
+            "phase": 0
+          },
+          {
+            "value": "6/8",
+            "confidence": 0.000389,
+            "phase": 0
+          }
+        ],
+        "key_signature": "C major",
+        "key_confidence": 1.0,
+        "key_signature_source": "librosa_chroma_krumhansl",
+        "key_candidates": [
+          {
+            "value": "C major",
+            "confidence": 1.0
+          },
+          {
+            "value": "G major",
+            "confidence": 0.0
+          },
+          {
+            "value": "F major",
+            "confidence": 0.0
+          }
+        ],
+        "duration_seconds": 30.0,
+        "elapsed_seconds": 3.109765,
+        "reason_codes": []
+      },
+      "cleanup_recall_delta": 0.0,
+      "human_rating": {
+        "status": "not_evaluated",
+        "rating": null
+      },
+      "musicxml_parse": {
+        "status": "passed"
+      },
+      "parser_validation": {
+        "music21": {
+          "status": "passed"
+        },
+        "osmd": {
+          "status": "passed",
+          "measure_count": 6,
+          "svg_count": 1
+        },
+        "xmllint": {
+          "status": "passed",
+          "error": null
+        }
+      },
+      "reconstruction": {
+        "status": "reconstructed",
+        "version": "music21-10.5.0/beat-grid/meter-key-v1/harmony-v1/e59dc7bc9a81/voicing-v1/82652e2a152b",
+        "fallback_used": false,
+        "error_code": null,
+        "voicing": {
+          "version": "voicing-v1/82652e2a152b",
+          "left_count": 36,
+          "right_count": 57,
+          "unknown_count": 18,
+          "mean_confidence": 0.396127
+        },
+        "chord_count": 27,
+        "voice_count": 24
+      },
+      "structure": {
+        "part_count": 2,
+        "measure_count": 12,
+        "chord_count": 27,
+        "voice_count": 24,
+        "rest_count": 38,
+        "short_rest_count": 0,
+        "measure_duration_error_count": 0,
+        "partial_final_measure_count": 0,
+        "time_signatures": [
+          "3/4"
+        ],
+        "key_signatures": [
+          0
+        ],
+        "key_signature_status": "detected",
+        "errors": []
+      },
+      "rating": "needs_redo"
+    },
+    {
+      "id": "07-soft",
+      "description": "Low-velocity melody",
+      "reference_notes": 40,
+      "raw_estimated_notes": 77,
+      "estimated_notes": 77,
+      "matched_notes": 37,
+      "corrections": 43,
+      "precision": 0.480519,
+      "recall": 0.925,
+      "f1": 0.632479,
+      "overlap": 0.689467,
+      "mean_onset_error_ms": 5.402549,
+      "mean_pitch_error_semitones": 0.0,
+      "raw_metrics": {
+        "status": "evaluated",
+        "reference_note_count": 40,
+        "estimated_note_count": 77,
+        "matched_note_count": 37,
+        "precision": 0.480519,
+        "recall": 0.925,
+        "f1": 0.632479,
+        "overlap": 0.689467,
+        "mean_onset_error_ms": 5.402549,
+        "mean_pitch_error_semitones": 0.0
+      },
+      "cleanup": {
+        "status": "applied",
+        "version": "note-cleanup-v3/b83e55947b32",
+        "config": {
+          "min_confidence": 0.1,
+          "min_duration_seconds": 0.04,
+          "adjacent_same_pitch_gap_seconds": 0.03,
+          "max_note_duration_seconds": 30.0
+        },
+        "source_note_count": 77,
+        "output_note_count": 77,
+        "removed_note_count": 0,
+        "clipped_note_count": 0,
+        "merged_note_count": 0,
+        "reason_counts": {
+          "LOW_CONFIDENCE_REMOVED": 0,
+          "SHORT_NOTE_REMOVED": 0,
+          "DUPLICATE_NOTE_REMOVED": 0,
+          "EXCESSIVE_DURATION_CLIPPED": 0,
+          "NOTE_PRESERVED": 77,
+          "ADJACENT_SAME_PITCH_PRESERVED": 22,
+          "OVERLAPPING_SAME_PITCH_PRESERVED": 0
+        },
+        "fallback_used": false,
+        "error_code": null
+      },
+      "analysis": {
+        "status": "analyzed_with_defaults",
+        "version": "structure-analysis-v2/8d2475ced611",
+        "source": "librosa-0.11.0",
+        "bpm": 80.749512,
+        "bpm_confidence": 1.0,
+        "beat_grid_seconds": [
+          0.789478,
+          1.532517,
+          2.275556,
+          3.018594,
+          3.784853,
+          4.527891,
+          5.27093,
+          6.037188,
+          6.780227,
+          7.523265,
+          8.289524,
+          9.032562,
+          9.775601,
+          10.518639,
+          11.284898,
+          12.027937,
+          12.770975,
+          13.537234,
+          14.280272,
+          15.023311,
+          15.789569,
+          16.532608,
+          17.275646,
+          18.018685,
+          18.784943,
+          19.527982,
+          20.27102,
+          21.037279,
+          21.780317,
+          22.523356,
+          23.289615,
+          24.032653,
+          24.775692,
+          25.51873,
+          26.284989,
+          27.028027,
+          27.771066,
+          28.537324,
+          29.280363
+        ],
+        "downbeat_grid_seconds": [
+          0.789478,
+          3.784853,
+          6.780227,
+          9.775601,
+          12.770975,
+          15.789569,
+          18.784943,
+          21.780317,
+          24.775692,
+          27.771066
+        ],
+        "downbeat_phase_index": 0,
+        "time_signature": "4/4",
+        "time_signature_confidence": 0.50983,
+        "time_signature_source": "default",
+        "time_signature_candidates": [
+          {
+            "value": "4/4",
+            "confidence": 0.50983,
+            "phase": 3
+          },
+          {
+            "value": "3/4",
+            "confidence": 0.488584,
+            "phase": 2
+          },
+          {
+            "value": "6/8",
+            "confidence": 0.001586,
+            "phase": 2
+          }
+        ],
+        "key_signature": "E minor",
+        "key_confidence": 0.227204,
+        "key_signature_source": "librosa_chroma_krumhansl",
+        "key_candidates": [
+          {
+            "value": "E minor",
+            "confidence": 0.227204
+          },
+          {
+            "value": "G major",
+            "confidence": 0.0
+          },
+          {
+            "value": "A minor",
+            "confidence": 0.0
+          }
+        ],
+        "duration_seconds": 30.0,
+        "elapsed_seconds": 3.132738,
+        "reason_codes": [
+          "TIME_SIGNATURE_DEFAULTED_4_4"
+        ]
+      },
+      "cleanup_recall_delta": 0.0,
+      "human_rating": {
+        "status": "not_evaluated",
+        "rating": null
+      },
+      "musicxml_parse": {
+        "status": "passed"
+      },
+      "parser_validation": {
+        "music21": {
+          "status": "passed"
+        },
+        "osmd": {
+          "status": "passed",
+          "measure_count": 11,
+          "svg_count": 1
+        },
+        "xmllint": {
+          "status": "passed",
+          "error": null
+        }
+      },
+      "reconstruction": {
+        "status": "reconstructed",
+        "version": "music21-10.5.0/beat-grid/meter-key-v1/harmony-v1/e59dc7bc9a81/voicing-v1/82652e2a152b",
+        "fallback_used": false,
+        "error_code": null,
+        "voicing": {
+          "version": "voicing-v1/82652e2a152b",
+          "left_count": 43,
+          "right_count": 25,
+          "unknown_count": 9,
+          "mean_confidence": 0.534843
+        },
+        "chord_count": 10,
+        "voice_count": 51
+      },
+      "structure": {
+        "part_count": 2,
+        "measure_count": 22,
+        "chord_count": 10,
+        "voice_count": 51,
+        "rest_count": 96,
+        "short_rest_count": 0,
+        "measure_duration_error_count": 0,
+        "partial_final_measure_count": 0,
+        "time_signatures": [
+          "4/4"
+        ],
+        "key_signatures": [
+          1
+        ],
+        "key_signature_status": "detected",
+        "errors": []
+      },
+      "rating": "needs_redo"
+    },
+    {
+      "id": "08-dynamics",
+      "description": "Wide velocity changes",
+      "reference_notes": 59,
+      "raw_estimated_notes": 111,
+      "estimated_notes": 111,
+      "matched_notes": 53,
+      "corrections": 64,
+      "precision": 0.477477,
+      "recall": 0.898305,
+      "f1": 0.623529,
+      "overlap": 0.686653,
+      "mean_onset_error_ms": 5.245523,
+      "mean_pitch_error_semitones": 0.0,
+      "raw_metrics": {
+        "status": "evaluated",
+        "reference_note_count": 59,
+        "estimated_note_count": 111,
+        "matched_note_count": 53,
+        "precision": 0.477477,
+        "recall": 0.898305,
+        "f1": 0.623529,
+        "overlap": 0.686653,
+        "mean_onset_error_ms": 5.245523,
+        "mean_pitch_error_semitones": 0.0
+      },
+      "cleanup": {
+        "status": "applied",
+        "version": "note-cleanup-v3/b83e55947b32",
+        "config": {
+          "min_confidence": 0.1,
+          "min_duration_seconds": 0.04,
+          "adjacent_same_pitch_gap_seconds": 0.03,
+          "max_note_duration_seconds": 30.0
+        },
+        "source_note_count": 111,
+        "output_note_count": 111,
+        "removed_note_count": 0,
+        "clipped_note_count": 0,
+        "merged_note_count": 0,
+        "reason_counts": {
+          "LOW_CONFIDENCE_REMOVED": 0,
+          "SHORT_NOTE_REMOVED": 0,
+          "DUPLICATE_NOTE_REMOVED": 0,
+          "EXCESSIVE_DURATION_CLIPPED": 0,
+          "NOTE_PRESERVED": 111,
+          "ADJACENT_SAME_PITCH_PRESERVED": 29,
+          "OVERLAPPING_SAME_PITCH_PRESERVED": 0
+        },
+        "fallback_used": false,
+        "error_code": null
+      },
+      "analysis": {
+        "status": "analyzed",
+        "version": "structure-analysis-v2/8d2475ced611",
+        "source": "librosa-0.11.0",
+        "bpm": 117.453835,
+        "bpm_confidence": 1.0,
+        "beat_grid_seconds": [
+          0.534059,
+          1.021678,
+          1.532517,
+          2.020136,
+          2.530975,
+          3.018594,
+          3.529433,
+          4.017052,
+          4.527891,
+          5.03873,
+          5.526349,
+          6.037188,
+          6.524807,
+          7.035646,
+          7.523265,
+          8.034104,
+          8.521723,
+          9.032562,
+          9.520181,
+          10.03102,
+          10.518639,
+          11.029478,
+          11.540317,
+          12.027937,
+          12.538776,
+          13.026395,
+          13.537234,
+          14.024853,
+          14.535692,
+          15.023311,
+          15.53415,
+          16.021769,
+          16.532608,
+          17.020227,
+          17.531066,
+          18.018685,
+          18.529524,
+          19.017143,
+          19.527982,
+          20.015601,
+          20.52644,
+          21.037279,
+          21.524898,
+          22.035737,
+          22.523356,
+          23.034195,
+          23.521814,
+          24.032653,
+          24.520272,
+          25.031111,
+          25.51873,
+          26.029569,
+          26.517188,
+          27.028027,
+          27.538866,
+          28.026485,
+          28.537324,
+          29.024943
+        ],
+        "downbeat_grid_seconds": [
+          0.02322,
+          2.020136,
+          4.017052,
+          6.037188,
+          8.034104,
+          10.03102,
+          12.027937,
+          14.024853,
+          16.021769,
+          18.018685,
+          20.015601,
+          22.035737,
+          24.032653,
+          26.029569,
+          28.026485
+        ],
+        "downbeat_phase_index": 3,
+        "time_signature": "4/4",
+        "time_signature_confidence": 0.869257,
+        "time_signature_source": "librosa_onset_accent",
+        "time_signature_candidates": [
+          {
+            "value": "4/4",
+            "confidence": 0.869257,
+            "phase": 3
+          },
+          {
+            "value": "3/4",
+            "confidence": 0.10587,
+            "phase": 1
+          },
+          {
+            "value": "6/8",
+            "confidence": 0.024873,
+            "phase": 1
+          }
+        ],
+        "key_signature": "C major",
+        "key_confidence": 0.39631,
+        "key_signature_source": "librosa_chroma_krumhansl",
+        "key_candidates": [
+          {
+            "value": "C major",
+            "confidence": 0.39631
+          },
+          {
+            "value": "A minor",
+            "confidence": 0.0
+          },
+          {
+            "value": "G major",
+            "confidence": 0.0
+          }
+        ],
+        "duration_seconds": 30.0,
+        "elapsed_seconds": 3.074934,
+        "reason_codes": []
+      },
+      "cleanup_recall_delta": 0.0,
+      "human_rating": {
+        "status": "not_evaluated",
+        "rating": null
+      },
+      "musicxml_parse": {
+        "status": "passed"
+      },
+      "parser_validation": {
+        "music21": {
+          "status": "passed"
+        },
+        "osmd": {
+          "status": "passed",
+          "measure_count": 15,
+          "svg_count": 1
+        },
+        "xmllint": {
+          "status": "passed",
+          "error": null
+        }
+      },
+      "reconstruction": {
+        "status": "reconstructed",
+        "version": "music21-10.5.0/beat-grid/meter-key-v1/harmony-v1/e59dc7bc9a81/voicing-v1/82652e2a152b",
+        "fallback_used": false,
+        "error_code": null,
+        "voicing": {
+          "version": "voicing-v1/82652e2a152b",
+          "left_count": 12,
+          "right_count": 21,
+          "unknown_count": 78,
+          "mean_confidence": 0.190855
+        },
+        "chord_count": 27,
+        "voice_count": 64
+      },
+      "structure": {
+        "part_count": 2,
+        "measure_count": 30,
+        "chord_count": 27,
+        "voice_count": 64,
+        "rest_count": 107,
+        "short_rest_count": 0,
+        "measure_duration_error_count": 0,
+        "partial_final_measure_count": 0,
+        "time_signatures": [
+          "4/4"
+        ],
+        "key_signatures": [
+          0
+        ],
+        "key_signature_status": "detected",
+        "errors": []
+      },
+      "rating": "needs_redo"
+    },
+    {
+      "id": "09-light-noise",
+      "description": "Melody with light background noise",
+      "reference_notes": 30,
+      "raw_estimated_notes": 36,
+      "estimated_notes": 36,
+      "matched_notes": 30,
+      "corrections": 6,
+      "precision": 0.833333,
+      "recall": 1.0,
+      "f1": 0.909091,
+      "overlap": 0.760929,
+      "mean_onset_error_ms": 4.6722,
+      "mean_pitch_error_semitones": 0.0,
+      "raw_metrics": {
+        "status": "evaluated",
+        "reference_note_count": 30,
+        "estimated_note_count": 36,
+        "matched_note_count": 30,
+        "precision": 0.833333,
+        "recall": 1.0,
+        "f1": 0.909091,
+        "overlap": 0.760929,
+        "mean_onset_error_ms": 4.6722,
+        "mean_pitch_error_semitones": 0.0
+      },
+      "cleanup": {
+        "status": "applied",
+        "version": "note-cleanup-v3/b83e55947b32",
+        "config": {
+          "min_confidence": 0.1,
+          "min_duration_seconds": 0.04,
+          "adjacent_same_pitch_gap_seconds": 0.03,
+          "max_note_duration_seconds": 30.0
+        },
+        "source_note_count": 36,
+        "output_note_count": 36,
+        "removed_note_count": 0,
+        "clipped_note_count": 0,
+        "merged_note_count": 0,
+        "reason_counts": {
+          "LOW_CONFIDENCE_REMOVED": 0,
+          "SHORT_NOTE_REMOVED": 0,
+          "DUPLICATE_NOTE_REMOVED": 0,
+          "EXCESSIVE_DURATION_CLIPPED": 0,
+          "NOTE_PRESERVED": 36,
+          "ADJACENT_SAME_PITCH_PRESERVED": 6,
+          "OVERLAPPING_SAME_PITCH_PRESERVED": 0
+        },
+        "fallback_used": false,
+        "error_code": null
+      },
+      "analysis": {
+        "status": "analyzed",
+        "version": "structure-analysis-v2/8d2475ced611",
+        "source": "librosa-0.11.0",
+        "bpm": 60.09266,
+        "bpm_confidence": 1.0,
+        "beat_grid_seconds": [
+          1.021678,
+          2.020136,
+          3.041814,
+          4.040272,
+          5.03873,
+          6.037188,
+          7.035646,
+          8.034104,
+          9.032562,
+          10.03102,
+          11.029478,
+          12.027937,
+          13.026395,
+          14.024853,
+          15.023311,
+          16.021769,
+          17.020227,
+          18.041905,
+          19.040363,
+          20.038821,
+          21.037279,
+          22.035737,
+          23.034195,
+          24.032653,
+          25.031111,
+          26.029569,
+          27.028027,
+          28.026485,
+          29.024943
+        ],
+        "downbeat_grid_seconds": [
+          0.04644,
+          4.040272,
+          8.034104,
+          12.027937,
+          16.021769,
+          20.038821,
+          24.032653,
+          28.026485
+        ],
+        "downbeat_phase_index": 3,
+        "time_signature": "4/4",
+        "time_signature_confidence": 0.650139,
+        "time_signature_source": "librosa_onset_accent",
+        "time_signature_candidates": [
+          {
+            "value": "4/4",
+            "confidence": 0.650139,
+            "phase": 3
+          },
+          {
+            "value": "3/4",
+            "confidence": 0.329068,
+            "phase": 0
+          },
+          {
+            "value": "6/8",
+            "confidence": 0.020793,
+            "phase": 0
+          }
+        ],
+        "key_signature": "G major",
+        "key_confidence": 0.532071,
+        "key_signature_source": "librosa_chroma_krumhansl",
+        "key_candidates": [
+          {
+            "value": "G major",
+            "confidence": 0.532071
+          },
+          {
+            "value": "E minor",
+            "confidence": 0.0
+          },
+          {
+            "value": "C major",
+            "confidence": 0.0
+          }
+        ],
+        "duration_seconds": 30.0,
+        "elapsed_seconds": 2.981952,
+        "reason_codes": []
+      },
+      "cleanup_recall_delta": 0.0,
+      "human_rating": {
+        "status": "not_evaluated",
+        "rating": null
+      },
+      "musicxml_parse": {
+        "status": "passed"
+      },
+      "parser_validation": {
+        "music21": {
+          "status": "passed"
+        },
+        "osmd": {
+          "status": "passed",
+          "measure_count": 8,
+          "svg_count": 1
+        },
+        "xmllint": {
+          "status": "passed",
+          "error": null
+        }
+      },
+      "reconstruction": {
+        "status": "reconstructed",
+        "version": "music21-10.5.0/beat-grid/meter-key-v1/harmony-v1/e59dc7bc9a81/voicing-v1/82652e2a152b",
+        "fallback_used": false,
+        "error_code": null,
+        "voicing": {
+          "version": "voicing-v1/82652e2a152b",
+          "left_count": 23,
+          "right_count": 9,
+          "unknown_count": 4,
+          "mean_confidence": 0.484416
+        },
+        "chord_count": 0,
+        "voice_count": 18
+      },
+      "structure": {
+        "part_count": 2,
+        "measure_count": 16,
+        "chord_count": 0,
+        "voice_count": 18,
+        "rest_count": 33,
+        "short_rest_count": 0,
+        "measure_duration_error_count": 0,
+        "partial_final_measure_count": 0,
+        "time_signatures": [
+          "4/4"
+        ],
+        "key_signatures": [
+          1
+        ],
+        "key_signature_status": "detected",
+        "errors": []
+      },
+      "rating": "minor_edits"
+    },
+    {
+      "id": "10-device",
+      "description": "Narrow-band device recording with noise",
+      "reference_notes": 90,
+      "raw_estimated_notes": 174,
+      "estimated_notes": 174,
+      "matched_notes": 89,
+      "corrections": 86,
+      "precision": 0.511494,
+      "recall": 0.988889,
+      "f1": 0.674242,
+      "overlap": 0.572183,
+      "mean_onset_error_ms": 18.526148,
+      "mean_pitch_error_semitones": 0.0,
+      "raw_metrics": {
+        "status": "evaluated",
+        "reference_note_count": 90,
+        "estimated_note_count": 174,
+        "matched_note_count": 89,
+        "precision": 0.511494,
+        "recall": 0.988889,
+        "f1": 0.674242,
+        "overlap": 0.572183,
+        "mean_onset_error_ms": 18.526148,
+        "mean_pitch_error_semitones": 0.0
+      },
+      "cleanup": {
+        "status": "applied",
+        "version": "note-cleanup-v3/b83e55947b32",
+        "config": {
+          "min_confidence": 0.1,
+          "min_duration_seconds": 0.04,
+          "adjacent_same_pitch_gap_seconds": 0.03,
+          "max_note_duration_seconds": 30.0
+        },
+        "source_note_count": 174,
+        "output_note_count": 174,
+        "removed_note_count": 0,
+        "clipped_note_count": 0,
+        "merged_note_count": 0,
+        "reason_counts": {
+          "LOW_CONFIDENCE_REMOVED": 0,
+          "SHORT_NOTE_REMOVED": 0,
+          "DUPLICATE_NOTE_REMOVED": 0,
+          "EXCESSIVE_DURATION_CLIPPED": 0,
+          "NOTE_PRESERVED": 174,
+          "ADJACENT_SAME_PITCH_PRESERVED": 29,
+          "OVERLAPPING_SAME_PITCH_PRESERVED": 0
+        },
+        "fallback_used": false,
+        "error_code": null
+      },
+      "analysis": {
+        "status": "analyzed",
+        "version": "structure-analysis-v2/8d2475ced611",
+        "source": "librosa-0.11.0",
+        "bpm": 117.453835,
+        "bpm_confidence": 1.0,
+        "beat_grid_seconds": [
+          1.044898,
+          1.532517,
+          2.043356,
+          2.530975,
+          3.041814,
+          3.529433,
+          4.040272,
+          4.527891,
+          5.03873,
+          5.526349,
+          6.037188,
+          6.524807,
+          7.035646,
+          7.546485,
+          8.034104,
+          8.544943,
+          9.032562,
+          9.543401,
+          10.03102,
+          10.541859,
+          11.029478,
+          11.540317,
+          12.027937,
+          12.538776,
+          13.049615,
+          13.537234,
+          14.048073,
+          14.535692,
+          15.046531,
+          15.53415,
+          16.044989,
+          16.532608,
+          17.043447,
+          17.531066,
+          18.041905,
+          18.529524,
+          19.040363,
+          19.527982,
+          20.038821,
+          20.52644,
+          21.037279,
+          21.524898,
+          22.035737,
+          22.546576,
+          23.034195,
+          23.545034,
+          24.032653,
+          24.543492,
+          25.031111,
+          25.54195,
+          26.029569,
+          26.540408,
+          27.028027,
+          27.538866,
+          28.049705,
+          28.537324,
+          29.048163
+        ],
+        "downbeat_grid_seconds": [
+          0.04644,
+          2.043356,
+          4.040272,
+          6.037188,
+          8.034104,
+          10.03102,
+          12.027937,
+          14.048073,
+          16.044989,
+          18.041905,
+          20.038821,
+          22.035737,
+          24.032653,
+          26.029569,
+          28.049705
+        ],
+        "downbeat_phase_index": 2,
+        "time_signature": "4/4",
+        "time_signature_confidence": 0.900938,
+        "time_signature_source": "librosa_onset_accent",
+        "time_signature_candidates": [
+          {
+            "value": "4/4",
+            "confidence": 0.900938,
+            "phase": 2
+          },
+          {
+            "value": "3/4",
+            "confidence": 0.08971,
+            "phase": 2
+          },
+          {
+            "value": "6/8",
+            "confidence": 0.009352,
+            "phase": 2
+          }
+        ],
+        "key_signature": "C major",
+        "key_confidence": 0.534117,
+        "key_signature_source": "librosa_chroma_krumhansl",
+        "key_candidates": [
+          {
+            "value": "C major",
+            "confidence": 0.534117
+          },
+          {
+            "value": "G major",
+            "confidence": 0.0
+          },
+          {
+            "value": "E minor",
+            "confidence": 0.0
+          }
+        ],
+        "duration_seconds": 30.0,
+        "elapsed_seconds": 3.270698,
+        "reason_codes": []
+      },
+      "cleanup_recall_delta": 0.0,
+      "human_rating": {
+        "status": "not_evaluated",
+        "rating": null
+      },
+      "musicxml_parse": {
+        "status": "passed"
+      },
+      "parser_validation": {
+        "music21": {
+          "status": "passed"
+        },
+        "osmd": {
+          "status": "passed",
+          "measure_count": 15,
+          "svg_count": 1
+        },
+        "xmllint": {
+          "status": "passed",
+          "error": null
+        }
+      },
+      "reconstruction": {
+        "status": "reconstructed",
+        "version": "music21-10.5.0/beat-grid/meter-key-v1/harmony-v1/e59dc7bc9a81/voicing-v1/82652e2a152b",
+        "fallback_used": false,
+        "error_code": null,
+        "voicing": {
+          "version": "voicing-v1/82652e2a152b",
+          "left_count": 60,
+          "right_count": 89,
+          "unknown_count": 25,
+          "mean_confidence": 0.442229
+        },
+        "chord_count": 22,
+        "voice_count": 103
+      },
+      "structure": {
+        "part_count": 2,
+        "measure_count": 30,
+        "chord_count": 27,
+        "voice_count": 103,
+        "rest_count": 191,
+        "short_rest_count": 0,
+        "measure_duration_error_count": 0,
+        "partial_final_measure_count": 0,
+        "time_signatures": [
+          "4/4"
+        ],
+        "key_signatures": [
+          0
+        ],
+        "key_signature_status": "detected",
+        "errors": []
+      },
+      "rating": "needs_redo"
+    },
+    {
+      "id": "11-waltz-34",
+      "description": "Three-four waltz accompaniment",
+      "reference_notes": 60,
+      "raw_estimated_notes": 129,
+      "estimated_notes": 129,
+      "matched_notes": 60,
+      "corrections": 69,
+      "precision": 0.465116,
+      "recall": 1.0,
+      "f1": 0.634921,
+      "overlap": 0.432414,
+      "mean_onset_error_ms": 5.017899,
+      "mean_pitch_error_semitones": 0.0,
+      "raw_metrics": {
+        "status": "evaluated",
+        "reference_note_count": 60,
+        "estimated_note_count": 129,
+        "matched_note_count": 60,
+        "precision": 0.465116,
+        "recall": 1.0,
+        "f1": 0.634921,
+        "overlap": 0.432414,
+        "mean_onset_error_ms": 5.017899,
+        "mean_pitch_error_semitones": 0.0
+      },
+      "cleanup": {
+        "status": "applied",
+        "version": "note-cleanup-v3/b83e55947b32",
+        "config": {
+          "min_confidence": 0.1,
+          "min_duration_seconds": 0.04,
+          "adjacent_same_pitch_gap_seconds": 0.03,
+          "max_note_duration_seconds": 30.0
+        },
+        "source_note_count": 129,
+        "output_note_count": 129,
+        "removed_note_count": 0,
+        "clipped_note_count": 0,
+        "merged_note_count": 0,
+        "reason_counts": {
+          "LOW_CONFIDENCE_REMOVED": 0,
+          "SHORT_NOTE_REMOVED": 0,
+          "DUPLICATE_NOTE_REMOVED": 0,
+          "EXCESSIVE_DURATION_CLIPPED": 0,
+          "NOTE_PRESERVED": 129,
+          "ADJACENT_SAME_PITCH_PRESERVED": 38,
+          "OVERLAPPING_SAME_PITCH_PRESERVED": 0
+        },
+        "fallback_used": false,
+        "error_code": null
+      },
+      "analysis": {
+        "status": "analyzed",
+        "version": "structure-analysis-v2/8d2475ced611",
+        "source": "librosa-0.11.0",
+        "bpm": 117.453835,
+        "bpm_confidence": 1.0,
+        "beat_grid_seconds": [
+          0.534059,
+          1.021678,
+          1.532517,
+          2.020136,
+          2.530975,
+          3.018594,
+          3.529433,
+          4.017052,
+          4.527891,
+          5.03873,
+          5.526349,
+          6.037188,
+          6.524807,
+          7.035646,
+          7.523265,
+          8.034104,
+          8.521723,
+          9.032562,
+          9.520181,
+          10.03102,
+          10.518639,
+          11.029478,
+          11.517098,
+          12.027937,
+          12.538776,
+          13.026395,
+          13.537234,
+          14.024853,
+          14.535692,
+          15.023311,
+          15.53415,
+          16.021769,
+          16.532608,
+          17.020227,
+          17.531066,
+          18.018685,
+          18.529524,
+          19.017143,
+          19.527982,
+          20.038821,
+          20.52644,
+          21.037279,
+          21.524898,
+          22.035737,
+          22.523356,
+          23.034195,
+          23.521814,
+          24.032653,
+          24.520272,
+          25.031111,
+          25.51873,
+          26.029569,
+          26.517188,
+          27.028027,
+          27.538866,
+          28.026485,
+          28.537324,
+          29.024943,
+          29.535782
+        ],
+        "downbeat_grid_seconds": [
+          0.02322,
+          1.532517,
+          3.018594,
+          4.527891,
+          6.037188,
+          7.523265,
+          9.032562,
+          10.518639,
+          12.027937,
+          13.537234,
+          15.023311,
+          16.532608,
+          18.018685,
+          19.527982,
+          21.037279,
+          22.523356,
+          24.032653,
+          25.51873,
+          27.028027,
+          28.537324
+        ],
+        "downbeat_phase_index": 2,
+        "time_signature": "3/4",
+        "time_signature_confidence": 0.794797,
+        "time_signature_source": "librosa_onset_accent",
+        "time_signature_candidates": [
+          {
+            "value": "3/4",
+            "confidence": 0.794797,
+            "phase": 2
+          },
+          {
+            "value": "4/4",
+            "confidence": 0.201548,
+            "phase": 0
+          },
+          {
+            "value": "6/8",
+            "confidence": 0.003655,
+            "phase": 2
+          }
+        ],
+        "key_signature": "C major",
+        "key_confidence": 0.372776,
+        "key_signature_source": "librosa_chroma_krumhansl",
+        "key_candidates": [
+          {
+            "value": "C major",
+            "confidence": 0.372776
+          },
+          {
+            "value": "G major",
+            "confidence": 0.0
+          },
+          {
+            "value": "F major",
+            "confidence": 0.0
+          }
+        ],
+        "duration_seconds": 30.0,
+        "elapsed_seconds": 3.039379,
+        "reason_codes": []
+      },
+      "cleanup_recall_delta": 0.0,
+      "human_rating": {
+        "status": "not_evaluated",
+        "rating": null
+      },
+      "musicxml_parse": {
+        "status": "passed"
+      },
+      "parser_validation": {
+        "music21": {
+          "status": "passed"
+        },
+        "osmd": {
+          "status": "passed",
+          "measure_count": 20,
+          "svg_count": 1
+        },
+        "xmllint": {
+          "status": "passed",
+          "error": null
+        }
+      },
+      "reconstruction": {
+        "status": "reconstructed",
+        "version": "music21-10.5.0/beat-grid/meter-key-v1/harmony-v1/e59dc7bc9a81/voicing-v1/82652e2a152b",
+        "fallback_used": false,
+        "error_code": null,
+        "voicing": {
+          "version": "voicing-v1/82652e2a152b",
+          "left_count": 44,
+          "right_count": 46,
+          "unknown_count": 39,
+          "mean_confidence": 0.350131
+        },
+        "chord_count": 21,
+        "voice_count": 108
+      },
+      "structure": {
+        "part_count": 2,
+        "measure_count": 40,
+        "chord_count": 26,
+        "voice_count": 108,
+        "rest_count": 136,
+        "short_rest_count": 0,
+        "measure_duration_error_count": 0,
+        "partial_final_measure_count": 0,
+        "time_signatures": [
+          "3/4"
+        ],
+        "key_signatures": [
+          0
+        ],
+        "key_signature_status": "detected",
+        "errors": []
+      },
+      "rating": "needs_redo"
+    },
+    {
+      "id": "12-compound-68",
+      "description": "Six-eight compound rhythm",
+      "reference_notes": 139,
+      "raw_estimated_notes": 310,
+      "estimated_notes": 310,
+      "matched_notes": 139,
+      "corrections": 171,
+      "precision": 0.448387,
+      "recall": 1.0,
+      "f1": 0.619154,
+      "overlap": 0.46179,
+      "mean_onset_error_ms": 6.360955,
+      "mean_pitch_error_semitones": 0.0,
+      "raw_metrics": {
+        "status": "evaluated",
+        "reference_note_count": 139,
+        "estimated_note_count": 310,
+        "matched_note_count": 139,
+        "precision": 0.448387,
+        "recall": 1.0,
+        "f1": 0.619154,
+        "overlap": 0.463526,
+        "mean_onset_error_ms": 6.39907,
+        "mean_pitch_error_semitones": 0.0
+      },
+      "cleanup": {
+        "status": "applied",
+        "version": "note-cleanup-v3/b83e55947b32",
+        "config": {
+          "min_confidence": 0.1,
+          "min_duration_seconds": 0.04,
+          "adjacent_same_pitch_gap_seconds": 0.03,
+          "max_note_duration_seconds": 30.0
+        },
+        "source_note_count": 310,
+        "output_note_count": 310,
+        "removed_note_count": 0,
+        "clipped_note_count": 0,
+        "merged_note_count": 0,
+        "reason_counts": {
+          "LOW_CONFIDENCE_REMOVED": 0,
+          "SHORT_NOTE_REMOVED": 0,
+          "DUPLICATE_NOTE_REMOVED": 0,
+          "EXCESSIVE_DURATION_CLIPPED": 0,
+          "NOTE_PRESERVED": 310,
+          "ADJACENT_SAME_PITCH_PRESERVED": 168,
+          "OVERLAPPING_SAME_PITCH_PRESERVED": 0
+        },
+        "fallback_used": false,
+        "error_code": null
+      },
+      "analysis": {
+        "status": "analyzed",
+        "version": "structure-analysis-v2/8d2475ced611",
+        "source": "librosa-0.11.0",
+        "bpm": 117.453835,
+        "bpm_confidence": 1.0,
+        "beat_grid_seconds": [
+          0.534059,
+          1.044898,
+          1.532517,
+          2.043356,
+          2.530975,
+          3.041814,
+          3.529433,
+          4.040272,
+          4.527891,
+          5.03873,
+          5.526349,
+          6.037188,
+          6.524807,
+          7.035646,
+          7.523265,
+          8.034104,
+          8.544943,
+          9.032562,
+          9.520181,
+          10.03102,
+          10.541859,
+          11.029478,
+          11.540317,
+          12.027937,
+          12.538776,
+          13.026395,
+          13.537234,
+          14.024853,
+          14.535692,
+          15.023311,
+          15.53415,
+          16.044989,
+          16.532608,
+          17.043447,
+          17.531066,
+          18.041905,
+          18.529524,
+          19.040363,
+          19.527982,
+          20.038821,
+          20.52644,
+          21.037279,
+          21.524898,
+          22.035737,
+          22.523356,
+          23.034195,
+          23.545034,
+          24.032653,
+          24.543492,
+          25.031111,
+          25.54195,
+          26.029569,
+          26.540408,
+          27.028027,
+          27.538866,
+          28.026485,
+          28.537324,
+          29.024943
+        ],
+        "downbeat_grid_seconds": [
+          0.02322,
+          1.532517,
+          3.041814,
+          4.527891,
+          6.037188,
+          7.523265,
+          9.032562,
+          10.541859,
+          12.027937,
+          13.537234,
+          15.023311,
+          16.532608,
+          18.041905,
+          19.527982,
+          21.037279,
+          22.523356,
+          24.032653,
+          25.54195,
+          27.028027,
+          28.537324
+        ],
+        "downbeat_phase_index": 2,
+        "time_signature": "6/8",
+        "time_signature_confidence": 0.962398,
+        "time_signature_source": "librosa_onset_accent",
+        "time_signature_candidates": [
+          {
+            "value": "6/8",
+            "confidence": 0.962398,
+            "phase": 2
+          },
+          {
+            "value": "4/4",
+            "confidence": 0.037602,
+            "phase": 0
+          },
+          {
+            "value": "3/4",
+            "confidence": 0.0,
+            "phase": 2
+          }
+        ],
+        "key_signature": "C major",
+        "key_confidence": 0.221456,
+        "key_signature_source": "librosa_chroma_krumhansl",
+        "key_candidates": [
+          {
+            "value": "C major",
+            "confidence": 0.221456
+          },
+          {
+            "value": "E minor",
+            "confidence": 0.0
+          },
+          {
+            "value": "G major",
+            "confidence": 0.0
+          }
+        ],
+        "duration_seconds": 30.0,
+        "elapsed_seconds": 3.036191,
+        "reason_codes": []
+      },
+      "cleanup_recall_delta": 0.0,
+      "human_rating": {
+        "status": "not_evaluated",
+        "rating": null
+      },
+      "musicxml_parse": {
+        "status": "passed"
+      },
+      "parser_validation": {
+        "music21": {
+          "status": "passed"
+        },
+        "osmd": {
+          "status": "passed",
+          "measure_count": 20,
+          "svg_count": 1
+        },
+        "xmllint": {
+          "status": "passed",
+          "error": null
+        }
+      },
+      "reconstruction": {
+        "status": "reconstructed",
+        "version": "music21-10.5.0/beat-grid/meter-key-v1/harmony-v1/e59dc7bc9a81/voicing-v1/82652e2a152b",
+        "fallback_used": false,
+        "error_code": null,
+        "voicing": {
+          "version": "voicing-v1/82652e2a152b",
+          "left_count": 110,
+          "right_count": 165,
+          "unknown_count": 35,
+          "mean_confidence": 0.471775
+        },
+        "chord_count": 36,
+        "voice_count": 175
+      },
+      "structure": {
+        "part_count": 2,
+        "measure_count": 40,
+        "chord_count": 37,
+        "voice_count": 175,
+        "rest_count": 202,
+        "short_rest_count": 0,
+        "measure_duration_error_count": 0,
+        "partial_final_measure_count": 0,
+        "time_signatures": [
+          "6/8"
+        ],
+        "key_signatures": [
+          0
+        ],
+        "key_signature_status": "detected",
+        "errors": []
+      },
+      "rating": "needs_redo"
+    },
+    {
+      "id": "13-key-change",
+      "description": "Mid-clip key change",
+      "reference_notes": 90,
+      "raw_estimated_notes": 193,
+      "estimated_notes": 193,
+      "matched_notes": 85,
+      "corrections": 113,
+      "precision": 0.440415,
+      "recall": 0.944444,
+      "f1": 0.600707,
+      "overlap": 0.681314,
+      "mean_onset_error_ms": 5.156964,
+      "mean_pitch_error_semitones": 0.0,
+      "raw_metrics": {
+        "status": "evaluated",
+        "reference_note_count": 90,
+        "estimated_note_count": 193,
+        "matched_note_count": 85,
+        "precision": 0.440415,
+        "recall": 0.944444,
+        "f1": 0.600707,
+        "overlap": 0.681314,
+        "mean_onset_error_ms": 5.156964,
+        "mean_pitch_error_semitones": 0.0
+      },
+      "cleanup": {
+        "status": "applied",
+        "version": "note-cleanup-v3/b83e55947b32",
+        "config": {
+          "min_confidence": 0.1,
+          "min_duration_seconds": 0.04,
+          "adjacent_same_pitch_gap_seconds": 0.03,
+          "max_note_duration_seconds": 30.0
+        },
+        "source_note_count": 193,
+        "output_note_count": 193,
+        "removed_note_count": 0,
+        "clipped_note_count": 0,
+        "merged_note_count": 0,
+        "reason_counts": {
+          "LOW_CONFIDENCE_REMOVED": 0,
+          "SHORT_NOTE_REMOVED": 0,
+          "DUPLICATE_NOTE_REMOVED": 0,
+          "EXCESSIVE_DURATION_CLIPPED": 0,
+          "NOTE_PRESERVED": 193,
+          "ADJACENT_SAME_PITCH_PRESERVED": 85,
+          "OVERLAPPING_SAME_PITCH_PRESERVED": 0
+        },
+        "fallback_used": false,
+        "error_code": null
+      },
+      "analysis": {
+        "status": "analyzed_with_defaults",
+        "version": "structure-analysis-v2/8d2475ced611",
+        "source": "librosa-0.11.0",
+        "bpm": 117.453835,
+        "bpm_confidence": 1.0,
+        "beat_grid_seconds": [
+          0.534059,
+          1.021678,
+          1.532517,
+          2.020136,
+          2.530975,
+          3.018594,
+          3.529433,
+          4.017052,
+          4.527891,
+          5.03873,
+          5.526349,
+          6.037188,
+          6.524807,
+          7.035646,
+          7.523265,
+          8.034104,
+          8.521723,
+          9.032562,
+          9.520181,
+          10.03102,
+          10.518639,
+          11.029478,
+          11.517098,
+          12.027937,
+          12.538776,
+          13.026395,
+          13.537234,
+          14.024853,
+          14.535692,
+          15.023311,
+          15.53415,
+          16.021769,
+          16.532608,
+          17.020227,
+          17.531066,
+          18.018685,
+          18.529524,
+          19.040363,
+          19.527982,
+          20.038821,
+          20.52644,
+          21.037279,
+          21.524898,
+          22.035737,
+          22.523356,
+          23.034195,
+          23.521814,
+          24.032653,
+          24.543492,
+          25.031111,
+          25.51873,
+          26.029569,
+          26.517188,
+          27.028027,
+          27.538866,
+          28.026485,
+          28.537324,
+          29.024943
+        ],
+        "downbeat_grid_seconds": [
+          0.534059,
+          2.530975,
+          4.527891,
+          6.524807,
+          8.521723,
+          10.518639,
+          12.538776,
+          14.535692,
+          16.532608,
+          18.529524,
+          20.52644,
+          22.523356,
+          24.543492,
+          26.517188,
+          28.537324
+        ],
+        "downbeat_phase_index": 0,
+        "time_signature": "4/4",
+        "time_signature_confidence": 0.526123,
+        "time_signature_source": "default",
+        "time_signature_candidates": [
+          {
+            "value": "4/4",
+            "confidence": 0.526123,
+            "phase": 1
+          },
+          {
+            "value": "3/4",
+            "confidence": 0.401662,
+            "phase": 2
+          },
+          {
+            "value": "6/8",
+            "confidence": 0.072215,
+            "phase": 2
+          }
+        ],
+        "key_signature": "C major",
+        "key_confidence": 0.106506,
+        "key_signature_source": "default",
+        "key_candidates": [
+          {
+            "value": "C major",
+            "confidence": 0.106506
+          },
+          {
+            "value": "E minor",
+            "confidence": 0.0
+          },
+          {
+            "value": "G major",
+            "confidence": 0.0
+          }
+        ],
+        "duration_seconds": 30.0,
+        "elapsed_seconds": 3.07917,
+        "reason_codes": [
+          "TIME_SIGNATURE_DEFAULTED_4_4",
+          "KEY_SIGNATURE_DEFAULTED_C_MAJOR"
+        ]
+      },
+      "cleanup_recall_delta": 0.0,
+      "human_rating": {
+        "status": "not_evaluated",
+        "rating": null
+      },
+      "musicxml_parse": {
+        "status": "passed"
+      },
+      "parser_validation": {
+        "music21": {
+          "status": "passed"
+        },
+        "osmd": {
+          "status": "passed",
+          "measure_count": 16,
+          "svg_count": 1
+        },
+        "xmllint": {
+          "status": "passed",
+          "error": null
+        }
+      },
+      "reconstruction": {
+        "status": "reconstructed",
+        "version": "music21-10.5.0/beat-grid/meter-key-v1/harmony-v1/e59dc7bc9a81/voicing-v1/82652e2a152b",
+        "fallback_used": false,
+        "error_code": null,
+        "voicing": {
+          "version": "voicing-v1/82652e2a152b",
+          "left_count": 27,
+          "right_count": 8,
+          "unknown_count": 158,
+          "mean_confidence": 0.139184
+        },
+        "chord_count": 57,
+        "voice_count": 97
+      },
+      "structure": {
+        "part_count": 2,
+        "measure_count": 32,
+        "chord_count": 66,
+        "voice_count": 97,
+        "rest_count": 168,
+        "short_rest_count": 0,
+        "measure_duration_error_count": 0,
+        "partial_final_measure_count": 0,
+        "time_signatures": [
+          "4/4"
+        ],
+        "key_signatures": [
+          0
+        ],
+        "key_signature_status": "detected",
+        "errors": []
+      },
+      "rating": "needs_redo"
+    },
+    {
+      "id": "14-hand-crossing",
+      "description": "Crossing-hand polyphonic motion",
+      "reference_notes": 118,
+      "raw_estimated_notes": 285,
+      "estimated_notes": 285,
+      "matched_notes": 111,
+      "corrections": 181,
+      "precision": 0.389474,
+      "recall": 0.940678,
+      "f1": 0.550868,
+      "overlap": 0.736135,
+      "mean_onset_error_ms": 5.424163,
+      "mean_pitch_error_semitones": 0.0,
+      "raw_metrics": {
+        "status": "evaluated",
+        "reference_note_count": 118,
+        "estimated_note_count": 285,
+        "matched_note_count": 111,
+        "precision": 0.389474,
+        "recall": 0.940678,
+        "f1": 0.550868,
+        "overlap": 0.736135,
+        "mean_onset_error_ms": 5.424163,
+        "mean_pitch_error_semitones": 0.0
+      },
+      "cleanup": {
+        "status": "applied",
+        "version": "note-cleanup-v3/b83e55947b32",
+        "config": {
+          "min_confidence": 0.1,
+          "min_duration_seconds": 0.04,
+          "adjacent_same_pitch_gap_seconds": 0.03,
+          "max_note_duration_seconds": 30.0
+        },
+        "source_note_count": 285,
+        "output_note_count": 285,
+        "removed_note_count": 0,
+        "clipped_note_count": 0,
+        "merged_note_count": 0,
+        "reason_counts": {
+          "LOW_CONFIDENCE_REMOVED": 0,
+          "SHORT_NOTE_REMOVED": 0,
+          "DUPLICATE_NOTE_REMOVED": 0,
+          "EXCESSIVE_DURATION_CLIPPED": 0,
+          "NOTE_PRESERVED": 285,
+          "ADJACENT_SAME_PITCH_PRESERVED": 150,
+          "OVERLAPPING_SAME_PITCH_PRESERVED": 0
+        },
+        "fallback_used": false,
+        "error_code": null
+      },
+      "analysis": {
+        "status": "analyzed",
+        "version": "structure-analysis-v2/8d2475ced611",
+        "source": "librosa-0.11.0",
+        "bpm": 117.453835,
+        "bpm_confidence": 1.0,
+        "beat_grid_seconds": [
+          0.534059,
+          1.021678,
+          1.532517,
+          2.043356,
+          2.530975,
+          3.041814,
+          3.529433,
+          4.040272,
+          4.527891,
+          5.03873,
+          5.526349,
+          6.037188,
+          6.524807,
+          7.035646,
+          7.523265,
+          8.034104,
+          8.544943,
+          9.032562,
+          9.543401,
+          10.03102,
+          10.541859,
+          11.029478,
+          11.540317,
+          12.027937,
+          12.538776,
+          13.026395,
+          13.537234,
+          14.024853,
+          14.535692,
+          15.023311,
+          15.53415,
+          16.021769,
+          16.532608,
+          17.020227,
+          17.531066,
+          18.041905,
+          18.529524,
+          19.040363,
+          19.527982,
+          20.038821,
+          20.52644,
+          21.037279,
+          21.524898,
+          22.035737,
+          22.546576,
+          23.034195,
+          23.545034,
+          24.032653,
+          24.543492,
+          25.031111,
+          25.54195,
+          26.029569,
+          26.540408,
+          27.028027,
+          27.538866,
+          28.026485,
+          28.537324,
+          29.024943
+        ],
+        "downbeat_grid_seconds": [
+          0.04644,
+          2.043356,
+          4.040272,
+          6.037188,
+          8.034104,
+          10.03102,
+          12.027937,
+          14.024853,
+          16.021769,
+          18.041905,
+          20.038821,
+          22.035737,
+          24.032653,
+          26.029569,
+          28.026485
+        ],
+        "downbeat_phase_index": 3,
+        "time_signature": "4/4",
+        "time_signature_confidence": 0.713561,
+        "time_signature_source": "librosa_onset_accent",
+        "time_signature_candidates": [
+          {
+            "value": "4/4",
+            "confidence": 0.713561,
+            "phase": 3
+          },
+          {
+            "value": "3/4",
+            "confidence": 0.272022,
+            "phase": 2
+          },
+          {
+            "value": "6/8",
+            "confidence": 0.014417,
+            "phase": 2
+          }
+        ],
+        "key_signature": "Eb minor",
+        "key_confidence": 0.189027,
+        "key_signature_source": "librosa_chroma_krumhansl",
+        "key_candidates": [
+          {
+            "value": "Eb minor",
+            "confidence": 0.189027
+          },
+          {
+            "value": "C minor",
+            "confidence": 0.0
+          },
+          {
+            "value": "A minor",
+            "confidence": 0.0
+          }
+        ],
+        "duration_seconds": 30.0,
+        "elapsed_seconds": 3.030114,
+        "reason_codes": []
+      },
+      "cleanup_recall_delta": 0.0,
+      "human_rating": {
+        "status": "not_evaluated",
+        "rating": null
+      },
+      "musicxml_parse": {
+        "status": "passed"
+      },
+      "parser_validation": {
+        "music21": {
+          "status": "passed"
+        },
+        "osmd": {
+          "status": "passed",
+          "measure_count": 15,
+          "svg_count": 1
+        },
+        "xmllint": {
+          "status": "passed",
+          "error": null
+        }
+      },
+      "reconstruction": {
+        "status": "reconstructed",
+        "version": "music21-10.5.0/beat-grid/meter-key-v1/harmony-v1/e59dc7bc9a81/voicing-v1/82652e2a152b",
+        "fallback_used": false,
+        "error_code": null,
+        "voicing": {
+          "version": "voicing-v1/82652e2a152b",
+          "left_count": 151,
+          "right_count": 85,
+          "unknown_count": 49,
+          "mean_confidence": 0.421703
+        },
+        "chord_count": 90,
+        "voice_count": 110
+      },
+      "structure": {
+        "part_count": 2,
+        "measure_count": 30,
+        "chord_count": 97,
+        "voice_count": 110,
+        "rest_count": 169,
+        "short_rest_count": 0,
+        "measure_duration_error_count": 0,
+        "partial_final_measure_count": 0,
+        "time_signatures": [
+          "4/4"
+        ],
+        "key_signatures": [
+          -6
+        ],
+        "key_signature_status": "detected",
+        "errors": []
+      },
+      "rating": "needs_redo"
+    },
+    {
+      "id": "15-repeated-notes",
+      "description": "Rapid repeated notes",
+      "reference_notes": 118,
+      "raw_estimated_notes": 237,
+      "estimated_notes": 237,
+      "matched_notes": 118,
+      "corrections": 119,
+      "precision": 0.49789,
+      "recall": 1.0,
+      "f1": 0.664789,
+      "overlap": 0.481625,
+      "mean_onset_error_ms": 3.861217,
+      "mean_pitch_error_semitones": 0.0,
+      "raw_metrics": {
+        "status": "evaluated",
+        "reference_note_count": 118,
+        "estimated_note_count": 237,
+        "matched_note_count": 118,
+        "precision": 0.49789,
+        "recall": 1.0,
+        "f1": 0.664789,
+        "overlap": 0.481625,
+        "mean_onset_error_ms": 3.861217,
+        "mean_pitch_error_semitones": 0.0
+      },
+      "cleanup": {
+        "status": "applied",
+        "version": "note-cleanup-v3/b83e55947b32",
+        "config": {
+          "min_confidence": 0.1,
+          "min_duration_seconds": 0.04,
+          "adjacent_same_pitch_gap_seconds": 0.03,
+          "max_note_duration_seconds": 30.0
+        },
+        "source_note_count": 237,
+        "output_note_count": 237,
+        "removed_note_count": 0,
+        "clipped_note_count": 0,
+        "merged_note_count": 0,
+        "reason_counts": {
+          "LOW_CONFIDENCE_REMOVED": 0,
+          "SHORT_NOTE_REMOVED": 0,
+          "DUPLICATE_NOTE_REMOVED": 0,
+          "EXCESSIVE_DURATION_CLIPPED": 0,
+          "NOTE_PRESERVED": 237,
+          "ADJACENT_SAME_PITCH_PRESERVED": 131,
+          "OVERLAPPING_SAME_PITCH_PRESERVED": 0
+        },
+        "fallback_used": false,
+        "error_code": null
+      },
+      "analysis": {
+        "status": "analyzed",
+        "version": "structure-analysis-v2/8d2475ced611",
+        "source": "librosa-0.11.0",
+        "bpm": 117.453835,
+        "bpm_confidence": 0.953922,
+        "beat_grid_seconds": [
+          0.534059,
+          1.021678,
+          1.532517,
+          1.996916,
+          2.507755,
+          3.018594,
+          3.529433,
+          3.993832,
+          4.504671,
+          5.01551,
+          5.526349,
+          6.013968,
+          6.524807,
+          7.035646,
+          7.523265,
+          8.010884,
+          8.521723,
+          9.032562,
+          9.520181,
+          10.0078,
+          10.49542,
+          11.029478,
+          11.517098,
+          12.004717,
+          12.515556,
+          13.026395,
+          13.514014,
+          14.001633,
+          14.512472,
+          15.023311,
+          15.53415,
+          16.021769,
+          16.532608,
+          17.020227,
+          17.531066,
+          17.995465,
+          18.506304,
+          19.017143,
+          19.527982,
+          20.015601,
+          20.52644,
+          21.037279,
+          21.524898,
+          22.012517,
+          22.523356,
+          23.034195,
+          23.521814,
+          24.009433,
+          24.497052,
+          25.031111,
+          25.51873,
+          26.006349,
+          26.517188,
+          27.028027,
+          27.515646,
+          28.003265,
+          28.514104
+        ],
+        "downbeat_grid_seconds": [
+          0.0,
+          1.996916,
+          3.993832,
+          6.013968,
+          8.010884,
+          10.0078,
+          12.004717,
+          14.001633,
+          16.021769,
+          17.995465,
+          20.015601,
+          22.012517,
+          24.009433,
+          26.006349,
+          28.003265
+        ],
+        "downbeat_phase_index": 3,
+        "time_signature": "4/4",
+        "time_signature_confidence": 0.825696,
+        "time_signature_source": "librosa_onset_accent",
+        "time_signature_candidates": [
+          {
+            "value": "4/4",
+            "confidence": 0.825696,
+            "phase": 3
+          },
+          {
+            "value": "6/8",
+            "confidence": 0.174304,
+            "phase": 0
+          },
+          {
+            "value": "3/4",
+            "confidence": 0.0,
+            "phase": 0
+          }
+        ],
+        "key_signature": "G major",
+        "key_confidence": 0.190689,
+        "key_signature_source": "librosa_chroma_krumhansl",
+        "key_candidates": [
+          {
+            "value": "G major",
+            "confidence": 0.190689
+          },
+          {
+            "value": "C major",
+            "confidence": 0.0
+          },
+          {
+            "value": "E minor",
+            "confidence": 0.0
+          }
+        ],
+        "duration_seconds": 30.0,
+        "elapsed_seconds": 3.175374,
+        "reason_codes": []
+      },
+      "cleanup_recall_delta": 0.0,
+      "human_rating": {
+        "status": "not_evaluated",
+        "rating": null
+      },
+      "musicxml_parse": {
+        "status": "passed"
+      },
+      "parser_validation": {
+        "music21": {
+          "status": "passed"
+        },
+        "osmd": {
+          "status": "passed",
+          "measure_count": 15,
+          "svg_count": 1
+        },
+        "xmllint": {
+          "status": "passed",
+          "error": null
+        }
+      },
+      "reconstruction": {
+        "status": "reconstructed",
+        "version": "music21-10.5.0/beat-grid/meter-key-v1/harmony-v1/e59dc7bc9a81/voicing-v1/82652e2a152b",
+        "fallback_used": false,
+        "error_code": null,
+        "voicing": {
+          "version": "voicing-v1/82652e2a152b",
+          "left_count": 133,
+          "right_count": 93,
+          "unknown_count": 11,
+          "mean_confidence": 0.554159
+        },
+        "chord_count": 4,
+        "voice_count": 71
+      },
+      "structure": {
+        "part_count": 2,
+        "measure_count": 30,
+        "chord_count": 4,
+        "voice_count": 71,
+        "rest_count": 147,
+        "short_rest_count": 0,
+        "measure_duration_error_count": 0,
+        "partial_final_measure_count": 0,
+        "time_signatures": [
+          "4/4"
+        ],
+        "key_signatures": [
+          1
+        ],
+        "key_signature_status": "detected",
+        "errors": []
+      },
+      "rating": "needs_redo"
+    },
+    {
+      "id": "16-noisy-polyphony",
+      "description": "Polyphony with background noise",
+      "reference_notes": 120,
+      "raw_estimated_notes": 149,
+      "estimated_notes": 149,
+      "matched_notes": 120,
+      "corrections": 29,
+      "precision": 0.805369,
+      "recall": 1.0,
+      "f1": 0.892193,
+      "overlap": 0.490238,
+      "mean_onset_error_ms": 5.319342,
+      "mean_pitch_error_semitones": 0.0,
+      "raw_metrics": {
+        "status": "evaluated",
+        "reference_note_count": 120,
+        "estimated_note_count": 149,
+        "matched_note_count": 120,
+        "precision": 0.805369,
+        "recall": 1.0,
+        "f1": 0.892193,
+        "overlap": 0.490238,
+        "mean_onset_error_ms": 5.319342,
+        "mean_pitch_error_semitones": 0.0
+      },
+      "cleanup": {
+        "status": "applied",
+        "version": "note-cleanup-v3/b83e55947b32",
+        "config": {
+          "min_confidence": 0.1,
+          "min_duration_seconds": 0.04,
+          "adjacent_same_pitch_gap_seconds": 0.03,
+          "max_note_duration_seconds": 30.0
+        },
+        "source_note_count": 149,
+        "output_note_count": 149,
+        "removed_note_count": 0,
+        "clipped_note_count": 0,
+        "merged_note_count": 0,
+        "reason_counts": {
+          "LOW_CONFIDENCE_REMOVED": 0,
+          "SHORT_NOTE_REMOVED": 0,
+          "DUPLICATE_NOTE_REMOVED": 0,
+          "EXCESSIVE_DURATION_CLIPPED": 0,
+          "NOTE_PRESERVED": 149,
+          "ADJACENT_SAME_PITCH_PRESERVED": 25,
+          "OVERLAPPING_SAME_PITCH_PRESERVED": 0
+        },
+        "fallback_used": false,
+        "error_code": null
+      },
+      "analysis": {
+        "status": "analyzed",
+        "version": "structure-analysis-v2/8d2475ced611",
+        "source": "librosa-0.11.0",
+        "bpm": 117.453835,
+        "bpm_confidence": 1.0,
+        "beat_grid_seconds": [
+          2.043356,
+          2.530975,
+          3.041814,
+          3.529433,
+          4.040272,
+          4.551111,
+          5.03873,
+          5.526349,
+          6.037188,
+          6.548027,
+          7.035646,
+          7.546485,
+          8.034104,
+          8.544943,
+          9.032562,
+          9.543401,
+          10.03102,
+          10.541859,
+          11.029478,
+          11.540317,
+          12.027937,
+          12.538776,
+          13.026395,
+          13.537234,
+          14.024853,
+          14.535692,
+          15.046531,
+          15.53415,
+          16.044989,
+          16.532608,
+          17.043447,
+          17.531066,
+          18.041905,
+          18.552744,
+          19.040363,
+          19.527982,
+          20.038821,
+          20.54966,
+          21.037279,
+          21.548118,
+          22.035737,
+          22.546576,
+          23.034195,
+          23.545034,
+          24.032653,
+          24.543492,
+          25.031111,
+          25.54195,
+          26.029569,
+          26.540408,
+          27.028027,
+          27.538866,
+          28.026485
+        ],
+        "downbeat_grid_seconds": [
+          0.04644,
+          2.043356,
+          4.040272,
+          6.037188,
+          8.034104,
+          10.03102,
+          12.027937,
+          14.024853,
+          16.044989,
+          18.041905,
+          20.038821,
+          22.035737,
+          24.032653,
+          26.029569,
+          28.026485
+        ],
+        "downbeat_phase_index": 0,
+        "time_signature": "4/4",
+        "time_signature_confidence": 0.970988,
+        "time_signature_source": "librosa_onset_accent",
+        "time_signature_candidates": [
+          {
+            "value": "4/4",
+            "confidence": 0.970988,
+            "phase": 0
+          },
+          {
+            "value": "3/4",
+            "confidence": 0.026531,
+            "phase": 0
+          },
+          {
+            "value": "6/8",
+            "confidence": 0.002481,
+            "phase": 0
+          }
+        ],
+        "key_signature": "C major",
+        "key_confidence": 0.215232,
+        "key_signature_source": "librosa_chroma_krumhansl",
+        "key_candidates": [
+          {
+            "value": "C major",
+            "confidence": 0.215232
+          },
+          {
+            "value": "G major",
+            "confidence": 0.0
+          },
+          {
+            "value": "E minor",
+            "confidence": 0.0
+          }
+        ],
+        "duration_seconds": 30.0,
+        "elapsed_seconds": 3.093873,
+        "reason_codes": []
+      },
+      "cleanup_recall_delta": 0.0,
+      "human_rating": {
+        "status": "not_evaluated",
+        "rating": null
+      },
+      "musicxml_parse": {
+        "status": "passed"
+      },
+      "parser_validation": {
+        "music21": {
+          "status": "passed"
+        },
+        "osmd": {
+          "status": "passed",
+          "measure_count": 15,
+          "svg_count": 1
+        },
+        "xmllint": {
+          "status": "passed",
+          "error": null
+        }
+      },
+      "reconstruction": {
+        "status": "reconstructed",
+        "version": "music21-10.5.0/beat-grid/meter-key-v1/harmony-v1/e59dc7bc9a81/voicing-v1/82652e2a152b",
+        "fallback_used": false,
+        "error_code": null,
+        "voicing": {
+          "version": "voicing-v1/82652e2a152b",
+          "left_count": 57,
+          "right_count": 56,
+          "unknown_count": 36,
+          "mean_confidence": 0.351779
+        },
+        "chord_count": 40,
+        "voice_count": 118
+      },
+      "structure": {
+        "part_count": 2,
+        "measure_count": 30,
+        "chord_count": 47,
+        "voice_count": 118,
+        "rest_count": 168,
+        "short_rest_count": 0,
+        "measure_duration_error_count": 0,
+        "partial_final_measure_count": 0,
+        "time_signatures": [
+          "4/4"
+        ],
+        "key_signatures": [
+          0
+        ],
+        "key_signature_status": "detected",
+        "errors": []
+      },
+      "rating": "needs_redo"
+    }
+  ],
+  "evaluation_id": "98d51c3a09363068e57b335eac7a3880f7b9ade4283faec20a845d32739607cf",
+  "comparison": {
+    "status": "not_evaluated",
+    "reason": "CANDIDATE_REPORT_UNAVAILABLE",
+    "baseline_evaluation_id": "98d51c3a09363068e57b335eac7a3880f7b9ade4283faec20a845d32739607cf",
+    "candidate_evaluation_id": null
+  }
+}

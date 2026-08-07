@@ -1,0 +1,5 @@
+ariautils @ https://github.com/EleutherAI/aria-utils/archive/4ed0749d2d70918610f03a5316bf283479ff9d09.tar.gz
+safetensors==0.5.3
+librosa==0.11.0
+tqdm==4.67.1
+orjson==3.10.15

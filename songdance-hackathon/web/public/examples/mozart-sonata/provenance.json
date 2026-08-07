@@ -1,0 +1,45 @@
+{
+  "title": "W.A. Mozart Sonata in C major",
+  "performer": "Varvara Semenchuk",
+  "source_page": "https://commons.wikimedia.org/wiki/File:%D0%92%D0%B0%D1%80%D0%B2%D0%B0%D1%80%D0%B0_%D0%A1%D0%B5%D0%BC%D0%B5%D0%BD%D1%87%D1%83%D0%BA_-_%D0%9C%D0%BE%D1%86%D0%B0%D1%80%D1%82-%D0%A1%D0%BE%D0%BD%D0%B0%D1%82%D0%B0-c-dur-part1.ogv",
+  "license": "Public domain",
+  "license_url": "https://commons.wikimedia.org/wiki/File:%D0%92%D0%B0%D1%80%D0%B2%D0%B0%D1%80%D0%B0_%D0%A1%D0%B5%D0%BC%D0%B5%D0%BD%D1%87%D1%83%D0%BA_-_%D0%9C%D0%BE%D1%86%D0%B0%D1%80%D1%82-%D0%A1%D0%BE%D0%BD%D0%B0%D1%82%D0%B0-c-dur-part1.ogv",
+  "clip_start_sec": 25,
+  "clip_duration_sec": 30,
+  "audio_sha256": "32975b2333e0ca318125335660e21e747e074e0ea28cf83e3ecbd5ce21fc298f",
+  "model_version": "basic-pitch-0.4.0/icassp-2022-onnx/o0.5-f0.3",
+  "postprocess_version": "note-cleanup-v3/b83e55947b32/structure-analysis-v2/8d2475ced611/music21-10.5.0/beat-grid/meter-key-v1/harmony-v1/e59dc7bc9a81/voicing-v1/82652e2a152b",
+  "review_status": "pending",
+  "generated_at": "2026-08-07T04:09:53.321396+00:00",
+  "midi_sha256": "55bb4499ab14ebba4b1c6f3531f5249d4dc55bbc29ed31c21b7fdcabada8f042",
+  "musicxml_sha256": "30a781340b66eab35d85d4f70421a122a5481d4c225bd94c80aeeba05cf015c4",
+  "timeline_sha256": "ebf1a3f3fd07ff9b45d759fd800d144c8cebcb6a625687148cd52ff1cdae9659",
+  "artifacts": {
+    "midi": {
+      "sha256": "55bb4499ab14ebba4b1c6f3531f5249d4dc55bbc29ed31c21b7fdcabada8f042",
+      "size_bytes": 3080
+    },
+    "musicxml": {
+      "sha256": "30a781340b66eab35d85d4f70421a122a5481d4c225bd94c80aeeba05cf015c4",
+      "size_bytes": 160602
+    },
+    "timeline": {
+      "sha256": "ebf1a3f3fd07ff9b45d759fd800d144c8cebcb6a625687148cd52ff1cdae9659",
+      "size_bytes": 53809
+    }
+  },
+  "parser_validation": {
+    "music21": {
+      "status": "passed"
+    },
+    "xmllint": {
+      "status": "passed",
+      "error": null
+    },
+    "osmd": {
+      "status": "passed",
+      "measure_count": 18,
+      "svg_count": 1
+    }
+  }
+}

@@ -1,0 +1,27 @@
+{
+  "schema_version": 1,
+  "suite_type": "real_piano_human_quality_gate",
+  "product_quality_gate": true,
+  "duration_seconds": 30,
+  "sample_rate": 22050,
+  "source_collection": "Wikimedia Commons: Audio files from Chestnut piano competition",
+  "source_category_url": "https://commons.wikimedia.org/wiki/Category:Audio_files_from_Chestnut_piano_competition",
+  "authorization": {
+    "metadata_provider": "Wikimedia Commons API",
+    "allowed_licenses": ["Public domain", "CC BY-SA 3.0"],
+    "license_is_verified_before_download": true,
+    "full_source_is_not_retained": true
+  },
+  "cases": [
+    {"id": "01-bach-capriccio", "source_title": "File:J.S.Bach-kapricio c-moll.ogv", "start_sec": 20, "coverage": ["polyphony", "fast_passages"]},
+    {"id": "02-brahms-intermezzo", "source_title": "File:Анна Михайловська - Брамс-Інтермеццо-A-dur.ogv", "start_sec": 35, "coverage": ["soft", "sustain"]},
+    {"id": "03-mozart-sonata", "source_title": "File:Варвара Семенчук - Моцарт-Соната-c-dur-part1.ogv", "start_sec": 25, "coverage": ["scales", "dynamics"]},
+    {"id": "04-rachmaninoff-g-sharp", "source_title": "File:Варвара Семенчук - Рахманінов-прелюдія-gis-moll.ogv", "start_sec": 30, "coverage": ["chords", "sustain"]},
+    {"id": "05-chopin-c-minor", "source_title": "File:Гліб Козирєв - Шопен-Прелюдія-c-moll.ogv", "start_sec": 12, "coverage": ["chords", "strong"]},
+    {"id": "06-scriabin-etude", "source_title": "File:Константин Мамонтов - Скрябін-етюд-dis-moll-op8.ogv", "start_sec": 25, "coverage": ["fast_passages", "two_hand"]},
+    {"id": "07-chopin-ballade", "source_title": "File:Константин Мамонтов - Шопен-балада №1.ogv", "start_sec": 80, "coverage": ["dynamics", "two_hand"]},
+    {"id": "08-chopin-a-major", "source_title": "File:Михайло Калошин - Шопен-прелюдія-ля-мажор.ogv", "start_sec": 10, "coverage": ["slow_melody", "soft"]},
+    {"id": "09-chopin-waltz", "source_title": "File:Олег Дерев’янко - Шопен-вальс-As-dur.ogv", "start_sec": 25, "coverage": ["accompaniment", "tempo"]},
+    {"id": "10-rachmaninoff-c-sharp", "source_title": "File:Олександр Немеш - Рахманінов-прелюдія-cis-moll.ogv", "start_sec": 35, "coverage": ["room_noise", "wide_register"]}
+  ]
+}

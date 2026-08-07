@@ -92,6 +92,15 @@ def test_modelscope_proxy_does_not_trust_inbound_forwarded_for() -> None:
     assert nginx.count("proxy_set_header X-Forwarded-For $remote_addr;") == 2
 
 
+def test_modelscope_proxy_allows_only_modelscope_embedding() -> None:
+    nginx = (PROJECT_ROOT / "deploy/nginx.conf").read_text(encoding="utf-8")
+
+    assert "X-Frame-Options" not in nginx
+    assert (
+        "frame-ancestors 'self' https://modelscope.cn https://*.modelscope.cn" in nginx
+    )
+
+
 def test_modelscope_healthcheck_uses_dependency_readiness() -> None:
     nginx = (PROJECT_ROOT / "deploy/nginx.conf").read_text(encoding="utf-8")
 

@@ -18,7 +18,7 @@ if [ -z "${SONGDANCE_DOWNLOAD_SIGNING_SECRET:-}" ]; then
 fi
 
 export SONGDANCE_ENVIRONMENT="${SONGDANCE_ENVIRONMENT:-production}"
-export SONGDANCE_CORS_ORIGINS="${SONGDANCE_CORS_ORIGINS:-https://modelscope.cn}"
+export SONGDANCE_CORS_ORIGINS="${SONGDANCE_CORS_ORIGINS:-https://modelscope.cn,https://haoyue11-songdance-hackathon.ms.show}"
 export SONGDANCE_DATABASE_URL="${SONGDANCE_DATABASE_URL:-sqlite:////mnt/workspace/songdance/songdance.db}"
 export SONGDANCE_REDIS_URL="${SONGDANCE_REDIS_URL:-redis://127.0.0.1:6379/0}"
 export SONGDANCE_STORAGE_BACKEND="${SONGDANCE_STORAGE_BACKEND:-local}"

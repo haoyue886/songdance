@@ -85,6 +85,15 @@ def test_modelscope_container_provides_writable_numba_cache() -> None:
     assert "chown -R songdance:songdance" in dockerfile
 
 
+def test_modelscope_runtime_allows_public_app_origin() -> None:
+    start_script = (PROJECT_ROOT / "deploy/start-modelscope.sh").read_text(
+        encoding="utf-8"
+    )
+
+    assert "https://modelscope.cn" in start_script
+    assert "https://haoyue11-songdance-hackathon.ms.show" in start_script
+
+
 def test_modelscope_proxy_does_not_trust_inbound_forwarded_for() -> None:
     nginx = (PROJECT_ROOT / "deploy/nginx.conf").read_text(encoding="utf-8")
 

@@ -23,7 +23,7 @@
 | Phase 13 | 已完成 | 音符清洗 v3；自动召回差值 0.0；人工门禁 7/10；代码审查 Stage 1/2 PASS |
 | Phase 14 | 已完成 | 结构分析 v2；16 段回归门禁通过；代码审查 Stage 1/2 PASS |
 | Phase 15 | 已完成 | 和弦、多声部与左右手谱面重建；结构与解析门禁 16/16，人工可读 13/16，代码审查 Stage 1/2 PASS |
-| Phase 16 | 下一步 | 五线谱质量展示、产物版本和结果页降级 |
+| Phase 16 | 已完成 | 五线谱质量展示、产物版本、结果页降级与 OSMD 小节交互；代码审查 Stage 1/2 PASS |
 | Phase 17 | 计划中 | 多乐器领域模型、乐器选择与向后兼容 API |
 | Phase 18 | 计划中 | 贝斯、弦乐、管乐和人声旋律单音家族 |
 | Phase 19 | 计划中 | 吉他复音转录与标准记谱 |
@@ -555,15 +555,19 @@ Phase 9 基线
 - 区分“清洗后预览”“原始 MIDI 下载”和“排版假设”，不把默认 4/4 或中央 C 分手显示为识别结论。
 - MusicXML/PDF 失败时保持 MIDI、原始时间线和钢琴卷帘可用；成功时标明产物版本。
 - 增加质量摘要空态、低置信度警告、结构校验失败、产物部分成功和移动端布局。
+- 基于 OSMD 公开 Cursor、GraphicSheet 和坐标转换 API 增加当前小节高亮、点击小节定位及上一/下一小节控制，不依赖渲染器内部 CSS class。
 
 **关键文件：**
 
 - `songdance/web/src/components/result/result-workspace.tsx` — 质量摘要和产物版本展示。
 - `songdance/web/src/components/result/score-viewer.tsx` — MusicXML 错误和质量警告。
+- `songdance/web/src/components/result/score-viewer.test.tsx` — 小节高亮、点击定位、导航边界和映射降级测试。
 - `songdance/web/src/components/result/artifact-downloads.tsx` — raw/clean 产物状态。
 - `songdance/web/src/lib/api/jobs.ts` — 质量摘要类型和 API 客户端。
+- `songdance/web/src/lib/result/timeline.ts` — 保留结构分析节拍与下拍网格，提供乐谱时间换算输入。
 - `songdance/web/src/app/jobs/[jobId]/result-client.tsx` — 结果数据装配与降级。
 - `songdance/web/e2e/quality-result.spec.ts` — 质量摘要、部分失败和窄屏 E2E。
+- `songdance/web/e2e/result.spec.ts` — 真实 MusicXML 小节点击、高亮、前后导航和播放同步 E2E。
 
 **验收标准：**
 
@@ -571,13 +575,17 @@ Phase 9 基线
 - MusicXML 失败时 MIDI、钢琴卷帘和原始音频播放仍可用。
 - 375 px 下质量摘要不造成页面横向滚动，核心播放和下载仍可用。
 - E2E 覆盖高质量、低置信度、MusicXML 失败和清洗回退四种状态。
+- 播放或拖动跨越小节边界时 OSMD 高亮对应小节；点击小节及上一/下一控制定位到共享时间线中的小节起点，首尾边界正确禁用。
+- 小节映射不可用时控制禁用且不影响五线谱、播放和下载；375 px 下导航无页面级横向滚动。
 
 **完成记录：**
 
 - 结果页已接入持久化质量报告，显示原始/清洗音符、清洗动作、BPM/拍号/调性置信度、平均音符置信度及模型/后处理/报告/时间线版本；旧任务或异常报告降级为明确空态。
 - 清洗回退会真实读取 `raw_timeline`，并禁用不一致的五线谱、MusicXML 和 PDF；MusicXML 单独失败时钢琴卷帘、原始/清洗 MIDI 与原音保持可用。
 - 高质量、低置信度、MusicXML 失败、清洗回退四类 E2E 全部通过，375 px 无横向滚动；真实转录、播放、MIDI/MusicXML/PDF 导出主流程通过。
-- Web `21 files / 79 tests`、lint、typecheck、生产构建通过；代码审查 Stage 1/2 PASS，`0 HIGH / 0 MEDIUM / 0 LOW`。
+- OSMD 已接入 CurrentArea 当前小节高亮、共享时间线同步、点击小节定位、前后小节导航和首尾禁用；映射不可用时保留乐谱、播放和下载，导航明确降级。
+- Web `21 files / 85 tests`、lint、typecheck、生产构建和 Playwright `14/14` 通过；真实 Cursor 位移、小节点击、合法 MusicXML 映射降级及 375 px 布局均有浏览器级证据。
+- 代码审查 Stage 1/2 PASS，`0 HIGH / 0 MEDIUM / 0 LOW`。
 
 ---
 

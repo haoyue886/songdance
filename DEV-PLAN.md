@@ -30,6 +30,7 @@
 | Phase 20 | 计划中 | 鼓转录、General MIDI 与打击乐谱 |
 | Phase 21 | 计划中 | 完整混音分轨与直接多乐器 AMT 技术门禁 |
 | Phase 22 | 计划中 | 多轨结果工作台、部分成功与生命周期 |
+| Phase 23 | 已完成 | 固定乐谱工作台、精准谱面定位、跨系统区间选择与共享播放边界；代码审查 Stage 1/2 PASS |
 
 ## 功能依赖图
 
@@ -589,6 +590,55 @@ Phase 9 基线
 
 ---
 
+## Phase 23：固定乐谱工作台、谱面区间选择与播放同步
+
+**目标：** 借鉴 Pianofi 的固定播放器与高亮跟随、Songscription 截图体现的谱面区间选择，将结果页从页面滚动式预览改为固定高度的可操作乐谱工作台，不更换 OSMD 渲染器、不破坏原音与 MIDI 的共享播放时间线。
+
+**交付内容：**
+
+- 增加可版本兼容的乐谱时间映射：优先使用 MusicXML/OSMD 的乐谱时间与现有 beat/downbeat 网格映射到真实秒数；旧任务或映射不一致时明确禁用谱面定位和选区。
+- 重构 OSMD 交互：关闭 `followCursor` 自动滚动，使用公开 `GraphicSheet`、`GraphicalMeasure.PositionAndShape`、`tryGetTimeStampFromPosition` 和 `Drawer.calculatePixelDistance` 实现当前小节高亮、点击定位、拖动区间选择、SVG 选区遮罩及用户主动定位。
+- 将结果中央预览改为固定高度工作区：播放器固定在工作区顶部，谱面在独立 `overflow` 容器内滚动，375 px 下无页面级横向滚动。
+- 扩展播放状态以支持选区边界：原音和转录演奏共享选区起止；一次播放到终点停止，循环开启时回到选区起点；清除选区后恢复整曲播放。
+
+**关键文件：**
+
+- `songdance/web/src/components/result/result-workspace.tsx` — 固定高度工作区、播放器与谱面容器布局。
+- `songdance/web/src/components/result/score-viewer.tsx` — OSMD 光标、点击/拖动选区、公开几何 API 绘制覆盖层和主动定位。
+- `songdance/web/src/components/result/transport.tsx` — 固定播放器、选区摘要、清除选区与循环状态。
+- `songdance/web/src/hooks/use-result-playback.ts` — 选区播放边界、停止/循环和共享播放头。
+- `songdance/web/src/lib/result/score-time-map.ts` — 乐谱时间、beat/downbeat 和秒数映射及降级判断。
+- `songdance/web/src/lib/result/timeline.ts` — 可选映射字段解析和旧任务兼容。
+- `songdance/web/src/components/result/score-viewer.test.tsx` — 点击、拖动、跨系统覆盖层与禁止自动滚动测试。
+- `songdance/web/src/hooks/use-result-playback.test.tsx` — 选区播放、终点停止、循环和双播放源一致性测试。
+- `songdance/web/e2e/phase7.spec.ts` — 真实 MusicXML 点击定位、区间选择、播放器固定和窄屏回归。
+
+**验收标准：**
+
+- 播放跨越至少 3 个小节时，页面 `window.scrollY` 和谱面 `scrollTop` 都不自动变化；当前小节高亮正确切换。
+- 点击谱面可映射位置后，原音、转录演奏和钢琴卷帘定位到同一秒数；播放中继续、暂停时不自动播放。
+- 拖动选区跨越同一行和多行谱面时，选区边界、选区外淡化和起止秒数一致。
+- 选区播放从起点开始，在终点停止；循环开启时只在选区内循环；清除后整曲播放恢复。
+- 播放器在谱面内部滚动前后位置不变；仅用户点击主动定位后才滚动谱面内部容器。
+- 375 px 与桌面视口均无页面级横向滚动，播放器控件有可访问名称且不被谱面内容遮挡。
+- MusicXML/时间映射失败时，五线谱、播放和下载仍可用，谱面定位与区间选择被禁用并给出明确状态。
+- Web 单测、lint、typecheck、生产构建和 Playwright 核心流程全部通过，代码审查 Stage 1/2 PASS。
+
+**依赖与风险：**
+
+- 依赖 Phase 14 的 beat/downbeat 网格、Phase 15 的 MusicXML 重建和 Phase 16 的 OSMD 公共 API 接入。
+- 不依赖新数据库表；时间线字段向后兼容，旧任务无法建立映射时降级。
+- OSMD 的坐标与渲染缩放、跨系统矩形覆盖层和触摸拖动是主要风险，必须用真实 MusicXML E2E 验证，不以 mock 坐标测试代替。
+
+**完成记录（2026-08-09）：**
+
+- OSMD 已关闭自动滚动跟随；播放器固定在谱面工作区顶部，谱面使用独立 520 px 滚动视口，只有用户主动点击定位按钮才滚动谱面。
+- 点击与拖选使用 OSMD 乐谱时间戳；OSMD 小节时间与 downbeat 网格缺失、数量不一致或超出容差时，定位和选区明确禁用，五线谱、播放与下载保持可用。
+- 跨系统选区按 `PositionAndShape` 和 Drawer 公共像素换算生成独立 SVG 遮罩；原音与 MIDI 共享选区起止，非循环在终点停止，循环回到选区起点。
+- Web `24 files / 103 tests`、Playwright `14/14`、lint、typecheck、生产构建通过；代码审查 Stage 1/2 PASS，`0 HIGH / 0 MEDIUM / 0 LOW`。
+
+---
+
 ## Phase 17：多乐器领域模型、乐器选择与兼容 API
 
 **目标：** 在不破坏现有钢琴任务和下载接口的前提下，把单结果钢琴管线升级为按乐器配置、可容纳多轨的稳定领域模型。
@@ -760,7 +810,7 @@ Phase 9 基线
 
 ---
 
-## Phase 11–22 需求追踪
+## Phase 11–23 需求追踪
 
 | Product Spec | 开发阶段 | 必须交付的证据 |
 |---|---|---|
@@ -772,6 +822,7 @@ Phase 9 基线
 | AC-026 分层失败与可用产物 | Phase 11、16 | API 部分成功状态和四种结果页 E2E |
 | AC-027 可重复性 | Phase 11–15 | 相同版本/配置双跑摘要一致性报告 |
 | AC-028 专用钢琴模型选择门禁 | Phase 12 | 同集 A/B、人工盲评、运行预算、许可与回退报告 |
+| AC-045–AC-051 结果页谱面定位、选区播放与固定工作台 | Phase 23 | 真实 MusicXML 交互 E2E、播放边界测试、页面/谱面滚动位置证据 |
 | AC-029–AC-030 乐器选择与安全路由 | Phase 17 | Profile 注册表、API 白名单、未知模型拒绝和旧任务兼容 |
 | AC-031–AC-032 移调乐器与单音谱面 | Phase 18 | 响音/记谱音高测试、单行谱表和无左右手 UI |
 | AC-033 吉他标准记谱 | Phase 19 | 复音固定集、八度一致性和无 TAB/Guitar Pro 边界 |
@@ -788,7 +839,7 @@ Phase 9 基线
 | SCOPE-021 鼓转录 | Phase 20 | 鼓事件、GM MIDI、鼓件 lane 和打击乐谱 |
 | SCOPE-022 完整混音多轨 | Phase 21–22 | 分轨/直接 AMT 门禁、多轨 UI、部分成功和删除 |
 
-**交接顺序：** 后续开发 Agent 先完成 Phase 9 和 Phase 11–16 的钢琴质量闭环，再严格按 Phase 17 → 18 → 19 → 20 → 21 → 22 推进多乐器。每个乐器过门禁后才能在选择器中启用；不得为了等完整混音而阻塞已通过的单乐器能力。每个 Phase 单独提交，不允许把模型切换、数据库迁移、谱面算法和 UI 改动混进一个不可归因的提交。
+**交接顺序：** 后续开发 Agent 先完成 Phase 9 和 Phase 11–16 的钢琴质量闭环，再完成结果工作台 Phase 23，之后严格按 Phase 17 → 18 → 19 → 20 → 21 → 22 推进多乐器。每个乐器过门禁后才能在选择器中启用；不得为了等完整混音而阻塞已通过的单乐器能力。每个 Phase 单独提交，不允许把模型切换、数据库迁移、谱面算法和 UI 改动混进一个不可归因的提交。
 
 **停止条件：** 任一候选算法未达到对应乐器数值门槛、结构严重错误增加、固定集人工评级下降、许可不明确、超出资源预算，或破坏旧钢琴任务/下载 API，即停止该乐器晋级并保留上一版本。一个乐器失败只阻塞该乐器；完整混音失败不回滚已上线单乐器能力。生产默认值只能来自固定回归报告，不得凭示例页截图调整。
 

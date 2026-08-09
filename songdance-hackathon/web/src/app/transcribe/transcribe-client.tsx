@@ -90,7 +90,7 @@ export function TranscribeClient() {
         <ModeTab active={inputMode === "upload"} icon={<Upload size={16} />}
           label="本地上传" onClick={() => setInputMode("upload")} />
         <ModeTab active={inputMode === "youtube"} icon={<Video size={16} />}
-          label="YouTube" onClick={() => setInputMode("youtube")} />
+          label="抖音" onClick={() => setInputMode("youtube")} />
       </div>
       {inputMode === "youtube" ? (
         <YoutubeInput onUseUpload={() => setInputMode("upload")} />

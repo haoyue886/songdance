@@ -118,10 +118,10 @@ describe("transcription draft", () => {
     const user = userEvent.setup();
     render(<TranscribeClient />);
 
-    await user.click(screen.getByRole("tab", { name: "YouTube" }));
-    await screen.findByLabelText("YouTube 视频链接");
+    await user.click(screen.getByRole("tab", { name: "抖音" }));
+    await screen.findByLabelText("抖音视频链接");
     await user.type(
-      screen.getByLabelText("YouTube 视频链接"),
+      screen.getByLabelText("抖音视频链接"),
       "https://youtu.be/dQw4w9WgXcQ",
     );
     await user.clear(screen.getByLabelText("开始秒数"));
@@ -142,13 +142,27 @@ describe("transcription draft", () => {
     expect(mocks.push).toHaveBeenCalledWith("/jobs/youtube-job-id");
   });
 
+  it("keeps the import failure copy platform-neutral", async () => {
+    mocks.createYoutubeJob.mockRejectedValueOnce(new Error("YouTube 链接格式无效"));
+    const user = userEvent.setup();
+    render(<TranscribeClient />);
+
+    await user.click(screen.getByRole("tab", { name: "抖音" }));
+    await user.type(screen.getByLabelText("抖音视频链接"), "https://youtu.be/dQw4w9WgXcQ");
+    await user.click(screen.getByRole("checkbox"));
+    await user.click(screen.getByRole("button", { name: "导入并创建转录任务" }));
+
+    expect(await screen.findByRole("alert")).toHaveTextContent("抖音导入失败，请改用本地上传。");
+    expect(screen.queryByText("YouTube 链接格式无效")).not.toBeInTheDocument();
+  });
+
   it("keeps local upload available when YouTube is disabled", async () => {
     mocks.getYoutubeConfig.mockResolvedValue({ enabled: false });
     const user = userEvent.setup();
     render(<TranscribeClient />);
 
-    await user.click(screen.getByRole("tab", { name: "YouTube" }));
-    expect(await screen.findByText("YouTube 导入当前未开放")).toBeInTheDocument();
+    await user.click(screen.getByRole("tab", { name: "抖音" }));
+    expect(await screen.findByText("抖音导入当前未开放")).toBeInTheDocument();
     await user.click(screen.getByRole("button", { name: "改用本地上传" }));
     expect(screen.getByLabelText("选择钢琴音频")).toBeInTheDocument();
   });

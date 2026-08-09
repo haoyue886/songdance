@@ -10,8 +10,8 @@ const infrastructureExpect = expect.configure({ timeout: infrastructureTimeout }
 
 test("keeps local upload available when the YouTube flag is off", async ({ page }) => {
   await page.goto("/transcribe");
-  await page.getByRole("tab", { name: "YouTube" }).click();
-  await expect(page.getByText("YouTube 导入当前未开放")).toBeVisible();
+  await page.getByRole("tab", { name: "抖音" }).click();
+  await expect(page.getByText("抖音导入当前未开放")).toBeVisible();
   await page.getByRole("button", { name: "改用本地上传" }).click();
   await expect(page.getByLabel("选择钢琴音频")).toBeVisible();
 });

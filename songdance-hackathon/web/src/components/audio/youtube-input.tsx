@@ -38,8 +38,8 @@ export function YoutubeInput({ onUseUpload }: { onUseUpload: () => void }) {
     try {
       const job = await createYoutubeJob({ url, startSec, endSec, rightsConfirmed });
       router.push(`/jobs/${job.id}`);
-    } catch (caught) {
-      setError(caught instanceof Error ? caught.message : "YouTube 导入失败，请改用本地上传。");
+    } catch {
+      setError("抖音导入失败，请改用本地上传。");
     } finally {
       setSubmitting(false);
     }
@@ -47,13 +47,13 @@ export function YoutubeInput({ onUseUpload }: { onUseUpload: () => void }) {
 
   if (availability === "checking") {
     return <p role="status" className="rounded-lg border border-[#d9e3dd] bg-white p-5 text-[#52635f]">
-      正在检查 YouTube 导入能力…
+      正在检查抖音导入能力…
     </p>;
   }
   if (availability === "disabled") {
     return (
       <div className="rounded-lg border border-[#d9e3dd] bg-white p-5">
-        <p className="font-bold text-[#15332f]">YouTube 导入当前未开放</p>
+        <p className="font-bold text-[#15332f]">抖音导入当前未开放</p>
         <p className="mt-2 text-sm leading-6 text-[#61716c]">
           本地上传不受影响。下载能力不可用时不会尝试绕过平台限制。
         </p>
@@ -70,9 +70,9 @@ export function YoutubeInput({ onUseUpload }: { onUseUpload: () => void }) {
   return (
     <div className="grid gap-5">
       <label className="grid gap-2 text-sm font-bold text-[#15332f]">
-        YouTube 视频链接
+        抖音视频链接
         <input type="url" value={url} onChange={(event) => setUrl(event.currentTarget.value)}
-          placeholder="https://www.youtube.com/watch?v=…" autoComplete="url"
+          placeholder="请输入视频链接" autoComplete="url"
           className="h-12 rounded-md border border-[#c8d8d2] bg-white px-4 font-normal outline-none focus:border-[#147d70]" />
       </label>
       <div className="grid gap-4 sm:grid-cols-2">

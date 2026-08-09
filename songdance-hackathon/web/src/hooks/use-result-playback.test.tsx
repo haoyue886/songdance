@@ -1,5 +1,5 @@
 import { act, renderHook } from "@testing-library/react";
-import { beforeEach, describe, expect, it, vi } from "vitest";
+import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import type { NoteTimeline } from "@/lib/result/timeline";
 import { useResultPlayback } from "./use-result-playback";
 
@@ -53,6 +53,8 @@ describe("result playback", () => {
     mocks.instances = [];
   });
 
+  afterEach(() => vi.useRealTimers());
+
   it("applies transpose, speed and loop bounds to real MIDI scheduling", async () => {
     const { result } = renderHook(() => useResultPlayback(timeline));
 
@@ -81,6 +83,62 @@ describe("result playback", () => {
     expect(result.current.error).toBe("钢琴采样加载失败，当前使用基础合成音。");
   });
 
+  it("starts and schedules MIDI within a selected score range", async () => {
+    const { result } = renderHook(() => useResultPlayback({
+      ...timeline,
+      notes: [{ ...timeline.notes[0], end_sec: 8 }],
+    }));
+
+    act(() => result.current.setSelection(2, 4));
+    act(() => result.current.seek(3));
+    await act(async () => result.current.play());
+
+    expect(result.current.selection).toEqual({ start: 2, end: 4 });
+    expect(mocks.play).toHaveBeenCalledWith(expect.any(Array), 2, 4, 1);
+    act(() => result.current.clearSelection());
+    expect(result.current.selection).toBeNull();
+  });
+
+  it("starts source audio at the selection and stops at its end when loop is off", async () => {
+    vi.useFakeTimers();
+    const audio = fakeAudio();
+    const { result } = renderHook(() => useResultPlayback({
+      ...timeline,
+      notes: [{ ...timeline.notes[0], end_sec: 8 }],
+    }));
+    Object.defineProperty(result.current.audioRef, "current", { configurable: true, value: audio });
+    act(() => result.current.setMode("source"));
+    act(() => result.current.setSelection(2, 4));
+    await act(async () => result.current.play());
+    expect(audio.currentTime).toBe(2);
+    expect(audio.play).toHaveBeenCalledOnce();
+
+    audio.currentTime = 4.01;
+    await act(async () => vi.advanceTimersByTime(60));
+    expect(audio.pause).toHaveBeenCalled();
+    expect(result.current.playing).toBe(false);
+    expect(result.current.currentTime).toBe(4);
+  });
+
+  it("loops source audio back to the selection start when loop is on", async () => {
+    vi.useFakeTimers();
+    const audio = fakeAudio();
+    const { result } = renderHook(() => useResultPlayback({
+      ...timeline,
+      notes: [{ ...timeline.notes[0], end_sec: 8 }],
+    }));
+    Object.defineProperty(result.current.audioRef, "current", { configurable: true, value: audio });
+    act(() => result.current.setMode("source"));
+    act(() => result.current.setSelection(2, 4));
+    act(() => result.current.setLoopEnabled(true));
+    await act(async () => result.current.play());
+    audio.currentTime = 4.01;
+    await act(async () => vi.advanceTimersByTime(60));
+    expect(audio.currentTime).toBe(2);
+    expect(audio.play).toHaveBeenCalledTimes(2);
+    expect(result.current.playing).toBe(true);
+  });
+
   it("recreates the MIDI player after the Strict Mode effect rehearsal", async () => {
     const { result, unmount } = renderHook(() => useResultPlayback(timeline), {
       reactStrictMode: true,
@@ -98,3 +156,12 @@ describe("result playback", () => {
     expect(mocks.dispose).toHaveBeenCalledTimes(2);
   });
 });
+
+function fakeAudio() {
+  return {
+    currentTime: 0,
+    playbackRate: 1,
+    play: vi.fn().mockResolvedValue(undefined),
+    pause: vi.fn(),
+  } as unknown as HTMLAudioElement & { play: ReturnType<typeof vi.fn>; pause: ReturnType<typeof vi.fn> };
+}

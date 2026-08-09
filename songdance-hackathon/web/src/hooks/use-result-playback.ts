@@ -14,6 +14,7 @@ export function useResultPlayback(timeline: NoteTimeline) {
   const timelineRef = useRef(timeline);
   const currentRef = useRef(0);
   const playingRef = useRef(false);
+  const selectionRef = useRef<{ start: number; end: number } | null>(null);
   const anchorRef = useRef({ wallTime: 0, timelineTime: 0 });
   const configRef = useRef({
     mode: "midi" as PlaybackMode,
@@ -32,6 +33,7 @@ export function useResultPlayback(timeline: NoteTimeline) {
   const [loopEnd, setLoopEnd] = useState(duration);
   const [transpose, setTranspose] = useState(0);
   const [error, setError] = useState<string | null>(null);
+  const [selection, setSelectionState] = useState<{ start: number; end: number } | null>(null);
 
   useEffect(() => {
     const midi = new TimelineMidiPlayer();
@@ -62,6 +64,24 @@ export function useResultPlayback(timeline: NoteTimeline) {
     setCurrentTimeState(value);
   }, []);
 
+  const setSelection = useCallback((start: number, end: number) => {
+    const nextStart = Math.max(0, Math.min(start, duration - 0.1));
+    const nextEnd = Math.min(duration, Math.max(end, nextStart + 0.1));
+    const next = { start: nextStart, end: nextEnd };
+    selectionRef.current = next;
+    setSelectionState(next);
+    setLoopStart(nextStart);
+    setLoopEnd(nextEnd);
+    setCurrentTime(nextStart);
+  }, [duration, setCurrentTime]);
+
+  const clearSelection = useCallback(() => {
+    selectionRef.current = null;
+    setSelectionState(null);
+    setLoopStart(0);
+    setLoopEnd(duration);
+  }, [duration]);
+
   const stopEngines = useCallback(() => {
     audioRef.current?.pause();
     midiRef.current?.stop();
@@ -70,8 +90,9 @@ export function useResultPlayback(timeline: NoteTimeline) {
   const startAt = useCallback(
     async (at: number) => {
       const config = configRef.current;
-      const boundary = config.loopEnabled ? config.loopEnd : duration;
-      const startBoundary = config.loopEnabled ? config.loopStart : 0;
+      const selectionState = selectionRef.current;
+      const startBoundary = selectionState?.start ?? (config.loopEnabled ? config.loopStart : 0);
+      const boundary = selectionState?.end ?? (config.loopEnabled ? config.loopEnd : duration);
       const next = Math.max(startBoundary, Math.min(at, boundary));
       stopEngines();
       setError(null);
@@ -130,7 +151,7 @@ export function useResultPlayback(timeline: NoteTimeline) {
 
   useEffect(() => {
     if (playingRef.current) void startAt(currentRef.current);
-  }, [loopEnabled, loopEnd, loopStart, mode, rate, startAt, transpose]);
+  }, [loopEnabled, loopEnd, loopStart, mode, rate, selection, startAt, transpose]);
 
   useEffect(() => {
     if (!playing) return;
@@ -141,12 +162,13 @@ export function useResultPlayback(timeline: NoteTimeline) {
           ? audioRef.current.currentTime
           : anchorRef.current.timelineTime +
             ((performance.now() - anchorRef.current.wallTime) / 1000) * config.rate;
-      const boundary = config.loopEnabled ? config.loopEnd : duration;
+      const selectionState = selectionRef.current;
+      const boundary = selectionState?.end ?? (config.loopEnabled ? config.loopEnd : duration);
       if (value >= boundary - 0.02) {
-        if (config.loopEnabled) void startAt(config.loopStart);
+        if (config.loopEnabled) void startAt(selectionState?.start ?? config.loopStart);
         else {
           stopEngines();
-          setCurrentTime(duration);
+          setCurrentTime(boundary);
           setPlaying(false);
         }
       } else {
@@ -162,7 +184,11 @@ export function useResultPlayback(timeline: NoteTimeline) {
     mode,
     setMode,
     playing,
-    play: () => startAt(currentRef.current >= duration ? 0 : currentRef.current),
+    play: () => {
+      const selected = selectionRef.current;
+      const start = selected?.start ?? (currentRef.current >= duration ? 0 : currentRef.current);
+      return startAt(start);
+    },
     pause,
     currentTime,
     seek,
@@ -178,5 +204,8 @@ export function useResultPlayback(timeline: NoteTimeline) {
     transpose,
     setTranspose,
     error,
+    selection,
+    setSelection,
+    clearSelection,
   };
 }

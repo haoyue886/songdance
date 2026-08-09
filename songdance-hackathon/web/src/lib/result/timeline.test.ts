@@ -5,6 +5,8 @@ const valid = {
   schema_version: 1,
   model_version: "test-model",
   tempo_bpm: 120,
+  beat_grid_seconds: [0, 0.5, 1],
+  downbeat_grid_seconds: [0],
   time_signature: "4/4",
   quality_flags: [],
   notes: [
@@ -36,6 +38,8 @@ describe("result timeline", () => {
     expect(timeline.notes).toHaveLength(2);
     expect(timeline.notes[0].hand_confidence).toBe(0.82);
     expect(timeline.notes[1].hand_confidence).toBeNull();
+    expect(timeline.beat_grid_seconds).toEqual([0, 0.5, 1]);
+    expect(timeline.downbeat_grid_seconds).toEqual([0]);
     expect(timelineDuration(timeline)).toBe(2.25);
   });
 
@@ -55,6 +59,8 @@ describe("result timeline", () => {
     { ...valid, notes: [{ ...valid.notes[0], end_sec: 0 }] },
     { ...valid, notes: [{ ...valid.notes[0], start_sec: -0.251 }] },
     { ...valid, notes: [{ ...valid.notes[0], hand_confidence: 1.1 }] },
+    { ...valid, beat_grid_seconds: [0, -1] },
+    { ...valid, downbeat_grid_seconds: "0" },
   ])("rejects malformed or empty artifact data", (input) => {
     expect(() => parseTimeline(input)).toThrow();
   });

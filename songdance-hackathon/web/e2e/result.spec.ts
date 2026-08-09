@@ -29,9 +29,21 @@ test("renders, plays and exports a real completed transcription", async ({ page 
   await infrastructureExpect
     .poll(async () => Number(await page.locator('[aria-label="MusicXML 五线谱"] svg').getAttribute("width")))
     .toBeGreaterThan(0);
-  const scoreProgress = page.getByRole("progressbar", { name: "五线谱播放位置" });
-  await infrastructureExpect(scoreProgress).toHaveAttribute("aria-valuenow", "0");
   const position = page.getByRole("slider", { name: "播放位置", exact: true });
+  const previousMeasure = page.getByRole("button", { name: "上一小节" });
+  const nextMeasure = page.getByRole("button", { name: "下一小节" });
+  const mappingUnavailable = page.getByText("小节定位不可用");
+  if (await mappingUnavailable.isVisible()) {
+    await expect(previousMeasure).toBeDisabled();
+    await expect(nextMeasure).toBeDisabled();
+  } else {
+    await expect(page.getByText(/第 1 \/ \d+ 小节/)).toBeVisible();
+    await expect(previousMeasure).toBeDisabled();
+    if (await page.getByText("第 1 / 1 小节").isVisible()) await expect(nextMeasure).toBeDisabled();
+  }
+  const scoreProgress = page.getByRole("progressbar", { name: "五线谱播放位置" });
+  await position.press("Home");
+  await infrastructureExpect(scoreProgress).toHaveAttribute("aria-valuenow", "0");
   await position.press("End");
   expect(Number(await position.inputValue())).toBeGreaterThan(4);
   await infrastructureExpect

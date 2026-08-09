@@ -19,6 +19,8 @@ export type NoteTimeline = {
   schema_version: 1;
   model_version: string;
   tempo_bpm: number;
+  beat_grid_seconds?: number[];
+  downbeat_grid_seconds?: number[];
   time_signature: string;
   quality_flags: string[];
   notes: TimelineNote[];
@@ -47,10 +49,14 @@ export function parseTimeline(input: unknown): NoteTimeline {
   }
   const notes = input.notes.map(parseNote);
   if (notes.length === 0) throw invalidTimeline("转录结果没有可预览的音符。");
+  const beatGridSeconds = parseTimeGrid(input.beat_grid_seconds);
+  const downbeatGridSeconds = parseTimeGrid(input.downbeat_grid_seconds);
   return {
     schema_version: 1,
     model_version: input.model_version,
     tempo_bpm: input.tempo_bpm,
+    beat_grid_seconds: beatGridSeconds,
+    downbeat_grid_seconds: downbeatGridSeconds,
     time_signature: input.time_signature,
     quality_flags: input.quality_flags,
     notes,
@@ -93,6 +99,12 @@ function parseNote(input: unknown): TimelineNote {
     hand_confidence:
       typeof input.hand_confidence === "number" ? input.hand_confidence : null,
   };
+}
+
+function parseTimeGrid(input: unknown): number[] {
+  if (input === undefined) return [];
+  if (!Array.isArray(input) || !input.every(nonNegativeNumber)) throw invalidTimeline();
+  return input;
 }
 
 function isRecord(input: unknown): input is Record<string, unknown> {

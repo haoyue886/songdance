@@ -22,6 +22,8 @@ export type TransportProps = {
   onLoopEnd: (seconds: number) => void;
   transpose: number;
   onTranspose: (semitones: number) => void;
+  selection?: { start: number; end: number } | null;
+  onClearSelection?: () => void;
 };
 
 export function Transport(props: TransportProps) {
@@ -111,6 +113,13 @@ export function Transport(props: TransportProps) {
           </IconButton>
         </div>
       </div>
+      {props.selection && (
+        <div className="mt-3 flex flex-wrap items-center justify-between gap-2 border-t border-[#e1e7e2] pt-3 text-xs font-semibold text-[#52635f]">
+          <span aria-live="polite">谱面选区：{formatTime(props.selection.start)} - {formatTime(props.selection.end)}</span>
+          <button type="button" className="rounded border border-[#cad8d2] px-2 py-1 text-[#075e55] hover:bg-[#edf4f0]"
+            onClick={props.onClearSelection}>清除选区</button>
+        </div>
+      )}
     </section>
   );
 }

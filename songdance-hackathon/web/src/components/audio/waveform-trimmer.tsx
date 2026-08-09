@@ -30,11 +30,9 @@ export function WaveformTrimmer({ file, duration, clip, disabled, onChange, onEr
 
   useEffect(() => {
     if (!containerRef.current) return;
-    const objectUrl = URL.createObjectURL(file);
     const regions = RegionsPlugin.create();
     const waveSurfer = WaveSurfer.create({
       container: containerRef.current,
-      url: objectUrl,
       height: 112,
       waveColor: "#9dc7bc",
       progressColor: "#147d70",
@@ -67,12 +65,12 @@ export function WaveformTrimmer({ file, duration, clip, disabled, onChange, onEr
     regions.on("region-updated", (region, side) => {
       onChange(normalizeClip({ start: region.start, end: region.end }, duration, side ?? "end"));
     });
+    void waveSurfer.loadBlob(file).catch(() => undefined);
 
     return () => {
       waveSurfer.destroy();
       waveSurferRef.current = null;
       regionRef.current = null;
-      URL.revokeObjectURL(objectUrl);
     };
   }, [duration, file, onChange, onError]);
 

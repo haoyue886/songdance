@@ -68,6 +68,9 @@ export function ResultWorkspace({
     transpose,
     setTranspose,
     error: playbackError,
+    selection,
+    setSelection,
+    clearSelection,
   } = useResultPlayback(timeline);
   const initialView = musicXml ? "score" : "roll";
   const qualityReport = useMemo(
@@ -194,13 +197,34 @@ export function ResultWorkspace({
             {previewKind === "cleaned" ? "清洗后音符" : "原始模型音符（清洗结果不可用）"}
           </p>
           {view === "score" && shiftedMusicXml ? (
-            <ScoreViewer musicXml={shiftedMusicXml} currentTime={currentTime}
-              timeline={shiftedTimeline} onRendered={onScoreRendered} />
+            <>
+              <div className="sticky top-2 z-10 mb-3">
+                <Transport mode={mode} onMode={setMode} playing={playing}
+                  onPlay={() => {
+                    void play().then((started) => {
+                      if (started && trackEvents) trackEvent(job.id, "playback_started", { mode });
+                    });
+                  }} onPause={pause}
+                  currentTime={currentTime} duration={duration} onSeek={seek}
+                  rate={rate} onRate={setRate} loopEnabled={loopEnabled}
+                  onLoopEnabled={setLoopEnabled} loopStart={loopStart} loopEnd={loopEnd}
+                  onLoopStart={setLoopStart} onLoopEnd={setLoopEnd}
+                  transpose={transpose} onTranspose={setTranspose}
+                  selection={selection} onClearSelection={clearSelection} />
+              </div>
+              <ScoreViewer musicXml={shiftedMusicXml} currentTime={currentTime}
+                timeline={shiftedTimeline} selection={selection} onSeek={seek}
+                onSelectionChange={(next) => {
+                  if (next) setSelection(next.start, next.end);
+                  else clearSelection();
+                }}
+                onRendered={onScoreRendered} />
+            </>
           ) : (
             <PianoRoll timeline={shiftedTimeline} currentTime={currentTime}
               duration={duration} onSeek={seek} />
           )}
-          <div className="mt-3">
+          {view !== "score" && <div className="mt-3">
             <Transport mode={mode} onMode={setMode} playing={playing}
               onPlay={() => {
                 void play().then((started) => {
@@ -212,8 +236,9 @@ export function ResultWorkspace({
               loopEnabled={loopEnabled} onLoopEnabled={setLoopEnabled}
               loopStart={loopStart} loopEnd={loopEnd}
               onLoopStart={setLoopStart} onLoopEnd={setLoopEnd}
-              transpose={transpose} onTranspose={setTranspose} />
-          </div>
+              transpose={transpose} onTranspose={setTranspose}
+              selection={selection} onClearSelection={clearSelection} />
+          </div>}
         </div>
         <div className="grid content-start gap-6">
           <ArtifactDownloads artifacts={job.artifacts} busy={busy}

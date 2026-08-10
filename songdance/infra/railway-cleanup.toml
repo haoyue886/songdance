@@ -1,0 +1,9 @@
+[build]
+builder = "DOCKERFILE"
+dockerfilePath = "api/Dockerfile"
+watchPatterns = ["api/**"]
+
+[deploy]
+startCommand = "python -m app.jobs.cleanup"
+cronSchedule = "*/15 * * * *"
+restartPolicyType = "NEVER"

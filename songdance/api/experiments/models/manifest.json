@@ -1,0 +1,124 @@
+{
+  "schema_version": 1,
+  "candidates": [
+    {
+      "id": "aria_amt",
+      "display_name": "Aria-AMT",
+      "status": "research_only",
+      "production_eligibility": {
+        "status": "blocked",
+        "reason": "WEIGHT_LICENSE_NONCOMMERCIAL"
+      },
+      "source": {
+        "repository": "https://github.com/EleutherAI/aria-amt",
+        "commit": "a1ab73fc901d1759ec3bc173c146b3c6a3040261",
+        "license": "Apache-2.0",
+        "production_use_verified": true,
+        "license_evidence_url": "https://github.com/EleutherAI/aria-amt/blob/a1ab73fc901d1759ec3bc173c146b3c6a3040261/LICENSE"
+      },
+      "runtime": {
+        "python": ">=3.11,<3.12",
+        "torch": ">=2.3",
+        "torchaudio": "<=2.5",
+        "accelerator": "nvidia_cuda",
+        "cpu_inference_supported": false,
+        "requirement_evidence_url": "https://github.com/EleutherAI/aria-amt/blob/a1ab73fc901d1759ec3bc173c146b3c6a3040261/amt/run.py#L397-L404"
+      },
+      "weight": {
+        "filename": "piano-medium-double-1.0.safetensors",
+        "source_url": "https://huggingface.co/datasets/loubb/aria-midi/resolve/8cc4cf5c83b47f2689ac256a947b2a57c17a4c8b/piano-medium-double-1.0.safetensors?download=true",
+        "revision": "8cc4cf5c83b47f2689ac256a947b2a57c17a4c8b",
+        "sha256": "089d3129dbe93246aeda55efe668c8a48af08afaf9dd15c64cef0a07c0fb30a4",
+        "file_size_bytes": 446577344,
+        "license": "CC-BY-NC-SA-4.0",
+        "production_use_verified": false,
+        "license_evidence_url": "https://huggingface.co/datasets/loubb/aria-midi/tree/8cc4cf5c83b47f2689ac256a947b2a57c17a4c8b",
+        "local_path": "aria_amt/weights/piano-medium-double-1.0.safetensors"
+      },
+      "training_data": {
+        "summary": "Upstream training-data provenance is not needed for this already blocked noncommercial weight, but remains unverified.",
+        "license": "UNVERIFIED",
+        "production_use_verified": false,
+        "license_evidence_url": "https://huggingface.co/datasets/loubb/aria-midi/tree/8cc4cf5c83b47f2689ac256a947b2a57c17a4c8b"
+      }
+    },
+    {
+      "id": "piano_transcription_inference",
+      "display_name": "Piano Transcription Inference",
+      "status": "research_only",
+      "production_eligibility": {
+        "status": "blocked",
+        "reason": "SOURCE_LICENSE_TEXT_UNAVAILABLE"
+      },
+      "source": {
+        "repository": "https://github.com/qiuqiangkong/piano_transcription_inference",
+        "commit": "0226e74cbc805660e34bbd6a8fed2083890ebb88",
+        "license": "UNVERIFIED",
+        "production_use_verified": false,
+        "license_evidence_url": "https://github.com/qiuqiangkong/piano_transcription_inference/blob/0226e74cbc805660e34bbd6a8fed2083890ebb88/setup.py"
+      },
+      "runtime": {
+        "python": ">=3.6",
+        "torch": "1.4.0 tested upstream",
+        "accelerator": "cpu_or_nvidia_cuda",
+        "cpu_inference_supported": true,
+        "requirement_evidence_url": "https://github.com/qiuqiangkong/piano_transcription_inference/blob/0226e74cbc805660e34bbd6a8fed2083890ebb88/README.md"
+      },
+      "weight": {
+        "filename": "CRNN_note_F1=0.9677_pedal_F1=0.9186.pth",
+        "source_url": "https://zenodo.org/api/records/4034264/files/CRNN_note_F1%3D0.9677_pedal_F1%3D0.9186.pth/content",
+        "revision": "4034264",
+        "sha256": "UNVERIFIED",
+        "file_size_bytes": 171966578,
+        "license": "CC-BY-4.0",
+        "production_use_verified": false,
+        "license_evidence_url": "https://zenodo.org/api/records/4034264",
+        "local_path": "piano_transcription_inference/weights/CRNN_note_F1=0.9677_pedal_F1=0.9186.pth"
+      },
+      "training_data": {
+        "summary": "The candidate repository and Zenodo weight record do not declare the training data or its license.",
+        "license": "UNVERIFIED",
+        "production_use_verified": false,
+        "license_evidence_url": "https://zenodo.org/api/records/4034264"
+      }
+    },
+    {
+      "id": "omnizart_piano",
+      "display_name": "Omnizart Piano",
+      "status": "research_only",
+      "production_eligibility": {
+        "status": "blocked",
+        "reason": "WEIGHT_AND_TRAINING_DATA_LICENSE_UNVERIFIED"
+      },
+      "source": {
+        "repository": "https://github.com/Music-and-Culture-Technology-Lab/omnizart",
+        "commit": "bcd8cb44d4da66ce87df10b6abee5c35a8cc2886",
+        "license": "MIT",
+        "production_use_verified": true,
+        "license_evidence_url": "https://github.com/Music-and-Culture-Technology-Lab/omnizart/blob/bcd8cb44d4da66ce87df10b6abee5c35a8cc2886/LICENSE"
+      },
+      "runtime": {
+        "python": "isolated environment required; version not yet verified",
+        "accelerator": "UNVERIFIED",
+        "cpu_inference_supported": "UNVERIFIED",
+        "requirement_evidence_url": "https://github.com/Music-and-Culture-Technology-Lab/omnizart/blob/bcd8cb44d4da66ce87df10b6abee5c35a8cc2886/README.md"
+      },
+      "weight": {
+        "filename": "Omnizart piano checkpoint archive",
+        "source_url": "https://github.com/Music-and-Culture-Technology-Lab/omnizart/releases/tag/checkpoints-20211001",
+        "revision": "checkpoints-20211001",
+        "sha256": "UNVERIFIED",
+        "license": "UNVERIFIED",
+        "production_use_verified": false,
+        "license_evidence_url": "https://github.com/Music-and-Culture-Technology-Lab/omnizart/releases/tag/checkpoints-20211001",
+        "local_path": "omnizart/weights/checkpoints-20211001"
+      },
+      "training_data": {
+        "summary": "The pinned project documents that its piano model was trained on MAESTRO, but its checkpoint release does not provide auditable production-use terms or a pinned weight digest.",
+        "license": "UNVERIFIED",
+        "production_use_verified": false,
+        "license_evidence_url": "https://github.com/Music-and-Culture-Technology-Lab/omnizart/blob/bcd8cb44d4da66ce87df10b6abee5c35a8cc2886/paper.md#L63"
+      }
+    }
+  ]
+}

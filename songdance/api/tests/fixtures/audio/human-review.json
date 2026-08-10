@@ -1,0 +1,76 @@
+{
+  "schema_version": 2,
+  "model_version": "basic-pitch-0.4.0/icassp-2022-onnx/o0.5-f0.3",
+  "suite_fingerprint": "f29f5ea82080b951c3a6bf81f176b2c7ae3962d988738efcacdc10535f20f358",
+  "reviewer": {
+    "midi_daw_experience": null,
+    "reviewed_at": null
+  },
+  "rating_definition": {
+    "direct_use": "可直接使用",
+    "minor_edits": "30 秒内不超过 10 个明显错音或漏音，且无需整体重建节拍网格",
+    "needs_redo": "需要重做"
+  },
+  "results": [
+    {
+      "id": "01-bach-capriccio",
+      "raw_midi_note_count": 275,
+      "rating": "pending",
+      "notes": ""
+    },
+    {
+      "id": "02-brahms-intermezzo",
+      "raw_midi_note_count": 242,
+      "rating": "pending",
+      "notes": ""
+    },
+    {
+      "id": "03-mozart-sonata",
+      "raw_midi_note_count": 321,
+      "rating": "pending",
+      "notes": ""
+    },
+    {
+      "id": "04-rachmaninoff-g-sharp",
+      "raw_midi_note_count": 372,
+      "rating": "pending",
+      "notes": ""
+    },
+    {
+      "id": "05-chopin-c-minor",
+      "raw_midi_note_count": 143,
+      "rating": "pending",
+      "notes": ""
+    },
+    {
+      "id": "06-scriabin-etude",
+      "raw_midi_note_count": 305,
+      "rating": "pending",
+      "notes": ""
+    },
+    {
+      "id": "07-chopin-ballade",
+      "raw_midi_note_count": 222,
+      "rating": "pending",
+      "notes": ""
+    },
+    {
+      "id": "08-chopin-a-major",
+      "raw_midi_note_count": 214,
+      "rating": "pending",
+      "notes": ""
+    },
+    {
+      "id": "09-chopin-waltz",
+      "raw_midi_note_count": 194,
+      "rating": "pending",
+      "notes": ""
+    },
+    {
+      "id": "10-rachmaninoff-c-sharp",
+      "raw_midi_note_count": 83,
+      "rating": "pending",
+      "notes": ""
+    }
+  ]
+}

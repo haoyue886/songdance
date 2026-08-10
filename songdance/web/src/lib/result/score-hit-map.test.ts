@@ -27,6 +27,19 @@ function canvas(top = 0, scale = 1): HTMLElement {
   return element;
 }
 
+function wrappedSvg(top = 0, scale = 1): HTMLElement {
+  const wrapper = document.createElement("div");
+  const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+  svg.setAttribute("width", "1000");
+  svg.setAttribute("height", "1000");
+  svg.getBoundingClientRect = () => ({
+    x: 0, y: top, left: 0, top, right: 1000 * scale, bottom: top + 1000 * scale,
+    width: 1000 * scale, height: 1000 * scale, toJSON: () => ({}),
+  });
+  wrapper.append(svg);
+  return wrapper;
+}
+
 function scorePage(pageNumber: number) {
   return { PageNumber: pageNumber };
 }
@@ -129,6 +142,22 @@ describe("score hit map", () => {
 
     expect(scoreSecondsAtDomPoint(hitMap, { x: 32, y: 30 })).toBe(0.5);
     expect(scoreSecondsAtDomPoint(hitMap, { x: 34, y: 30 })).toBeCloseTo(0.68, 5);
+  });
+
+  it("uses SVG dimensions when a scaled backend canvas is a wrapper", () => {
+    const page = scorePage(1);
+    const secondSystem = scoreSystem(page, 30);
+    const osmd = scoreOsmd([{
+      page,
+      canvas: wrappedSvg(100, 0.5),
+      measures: [
+        scoreMeasure(scoreSystem(page), 0, [{ x: 5, realValue: 0.25 }]),
+        scoreMeasure(secondSystem, 1, [{ x: 5, realValue: 1.25 }]),
+      ],
+    }]);
+    const hitMap = createScoreHitMap(osmd, timeMap, 10);
+
+    expect(scoreSecondsAtDomPoint(hitMap, { x: 25, y: 280 })).toBe(2.5);
   });
 
   it("limits cached lookup to the backend page under the pointer", () => {

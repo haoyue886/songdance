@@ -153,8 +153,8 @@ function dedupeAnchors(anchors: HitAnchor[]): HitAnchor[] {
 
 function nearestPage(pages: HitPage[], point: ScorePoint): HitPage {
   return pages.reduce((nearest, page) =>
-    rectDistance(page.backend.getCanvas().getBoundingClientRect(), point)
-      < rectDistance(nearest.backend.getCanvas().getBoundingClientRect(), point) ? page : nearest);
+    rectDistance(scoreSurface(page.backend.getCanvas()).getBoundingClientRect(), point)
+      < rectDistance(scoreSurface(nearest.backend.getCanvas()).getBoundingClientRect(), point) ? page : nearest);
 }
 
 function nearestByRect<T extends HitRect>(items: T[], point: ScorePoint): T {
@@ -206,10 +206,11 @@ function secondsFromQuarters(hitMap: ScoreHitMap, scoreQuarters: number): number
 }
 
 function canvasToOsmd(canvas: HTMLElement, point: ScorePoint, pixelsPerUnit: number): ScorePoint | null {
-  const rect = canvas.getBoundingClientRect();
+  const surface = scoreSurface(canvas);
+  const rect = surface.getBoundingClientRect();
   if (rect.width <= 0 || rect.height <= 0 || pixelsPerUnit <= 0) return null;
-  const width = Number(canvas.getAttribute("width")) || rect.width;
-  const height = Number(canvas.getAttribute("height")) || rect.height;
+  const width = surfaceDimension(surface, "width", rect.width);
+  const height = surfaceDimension(surface, "height", rect.height);
   return {
     x: ((point.x - rect.left) * width / rect.width) / pixelsPerUnit,
     y: ((point.y - rect.top) * height / rect.height) / pixelsPerUnit,
@@ -217,9 +218,28 @@ function canvasToOsmd(canvas: HTMLElement, point: ScorePoint, pixelsPerUnit: num
 }
 
 function canvasCssPixelsPerOsmdUnit(canvas: HTMLElement, pixelsPerUnit: number): number {
-  const rect = canvas.getBoundingClientRect();
-  const width = Number(canvas.getAttribute("width")) || rect.width;
+  const surface = scoreSurface(canvas);
+  const rect = surface.getBoundingClientRect();
+  const width = surfaceDimension(surface, "width", rect.width);
   return width > 0 ? pixelsPerUnit * rect.width / width : pixelsPerUnit;
+}
+
+function scoreSurface(canvas: HTMLElement): HTMLElement | SVGSVGElement {
+  return canvas.matches("svg") ? canvas : canvas.querySelector<SVGSVGElement>("svg") ?? canvas;
+}
+
+function surfaceDimension(
+  surface: HTMLElement | SVGSVGElement,
+  dimension: "width" | "height",
+  fallback: number,
+): number {
+  const attribute = Number(surface.getAttribute(dimension));
+  if (Number.isFinite(attribute) && attribute > 0) return attribute;
+  if (surface instanceof SVGSVGElement) {
+    const viewBoxDimension = surface.viewBox.baseVal[dimension];
+    if (Number.isFinite(viewBoxDimension) && viewBoxDimension > 0) return viewBoxDimension;
+  }
+  return fallback;
 }
 
 function rectDistance(rect: DOMRect, point: ScorePoint): number {

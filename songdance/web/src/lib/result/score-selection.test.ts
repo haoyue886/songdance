@@ -49,10 +49,11 @@ describe("score selection geometry", () => {
       Drawer: { calculatePixelDistance: (units: number) => units * 10 },
     } as unknown as OpenSheetMusicDisplay;
 
-    const rects = scoreSelectionRects(osmd, map, { start: 1, end: 5 }, 1);
+    const rects = scoreSelectionRects(osmd, map, { start: 1, end: 5 }, 1,
+      (measureIndex, quarters) => measureIndex === 0 && quarters === 2 ? 0.75 : null);
 
     expect(rects).toEqual([
-      { key: "page-0-system-0", left: 100, top: 0, width: 300, height: 120 },
+      { key: "page-0-system-0", left: 150, top: 0, width: 250, height: 120 },
       { key: "page-0-system-1", left: 0, top: 200, width: 100, height: 120 },
     ]);
   });

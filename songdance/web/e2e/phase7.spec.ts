@@ -75,10 +75,10 @@ test("plays, switches views and exports the public-domain example", async ({ pag
   const openingHighlightBox = await activeMeasureHighlight.boundingBox();
   expect(openingHighlightBox).not.toBeNull();
   if (!openingHighlightBox) throw new Error("弱起小节高亮不可见");
-  await page.mouse.move(
-    openingHighlightBox.x + openingHighlightBox.width * 0.7,
-    openingHighlightBox.y + openingHighlightBox.height * 0.35,
-  );
+  const dragStartX = openingHighlightBox.x + openingHighlightBox.width * 0.7;
+  const dragEndX = openingHighlightBox.x + openingHighlightBox.width * 0.9;
+  const dragY = openingHighlightBox.y + openingHighlightBox.height * 0.35;
+  await page.mouse.move(dragStartX, dragY);
   await expect(score).toHaveCSS("cursor", "crosshair");
   const loopBoundsBeforeDraft = {
     start: await loopStartInput.inputValue(),
@@ -86,13 +86,13 @@ test("plays, switches views and exports the public-domain example", async ({ pag
   };
   await page.mouse.down();
   await page.mouse.move(
-    openingHighlightBox.x + openingHighlightBox.width * 0.7 + 3,
-    openingHighlightBox.y + openingHighlightBox.height * 0.35,
+    dragStartX + 3,
+    dragY,
   );
   await expect(score).toHaveCSS("cursor", "crosshair");
   await page.mouse.move(
-    openingHighlightBox.x + openingHighlightBox.width * 0.9,
-    openingHighlightBox.y + openingHighlightBox.height * 0.35,
+    dragEndX,
+    dragY,
     { steps: 8 },
   );
   await expect(score).toHaveCSS("cursor", "grabbing");
@@ -100,14 +100,17 @@ test("plays, switches views and exports the public-domain example", async ({ pag
   await expect(selectionOverlay).toHaveAttribute("fill", "rgba(255,255,255,.74)");
   expect(await loopStartInput.inputValue()).toBe(loopBoundsBeforeDraft.start);
   expect(await loopEndInput.inputValue()).toBe(loopBoundsBeforeDraft.end);
-  const draftBorderStyle = await selectionBorders.first().evaluate((element) => ({
-    stroke: getComputedStyle(element).stroke,
-    width: Number(element.getAttribute("width")),
-    height: Number(element.getAttribute("height")),
-  }));
-  expect(draftBorderStyle.stroke).toBe("rgb(21, 128, 61)");
-  expect(draftBorderStyle.width).toBeGreaterThan(0);
-  expect(draftBorderStyle.height).toBeGreaterThan(0);
+  const rapidUntil = Date.now() + 2_000;
+  while (Date.now() < rapidUntil) {
+    await page.mouse.move(Date.now() % 2 ? dragEndX : dragStartX + 10, dragY);
+    await page.waitForTimeout(16);
+  }
+  await page.mouse.move(dragEndX, dragY);
+  const draftBorderBox = await selectionBorders.first().boundingBox();
+  expect(draftBorderBox).not.toBeNull();
+  expect(Math.abs((draftBorderBox?.x ?? 0) - dragStartX)).toBeLessThanOrEqual(10);
+  expect(Math.abs((draftBorderBox?.x ?? 0) + (draftBorderBox?.width ?? 0) - dragEndX)).toBeLessThanOrEqual(10);
+  await expect(selectionBorders.first()).toHaveCSS("stroke", "rgb(21, 128, 61)");
   await page.screenshot({ path: testInfo.outputPath("score-selection-draft.png"), fullPage: false });
   await page.mouse.up();
   await expect(score).toHaveCSS("cursor", "crosshair");

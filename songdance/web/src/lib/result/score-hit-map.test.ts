@@ -1,6 +1,10 @@
 import type { OpenSheetMusicDisplay } from "opensheetmusicdisplay";
 import { describe, expect, it } from "vitest";
-import { createScoreHitMap, scoreSecondsAtDomPoint } from "./score-hit-map";
+import {
+  createScoreHitMap,
+  scoreMeasureFractionAtQuarters,
+  scoreSecondsAtDomPoint,
+} from "./score-hit-map";
 import type { ScoreTimeMap } from "./score-time-map";
 
 const anchors = [
@@ -116,6 +120,20 @@ describe("score hit map", () => {
 
     expect(scoreSecondsAtDomPoint(hitMap, { x: 100, y: 60 })).toBe(1);
     expect(scoreSecondsAtDomPoint(hitMap, { x: 125, y: 60 })).toBe(1.25);
+  });
+
+  it("inverts a non-linear event position for selection geometry", () => {
+    const page = scorePage(1);
+    const osmd = scoreOsmd([{
+      page,
+      canvas: canvas(),
+      measures: [scoreMeasure(scoreSystem(page), 0, [{ x: 15, realValue: 0.5 }])],
+    }]);
+    const hitMap = createScoreHitMap(osmd, timeMap, 10);
+
+    expect(scoreMeasureFractionAtQuarters(hitMap, 0, 2)).toBe(0.75);
+    expect(scoreMeasureFractionAtQuarters(hitMap, 0, -1)).toBe(0);
+    expect(scoreMeasureFractionAtQuarters(hitMap, 0, 5)).toBe(1);
   });
 
   it("snaps within eight CSS pixels and interpolates outside the radius", () => {

@@ -89,6 +89,25 @@ describe("score range drag", () => {
     expect(score).toHaveAttribute("data-draft", "2:3");
   });
 
+  it("tracks the latest pointer across 120 coalesced animation frames", () => {
+    const secondsAtPoint = vi.fn((point: ScorePointer) => point.x / 10);
+    const view = render(<Harness secondsAtPoint={secondsAtPoint} onCommit={vi.fn()} />);
+    const score = view.getByTestId("score");
+    fireEvent.pointerDown(score, pointer(6, 0, 100));
+    secondsAtPoint.mockClear();
+
+    for (let frame = 0; frame < 120; frame += 1) {
+      const latestX = frame % 2 === 0 ? 20 : 40;
+      fireEvent.pointerMove(score, pointer(6, 10, 100));
+      fireEvent.pointerMove(score, pointer(6, latestX, 100));
+      expect(frames).toHaveLength(1);
+      flushFrame(frame * (1000 / 60));
+      expect(score).toHaveAttribute("data-draft", `0:${latestX / 10}`);
+    }
+
+    expect(secondsAtPoint).toHaveBeenCalledTimes(120);
+  });
+
   it.each([
     ["pointerCancel", (score: HTMLElement) => fireEvent.pointerCancel(score, pointer(3, 20, 100))],
     ["lostPointerCapture", (score: HTMLElement) => fireEvent.lostPointerCapture(score, pointer(3, 20, 100))],
@@ -148,14 +167,15 @@ describe("score range drag", () => {
     expect(onCommit).toHaveBeenCalledWith({ start: 0, end: 2 });
   });
 
-  it("leaves touch vertical gestures to browser scrolling", () => {
+  it("cancels a touch draft when the browser takes over vertical scrolling", () => {
     const onCommit = vi.fn();
     const view = render(<Harness secondsAtPoint={(point) => point.x / 10} onCommit={onCommit} />);
     const score = view.getByTestId("score");
     fireEvent.pointerDown(score, pointer(5, 0, 100, "touch"));
-    fireEvent.pointerMove(score, pointer(5, 50, 150, "touch"));
+    fireEvent.pointerMove(score, pointer(5, 50, 100, "touch"));
     flushFrame();
-    fireEvent.pointerUp(score, pointer(5, 50, 150, "touch"));
+    expect(score).toHaveAttribute("data-draft", "0:5");
+    fireEvent.pointerCancel(score, pointer(5, 50, 150, "touch"));
 
     expect(score).toHaveAttribute("data-draft", "none");
     expect(score).toHaveAttribute("data-dragging", "false");
@@ -167,8 +187,8 @@ function pointer(pointerId: number, clientX: number, clientY: number, pointerTyp
   return { pointerId, clientX, clientY, pointerType, button: 0, isPrimary: true };
 }
 
-function flushFrame() {
+function flushFrame(timestamp = performance.now()) {
   const pending = [...frames.entries()];
   frames.clear();
-  act(() => pending.forEach(([, callback]) => callback(performance.now())));
+  act(() => pending.forEach(([, callback]) => callback(timestamp)));
 }

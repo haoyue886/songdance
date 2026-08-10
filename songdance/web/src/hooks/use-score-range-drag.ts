@@ -107,7 +107,7 @@ export function useScoreRangeDrag({
   }, [scheduleFrame, viewportRef]);
 
   const handlePointerDown = useCallback((event: ReactPointerEvent<HTMLElement>) => {
-    if (!enabled || event.isPrimary === false || event.pointerType === "touch") return;
+    if (!enabled || event.isPrimary === false) return;
     if (event.pointerType === "mouse" && event.button !== 0) return;
     const point = { x: event.clientX, y: event.clientY };
     const seconds = secondsAtPointRef.current(point);

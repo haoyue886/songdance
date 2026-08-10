@@ -16,6 +16,7 @@ const fakePage = {
   PositionAndShape: { AbsolutePosition: new FakePointF2D(0, 0) },
 };
 let staffEntriesReads = 0;
+let renderCalls = 0;
 export const tryGetTimeStampFromPosition = vi.fn((point: FakePointF2D) =>
   ({ RealValue: point.y > 150 ? 2.5 : point.x < 15 ? 0 : 0.5 }));
 
@@ -99,6 +100,7 @@ export class FakeOsmd {
 
   load = vi.fn().mockResolvedValue({});
   render = vi.fn(() => {
+    renderCalls += 1;
     const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
     svg.setAttribute("width", "720");
     svg.setAttribute("height", "900");
@@ -117,9 +119,14 @@ export function resetScoreViewerFixture() {
   cursor.show.mockReset();
   cursor.hide.mockReset();
   staffEntriesReads = 0;
+  renderCalls = 0;
   tryGetTimeStampFromPosition.mockClear();
 }
 
 export function getStaffEntriesReads(): number {
   return staffEntriesReads;
+}
+
+export function getOsmdRenderCalls(): number {
+  return renderCalls;
 }

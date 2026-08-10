@@ -3,6 +3,7 @@ import { secondsToScoreQuarters, type ScoreTimeMap } from "./score-time-map";
 
 export type ScoreSelectionRect = { left: number; top: number; width: number; height: number };
 export type ScoreSelectionSegment = ScoreSelectionRect & { key: string };
+export type ScoreMeasureFractionResolver = (measureIndex: number, scoreQuarters: number) => number | null;
 export function scoreMeasureRect(
   osmd: OpenSheetMusicDisplay,
   measureIndex: number,
@@ -61,6 +62,7 @@ export function scoreSelectionRects(
   map: ScoreTimeMap,
   selection: { start: number; end: number },
   scale: number,
+  resolveFraction?: ScoreMeasureFractionResolver,
 ): ScoreSelectionSegment[] {
   const selectionStartQuarters = secondsToScoreQuarters(map, selection.start);
   const selectionEndQuarters = secondsToScoreQuarters(map, selection.end);
@@ -83,8 +85,10 @@ export function scoreSelectionRects(
     if (selectionEndQuarters <= measureStartQuarters || selectionStartQuarters >= measureEndQuarters) return;
     const measureRect = scoreMeasureRect(osmd, measureIndex, scale);
     if (!measureRect) return;
-    const startFraction = clamp((selectionStartQuarters - measureStartQuarters) / measureDurationQuarters);
-    const endFraction = clamp((selectionEndQuarters - measureStartQuarters) / measureDurationQuarters);
+    const startFraction = resolveFraction?.(measureIndex, selectionStartQuarters)
+      ?? clamp((selectionStartQuarters - measureStartQuarters) / measureDurationQuarters);
+    const endFraction = resolveFraction?.(measureIndex, selectionEndQuarters)
+      ?? clamp((selectionEndQuarters - measureStartQuarters) / measureDurationQuarters);
     const left = measureRect.left + measureRect.width * startFraction;
     const right = measureRect.left + measureRect.width * endFraction;
     const system = measure.ParentMusicSystem;

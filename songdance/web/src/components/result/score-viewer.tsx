@@ -4,7 +4,12 @@ import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import type { OpenSheetMusicDisplay } from "opensheetmusicdisplay";
 import { useScoreRangeDrag } from "@/hooks/use-score-range-drag";
 import type { NoteTimeline } from "@/lib/result/timeline";
-import { createScoreHitMap, scoreSecondsAtDomPoint, type ScoreHitMap } from "@/lib/result/score-hit-map";
+import {
+  createScoreHitMap,
+  scoreMeasureFractionAtQuarters,
+  scoreSecondsAtDomPoint,
+  type ScoreHitMap,
+} from "@/lib/result/score-hit-map";
 import { scoreMeasureRect, scoreSelectionRects } from "@/lib/result/score-selection";
 import { createScoreTimeMap, measureIndexAtTime, measureStartSeconds, scoreTimeMapMatches } from "@/lib/result/score-time-map";
 import { ScoreSelectionOverlay } from "./score-selection-overlay";
@@ -42,6 +47,7 @@ export function ScoreViewer({
   const [scoreHeight, setScoreHeight] = useState(520);
   const [measureCount, setMeasureCount] = useState(0);
   const [renderedOsmd, setRenderedOsmd] = useState<OpenSheetMusicDisplay | null>(null);
+  const [renderedHitMap, setRenderedHitMap] = useState<ScoreHitMap | null>(null);
   const [activeMeasure, setActiveMeasure] = useState(0);
   const timeMap = useMemo(() => createScoreTimeMap(timeline), [timeline]);
   const duration = Math.max(...timeline.notes.map((note) => note.end_sec));
@@ -63,9 +69,11 @@ export function ScoreViewer({
   const visibleSelection = draftSelection ?? selection;
   const selectionRects = useMemo(() => {
     return renderedOsmd && timeMap && visibleSelection && measureCount > 0
-      ? scoreSelectionRects(renderedOsmd, timeMap, visibleSelection, scale)
+      ? scoreSelectionRects(renderedOsmd, timeMap, visibleSelection, scale,
+        renderedHitMap ? (measureIndex, quarters) =>
+          scoreMeasureFractionAtQuarters(renderedHitMap, measureIndex, quarters) : undefined)
       : [];
-  }, [measureCount, renderedOsmd, scale, timeMap, visibleSelection]);
+  }, [measureCount, renderedHitMap, renderedOsmd, scale, timeMap, visibleSelection]);
   const activeMeasureRect = useMemo(() => renderedOsmd && measureCount > 0
     ? scoreMeasureRect(renderedOsmd, activeMeasure, scale)
     : null, [activeMeasure, measureCount, renderedOsmd, scale]);
@@ -80,6 +88,7 @@ export function ScoreViewer({
     setStatus("loading");
     setMeasureCount(0);
     setRenderedOsmd(null);
+    setRenderedHitMap(null);
     setActiveMeasure(0);
     activeMeasureRef.current = -1;
     hitMapRef.current = null;
@@ -120,6 +129,7 @@ export function ScoreViewer({
         hitMapRef.current = mappingValid && timeMap
           ? createScoreHitMap(osmd, timeMap, duration)
           : null;
+        setRenderedHitMap(hitMapRef.current);
         const updateScale = () => {
           const availableWidth = frame.clientWidth || SCORE_WIDTH;
           const nextScale = Math.min(1, availableWidth / SCORE_WIDTH);

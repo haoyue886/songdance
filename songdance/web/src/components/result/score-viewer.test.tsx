@@ -7,6 +7,7 @@ import {
   FakeGraphicalMeasure,
   FakeOsmd,
   FakePointF2D,
+  getOsmdRenderCalls,
   getStaffEntriesReads,
   resetScoreViewerFixture,
   tryGetTimeStampFromPosition,
@@ -182,6 +183,7 @@ describe("score viewer", () => {
     fireEvent.pointerMove(score, pointer(2, 20, 20));
     expect(score).toHaveClass("cursor-grabbing");
     await waitFor(() => expect(view.getByTestId("score-selection-overlay")).toBeInTheDocument());
+    expect(getOsmdRenderCalls()).toBe(1);
     expect(onSelectionChange).not.toHaveBeenCalled();
     fireEvent.pointerUp(score, pointer(2, 20, 20));
     expect(onSelectionChange).toHaveBeenCalledWith({ start: 0.2, end: 0.4 });

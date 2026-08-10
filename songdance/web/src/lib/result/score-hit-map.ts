@@ -12,7 +12,7 @@ type ScoreBackend = {
 
 type HitAnchor = { x: number; scoreQuarters: number; isEvent: boolean };
 type HitRect = { left: number; top: number; right: number; bottom: number };
-type HitMeasure = HitRect & { anchors: HitAnchor[] };
+type HitMeasure = HitRect & { measureIndex: number; anchors: HitAnchor[] };
 type HitSystem = HitRect & { measures: HitMeasure[] };
 type HitPage = { backend: ScoreBackend; systems: HitSystem[] };
 
@@ -65,6 +65,23 @@ export function scoreSecondsAtDomPoint(hitMap: ScoreHitMap, domPoint: ScorePoint
   }
 
   return fallbackSecondsAtDomPoint(hitMap, domPoint);
+}
+
+export function scoreMeasureFractionAtQuarters(
+  hitMap: ScoreHitMap,
+  measureIndex: number,
+  scoreQuarters: number,
+): number | null {
+  const measure = hitMap.pages
+    .flatMap((page) => page.systems)
+    .flatMap((system) => system.measures)
+    .find((candidate) => candidate.measureIndex === measureIndex);
+  if (!measure || measure.right <= measure.left) return null;
+  const times = measure.anchors.map((anchor) => anchor.scoreQuarters);
+  if (scoreQuarters < Math.min(...times)) return 0;
+  if (scoreQuarters > Math.max(...times)) return 1;
+  const x = interpolateAnchorX(measure.anchors, scoreQuarters);
+  return x === null ? null : clamp((x - measure.left) / (measure.right - measure.left));
 }
 
 function buildPageSystems(
@@ -137,7 +154,7 @@ function buildMeasure(
   const bottom = system.PositionAndShape.AbsolutePosition.y
     + (bottomStaffLine?.PositionAndShape.RelativePosition.y ?? 0)
     + (bottomStaffLine?.StaffHeight ?? 0);
-  return { left, top, right, bottom, anchors };
+  return { measureIndex, left, top, right, bottom, anchors };
 }
 
 function dedupeAnchors(anchors: HitAnchor[]): HitAnchor[] {
@@ -181,6 +198,21 @@ function interpolateScoreQuarters(anchors: HitAnchor[], x: number): number | nul
     return left.scoreQuarters + (right.scoreQuarters - left.scoreQuarters) * progress;
   }
   return last.scoreQuarters;
+}
+
+function interpolateAnchorX(anchors: HitAnchor[], scoreQuarters: number): number | null {
+  if (anchors.length === 0) return null;
+  const byTime = [...anchors].sort((left, right) =>
+    left.scoreQuarters - right.scoreQuarters || left.x - right.x);
+  if (scoreQuarters <= byTime[0].scoreQuarters) return byTime[0].x;
+  const last = byTime[byTime.length - 1];
+  if (scoreQuarters >= last.scoreQuarters) return last.x;
+  const rightIndex = byTime.findIndex((anchor) => anchor.scoreQuarters >= scoreQuarters);
+  const left = byTime[rightIndex - 1];
+  const right = byTime[rightIndex];
+  const span = right.scoreQuarters - left.scoreQuarters;
+  if (span <= 0) return right.x;
+  return left.x + (right.x - left.x) * ((scoreQuarters - left.scoreQuarters) / span);
 }
 
 function fallbackSecondsAtDomPoint(hitMap: ScoreHitMap, domPoint: ScorePoint): number | null {
@@ -260,4 +292,8 @@ function finiteQuarters(realValue: number | undefined): number | null {
 
 function isFiniteAnchor(anchor: HitAnchor): boolean {
   return Number.isFinite(anchor.x) && Number.isFinite(anchor.scoreQuarters);
+}
+
+function clamp(value: number): number {
+  return Math.max(0, Math.min(1, value));
 }

@@ -1,0 +1,14 @@
+{
+  "name": "hackathon-demo-video",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "node node_modules/hyperframes/bin/hyperframes.mjs preview",
+    "check": "node node_modules/hyperframes/bin/hyperframes.mjs check",
+    "render": "node node_modules/hyperframes/bin/hyperframes.mjs render",
+    "publish": "node node_modules/hyperframes/bin/hyperframes.mjs publish"
+  },
+  "devDependencies": {
+    "hyperframes": "0.7.103"
+  }
+}

@@ -1,18 +1,32 @@
 "use client";
 
-import { useId } from "react";
+import { useId, type PointerEvent as ReactPointerEvent, type PointerEventHandler } from "react";
 import type { ScoreSelectionRect, ScoreSelectionSegment } from "@/lib/result/score-selection";
+
+export type ScoreSelectionBoundary = "start" | "end";
+export type ScoreSelectionBoundaryHandlers = {
+  onPointerDown: (
+    boundary: ScoreSelectionBoundary,
+    event: ReactPointerEvent<SVGLineElement>,
+  ) => void;
+  onPointerMove: PointerEventHandler<SVGLineElement>;
+  onPointerUp: PointerEventHandler<SVGLineElement>;
+  onPointerCancel: PointerEventHandler<SVGLineElement>;
+  onLostPointerCapture: PointerEventHandler<SVGLineElement>;
+};
 
 export function ScoreSelectionOverlay({
   width,
   height,
   activeMeasure,
   selectionSegments,
+  boundaryHandlers,
 }: {
   width: number;
   height: number;
   activeMeasure: ScoreSelectionRect | null;
   selectionSegments: ScoreSelectionSegment[];
+  boundaryHandlers?: ScoreSelectionBoundaryHandlers;
 }) {
   const maskId = useId().replaceAll(":", "");
   if (!activeMeasure && selectionSegments.length === 0) return null;
@@ -61,6 +75,30 @@ export function ScoreSelectionOverlay({
               data-score-selection-segment={segment.key}
               x={segment.left} y={segment.top} width={segment.width} height={segment.height}
               fill="rgba(255,255,255,0)" stroke="#15803d" strokeWidth="3" />
+          ))}
+          {boundaryHandlers && ([
+            {
+              boundary: "start" as const,
+              x: selectionSegments[0].left,
+              segment: selectionSegments[0],
+            },
+            {
+              boundary: "end" as const,
+              x: selectionSegments[selectionSegments.length - 1].left
+                + selectionSegments[selectionSegments.length - 1].width,
+              segment: selectionSegments[selectionSegments.length - 1],
+            },
+          ]).map(({ boundary, x, segment }) => (
+            <line key={boundary}
+              data-score-selection-handle={boundary}
+              x1={x} x2={x} y1={segment.top} y2={segment.top + segment.height}
+              stroke="transparent" strokeWidth="16" pointerEvents="stroke"
+              style={{ cursor: "ew-resize" }}
+              onPointerDown={(event) => boundaryHandlers.onPointerDown(boundary, event)}
+              onPointerMove={boundaryHandlers.onPointerMove}
+              onPointerUp={boundaryHandlers.onPointerUp}
+              onPointerCancel={boundaryHandlers.onPointerCancel}
+              onLostPointerCapture={boundaryHandlers.onLostPointerCapture} />
           ))}
         </>
       )}

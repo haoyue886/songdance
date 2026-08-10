@@ -1,5 +1,5 @@
-import { render } from "@testing-library/react";
-import { describe, expect, it } from "vitest";
+import { fireEvent, render } from "@testing-library/react";
+import { describe, expect, it, vi } from "vitest";
 import { ScoreSelectionOverlay } from "./score-selection-overlay";
 
 describe("score selection overlay", () => {
@@ -29,5 +29,37 @@ describe("score selection overlay", () => {
       '[data-score-selection-segment="page-1-system-1"]',
     )).toBe(firstBorder);
     expect(firstBorder).toHaveAttribute("width", "80");
+  });
+
+  it("exposes only the first and last boundaries with an ew-resize cursor", () => {
+    const onPointerDown = vi.fn();
+    const handlers = {
+      onPointerDown,
+      onPointerMove: vi.fn(),
+      onPointerUp: vi.fn(),
+      onPointerCancel: vi.fn(),
+      onLostPointerCapture: vi.fn(),
+    };
+    const view = render(
+      <ScoreSelectionOverlay width={720} height={900} activeMeasure={null}
+        selectionSegments={[
+          { key: "system-1", left: 10, top: 20, width: 30, height: 40 },
+          { key: "system-2", left: 5, top: 80, width: 50, height: 40 },
+        ]}
+        boundaryHandlers={handlers} />,
+    );
+    const handles = view.container.querySelectorAll<SVGLineElement>(
+      '[data-score-selection-handle]',
+    );
+
+    expect(handles).toHaveLength(2);
+    expect(handles[0]).toHaveAttribute("x1", "10");
+    expect(handles[0]).toHaveAttribute("y1", "20");
+    expect(handles[1]).toHaveAttribute("x1", "55");
+    expect(handles[1]).toHaveAttribute("y1", "80");
+    expect(handles[0]).toHaveAttribute("stroke-width", "16");
+    expect(handles[0]).toHaveStyle({ cursor: "ew-resize" });
+    fireEvent.pointerDown(handles[1], { pointerId: 4, clientX: 55, clientY: 90 });
+    expect(onPointerDown).toHaveBeenCalledWith("end", expect.any(Object));
   });
 });

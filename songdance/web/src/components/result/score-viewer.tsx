@@ -1,10 +1,11 @@
 "use client";
 
-import { useEffect, useId, useMemo, useRef, useState } from "react";
+import { useCallback, useEffect, useId, useMemo, useRef, useState } from "react";
 import type { OpenSheetMusicDisplay } from "opensheetmusicdisplay";
+import { useScoreRangeDrag } from "@/hooks/use-score-range-drag";
 import type { NoteTimeline } from "@/lib/result/timeline";
 import { createScoreHitMap, scoreSecondsAtDomPoint, type ScoreHitMap } from "@/lib/result/score-hit-map";
-import { scoreMeasureRect, scoreSelectionRects, type ScoreSelectionRect } from "@/lib/result/score-selection";
+import { scoreMeasureRect, scoreSelectionRects } from "@/lib/result/score-selection";
 import { createScoreTimeMap, measureIndexAtTime, measureStartSeconds, scoreTimeMapMatches } from "@/lib/result/score-time-map";
 import { ScoreToolbar } from "./score-toolbar";
 
@@ -34,34 +35,40 @@ export function ScoreViewer({
   const osmdRef = useRef<OpenSheetMusicDisplay | null>(null);
   const hitMapRef = useRef<ScoreHitMap | null>(null);
   const activeMeasureRef = useRef(-1);
-  const suppressClickRef = useRef(false);
-  const dragRef = useRef<{ pointerId: number; seconds: number } | null>(null);
   const selectionMaskId = useId().replaceAll(":", "");
   const [status, setStatus] = useState<"loading" | "ready" | "error">("loading");
   const [scale, setScale] = useState(1);
   const [frameHeight, setFrameHeight] = useState<number | undefined>(undefined);
   const [scoreHeight, setScoreHeight] = useState(520);
   const [measureCount, setMeasureCount] = useState(0);
-  const [isDragging, setIsDragging] = useState(false);
+  const [renderedOsmd, setRenderedOsmd] = useState<OpenSheetMusicDisplay | null>(null);
   const [activeMeasure, setActiveMeasure] = useState(0);
-  const [activeMeasureRect, setActiveMeasureRect] = useState<ScoreSelectionRect | null>(null);
-  const [selectionRects, setSelectionRects] = useState<ScoreSelectionRect[]>([]);
   const timeMap = useMemo(() => createScoreTimeMap(timeline), [timeline]);
   const duration = Math.max(...timeline.notes.map((note) => note.end_sec));
-
-  useEffect(() => {
-    const osmd = osmdRef.current;
-    setSelectionRects(osmd && timeMap && selection && measureCount > 0
-      ? scoreSelectionRects(osmd, timeMap, selection, scale)
-      : []);
-  }, [measureCount, scale, selection, timeMap]);
-
-  useEffect(() => {
-    const osmd = osmdRef.current;
-    setActiveMeasureRect(osmd && measureCount > 0
-      ? scoreMeasureRect(osmd, activeMeasure, scale)
-      : null);
-  }, [activeMeasure, measureCount, scale]);
+  const secondsAtPoint = useCallback((point: { x: number; y: number }) => {
+    const hitMap = hitMapRef.current;
+    return hitMap && measureCount > 0 ? scoreSecondsAtDomPoint(hitMap, point) : null;
+  }, [measureCount]);
+  const {
+    draftSelection,
+    isDragging,
+    consumeClickSuppression,
+    pointerHandlers,
+  } = useScoreRangeDrag({
+    enabled: measureCount > 0,
+    viewportRef,
+    secondsAtPoint,
+    onCommit: onSelectionChange ?? undefined,
+  });
+  const visibleSelection = draftSelection ?? selection;
+  const selectionRects = useMemo(() => {
+    return renderedOsmd && timeMap && visibleSelection && measureCount > 0
+      ? scoreSelectionRects(renderedOsmd, timeMap, visibleSelection, scale)
+      : [];
+  }, [measureCount, renderedOsmd, scale, timeMap, visibleSelection]);
+  const activeMeasureRect = useMemo(() => renderedOsmd && measureCount > 0
+    ? scoreMeasureRect(renderedOsmd, activeMeasure, scale)
+    : null, [activeMeasure, measureCount, renderedOsmd, scale]);
 
   useEffect(() => {
     let cancelled = false;
@@ -72,12 +79,10 @@ export function ScoreViewer({
     container.replaceChildren();
     setStatus("loading");
     setMeasureCount(0);
+    setRenderedOsmd(null);
     setActiveMeasure(0);
-    setActiveMeasureRect(null);
     activeMeasureRef.current = -1;
     hitMapRef.current = null;
-    dragRef.current = null;
-    setIsDragging(false);
     onRendered(null);
 
     void (async () => {
@@ -101,6 +106,7 @@ export function ScoreViewer({
         if (cancelled) return;
         osmd.render();
         osmdRef.current = osmd;
+        setRenderedOsmd(osmd);
         const nextMeasureCount = osmd.GraphicSheet.MeasureList.length;
         const scoreMeasureStarts = osmd.GraphicSheet.MeasureList.map(
           (staffMeasures) => staffMeasures[0]?.parentSourceMeasure.AbsoluteTimestamp.RealValue,
@@ -179,46 +185,9 @@ export function ScoreViewer({
     viewport.scrollTo({ top: target, behavior: "smooth" });
   };
   const handleScoreClick = (event: React.MouseEvent<HTMLDivElement>) => {
-    if (suppressClickRef.current) {
-      suppressClickRef.current = false;
-      return;
-    }
-    const hitMap = hitMapRef.current;
-    if (!hitMap || measureCount === 0) return;
-    const seconds = scoreSecondsAtDomPoint(hitMap, { x: event.clientX, y: event.clientY });
+    if (consumeClickSuppression()) return;
+    const seconds = secondsAtPoint({ x: event.clientX, y: event.clientY });
     if (seconds !== null) onSeek(seconds);
-  };
-  const secondsAtEvent = (event: React.PointerEvent<HTMLDivElement>) => {
-    const hitMap = hitMapRef.current;
-    if (!hitMap || measureCount === 0) return null;
-    return scoreSecondsAtDomPoint(hitMap, { x: event.clientX, y: event.clientY });
-  };
-  const handlePointerDown = (event: React.PointerEvent<HTMLDivElement>) => {
-    const seconds = secondsAtEvent(event);
-    if (seconds === null) return;
-    if (typeof event.currentTarget.setPointerCapture === "function") {
-      event.currentTarget.setPointerCapture(event.pointerId);
-    }
-    dragRef.current = { pointerId: event.pointerId, seconds };
-    setIsDragging(true);
-  };
-  const handlePointerUp = (event: React.PointerEvent<HTMLDivElement>) => {
-    const drag = dragRef.current;
-    if (!drag || drag.pointerId !== event.pointerId || !timeMap) return;
-    dragRef.current = null;
-    setIsDragging(false);
-    const dragStart = drag.seconds;
-    const endSeconds = secondsAtEvent(event) ?? dragStart;
-    if (Math.abs(endSeconds - dragStart) < 0.02) {
-      return;
-    }
-    suppressClickRef.current = true;
-    onSelectionChange?.({ start: Math.min(dragStart, endSeconds), end: Math.max(dragStart, endSeconds) });
-  };
-  const handlePointerCancel = (event: React.PointerEvent<HTMLDivElement>) => {
-    if (dragRef.current?.pointerId !== event.pointerId) return;
-    dragRef.current = null;
-    setIsDragging(false);
   };
 
   const activePitches = timeline.notes
@@ -282,11 +251,9 @@ export function ScoreViewer({
           aria-label="MusicXML 五线谱"
           aria-hidden={status !== "ready"}
           onClick={handleScoreClick}
-          onPointerDown={handlePointerDown}
-          onPointerUp={handlePointerUp}
-          onPointerCancel={handlePointerCancel}
+          {...pointerHandlers}
           title={measureCount > 0 ? "点击定位，拖动选择谱面区间" : undefined}
-          className={`w-[720px] select-none ${measureCount > 0 ? isDragging ? "cursor-grabbing" : "cursor-crosshair" : ""} ${status === "ready" ? "" : "invisible absolute left-0 top-0"}`}
+          className={`w-[720px] touch-pan-y select-none ${measureCount > 0 ? isDragging ? "cursor-grabbing" : "cursor-crosshair" : ""} ${status === "ready" ? "" : "invisible absolute left-0 top-0"}`}
           style={{ transform: `scale(${scale})`, transformOrigin: "top left" }}
         />
       </div>

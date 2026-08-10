@@ -161,21 +161,29 @@ describe("score viewer", () => {
 
   it("emits a shared timeline range only after dragging across measures", async () => {
     const onSelectionChange = vi.fn();
+    const onSeek = vi.fn();
     const view = render(
       <ScoreViewer musicXml="<score-partwise/>" currentTime={0} timeline={timeline}
-        onSeek={vi.fn()} onSelectionChange={onSelectionChange} onRendered={vi.fn()} />,
+        onSeek={onSeek} onSelectionChange={onSelectionChange} onRendered={vi.fn()} />,
     );
     await waitFor(() => expect(view.getByText("第 1 / 3 小节")).toBeInTheDocument());
     const score = view.getByLabelText("MusicXML 五线谱");
     expect(score).toHaveClass("cursor-crosshair");
-    fireEvent.pointerDown(score, { pointerId: 1, clientX: 10, clientY: 10 });
-    expect(score).toHaveClass("cursor-grabbing");
-    expect(score).not.toHaveClass("cursor-crosshair");
-    fireEvent.pointerUp(score, { pointerId: 1, clientX: 10, clientY: 10 });
+    fireEvent.pointerDown(score, pointer(1, 10, 10));
+    fireEvent.pointerMove(score, pointer(1, 14, 10));
+    expect(score).toHaveClass("cursor-crosshair");
+    fireEvent.pointerUp(score, pointer(1, 10, 10));
     expect(score).toHaveClass("cursor-crosshair");
     expect(onSelectionChange).not.toHaveBeenCalled();
-    fireEvent.pointerDown(score, { pointerId: 2, clientX: 10, clientY: 10 });
-    fireEvent.pointerUp(score, { pointerId: 2, clientX: 20, clientY: 20 });
+    fireEvent.click(score, { clientX: 10, clientY: 10 });
+    expect(onSeek).toHaveBeenCalledWith(0.2);
+
+    fireEvent.pointerDown(score, pointer(2, 10, 10));
+    fireEvent.pointerMove(score, pointer(2, 20, 20));
+    expect(score).toHaveClass("cursor-grabbing");
+    await waitFor(() => expect(view.getByTestId("score-selection-overlay")).toBeInTheDocument());
+    expect(onSelectionChange).not.toHaveBeenCalled();
+    fireEvent.pointerUp(score, pointer(2, 20, 20));
     expect(onSelectionChange).toHaveBeenCalledWith({ start: 0.2, end: 0.4 });
   });
 
@@ -187,11 +195,12 @@ describe("score viewer", () => {
     );
     await waitFor(() => expect(view.getByText("第 1 / 3 小节")).toBeInTheDocument());
     const score = view.getByLabelText("MusicXML 五线谱");
-    fireEvent.pointerDown(score, { pointerId: 4, clientX: 10, clientY: 10 });
+    fireEvent.pointerDown(score, pointer(4, 10, 10));
+    fireEvent.pointerMove(score, pointer(4, 20, 20));
     expect(score).toHaveClass("cursor-grabbing");
-    fireEvent.pointerCancel(score, { pointerId: 4 });
+    fireEvent.pointerCancel(score, pointer(4, 20, 20));
     expect(score).toHaveClass("cursor-crosshair");
-    fireEvent.pointerUp(score, { pointerId: 4, clientX: 20, clientY: 20 });
+    fireEvent.pointerUp(score, pointer(4, 20, 20));
     expect(onSelectionChange).not.toHaveBeenCalled();
   });
 
@@ -204,8 +213,10 @@ describe("score viewer", () => {
     const view = render(<Harness />);
     await waitFor(() => expect(view.getByText("第 1 / 3 小节")).toBeInTheDocument());
     const score = view.getByLabelText("MusicXML 五线谱");
-    fireEvent.pointerDown(score, { pointerId: 3, clientX: 10, clientY: 10 });
-    fireEvent.pointerUp(score, { pointerId: 3, clientX: 10, clientY: 350 });
+    fireEvent.pointerDown(score, pointer(3, 10, 10));
+    fireEvent.pointerMove(score, pointer(3, 10, 350));
+    await waitFor(() => expect(view.getByTestId("score-selection-overlay")).toBeInTheDocument());
+    fireEvent.pointerUp(score, pointer(3, 10, 350));
     const maskOverlay = await waitFor(() => {
       const element = view.container.querySelector("svg.pointer-events-none");
       expect(element).not.toBeNull();
@@ -216,3 +227,7 @@ describe("score viewer", () => {
     expect(view.getByTestId("score-selection-overlay")).toHaveAttribute("fill", "rgba(255,255,255,.74)");
   });
 });
+
+function pointer(pointerId: number, clientX: number, clientY: number) {
+  return { pointerId, clientX, clientY, pointerType: "mouse", button: 0, isPrimary: true };
+}

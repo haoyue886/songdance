@@ -32,7 +32,7 @@
 | Phase 22 | 计划中 | 多轨结果工作台、部分成功与生命周期 |
 | Phase 23 | 已完成 | 固定乐谱工作台、精准谱面定位、跨系统区间选择与共享播放边界；代码审查 Stage 1/2 PASS |
 | Phase 24 | 已完成 | 实时谱面拖选预览、连续事件命中、反向/跨系统手势与边缘自动滚动；代码审查 Stage 1/2 PASS |
-| Phase 25 | 进行中 | 已提交谱面选区的 `↔` 边界命中与实时端点调整 |
+| Phase 25 | 已完成 | 已提交谱面选区的 `↔` 边界命中、实时端点调整与稳定 pointer capture；代码审查 Stage 1/2 PASS |
 
 ## 功能依赖图
 
@@ -727,6 +727,14 @@ Phase 9 基线
 - 依赖 Phase 24 的 `ScoreSelectionSegment` 稳定 key、事件时间双向几何、Pointer capture 和自动滚动状态机，不新增数据库、API、OSMD 版本或动画库。
 - 覆盖层位于谱面上方，只有透明命中线允许 pointer events；遮罩、绿色高亮和边框继续 `pointer-events: none`，避免大面积截断谱面点击。
 - 跨系统选区只允许首段左边界和末段右边界调整；中间系统矩形边缘不是独立端点，不得显示 `↔` 或开始调整。
+
+**完成记录（2026-08-11）：**
+
+- 正式选区首尾边界各提供 16 CSS px 透明命中带，真实 Chrome 通过 `elementFromPoint` 命中并计算为系统原生 `ew-resize`；短点击不修改选区、循环边界或播放头。
+- create/resize 共用 4 CSS px 阈值、RAF draft、事件磁吸、36 px 边缘区和 4–18 CSS px/帧内部滚动；拖动起点或终点时另一端固定，松手后只提交一次正式区间。
+- resize pointer capture 绑定稳定谱面视口，零宽 draft 即使临时卸载边界线也能继续越过固定端并交换角色；`Escape`、`pointercancel`、lost capture 和外部清除均恢复正式选区。
+- 真实 18 小节 MusicXML 覆盖同系统越过固定端、跨页终点从第 2 页拖回第 1 页、边缘自动滚动、页面滚动不变、OSMD 不重排和二次调整截图。
+- Web `27 files / 128 tests`、Playwright `14/14`、lint、typecheck、生产构建通过；代码审查 Stage 1/2 PASS，`0 HIGH / 0 MEDIUM / 0 LOW`。
 
 ---
 

@@ -2,83 +2,16 @@ import { fireEvent, render, waitFor } from "@testing-library/react";
 import { useState } from "react";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import type { NoteTimeline } from "@/lib/result/timeline";
+import {
+  cursor,
+  FakeGraphicalMeasure,
+  FakeOsmd,
+  FakePointF2D,
+  getStaffEntriesReads,
+  resetScoreViewerFixture,
+  tryGetTimeStampFromPosition,
+} from "./score-viewer.test-fixture";
 import { ScoreViewer } from "./score-viewer";
-
-const cursor = {
-  reset: vi.fn(),
-  nextMeasure: vi.fn(),
-  show: vi.fn(),
-  hide: vi.fn(),
-};
-
-class FakeGraphicalMeasure {
-  parentSourceMeasure: { AbsoluteTimestamp: { RealValue: number } };
-  ParentStaff = { isVisible: () => true };
-  ParentMusicSystem: {
-    Parent: { PositionAndShape: { AbsolutePosition: FakePointF2D } };
-    PositionAndShape: { AbsolutePosition: FakePointF2D };
-    StaffLines: Array<{
-      PositionAndShape: { RelativePosition: FakePointF2D };
-      StaffHeight: number;
-    }>;
-  };
-  PositionAndShape: {
-    AbsolutePosition: FakePointF2D;
-    UpperLeftCorner: FakePointF2D;
-    Size: { width: number; height: number };
-  };
-  constructor(index: number) {
-    this.parentSourceMeasure = { AbsoluteTimestamp: { RealValue: index } };
-    this.ParentMusicSystem = {
-      Parent: { PositionAndShape: { AbsolutePosition: new FakePointF2D(0, 0) } },
-      PositionAndShape: {
-        AbsolutePosition: new FakePointF2D(0, 10 + Math.floor(index / 2) * 20),
-      },
-      StaffLines: [
-        { PositionAndShape: { RelativePosition: new FakePointF2D(0, 0) }, StaffHeight: 4 },
-        { PositionAndShape: { RelativePosition: new FakePointF2D(0, 8) }, StaffHeight: 4 },
-      ],
-    };
-    this.PositionAndShape = {
-      AbsolutePosition: new FakePointF2D(index % 2 * 20, 0),
-      UpperLeftCorner: new FakePointF2D(0, 0),
-      Size: { width: 20, height: 12 },
-    };
-  }
-}
-class FakePointF2D {
-  constructor(public x: number, public y: number) {}
-}
-
-const measures = [
-  [new FakeGraphicalMeasure(0)],
-  [new FakeGraphicalMeasure(1)],
-  [new FakeGraphicalMeasure(2)],
-];
-
-class FakeOsmd {
-  cursor = cursor;
-  Drawer = { calculatePixelDistance: (units: number) => units * 10 };
-  GraphicSheet = {
-    MeasureList: measures,
-    domToSvg: (point: FakePointF2D) => point,
-    svgToOsmd: (point: FakePointF2D) => point,
-    osmdToSvg: (point: FakePointF2D) => point,
-    GetNearestObject: (point: FakePointF2D) => point.x < 15 ? measures[0][0] : measures[1][0],
-    tryGetTimeStampFromPosition: (point: FakePointF2D) => ({ RealValue: point.y > 150 ? 2.5 : point.x < 15 ? 0 : 0.5 }),
-  };
-
-  constructor(private container: HTMLElement) {
-  }
-
-  load = vi.fn().mockResolvedValue({});
-  render = vi.fn(() => {
-    const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
-    svg.setAttribute("width", "720");
-    svg.setAttribute("height", "900");
-    this.container.append(svg);
-  });
-}
 
 vi.mock("opensheetmusicdisplay", () => ({
   CursorType: { CurrentArea: 3 },
@@ -109,10 +42,7 @@ const timeline: NoteTimeline = {
 
 describe("score viewer", () => {
   beforeEach(() => {
-    cursor.reset.mockReset();
-    cursor.nextMeasure.mockReset();
-    cursor.show.mockReset();
-    cursor.hide.mockReset();
+    resetScoreViewerFixture();
     vi.stubGlobal(
       "ResizeObserver",
       class {
@@ -170,6 +100,11 @@ describe("score viewer", () => {
 
     fireEvent.click(view.getByLabelText("MusicXML 五线谱"), { clientX: 50, clientY: 100 });
     expect(onSeek).toHaveBeenLastCalledWith(1);
+    const cachedEntryReads = getStaffEntriesReads();
+    fireEvent.click(view.getByLabelText("MusicXML 五线谱"), { clientX: 250, clientY: 100 });
+    expect(onSeek).toHaveBeenLastCalledWith(3);
+    expect(getStaffEntriesReads()).toBe(cachedEntryReads);
+    expect(tryGetTimeStampFromPosition).not.toHaveBeenCalled();
     expect(cursor.show).toHaveBeenCalled();
 
     view.rerender(
@@ -241,7 +176,7 @@ describe("score viewer", () => {
     expect(onSelectionChange).not.toHaveBeenCalled();
     fireEvent.pointerDown(score, { pointerId: 2, clientX: 10, clientY: 10 });
     fireEvent.pointerUp(score, { pointerId: 2, clientX: 20, clientY: 20 });
-    expect(onSelectionChange).toHaveBeenCalledWith({ start: 0, end: 1 });
+    expect(onSelectionChange).toHaveBeenCalledWith({ start: 0.2, end: 0.4 });
   });
 
   it("clears an active drag when the pointer is cancelled", async () => {
@@ -270,7 +205,7 @@ describe("score viewer", () => {
     await waitFor(() => expect(view.getByText("第 1 / 3 小节")).toBeInTheDocument());
     const score = view.getByLabelText("MusicXML 五线谱");
     fireEvent.pointerDown(score, { pointerId: 3, clientX: 10, clientY: 10 });
-    fireEvent.pointerUp(score, { pointerId: 3, clientX: 10, clientY: 200 });
+    fireEvent.pointerUp(score, { pointerId: 3, clientX: 10, clientY: 350 });
     const maskOverlay = await waitFor(() => {
       const element = view.container.querySelector("svg.pointer-events-none");
       expect(element).not.toBeNull();

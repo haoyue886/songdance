@@ -1,6 +1,6 @@
 import type { OpenSheetMusicDisplay } from "opensheetmusicdisplay";
 import { describe, expect, it } from "vitest";
-import { scoreMeasureRect, scoreSecondsAtDomPoint, scoreSelectionRects } from "./score-selection";
+import { scoreMeasureRect, scoreSelectionRects } from "./score-selection";
 import type { ScoreTimeMap } from "./score-time-map";
 
 const anchors = [
@@ -117,56 +117,4 @@ describe("score selection geometry", () => {
     ]);
   });
 
-  it("limits pointer timestamp lookup to the backend page under the pointer", () => {
-    const pageOne = { PageNumber: 1 };
-    const pageTwo = { PageNumber: 2 };
-    const canvas = (top: number) => {
-      const element = document.createElement("div");
-      element.setAttribute("width", "720");
-      element.setAttribute("height", "1000");
-      element.getBoundingClientRect = () => ({
-        x: 0, y: top, left: 0, top, right: 720, bottom: top + 1000,
-        width: 720, height: 1000, toJSON: () => ({}),
-      });
-      return element;
-    };
-    const measure = (page: typeof pageOne, timestamp: number) => ({
-      ParentStaff: { isVisible: () => true },
-      ParentMusicSystem: { Parent: page },
-      staffEntries: [{
-        PositionAndShape: { AbsolutePosition: { x: 10, y: 10 } },
-        getAbsoluteTimestamp: () => ({ RealValue: timestamp }),
-      }],
-    });
-    const osmd = {
-      Drawer: {
-        calculatePixelDistance: (units: number) => units * 10,
-        Backends: [
-          { graphicalMusicPage: pageOne, getCanvas: () => canvas(0) },
-          { graphicalMusicPage: pageTwo, getCanvas: () => canvas(1000) },
-        ],
-      },
-      GraphicSheet: {
-        MeasureList: [[measure(pageOne, 0.5)], [measure(pageTwo, 2.5)]],
-        domToSvg: () => { throw new Error("page-aware lookup should not fall back"); },
-      },
-    } as unknown as OpenSheetMusicDisplay;
-
-    expect(scoreSecondsAtDomPoint(osmd, { x: 100, y: 100 }, map, 10)).toBe(1);
-    expect(scoreSecondsAtDomPoint(osmd, { x: 100, y: 1100 }, map, 10)).toBe(5);
-  });
-
-  it("falls back to the public position API when no backend is ready", () => {
-    const osmd = {
-      Drawer: { Backends: [], calculatePixelDistance: (units: number) => units * 10 },
-      GraphicSheet: {
-        MeasureList: [],
-        domToSvg: (point: unknown) => point,
-        svgToOsmd: (point: unknown) => point,
-        tryGetTimeStampFromPosition: () => ({ RealValue: 0.5 }),
-      },
-    } as unknown as OpenSheetMusicDisplay;
-
-    expect(scoreSecondsAtDomPoint(osmd, { x: 10, y: 10 }, map, 10)).toBe(1);
-  });
 });

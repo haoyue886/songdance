@@ -3,7 +3,8 @@
 import { useEffect, useId, useMemo, useRef, useState } from "react";
 import type { OpenSheetMusicDisplay } from "opensheetmusicdisplay";
 import type { NoteTimeline } from "@/lib/result/timeline";
-import { scoreMeasureRect, scoreSecondsAtDomPoint, scoreSelectionRects, type ScoreSelectionRect } from "@/lib/result/score-selection";
+import { createScoreHitMap, scoreSecondsAtDomPoint, type ScoreHitMap } from "@/lib/result/score-hit-map";
+import { scoreMeasureRect, scoreSelectionRects, type ScoreSelectionRect } from "@/lib/result/score-selection";
 import { createScoreTimeMap, measureIndexAtTime, measureStartSeconds, scoreTimeMapMatches } from "@/lib/result/score-time-map";
 import { ScoreToolbar } from "./score-toolbar";
 
@@ -31,6 +32,7 @@ export function ScoreViewer({
   const viewportRef = useRef<HTMLDivElement>(null);
   const toolbarRef = useRef<HTMLDivElement>(null);
   const osmdRef = useRef<OpenSheetMusicDisplay | null>(null);
+  const hitMapRef = useRef<ScoreHitMap | null>(null);
   const activeMeasureRef = useRef(-1);
   const suppressClickRef = useRef(false);
   const dragRef = useRef<{ pointerId: number; seconds: number } | null>(null);
@@ -45,6 +47,7 @@ export function ScoreViewer({
   const [activeMeasureRect, setActiveMeasureRect] = useState<ScoreSelectionRect | null>(null);
   const [selectionRects, setSelectionRects] = useState<ScoreSelectionRect[]>([]);
   const timeMap = useMemo(() => createScoreTimeMap(timeline), [timeline]);
+  const duration = Math.max(...timeline.notes.map((note) => note.end_sec));
 
   useEffect(() => {
     const osmd = osmdRef.current;
@@ -72,6 +75,7 @@ export function ScoreViewer({
     setActiveMeasure(0);
     setActiveMeasureRect(null);
     activeMeasureRef.current = -1;
+    hitMapRef.current = null;
     dragRef.current = null;
     setIsDragging(false);
     onRendered(null);
@@ -107,6 +111,9 @@ export function ScoreViewer({
           scoreMeasureStarts,
         );
         setMeasureCount(mappingValid ? nextMeasureCount : 0);
+        hitMapRef.current = mappingValid && timeMap
+          ? createScoreHitMap(osmd, timeMap, duration)
+          : null;
         const updateScale = () => {
           const availableWidth = frame.clientWidth || SCORE_WIDTH;
           const nextScale = Math.min(1, availableWidth / SCORE_WIDTH);
@@ -136,10 +143,11 @@ export function ScoreViewer({
       observer?.disconnect();
       osmdRef.current?.cursor.hide();
       osmdRef.current = null;
+      hitMapRef.current = null;
       onRendered(null);
       container.replaceChildren();
     };
-  }, [musicXml, onRendered, timeMap, timeline.downbeat_grid_seconds]);
+  }, [duration, musicXml, onRendered, timeMap, timeline.downbeat_grid_seconds]);
 
   useEffect(() => {
     const osmd = osmdRef.current;
@@ -175,15 +183,15 @@ export function ScoreViewer({
       suppressClickRef.current = false;
       return;
     }
-    const osmd = osmdRef.current;
-    if (!osmd || !timeMap || measureCount === 0) return;
-    const seconds = scoreSecondsAtDomPoint(osmd, { x: event.clientX, y: event.clientY }, timeMap, duration);
+    const hitMap = hitMapRef.current;
+    if (!hitMap || measureCount === 0) return;
+    const seconds = scoreSecondsAtDomPoint(hitMap, { x: event.clientX, y: event.clientY });
     if (seconds !== null) onSeek(seconds);
   };
   const secondsAtEvent = (event: React.PointerEvent<HTMLDivElement>) => {
-    const osmd = osmdRef.current;
-    if (!osmd || !timeMap || measureCount === 0) return null;
-    return scoreSecondsAtDomPoint(osmd, { x: event.clientX, y: event.clientY }, timeMap, duration);
+    const hitMap = hitMapRef.current;
+    if (!hitMap || measureCount === 0) return null;
+    return scoreSecondsAtDomPoint(hitMap, { x: event.clientX, y: event.clientY });
   };
   const handlePointerDown = (event: React.PointerEvent<HTMLDivElement>) => {
     const seconds = secondsAtEvent(event);
@@ -213,7 +221,6 @@ export function ScoreViewer({
     setIsDragging(false);
   };
 
-  const duration = Math.max(...timeline.notes.map((note) => note.end_sec));
   const activePitches = timeline.notes
     .filter((note) => note.start_sec <= currentTime && note.end_sec > currentTime)
     .map((note) => midiName(note.pitch));

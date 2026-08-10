@@ -17,17 +17,21 @@ const map: ScoreTimeMap = {
 };
 
 describe("score selection geometry", () => {
-  it("builds separate clipped rectangles across score systems", () => {
-    const measure = (x: number, y: number) => ({
+  it("merges adjacent measures into one clipped segment per score system", () => {
+    const page = { PositionAndShape: { AbsolutePosition: { x: 0, y: 0 } } };
+    const system = (y: number) => ({
+      Parent: page,
+      PositionAndShape: { AbsolutePosition: { x: 0, y } },
+      StaffLines: [
+        { PositionAndShape: { RelativePosition: { x: 0, y: 0 } }, StaffHeight: 4 },
+        { PositionAndShape: { RelativePosition: { x: 0, y: 8 } }, StaffHeight: 4 },
+      ],
+    });
+    const firstSystem = system(0);
+    const secondSystem = system(20);
+    const measure = (x: number, parentSystem: ReturnType<typeof system>) => ({
       ParentStaff: { isVisible: () => true },
-      ParentMusicSystem: {
-        Parent: { PositionAndShape: { AbsolutePosition: { x: 0, y: 0 } } },
-        PositionAndShape: { AbsolutePosition: { x: 0, y } },
-        StaffLines: [
-          { PositionAndShape: { RelativePosition: { x: 0, y: 0 } }, StaffHeight: 4 },
-          { PositionAndShape: { RelativePosition: { x: 0, y: 8 } }, StaffHeight: 4 },
-        ],
-      },
+      ParentMusicSystem: parentSystem,
       PositionAndShape: {
         AbsolutePosition: { x, y: 0 },
         UpperLeftCorner: { x: 1, y: 2 },
@@ -35,16 +39,21 @@ describe("score selection geometry", () => {
       },
     });
     const osmd = {
-      GraphicSheet: { MeasureList: [[measure(0, 0)], [measure(20, 0)], [measure(0, 20)]] },
+      GraphicSheet: {
+        MeasureList: [
+          [measure(0, firstSystem)],
+          [measure(20, firstSystem)],
+          [measure(0, secondSystem)],
+        ],
+      },
       Drawer: { calculatePixelDistance: (units: number) => units * 10 },
     } as unknown as OpenSheetMusicDisplay;
 
     const rects = scoreSelectionRects(osmd, map, { start: 1, end: 5 }, 1);
 
     expect(rects).toEqual([
-      { left: 100, top: 0, width: 100, height: 120 },
-      { left: 200, top: 0, width: 200, height: 120 },
-      { left: 0, top: 200, width: 100, height: 120 },
+      { key: "page-0-system-0", left: 100, top: 0, width: 300, height: 120 },
+      { key: "page-0-system-1", left: 0, top: 200, width: 100, height: 120 },
     ]);
   });
 
@@ -113,7 +122,7 @@ describe("score selection geometry", () => {
     } as unknown as OpenSheetMusicDisplay;
 
     expect(scoreSelectionRects(osmd, pickupMap, { start: 0, end: 0.125 }, 1)).toEqual([
-      { left: 137.5, top: 0, width: 12.5, height: 40 },
+      { key: "page-0-system-0", left: 137.5, top: 0, width: 12.5, height: 40 },
     ]);
   });
 

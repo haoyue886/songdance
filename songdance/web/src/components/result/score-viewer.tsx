@@ -1,12 +1,13 @@
 "use client";
 
-import { useCallback, useEffect, useId, useMemo, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import type { OpenSheetMusicDisplay } from "opensheetmusicdisplay";
 import { useScoreRangeDrag } from "@/hooks/use-score-range-drag";
 import type { NoteTimeline } from "@/lib/result/timeline";
 import { createScoreHitMap, scoreSecondsAtDomPoint, type ScoreHitMap } from "@/lib/result/score-hit-map";
 import { scoreMeasureRect, scoreSelectionRects } from "@/lib/result/score-selection";
 import { createScoreTimeMap, measureIndexAtTime, measureStartSeconds, scoreTimeMapMatches } from "@/lib/result/score-time-map";
+import { ScoreSelectionOverlay } from "./score-selection-overlay";
 import { ScoreToolbar } from "./score-toolbar";
 
 const SCORE_WIDTH = 720;
@@ -35,7 +36,6 @@ export function ScoreViewer({
   const osmdRef = useRef<OpenSheetMusicDisplay | null>(null);
   const hitMapRef = useRef<ScoreHitMap | null>(null);
   const activeMeasureRef = useRef(-1);
-  const selectionMaskId = useId().replaceAll(":", "");
   const [status, setStatus] = useState<"loading" | "ready" | "error">("loading");
   const [scale, setScale] = useState(1);
   const [frameHeight, setFrameHeight] = useState<number | undefined>(undefined);
@@ -225,27 +225,8 @@ export function ScoreViewer({
       )}
       <div ref={viewportRef} data-testid="score-viewport"
         className="relative max-h-[520px] overflow-auto overscroll-contain p-4">
-        {(activeMeasureRect || selectionRects.length > 0) && (
-          <svg aria-hidden="true" className="pointer-events-none absolute left-4 top-4 z-10"
-            width={SCORE_WIDTH * scale} height={scoreHeight}>
-            {activeMeasureRect && <rect data-testid="active-measure-highlight"
-              x={activeMeasureRect.left} y={activeMeasureRect.top}
-              width={activeMeasureRect.width} height={activeMeasureRect.height}
-              fill="rgba(22, 163, 74, .22)" stroke="#15803d" strokeWidth="2" />}
-            {selectionRects.length > 0 && <>
-              <defs><mask id={selectionMaskId}>
-                <rect width="100%" height="100%" fill="white" />
-                {selectionRects.map((rect, index) => <rect key={index}
-                  x={rect.left} y={rect.top} width={rect.width} height={rect.height} fill="black" />)}
-              </mask></defs>
-              <rect data-testid="score-selection-overlay" width="100%" height="100%"
-                fill="rgba(255,255,255,.74)" mask={`url(#${selectionMaskId})`} />
-              {selectionRects.map((rect, index) => <rect key={index} data-score-selection-border="true"
-                x={rect.left} y={rect.top} width={rect.width} height={rect.height}
-                fill="rgba(255,255,255,0)" stroke="#15803d" strokeWidth="3" />)}
-            </>}
-          </svg>
-        )}
+        <ScoreSelectionOverlay width={SCORE_WIDTH * scale} height={scoreHeight}
+          activeMeasure={activeMeasureRect} selectionSegments={selectionRects} />
         <div
           ref={containerRef}
           aria-label="MusicXML 五线谱"

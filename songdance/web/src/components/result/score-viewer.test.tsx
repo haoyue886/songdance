@@ -204,7 +204,7 @@ describe("score viewer", () => {
     expect(onSelectionChange).not.toHaveBeenCalled();
   });
 
-  it("renders a padding-aligned mask with separate rectangles across score systems", async () => {
+  it("renders one padding-aligned selection segment per score system", async () => {
     function Harness() {
       const [selection, setSelection] = useState<{ start: number; end: number } | null>(null);
       return <ScoreViewer musicXml="<score-partwise/>" currentTime={0} timeline={timeline}
@@ -223,7 +223,7 @@ describe("score viewer", () => {
       return element as SVGSVGElement;
     });
     expect(maskOverlay).toHaveClass("left-4", "top-4");
-    expect(maskOverlay.querySelectorAll('rect[data-score-selection-border="true"]')).toHaveLength(3);
+    expect(maskOverlay.querySelectorAll('rect[data-score-selection-border="true"]')).toHaveLength(2);
     expect(view.getByTestId("score-selection-overlay")).toHaveAttribute("fill", "rgba(255,255,255,.74)");
   });
 });

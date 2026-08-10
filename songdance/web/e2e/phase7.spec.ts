@@ -69,6 +69,9 @@ test("plays, switches views and exports the public-domain example", async ({ pag
   await position.press("Home");
   await expect(page.getByText("第 1 / 18 小节")).toBeVisible();
   const selectionBorders = page.locator('svg.pointer-events-none rect[data-score-selection-border="true"]');
+  const selectionOverlay = page.getByTestId("score-selection-overlay");
+  const loopStartInput = page.getByLabel("循环起点");
+  const loopEndInput = page.getByLabel("循环终点");
   const openingHighlightBox = await activeMeasureHighlight.boundingBox();
   expect(openingHighlightBox).not.toBeNull();
   if (!openingHighlightBox) throw new Error("弱起小节高亮不可见");
@@ -77,13 +80,35 @@ test("plays, switches views and exports the public-domain example", async ({ pag
     openingHighlightBox.y + openingHighlightBox.height * 0.35,
   );
   await expect(score).toHaveCSS("cursor", "crosshair");
+  const loopBoundsBeforeDraft = {
+    start: await loopStartInput.inputValue(),
+    end: await loopEndInput.inputValue(),
+  };
   await page.mouse.down();
-  await expect(score).toHaveCSS("cursor", "grabbing");
+  await page.mouse.move(
+    openingHighlightBox.x + openingHighlightBox.width * 0.7 + 3,
+    openingHighlightBox.y + openingHighlightBox.height * 0.35,
+  );
+  await expect(score).toHaveCSS("cursor", "crosshair");
   await page.mouse.move(
     openingHighlightBox.x + openingHighlightBox.width * 0.9,
     openingHighlightBox.y + openingHighlightBox.height * 0.35,
     { steps: 8 },
   );
+  await expect(score).toHaveCSS("cursor", "grabbing");
+  await expect(selectionBorders).not.toHaveCount(0);
+  await expect(selectionOverlay).toHaveAttribute("fill", "rgba(255,255,255,.74)");
+  expect(await loopStartInput.inputValue()).toBe(loopBoundsBeforeDraft.start);
+  expect(await loopEndInput.inputValue()).toBe(loopBoundsBeforeDraft.end);
+  const draftBorderStyle = await selectionBorders.first().evaluate((element) => ({
+    stroke: getComputedStyle(element).stroke,
+    width: Number(element.getAttribute("width")),
+    height: Number(element.getAttribute("height")),
+  }));
+  expect(draftBorderStyle.stroke).toBe("rgb(21, 128, 61)");
+  expect(draftBorderStyle.width).toBeGreaterThan(0);
+  expect(draftBorderStyle.height).toBeGreaterThan(0);
+  await page.screenshot({ path: testInfo.outputPath("score-selection-draft.png"), fullPage: false });
   await page.mouse.up();
   await expect(score).toHaveCSS("cursor", "crosshair");
   await expect(selectionBorders).not.toHaveCount(0);
@@ -91,7 +116,28 @@ test("plays, switches views and exports the public-domain example", async ({ pag
   expect(openingBorderBox).not.toBeNull();
   expect(((openingBorderBox?.x ?? 0) - openingHighlightBox.x) / openingHighlightBox.width)
     .toBeGreaterThan(0.5);
+  expect(await loopStartInput.inputValue()).not.toBe(loopBoundsBeforeDraft.start);
   await page.getByRole("button", { name: "清除选区" }).click();
+
+  await scoreViewport.evaluate((element) => { element.scrollTop = 0; });
+  const viewportBox = await scoreViewport.boundingBox();
+  expect(viewportBox).not.toBeNull();
+  if (!viewportBox) throw new Error("谱面滚动视口不可见");
+  const pageScrollBeforeEdgeDrag = await page.evaluate(() => window.scrollY);
+  await page.mouse.move(
+    openingHighlightBox.x + openingHighlightBox.width * 0.5,
+    openingHighlightBox.y + openingHighlightBox.height * 0.5,
+  );
+  await page.mouse.down();
+  await page.mouse.move(
+    openingHighlightBox.x + openingHighlightBox.width * 0.7,
+    viewportBox.y + viewportBox.height - 2,
+  );
+  await expect.poll(() => scoreViewport.evaluate((element) => element.scrollTop)).toBeGreaterThan(0);
+  expect(await page.evaluate(() => window.scrollY)).toBe(pageScrollBeforeEdgeDrag);
+  await page.mouse.up();
+  await page.getByRole("button", { name: "清除选区" }).click();
+  await scoreViewport.evaluate((element) => { element.scrollTop = 0; });
 
   const crossPageStart = await score.locator("#osmdSvgPage1 text").filter({ hasText: /^2$/ }).first().boundingBox();
   expect(crossPageStart).not.toBeNull();
@@ -103,14 +149,19 @@ test("plays, switches views and exports the public-domain example", async ({ pag
   expect(crossPageEnd).not.toBeNull();
   if (!crossPageEnd) throw new Error("跨页选区终点不可见");
   await page.mouse.move(crossPageEnd.x + 250, crossPageEnd.y + 40, { steps: 8 });
+  await expect(selectionBorders).not.toHaveCount(0);
+  await expect(selectionOverlay).toBeVisible();
   await page.mouse.up();
   await expect(selectionBorders).not.toHaveCount(0);
   const firstPageHeight = Number(await scorePages.first().getAttribute("height"));
   const crossPageBorderYs = await selectionBorders.evaluateAll((elements) =>
     elements.map((element) => Number(element.getAttribute("y"))));
+  const crossPageSegmentKeys = await selectionBorders.evaluateAll((elements) =>
+    elements.map((element) => element.getAttribute("data-score-selection-segment")));
   const crossPageStartSeconds = Number(await page.getByLabel("循环起点").inputValue());
   const crossPageEndSeconds = Number(await page.getByLabel("循环终点").inputValue());
   expect(Math.max(...crossPageBorderYs)).toBeGreaterThan(firstPageHeight);
+  expect(new Set(crossPageSegmentKeys).size).toBe(crossPageSegmentKeys.length);
   expect(crossPageEndSeconds - crossPageStartSeconds).toBeGreaterThan(3);
   await page.getByRole("button", { name: "清除选区" }).click();
   await scoreViewport.evaluate((element) => { element.scrollTop = 0; });
@@ -124,7 +175,7 @@ test("plays, switches views and exports the public-domain example", async ({ pag
   await page.mouse.up();
   await expect(page.getByText(/谱面选区：/)).toBeVisible();
   await expect(selectionBorders).not.toHaveCount(0);
-  await expect(page.getByTestId("score-selection-overlay"))
+  await expect(selectionOverlay)
     .toHaveAttribute("fill", "rgba(255,255,255,.74)");
   const selectionLayerHeight = Number(await selectionBorders.first().locator("xpath=..").getAttribute("height"));
   const scoreContentHeight = await score.evaluate((element) => element.scrollHeight);

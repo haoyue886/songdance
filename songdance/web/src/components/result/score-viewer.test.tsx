@@ -206,6 +206,69 @@ describe("score viewer", () => {
     expect(onSelectionChange).not.toHaveBeenCalled();
   });
 
+  it("resizes a committed boundary without seeking or rerendering OSMD", async () => {
+    const onSelectionChange = vi.fn();
+    const onSeek = vi.fn();
+    const view = render(
+      <ScoreViewer musicXml="<score-partwise/>" currentTime={0} timeline={timeline}
+        selection={{ start: 0.2, end: 0.4 }} onSeek={onSeek}
+        onSelectionChange={onSelectionChange} onRendered={vi.fn()} />,
+    );
+    await waitFor(() => expect(view.getByText("第 1 / 3 小节")).toBeInTheDocument());
+    const endHandle = view.container.querySelector<SVGLineElement>(
+      '[data-score-selection-handle="end"]',
+    );
+    expect(endHandle).not.toBeNull();
+    const initialX = Number(endHandle?.getAttribute("x1"));
+
+    fireEvent.pointerDown(endHandle!, pointer(10, initialX, 110));
+    fireEvent.pointerUp(endHandle!, pointer(10, initialX, 110));
+    expect(onSelectionChange).not.toHaveBeenCalled();
+    expect(onSeek).not.toHaveBeenCalled();
+
+    fireEvent.pointerDown(endHandle!, pointer(11, initialX, 110));
+    fireEvent.pointerMove(endHandle!, pointer(11, initialX + 40, 110));
+    await waitFor(() => expect(Number(endHandle?.getAttribute("x1"))).toBeGreaterThan(initialX));
+    expect(onSelectionChange).not.toHaveBeenCalled();
+    fireEvent.pointerUp(endHandle!, pointer(11, initialX + 40, 110));
+
+    expect(onSelectionChange).toHaveBeenCalledOnce();
+    const committed = onSelectionChange.mock.calls[0][0];
+    expect(committed.start).toBe(0.2);
+    expect(committed.end).toBeGreaterThan(0.4);
+    expect(onSeek).not.toHaveBeenCalled();
+    expect(getOsmdRenderCalls()).toBe(1);
+  });
+
+  it("cancels a boundary draft when the controlled selection is cleared", async () => {
+    const onSelectionChange = vi.fn();
+    function Harness() {
+      const [selection, setSelection] = useState<{ start: number; end: number } | null>(
+        { start: 0.2, end: 0.4 },
+      );
+      return <><button onClick={() => setSelection(null)}>clear</button>
+        <ScoreViewer musicXml="<score-partwise/>" currentTime={0} timeline={timeline}
+          selection={selection} onSeek={vi.fn()} onSelectionChange={(next) => {
+            onSelectionChange(next);
+            setSelection(next);
+          }} onRendered={vi.fn()} /></>;
+    }
+    const view = render(<Harness />);
+    await waitFor(() => expect(view.getByText("第 1 / 3 小节")).toBeInTheDocument());
+    const handle = view.container.querySelector<SVGLineElement>(
+      '[data-score-selection-handle="end"]',
+    )!;
+    const initialX = Number(handle.getAttribute("x1"));
+    fireEvent.pointerDown(handle, pointer(12, initialX, 110));
+    fireEvent.pointerMove(handle, pointer(12, initialX + 40, 110));
+    await waitFor(() => expect(Number(handle.getAttribute("x1"))).toBeGreaterThan(initialX));
+    fireEvent.click(view.getByRole("button", { name: "clear" }));
+    fireEvent.pointerUp(handle, pointer(12, initialX + 40, 110));
+
+    expect(view.container.querySelector('[data-score-selection-handle="end"]')).toBeNull();
+    expect(onSelectionChange).not.toHaveBeenCalled();
+  });
+
   it("renders one padding-aligned selection segment per score system", async () => {
     function Harness() {
       const [selection, setSelection] = useState<{ start: number; end: number } | null>(null);

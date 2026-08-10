@@ -12,7 +12,10 @@ import {
 } from "@/lib/result/score-hit-map";
 import { scoreMeasureRect, scoreSelectionRects } from "@/lib/result/score-selection";
 import { createScoreTimeMap, measureIndexAtTime, measureStartSeconds, scoreTimeMapMatches } from "@/lib/result/score-time-map";
-import { ScoreSelectionOverlay } from "./score-selection-overlay";
+import {
+  ScoreSelectionOverlay,
+  type ScoreSelectionBoundaryHandlers,
+} from "./score-selection-overlay";
 import { ScoreToolbar } from "./score-toolbar";
 
 const SCORE_WIDTH = 720;
@@ -58,6 +61,8 @@ export function ScoreViewer({
   const {
     draftSelection,
     isDragging,
+    beginBoundaryResize,
+    cancelBoundaryResize,
     consumeClickSuppression,
     pointerHandlers,
   } = useScoreRangeDrag({
@@ -67,6 +72,16 @@ export function ScoreViewer({
     onCommit: onSelectionChange ?? undefined,
   });
   const visibleSelection = draftSelection ?? selection;
+  const boundaryHandlers = useMemo<ScoreSelectionBoundaryHandlers | undefined>(() => {
+    if (!selection || !onSelectionChange || measureCount === 0) return undefined;
+    return {
+      onPointerDown: (boundary, event) => beginBoundaryResize(event, boundary, selection),
+      onPointerMove: pointerHandlers.onPointerMove,
+      onPointerUp: pointerHandlers.onPointerUp,
+      onPointerCancel: pointerHandlers.onPointerCancel,
+      onLostPointerCapture: pointerHandlers.onLostPointerCapture,
+    };
+  }, [beginBoundaryResize, measureCount, onSelectionChange, pointerHandlers, selection]);
   const selectionRects = useMemo(() => {
     return renderedOsmd && timeMap && visibleSelection && measureCount > 0
       ? scoreSelectionRects(renderedOsmd, timeMap, visibleSelection, scale,
@@ -180,6 +195,10 @@ export function ScoreViewer({
     cursorElement?.style.setProperty("pointer-events", "none");
   }, [currentTime, measureCount, status, timeMap]);
 
+  useEffect(() => {
+    if (!selection) cancelBoundaryResize();
+  }, [cancelBoundaryResize, selection]);
+
   const seekToMeasure = (measureIndex: number) => {
     if (!timeMap || measureCount === 0) return;
     onSeek(measureStartSeconds(timeMap, measureIndex));
@@ -234,9 +253,14 @@ export function ScoreViewer({
         </div>
       )}
       <div ref={viewportRef} data-testid="score-viewport"
+        onPointerMove={pointerHandlers.onPointerMove}
+        onPointerUp={pointerHandlers.onPointerUp}
+        onPointerCancel={pointerHandlers.onPointerCancel}
+        onLostPointerCapture={pointerHandlers.onLostPointerCapture}
         className="relative max-h-[520px] overflow-auto overscroll-contain p-4">
         <ScoreSelectionOverlay width={SCORE_WIDTH * scale} height={scoreHeight}
-          activeMeasure={activeMeasureRect} selectionSegments={selectionRects} />
+          activeMeasure={activeMeasureRect} selectionSegments={selectionRects}
+          boundaryHandlers={boundaryHandlers} />
         <div
           ref={containerRef}
           aria-label="MusicXML 五线谱"

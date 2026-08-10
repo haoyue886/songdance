@@ -3,6 +3,10 @@ import { expect, test } from "@playwright/test";
 import { execFile } from "node:child_process";
 import { readFile } from "node:fs/promises";
 import { promisify } from "node:util";
+import {
+  verifyCommittedSelectionResize,
+  verifyCrossPageSelectionResize,
+} from "./score-selection-helpers";
 
 const execFileAsync = promisify(execFile);
 const infrastructureTimeout = Number(process.env.PLAYWRIGHT_INFRASTRUCTURE_TIMEOUT ?? 30_000);
@@ -120,6 +124,8 @@ test("plays, switches views and exports the public-domain example", async ({ pag
   expect(((openingBorderBox?.x ?? 0) - openingHighlightBox.x) / openingHighlightBox.width)
     .toBeGreaterThan(0.5);
   expect(await loopStartInput.inputValue()).not.toBe(loopBoundsBeforeDraft.start);
+  await verifyCommittedSelectionResize(page);
+  await page.screenshot({ path: testInfo.outputPath("score-selection-resized.png"), fullPage: false });
   await page.getByRole("button", { name: "清除选区" }).click();
 
   await scoreViewport.evaluate((element) => { element.scrollTop = 0; });
@@ -166,6 +172,7 @@ test("plays, switches views and exports the public-domain example", async ({ pag
   expect(Math.max(...crossPageBorderYs)).toBeGreaterThan(firstPageHeight);
   expect(new Set(crossPageSegmentKeys).size).toBe(crossPageSegmentKeys.length);
   expect(crossPageEndSeconds - crossPageStartSeconds).toBeGreaterThan(3);
+  await verifyCrossPageSelectionResize(page);
   await page.getByRole("button", { name: "清除选区" }).click();
   await scoreViewport.evaluate((element) => { element.scrollTop = 0; });
 

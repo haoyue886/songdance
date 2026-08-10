@@ -17,8 +17,16 @@ function Harness({
 }) {
   const viewportRef = useRef<HTMLDivElement>(null);
   const drag = useScoreRangeDrag({ enabled, viewportRef, secondsAtPoint, onCommit });
+  const boundaryEvents = {
+    onPointerMove: drag.pointerHandlers.onPointerMove,
+    onPointerUp: drag.pointerHandlers.onPointerUp,
+    onPointerCancel: drag.pointerHandlers.onPointerCancel,
+    onLostPointerCapture: drag.pointerHandlers.onLostPointerCapture,
+  };
+  const showBoundaries = !drag.draftSelection
+    || drag.draftSelection.start !== drag.draftSelection.end;
   return (
-    <div ref={viewportRef} data-testid="viewport">
+    <div ref={viewportRef} data-testid="viewport" {...boundaryEvents}>
       <div
         data-testid="score"
         data-dragging={String(drag.isDragging)}
@@ -27,6 +35,12 @@ function Harness({
           : "none"}
         {...drag.pointerHandlers}
       />
+      {showBoundaries && <>
+        <div data-testid="start-handle" {...boundaryEvents}
+          onPointerDown={(event) => drag.beginBoundaryResize(event, "start", { start: 2, end: 8 })} />
+        <div data-testid="end-handle" {...boundaryEvents}
+          onPointerDown={(event) => drag.beginBoundaryResize(event, "end", { start: 2, end: 8 })} />
+      </>}
     </div>
   );
 }
@@ -87,6 +101,93 @@ describe("score range drag", () => {
     fireEvent.pointerMove(score, pointer(2, 30, 100));
     flushFrame();
     expect(score).toHaveAttribute("data-draft", "2:3");
+  });
+
+  it.each([
+    ["start", "start-handle", 20, 10, "1:8", { start: 1, end: 8 }],
+    ["end across start", "end-handle", 80, 10, "1:2", { start: 1, end: 2 }],
+  ])("resizes the %s boundary from the old range and commits on release", (
+    _label,
+    testId,
+    startX,
+    endX,
+    draft,
+    committed,
+  ) => {
+    const onCommit = vi.fn();
+    const view = render(<Harness secondsAtPoint={(point) => point.x / 10} onCommit={onCommit} />);
+    const score = view.getByTestId("score");
+    const handle = view.getByTestId(testId);
+
+    fireEvent.pointerDown(handle, pointer(7, startX, 100));
+    fireEvent.pointerMove(handle, pointer(7, startX - 4, 100));
+    expect(score).toHaveAttribute("data-dragging", "false");
+    expect(score).toHaveAttribute("data-draft", "none");
+    fireEvent.pointerMove(handle, pointer(7, endX, 100));
+    flushFrame();
+    expect(score).toHaveAttribute("data-draft", draft);
+    expect(onCommit).not.toHaveBeenCalled();
+
+    fireEvent.pointerUp(handle, pointer(7, endX, 100));
+    expect(score).toHaveAttribute("data-draft", "none");
+    expect(onCommit).toHaveBeenCalledOnce();
+    expect(onCommit).toHaveBeenCalledWith(committed);
+  });
+
+  it("treats a boundary press within four pixels as neither resize nor create", () => {
+    const secondsAtPoint = vi.fn((point: ScorePointer) => point.x / 10);
+    const onCommit = vi.fn();
+    const view = render(<Harness secondsAtPoint={secondsAtPoint} onCommit={onCommit} />);
+    const handle = view.getByTestId("end-handle");
+
+    fireEvent.pointerDown(handle, pointer(8, 80, 100));
+    fireEvent.pointerMove(handle, pointer(8, 84, 100));
+    fireEvent.pointerUp(handle, pointer(8, 84, 100));
+
+    expect(secondsAtPoint).not.toHaveBeenCalled();
+    expect(onCommit).not.toHaveBeenCalled();
+    expect(view.getByTestId("score")).toHaveAttribute("data-draft", "none");
+  });
+
+  it("keeps resizing through a zero-width draft after the handle disappears", () => {
+    const onCommit = vi.fn();
+    const view = render(<Harness secondsAtPoint={(point) => point.x / 10} onCommit={onCommit} />);
+    const score = view.getByTestId("score");
+    const handle = view.getByTestId("end-handle");
+    const viewport = view.getByTestId("viewport");
+
+    fireEvent.pointerDown(handle, pointer(13, 80, 100));
+    fireEvent.pointerMove(handle, pointer(13, 20, 100));
+    flushFrame();
+    expect(score).toHaveAttribute("data-draft", "2:2");
+    fireEvent.pointerMove(viewport, pointer(13, 10, 100));
+    flushFrame();
+    expect(score).toHaveAttribute("data-draft", "1:2");
+    fireEvent.pointerUp(viewport, pointer(13, 10, 100));
+
+    expect(onCommit).toHaveBeenCalledOnce();
+    expect(onCommit).toHaveBeenCalledWith({ start: 1, end: 2 });
+  });
+
+  it.each([
+    ["pointerCancel", (handle: HTMLElement) =>
+      fireEvent.pointerCancel(handle, pointer(9, 10, 100))],
+    ["lostPointerCapture", (handle: HTMLElement) =>
+      fireEvent.lostPointerCapture(handle, pointer(9, 10, 100))],
+    ["Escape", () => fireEvent.keyDown(window, { key: "Escape" })],
+  ])("restores the old range when boundary resize ends through %s", (_label, cancel) => {
+    const onCommit = vi.fn();
+    const view = render(<Harness secondsAtPoint={(point) => point.x / 10} onCommit={onCommit} />);
+    const score = view.getByTestId("score");
+    const handle = view.getByTestId("start-handle");
+    fireEvent.pointerDown(handle, pointer(9, 20, 100));
+    fireEvent.pointerMove(handle, pointer(9, 10, 100));
+    flushFrame();
+    expect(score).toHaveAttribute("data-draft", "1:8");
+
+    cancel(handle);
+    expect(score).toHaveAttribute("data-draft", "none");
+    expect(onCommit).not.toHaveBeenCalled();
   });
 
   it("tracks the latest pointer across 120 coalesced animation frames", () => {

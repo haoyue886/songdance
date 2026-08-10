@@ -19,12 +19,13 @@ export type ScoreRange = { start: number; end: number };
 export type ScorePointer = { x: number; y: number };
 
 type ActiveDrag = {
+  mode: "create" | "resize";
   pointerId: number;
   anchorSeconds: number;
   focusSeconds: number;
   start: ScorePointer;
   latest: ScorePointer;
-  target: HTMLElement;
+  target: Element;
   dragging: boolean;
 };
 
@@ -90,6 +91,30 @@ export function useScoreRangeDrag({
     if (active && release) releaseCapture(active);
   }, [cancelFrame, releaseCapture, suppressNextClick]);
 
+  const startDrag = useCallback((
+    event: ReactPointerEvent<Element>,
+    anchorSeconds: number,
+    focusSeconds: number,
+    mode: ActiveDrag["mode"],
+    captureTarget = event.currentTarget,
+  ) => {
+    if (!enabled || activeRef.current || event.isPrimary === false) return false;
+    if (event.pointerType === "mouse" && event.button !== 0) return false;
+    const point = { x: event.clientX, y: event.clientY };
+    captureTarget.setPointerCapture?.(event.pointerId);
+    activeRef.current = {
+      mode,
+      pointerId: event.pointerId,
+      anchorSeconds,
+      focusSeconds,
+      start: point,
+      latest: point,
+      target: captureTarget,
+      dragging: false,
+    };
+    return true;
+  }, [enabled]);
+
   useEffect(() => {
     runFrameRef.current = () => {
       animationFrameRef.current = null;
@@ -107,24 +132,27 @@ export function useScoreRangeDrag({
   }, [scheduleFrame, viewportRef]);
 
   const handlePointerDown = useCallback((event: ReactPointerEvent<HTMLElement>) => {
-    if (!enabled || event.isPrimary === false) return;
-    if (event.pointerType === "mouse" && event.button !== 0) return;
     const point = { x: event.clientX, y: event.clientY };
     const seconds = secondsAtPointRef.current(point);
     if (seconds === null) return;
-    event.currentTarget.setPointerCapture?.(event.pointerId);
-    activeRef.current = {
-      pointerId: event.pointerId,
-      anchorSeconds: seconds,
-      focusSeconds: seconds,
-      start: point,
-      latest: point,
-      target: event.currentTarget,
-      dragging: false,
-    };
-  }, [enabled]);
+    startDrag(event, seconds, seconds, "create");
+  }, [startDrag]);
 
-  const handlePointerMove = useCallback((event: ReactPointerEvent<HTMLElement>) => {
+  const beginBoundaryResize = useCallback((
+    event: ReactPointerEvent<Element>,
+    boundary: "start" | "end",
+    selection: ScoreRange,
+  ) => {
+    const anchorSeconds = boundary === "start" ? selection.end : selection.start;
+    const focusSeconds = boundary === "start" ? selection.start : selection.end;
+    if (!Number.isFinite(anchorSeconds) || !Number.isFinite(focusSeconds)) return;
+    if (startDrag(event, anchorSeconds, focusSeconds, "resize",
+      viewportRef.current ?? event.currentTarget)) {
+      event.stopPropagation();
+    }
+  }, [startDrag, viewportRef]);
+
+  const handlePointerMove = useCallback((event: ReactPointerEvent<Element>) => {
     const active = activeRef.current;
     if (!active || active.pointerId !== event.pointerId) return;
     active.latest = { x: event.clientX, y: event.clientY };
@@ -141,7 +169,7 @@ export function useScoreRangeDrag({
     scheduleFrame();
   }, [scheduleFrame]);
 
-  const handlePointerUp = useCallback((event: ReactPointerEvent<HTMLElement>) => {
+  const handlePointerUp = useCallback((event: ReactPointerEvent<Element>) => {
     const active = activeRef.current;
     if (!active || active.pointerId !== event.pointerId) return;
     active.latest = { x: event.clientX, y: event.clientY };
@@ -157,12 +185,16 @@ export function useScoreRangeDrag({
     onCommitRef.current?.(normalizeRange(active.anchorSeconds, focusSeconds));
   }, [cancelFrame, releaseCapture, suppressNextClick]);
 
-  const handlePointerCancel = useCallback((event: ReactPointerEvent<HTMLElement>) => {
+  const handlePointerCancel = useCallback((event: ReactPointerEvent<Element>) => {
     if (activeRef.current?.pointerId === event.pointerId) cancelDrag(false);
   }, [cancelDrag]);
 
-  const handleLostPointerCapture = useCallback((event: ReactPointerEvent<HTMLElement>) => {
+  const handleLostPointerCapture = useCallback((event: ReactPointerEvent<Element>) => {
     if (activeRef.current?.pointerId === event.pointerId) cancelDrag(false);
+  }, [cancelDrag]);
+
+  const cancelBoundaryResize = useCallback(() => {
+    if (activeRef.current?.mode === "resize") cancelDrag();
   }, [cancelDrag]);
 
   const consumeClickSuppression = useCallback(() => {
@@ -190,6 +222,8 @@ export function useScoreRangeDrag({
   return {
     draftSelection,
     isDragging,
+    beginBoundaryResize,
+    cancelBoundaryResize,
     consumeClickSuppression,
     pointerHandlers: {
       onPointerDown: handlePointerDown,

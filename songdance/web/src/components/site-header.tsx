@@ -4,6 +4,7 @@ import { BrandMark } from "./brand-mark";
 const NAV_ITEMS = [
   { href: "/#features", label: "功能" },
   { href: "/#how-it-works", label: "工作原理" },
+  { href: "/audio-to-midi", label: "Audio to MIDI" },
   { href: "/examples", label: "示例" },
   { href: "/privacy", label: "隐私" },
 ];

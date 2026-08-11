@@ -97,7 +97,9 @@ measured. Each worker process loads the transcription model.
 2. Set **Root Directory** to `web`.
 3. Keep Framework Preset as Next.js. `web/vercel.json` supplies the install command,
    build command and response security headers.
-4. Add `NEXT_PUBLIC_API_URL=https://API_DOMAIN` to Production and Preview environments.
+4. Add `NEXT_PUBLIC_API_URL=https://API_DOMAIN` and `NEXT_PUBLIC_SITE_URL=https://WEB_DOMAIN`
+   to Production and Preview environments. Set `NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION`
+   after creating the Google Search Console property.
 5. Deploy and note the final `https://*.vercel.app` URL.
 6. Return to the Railway API and set `SONGDANCE_CORS_ORIGINS` to that exact origin, then
    redeploy the API. If a custom Web domain is added, include both HTTPS origins separated

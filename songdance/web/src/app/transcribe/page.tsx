@@ -3,8 +3,20 @@ import { SiteHeader } from "@/components/site-header";
 import { TranscribeClient } from "./transcribe-client";
 
 export const metadata: Metadata = {
-  title: "准备钢琴转录片段 — SongDance",
-  description: "上传钢琴录音并选择最长 90 秒的转录片段。",
+  title: "Upload Piano Audio for MIDI Transcription",
+  description: "Upload MP3, WAV or M4A piano audio and select a 1–90 second excerpt for MIDI and MusicXML transcription.",
+  alternates: { canonical: "/transcribe" },
+  openGraph: {
+    type: "website",
+    url: "/transcribe",
+    title: "Upload Piano Audio for MIDI Transcription",
+    description: "Prepare a piano recording for MIDI and MusicXML transcription.",
+  },
+  twitter: {
+    card: "summary",
+    title: "Upload Piano Audio for MIDI Transcription",
+    description: "Prepare a piano recording for MIDI and MusicXML transcription.",
+  },
 };
 
 export default function TranscribePage() {

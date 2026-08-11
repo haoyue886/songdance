@@ -11,7 +11,8 @@ export function SiteFooter() {
             匿名 MVP。音频不用于模型训练，任务页提供立即删除入口。
           </p>
         </div>
-        <div className="flex gap-5 text-sm font-semibold text-[#d9e5e1]">
+        <div className="flex flex-wrap gap-5 text-sm font-semibold text-[#d9e5e1]">
+          <Link href="/audio-to-midi">Audio to MIDI</Link>
           <Link href="/privacy">隐私说明</Link>
           <Link href="/terms">使用条款</Link>
           <Link href="/examples">转录示例</Link>

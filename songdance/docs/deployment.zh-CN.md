@@ -71,7 +71,9 @@ API 是唯一允许读取或写入存储桶的组件。浏览器只会收到短�
 1. 将同一个私有仓库导入 Vercel。
 2. 将 **Root Directory** 设置为 `web`。
 3. 保持 Framework Preset 为 Next.js。`web/vercel.json` 提供安装命令、构建命令和响应安全头。
-4. 为 Production 和 Preview 环境添加 `NEXT_PUBLIC_API_URL=https://API_DOMAIN`。
+4. 为 Production 和 Preview 环境添加 `NEXT_PUBLIC_API_URL=https://API_DOMAIN` 与
+   `NEXT_PUBLIC_SITE_URL=https://WEB_DOMAIN`；创建 Google Search Console 资源后再设置
+   `NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION`。
 5. 部署并记录最终的 `https://*.vercel.app` URL。
 6. 返回 Railway API，将 `SONGDANCE_CORS_ORIGINS` 设置为该精确源站，然后重新部署 API。若添加自定义 Web 域名，在迁移期间用逗号分隔并同时包含两个 HTTPS 源站，随后删除已废弃的源站。
 

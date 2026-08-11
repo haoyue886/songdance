@@ -5,8 +5,20 @@ import { SiteHeader } from "@/components/site-header";
 import { ExampleClient } from "./example-client";
 
 export const metadata: Metadata = {
-  title: "公共领域钢琴转录示例 — SongDance",
-  description: "直接体验真实钢琴音频的五线谱、钢琴卷帘和 MIDI、MusicXML、PDF 导出。",
+  title: "Real Piano Audio to MIDI Transcription Example",
+  description: "Hear a real public-domain piano recording and inspect its MIDI, MusicXML, PDF, sheet music and piano-roll transcription.",
+  alternates: { canonical: "/examples" },
+  openGraph: {
+    type: "website",
+    url: "/examples",
+    title: "Real Piano Audio to MIDI Transcription Example",
+    description: "Review a real piano transcription before converting your own recording.",
+  },
+  twitter: {
+    card: "summary",
+    title: "Real Piano Audio to MIDI Transcription Example",
+    description: "Review a real piano transcription before converting your own recording.",
+  },
 };
 
 export default function ExamplesPage() {

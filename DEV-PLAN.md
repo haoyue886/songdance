@@ -34,6 +34,7 @@
 | Phase 24 | 已完成 | 实时谱面拖选预览、连续事件命中、反向/跨系统手势与边缘自动滚动；代码审查 Stage 1/2 PASS |
 | Phase 25 | 已完成 | 已提交谱面选区的 `↔` 边界命中、实时端点调整与稳定 pointer capture；代码审查 Stage 1/2 PASS |
 | Phase 26 | 已完成 | 双击清除正式谱面选区、边界点击隔离与无选区即时定位；代码审查 Stage 1/2 PASS |
+| Phase 27 | 已完成 | 海外 SEO 技术基线、核心 Audio-to-MIDI 页面与索引门禁；代码审查 Stage 1/2 PASS |
 
 ## 功能依赖图
 
@@ -772,6 +773,50 @@ Phase 9 基线
 - 无正式选区继续即时采用原有单击定位，不引入不可读取系统双击阈值的延迟计时器；清除选区后恢复该语义。
 - 组件测试覆盖正文单击隔离、端点双击清除、端点短点击不定位和清除后的普通定位；真实 18 小节 MusicXML E2E 验证选区、循环边界、播放头和两级滚动边界。
 - Web `28 files / 129 tests`、Playwright `14/14`、lint、typecheck、生产构建通过；代码审查 Stage 1/2 PASS，`0 HIGH / 0 MEDIUM / 0 LOW`。
+
+---
+
+## Phase 27：海外 SEO 技术基线与核心页面
+
+**目标：** 先让稳定公开页面可被正确发现、理解和索引，再用一个高意图英语核心页面验证海外自然搜索需求；临时任务与未经验证的批量页面不得进入索引。
+
+**交付内容：**
+
+- 建立统一站点 origin、metadata template、canonical、Open Graph/Twitter、GSC verification、`robots.ts` 与 `sitemap.ts`。
+- 为匿名 `/jobs/*` 输出 `noindex, nofollow`，并用 sitemap 测试保证随机任务 URL 永不进入公开索引资产。
+- 新增 `/audio-to-midi` 服务端可抓取页面，包含工具入口、真实示例、输出/限制、FAQ、内部链接和与可见内容一致的 JSON-LD。
+- 优化首页与示例页元数据、站内链接和 WebApplication 结构化数据；补充生产 `NEXT_PUBLIC_SITE_URL` 配置说明。
+- 产出 `SEO-PLAN.md`，将首批 10 页、3 份 Brief、发布检查和 30 天 GSC 循环作为扩展门禁。
+
+**关键文件：**
+
+- `SEO-PLAN.md` — 关键词、页面资产、Brief、发布与迭代计划。
+- `songdance/web/src/lib/seo/site.ts` — 站点 origin 与绝对 URL。
+- `songdance/web/src/app/layout.tsx` — 全局 metadata 和验证标记。
+- `songdance/web/src/app/robots.ts`、`sitemap.ts` — 抓取与索引入口。
+- `songdance/web/src/app/audio-to-midi/page.tsx` — 英语核心工具页与结构化数据。
+- `songdance/web/src/app/jobs/[jobId]/page.tsx` — 临时任务 noindex。
+
+**验收标准：**
+
+- 生产域名配置后，稳定公开页面 canonical、Open Graph 和 sitemap 同源且不含 localhost；本地构建使用明确的开发 fallback。
+- robots、sitemap 与核心页静态响应为 200；sitemap 无 `/jobs/`，任务页 metadata 明确 `noindex, nofollow`。
+- `/audio-to-midi` 服务端 HTML 含唯一 H1、真实 CTA、限制、FAQ、站内链接和可解析 JSON-LD；不依赖客户端渲染才出现关键词正文。
+- Web 单测、lint、typecheck、生产构建与 Playwright 页面抓取通过；代码审查 Stage 1/2 PASS。
+
+**依赖与风险：**
+
+- 当前没有真实搜索量、KD、SERP 或 GSC 数据，关键词优先级全部标为假设；不得把计划数字写成已验证市场事实。
+- `NEXT_PUBLIC_SITE_URL` 在生产必须设置为最终 HTTPS 域名；未设置时本地构建只能生成 localhost fallback，不可直接作为生产 SEO 验收证据。
+- 不新增分析脚本或第三方 cookie；GSC 验证仅在配置 token 后输出。
+
+**完成记录（2026-08-11）：**
+
+- 建立统一生产 origin、页面级 canonical/OG/Twitter、GSC verification、robots 与 sitemap；生产构建的 6 个稳定 URL 全部使用同一 HTTPS origin，任务 URL 不进入 sitemap。
+- 新增服务端 `/audio-to-midi` 英语核心页，提供真实转录入口、公共示例、输入/输出边界、FAQ、内部链接和 WebApplication + FAQPage JSON-LD；结构化数据不声明未经页面证明的价格、评分或准确率。
+- `/jobs/*` 输出 `noindex, nofollow, nocache` 且不输出分享 metadata；自定义 404 保持唯一 title、唯一框架 noindex，并移除错误的首页 OG/Twitter 继承。
+- 原始响应 E2E 不执行客户端 JavaScript 即解析 H1、正文和 JSON-LD；桌面与 375 px 截图无横向溢出。
+- Web `29 files / 131 tests`、Playwright `15/15`、lint、typecheck、生产构建和 `git diff --check` 通过；代码审查 Stage 1/2 PASS，`0 HIGH / 0 MEDIUM / 2 LOW`。剩余 LOW 为上线后的自然搜索漏斗归因和原始 DOM 断言加固，不阻断 AC-059–AC-063。
 
 ---
 

@@ -86,6 +86,7 @@ SongDance 是一个钢琴优先、逐步扩展到多乐器的公开音频转录 
 | SCOPE-020 | 吉他标准记谱转录 | P1 | 支持单乐器吉他录音的复音 MIDI 与标准五线谱；首批不生成 TAB 或 Guitar Pro |
 | SCOPE-021 | 鼓转录与打击乐谱 | P1 | 输出 General MIDI Channel 10 打击乐事件、鼓时间线和 MusicXML 打击乐谱 |
 | SCOPE-022 | 完整混音多轨转录 | P1 | 先分轨再逐轨转录，并与直接多乐器 AMT 做 A/B；仅返回通过质量门禁的已知轨道 |
+| SCOPE-023 | 可索引公开页面与技术 SEO 基线 | P1 | 面向英语任务型搜索提供核心工具页、真实示例、标准元数据、sitemap 与结构化数据；不批量生成薄页面 |
 
 ### 2.2 不在本版本范围
 
@@ -115,6 +116,7 @@ SongDance 是一个钢琴优先、逐步扩展到多乐器的公开音频转录 
 | TASK-007 | 用户为单乐器录音选择正确的目标乐器和谱面类型 | 独立音乐制作人 | P1 |
 | TASK-008 | 用户把不同乐器或人声旋律转换为统一可编辑的 MIDI 与对应乐谱 | 独立音乐制作人 | P1 |
 | TASK-009 | 用户从完整混音中获得多个可独立检查和下载的转录轨道 | 独立音乐制作人 | P1 |
+| TASK-010 | 海外用户通过任务型搜索找到并验证钢琴 Audio-to-MIDI 工具 | 独立音乐制作人、编曲者 | P1 |
 
 ## 4. 用户流程
 
@@ -580,6 +582,31 @@ SongDance 是一个钢琴优先、逐步扩展到多乐器的公开音频转录 
 - [ ] AC-040：Given 一个 stem 转录失败，when 用户查看结果，then 任务显示部分成功，其他成功轨道仍可播放和下载，失败轨道可单独重试。
 - [ ] AC-041：Given 用户删除完整混音任务或任务过期，when 清理完成，then 原始混音、全部 stem、轨道产物和质量报告均被删除。
 - [ ] AC-042：Given 完整混音固定集，when 比较分轨后转录与直接多乐器 AMT，then 只有同时通过逐乐器质量、许可、P95 时延和峰值内存门槛的路径才能进入默认生产路由。
+
+### REQ-012：公开页面索引与海外 SEO
+
+**优先级：** P1
+**关联任务：** TASK-010
+
+**行为：** 让搜索引擎能够准确发现、理解并索引公开产品能力，同时阻止临时匿名任务页进入搜索结果。
+
+**规则：**
+
+- MUST 为首页、核心工具、真实示例和法律页面提供唯一 title、description 与 canonical，并通过环境变量使用最终生产 HTTPS 域名。
+- MUST 提供可访问的 `robots.txt` 和 `sitemap.xml`；sitemap 只包含稳定公开页面，不包含带随机 ID 的任务页。
+- MUST 为 `/jobs/*` 输出 `noindex, nofollow`，避免临时结果、过期链接或用户数据进入索引。
+- MUST 只输出与页面可见内容一致的结构化数据，不伪造评分、用户数量、准确率、价格或未经验证的产品能力。
+- MUST 首先建设一个围绕 `audio to MIDI converter` 意图的英语核心页面，包含真实工具入口、示例、限制、FAQ 与站内链接；其余格式、教程和比较页在 GSC 出现需求信号后逐步增加。
+- MUST NOT 批量生成关键词替换式薄页面、重复内容或未经真实测试的竞品比较。
+- SHOULD 支持 GSC 验证配置，并把自然搜索访问与工具开始、任务完成和导出事件关联分析。
+
+**验收标准：**
+
+- [ ] AC-059：Given 生产域名已配置，when 抓取任一稳定公开页面，then canonical、Open Graph URL 和 sitemap URL 均使用同一 HTTPS origin，且没有 localhost。
+- [ ] AC-060：Given 搜索引擎抓取站点，when 请求 `robots.txt` 和 `sitemap.xml`，then 两者返回 200，sitemap 只列稳定公开页面且不含 `/jobs/`。
+- [ ] AC-061：Given 打开任一匿名任务页，when 检查页面元数据，then robots 指令为 `noindex, nofollow`，任务 URL 不出现在 sitemap。
+- [ ] AC-062：Given 打开 `/audio-to-midi`，when 不执行客户端 JavaScript读取服务端 HTML，then 可见唯一 H1、核心任务说明、真实工具 CTA、限制、FAQ 和内部链接，且 JSON-LD 与页面内容一致。
+- [ ] AC-063：Given 未获得 GSC 查询和转化信号，when 发布 SEO 内容，then 不新增批量格式/乐器模板页或无真实证据的比较页。
 
 ## 6. 数据模型
 

@@ -2,8 +2,20 @@ import type { Metadata } from "next";
 import { LegalPage } from "@/components/legal-page";
 
 export const metadata: Metadata = {
-  title: "使用条款 - SongDance",
+  title: "使用条款",
   description: "SongDance 内容权利、服务限制和合理使用说明。",
+  alternates: { canonical: "/terms" },
+  openGraph: {
+    type: "website",
+    url: "/terms",
+    title: "SongDance 使用条款",
+    description: "查看 SongDance 的内容权利、服务边界和合理使用规则。",
+  },
+  twitter: {
+    card: "summary",
+    title: "SongDance 使用条款",
+    description: "查看 SongDance 的内容权利、服务边界和合理使用规则。",
+  },
 };
 
 const SECTIONS = [

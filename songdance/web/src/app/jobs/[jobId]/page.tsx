@@ -3,8 +3,11 @@ import { SiteHeader } from "@/components/site-header";
 import { JobStatusClient } from "./job-status-client";
 
 export const metadata: Metadata = {
-  title: "转录任务 — SongDance",
+  title: "转录任务",
   description: "查看钢琴转录任务状态。",
+  robots: { index: false, follow: false, nocache: true },
+  openGraph: null,
+  twitter: null,
 };
 
 export default async function JobPage({

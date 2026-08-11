@@ -2,8 +2,20 @@ import type { Metadata } from "next";
 import { LegalPage } from "@/components/legal-page";
 
 export const metadata: Metadata = {
-  title: "隐私说明 - SongDance",
+  title: "隐私说明",
   description: "SongDance 音频处理、保存期限和匿名事件说明。",
+  alternates: { canonical: "/privacy" },
+  openGraph: {
+    type: "website",
+    url: "/privacy",
+    title: "SongDance 隐私说明",
+    description: "了解 SongDance 如何处理、临时保存和删除上传音频。",
+  },
+  twitter: {
+    card: "summary",
+    title: "SongDance 隐私说明",
+    description: "了解 SongDance 如何处理、临时保存和删除上传音频。",
+  },
 };
 
 const SECTIONS = [

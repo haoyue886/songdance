@@ -1,7 +1,7 @@
 # SongDance Overseas SEO Plan
 
 > 数据日期：2026-08-11
-> 当前状态：首轮本地实现与验证完成；待生产域名、GSC 配置和数据回流
+> 当前状态：技术 SEO 基线已完成；英语默认的中英文国际化与首页合并进入 Phase 28
 > 数据说明：当前没有 Ahrefs、Semrush、Keyword Planner 或 GSC 实测数据。下列关键词优先级基于产品匹配度与搜索意图假设，不包含虚构的搜索量或 KD。
 
 ## 1. SEO 定位
@@ -30,10 +30,10 @@
 
 | 优先级 | URL | 主关键词 | 页面类型 | 难度假设 | 状态 / 理由 |
 |---:|---|---|---|---|---|
-| 1 | `/audio-to-midi` | `audio to MIDI converter` | 核心工具页 | 中高 | 本轮上线；最高意图，导向真实上传工具 |
-| 2 | `/` | `piano audio to MIDI` | 产品首页 | 中 | 本轮优化元数据与结构化数据 |
-| 3 | `/examples` | `piano transcription example` | 真实示例 | 低中 | 本轮优化；提供可验证证据 |
-| 4 | `/piano-audio-to-midi` | `piano audio to MIDI` | 子功能页 | 中 | GSC 验证后建设，避免与首页互抢 |
+| 1 | `/` | `audio to MIDI converter`、`piano audio to MIDI` | 英语核心首页 | 中高 | Phase 28 合并原核心落地页；品牌和核心任务只保留一个权威 URL |
+| 2 | `/examples` | `piano transcription example` | 英语真实示例 | 低中 | 提供可验证证据并反链首页与工具 |
+| 3 | `/transcribe` | `convert piano audio to MIDI` | 英语工具页 | 中 | 承担上传和转换，不堆叠重复营销正文 |
+| 4 | `/zh` | `音频转 MIDI`、`钢琴录音转 MIDI` | 中文本地化首页 | 中 | 与英语首页共享组件；独立 locale URL，不是复制页面实现 |
 | 5 | `/audio-to-sheet-music` | `audio to sheet music` | 子功能页 | 中高 | 需强化 MusicXML/PDF 示例后建设 |
 | 6 | `/mp3-to-midi` | `MP3 to MIDI converter` | 格式页 | 中高 | 只在核心页出词后建设独立格式说明 |
 | 7 | `/wav-to-midi` | `WAV to MIDI converter` | 格式页 | 中 | 与 MP3 页分阶段 A/B，不批量生成 |
@@ -43,7 +43,7 @@
 
 ## 4. 首批 SEO Briefs
 
-### `/audio-to-midi`
+### `/`
 
 - Primary keyword: `audio to MIDI converter`
 - Secondary: `piano audio to MIDI`, `convert piano recording to MIDI`, `audio to MusicXML`
@@ -53,18 +53,8 @@
 - First-screen promise: 上传 MP3/WAV/M4A 钢琴片段，导出 MIDI、MusicXML 和 PDF，并先用真实谱面验证结果。
 - Differentiation: 真实公共领域示例、可试听原音/转录演奏、透明的 90 秒与自动误差边界。
 - CTA: `Convert piano audio`
-- Internal links: `/transcribe`、`/examples`、`/privacy`
+- Internal links: `/transcribe`、`/examples`、`/privacy`，并提供 `/zh` 语言切换
 - Schema: `WebApplication` + `FAQPage`
-
-### `/`
-
-- Primary keyword: `piano audio to MIDI`
-- Intent: 了解产品并开始转换
-- Title: `Piano Audio to MIDI Converter | SongDance`
-- H1: 保持中文产品主张，但正文与元数据明确 piano audio to MIDI、MusicXML 和 sheet music。
-- CTA: 进入 `/transcribe`
-- Internal links: 核心工具页、真实示例、处理流程、隐私说明。
-- Schema: `WebApplication`
 
 ### `/examples`
 
@@ -75,23 +65,32 @@
 - CTA: `Transcribe your piano recording`
 - Schema: `WebPage`，不伪造评分或 Review schema。
 
+### Locale 架构
+
+- 英语是默认语言，使用 `/`、`/transcribe`、`/examples`、`/privacy` 和 `/terms` 等无前缀 URL。
+- 简体中文使用 `/zh`、`/zh/transcribe`、`/zh/examples`、`/zh/privacy` 和 `/zh/terms`；两种语言共享页面组件和功能测试。
+- 语言切换导航到同一逻辑页面的另一 locale，保留查询参数、hash 与匿名任务 ID；不依靠客户端隐藏/替换 DOM 完成翻译。
+- 每个稳定语言 URL 自引用 canonical，并与对应语言页面互相输出 `hreflang="en"`、`hreflang="zh-CN"`；`x-default` 指向英语 URL。
+- `/audio-to-midi` 永久重定向到 `/`，不进入导航、sitemap 或 canonical；首页承接原页面的任务说明、限制、FAQ、内部链接和结构化数据。
+
 ## 5. 发布清单
 
 - [ ] 生产环境设置 `NEXT_PUBLIC_SITE_URL` 为最终 HTTPS 域名。
-- [x] 每个公开页面拥有唯一 title、description 与 canonical。
-- [x] `/robots.txt` 与 `/sitemap.xml` 可访问，sitemap 不包含匿名任务 URL。
+- [ ] 每个英语和中文公开 URL 拥有本地化 title、description、自引用 canonical 和双向 hreflang。
+- [ ] `/robots.txt` 与 `/sitemap.xml` 可访问，sitemap 包含稳定语言版本且不包含匿名任务 URL。
 - [x] `/jobs/*` 输出 `noindex, nofollow`，避免临时结果进入索引。
-- [x] 首页和核心工具页输出与可见内容一致的 JSON-LD。
+- [ ] 英语和中文首页输出与各自可见内容一致的 JSON-LD。
 - [ ] GSC 验证环境变量配置完成并提交 sitemap。
 - [ ] 埋点能区分 SEO 页面访问、工具开始、任务完成与导出。
-- [x] 首页、核心页、示例页之间存在上下文内部链接，无孤儿页。
+- [ ] 首页、工具页、示例页和对应语言版本之间存在上下文内部链接与语言切换，无孤儿页。
+- [ ] `/audio-to-midi` 永久重定向到 `/`，且不再被站内引用。
 - [x] 不创建未经 GSC 验证的批量格式/乐器模板页。
 
 ## 6. 30 天迭代
 
-- 第 1 周：部署技术 SEO 和 `/audio-to-midi`；验证 canonical、robots、sitemap、结构化数据与 GSC 收录。
+- 第 1 周：上线英语默认与 `/zh` 国际化，把核心内容合并到 `/`，验证旧地址永久重定向、canonical、hreflang、robots、sitemap 与结构化数据。
 - 第 2 周：按 GSC 查询词修正 title/H1/FAQ；为有曝光无点击的词优化 SERP 文案；获得首批合规目录/产品资料页链接。
-- 第 3 周：只扩展已有曝光支持的一个页面集，优先在 `/piano-audio-to-midi` 与 `/audio-to-sheet-music` 中二选一。
+- 第 3 周：只扩展已有曝光支持的一个页面集，优先在 `/audio-to-sheet-music` 与教程内容中二选一；不再创建与英语首页争夺 `piano audio to MIDI` 的重复页面。
 - 第 4 周：比较自然搜索访问到 `tool_start`、任务完成和导出的漏斗；合并无曝光内容，规划下一轮教程或格式页。
 
 ## 7. 成功信号

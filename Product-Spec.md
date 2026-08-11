@@ -12,7 +12,7 @@
 
 ### 1.1 产品摘要
 
-SongDance 是一个钢琴优先、逐步扩展到多乐器的公开音频转录 Web 应用。当前 P0 先把钢琴转录质量做稳；后续 P1 支持吉他、贝斯、小提琴、长笛、降 B 调小号、中音/次中音萨克斯、鼓和人声旋律，并在单乐器模式通过后增加完整混音的分轨与多轨转录。
+SongDance 是一个面向海外用户、钢琴优先并逐步扩展到多乐器的公开音频转录 Web 应用。网站默认使用英语，并通过同一套页面组件支持简体中文。当前 P0 先把钢琴转录质量做稳；后续 P1 支持吉他、贝斯、小提琴、长笛、降 B 调小号、中音/次中音萨克斯、鼓和人声旋律，并在单乐器模式通过后增加完整混音的分轨与多轨转录。
 
 有音高乐器输出 MIDI、MusicXML、五线谱预览和 PDF；鼓输出 General MIDI 打击乐轨与打击乐谱；人声只输出旋律音符，不做歌词识别。首版使用成熟开源模型验证核心价值，不承诺达到商业竞品 Songscription 的转录准确率。
 
@@ -86,7 +86,8 @@ SongDance 是一个钢琴优先、逐步扩展到多乐器的公开音频转录 
 | SCOPE-020 | 吉他标准记谱转录 | P1 | 支持单乐器吉他录音的复音 MIDI 与标准五线谱；首批不生成 TAB 或 Guitar Pro |
 | SCOPE-021 | 鼓转录与打击乐谱 | P1 | 输出 General MIDI Channel 10 打击乐事件、鼓时间线和 MusicXML 打击乐谱 |
 | SCOPE-022 | 完整混音多轨转录 | P1 | 先分轨再逐轨转录，并与直接多乐器 AMT 做 A/B；仅返回通过质量门禁的已知轨道 |
-| SCOPE-023 | 可索引公开页面与技术 SEO 基线 | P1 | 面向英语任务型搜索提供核心工具页、真实示例、标准元数据、sitemap 与结构化数据；不批量生成薄页面 |
+| SCOPE-023 | 可索引公开页面与技术 SEO 基线 | P1 | 由默认英语首页承接核心任务型搜索，提供真实示例、标准元数据、sitemap 与结构化数据；不批量生成薄页面 |
+| SCOPE-024 | 英语默认的中英文国际化 | P1 | 页面组件只维护一套；英语使用无前缀 URL，简体中文使用 `/zh` 前缀并支持服务端翻译与语言切换 |
 
 ### 2.2 不在本版本范围
 
@@ -117,6 +118,7 @@ SongDance 是一个钢琴优先、逐步扩展到多乐器的公开音频转录 
 | TASK-008 | 用户把不同乐器或人声旋律转换为统一可编辑的 MIDI 与对应乐谱 | 独立音乐制作人 | P1 |
 | TASK-009 | 用户从完整混音中获得多个可独立检查和下载的转录轨道 | 独立音乐制作人 | P1 |
 | TASK-010 | 海外用户通过任务型搜索找到并验证钢琴 Audio-to-MIDI 工具 | 独立音乐制作人、编曲者 | P1 |
+| TASK-011 | 用户在英语与简体中文之间切换并继续当前任务 | 独立音乐制作人、编曲者 | P1 |
 
 ## 4. 用户流程
 
@@ -596,7 +598,8 @@ SongDance 是一个钢琴优先、逐步扩展到多乐器的公开音频转录 
 - MUST 提供可访问的 `robots.txt` 和 `sitemap.xml`；sitemap 只包含稳定公开页面，不包含带随机 ID 的任务页。
 - MUST 为 `/jobs/*` 输出 `noindex, nofollow`，避免临时结果、过期链接或用户数据进入索引。
 - MUST 只输出与页面可见内容一致的结构化数据，不伪造评分、用户数量、准确率、价格或未经验证的产品能力。
-- MUST 首先建设一个围绕 `audio to MIDI converter` 意图的英语核心页面，包含真实工具入口、示例、限制、FAQ 与站内链接；其余格式、教程和比较页在 GSC 出现需求信号后逐步增加。
+- MUST 由默认英语首页 `/` 承接 `audio to MIDI converter` 与 `piano audio to MIDI` 核心意图，包含真实工具入口、示例、限制、FAQ 与站内链接；不得再维护与首页意图和内容重复的独立核心落地页。
+- MUST 将旧 `/audio-to-midi` 永久重定向到 `/`，不继续渲染独立页面或出现在 sitemap、导航和 canonical 中。
 - MUST NOT 批量生成关键词替换式薄页面、重复内容或未经真实测试的竞品比较。
 - SHOULD 支持 GSC 验证配置，并把自然搜索访问与工具开始、任务完成和导出事件关联分析。
 
@@ -605,8 +608,35 @@ SongDance 是一个钢琴优先、逐步扩展到多乐器的公开音频转录 
 - [ ] AC-059：Given 生产域名已配置，when 抓取任一稳定公开页面，then canonical、Open Graph URL 和 sitemap URL 均使用同一 HTTPS origin，且没有 localhost。
 - [ ] AC-060：Given 搜索引擎抓取站点，when 请求 `robots.txt` 和 `sitemap.xml`，then 两者返回 200，sitemap 只列稳定公开页面且不含 `/jobs/`。
 - [ ] AC-061：Given 打开任一匿名任务页，when 检查页面元数据，then robots 指令为 `noindex, nofollow`，任务 URL 不出现在 sitemap。
-- [ ] AC-062：Given 打开 `/audio-to-midi`，when 不执行客户端 JavaScript读取服务端 HTML，then 可见唯一 H1、核心任务说明、真实工具 CTA、限制、FAQ 和内部链接，且 JSON-LD 与页面内容一致。
+- [ ] AC-062：Given 打开默认英语首页 `/`，when 不执行客户端 JavaScript 读取服务端 HTML，then 可见唯一英语 H1、核心任务说明、真实工具 CTA、限制、FAQ 和内部链接，且 JSON-LD 与页面内容一致。
 - [ ] AC-063：Given 未获得 GSC 查询和转化信号，when 发布 SEO 内容，then 不新增批量格式/乐器模板页或无真实证据的比较页。
+
+### REQ-013：英语默认的中英文国际化
+
+**优先级：** P1
+**关联任务：** TASK-011
+
+**行为：** 用户使用同一套产品页面完成任务，并可在英语和简体中文之间切换；默认英语面向海外，中文通过独立 locale URL 被服务端渲染和索引。
+
+**规则：**
+
+- MUST 使用一套共享页面组件和两套消息目录，不得为中英文复制业务页面、播放器、上传流程或结果工作台实现。
+- MUST 将英语设为默认 locale：`/`、`/transcribe`、`/examples`、`/privacy`、`/terms` 和 `/jobs/{id}` 均输出英语；对应中文 URL 使用 `/zh` 前缀。直接访问无前缀 URL 不得因浏览器 `Accept-Language` 自动改成中文。
+- MUST 在服务端按 URL locale 输出完整 HTML，并同步设置 `<html lang="en">` 或 `<html lang="zh-CN">`；不得等客户端 JavaScript 加载后才替换主要文案。
+- MUST 在桌面和移动导航提供可访问的语言切换控件；切换后保持当前逻辑页面、任务 ID、查询参数和 hash，并记录用户显式选择供后续站内导航沿用。
+- MUST 覆盖导航、首页、上传、处理状态、结果工作台、示例、法律页、空态、加载态、校验、错误、404 和操作反馈中的用户可见文案；不得向用户显示翻译 key 或仅在一种语言下可理解的原始错误字符串。
+- MUST 让 API 返回稳定的结构化状态和 `error_code`，由 Web 根据当前 locale 映射用户文案；只有必须由后端生成的用户可见产物才接收显式 locale，禁止前后端各自维护同一 UI 文案。
+- MUST 为英语和中文稳定公开 URL 输出自引用 canonical，并互相声明 `hreflang="en"`、`hreflang="zh-CN"` 与英语 `x-default`；sitemap 同时列出两个语言版本，临时 `/jobs/*` 继续 `noindex`。
+- SHOULD 在不记录个人内容的前提下将 locale 作为页面访问、工具开始、任务完成和导出事件属性，用于比较语言版本漏斗。
+
+**验收标准：**
+
+- [ ] AC-064：Given 未保存语言选择，when 分别直接请求 `/` 与 `/zh` 且不执行客户端 JavaScript，then 两者使用同一页面结构，前者完整显示英语并设置 `lang="en"`，后者完整显示简体中文并设置 `lang="zh-CN"`。
+- [ ] AC-065：Given 用户位于任一稳定页面或匿名任务页，when 切换语言，then 系统导航到对应 locale URL，保留逻辑路径、任务 ID、查询参数和 hash，且 375 px 下控件不造成页面横向滚动。
+- [ ] AC-066：Given 任一支持语言，when 打开首页、上传、处理中、成功、失败、结果、示例、法律页、404 和核心交互反馈，then 不出现缺失翻译 key、错误语言文案或直接透传的后端技术错误。
+- [ ] AC-067：Given 抓取任一英语或中文稳定公开页面，when 检查 metadata 与 sitemap，then canonical 自引用、语言 alternates 双向完整、`x-default` 指向英语版本，且临时任务 URL 不进入 sitemap。
+- [ ] AC-068：Given 请求旧 `/audio-to-midi`，when 服务端响应，then 返回指向 `/` 的永久重定向，且导航、sitemap 和页面 canonical 均不再引用旧地址。
+- [ ] AC-069：Given API 返回同一稳定 `error_code`，when 英语或中文用户触发该错误，then Web 分别展示语义一致的本地化提示和可执行恢复动作，未知错误码使用对应语言的安全兜底。
 
 ## 6. 数据模型
 
@@ -670,6 +700,7 @@ SongDance 是一个钢琴优先、逐步扩展到多乐器的公开音频转录 
 | DEP-020 | Omnizart | 有音高乐器、人声旋律和鼓任务候选 | No | 代码 MIT；checkpoint 许可、Python 3.11/Linux 与 ARM 兼容需审计，候选依赖隔离 |
 | DEP-021 | MT3 | 直接多乐器多轨 AMT 候选 | No | 代码 Apache-2.0 且非官方支持产品；T5X、checkpoint、GPU 成本和乐器 program 质量通过 A/B 前不进生产 |
 | DEP-022 | Aria-AMT (`EleutherAI/aria-amt`) | 专用钢琴转录研究参考 | No | 代码 Apache-2.0，要求 Python 3.11、PyTorch >=2.3 与 torchaudio <=2.5；固定权重为 CC-BY-NC-SA-4.0，不允许目标生产用途，标为 `research_only`，保留许可与 provenance 审计，不分配 CUDA、不进入固定集 A/B 或主 Worker |
+| DEP-023 | next-intl 4.x | Next.js App Router 服务端国际化、locale 路由和消息目录 | Yes for SCOPE-024 | 已核验 4.13.6 peer dependency 支持 Next.js 16 与 React 19；英语使用无前缀默认 locale，中文使用 `/zh` 前缀 |
 
 ## 8. 非功能需求
 
@@ -688,6 +719,7 @@ SongDance 是一个钢琴优先、逐步扩展到多乐器的公开音频转录 
 | 多乐器隔离 | 单个乐器模型或单个 stem 失败不影响其他轨道；模型权重和重依赖按 Worker 类型隔离 | P1 |
 | 多乐器性能 | 单乐器沿用 30 秒 P95 180 秒、90 秒 P95 360 秒；完整混音暂定 30 秒 P95 360 秒、90 秒 P95 720 秒，超出即阻塞默认上线 | P1 |
 | 向后兼容 | 旧钢琴任务、`midi`/`timeline` 产物、下载 URL 和钢琴结果页必须保持可读；新增轨道字段只做向后兼容扩展 | P0 |
+| 国际化 | 英语与简体中文共享组件和行为；主要文案服务端输出；消息 key 两种语言完全对齐；语言切换保持当前逻辑页面且无内容闪烁 | P1 |
 
 ## 9. 验证数据与测试方法
 

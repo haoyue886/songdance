@@ -35,6 +35,7 @@
 | Phase 25 | 已完成 | 已提交谱面选区的 `↔` 边界命中、实时端点调整与稳定 pointer capture；代码审查 Stage 1/2 PASS |
 | Phase 26 | 已完成 | 双击清除正式谱面选区、边界点击隔离与无选区即时定位；代码审查 Stage 1/2 PASS |
 | Phase 27 | 已完成 | 海外 SEO 技术基线、核心 Audio-to-MIDI 页面与索引门禁；代码审查 Stage 1/2 PASS |
+| Phase 28 | 计划中 | 英语默认的中英文国际化、语言切换与核心 SEO 首页合并 |
 
 ## 功能依赖图
 
@@ -47,6 +48,8 @@
                           ├─ 匿名限流 + 删除 + 日志 + 埋点
                           └─ YouTube P1 + 示例音频
                           └─ 公网部署 + 生产端到端验收
+                                  └─ Phase 27 技术 SEO 基线
+                                          └─ Phase 28 英语默认国际化与核心首页合并
 
 Phase 9 基线
   └─ Phase 11 质量评测契约
@@ -66,7 +69,7 @@ Phase 9 基线
                                                                                                   └─ Phase 22 多轨产品化
 ```
 
-依赖原则：Phase 2 和 Phase 3 都依赖 Phase 1，可并行开发但不能同时修改共享配置；Phase 4 依赖 Phase 3；Phase 5 依赖 Phase 2 和 Phase 4；Phase 6–8 依次收紧生产能力。Phase 13–16 按顺序消费 Phase 11 的质量基线；Phase 12 是许可合格候选出现后才恢复的并行模型门禁，不阻塞确定性后处理。Phase 24 只消费 Phase 23 已稳定的乐谱时间映射、跨页几何和播放选区合同；Phase 25 在 Phase 24 的命中缓存、RAF draft 与稳定覆盖层上增加已提交选区的端点调整，在进入多乐器结果页扩展前完成。Phase 17–20 按“共享领域模型 → 单音家族 → 吉他 → 鼓”顺序扩展单乐器能力；每个乐器独立过门禁。Phase 21 只有在 Phase 18–20 具备可复用单乐器路由后才评估完整混音，Phase 22 只消费 Phase 21 已批准的轨道来源，不在 UI 层猜乐器。
+依赖原则：Phase 2 和 Phase 3 都依赖 Phase 1，可并行开发但不能同时修改共享配置；Phase 4 依赖 Phase 3；Phase 5 依赖 Phase 2 和 Phase 4；Phase 6–8 依次收紧生产能力。Phase 13–16 按顺序消费 Phase 11 的质量基线；Phase 12 是许可合格候选出现后才恢复的并行模型门禁，不阻塞确定性后处理。Phase 24 只消费 Phase 23 已稳定的乐谱时间映射、跨页几何和播放选区合同；Phase 25 在 Phase 24 的命中缓存、RAF draft 与稳定覆盖层上增加已提交选区的端点调整，在进入多乐器结果页扩展前完成。Phase 28 消费 Phase 27 已完成的 metadata、sitemap 和结构化数据基线，只替换语言路由与核心页面信息架构，不重做 SEO 基础设施。Phase 17–20 按“共享领域模型 → 单音家族 → 吉他 → 鼓”顺序扩展单乐器能力；每个乐器独立过门禁。Phase 21 只有在 Phase 18–20 具备可复用单乐器路由后才评估完整混音，Phase 22 只消费 Phase 21 已批准的轨道来源，不在 UI 层猜乐器。
 
 ---
 
@@ -817,6 +820,48 @@ Phase 9 基线
 - `/jobs/*` 输出 `noindex, nofollow, nocache` 且不输出分享 metadata；自定义 404 保持唯一 title、唯一框架 noindex，并移除错误的首页 OG/Twitter 继承。
 - 原始响应 E2E 不执行客户端 JavaScript 即解析 H1、正文和 JSON-LD；桌面与 375 px 截图无横向溢出。
 - Web `29 files / 131 tests`、Playwright `15/15`、lint、typecheck、生产构建和 `git diff --check` 通过；代码审查 Stage 1/2 PASS，`0 HIGH / 0 MEDIUM / 2 LOW`。剩余 LOW 为上线后的自然搜索漏斗归因和原始 DOM 断言加固，不阻断 AC-059–AC-063。
+- 本节记录 Phase 27 当时已完成的历史实现；后续确认的英语默认国际化、首页内容合并和旧路由重定向由 Phase 28 替代，不回写或伪造 Phase 27 的原始验收结果。
+
+---
+
+## Phase 28：英语默认的中英文国际化与核心首页合并
+
+**目标：** 使用一套页面组件向海外用户默认提供英语，并通过 `/zh` locale URL 提供完整简体中文体验；合并重复 SEO 落地页，同时保持上传、任务、结果和导出行为一致。
+
+**交付内容：**
+
+- 接入 `next-intl` 4.13.6，建立 `en` 与 `zh-CN` 消息目录和 as-needed locale 路由；无前缀 URL 固定输出英语，中文使用 `/zh`，不按浏览器语言自动改写根 URL。
+- 将首页、上传、示例、任务/结果、法律页、错误边界和公共导航迁入共享 locale 页面树；在桌面与移动导航提供语言切换，保持逻辑路径、任务 ID、查询参数和 hash。
+- 将用户可见状态、校验和 API 错误统一映射为 locale 消息；FastAPI 继续返回稳定 `error_code` 和结构化数据，不复制 Web UI 翻译文案。
+- 把 `/audio-to-midi` 的核心说明、限制、FAQ、内部链接和 JSON-LD 合并到英语首页，并将旧地址永久重定向到 `/`；为两种语言生成自引用 canonical、双向 hreflang、英语 x-default 和 sitemap 项。
+- 增加消息 key 对齐、无 JavaScript 服务端 HTML、语言切换、动态任务路径、旧地址重定向、metadata、375 px 和既有核心流程回归测试。
+
+**关键文件：**
+
+- `songdance/web/next.config.ts` — next-intl 插件与旧地址永久重定向。
+- `songdance/web/src/proxy.ts` — locale 路由匹配与默认英语策略。
+- `songdance/web/src/i18n/routing.ts`、`request.ts` — locale、前缀和服务端消息加载。
+- `songdance/web/messages/en.json`、`zh-CN.json` — 对齐的共享消息目录。
+- `songdance/web/src/app/[locale]/layout.tsx` 与各页面入口 — 动态 `lang`、共享页面和本地化 metadata。
+- `songdance/web/src/components/language-switcher.tsx` — 保持当前逻辑页面的语言切换控件。
+- `songdance/web/src/lib/i18n/errors.ts` — API `error_code` 到本地化消息 key 的稳定映射。
+- `songdance/web/src/app/sitemap.ts`、`src/lib/seo/site.ts` — 语言 alternates、canonical 与 sitemap。
+- `songdance/web/e2e/i18n.spec.ts` — 原始 HTML、切换、任务路径、SEO 和窄屏 E2E。
+
+**验收标准：**
+
+- 不执行客户端 JavaScript 请求 `/` 与 `/zh` 时，两者共享结构但分别完整输出英语和简体中文，且 `<html lang>`、title、description、canonical、JSON-LD 与可见内容一致。
+- 从任一稳定页或 `/jobs/{id}` 切换语言后，逻辑路径、任务 ID、查询参数和 hash 保持；刷新后语言不回跳，375 px 无页面级横向滚动。
+- `en` 与 `zh-CN` 消息 key 完全一致；首页、上传、处理、成功、失败、结果、示例、法律页、404 和 API 错误均不出现 key、错误语言或原始技术错误。
+- 所有稳定语言 URL 自引用 canonical、互相声明 `en`/`zh-CN` 和英语 x-default；sitemap 包含两种语言且不含任务 URL。
+- `/audio-to-midi` 返回指向 `/` 的永久重定向，导航、sitemap、canonical 无旧地址；英语首页承接原核心页内容且不存在关键词意图重复页面。
+- Web 单测、lint、typecheck、生产构建、Playwright 全量回归与代码审查 Stage 1/2 全部通过。
+
+**依赖与风险：**
+
+- App Router 页面迁入 `[locale]` 会同时触及静态页、动态任务页和 metadata；必须一次迁移完整路由矩阵，不能留下只支持单语言的旁路页面。
+- locale cookie 只记录用户显式选择并服务站内导航；直接请求无前缀 URL 永远输出英语，避免缓存、canonical 和爬虫结果随请求头变化。
+- 临时任务的两个语言 URL 都保持 `noindex`，语言切换不得把高熵任务 ID 写入 sitemap、analytics 文本或公开 alternates。
 
 ---
 

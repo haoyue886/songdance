@@ -93,6 +93,33 @@ export async function verifyCommittedSelectionResize(page: Page): Promise<void> 
   expect(Number(await endInput.inputValue())).toBeCloseTo(Number(before.start), 1);
 }
 
+export async function verifyDoubleClickClearsSelection(page: Page): Promise<void> {
+  const viewport = page.getByTestId("score-viewport");
+  const position = page.getByRole("slider", { name: "播放位置", exact: true });
+  const startInput = page.getByLabel("循环起点");
+  const endInput = page.getByLabel("循环终点");
+  const border = page.locator('[data-score-selection-border="true"]').first();
+  const borderBox = await border.boundingBox();
+  if (!borderBox) throw new Error("双击清除前的谱面选区不可见");
+  const before = {
+    position: await position.inputValue(),
+    start: Number(await startInput.inputValue()),
+    end: Number(await endInput.inputValue()),
+    pageScroll: await page.evaluate(() => window.scrollY),
+    scoreScroll: await viewport.evaluate((element) => element.scrollTop),
+  };
+
+  const point = { x: borderBox.x + borderBox.width / 2, y: borderBox.y + borderBox.height / 2 };
+  await page.mouse.dblclick(point.x, point.y);
+  await expect(page.locator('[data-score-selection-border="true"]')).toHaveCount(0);
+  await expect(page.getByText(/谱面选区：/)).toHaveCount(0);
+  expect(await position.inputValue()).toBe(before.position);
+  expect(Number(await startInput.inputValue())).toBe(0);
+  expect(Number(await endInput.inputValue())).toBeGreaterThan(before.end);
+  expect(await page.evaluate(() => window.scrollY)).toBe(before.pageScroll);
+  expect(await viewport.evaluate((element) => element.scrollTop)).toBe(before.scoreScroll);
+}
+
 export async function verifyCrossPageSelectionResize(page: Page): Promise<void> {
   const viewport = page.getByTestId("score-viewport");
   const startInput = page.getByLabel("循环起点");

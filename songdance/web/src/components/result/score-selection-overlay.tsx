@@ -94,6 +94,7 @@ export function ScoreSelectionOverlay({
               x1={x} x2={x} y1={segment.top} y2={segment.top + segment.height}
               stroke="transparent" strokeWidth="16" pointerEvents="stroke"
               style={{ cursor: "ew-resize" }}
+              onClick={(event) => event.stopPropagation()}
               onPointerDown={(event) => boundaryHandlers.onPointerDown(boundary, event)}
               onPointerMove={boundaryHandlers.onPointerMove}
               onPointerUp={boundaryHandlers.onPointerUp}

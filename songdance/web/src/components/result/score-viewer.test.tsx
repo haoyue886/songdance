@@ -100,10 +100,10 @@ describe("score viewer", () => {
     expect(onSeek).toHaveBeenCalledWith(2);
 
     fireEvent.click(view.getByLabelText("MusicXML 五线谱"), { clientX: 50, clientY: 100 });
-    expect(onSeek).toHaveBeenLastCalledWith(1);
+    await waitFor(() => expect(onSeek).toHaveBeenLastCalledWith(1));
     const cachedEntryReads = getStaffEntriesReads();
     fireEvent.click(view.getByLabelText("MusicXML 五线谱"), { clientX: 250, clientY: 100 });
-    expect(onSeek).toHaveBeenLastCalledWith(3);
+    await waitFor(() => expect(onSeek).toHaveBeenLastCalledWith(3));
     expect(getStaffEntriesReads()).toBe(cachedEntryReads);
     expect(tryGetTimeStampFromPosition).not.toHaveBeenCalled();
     expect(cursor.show).toHaveBeenCalled();
@@ -177,7 +177,7 @@ describe("score viewer", () => {
     expect(score).toHaveClass("cursor-crosshair");
     expect(onSelectionChange).not.toHaveBeenCalled();
     fireEvent.click(score, { clientX: 10, clientY: 10 });
-    expect(onSeek).toHaveBeenCalledWith(0.2);
+    await waitFor(() => expect(onSeek).toHaveBeenCalledWith(0.2));
 
     fireEvent.pointerDown(score, pointer(2, 10, 10));
     fireEvent.pointerMove(score, pointer(2, 20, 20));
@@ -223,6 +223,7 @@ describe("score viewer", () => {
 
     fireEvent.pointerDown(endHandle!, pointer(10, initialX, 110));
     fireEvent.pointerUp(endHandle!, pointer(10, initialX, 110));
+    fireEvent.click(endHandle!, { clientX: initialX, clientY: 110 });
     expect(onSelectionChange).not.toHaveBeenCalled();
     expect(onSeek).not.toHaveBeenCalled();
 

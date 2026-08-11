@@ -6,6 +6,7 @@ import { promisify } from "node:util";
 import {
   verifyCommittedSelectionResize,
   verifyCrossPageSelectionResize,
+  verifyDoubleClickClearsSelection,
 } from "./score-selection-helpers";
 
 const execFileAsync = promisify(execFile);
@@ -126,7 +127,7 @@ test("plays, switches views and exports the public-domain example", async ({ pag
   expect(await loopStartInput.inputValue()).not.toBe(loopBoundsBeforeDraft.start);
   await verifyCommittedSelectionResize(page);
   await page.screenshot({ path: testInfo.outputPath("score-selection-resized.png"), fullPage: false });
-  await page.getByRole("button", { name: "清除选区" }).click();
+  await verifyDoubleClickClearsSelection(page);
 
   await scoreViewport.evaluate((element) => { element.scrollTop = 0; });
   const viewportBox = await scoreViewport.boundingBox();

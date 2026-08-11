@@ -33,6 +33,7 @@
 | Phase 23 | 已完成 | 固定乐谱工作台、精准谱面定位、跨系统区间选择与共享播放边界；代码审查 Stage 1/2 PASS |
 | Phase 24 | 已完成 | 实时谱面拖选预览、连续事件命中、反向/跨系统手势与边缘自动滚动；代码审查 Stage 1/2 PASS |
 | Phase 25 | 已完成 | 已提交谱面选区的 `↔` 边界命中、实时端点调整与稳定 pointer capture；代码审查 Stage 1/2 PASS |
+| Phase 26 | 已完成 | 双击清除正式谱面选区、边界点击隔离与无选区即时定位；代码审查 Stage 1/2 PASS |
 
 ## 功能依赖图
 
@@ -735,6 +736,42 @@ Phase 9 基线
 - resize pointer capture 绑定稳定谱面视口，零宽 draft 即使临时卸载边界线也能继续越过固定端并交换角色；`Escape`、`pointercancel`、lost capture 和外部清除均恢复正式选区。
 - 真实 18 小节 MusicXML 覆盖同系统越过固定端、跨页终点从第 2 页拖回第 1 页、边缘自动滚动、页面滚动不变、OSMD 不重排和二次调整截图。
 - Web `27 files / 128 tests`、Playwright `14/14`、lint、typecheck、生产构建通过；代码审查 Stage 1/2 PASS，`0 HIGH / 0 MEDIUM / 0 LOW`。
+
+---
+
+## Phase 26：双击清除谱面选区
+
+**目标：** 保持无选区时的单击定位、拖选和边界调整手势，让存在正式选区的用户可双击谱面工作区直接清除选区，并确保浏览器的两次 click 不产生额外定位。
+
+**交付内容：**
+
+- 无选区谱面点击继续即时定位；正式选区存在时单击不定位，双击直接清除选区，避免不可读取的系统双击阈值造成播放头竞态。
+- 让 SVG 选区边界与普通谱面正文都能冒泡到统一的工作区双击入口，既不干扰 pointer drag，也不改变播放头或滚动位置。
+- 覆盖双击清除、无选区双击定位、拖选后的点击抑制及真实 MusicXML 播放边界回归。
+
+**关键文件：**
+
+- `songdance/web/src/components/result/score-viewer.tsx` — 可取消单击定位与工作区双击清除入口。
+- `songdance/web/src/components/result/score-viewer-double-click.test.tsx` — 单击/双击时序、选区清除和播放头隔离测试。
+- `songdance/web/e2e/phase7.spec.ts` — 真实 MusicXML 双击清除与播放边界回归。
+
+**验收标准：**
+
+- 正式选区存在时，单击谱面正文或选区边界不改变播放头；双击后选区遮罩、绿色边界和循环起止输入均消失，播放头、`window.scrollY` 与谱面 `scrollTop` 均不变。
+- 正式选区双击不产生任何 `onSeek`；无正式选区时沿用普通单击定位语义。
+- 已有拖选、边界调整、短点击和 `Escape` 取消行为不回归；Web 单测、lint、typecheck、生产构建、真实 MusicXML E2E 与代码审查 Stage 1/2 全部通过。
+
+**依赖与风险：**
+
+- 浏览器双击由两次 `click` 后接一个 `dblclick` 组成；正式选区存在时必须在 `click` 阶段抑制定位，不能仅在 `dblclick` 中调用清除。
+- 不新增播放器状态、API、依赖或常驻 UI 控件。
+
+**完成记录（2026-08-11）：**
+
+- 谱面视口统一处理双击：正式选区存在时正文与端点单击均不定位，双击只清除选区；端点单击单独停止冒泡，而 `dblclick` 继续冒泡到清除入口。
+- 无正式选区继续即时采用原有单击定位，不引入不可读取系统双击阈值的延迟计时器；清除选区后恢复该语义。
+- 组件测试覆盖正文单击隔离、端点双击清除、端点短点击不定位和清除后的普通定位；真实 18 小节 MusicXML E2E 验证选区、循环边界、播放头和两级滚动边界。
+- Web `28 files / 129 tests`、Playwright `14/14`、lint、typecheck、生产构建通过；代码审查 Stage 1/2 PASS，`0 HIGH / 0 MEDIUM / 0 LOW`。
 
 ---
 

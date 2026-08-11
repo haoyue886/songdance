@@ -4,18 +4,10 @@ import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import type { OpenSheetMusicDisplay } from "opensheetmusicdisplay";
 import { useScoreRangeDrag } from "@/hooks/use-score-range-drag";
 import type { NoteTimeline } from "@/lib/result/timeline";
-import {
-  createScoreHitMap,
-  scoreMeasureFractionAtQuarters,
-  scoreSecondsAtDomPoint,
-  type ScoreHitMap,
-} from "@/lib/result/score-hit-map";
+import { createScoreHitMap, scoreMeasureFractionAtQuarters, scoreSecondsAtDomPoint, type ScoreHitMap } from "@/lib/result/score-hit-map";
 import { scoreMeasureRect, scoreSelectionRects } from "@/lib/result/score-selection";
 import { createScoreTimeMap, measureIndexAtTime, measureStartSeconds, scoreTimeMapMatches } from "@/lib/result/score-time-map";
-import {
-  ScoreSelectionOverlay,
-  type ScoreSelectionBoundaryHandlers,
-} from "./score-selection-overlay";
+import { ScoreSelectionOverlay, type ScoreSelectionBoundaryHandlers } from "./score-selection-overlay";
 import { ScoreToolbar } from "./score-toolbar";
 
 const SCORE_WIDTH = 720;
@@ -216,7 +208,13 @@ export function ScoreViewer({
   const handleScoreClick = (event: React.MouseEvent<HTMLDivElement>) => {
     if (consumeClickSuppression()) return;
     const seconds = secondsAtPoint({ x: event.clientX, y: event.clientY });
-    if (seconds !== null) onSeek(seconds);
+    if (seconds === null) return;
+    if (selection && onSelectionChange) return;
+    onSeek(seconds);
+  };
+  const handleScoreDoubleClick = () => {
+    if (!selection || !onSelectionChange) return;
+    onSelectionChange(null);
   };
 
   const activePitches = timeline.notes
@@ -230,12 +228,10 @@ export function ScoreViewer({
       style={status === "ready" ? { height: frameHeight } : undefined}
     >
       {status === "ready" && (
-        <div ref={toolbarRef}>
-          <ScoreToolbar activeMeasure={activeMeasure} measureCount={measureCount}
-            currentTime={currentTime} duration={duration} activePitches={activePitches}
-            onLocate={locateCurrent} onPrevious={() => seekToMeasure(activeMeasure - 1)}
-            onNext={() => seekToMeasure(activeMeasure + 1)} />
-        </div>
+        <div ref={toolbarRef}><ScoreToolbar activeMeasure={activeMeasure} measureCount={measureCount}
+          currentTime={currentTime} duration={duration} activePitches={activePitches}
+          onLocate={locateCurrent} onPrevious={() => seekToMeasure(activeMeasure - 1)}
+          onNext={() => seekToMeasure(activeMeasure + 1)} /></div>
       )}
       {status === "loading" && (
         <div className="grid min-h-[360px] place-items-center" role="status">
@@ -253,6 +249,8 @@ export function ScoreViewer({
         </div>
       )}
       <div ref={viewportRef} data-testid="score-viewport"
+        onClick={handleScoreClick}
+        onDoubleClick={handleScoreDoubleClick}
         onPointerMove={pointerHandlers.onPointerMove}
         onPointerUp={pointerHandlers.onPointerUp}
         onPointerCancel={pointerHandlers.onPointerCancel}
@@ -265,7 +263,6 @@ export function ScoreViewer({
           ref={containerRef}
           aria-label="MusicXML 五线谱"
           aria-hidden={status !== "ready"}
-          onClick={handleScoreClick}
           {...pointerHandlers}
           title={measureCount > 0 ? "点击定位，拖动选择谱面区间" : undefined}
           className={`w-[720px] touch-pan-y select-none ${measureCount > 0 ? isDragging ? "cursor-grabbing" : "cursor-crosshair" : ""} ${status === "ready" ? "" : "invisible absolute left-0 top-0"}`}

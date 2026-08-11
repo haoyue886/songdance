@@ -1,6 +1,7 @@
 "use client";
 
 import { BarChart3, Check, Copy, Music2 } from "lucide-react";
+import { useLocale, useTranslations } from "next-intl";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { useResultPlayback } from "@/hooks/use-result-playback";
 import { trackEvent } from "@/lib/analytics/events";
@@ -47,6 +48,9 @@ export function ResultWorkspace({
   expiresLabel?: string;
   shareable?: boolean;
 }) {
+  const t = useTranslations("result");
+  const errors = useTranslations("errors");
+  const locale = useLocale();
   const {
     audioRef,
     duration,
@@ -111,7 +115,7 @@ export function ResultWorkspace({
         const response = artifactPaths?.midi
           ? await fetch(artifactPaths.midi, { cache: "force-cache" })
           : await fetchArtifact(job.id, kind);
-        if (!response.ok) throw new Error("MIDI 产物暂时无法读取。");
+        if (!response.ok) throw new Error("MIDI unavailable");
         const source = await response.arrayBuffer();
         downloadBytes(
           kind === "midi" ? transposeMidi(source, transpose) : source,
@@ -119,20 +123,20 @@ export function ResultWorkspace({
           fileName(job.id, "mid"),
         );
       } else if (kind === "musicxml") {
-        if (!shiftedMusicXml) throw new Error("MusicXML 产物不可用。");
+        if (!shiftedMusicXml) throw new Error("MusicXML unavailable");
         downloadBytes(
           shiftedMusicXml,
           "application/vnd.recordare.musicxml+xml",
           fileName(job.id, "musicxml"),
         );
       } else {
-        if (!scoreContainer) throw new Error("五线谱尚未完成渲染。");
+        if (!scoreContainer) throw new Error("Score unavailable");
         const pdf = await createScorePdf("SongDance Piano Transcription", scoreContainer);
         downloadBytes(pdf, "application/pdf", fileName(job.id, "pdf"));
       }
       if (trackEvents) trackEvent(job.id, "format_downloaded", { format: kind });
-    } catch (error) {
-      setExportError(error instanceof Error ? error.message : "文件导出失败。");
+    } catch {
+      setExportError(errors("service"));
     } finally {
       setBusy(null);
     }
@@ -159,19 +163,19 @@ export function ResultWorkspace({
       <div className="flex flex-wrap items-end justify-between gap-3 border-b border-[#d9e3dd] pb-5">
         <div>
           <p className="text-xs font-bold uppercase tracking-[0.16em] text-[#147d70]">
-            Transcription result
+            {t("title")}
           </p>
           <h1 className="mt-2 font-display text-3xl font-bold leading-tight sm:text-4xl">
-            钢琴转录结果
+            {t("title")}
           </h1>
         </div>
         <div className="flex flex-wrap items-center justify-end gap-3 text-sm text-[#61716c]">
-          <p>{expiresLabel ?? `保存至 ${formatDate(job.expires_at)}`}</p>
+          <p>{expiresLabel ?? t("savedUntil", { date: formatDate(job.expires_at, locale) })}</p>
           {shareable && (
             <button type="button" onClick={() => void copyShareLink()}
               className="inline-flex h-9 items-center gap-2 rounded-md border border-[#cad8d2] bg-white px-3 font-bold text-[#075e55]">
               {shareState === "copied" ? <Check size={15} /> : <Copy size={15} />}
-              {shareState === "copied" ? "已复制分享链接" : "复制临时分享链接"}
+              {shareState === "copied" ? t("copiedLink") : t("copyLink")}
             </button>
           )}
         </div>
@@ -185,16 +189,15 @@ export function ResultWorkspace({
           <div
             className="mb-3 flex w-fit rounded-md border border-[#cad8d2] bg-white p-0.5"
             role="tablist"
-            aria-label="结果视图"
+            aria-label={t("views")}
           >
             <ViewTab active={view === "score"} disabled={!musicXml} icon={<Music2 size={16} />}
-              label="五线谱" onClick={() => changeView("score")} />
+              label={t("score")} onClick={() => changeView("score")} />
             <ViewTab active={view === "roll"} icon={<BarChart3 size={16} />}
-              label="钢琴卷帘" onClick={() => changeView("roll")} />
+              label={t("pianoRoll")} onClick={() => changeView("roll")} />
           </div>
           <p className="mb-3 text-xs font-semibold text-[#61716c]">
-            当前预览：
-            {previewKind === "cleaned" ? "清洗后音符" : "原始模型音符（清洗结果不可用）"}
+            {previewKind === "cleaned" ? t("cleanedPreview") : t("rawPreview")}
           </p>
           {view === "score" && shiftedMusicXml ? (
             <>
@@ -249,7 +252,7 @@ export function ResultWorkspace({
           {onDelete && (
             <button type="button" disabled={deleting} onClick={onDelete}
               className="text-left text-sm font-bold text-[#9a493f] underline decoration-[#d7aaa4] underline-offset-4 disabled:opacity-50">
-              {deleting ? "正在删除…" : "立即删除音频和结果"}
+              {deleting ? t("deleting") : t("delete")}
             </button>
           )}
         </div>
@@ -257,12 +260,12 @@ export function ResultWorkspace({
 
       {(playbackError || exportError || warning) && (
         <p role="alert" className="mt-4 rounded-lg border border-[#e4b9b3] bg-[#fff1ef] p-3 text-sm text-[#8d372f]">
-          {playbackError ?? exportError ?? warning}
+          {playbackError ? errors("service") : exportError ?? warning}
         </p>
       )}
       {shareState === "error" && (
         <p role="alert" className="mt-4 text-sm text-[#8d372f]">
-          浏览器无法复制链接，请从地址栏复制当前任务地址。
+          {t("copyFailed")}
         </p>
       )}
     </section>
@@ -285,8 +288,8 @@ function fileName(jobId: string, extension: string): string {
   return `songdance-${jobId.slice(0, 8)}.${extension}`;
 }
 
-function formatDate(value: string): string {
-  return new Intl.DateTimeFormat("zh-CN", {
+function formatDate(value: string, locale: string): string {
+  return new Intl.DateTimeFormat(locale, {
     month: "short", day: "numeric", hour: "2-digit", minute: "2-digit",
   }).format(new Date(value));
 }

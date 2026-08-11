@@ -35,7 +35,7 @@
 | Phase 25 | 已完成 | 已提交谱面选区的 `↔` 边界命中、实时端点调整与稳定 pointer capture；代码审查 Stage 1/2 PASS |
 | Phase 26 | 已完成 | 双击清除正式谱面选区、边界点击隔离与无选区即时定位；代码审查 Stage 1/2 PASS |
 | Phase 27 | 已完成 | 海外 SEO 技术基线、核心 Audio-to-MIDI 页面与索引门禁；代码审查 Stage 1/2 PASS |
-| Phase 28 | 计划中 | 英语默认的中英文国际化、语言切换与核心 SEO 首页合并 |
+| Phase 28 | 已完成 | 英语默认的中英文国际化、语言切换与核心 SEO 首页合并；代码审查 Stage 1/2 PASS |
 
 ## 功能依赖图
 
@@ -856,6 +856,14 @@ Phase 9 基线
 - 所有稳定语言 URL 自引用 canonical、互相声明 `en`/`zh-CN` 和英语 x-default；sitemap 包含两种语言且不含任务 URL。
 - `/audio-to-midi` 返回指向 `/` 的永久重定向，导航、sitemap、canonical 无旧地址；英语首页承接原核心页内容且不存在关键词意图重复页面。
 - Web 单测、lint、typecheck、生产构建、Playwright 全量回归与代码审查 Stage 1/2 全部通过。
+
+**完成证据（2026-08-12）：**
+
+- `pnpm test`：31 个测试文件、135 条测试全部通过；`pnpm lint`、`pnpm typecheck` 与 `git diff --check` 均零错误。
+- `pnpm build`：Next.js 16.2.12 生产构建通过，TypeScript 通过并生成 15 个静态页面单元。
+- `pnpm test:e2e`：24 条 Playwright 全量回归通过，覆盖英语上传拒绝、失败任务、成功结果、产物失败、中文真实上传/任务/结果、SSR SEO、308 重定向、双语 404、语言切换和 375 px 布局。
+- 桌面与 375 px 的英语/中文首页、上传页和示例结果截图已人工复核，无 Loading 残留、页面级横向溢出或控件重叠。
+- 修复后由 fresh `code-reviewer` 从 Stage 1 重审：Stage 1/2 PASS，0 HIGH、0 MEDIUM；剩余 locale 分析属性和未使用中文 helper 为非阻断 LOW。
 
 **依赖与风险：**
 

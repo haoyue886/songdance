@@ -11,7 +11,10 @@ const mocks = vi.hoisted(() => ({
   replace: vi.fn(),
 }));
 
-vi.mock("next/navigation", () => ({ useRouter: () => ({ replace: mocks.replace }) }));
+vi.mock("@/i18n/navigation", () => ({
+  Link: ({ href, children }: { href: string; children: React.ReactNode }) => <a href={href}>{children}</a>,
+  useRouter: () => ({ replace: mocks.replace }),
+}));
 vi.mock("./result-client", () => ({
   ResultClient: ({ job }: { job: TranscriptionJob }) => <div>结果工作台 {job.id}</div>,
 }));
@@ -141,6 +144,8 @@ describe("job status", () => {
 
     expect(await screen.findByRole("heading", { name: "转录未完成" })).toBeInTheDocument();
     expect(screen.getByText(/任务已停止/)).toBeInTheDocument();
+    expect(screen.queryByText("MODEL_FAILED")).not.toBeInTheDocument();
+    expect(screen.queryByText("模型处理失败")).not.toBeInTheDocument();
     expect(screen.queryByText(/任务会在后台继续/)).not.toBeInTheDocument();
     await user.click(screen.getByRole("button", { name: "重试任务" }));
 

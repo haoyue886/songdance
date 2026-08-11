@@ -9,7 +9,7 @@ const execFileAsync = promisify(execFile);
 test("uploads, creates, restores and deletes a real WAV job", async ({ page }, testInfo) => {
   const wavPath = testInfo.outputPath("phase2-piano.wav");
   await writeFile(wavPath, createWav(2));
-  await page.goto("/transcribe");
+  await page.goto("/zh/transcribe");
 
   await page.getByLabel("选择钢琴音频").setInputFiles(wavPath);
   await expect(page.getByText("phase2-piano.wav")).toBeVisible();
@@ -36,7 +36,7 @@ test("uploads, creates, restores and deletes a real WAV job", async ({ page }, t
   await page.getByRole("checkbox").check();
   await expect(confirmButton).toBeEnabled();
   await confirmButton.click();
-  await expect(page).toHaveURL(/\/jobs\/[A-Za-z0-9_-]{32,}/);
+  await expect(page).toHaveURL(/\/zh\/jobs\/[A-Za-z0-9_-]{32,}/);
   await expect(page.getByRole("heading", { name: "等待处理" })).toBeVisible();
   const jobUrl = page.url();
   const jobId = jobUrl.split("/").at(-1);
@@ -50,7 +50,7 @@ test("uploads, creates, restores and deletes a real WAV job", async ({ page }, t
 
   page.once("dialog", (dialog) => dialog.accept());
   await page.getByRole("button", { name: "立即删除音频和任务" }).click();
-  await expect(page).toHaveURL(/\/transcribe\?deleted=1$/);
+  await expect(page).toHaveURL(/\/zh\/transcribe\?deleted=1$/);
   const deleted = await page.request.get(`http://127.0.0.1:8002/jobs/${jobId}`);
   expect(deleted.status()).toBe(404);
 });
@@ -76,7 +76,7 @@ test("accepts browser-decodable MP3 and M4A files", async ({ page }, testInfo) =
       "-y",
       outputPath,
     ]);
-    await page.goto("/transcribe");
+    await page.goto("/zh/transcribe");
     await page.getByLabel("选择钢琴音频").setInputFiles(outputPath);
     await expect(page.getByText(`phase2-piano.${format.extension}`)).toBeVisible();
     await expect(page.getByText(format.label, { exact: true })).toBeVisible();
@@ -87,7 +87,7 @@ test("accepts browser-decodable MP3 and M4A files", async ({ page }, testInfo) =
 test("caps a manually expanded real clip at 90 seconds", async ({ page }, testInfo) => {
   const wavPath = testInfo.outputPath("long-piano.wav");
   await writeFile(wavPath, createWav(120));
-  await page.goto("/transcribe");
+  await page.goto("/zh/transcribe");
   await page.getByLabel("选择钢琴音频").setInputFiles(wavPath);
 
   const endInput = page.getByLabel("结束时间");
@@ -99,7 +99,7 @@ test("caps a manually expanded real clip at 90 seconds", async ({ page }, testIn
 
 test("keeps the upload flow usable at 375px", async ({ page }, testInfo) => {
   await page.setViewportSize({ width: 375, height: 812 });
-  await page.goto("/transcribe");
+  await page.goto("/zh/transcribe");
 
   const widths = await page.evaluate(() => ({
     client: document.documentElement.clientWidth,

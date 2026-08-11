@@ -13,7 +13,10 @@ const mocks = vi.hoisted(() => ({
   push: vi.fn(),
 }));
 
-vi.mock("next/navigation", () => ({ useRouter: () => ({ push: mocks.push }) }));
+vi.mock("@/i18n/navigation", () => ({
+  Link: ({ href, children }: { href: string; children: React.ReactNode }) => <a href={href}>{children}</a>,
+  useRouter: () => ({ push: mocks.push }),
+}));
 
 vi.mock("@/lib/api/jobs", () => ({
   createJob: mocks.createJob,
@@ -95,7 +98,7 @@ describe("transcription draft", () => {
     await user.click(screen.getByRole("checkbox"));
     await user.click(screen.getByRole("button", { name: "创建转录任务" }));
 
-    expect(await screen.findByRole("alert")).toHaveTextContent("队列暂时不可用");
+    expect(await screen.findByRole("alert")).toHaveTextContent("操作失败，请重试");
     expect(screen.getByText("总时长 42.50 秒")).toBeInTheDocument();
     expect(screen.getByRole("button", { name: "创建转录任务" })).toBeEnabled();
   });

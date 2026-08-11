@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { useTranslations } from "next-intl";
 import WaveSurfer from "wavesurfer.js";
 import RegionsPlugin, { type Region } from "wavesurfer.js/dist/plugins/regions.esm.js";
 import { clipDuration, normalizeClip, type AudioClip } from "@/lib/audio/clip";
@@ -14,9 +15,9 @@ type WaveformTrimmerProps = {
   onError: (message: string) => void;
 };
 
-const formatTime = (value: number) => `${value.toFixed(2)} 秒`;
-
 export function WaveformTrimmer({ file, duration, clip, disabled, onChange, onError }: WaveformTrimmerProps) {
+  const t = useTranslations("audio");
+  const formatTime = (value: number) => `${value.toFixed(2)} ${t("seconds")}`;
   const containerRef = useRef<HTMLDivElement>(null);
   const waveSurferRef = useRef<WaveSurfer | null>(null);
   const regionRef = useRef<Region | null>(null);
@@ -59,7 +60,7 @@ export function WaveformTrimmer({ file, duration, clip, disabled, onChange, onEr
         resize: true,
       });
     });
-    waveSurfer.on("error", () => onError("波形加载失败，请重新选择音频"));
+    waveSurfer.on("error", () => onError(t("waveformError")));
     waveSurfer.on("pause", () => setIsPlaying(false));
     waveSurfer.on("finish", () => setIsPlaying(false));
     regions.on("region-updated", (region, side) => {
@@ -72,7 +73,7 @@ export function WaveformTrimmer({ file, duration, clip, disabled, onChange, onEr
       waveSurferRef.current = null;
       regionRef.current = null;
     };
-  }, [duration, file, onChange, onError]);
+  }, [duration, file, onChange, onError, t]);
 
   useEffect(() => {
     regionRef.current?.setOptions({ drag: !disabled, resize: !disabled });
@@ -99,11 +100,11 @@ export function WaveformTrimmer({ file, duration, clip, disabled, onChange, onEr
   };
 
   return (
-    <section aria-label="音频片段截取" className="rounded-3xl border border-[#d9e3dd] bg-white p-5 sm:p-6">
+    <section aria-label={t("trimLabel")} className="rounded-lg border border-[#d9e3dd] bg-white p-5 sm:p-6">
       <div className="flex flex-wrap items-center justify-between gap-3">
         <div>
-          <h2 className="text-lg font-bold">选择转录片段</h2>
-          <p className="mt-1 text-sm text-[#667772]">拖动绿色区域或输入时间，最长 90 秒。</p>
+          <h2 className="text-lg font-bold">{t("trimTitle")}</h2>
+          <p className="mt-1 text-sm text-[#667772]">{t("trimHelp")}</p>
         </div>
         <button
           type="button"
@@ -111,30 +112,30 @@ export function WaveformTrimmer({ file, duration, clip, disabled, onChange, onEr
           onClick={togglePlayback}
           className="rounded-full bg-[#e2f0eb] px-4 py-2 text-sm font-bold text-[#075e55] disabled:opacity-50"
         >
-          {isPlaying ? "暂停" : "播放选区"}
+          {isPlaying ? t("pause") : t("playSelection")}
         </button>
       </div>
       <div className="relative mt-5 min-h-28 overflow-hidden rounded-2xl bg-[#eff4f0]">
-        {!isReady && <p className="absolute inset-0 grid place-items-center text-sm text-[#667772]">正在生成波形…</p>}
+        {!isReady && <p className="absolute inset-0 grid place-items-center text-sm text-[#667772]">{t("waveformLoading")}</p>}
         <div ref={containerRef} className="relative z-10" />
       </div>
       <div className="mt-5 grid gap-4 sm:grid-cols-3">
         <TimeInput
-          label="开始时间"
+          label={t("startTime")}
           value={clip.start}
           max={Math.max(0, duration - 1)}
           disabled={disabled}
           onChange={(start) => onChange(normalizeClip({ start, end: clip.end }, duration, "start"))}
         />
         <TimeInput
-          label="结束时间"
+          label={t("endTime")}
           value={clip.end}
           max={duration}
           disabled={disabled}
           onChange={(end) => onChange(normalizeClip({ start: clip.start, end }, duration, "end"))}
         />
         <div className="rounded-xl bg-[#f3f6f3] px-4 py-3">
-          <p className="text-xs font-bold uppercase tracking-[0.12em] text-[#75837f]">片段时长</p>
+          <p className="text-xs font-bold uppercase text-[#75837f]">{t("duration")}</p>
           <p className="mt-1 font-bold text-[#15332f]">{formatTime(clipDuration(clip))}</p>
         </div>
       </div>
@@ -165,7 +166,7 @@ function TimeInput({ label, value, max, disabled, onChange }: TimeInputProps) {
           onChange={(event) => onChange(Number(event.currentTarget.value))}
           className="min-w-0 flex-1 bg-transparent font-bold outline-none"
         />
-        <span className="text-sm text-[#75837f]">秒</span>
+        <span className="text-sm text-[#75837f]">s</span>
       </span>
     </label>
   );

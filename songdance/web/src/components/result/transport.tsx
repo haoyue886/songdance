@@ -1,6 +1,7 @@
 "use client";
 
 import { Minus, Pause, Piano, Play, Plus, Repeat2, RotateCcw, Volume2 } from "lucide-react";
+import { useTranslations } from "next-intl";
 import type { PlaybackMode } from "@/hooks/use-result-playback";
 
 export type TransportProps = {
@@ -27,13 +28,14 @@ export type TransportProps = {
 };
 
 export function Transport(props: TransportProps) {
+  const t = useTranslations("result");
   return (
-    <section aria-label="播放控制" className="rounded-lg border border-[#cad8d2] bg-white p-3 shadow-sm">
+    <section aria-label={t("transport")} className="rounded-lg border border-[#cad8d2] bg-white p-3 shadow-sm">
       <div className="flex flex-wrap items-center gap-3">
         <button
           type="button"
-          aria-label={props.playing ? "暂停" : "播放"}
-          title={props.playing ? "暂停" : "播放"}
+          aria-label={props.playing ? t("pause") : t("play")}
+          title={props.playing ? t("pause") : t("play")}
           className="grid size-10 shrink-0 place-items-center rounded-md bg-[#147d70] text-white hover:bg-[#075e55]"
           onClick={props.playing ? props.onPause : props.onPlay}
         >
@@ -43,7 +45,7 @@ export function Transport(props: TransportProps) {
           {formatTime(props.currentTime)} / {formatTime(props.duration)}
         </span>
         <input
-          aria-label="播放位置"
+          aria-label={t("position")}
           className="min-w-[160px] flex-1 accent-[#147d70]"
           type="range"
           min={0}
@@ -52,24 +54,24 @@ export function Transport(props: TransportProps) {
           value={Math.min(props.currentTime, props.duration)}
           onChange={(event) => props.onSeek(Number(event.target.value))}
         />
-        <div className="flex rounded-md border border-[#cad8d2] p-0.5" aria-label="播放音源">
+        <div className="flex rounded-md border border-[#cad8d2] p-0.5" aria-label={t("sourceSelector")}>
           <ModeButton
             active={props.mode === "source"}
-            label="原音"
+            label={t("sourceMode")}
             icon={<Volume2 size={15} />}
             onClick={() => props.onMode("source")}
           />
           <ModeButton
             active={props.mode === "midi"}
-            label="转录演奏"
+            label={t("midiMode")}
             icon={<Piano size={15} />}
             onClick={() => props.onMode("midi")}
           />
         </div>
         <label className="flex items-center gap-2 text-sm font-semibold text-[#52635f]">
-          速度
+          {t("speed")}
           <select
-            aria-label="播放速度"
+            aria-label={t("playbackSpeed")}
             className="h-9 rounded-md border border-[#cad8d2] bg-white px-2"
             value={props.rate}
             onChange={(event) => props.onRate(Number(event.target.value))}
@@ -92,32 +94,32 @@ export function Transport(props: TransportProps) {
               checked={props.loopEnabled}
               onChange={(event) => props.onLoopEnabled(event.target.checked)}
             />
-            <Repeat2 size={16} /> 循环
+            <Repeat2 size={16} /> {t("loop")}
           </label>
-          <TimeInput label="起点" value={props.loopStart} max={props.loopEnd - 0.5} onChange={props.onLoopStart} />
-          <TimeInput label="终点" value={props.loopEnd} min={props.loopStart + 0.5} max={props.duration} onChange={props.onLoopEnd} />
+          <TimeInput label={t("start")} value={props.loopStart} max={props.loopEnd - 0.5} onChange={props.onLoopStart} />
+          <TimeInput label={t("end")} value={props.loopEnd} min={props.loopStart + 0.5} max={props.duration} onChange={props.onLoopEnd} />
         </div>
         <div className="flex items-center gap-2">
-          <span className="text-sm font-semibold text-[#52635f]">转调</span>
-          <IconButton label="降半音" onClick={() => props.onTranspose(Math.max(-12, props.transpose - 1))}>
+          <span className="text-sm font-semibold text-[#52635f]">{t("transpose")}</span>
+          <IconButton label={t("downSemitone")} onClick={() => props.onTranspose(Math.max(-12, props.transpose - 1))}>
             <Minus size={16} />
           </IconButton>
           <span className="w-11 text-center text-sm font-bold tabular-nums text-[#15332f]">
             {props.transpose > 0 ? `+${props.transpose}` : props.transpose}
           </span>
-          <IconButton label="升半音" onClick={() => props.onTranspose(Math.min(12, props.transpose + 1))}>
+          <IconButton label={t("upSemitone")} onClick={() => props.onTranspose(Math.min(12, props.transpose + 1))}>
             <Plus size={16} />
           </IconButton>
-          <IconButton label="重置转调" onClick={() => props.onTranspose(0)}>
+          <IconButton label={t("resetTranspose")} onClick={() => props.onTranspose(0)}>
             <RotateCcw size={16} />
           </IconButton>
         </div>
       </div>
       {props.selection && (
         <div className="mt-3 flex flex-wrap items-center justify-between gap-2 border-t border-[#e1e7e2] pt-3 text-xs font-semibold text-[#52635f]">
-          <span aria-live="polite">谱面选区：{formatTime(props.selection.start)} - {formatTime(props.selection.end)}</span>
+          <span aria-live="polite">{t("selection", { start: formatTime(props.selection.start), end: formatTime(props.selection.end) })}</span>
           <button type="button" className="rounded border border-[#cad8d2] px-2 py-1 text-[#075e55] hover:bg-[#edf4f0]"
-            onClick={props.onClearSelection}>清除选区</button>
+            onClick={props.onClearSelection}>{t("clearSelection")}</button>
         </div>
       )}
     </section>
@@ -165,7 +167,7 @@ function TimeInput({
       {label}
       <input
         type="number"
-        aria-label={`循环${label}`}
+        aria-label={label}
         className="h-8 w-20 rounded-md border border-[#cad8d2] px-2 tabular-nums"
         min={min}
         max={max}

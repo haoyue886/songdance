@@ -1,6 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { useTranslations } from "next-intl";
 import type { OpenSheetMusicDisplay } from "opensheetmusicdisplay";
 import { useScoreRangeDrag } from "@/hooks/use-score-range-drag";
 import type { NoteTimeline } from "@/lib/result/timeline";
@@ -29,6 +30,7 @@ export function ScoreViewer({
   onSelectionChange?: (selection: { start: number; end: number } | null) => void;
   onRendered: (container: HTMLDivElement | null) => void;
 }) {
+  const t = useTranslations("result");
   const containerRef = useRef<HTMLDivElement>(null);
   const frameRef = useRef<HTMLDivElement>(null);
   const viewportRef = useRef<HTMLDivElement>(null);
@@ -235,15 +237,15 @@ export function ScoreViewer({
       )}
       {status === "loading" && (
         <div className="grid min-h-[360px] place-items-center" role="status">
-          <p className="text-sm font-semibold text-[#61716c]">正在排版五线谱…</p>
+          <p className="text-sm font-semibold text-[#61716c]">{t("scoreLoading")}</p>
         </div>
       )}
       {status === "error" && (
         <div className="grid min-h-[360px] place-items-center p-8 text-center" role="alert">
           <div>
-            <p className="font-bold text-[#8d372f]">五线谱无法显示</p>
+            <p className="font-bold text-[#8d372f]">{t("scoreFailed")}</p>
             <p className="mt-2 text-sm leading-6 text-[#61716c]">
-              MusicXML 产物解析失败。MIDI 和其他可用格式仍可下载。
+              {t("scoreFailedBody")}
             </p>
           </div>
         </div>
@@ -261,10 +263,10 @@ export function ScoreViewer({
           boundaryHandlers={boundaryHandlers} />
         <div
           ref={containerRef}
-          aria-label="MusicXML 五线谱"
+          aria-label={t("scoreLabel")}
           aria-hidden={status !== "ready"}
           {...pointerHandlers}
-          title={measureCount > 0 ? "点击定位，拖动选择谱面区间" : undefined}
+          title={measureCount > 0 ? t("scoreHint") : undefined}
           className={`w-[720px] touch-pan-y select-none ${measureCount > 0 ? isDragging ? "cursor-grabbing" : "cursor-crosshair" : ""} ${status === "ready" ? "" : "invisible absolute left-0 top-0"}`}
           style={{ transform: `scale(${scale})`, transformOrigin: "top left" }}
         />

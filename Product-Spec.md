@@ -631,12 +631,12 @@ SongDance 是一个面向海外用户、钢琴优先并逐步扩展到多乐器�
 
 **验收标准：**
 
-- [ ] AC-064：Given 未保存语言选择，when 分别直接请求 `/` 与 `/zh` 且不执行客户端 JavaScript，then 两者使用同一页面结构，前者完整显示英语并设置 `lang="en"`，后者完整显示简体中文并设置 `lang="zh-CN"`。
-- [ ] AC-065：Given 用户位于任一稳定页面或匿名任务页，when 切换语言，then 系统导航到对应 locale URL，保留逻辑路径、任务 ID、查询参数和 hash，且 375 px 下控件不造成页面横向滚动。
-- [ ] AC-066：Given 任一支持语言，when 打开首页、上传、处理中、成功、失败、结果、示例、法律页、404 和核心交互反馈，then 不出现缺失翻译 key、错误语言文案或直接透传的后端技术错误。
-- [ ] AC-067：Given 抓取任一英语或中文稳定公开页面，when 检查 metadata 与 sitemap，then canonical 自引用、语言 alternates 双向完整、`x-default` 指向英语版本，且临时任务 URL 不进入 sitemap。
-- [ ] AC-068：Given 请求旧 `/audio-to-midi`，when 服务端响应，then 返回指向 `/` 的永久重定向，且导航、sitemap 和页面 canonical 均不再引用旧地址。
-- [ ] AC-069：Given API 返回同一稳定 `error_code`，when 英语或中文用户触发该错误，then Web 分别展示语义一致的本地化提示和可执行恢复动作，未知错误码使用对应语言的安全兜底。
+- [x] AC-064：Given 未保存语言选择，when 分别直接请求 `/` 与 `/zh` 且不执行客户端 JavaScript，then 两者使用同一页面结构，前者完整显示英语并设置 `lang="en"`，后者完整显示简体中文并设置 `lang="zh-CN"`。
+- [x] AC-065：Given 用户位于任一稳定页面或匿名任务页，when 切换语言，then 系统导航到对应 locale URL，保留逻辑路径、任务 ID、查询参数和 hash，且 375 px 下控件不造成页面横向滚动。
+- [x] AC-066：Given 任一支持语言，when 打开首页、上传、处理中、成功、失败、结果、示例、法律页、404 和核心交互反馈，then 不出现缺失翻译 key、错误语言文案或直接透传的后端技术错误。
+- [x] AC-067：Given 抓取任一英语或中文稳定公开页面，when 检查 metadata 与 sitemap，then canonical 自引用、语言 alternates 双向完整、`x-default` 指向英语版本，且临时任务 URL 不进入 sitemap。
+- [x] AC-068：Given 请求旧 `/audio-to-midi`，when 服务端响应，then 返回指向 `/` 的永久重定向，且导航、sitemap 和页面 canonical 均不再引用旧地址。
+- [x] AC-069：Given API 返回同一稳定 `error_code`，when 英语或中文用户触发该错误，then Web 分别展示语义一致的本地化提示和可执行恢复动作，未知错误码使用对应语言的安全兜底。
 
 ## 6. 数据模型
 

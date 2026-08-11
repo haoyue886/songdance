@@ -1,6 +1,7 @@
 "use client";
 
 import { Download, FileMusic, FileText, LoaderCircle } from "lucide-react";
+import { useTranslations } from "next-intl";
 import type { ArtifactType, JobArtifact } from "@/lib/api/jobs";
 
 type DownloadKind = "raw_midi" | "midi" | "musicxml" | "pdf";
@@ -18,18 +19,19 @@ export function ArtifactDownloads({
   pdfReady: boolean;
   onDownload: (kind: DownloadKind) => void;
 }) {
-  const midi = artifactState(artifacts, "midi");
-  const rawMidi = artifactState(artifacts, "raw_midi");
-  const musicXml = artifactState(artifacts, "musicxml");
+  const t = useTranslations("result");
+  const midi = artifactState(artifacts, "midi", t("notGenerated"), t("generationFailed"));
+  const rawMidi = artifactState(artifacts, "raw_midi", t("notGenerated"), t("generationFailed"));
+  const musicXml = artifactState(artifacts, "musicxml", t("notGenerated"), t("generationFailed"));
   return (
-    <aside aria-label="格式导出" className="min-w-0">
-      <h2 className="text-sm font-bold uppercase tracking-[0.12em] text-[#667772]">导出</h2>
+    <aside aria-label={t("export")} className="min-w-0">
+      <h2 className="text-sm font-bold uppercase text-[#667772]">{t("export")}</h2>
       <div className="mt-3 grid gap-2">
-        <DownloadButton label="原始 MIDI" detail={rawMidi.detail}
+        <DownloadButton label={t("rawMidi")} detail={rawMidi.detail}
           disabled={!rawMidi.available || busy !== null} busy={busy === "raw_midi"}
           icon={<FileMusic size={17} />} onClick={() => onDownload("raw_midi")} />
         <DownloadButton
-          label="清洗后 MIDI"
+          label={t("cleanedMidi")}
           detail={midi.detail}
           disabled={!midi.available || busy !== null}
           busy={busy === "midi"}
@@ -38,7 +40,7 @@ export function ArtifactDownloads({
         />
         <DownloadButton
           label="MusicXML"
-          detail={musicXml.available && !musicXmlReady ? "当前预览不可用" : musicXml.detail}
+          detail={musicXml.available && !musicXmlReady ? t("previewUnavailable") : musicXml.detail}
           disabled={!musicXml.available || !musicXmlReady || busy !== null}
           busy={busy === "musicxml"}
           icon={<FileMusic size={17} />}
@@ -46,7 +48,7 @@ export function ArtifactDownloads({
         />
         <DownloadButton
           label="PDF"
-          detail={pdfReady ? "当前五线谱" : "等待五线谱"}
+          detail={pdfReady ? t("currentScore") : t("waitingScore")}
           disabled={!pdfReady || busy !== null}
           busy={busy === "pdf"}
           icon={<FileText size={17} />}
@@ -57,11 +59,11 @@ export function ArtifactDownloads({
   );
 }
 
-function artifactState(artifacts: JobArtifact[], type: ArtifactType) {
+function artifactState(artifacts: JobArtifact[], type: ArtifactType, missing: string, failed: string) {
   const artifact = artifacts.find((item) => item.type === type);
-  if (!artifact) return { available: false, detail: "未生成" };
+  if (!artifact) return { available: false, detail: missing };
   if (artifact.status === "failed") {
-    return { available: false, detail: artifact.error_code ?? "生成失败" };
+    return { available: false, detail: failed };
   }
   return { available: true, detail: formatBytes(artifact.size_bytes) };
 }

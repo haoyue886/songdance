@@ -25,8 +25,8 @@ export default function NotFound() {
             <Link href="/" className="inline-flex min-h-12 items-center rounded-full bg-[#147d70] px-6 text-sm font-bold text-white transition hover:bg-[#075e55]">
               Return home
             </Link>
-            <Link href="/audio-to-midi" className="inline-flex min-h-12 items-center rounded-full border border-[#b9cdc6] bg-white px-6 text-sm font-bold text-[#075e55] transition hover:border-[#147d70]">
-              Open audio to MIDI guide
+            <Link href="/examples" className="inline-flex min-h-12 items-center rounded-full border border-[#b9cdc6] bg-white px-6 text-sm font-bold text-[#075e55] transition hover:border-[#147d70]">
+              Open transcription example
             </Link>
           </div>
         </div>

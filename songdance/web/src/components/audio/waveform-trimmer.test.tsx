@@ -106,7 +106,7 @@ describe("WaveformTrimmer", () => {
     expect(firstInstance.destroy).toHaveBeenCalledOnce();
     expect(activeInstance.loadBlob).toHaveBeenCalledWith(file);
     expect(activeInstance.destroy).not.toHaveBeenCalled();
-    expect(props.onError).toHaveBeenCalledWith("波形加载失败，请重新选择音频");
+    expect(props.onError).toHaveBeenCalledWith("波形加载失败，请重新选择音频。");
 
     view.unmount();
     expect(activeInstance.destroy).toHaveBeenCalledOnce();

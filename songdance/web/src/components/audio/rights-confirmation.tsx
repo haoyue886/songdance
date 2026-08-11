@@ -1,6 +1,7 @@
 "use client";
 
-import Link from "next/link";
+import { useTranslations } from "next-intl";
+import { Link } from "@/i18n/navigation";
 
 type RightsConfirmationProps = {
   checked: boolean;
@@ -9,6 +10,7 @@ type RightsConfirmationProps = {
 };
 
 export function RightsConfirmation({ checked, disabled, onChange }: RightsConfirmationProps) {
+  const t = useTranslations("audio");
   return (
     <label className="flex cursor-pointer items-start gap-3 rounded-2xl border border-[#dce4de] bg-[#f7f9f5] p-4 text-sm leading-6 text-[#52635f]">
       <input
@@ -19,16 +21,15 @@ export function RightsConfirmation({ checked, disabled, onChange }: RightsConfir
         className="mt-1 size-4 accent-[#147d70]"
       />
       <span>
-        我确认自己拥有处理和转录该音频所需的版权、许可或其他合法权利。
-        上传内容不会用于训练模型；任务创建后可在任务页立即删除。提交即表示你已阅读
+        {t("rightsText")} {t("rightsPrivacyPrefix")}{" "}
         <Link className="font-bold text-[#075e55] underline underline-offset-2" href="/privacy">
-          隐私说明
+          {t("privacy")}
         </Link>
-        和
+        {t("and")}
         <Link className="font-bold text-[#075e55] underline underline-offset-2" href="/terms">
-          使用条款
+          {t("terms")}
         </Link>
-        。
+        .
       </span>
     </label>
   );

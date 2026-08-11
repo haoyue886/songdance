@@ -6,11 +6,11 @@ import { HowItWorks } from "./how-it-works";
 import { SiteHeader } from "./site-header";
 
 describe("public product shell", () => {
-  it("states the product job and honest MVP limits", () => {
-    render(<HeroTranscriber />);
+  it("states the product job and honest MVP limits", async () => {
+    render(await HeroTranscriber());
 
     expect(
-      screen.getByRole("heading", { name: /让钢琴录音重新变得可编辑/ }),
+      screen.getByRole("heading", { name: /钢琴音频转 MIDI 转换器/ }),
     ).toBeInTheDocument();
     expect(screen.getByText("仅支持钢琴")).toBeInTheDocument();
     expect(screen.getByText("最长 90 秒")).toBeInTheDocument();
@@ -18,11 +18,13 @@ describe("public product shell", () => {
     expect(screen.getByText(/拥有处理该音频所需的版权或授权/)).toBeInTheDocument();
   });
 
-  it("uses working in-page navigation instead of dead product actions", () => {
+  it("uses working in-page navigation instead of dead product actions", async () => {
+    const header = await SiteHeader();
+    const process = await HowItWorks();
     render(
       <>
-        <SiteHeader />
-        <HowItWorks />
+        {header}
+        {process}
       </>,
     );
 

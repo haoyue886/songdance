@@ -19,7 +19,7 @@ test("shows a recoverable 429 while the same IP has an active job", async ({ pag
 
   const path = testInfo.outputPath("blocked.wav");
   await writeFile(path, wav);
-  await page.goto("/transcribe");
+  await page.goto("/zh/transcribe");
   await page.getByLabel("选择钢琴音频").setInputFiles(path);
   await page.getByRole("checkbox").check();
   await page.getByRole("button", { name: "创建转录任务" }).click();
@@ -28,7 +28,7 @@ test("shows a recoverable 429 while the same IP has an active job", async ({ pag
     const alert = page.getByText("任务创建失败").locator("..");
     await expect(alert).toContainText("请等待当前任务结束后再提交");
     await expect(alert).toContainText("30 秒后重试");
-    expect(page.url()).toContain("/transcribe");
+    expect(page.url()).toContain("/zh/transcribe");
   } finally {
     const deleted = await page.request.delete(`${API_URL}/jobs/${jobId}`);
     expect(deleted.status()).toBe(204);
@@ -37,14 +37,14 @@ test("shows a recoverable 429 while the same IP has an active job", async ({ pag
 
 test("publishes privacy and terms pages without mobile overflow", async ({ page }) => {
   await page.setViewportSize({ width: 375, height: 812 });
-  await page.goto("/privacy");
+  await page.goto("/zh/privacy");
   await expect(page.getByRole("heading", { name: "你的音频只为这次转录而处理" })).toBeVisible();
   await expect(page.getByText(/24 小时后自动删除/)).toBeVisible();
   await expect(page.getByText(/不用于训练模型/)).toBeVisible();
   await expectNoHorizontalOverflow(page);
 
   await page.getByRole("link", { name: "使用条款" }).first().click();
-  await expect(page).toHaveURL(/\/terms$/);
+  await expect(page).toHaveURL(/\/zh\/terms$/);
   await expect(page.getByRole("heading", { name: "只处理你有权处理的内容" })).toBeVisible();
   await expect(page.getByText(/每个 IP 默认每小时最多创建 3 个任务/)).toBeVisible();
   await expectNoHorizontalOverflow(page);

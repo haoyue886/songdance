@@ -39,7 +39,8 @@ describe("artifact downloads", () => {
     expect(midi).toBeEnabled();
     expect(screen.getByRole("button", { name: /^MusicXML/ })).toBeDisabled();
     expect(screen.getByRole("button", { name: /^PDF/ })).toBeDisabled();
-    expect(screen.getByText("MUSICXML_GENERATION_FAILED")).toBeInTheDocument();
+    expect(screen.getByText("生成失败")).toBeInTheDocument();
+    expect(screen.queryByText("MUSICXML_GENERATION_FAILED")).not.toBeInTheDocument();
     await user.click(midi);
     expect(download).toHaveBeenCalledWith("midi");
   });

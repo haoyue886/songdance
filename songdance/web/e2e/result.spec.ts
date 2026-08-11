@@ -13,13 +13,14 @@ const infrastructureTimeout = Number(process.env.PLAYWRIGHT_INFRASTRUCTURE_TIMEO
 const infrastructureExpect = expect.configure({ timeout: infrastructureTimeout });
 
 test("renders, plays and exports a real completed transcription", async ({ page }, testInfo) => {
+  test.setTimeout(infrastructureTimeout * 2);
   const wavPath = testInfo.outputPath("result-piano.wav");
   await writeFile(wavPath, createWav(5));
-  await page.goto("/transcribe");
+  await page.goto("/zh/transcribe");
   await page.getByLabel("选择钢琴音频").setInputFiles(wavPath);
   await page.getByRole("checkbox").check();
   await page.getByRole("button", { name: "创建转录任务" }).click();
-  await infrastructureExpect(page).toHaveURL(/\/jobs\/[A-Za-z0-9_-]{32,}/);
+  await infrastructureExpect(page).toHaveURL(/\/zh\/jobs\/[A-Za-z0-9_-]{32,}/);
   const jobId = page.url().split("/").at(-1);
   if (!jobId) throw new Error("任务 URL 缺少任务 ID");
 
@@ -86,8 +87,8 @@ test("renders, plays and exports a real completed transcription", async ({ page 
     .toBe(true);
   await page.getByRole("button", { name: "暂停" }).click();
 
-  await page.getByLabel("循环起点").fill("0.4");
-  await page.getByLabel("循环终点").fill("0.9");
+  await page.getByRole("spinbutton", { name: "起点", exact: true }).fill("0.4");
+  await page.getByRole("spinbutton", { name: "终点", exact: true }).fill("0.9");
   await page.getByRole("checkbox").check();
   await setRangeValue(position, 0.8);
   await page.getByRole("button", { name: "播放" }).click();
@@ -103,7 +104,7 @@ test("renders, plays and exports a real completed transcription", async ({ page 
   expect(originalResponse.ok()).toBe(true);
   const original = new Midi(new Uint8Array(await originalResponse.body()));
   const originalPitches = original.tracks.flatMap((track) => track.notes.map((note) => note.midi));
-  const exportPanel = page.getByRole("complementary", { name: "格式导出" });
+  const exportPanel = page.getByRole("complementary", { name: "导出", exact: true });
   const midiDownload = page.waitForEvent("download");
   await exportPanel.getByRole("button", { name: /^清洗后 MIDI / }).click();
   const midiPath = testInfo.outputPath("plus-one.mid");
@@ -129,7 +130,7 @@ test("renders, plays and exports a real completed transcription", async ({ page 
 
   page.once("dialog", (dialog) => dialog.accept());
   await page.getByRole("button", { name: "立即删除音频和结果" }).click();
-  await expect(page).toHaveURL(/\/transcribe\?deleted=1$/);
+  await expect(page).toHaveURL(/\/zh\/transcribe\?deleted=1$/);
 });
 
 async function verifyMusicXml(musicXmlPath: string): Promise<void> {

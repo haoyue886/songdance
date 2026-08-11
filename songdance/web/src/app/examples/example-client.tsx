@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { useTranslations } from "next-intl";
 import { ResultWorkspace } from "@/components/result/result-workspace";
 import type { TranscriptionJob } from "@/lib/api/jobs";
 import { parseTimeline, type NoteTimeline } from "@/lib/result/timeline";
@@ -14,6 +15,7 @@ type ExampleState =
   | { status: "ready"; timeline: NoteTimeline; musicXml: string; job: TranscriptionJob };
 
 export function ExampleClient() {
+  const t = useTranslations("result");
   const [state, setState] = useState<ExampleState>({ status: "loading" });
 
   useEffect(() => {
@@ -43,7 +45,7 @@ export function ExampleClient() {
   if (state.status === "error") {
     return (
       <p role="alert" className="rounded-lg border border-[#e4b9b3] bg-[#fff1ef] p-5 text-[#8d372f]">
-        示例产物暂时无法读取，请稍后刷新。
+        {t("exampleLoadError")}
       </p>
     );
   }
@@ -57,7 +59,7 @@ export function ExampleClient() {
       artifactPaths={{ midi: `${BASE_PATH}/score.mid` }}
       trackEvents={false}
       shareable={false}
-      expiresLabel="公共领域示例，持续可用"
+      expiresLabel={t("exampleAvailable")}
     />
   );
 }

@@ -1,6 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useRef, useState } from "react";
+import { useTranslations } from "next-intl";
 import type { NoteTimeline } from "@/lib/result/timeline";
 import { drawWaterfall, seekTimeFromCanvasY } from "./piano-roll-canvas";
 
@@ -15,6 +16,7 @@ export function PianoRoll({
   duration: number;
   onSeek: (seconds: number) => void;
 }) {
+  const t = useTranslations("result");
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const [reducedMotion, setReducedMotion] = useState(false);
 
@@ -55,7 +57,7 @@ export function PianoRoll({
     <div className="overflow-hidden rounded-lg border border-[#d9e3dd] bg-[#101512] shadow-sm">
       <canvas
         ref={canvasRef}
-        aria-label="钢琴卷帘：音符下落到键盘，点击可定位播放位置"
+        aria-label={t("rollLabel")}
         className="block aspect-[4/3] min-h-[330px] w-full cursor-crosshair touch-none sm:min-h-[430px]"
         role="img"
         tabIndex={0}

@@ -87,13 +87,10 @@ async function responseError(response: Response): Promise<JobsApiError> {
     | { detail?: string | { code?: string; message?: string; retry_after?: number } }
     | null;
   const detail = payload?.detail;
-  const baseMessage =
-    typeof detail === "string"
-      ? detail
-      : detail?.message ?? "转录服务暂时不可用，请稍后重试。";
+  const baseMessage = typeof detail === "string" ? detail : detail?.message ?? "Service unavailable";
   const retryAfter = typeof detail === "object" ? detail?.retry_after : undefined;
   const message = retryAfter
-    ? `${baseMessage} 请在 ${formatRetryAfter(retryAfter)}后重试。`
+    ? `${baseMessage} Retry after ${formatRetryAfter(retryAfter)}.`
     : baseMessage;
   return new JobsApiError(
     message,
@@ -104,9 +101,9 @@ async function responseError(response: Response): Promise<JobsApiError> {
 }
 
 function formatRetryAfter(seconds: number): string {
-  if (seconds < 60) return `${Math.ceil(seconds)} 秒`;
-  if (seconds < 3600) return `${Math.ceil(seconds / 60)} 分钟`;
-  return `${Math.ceil(seconds / 3600)} 小时`;
+  if (seconds < 60) return `${Math.ceil(seconds)} seconds`;
+  if (seconds < 3600) return `${Math.ceil(seconds / 60)} minutes`;
+  return `${Math.ceil(seconds / 3600)} hours`;
 }
 
 async function request<T>(path: string, init?: RequestInit): Promise<T> {
@@ -114,7 +111,7 @@ async function request<T>(path: string, init?: RequestInit): Promise<T> {
   try {
     response = await fetch(`${API_URL}${path}`, { cache: "no-store", ...init });
   } catch {
-    throw new JobsApiError("无法连接转录服务，请检查网络后重试。", 0, "NETWORK_ERROR");
+    throw new JobsApiError("Network error", 0, "NETWORK_ERROR");
   }
 
   if (!response.ok) {
@@ -181,7 +178,7 @@ export async function getDownloadUrl(
   );
   const expectedPrefix = `${jobPath(jobId)}/files/${type}?`;
   if (!ticket.path.startsWith(expectedPrefix) || ticket.path.includes("://")) {
-    throw new JobsApiError("下载地址无效，请刷新后重试。", 502, "INVALID_DOWNLOAD_URL");
+    throw new JobsApiError("Invalid download URL", 502, "INVALID_DOWNLOAD_URL");
   }
   return `${API_URL}${ticket.path}`;
 }
@@ -196,7 +193,7 @@ export async function fetchArtifact(
     const url = await getDownloadUrl(jobId, type, signal);
     response = await fetch(url, { cache: "no-store", signal });
   } catch {
-    throw new JobsApiError("无法连接转录服务，请检查网络后重试。", 0, "NETWORK_ERROR");
+    throw new JobsApiError("Network error", 0, "NETWORK_ERROR");
   }
   if (!response.ok) throw await responseError(response);
   return response;

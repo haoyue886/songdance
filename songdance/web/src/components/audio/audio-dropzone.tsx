@@ -1,6 +1,7 @@
 "use client";
 
 import { useRef, useState } from "react";
+import { useTranslations } from "next-intl";
 import { AUDIO_ACCEPT } from "@/lib/audio/validation";
 
 type AudioDropzoneProps = {
@@ -10,6 +11,7 @@ type AudioDropzoneProps = {
 };
 
 export function AudioDropzone({ disabled = false, fileName, onFile }: AudioDropzoneProps) {
+  const t = useTranslations("audio");
   const inputRef = useRef<HTMLInputElement>(null);
   const [isDragging, setIsDragging] = useState(false);
 
@@ -41,7 +43,7 @@ export function AudioDropzone({ disabled = false, fileName, onFile }: AudioDropz
         accept={AUDIO_ACCEPT}
         disabled={disabled}
         className="sr-only"
-        aria-label="选择钢琴音频"
+        aria-label={t("chooseLabel")}
         onChange={(event) => chooseFirstFile(event.currentTarget.files)}
       />
       <span className="mx-auto grid size-14 place-items-center rounded-2xl bg-[#dff0e9] text-[#147d70]">
@@ -50,15 +52,15 @@ export function AudioDropzone({ disabled = false, fileName, onFile }: AudioDropz
           <path d="M5 14v3.5A2.5 2.5 0 0 0 7.5 20h9a2.5 2.5 0 0 0 2.5-2.5V14" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" />
         </svg>
       </span>
-      <p className="mt-4 font-bold">{fileName ?? "拖入钢琴音频，或从电脑选择"}</p>
-      <p className="mt-1 text-sm text-[#6a7975]">MP3、WAV、M4A · 最大 25 MB</p>
+      <p className="mt-4 font-bold">{fileName ?? t("dropPrompt")}</p>
+      <p className="mt-1 text-sm text-[#6a7975]">{t("requirements")}</p>
       <button
         type="button"
         disabled={disabled}
         onClick={() => inputRef.current?.click()}
         className="mt-5 rounded-full border border-[#bfd4cc] bg-white px-4 py-2 text-sm font-bold text-[#075e55] hover:border-[#147d70] disabled:cursor-not-allowed disabled:opacity-50"
       >
-        {fileName ? "更换文件" : "选择文件"}
+        {fileName ? t("replaceFile") : t("chooseFile")}
       </button>
     </div>
   );

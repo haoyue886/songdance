@@ -1,6 +1,6 @@
 "use client";
 
-import { useRouter } from "next/navigation";
+import { useLocale, useTranslations } from "next-intl";
 import { useCallback, useRef, useState } from "react";
 import { Upload, Video } from "lucide-react";
 import { AudioDropzone } from "@/components/audio/audio-dropzone";
@@ -11,6 +11,8 @@ import { clipDuration, createDefaultClip, type AudioClip } from "@/lib/audio/cli
 import { createClipFile } from "@/lib/audio/clip-file";
 import { inspectAudioFile, type AudioInspection } from "@/lib/audio/validation";
 import { createJob, sendUploadStartedEvent } from "@/lib/api/jobs";
+import { useRouter } from "@/i18n/navigation";
+import { localizeError } from "@/lib/i18n/errors";
 
 type InspectionState =
   | { status: "empty" }
@@ -25,6 +27,9 @@ type SubmitState =
 
 export function TranscribeClient() {
   const router = useRouter();
+  const locale = useLocale();
+  const t = useTranslations("transcribe");
+  const errors = useTranslations("errors");
   const requestIdRef = useRef(0);
   const [inspectionState, setInspectionState] = useState<InspectionState>({ status: "empty" });
   const [clip, setClip] = useState<AudioClip | null>(null);
@@ -41,7 +46,7 @@ export function TranscribeClient() {
     const result = await inspectAudioFile(file);
     if (requestId !== requestIdRef.current) return;
     if (!result.ok) {
-      setInspectionState({ status: "error", message: result.error });
+      setInspectionState({ status: "error", message: locale === "zh-CN" ? result.error : errors("invalidInput") });
       return;
     }
     setClip(createDefaultClip(result.value.duration));
@@ -75,7 +80,7 @@ export function TranscribeClient() {
     } catch (error) {
       setSubmitState({
         status: "error",
-        message: error instanceof Error ? error.message : "任务创建失败，请重试。",
+        message: localizeError(error, errors),
       });
     }
   };
@@ -86,9 +91,9 @@ export function TranscribeClient() {
   return (
     <div className="mt-10 grid gap-6">
       <div className="flex w-fit rounded-md border border-[#cad8d2] bg-white p-0.5"
-        role="tablist" aria-label="音频来源">
+        role="tablist" aria-label={t("sourceLabel")}>
         <ModeTab active={inputMode === "upload"} icon={<Upload size={16} />}
-          label="本地上传" onClick={() => setInputMode("upload")} />
+          label={t("localUpload")} onClick={() => setInputMode("upload")} />
         <ModeTab active={inputMode === "youtube"} icon={<Video size={16} />}
           label="YouTube" onClick={() => setInputMode("youtube")} />
       </div>
@@ -109,12 +114,12 @@ export function TranscribeClient() {
       {inspectionState.status === "loading" && (
         <StatusCard
           tone="neutral"
-          title="正在检查音频"
-          body="验证文件签名并读取时长，通常几秒内完成。"
+          title={t("checkingTitle")}
+          body={t("checkingBody")}
         />
       )}
       {inspectionState.status === "error" && (
-        <StatusCard tone="error" title="这个文件不能使用" body={inspectionState.message} />
+        <StatusCard tone="error" title={t("invalidTitle")} body={inspectionState.message} />
       )}
 
       {ready && (
@@ -124,10 +129,10 @@ export function TranscribeClient() {
               {inspectionState.inspection.format.toUpperCase()}
             </span>
             <span className="rounded-full bg-[#e5eee9] px-3 py-1.5">
-              总时长 {inspectionState.inspection.duration.toFixed(2)} 秒
+              {t("totalDuration", { seconds: inspectionState.inspection.duration.toFixed(2) })}
             </span>
             <span className="rounded-full bg-[#e5eee9] px-3 py-1.5">
-              本次 {clipDuration(clip).toFixed(2)} 秒
+              {t("clipDuration", { seconds: clipDuration(clip).toFixed(2) })}
             </span>
           </div>
           <WaveformTrimmer
@@ -144,7 +149,7 @@ export function TranscribeClient() {
             onChange={setRightsConfirmed}
           />
           {submitState.status === "error" && (
-            <StatusCard tone="error" title="任务创建失败" body={submitState.message} />
+            <StatusCard tone="error" title={t("createFailed")} body={submitState.message} />
           )}
           <div>
             <button
@@ -154,11 +159,11 @@ export function TranscribeClient() {
               onClick={submitJob}
               className="w-full rounded-full bg-[#147d70] px-6 py-3.5 font-bold text-white transition hover:bg-[#075e55] disabled:cursor-not-allowed disabled:bg-[#9aaba6] sm:w-auto"
             >
-              {submitting ? "正在创建任务…" : "创建转录任务"}
+              {submitting ? t("creating") : t("create")}
             </button>
             {!rightsConfirmed && (
               <p id="rights-required" className="mt-2 text-sm text-[#9a493f]">
-                确认内容权利后才能继续。
+                {t("rightsRequired")}
               </p>
             )}
           </div>

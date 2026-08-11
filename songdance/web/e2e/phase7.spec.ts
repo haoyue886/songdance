@@ -14,7 +14,7 @@ const infrastructureTimeout = Number(process.env.PLAYWRIGHT_INFRASTRUCTURE_TIMEO
 const infrastructureExpect = expect.configure({ timeout: infrastructureTimeout });
 
 test("keeps local upload available when the YouTube flag is off", async ({ page }) => {
-  await page.goto("/transcribe");
+  await page.goto("/zh/transcribe");
   await page.getByRole("tab", { name: "YouTube" }).click();
   await expect(page.getByText("YouTube 导入当前未开放")).toBeVisible();
   await page.getByRole("button", { name: "改用本地上传" }).click();
@@ -22,9 +22,10 @@ test("keeps local upload available when the YouTube flag is off", async ({ page 
 });
 
 test("plays, switches views and exports the public-domain example", async ({ page }, testInfo) => {
-  await page.goto("/examples");
-  await expect(page.getByRole("heading", { name: "先听一段真实钢琴转录" })).toBeVisible();
-  await expect(page.getByRole("link", { name: "查看录音来源与许可证" }))
+  test.setTimeout(infrastructureTimeout * 2);
+  await page.goto("/zh/examples");
+  await expect(page.getByRole("heading", { name: "先听原音，再检查转录结果" })).toBeVisible();
+  await expect(page.getByRole("link", { name: "Musopen 录音与乐谱" }))
     .toHaveAttribute("href", /commons\.wikimedia\.org/);
   const scorePages = page.locator('[aria-label="MusicXML 五线谱"] svg');
   await infrastructureExpect.poll(() => scorePages.count()).toBeGreaterThan(0);
@@ -75,8 +76,8 @@ test("plays, switches views and exports the public-domain example", async ({ pag
   await expect(page.getByText("第 1 / 18 小节")).toBeVisible();
   const selectionBorders = page.locator('svg.pointer-events-none rect[data-score-selection-border="true"]');
   const selectionOverlay = page.getByTestId("score-selection-overlay");
-  const loopStartInput = page.getByLabel("循环起点");
-  const loopEndInput = page.getByLabel("循环终点");
+  const loopStartInput = page.getByRole("spinbutton", { name: "起点", exact: true });
+  const loopEndInput = page.getByRole("spinbutton", { name: "终点", exact: true });
   const openingHighlightBox = await activeMeasureHighlight.boundingBox();
   expect(openingHighlightBox).not.toBeNull();
   if (!openingHighlightBox) throw new Error("弱起小节高亮不可见");
@@ -168,8 +169,8 @@ test("plays, switches views and exports the public-domain example", async ({ pag
     elements.map((element) => Number(element.getAttribute("y"))));
   const crossPageSegmentKeys = await selectionBorders.evaluateAll((elements) =>
     elements.map((element) => element.getAttribute("data-score-selection-segment")));
-  const crossPageStartSeconds = Number(await page.getByLabel("循环起点").inputValue());
-  const crossPageEndSeconds = Number(await page.getByLabel("循环终点").inputValue());
+  const crossPageStartSeconds = Number(await page.getByRole("spinbutton", { name: "起点", exact: true }).inputValue());
+  const crossPageEndSeconds = Number(await page.getByRole("spinbutton", { name: "终点", exact: true }).inputValue());
   expect(Math.max(...crossPageBorderYs)).toBeGreaterThan(firstPageHeight);
   expect(new Set(crossPageSegmentKeys).size).toBe(crossPageSegmentKeys.length);
   expect(crossPageEndSeconds - crossPageStartSeconds).toBeGreaterThan(3);
@@ -194,8 +195,8 @@ test("plays, switches views and exports the public-domain example", async ({ pag
   const shortSelectionBorderBox = await selectionBorders.first().boundingBox();
   expect(shortSelectionBorderBox?.width).toBeLessThan(200);
   await page.screenshot({ path: testInfo.outputPath("score-selection.png"), fullPage: false });
-  const selectedStartSeconds = Number(await page.getByLabel("循环起点").inputValue());
-  const selectedEndSeconds = Number(await page.getByLabel("循环终点").inputValue());
+  const selectedStartSeconds = Number(await page.getByRole("spinbutton", { name: "起点", exact: true }).inputValue());
+  const selectedEndSeconds = Number(await page.getByRole("spinbutton", { name: "终点", exact: true }).inputValue());
   const selectedDuration = selectedEndSeconds - selectedStartSeconds;
   expect(selectedDuration).toBeGreaterThan(0);
   expect(selectedDuration).toBeLessThan(2);
@@ -258,7 +259,7 @@ test("plays, switches views and exports the public-domain example", async ({ pag
   await page.setViewportSize({ width: 1280, height: 720 });
   await page.getByRole("tab", { name: "五线谱" }).click();
 
-  const exportPanel = page.getByRole("complementary", { name: "格式导出" });
+  const exportPanel = page.getByRole("complementary", { name: "导出", exact: true });
   const midiDownload = page.waitForEvent("download");
   await exportPanel.getByRole("button", { name: /^清洗后 MIDI / }).click();
   const midiPath = testInfo.outputPath("example.mid");

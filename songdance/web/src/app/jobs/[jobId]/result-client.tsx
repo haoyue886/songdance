@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { useTranslations } from "next-intl";
 import { ResultWorkspace } from "@/components/result/result-workspace";
 import { fetchArtifact, getDownloadUrl, type TranscriptionJob } from "@/lib/api/jobs";
 import { fetchTimeline, type NoteTimeline } from "@/lib/result/timeline";
@@ -27,6 +28,8 @@ export function ResultClient({
   deleting: boolean;
   onDelete: () => void;
 }) {
+  const t = useTranslations("result");
+  const errors = useTranslations("errors");
   const [state, setState] = useState<LoadState>({ status: "loading" });
   const sourceRefreshPending = useRef(false);
   const lastSourceRefreshAt = useRef(0);
@@ -56,22 +59,22 @@ export function ResultClient({
         let musicXml: string | null = null;
         const warnings: string[] = [];
         if (cleanupFallback) {
-          warnings.push("音符清洗失败，当前显示原始模型钢琴卷帘；原始 MIDI 仍可下载。");
+          warnings.push(t("rawCleanupWarning"));
         } else if (useRawTimeline) {
-          warnings.push("清洗后时间线不可用，当前显示原始模型钢琴卷帘；原始 MIDI 仍可下载。");
+          warnings.push(t("rawTimelineWarning"));
         }
         if (musicXmlArtifact) {
           try {
             musicXml = await (await fetchArtifact(job.id, "musicxml", controller.signal)).text();
           } catch {
-            warnings.push("五线谱暂时无法读取，钢琴卷帘和 MIDI 下载仍可使用。");
+            warnings.push(t("scoreReadWarning"));
           }
         } else if (
           job.artifacts.some(
             (artifact) => artifact.type === "musicxml" && artifact.status === "failed",
           )
         ) {
-          warnings.push("五线谱生成失败，钢琴卷帘、MIDI 和原音仍可使用。");
+          warnings.push(t("scoreGenerationWarning"));
         }
         setState({
           status: "ready",
@@ -81,17 +84,17 @@ export function ResultClient({
           warning: warnings.length > 0 ? warnings.join(" ") : null,
           previewKind: useRawTimeline || cleanupFallback ? "raw" : "cleaned",
         });
-      } catch (error) {
+      } catch {
         if (!controller.signal.aborted) {
           setState({
             status: "error",
-            message: error instanceof Error ? error.message : "结果文件无法读取。",
+            message: errors("service"),
           });
         }
       }
     })();
     return () => controller.abort();
-  }, [job]);
+  }, [errors, job, t]);
 
   const refreshSourceUrl = async () => {
     const now = Date.now();
@@ -106,7 +109,7 @@ export function ResultClient({
     } catch {
       setState((current) =>
         current.status === "ready"
-          ? { ...current, warning: "原音频链接刷新失败，MIDI 播放和导出仍可使用。" }
+          ? { ...current, warning: t("sourceRefreshWarning") }
           : current,
       );
     } finally {
@@ -117,7 +120,7 @@ export function ResultClient({
   if (state.status === "loading") {
     return (
       <section className="grid min-h-[420px] place-items-center" role="status">
-        <div className="w-full max-w-xl animate-pulse space-y-4" aria-label="正在加载转录结果">
+        <div className="w-full max-w-xl animate-pulse space-y-4" aria-label={t("resultLoading")}>
           <div className="h-8 w-2/3 rounded bg-[#dfe9e3]" />
           <div className="h-72 rounded-lg bg-white" />
           <div className="h-16 rounded-lg bg-white" />
@@ -128,7 +131,7 @@ export function ResultClient({
   if (state.status === "error") {
     return (
       <section className="mx-auto max-w-xl rounded-lg border border-[#e4b9b3] bg-[#fff1ef] p-6" role="alert">
-        <h1 className="font-display text-3xl font-bold text-[#8d372f]">结果暂时无法打开</h1>
+        <h1 className="font-display text-3xl font-bold text-[#8d372f]">{t("resultFailed")}</h1>
         <p className="mt-3 leading-7 text-[#70534f]">{state.message}</p>
       </section>
     );

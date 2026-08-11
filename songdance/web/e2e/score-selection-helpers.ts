@@ -1,8 +1,8 @@
 import { expect, type Page } from "@playwright/test";
 
 export async function verifyCommittedSelectionResize(page: Page): Promise<void> {
-  const startInput = page.getByLabel("循环起点");
-  const endInput = page.getByLabel("循环终点");
+  const startInput = page.getByRole("spinbutton", { name: "起点", exact: true });
+  const endInput = page.getByRole("spinbutton", { name: "终点", exact: true });
   const position = page.getByRole("slider", { name: "播放位置", exact: true });
   const endHandle = page.locator('[data-score-selection-handle="end"]');
   const border = page.locator('[data-score-selection-border="true"]').last();
@@ -96,8 +96,8 @@ export async function verifyCommittedSelectionResize(page: Page): Promise<void> 
 export async function verifyDoubleClickClearsSelection(page: Page): Promise<void> {
   const viewport = page.getByTestId("score-viewport");
   const position = page.getByRole("slider", { name: "播放位置", exact: true });
-  const startInput = page.getByLabel("循环起点");
-  const endInput = page.getByLabel("循环终点");
+  const startInput = page.getByRole("spinbutton", { name: "起点", exact: true });
+  const endInput = page.getByRole("spinbutton", { name: "终点", exact: true });
   const border = page.locator('[data-score-selection-border="true"]').first();
   const borderBox = await border.boundingBox();
   if (!borderBox) throw new Error("双击清除前的谱面选区不可见");
@@ -122,8 +122,8 @@ export async function verifyDoubleClickClearsSelection(page: Page): Promise<void
 
 export async function verifyCrossPageSelectionResize(page: Page): Promise<void> {
   const viewport = page.getByTestId("score-viewport");
-  const startInput = page.getByLabel("循环起点");
-  const endInput = page.getByLabel("循环终点");
+  const startInput = page.getByRole("spinbutton", { name: "起点", exact: true });
+  const endInput = page.getByRole("spinbutton", { name: "终点", exact: true });
   const endHandle = page.locator('[data-score-selection-handle="end"]');
   const before = {
     start: Number(await startInput.inputValue()),

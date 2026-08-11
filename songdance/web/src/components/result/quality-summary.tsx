@@ -1,3 +1,6 @@
+"use client";
+
+import { useTranslations } from "next-intl";
 import type { NoteTimeline } from "@/lib/result/timeline";
 import {
   cleanupActionCount,
@@ -5,6 +8,7 @@ import {
 } from "@/lib/result/quality-report";
 
 export function QualitySummary({ report }: { report: TranscriptionQualityReport | null }) {
+  const t = useTranslations("result");
   if (!report) {
     return (
       <section
@@ -12,24 +16,31 @@ export function QualitySummary({ report }: { report: TranscriptionQualityReport 
         className="mt-5 border-y border-[#d9e3dd] py-4"
       >
         <h2 id="quality-summary-heading" className="text-sm font-bold text-[#15332f]">
-          质量摘要
+          {t("qualitySummary")}
         </h2>
         <p className="mt-1 text-sm leading-6 text-[#61716c]">
-          此任务未保存可读取的质量报告。预览和可用产物不受影响，结果仍需人工校对。
+          {t("qualityMissing")}
         </p>
       </section>
     );
   }
   const facts = [
-    ["原始 / 清洗音符", `${report.rawNoteCount} / ${report.cleanedNoteCount ?? "未生成"}`],
-    ["清洗动作", report.cleanup.fallbackUsed ? "已回退" : `${cleanupActionCount(report)} 次`],
-    ["BPM 置信度", confidenceText(report.analysis.bpmConfidence)],
-    ["拍号置信度", confidenceText(report.analysis.timeSignatureConfidence)],
-    ["调性", report.analysis.keySignature ?? "未分析"],
-    ["调性置信度", confidenceText(report.analysis.keyConfidence)],
-    ["音符平均置信度", confidenceText(report.noteConfidenceMean)],
+    [t("rawCleanedNotes"), `${report.rawNoteCount} / ${report.cleanedNoteCount ?? t("notGenerated")}`],
+    [t("cleanupActions"), report.cleanup.fallbackUsed ? t("fallback") : t("actionCount", { count: cleanupActionCount(report) })],
+    [t("bpmConfidence"), confidenceText(report.analysis.bpmConfidence, t("notEvaluated"))],
+    [t("timeConfidence"), confidenceText(report.analysis.timeSignatureConfidence, t("notEvaluated"))],
+    [t("key"), report.analysis.keySignature ?? t("notAnalyzed")],
+    [t("keyConfidence"), confidenceText(report.analysis.keyConfidence, t("notEvaluated"))],
+    [t("noteConfidence"), confidenceText(report.noteConfidenceMean, t("notEvaluated"))],
   ];
-  const warnings = qualityWarnings(report);
+  const warnings: string[] = [];
+  const reasons = new Set(report.analysis.reasonCodes);
+  if (reasons.has("TEMPO_DEFAULTED")) warnings.push(t("tempoDefaulted"));
+  if (reasons.has("TIME_SIGNATURE_DEFAULTED_4_4")) warnings.push(t("timeDefaulted"));
+  if (reasons.has("KEY_SIGNATURE_DEFAULTED_C_MAJOR")) warnings.push(t("keyDefaulted"));
+  if (report.cleanup.fallbackUsed) warnings.push(t("cleanupFallback"));
+  if (report.reconstruction.fallbackUsed) warnings.push(t("reconstructionFallback"));
+  if (report.musicXmlStatus !== "passed" || report.structureErrors.length > 0) warnings.push(t("structureWarning"));
   return (
     <section
       aria-labelledby="quality-summary-heading"
@@ -37,9 +48,9 @@ export function QualitySummary({ report }: { report: TranscriptionQualityReport 
     >
       <div className="flex flex-wrap items-baseline justify-between gap-2">
         <h2 id="quality-summary-heading" className="text-sm font-bold text-[#15332f]">
-          质量摘要
+          {t("qualitySummary")}
         </h2>
-        <p className="text-xs text-[#75837f]">自动分析仅供校对，不代表人工谱面级准确率</p>
+        <p className="text-xs text-[#75837f]">{t("qualityDisclaimer")}</p>
       </div>
       <dl className="mt-3 grid grid-cols-2 gap-x-5 gap-y-3 sm:grid-cols-4 lg:grid-cols-7">
         {facts.map(([label, value]) => (
@@ -54,7 +65,7 @@ export function QualitySummary({ report }: { report: TranscriptionQualityReport 
       >
         {warnings.length > 0
           ? warnings.map((warning) => <p key={warning}>{warning}</p>)
-          : <p>未记录结构或回退警告；自动转录仍可能需要人工校对。</p>}
+          : <p>{t("noQualityWarnings")}</p>}
       </div>
     </section>
   );
@@ -64,15 +75,16 @@ export function VersionSummary({ report, timeline }: {
   report: TranscriptionQualityReport | null;
   timeline: NoteTimeline;
 }) {
+  const t = useTranslations("result");
   const versions = report ? [
-    ["模型", report.modelVersion],
-    ["后处理", report.postprocessVersion],
-    ["质量报告", report.reportVersion],
-    ["时间线", `schema v${timeline.schema_version}`],
-  ] : [["模型", timeline.model_version], ["时间线", `schema v${timeline.schema_version}`]];
+    [t("model"), report.modelVersion],
+    [t("postprocess"), report.postprocessVersion],
+    [t("qualityReport"), report.reportVersion],
+    [t("timeline"), `schema v${timeline.schema_version}`],
+  ] : [[t("model"), timeline.model_version], [t("timeline"), `schema v${timeline.schema_version}`]];
   return (
-    <aside aria-label="产物版本" className="min-w-0 border-t border-[#d9e3dd] pt-5">
-      <h2 className="text-sm font-bold uppercase tracking-[0.12em] text-[#667772]">产物版本</h2>
+    <aside aria-label={t("artifactVersions")} className="min-w-0 border-t border-[#d9e3dd] pt-5">
+      <h2 className="text-sm font-bold uppercase text-[#667772]">{t("artifactVersions")}</h2>
       <dl className="mt-3 grid gap-2 text-xs">
         {versions.map(([label, value]) => (
           <div key={label}>
@@ -99,6 +111,6 @@ export function qualityWarnings(report: TranscriptionQualityReport): string[] {
   return warnings;
 }
 
-function confidenceText(value: number | null): string {
-  return value === null ? "未评估" : `${Math.round(value * 100)}%`;
+function confidenceText(value: number | null, missing = "未评估"): string {
+  return value === null ? missing : `${Math.round(value * 100)}%`;
 }

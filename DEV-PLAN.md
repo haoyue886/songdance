@@ -19,7 +19,7 @@
 | Phase 9 | 进行中 | 转录召回率修复、阈值版本化与乐谱默认规则透明化 |
 | Phase 10 | 已完成 | Canvas 下落式钢琴卷帘与键盘同步；单测、构建、示例 E2E 与桌面/窄屏验收通过 |
 | Phase 11 | 已完成 | 转录质量评测契约与原始/清洗产物追踪；失败基线已固化，人工门禁 4/10 未通过，进入 Phase 12/15 改进 |
-| Phase 12 | 暂缓（许可阻塞） | 三个专用钢琴候选均未通过生产许可前置审计；继续使用 Basic Pitch，保留门禁与审计记录，不阻塞 Phase 13 |
+| Phase 12 | 已取消 | 用户确认不做专用钢琴模型 A/B；历史许可审计保留，生产固定使用 Basic Pitch |
 | Phase 13 | 已完成 | 音符清洗 v3；自动召回差值 0.0；人工门禁 7/10；代码审查 Stage 1/2 PASS |
 | Phase 14 | 已完成 | 结构分析 v2；16 段回归门禁通过；代码审查 Stage 1/2 PASS |
 | Phase 15 | 已完成 | 和弦、多声部与左右手谱面重建；结构与解析门禁 16/16，人工可读 13/16，代码审查 Stage 1/2 PASS |
@@ -36,6 +36,7 @@
 | Phase 26 | 已完成 | 双击清除正式谱面选区、边界点击隔离与无选区即时定位；代码审查 Stage 1/2 PASS |
 | Phase 27 | 已完成 | 海外 SEO 技术基线、核心 Audio-to-MIDI 页面与索引门禁；代码审查 Stage 1/2 PASS |
 | Phase 28 | 已完成 | 英语默认的中英文国际化、语言切换与核心 SEO 首页合并；代码审查 Stage 1/2 PASS |
+| Phase 29 | 开发中 | Basic Pitch 完整 90 秒结构分析与双手共享边界的 MusicXML 弱起优化 |
 
 ## 功能依赖图
 
@@ -53,7 +54,7 @@
 
 Phase 9 基线
   └─ Phase 11 质量评测契约
-          ├─ Phase 12 专用钢琴模型 A/B（许可合格候选出现后恢复）
+          ├─ Phase 12 专用钢琴模型 A/B（已取消，保留历史审计）
           └─ Phase 13 音符清洗
                   └─ Phase 14 Beat / 调性 / 拍号与量化
                           └─ Phase 15 和弦 / 多声部 / 左右手
@@ -69,7 +70,7 @@ Phase 9 基线
                                                                                                   └─ Phase 22 多轨产品化
 ```
 
-依赖原则：Phase 2 和 Phase 3 都依赖 Phase 1，可并行开发但不能同时修改共享配置；Phase 4 依赖 Phase 3；Phase 5 依赖 Phase 2 和 Phase 4；Phase 6–8 依次收紧生产能力。Phase 13–16 按顺序消费 Phase 11 的质量基线；Phase 12 是许可合格候选出现后才恢复的并行模型门禁，不阻塞确定性后处理。Phase 24 只消费 Phase 23 已稳定的乐谱时间映射、跨页几何和播放选区合同；Phase 25 在 Phase 24 的命中缓存、RAF draft 与稳定覆盖层上增加已提交选区的端点调整，在进入多乐器结果页扩展前完成。Phase 28 消费 Phase 27 已完成的 metadata、sitemap 和结构化数据基线，只替换语言路由与核心页面信息架构，不重做 SEO 基础设施。Phase 17–20 按“共享领域模型 → 单音家族 → 吉他 → 鼓”顺序扩展单乐器能力；每个乐器独立过门禁。Phase 21 只有在 Phase 18–20 具备可复用单乐器路由后才评估完整混音，Phase 22 只消费 Phase 21 已批准的轨道来源，不在 UI 层猜乐器。
+依赖原则：Phase 2 和 Phase 3 都依赖 Phase 1，可并行开发但不能同时修改共享配置；Phase 4 依赖 Phase 3；Phase 5 依赖 Phase 2 和 Phase 4；Phase 6–8 依次收紧生产能力。Phase 13–16 按顺序消费 Phase 11 的质量基线；Phase 12 已取消，不再恢复候选模型路线。Phase 24 只消费 Phase 23 已稳定的乐谱时间映射、跨页几何和播放选区合同；Phase 25 在 Phase 24 的命中缓存、RAF draft 与稳定覆盖层上增加已提交选区的端点调整，在进入多乐器结果页扩展前完成。Phase 28 消费 Phase 27 已完成的 metadata、sitemap 和结构化数据基线，只替换语言路由与核心页面信息架构，不重做 SEO 基础设施。Phase 29 消费 Phase 11、13–16 的原始证据和结构基线，只优化 Basic Pitch 确定性后处理。Phase 17–20 按“共享领域模型 → 单音家族 → 吉他 → 鼓”顺序扩展单乐器能力；每个乐器独立过门禁。Phase 21 只有在 Phase 18–20 具备可复用单乐器路由后才评估完整混音，Phase 22 只消费 Phase 21 已批准的轨道来源，不在 UI 层猜乐器。
 
 ---
 
@@ -873,6 +874,33 @@ Phase 9 基线
 
 ---
 
+## Phase 29：Basic Pitch 钢琴谱面可读性优化
+
+**目标：** 不替换 Basic Pitch、不改原始模型事件，先消除结构分析只覆盖前 30 秒和弱起被排成空第一小节的问题；其他量化、和弦与声部算法不在缺少固定集证据时混入本轮。
+
+**交付内容：**
+
+- 保留 Basic Pitch 模型、阈值、原始 MIDI 与原始时间线指纹；只升级结构分析配置和 MusicXML 弱起表示。
+- 让节拍、拍号与调性分析覆盖产品允许的最长 90 秒输入，继续保存现有 BPM、beat/downbeat grid、拍号/调性候选和置信度。
+- 使用 music21 anacrusis 表示首个 downbeat 之前的弱起；左右手即使进入时刻不同或一手为空，也必须共享相同 `paddingLeft` 和小节线，不能制造整小节前置休止。
+- 对 16 段固定结构集重新生成产物并运行 music21、OSMD 和 xmllint；新产物必须重置人工评级，禁止沿用旧 13/16 评级冒充签收。
+
+**关键文件：**
+
+- `songdance/api/app/pipeline/analysis.py` — 最长 90 秒音频结构分析窗口。
+- `songdance/api/app/pipeline/score.py` — 弱起记谱、版本化重建与 MusicXML 输出。
+- `songdance/api/app/pipeline/score_validation.py` — 将 `paddingLeft` 纳入小节时值守恒。
+- `songdance/api/tests/test_analysis.py`、`test_score_validation.py` — 90 秒配置、弱起、一手为空、双手错位和解析回归。
+
+**验收标准：**
+
+- 同一音频优化前后 Basic Pitch 模型版本、阈值、原始事件与原始 MIDI 指纹一致；结构分析输入上限从 30 秒提升到 90 秒。
+- 弱起样本第一系统不出现只有整小节休止和末端孤立音符的人为空白小节；左右手的 `paddingLeft`、首小节长度和小节线一致。
+- 固定结构集的 MusicXML 全部通过 music21、OSMD 与独立 XML 解析，至少 13/16 人工评为“谱面可读”；未完成人工签收时不得把 Phase 29 标为完成。
+- API Ruff、pytest、固定结构回归和 `git diff --check` 全部通过；代码审查 Stage 1/2 无 HIGH 或 MEDIUM。Mypy 仅在项目依赖安装后执行，不把缺失工具伪报为通过。
+
+---
+
 ## Phase 17：多乐器领域模型、乐器选择与兼容 API
 
 **目标：** 在不破坏现有钢琴任务和下载接口的前提下，把单结果钢琴管线升级为按乐器配置、可容纳多轨的稳定领域模型。
@@ -1044,7 +1072,7 @@ Phase 9 基线
 
 ---
 
-## Phase 11–24 需求追踪
+## Phase 11–29 需求追踪
 
 | Product Spec | 开发阶段 | 必须交付的证据 |
 |---|---|---|
@@ -1055,7 +1083,7 @@ Phase 9 基线
 | AC-025 可读谱面门禁 | Phase 11、15 | 至少 16 段固定集、机器校验、至少 13/16 人工可读 |
 | AC-026 分层失败与可用产物 | Phase 11、16 | API 部分成功状态和四种结果页 E2E |
 | AC-027 可重复性 | Phase 11–15 | 相同版本/配置双跑摘要一致性报告 |
-| AC-028 专用钢琴模型选择门禁 | Phase 12 | 同集 A/B、人工盲评、运行预算、许可与回退报告 |
+| AC-028 Basic Pitch 谱面可读性优化 | Phase 29 | 原始事件指纹、弱起/量化/和弦/声部回归、解析与人工可读报告 |
 | AC-045–AC-047、AC-049–AC-051 结果页谱面定位、选区播放与固定工作台 | Phase 23 | 真实 MusicXML 交互 E2E、播放边界测试、页面/谱面滚动位置证据 |
 | AC-048、AC-052–AC-055 实时谱面拖选、取消恢复与边缘滚动 | Phase 24 | RAF 更新计数、真实 MusicXML 拖动中间帧、跨系统/跨页截图与滚动位置证据 |
 | AC-056–AC-057 已提交选区的 `↔` 边界调整 | Phase 25 | 首尾命中带组件测试、create/resize 状态机测试、真实 MusicXML 二次调整与取消恢复 E2E |
@@ -1075,7 +1103,7 @@ Phase 9 基线
 | SCOPE-021 鼓转录 | Phase 20 | 鼓事件、GM MIDI、鼓件 lane 和打击乐谱 |
 | SCOPE-022 完整混音多轨 | Phase 21–22 | 分轨/直接 AMT 门禁、多轨 UI、部分成功和删除 |
 
-**交接顺序：** 后续开发 Agent 先完成 Phase 9 和 Phase 11–16 的钢琴质量闭环，再完成结果工作台 Phase 23、实时拖选 Phase 24 与边界调整 Phase 25，之后严格按 Phase 17 → 18 → 19 → 20 → 21 → 22 推进多乐器。每个乐器过门禁后才能在选择器中启用；不得为了等完整混音而阻塞已通过的单乐器能力。每个 Phase 单独提交，不允许把模型切换、数据库迁移、谱面算法和 UI 改动混进一个不可归因的提交。
+**交接顺序：** 当前先完成 Phase 29 的 Basic Pitch 谱面可读性闭环，再严格按 Phase 17 → 18 → 19 → 20 → 21 → 22 推进多乐器。每个乐器过门禁后才能在选择器中启用；不得为了等完整混音而阻塞已通过的单乐器能力。每个 Phase 单独提交，不允许把数据库迁移、谱面算法和 UI 改动混进一个不可归因的提交。
 
 **停止条件：** 任一候选算法未达到对应乐器数值门槛、结构严重错误增加、固定集人工评级下降、许可不明确、超出资源预算，或破坏旧钢琴任务/下载 API，即停止该乐器晋级并保留上一版本。一个乐器失败只阻塞该乐器；完整混音失败不回滚已上线单乐器能力。生产默认值只能来自固定回归报告，不得凭示例页截图调整。
 
@@ -1096,7 +1124,6 @@ Phase 9 基线
 | API 框架 | FastAPI | 0.140.7 | 上传、任务和产物接口 |
 | Python | CPython | 3.11 | Basic Pitch 与 music21 兼容基线 |
 | 转录模型 | Basic Pitch | 0.4.0 | 开源 Audio-to-MIDI 基线 |
-| 钢琴模型候选 / 研究参考 | piano_transcription_inference / Aria-AMT | `piano_transcription_inference` 固定提交与生产许可待审计；Aria-AMT `EleutherAI/aria-amt@a1ab73fc901d1759ec3bc173c146b3c6a3040261`，权重 revision `8cc4cf5c83b47f2689ac256a947b2a57c17a4c8b`、SHA-256 `089d3129dbe93246aeda55efe668c8a48af08afaf9dd15c64cef0a07c0fb30a4` | Phase 12 只评测生产许可先通过的候选；Aria-AMT 权重 CC-BY-NC-SA-4.0，固定为 `research_only` 审计参考，取消 CUDA 与固定集 A/B，线上继续使用 Basic Pitch |
 | 单音候选 | librosa pYIN / CREPE | librosa 0.11.0 / CREPE 固定提交待验证 | Phase 18 与 Basic Pitch 按乐器 A/B；CREPE MIT 但维护与 TensorFlow 兼容需验证 |
 | 任务模型候选 | Omnizart | 固定提交/checkpoint 待审计 | Phase 18 人声与 Phase 20 鼓；代码 MIT，权重和 ARM/Python 兼容需验证 |
 | 直接多轨候选 | MT3 | 固定提交/checkpoint 待审计 | Phase 21 多 instrument program A/B；代码 Apache-2.0、非官方支持产品、T5X/GPU 依赖隔离 |

@@ -8,7 +8,7 @@
   <identification>
     <creator type="composer">Music21</creator>
     <encoding>
-      <encoding-date>2026-08-07</encoding-date>
+      <encoding-date>2026-08-12</encoding-date>
       <software>music21 v.10.5.0</software>
       <supports element="beam" type="yes" />
       <supports element="stem" type="yes" />
@@ -22,33 +22,33 @@
     </scaling>
   </defaults>
   <part-list>
-    <score-part id="P1e67cb6aa9a0f2392e6d0f501d5b6d9d">
+    <score-part id="P0a3c488545bdff04ca2431d500a66452">
       <part-name>Piano · Right Hand</part-name>
       <part-abbreviation>Pno</part-abbreviation>
-      <score-instrument id="I13790da4b245c068419e70334360830a">
+      <score-instrument id="Ia65fa87e74b2320eac5f9654530fb403">
         <instrument-name>Piano</instrument-name>
         <instrument-abbreviation>Pno</instrument-abbreviation>
       </score-instrument>
-      <midi-instrument id="I13790da4b245c068419e70334360830a">
+      <midi-instrument id="Ia65fa87e74b2320eac5f9654530fb403">
         <midi-channel>1</midi-channel>
         <midi-program>1</midi-program>
       </midi-instrument>
     </score-part>
-    <score-part id="Pf5389156a10e727b07413d38aab48bdf">
+    <score-part id="P2d64f011b791314b1d8be2856544b80b">
       <part-name>Piano · Left Hand</part-name>
       <part-abbreviation>Pno</part-abbreviation>
-      <score-instrument id="I8d97ae71145e2118bca619f47930f47a">
+      <score-instrument id="Iaa3d50dc67ef66e707626c3409bde4cf">
         <instrument-name>Piano</instrument-name>
         <instrument-abbreviation>Pno</instrument-abbreviation>
       </score-instrument>
-      <midi-instrument id="I8d97ae71145e2118bca619f47930f47a">
+      <midi-instrument id="Iaa3d50dc67ef66e707626c3409bde4cf">
         <midi-channel>2</midi-channel>
         <midi-program>1</midi-program>
       </midi-instrument>
     </score-part>
   </part-list>
   <!--=========================== Part 1 ===========================-->
-  <part id="P1e67cb6aa9a0f2392e6d0f501d5b6d9d">
+  <part id="P0a3c488545bdff04ca2431d500a66452">
     <!--========================= Measure 1 ==========================-->
     <measure implicit="no" number="1">
       <attributes>
@@ -3074,7 +3074,7 @@
     </measure>
   </part>
   <!--=========================== Part 2 ===========================-->
-  <part id="Pf5389156a10e727b07413d38aab48bdf">
+  <part id="P2d64f011b791314b1d8be2856544b80b">
     <!--========================= Measure 1 ==========================-->
     <measure implicit="no" number="1">
       <attributes>

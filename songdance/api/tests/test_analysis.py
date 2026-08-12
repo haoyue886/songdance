@@ -1,6 +1,7 @@
 import json
 import time
 from pathlib import Path
+from unittest.mock import Mock
 
 import numpy as np
 import pytest
@@ -10,6 +11,7 @@ from app.pipeline.analysis import (
     ANALYSIS_DISABLED,
     AnalysisConfig,
     StructureAnalysis,
+    _analyze_audio_core,
     _downbeats,
     _rank_key_candidates,
     _rank_meter_candidates,
@@ -150,6 +152,21 @@ def test_quantize_uses_analysis_grid_without_mutating_raw_events() -> None:
 
     assert raw[0].start_sec == 0.12
     assert quantized == [NoteEvent(0.1, 0.35, 60, 90, 0.9)]
+
+
+def test_analysis_config_allows_the_product_audio_window() -> None:
+    assert AnalysisConfig().max_duration_seconds == 90.0
+    assert AnalysisConfig(max_duration_seconds=60).version != AnalysisConfig().version
+
+
+def test_analysis_loads_the_configured_audio_window(monkeypatch) -> None:
+    load = Mock(return_value=(np.zeros(1, dtype=np.float32), 22_050))
+    monkeypatch.setattr("app.pipeline.analysis.librosa.load", load)
+
+    with pytest.raises(StructureAnalysisError, match="有效信号"):
+        _analyze_audio_core(Path("fixture.wav"), AnalysisConfig())
+
+    load.assert_called_once_with(Path("fixture.wav"), sr=22_050, mono=True, duration=90.0)
 
 
 def test_service_persists_analysis_without_changing_raw_timeline(

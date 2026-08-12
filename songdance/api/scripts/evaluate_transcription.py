@@ -113,7 +113,7 @@ def evaluate(settings: Settings | None = None) -> dict:
                 result["parser_validation"]["xmllint"] = {"status": "failed"}
                 continue
             result["parser_validation"].update(
-                external_results[musicxml_paths[case_id].name]
+                external_results[str(musicxml_paths[case_id].resolve())]
             )
 
     usable = sum(item["rating"] in {"direct_use", "minor_edits"} for item in results)

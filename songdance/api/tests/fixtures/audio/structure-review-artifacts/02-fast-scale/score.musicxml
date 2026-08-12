@@ -8,7 +8,7 @@
   <identification>
     <creator type="composer">Music21</creator>
     <encoding>
-      <encoding-date>2026-08-07</encoding-date>
+      <encoding-date>2026-08-12</encoding-date>
       <software>music21 v.10.5.0</software>
       <supports element="beam" type="yes" />
       <supports element="stem" type="yes" />
@@ -22,33 +22,33 @@
     </scaling>
   </defaults>
   <part-list>
-    <score-part id="P0f807eebebd499012d380f9e1c33f5bb">
+    <score-part id="Pa8d654c976a77c3874655e592436ce60">
       <part-name>Piano · Right Hand</part-name>
       <part-abbreviation>Pno</part-abbreviation>
-      <score-instrument id="Iba834b6ba054f5ba4ccb0f4199f5cda7">
+      <score-instrument id="If5f8e2c55f04f9114f2e3c062683e1c9">
         <instrument-name>Piano</instrument-name>
         <instrument-abbreviation>Pno</instrument-abbreviation>
       </score-instrument>
-      <midi-instrument id="Iba834b6ba054f5ba4ccb0f4199f5cda7">
+      <midi-instrument id="If5f8e2c55f04f9114f2e3c062683e1c9">
         <midi-channel>1</midi-channel>
         <midi-program>1</midi-program>
       </midi-instrument>
     </score-part>
-    <score-part id="Pddbfd5eca1ef739f1c963d0af1ef11e1">
+    <score-part id="P1c65015625f8cd41eb55fa35566535b4">
       <part-name>Piano · Left Hand</part-name>
       <part-abbreviation>Pno</part-abbreviation>
-      <score-instrument id="I1bd53e2111b691733516f2642bbac1e8">
+      <score-instrument id="Ifa293ff843a6b96ef2958f3286673ea7">
         <instrument-name>Piano</instrument-name>
         <instrument-abbreviation>Pno</instrument-abbreviation>
       </score-instrument>
-      <midi-instrument id="I1bd53e2111b691733516f2642bbac1e8">
+      <midi-instrument id="Ifa293ff843a6b96ef2958f3286673ea7">
         <midi-channel>2</midi-channel>
         <midi-program>1</midi-program>
       </midi-instrument>
     </score-part>
   </part-list>
   <!--=========================== Part 1 ===========================-->
-  <part id="P0f807eebebd499012d380f9e1c33f5bb">
+  <part id="Pa8d654c976a77c3874655e592436ce60">
     <!--========================= Measure 1 ==========================-->
     <measure implicit="no" number="1">
       <attributes>
@@ -75,12 +75,6 @@
         </direction-type>
         <sound tempo="117.453835" />
       </direction>
-      <note>
-        <rest />
-        <duration>5040</duration>
-        <voice>0</voice>
-        <type>eighth</type>
-      </note>
       <note dynamics="112.22">
         <pitch>
           <step>C</step>
@@ -119,13 +113,13 @@
         </notations>
       </note>
       <backup>
-        <duration>40320</duration>
+        <duration>35280</duration>
       </backup>
       <note>
         <rest />
-        <duration>10080</duration>
+        <duration>5040</duration>
         <voice>1</voice>
-        <type>quarter</type>
+        <type>eighth</type>
       </note>
       <note dynamics="106.67">
         <pitch>
@@ -169,14 +163,13 @@
         <type>eighth</type>
       </note>
       <backup>
-        <duration>40320</duration>
+        <duration>35280</duration>
       </backup>
       <note>
         <rest />
-        <duration>15120</duration>
+        <duration>10080</duration>
         <voice>2</voice>
         <type>quarter</type>
-        <dot />
       </note>
       <note dynamics="93.33">
         <pitch>
@@ -239,14 +232,19 @@
         </notations>
       </note>
       <backup>
-        <duration>40320</duration>
+        <duration>35280</duration>
       </backup>
       <note>
         <rest />
-        <duration>30240</duration>
+        <duration>20160</duration>
         <voice>3</voice>
         <type>half</type>
-        <dot />
+      </note>
+      <note>
+        <rest />
+        <duration>5040</duration>
+        <voice>3</voice>
+        <type>eighth</type>
       </note>
       <note dynamics="46.67">
         <pitch>
@@ -1357,7 +1355,7 @@
     </measure>
   </part>
   <!--=========================== Part 2 ===========================-->
-  <part id="Pddbfd5eca1ef739f1c963d0af1ef11e1">
+  <part id="P1c65015625f8cd41eb55fa35566535b4">
     <!--========================= Measure 1 ==========================-->
     <measure implicit="no" number="1">
       <attributes>
@@ -1386,10 +1384,9 @@
       </direction>
       <note>
         <rest />
-        <duration>35280</duration>
+        <duration>30240</duration>
         <voice>0</voice>
         <type>half</type>
-        <dot />
         <dot />
       </note>
       <note dynamics="67.78">
@@ -1403,28 +1400,37 @@
         <type>eighth</type>
       </note>
       <backup>
-        <duration>40320</duration>
+        <duration>35280</duration>
       </backup>
       <note>
-        <rest measure="yes" />
-        <duration>40320</duration>
+        <rest />
+        <duration>35280</duration>
         <voice>1</voice>
+        <type>half</type>
+        <dot />
+        <dot />
       </note>
       <backup>
-        <duration>40320</duration>
+        <duration>35280</duration>
       </backup>
       <note>
-        <rest measure="yes" />
-        <duration>40320</duration>
+        <rest />
+        <duration>35280</duration>
         <voice>2</voice>
+        <type>half</type>
+        <dot />
+        <dot />
       </note>
       <backup>
-        <duration>40320</duration>
+        <duration>35280</duration>
       </backup>
       <note>
-        <rest measure="yes" />
-        <duration>40320</duration>
+        <rest />
+        <duration>35280</duration>
         <voice>3</voice>
+        <type>half</type>
+        <dot />
+        <dot />
       </note>
     </measure>
     <!--========================= Measure 2 ==========================-->

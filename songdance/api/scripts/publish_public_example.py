@@ -38,7 +38,8 @@ def publish() -> dict[str, object]:
     for filename in PUBLISHED_ARTIFACTS.values():
         shutil.copy2(source_root / filename, PUBLIC_ROOT / filename)
 
-    external = validate_external_parsers([PUBLIC_ROOT / "score.musicxml"])["score.musicxml"]
+    score_path = (PUBLIC_ROOT / "score.musicxml").resolve()
+    external = validate_external_parsers([score_path])[str(score_path)]
     if any(parser["status"] != "passed" for parser in external.values()):
         raise RuntimeError("public example failed xmllint or OSMD validation")
 

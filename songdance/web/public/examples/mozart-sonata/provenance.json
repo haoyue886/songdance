@@ -8,24 +8,24 @@
   "clip_duration_sec": 30,
   "audio_sha256": "32975b2333e0ca318125335660e21e747e074e0ea28cf83e3ecbd5ce21fc298f",
   "model_version": "basic-pitch-0.4.0/icassp-2022-onnx/o0.5-f0.3",
-  "postprocess_version": "note-cleanup-v3/b83e55947b32/structure-analysis-v2/8d2475ced611/music21-10.5.0/beat-grid/meter-key-v1/harmony-v1/e59dc7bc9a81/voicing-v1/82652e2a152b",
+  "postprocess_version": "note-cleanup-v3/b83e55947b32/structure-analysis-v2/9eafa86ad08d/music21-10.5.0/beat-grid/pickup-v2/harmony-v1/e59dc7bc9a81/voicing-v1/82652e2a152b",
   "review_status": "pending",
-  "generated_at": "2026-08-07T04:09:53.321396+00:00",
-  "midi_sha256": "55bb4499ab14ebba4b1c6f3531f5249d4dc55bbc29ed31c21b7fdcabada8f042",
-  "musicxml_sha256": "30a781340b66eab35d85d4f70421a122a5481d4c225bd94c80aeeba05cf015c4",
-  "timeline_sha256": "ebf1a3f3fd07ff9b45d759fd800d144c8cebcb6a625687148cd52ff1cdae9659",
+  "generated_at": "2026-08-12T09:19:49.917302+00:00",
+  "midi_sha256": "58537b0e724e73703b14d9885f53aea36872c4e02b46282782d070252f0f3532",
+  "musicxml_sha256": "6e83312a5b7acbd027663247ff2419115b48199d2ab9d6c3b0ef846ec374879f",
+  "timeline_sha256": "d72c2708deb086c78a6b25c07690a01af0dbf6e87e163da2f06d3ef2554bb609",
   "artifacts": {
     "midi": {
-      "sha256": "55bb4499ab14ebba4b1c6f3531f5249d4dc55bbc29ed31c21b7fdcabada8f042",
-      "size_bytes": 3080
+      "sha256": "58537b0e724e73703b14d9885f53aea36872c4e02b46282782d070252f0f3532",
+      "size_bytes": 3079
     },
     "musicxml": {
-      "sha256": "30a781340b66eab35d85d4f70421a122a5481d4c225bd94c80aeeba05cf015c4",
-      "size_bytes": 160602
+      "sha256": "6e83312a5b7acbd027663247ff2419115b48199d2ab9d6c3b0ef846ec374879f",
+      "size_bytes": 160434
     },
     "timeline": {
-      "sha256": "ebf1a3f3fd07ff9b45d759fd800d144c8cebcb6a625687148cd52ff1cdae9659",
-      "size_bytes": 53809
+      "sha256": "d72c2708deb086c78a6b25c07690a01af0dbf6e87e163da2f06d3ef2554bb609",
+      "size_bytes": 53804
     }
   },
   "parser_validation": {

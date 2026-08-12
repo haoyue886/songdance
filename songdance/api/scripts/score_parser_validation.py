@@ -9,12 +9,12 @@ OSMD_VALIDATOR = WEB_ROOT / "scripts/validate-musicxml.mjs"
 
 def validate_external_parsers(paths: list[Path]) -> dict[str, dict[str, object]]:
     resolved = [path.resolve() for path in paths]
-    xml_results = {path.name: _validate_xmllint(path) for path in resolved}
+    xml_results = {str(path): _validate_xmllint(path) for path in resolved}
     osmd_results = _validate_osmd(resolved)
     return {
-        path.name: {
-            "xmllint": xml_results[path.name],
-            "osmd": osmd_results[path.name],
+        str(path): {
+            "xmllint": xml_results[str(path)],
+            "osmd": osmd_results[str(path)],
         }
         for path in resolved
     }
@@ -45,6 +45,6 @@ def _validate_osmd(paths: list[Path]) -> dict[str, dict[str, object]]:
     )
     if completed.returncode != 0:
         error = completed.stderr.strip() or "OSMD validation failed"
-        return {path.name: {"status": "failed", "error": error} for path in paths}
+        return {str(path): {"status": "failed", "error": error} for path in paths}
     payload = json.loads(completed.stdout)
-    return {path.name: payload[path.name] for path in paths}
+    return {str(path): payload[str(path)] for path in paths}

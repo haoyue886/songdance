@@ -1,16 +1,18 @@
 {
   "schema_version": 1,
   "model_version": "basic-pitch-0.4.0/icassp-2022-onnx/o0.5-f0.3",
-  "suite_fingerprint": "350a535bc576d65039deccc9c0c89382b46441df611cecbb96b97c9af584e1d1",
+  "suite_fingerprint": "7334aa7a0d67caa5c30cafe0fcbacedc5fc8a6d1a783c5d9f4adc2fe21e75be0",
   "reviewer": {
-    "midi_daw_experience": true,
-    "reviewed_at": "2026-08-07T02:40:32.490329+00:00"
+    "midi_daw_experience": null,
+    "reviewed_at": null
   },
   "minimum_readable_count": 13,
   "results": [
     {
       "id": "01-slow-melody",
       "raw_midi_note_count": 54,
+      "rating": "pending",
+      "notes": "",
       "parser_validation": {
         "music21": {
           "status": "passed"
@@ -24,13 +26,13 @@
           "measure_count": 15,
           "svg_count": 1
         }
-      },
-      "rating": "minor_edits",
-      "notes": ""
+      }
     },
     {
       "id": "02-fast-scale",
       "raw_midi_note_count": 204,
+      "rating": "pending",
+      "notes": "",
       "parser_validation": {
         "music21": {
           "status": "passed"
@@ -44,13 +46,13 @@
           "measure_count": 15,
           "svg_count": 1
         }
-      },
-      "rating": "minor_edits",
-      "notes": ""
+      }
     },
     {
       "id": "03-block-chords",
       "raw_midi_note_count": 128,
+      "rating": "pending",
+      "notes": "",
       "parser_validation": {
         "music21": {
           "status": "passed"
@@ -64,13 +66,13 @@
           "measure_count": 15,
           "svg_count": 1
         }
-      },
-      "rating": "minor_edits",
-      "notes": ""
+      }
     },
     {
       "id": "04-arpeggios",
       "raw_midi_note_count": 326,
+      "rating": "pending",
+      "notes": "",
       "parser_validation": {
         "music21": {
           "status": "passed"
@@ -84,13 +86,13 @@
           "measure_count": 15,
           "svg_count": 1
         }
-      },
-      "rating": "minor_edits",
-      "notes": ""
+      }
     },
     {
       "id": "05-two-hand",
       "raw_midi_note_count": 229,
+      "rating": "pending",
+      "notes": "",
       "parser_validation": {
         "music21": {
           "status": "passed"
@@ -104,13 +106,13 @@
           "measure_count": 15,
           "svg_count": 1
         }
-      },
-      "rating": "needs_redo",
-      "notes": ""
+      }
     },
     {
       "id": "06-sustain",
       "raw_midi_note_count": 111,
+      "rating": "pending",
+      "notes": "",
       "parser_validation": {
         "music21": {
           "status": "passed"
@@ -124,13 +126,13 @@
           "measure_count": 15,
           "svg_count": 1
         }
-      },
-      "rating": "needs_redo",
-      "notes": ""
+      }
     },
     {
       "id": "07-soft",
       "raw_midi_note_count": 77,
+      "rating": "pending",
+      "notes": "",
       "parser_validation": {
         "music21": {
           "status": "passed"
@@ -144,13 +146,13 @@
           "measure_count": 15,
           "svg_count": 1
         }
-      },
-      "rating": "minor_edits",
-      "notes": ""
+      }
     },
     {
       "id": "08-dynamics",
       "raw_midi_note_count": 111,
+      "rating": "pending",
+      "notes": "",
       "parser_validation": {
         "music21": {
           "status": "passed"
@@ -164,13 +166,13 @@
           "measure_count": 15,
           "svg_count": 1
         }
-      },
-      "rating": "minor_edits",
-      "notes": ""
+      }
     },
     {
       "id": "09-light-noise",
       "raw_midi_note_count": 36,
+      "rating": "pending",
+      "notes": "",
       "parser_validation": {
         "music21": {
           "status": "passed"
@@ -184,13 +186,13 @@
           "measure_count": 15,
           "svg_count": 1
         }
-      },
-      "rating": "minor_edits",
-      "notes": ""
+      }
     },
     {
       "id": "10-device",
       "raw_midi_note_count": 174,
+      "rating": "pending",
+      "notes": "",
       "parser_validation": {
         "music21": {
           "status": "passed"
@@ -204,13 +206,13 @@
           "measure_count": 15,
           "svg_count": 1
         }
-      },
-      "rating": "minor_edits",
-      "notes": ""
+      }
     },
     {
       "id": "11-waltz-34",
       "raw_midi_note_count": 129,
+      "rating": "pending",
+      "notes": "",
       "parser_validation": {
         "music21": {
           "status": "passed"
@@ -224,13 +226,13 @@
           "measure_count": 15,
           "svg_count": 1
         }
-      },
-      "rating": "minor_edits",
-      "notes": ""
+      }
     },
     {
       "id": "12-compound-68",
       "raw_midi_note_count": 310,
+      "rating": "pending",
+      "notes": "",
       "parser_validation": {
         "music21": {
           "status": "passed"
@@ -244,13 +246,13 @@
           "measure_count": 15,
           "svg_count": 1
         }
-      },
-      "rating": "minor_edits",
-      "notes": ""
+      }
     },
     {
       "id": "13-key-change",
       "raw_midi_note_count": 193,
+      "rating": "pending",
+      "notes": "",
       "parser_validation": {
         "music21": {
           "status": "passed"
@@ -264,13 +266,13 @@
           "measure_count": 15,
           "svg_count": 1
         }
-      },
-      "rating": "minor_edits",
-      "notes": ""
+      }
     },
     {
       "id": "14-hand-crossing",
       "raw_midi_note_count": 285,
+      "rating": "pending",
+      "notes": "",
       "parser_validation": {
         "music21": {
           "status": "passed"
@@ -284,13 +286,13 @@
           "measure_count": 15,
           "svg_count": 1
         }
-      },
-      "rating": "minor_edits",
-      "notes": ""
+      }
     },
     {
       "id": "15-repeated-notes",
       "raw_midi_note_count": 237,
+      "rating": "pending",
+      "notes": "",
       "parser_validation": {
         "music21": {
           "status": "passed"
@@ -304,13 +306,13 @@
           "measure_count": 15,
           "svg_count": 1
         }
-      },
-      "rating": "minor_edits",
-      "notes": ""
+      }
     },
     {
       "id": "16-noisy-polyphony",
       "raw_midi_note_count": 149,
+      "rating": "pending",
+      "notes": "",
       "parser_validation": {
         "music21": {
           "status": "passed"
@@ -324,9 +326,7 @@
           "measure_count": 15,
           "svg_count": 1
         }
-      },
-      "rating": "needs_redo",
-      "notes": ""
+      }
     }
   ]
 }

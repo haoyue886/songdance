@@ -36,6 +36,7 @@ class AnalysisConfig:
     min_meter_confidence: float = 0.6
     min_key_confidence: float = 0.18
     timeout_seconds: float = 15.0
+    max_duration_seconds: float = 90.0
 
     def as_dict(self) -> dict[str, bool | float | int]:
         return asdict(self)
@@ -95,7 +96,7 @@ def _analyze_audio_core(source: Path, active: AnalysisConfig) -> StructureAnalys
     started = time.perf_counter()
     try:
         audio, sample_rate = librosa.load(
-            source, sr=active.sample_rate, mono=True, duration=30.0
+            source, sr=active.sample_rate, mono=True, duration=active.max_duration_seconds
         )
         if audio.size == 0 or float(np.max(np.abs(audio))) < 1e-8:
             raise StructureAnalysisError("音频结构分析没有收到有效信号")
@@ -268,3 +269,5 @@ def _validate_config(config: AnalysisConfig) -> None:
         raise ValueError("analysis confidence thresholds must be between 0 and 1")
     if not 0 < config.timeout_seconds <= 15:
         raise ValueError("analysis timeout must be greater than 0 and at most 15 seconds")
+    if not 1 <= config.max_duration_seconds <= 90:
+        raise ValueError("analysis duration must be between 1 and 90 seconds")

@@ -22,7 +22,7 @@ const results = {};
 try {
   for (const file of files) {
     const xml = fs.readFileSync(file, "utf8");
-    results[path.basename(file)] = await page.evaluate(async (source) => {
+    results[file] = await page.evaluate(async (source) => {
       const container = document.querySelector("#score");
       container.replaceChildren();
       const osmd = new opensheetmusicdisplay.OpenSheetMusicDisplay(container, {

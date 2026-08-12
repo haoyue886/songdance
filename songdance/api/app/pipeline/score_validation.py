@@ -109,10 +109,24 @@ def _measure_errors(score: stream.Score) -> tuple[int, int]:
                 bar_duration = Fraction(measure.barDuration.quarterLength)
             except Exception:
                 continue
-            actual_duration = Fraction(measure.duration.quarterLength)
+            actual_duration = Fraction(measure.duration.quarterLength) + Fraction(
+                measure.paddingLeft
+            )
             is_final = index == len(measures) - 1
             if actual_duration > bar_duration or (not is_final and actual_duration != bar_duration):
                 error_count += 1
             elif is_final and actual_duration < bar_duration:
                 partial_final_count += 1
+    first_measures = [
+        measures[0]
+        for part in score.parts
+        if (measures := list(part.getElementsByClass(stream.Measure)))
+    ]
+    if any(Fraction(measure.paddingLeft) > 0 for measure in first_measures):
+        boundaries = {
+            (Fraction(measure.paddingLeft), Fraction(measure.duration.quarterLength))
+            for measure in first_measures
+        }
+        if len(boundaries) > 1:
+            error_count += 1
     return error_count, partial_final_count

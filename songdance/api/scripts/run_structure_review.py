@@ -56,7 +56,7 @@ def run(settings: Settings | None = None) -> None:
     parser_validation = {
         case_id: {
             "music21": {"status": "passed"},
-            **external[path.name],
+            **external[str(path.resolve())],
         }
         for case_id, path in musicxml_paths.items()
     }

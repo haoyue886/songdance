@@ -9,6 +9,7 @@ from app.pipeline.artifacts import artifact_paths, write_timeline
 from app.pipeline.audio import preprocess_audio
 from app.pipeline.cleanup import clean_note_events
 from app.pipeline.score import build_score, write_musicxml, write_quantized_midi
+from app.pipeline.sustain import extract_sustain_evidence
 from app.pipeline.transcribe import transcribe_audio, write_raw_midi
 from app.settings import Settings
 from scripts.generate_regression_set import MANIFEST_PATH, OUTPUT_DIR, generate_regression_set
@@ -39,16 +40,19 @@ def run(settings: Settings | None = None) -> None:
         events, raw_midi = transcribe_audio(normalized)
         cleaned = clean_note_events(events, active_settings.note_cleanup_config)
         analysis = analyze_audio(normalized, active_settings.structure_analysis_config)
-        scored = build_score(cleaned.events, title=case_id, analysis=analysis)
+        scored = build_score(
+            cleaned.events,
+            title=case_id,
+            analysis=analysis,
+            sustain_evidence=extract_sustain_evidence(normalized, raw_midi),
+        )
         write_raw_midi(raw_midi, paths["raw_midi"])
         write_quantized_midi(scored, paths["midi"])
         write_musicxml(scored, paths["musicxml"])
         write_timeline(scored, paths["timeline"], cleanup_summary=cleaned.summary())
         normalized.unlink(missing_ok=True)
         parsed = pretty_midi.PrettyMIDI(str(paths["raw_midi"]))
-        note_counts[case_id] = sum(
-            len(instrument.notes) for instrument in parsed.instruments
-        )
+        note_counts[case_id] = sum(len(instrument.notes) for instrument in parsed.instruments)
         musicxml_paths[case_id] = paths["musicxml"]
         print(f"prepared {case_id}: {note_counts[case_id]} raw MIDI notes")
 

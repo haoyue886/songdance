@@ -1,14 +1,30 @@
-from dataclasses import replace
+from dataclasses import asdict, dataclass, replace
 
 from app.pipeline.analysis import StructureAnalysis
 from app.pipeline.transcribe import NoteEvent
 
 GRID_DIVISIONS = 4
+FALSE_PICKUP_REJECTED_FULL_MEASURE = "FALSE_PICKUP_REJECTED_FULL_MEASURE"
 
 
-def quantize_events(
-    events: list[NoteEvent], analysis: StructureAnalysis
-) -> list[NoteEvent]:
+@dataclass(frozen=True)
+class PickupDecision:
+    measure_offset_units: int
+    applied: bool
+    reason_codes: tuple[str, ...]
+    candidate_pickup_units: int
+    first_measure_occupied_slots: int
+    complete_cycle_count: int
+    matching_complete_cycles: int
+    cycle_match_ratio: float
+    first_onset_velocity: int
+    candidate_downbeat_velocity: int
+
+    def summary(self) -> dict[str, object]:
+        return asdict(self)
+
+
+def quantize_events(events: list[NoteEvent], analysis: StructureAnalysis) -> list[NoteEvent]:
     grid = _subdivision_grid(events, analysis)
     quantized = []
     for event in events:
@@ -35,18 +51,136 @@ def seconds_per_quarter(analysis: StructureAnalysis) -> float:
 def notation_measure_offset_units(analysis: StructureAnalysis) -> int:
     if not analysis.downbeat_grid_seconds:
         return 0
-    measure_units = {"3/4": 12, "4/4": 16, "6/8": 12}[analysis.time_signature]
+    measure_units = _measure_units(analysis)
     downbeat_units = round(
-        analysis.downbeat_grid_seconds[0]
-        / seconds_per_quarter(analysis)
-        * GRID_DIVISIONS
+        analysis.downbeat_grid_seconds[0] / seconds_per_quarter(analysis) * GRID_DIVISIONS
     )
     return (-downbeat_units) % measure_units
 
 
-def _subdivision_grid(
-    events: list[NoteEvent], analysis: StructureAnalysis
-) -> tuple[float, ...]:
+def decide_notation_pickup(events: list[NoteEvent], analysis: StructureAnalysis) -> PickupDecision:
+    offset_units = notation_measure_offset_units(analysis)
+    measure_units = _measure_units(analysis)
+    candidate_units = measure_units - offset_units if offset_units else 0
+    evidence = _complete_eighth_note_measure_evidence(events, analysis, candidate_units)
+    if evidence is not None:
+        return PickupDecision(
+            measure_offset_units=0,
+            applied=False,
+            reason_codes=(FALSE_PICKUP_REJECTED_FULL_MEASURE,),
+            candidate_pickup_units=candidate_units,
+            **evidence,
+        )
+    return PickupDecision(
+        measure_offset_units=offset_units,
+        applied=offset_units > 0,
+        reason_codes=(),
+        candidate_pickup_units=candidate_units,
+        first_measure_occupied_slots=0,
+        complete_cycle_count=0,
+        matching_complete_cycles=0,
+        cycle_match_ratio=0.0,
+        first_onset_velocity=0,
+        candidate_downbeat_velocity=0,
+    )
+
+
+def _complete_eighth_note_measure_evidence(
+    events: list[NoteEvent], analysis: StructureAnalysis, candidate_units: int
+) -> dict[str, int | float] | None:
+    if (
+        analysis.time_signature != "4/4"
+        or candidate_units != GRID_DIVISIONS // 2
+        or not events
+        or not analysis.downbeat_grid_seconds
+    ):
+        return None
+
+    first_onset = min(event.start_sec for event in events)
+    candidate_downbeat = analysis.downbeat_grid_seconds[0]
+    eighth_seconds = candidate_downbeat - first_onset
+    expected_eighth = seconds_per_quarter(analysis) / 2
+    if eighth_seconds <= 0 or abs(eighth_seconds - expected_eighth) > expected_eighth * 0.2:
+        return None
+
+    first_velocity = _onset_velocity(events, first_onset, eighth_seconds * 0.2)
+    downbeat_velocity = _onset_velocity(events, candidate_downbeat, eighth_seconds * 0.2)
+    first_slots = _occupied_slots(
+        events, first_onset, eighth_seconds, start_slot=0, slot_count=8, tolerance=0.25
+    )
+    complete_cycle_count = _complete_cycle_count(events, first_onset, eighth_seconds)
+    matching_cycles = sum(
+        _occupied_slots(
+            events,
+            first_onset,
+            eighth_seconds,
+            start_slot=cycle * 8,
+            slot_count=8,
+            tolerance=0.55,
+        )
+        == 8
+        for cycle in range(complete_cycle_count)
+    )
+    cycle_match_ratio = matching_cycles / complete_cycle_count if complete_cycle_count else 0.0
+    if (
+        first_slots < 8
+        or complete_cycle_count < 3
+        or cycle_match_ratio < 0.8
+        or first_velocity < downbeat_velocity
+    ):
+        return None
+    return {
+        "first_measure_occupied_slots": first_slots,
+        "complete_cycle_count": complete_cycle_count,
+        "matching_complete_cycles": matching_cycles,
+        "cycle_match_ratio": round(cycle_match_ratio, 6),
+        "first_onset_velocity": first_velocity,
+        "candidate_downbeat_velocity": downbeat_velocity,
+    }
+
+
+def _measure_units(analysis: StructureAnalysis) -> int:
+    return {"3/4": 12, "4/4": 16, "6/8": 12}[analysis.time_signature]
+
+
+def _onset_velocity(events: list[NoteEvent], target: float, tolerance: float) -> int:
+    return max(
+        (event.velocity for event in events if abs(event.start_sec - target) <= tolerance),
+        default=0,
+    )
+
+
+def _occupied_slots(
+    events: list[NoteEvent],
+    origin: float,
+    interval: float,
+    *,
+    start_slot: int,
+    slot_count: int,
+    tolerance: float,
+) -> int:
+    starts = sorted({event.start_sec for event in events})
+    start_index = 0
+    matched = 0
+    for slot in range(start_slot, start_slot + slot_count):
+        target = origin + slot * interval
+        lower_bound = target - interval * tolerance
+        upper_bound = target + interval * tolerance
+        while start_index < len(starts) and starts[start_index] < lower_bound:
+            start_index += 1
+        if start_index < len(starts) and starts[start_index] <= upper_bound:
+            matched += 1
+            start_index += 1
+    return matched
+
+
+def _complete_cycle_count(events: list[NoteEvent], origin: float, interval: float) -> int:
+    last_onset = max(event.start_sec for event in events)
+    occupied_span_in_slots = (last_onset - origin) / interval + 1
+    return max(0, int((occupied_span_in_slots + 0.55) // 8))
+
+
+def _subdivision_grid(events: list[NoteEvent], analysis: StructureAnalysis) -> tuple[float, ...]:
     end = max((event.end_sec for event in events), default=0.0)
     beat_grid = analysis.beat_grid_seconds
     anchor_grid = analysis.downbeat_grid_seconds or beat_grid

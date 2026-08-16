@@ -16,6 +16,7 @@ from app.pipeline.cleanup import clean_note_events, failed_cleanup_summary
 from app.pipeline.errors import NoteCleanupError, PipelineError
 from app.pipeline.quality import build_quality_report
 from app.pipeline.score import build_score, read_musicxml_structure
+from app.pipeline.sustain import extract_sustain_evidence
 from app.pipeline.transcribe import model_version, transcribe_audio, write_raw_midi
 from app.services.analytics import observe_stage
 from app.services.storage import ObjectStorage
@@ -163,8 +164,13 @@ def run_transcription_job(
                     )
                     cleanup_flag = "NOTE_CLEANUP_FALLBACK"
                 structure_analysis = analyze_with_fallback(normalized, analysis_config, job_id)
+                sustain_evidence = extract_sustain_evidence(normalized, raw_midi)
                 try:
-                    scored = build_score(cleaned_events, analysis=structure_analysis)
+                    scored = build_score(
+                        cleaned_events,
+                        analysis=structure_analysis,
+                        sustain_evidence=sustain_evidence,
+                    )
                     scored = replace(
                         scored,
                         quality_flags=[*scored.quality_flags, cleanup_flag],
@@ -243,9 +249,7 @@ def run_transcription_job(
                     expected_attempt=active_attempt,
                 )
     except PipelineError as error:
-        mark_failed(
-            factory, job_id, error.code, error.message, expected_attempt=active_attempt
-        )
+        mark_failed(factory, job_id, error.code, error.message, expected_attempt=active_attempt)
 
 
 def _source_key(

@@ -8,24 +8,24 @@
   "clip_duration_sec": 30,
   "audio_sha256": "32975b2333e0ca318125335660e21e747e074e0ea28cf83e3ecbd5ce21fc298f",
   "model_version": "basic-pitch-0.4.0/icassp-2022-onnx/o0.5-f0.3",
-  "postprocess_version": "note-cleanup-v3/b83e55947b32/structure-analysis-v2/9eafa86ad08d/music21-10.5.0/beat-grid/pickup-v2/harmony-v1/e59dc7bc9a81/voicing-v1/82652e2a152b",
+  "postprocess_version": "note-cleanup-v3/b83e55947b32/structure-analysis-v2/9eafa86ad08d/music21-10.5.0/beat-grid/pickup-v4/harmony-v1/e59dc7bc9a81/voicing-v1/82652e2a152b/voice-compression-v1/0e515287c83d",
   "review_status": "pending",
-  "generated_at": "2026-08-12T09:19:49.917302+00:00",
-  "midi_sha256": "58537b0e724e73703b14d9885f53aea36872c4e02b46282782d070252f0f3532",
-  "musicxml_sha256": "6e83312a5b7acbd027663247ff2419115b48199d2ab9d6c3b0ef846ec374879f",
-  "timeline_sha256": "d72c2708deb086c78a6b25c07690a01af0dbf6e87e163da2f06d3ef2554bb609",
+  "generated_at": "2026-08-16T14:27:26.274359+00:00",
+  "midi_sha256": "8725b17d627dc49299b5d0f010c638cc63c8c144c684b83ff296fa2331cb7530",
+  "musicxml_sha256": "0f98965b846bc33c13c9fdf19f5641abf31e62acf2a56dda396d57781e55cf59",
+  "timeline_sha256": "5b3a5aded67cc4e20bbdbf5c90c2f117625cfc5c57b813ba08b5b2a6994a6df0",
   "artifacts": {
     "midi": {
-      "sha256": "58537b0e724e73703b14d9885f53aea36872c4e02b46282782d070252f0f3532",
-      "size_bytes": 3079
+      "sha256": "8725b17d627dc49299b5d0f010c638cc63c8c144c684b83ff296fa2331cb7530",
+      "size_bytes": 3021
     },
     "musicxml": {
-      "sha256": "6e83312a5b7acbd027663247ff2419115b48199d2ab9d6c3b0ef846ec374879f",
-      "size_bytes": 160434
+      "sha256": "0f98965b846bc33c13c9fdf19f5641abf31e62acf2a56dda396d57781e55cf59",
+      "size_bytes": 150288
     },
     "timeline": {
-      "sha256": "d72c2708deb086c78a6b25c07690a01af0dbf6e87e163da2f06d3ef2554bb609",
-      "size_bytes": 53804
+      "sha256": "5b3a5aded67cc4e20bbdbf5c90c2f117625cfc5c57b813ba08b5b2a6994a6df0",
+      "size_bytes": 54600
     }
   },
   "parser_validation": {

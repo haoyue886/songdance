@@ -3,7 +3,6 @@ from fractions import Fraction
 from pathlib import Path
 
 from music21 import (
-    chord,
     clef,
     instrument,
     key,
@@ -18,28 +17,38 @@ from music21.exceptions21 import Music21Exception
 from app.pipeline.analysis import AnalysisConfig, StructureAnalysis, fallback_analysis
 from app.pipeline.errors import ScoreGenerationError
 from app.pipeline.harmony import HarmonyConfig, group_harmony
+from app.pipeline.pickup import apply_pickup_measures
 from app.pipeline.quantize import (
     GRID_DIVISIONS,
-    notation_measure_offset_units,
+    decide_notation_pickup,
     quantize_events,
     seconds_per_quarter,
+)
+from app.pipeline.score_notation import (
+    apply_cc64_pedal_marks,
+    combined_compression_summary,
+    populate_part,
 )
 from app.pipeline.score_validation import (
     raise_for_structure_errors,
     score_structure_summary,
 )
+from app.pipeline.sustain import (
+    SUSTAIN_EVIDENCE_UNAVAILABLE,
+    SustainEvidence,
+)
 from app.pipeline.transcribe import NoteEvent
+from app.pipeline.voice_compression import VoiceCompressionConfig
 from app.pipeline.voicing import (
     UNKNOWN_HAND_NOTATION_FALLBACK,
     VoicingConfig,
     assign_hands,
-    assign_voices,
     notation_hand,
 )
 
 POSTPROCESS_VERSION = (
-    "music21-10.5.0/beat-grid/pickup-v2/"
-    f"{HarmonyConfig().version}/{VoicingConfig().version}"
+    "music21-10.5.0/beat-grid/pickup-v4/"
+    f"{HarmonyConfig().version}/{VoicingConfig().version}/{VoiceCompressionConfig().version}"
 )
 TIME_SIGNATURE_ASSUMED = "TIME_SIGNATURE_ASSUMED_4_4"
 HAND_ASSIGNMENT_INFERRED = "HAND_ASSIGNMENT_INFERRED"
@@ -62,6 +71,7 @@ def build_score(
     events: list[NoteEvent],
     title: str = "SongDance Transcription",
     analysis: StructureAnalysis | None = None,
+    sustain_evidence: SustainEvidence | None = None,
 ) -> ScoredTranscription:
     active_analysis = analysis or fallback_analysis(
         AnalysisConfig(), STRUCTURE_ANALYSIS_NOT_RUN, source="score_default"
@@ -74,15 +84,19 @@ def build_score(
     if voicing.unknown_count:
         flags.append(UNKNOWN_HAND_NOTATION_FALLBACK)
     quarter_seconds = seconds_per_quarter(active_analysis)
-    measure_offset_units = notation_measure_offset_units(active_analysis)
+    pickup = decide_notation_pickup(quantized, active_analysis)
+    measure_offset_units = pickup.measure_offset_units
+    if sustain_evidence is None or sustain_evidence.status != "available":
+        flags.append(SUSTAIN_EVIDENCE_UNAVAILABLE)
 
     try:
-        score, structure = _build_reconstructed_score(
+        score, structure, compression = _build_reconstructed_score(
             voicing.events,
             title,
             active_analysis,
             quarter_seconds,
             measure_offset_units,
+            sustain_evidence,
         )
         reconstruction = {
             "status": "reconstructed",
@@ -92,6 +106,8 @@ def build_score(
             "voicing": voicing.summary(),
             "chord_count": structure["chord_count"],
             "voice_count": structure["voice_count"],
+            "pickup": pickup.summary(),
+            "voice_compression": compression,
         }
     except RECOVERABLE_SCORE_ERRORS as error:
         try:
@@ -114,6 +130,18 @@ def build_score(
             "voicing": voicing.summary(),
             "chord_count": structure["chord_count"],
             "voice_count": structure["voice_count"],
+            "pickup": pickup.summary(),
+            "voice_compression": {
+                "version": VoiceCompressionConfig().version,
+                "applied": False,
+                "compressed_group_count": 0,
+                "coalesced_group_count": 0,
+                "dense_run_count": 0,
+                "reason_codes": ("SCORE_RECONSTRUCTION_FAILED",),
+                "evidence": (sustain_evidence or SustainEvidence.unavailable()).summary(),
+                "pedal_marking_applied": False,
+                "pedal_marking_count": 0,
+            },
         }
     return ScoredTranscription(
         score, voicing.events, active_analysis.bpm, flags, active_analysis, reconstruction
@@ -126,16 +154,31 @@ def _build_reconstructed_score(
     analysis: StructureAnalysis,
     quarter_seconds: float,
     measure_offset_units: int,
-) -> tuple[stream.Score, dict[str, object]]:
+    sustain_evidence: SustainEvidence | None,
+) -> tuple[stream.Score, dict[str, object], dict[str, object]]:
     score = stream.Score(id="songdance-score")
     score.metadata = metadata.Metadata(title=title)
     right = _new_part("right-hand", "Piano · Right Hand", clef.TrebleClef(), analysis)
     left = _new_part("left-hand", "Piano · Left Hand", clef.BassClef(), analysis)
-    _populate_part(right, events, "right", quarter_seconds, measure_offset_units)
-    _populate_part(left, events, "left", quarter_seconds, measure_offset_units)
+    right_compression = populate_part(
+        right, events, "right", quarter_seconds, measure_offset_units, sustain_evidence
+    )
+    left_compression = populate_part(
+        left, events, "left", quarter_seconds, measure_offset_units, sustain_evidence
+    )
     score.insert(0, right)
     score.insert(0, left)
-    return _finalize_score(score, measure_offset_units)
+    score, structure = _finalize_score(score, measure_offset_units)
+    pedal_marking_count = apply_cc64_pedal_marks(
+        score, sustain_evidence, quarter_seconds, measure_offset_units
+    )
+    compression = combined_compression_summary(
+        right_compression,
+        left_compression,
+        sustain_evidence,
+        pedal_marking_count,
+    )
+    return score, structure, compression
 
 
 def _build_basic_score(
@@ -165,9 +208,7 @@ def _build_basic_score(
                 continue
             notation = note.Note(
                 group.pitches[0],
-                quarterLength=Fraction(
-                    group.end_units - group.start_units, GRID_DIVISIONS
-                ),
+                quarterLength=Fraction(group.end_units - group.start_units, GRID_DIVISIONS),
             )
             notation.volume.velocity = group.velocity
             voice.insert(Fraction(group.start_units, GRID_DIVISIONS), notation)
@@ -183,40 +224,9 @@ def _finalize_score(
     raise_for_structure_errors(score)
     _fill_voice_gaps(score)
     score.makeNotation(inPlace=True)
-    _apply_pickup_measures(score, measure_offset_units)
+    apply_pickup_measures(score, measure_offset_units)
     raise_for_structure_errors(score, validate_measure_durations=True)
     return score, score_structure_summary(score, validate_measure_durations=True)
-
-def _apply_pickup_measures(score: stream.Score, measure_offset_units: int) -> None:
-    if measure_offset_units <= 0:
-        return
-    padding = Fraction(measure_offset_units, GRID_DIVISIONS)
-    for part in score.parts:
-        measures = list(part.getElementsByClass(stream.Measure))
-        if not measures:
-            continue
-        first = measures[0]
-        if list(first.recurse().notes):
-            containers = list(first.getElementsByClass(stream.Voice)) or [first]
-            for container in containers:
-                _trim_pickup_padding(container, padding)
-        else:
-            for rest in list(first.recurse().getElementsByClass(note.Rest)):
-                first.remove(rest, recurse=True)
-            first.insert(0, note.Rest(quarterLength=first.barDuration.quarterLength - padding))
-        first.paddingLeft = padding
-
-def _trim_pickup_padding(container: stream.Stream, padding: Fraction) -> None:
-    for element in list(container.notesAndRests):
-        start = Fraction(element.offset)
-        end = start + Fraction(element.quarterLength)
-        if end <= padding:
-            container.remove(element)
-        elif start < padding:
-            container.setElementOffset(element, 0)
-            element.quarterLength = end - padding
-        else:
-            container.setElementOffset(element, start - padding)
 
 
 def _fill_voice_gaps(score: stream.Score) -> None:
@@ -250,34 +260,6 @@ def _new_part(
     return part
 
 
-def _populate_part(
-    part: stream.Part,
-    events: list[NoteEvent],
-    hand: str,
-    seconds_per_quarter: float,
-    measure_offset_units: int,
-) -> None:
-    groups = group_harmony(
-        [event for event in events if notation_hand(event) == hand],
-        seconds_per_quarter,
-        measure_offset_units,
-    )
-    for voice_index, voice_groups in enumerate(assign_voices(groups), start=1):
-        notation_voice = stream.Voice(id=f"{hand}-voice-{voice_index}")
-        for group in voice_groups:
-            duration = Fraction(group.end_units - group.start_units, GRID_DIVISIONS)
-            if len(group.pitches) == 1:
-                notation = note.Note(group.pitches[0], quarterLength=duration)
-            else:
-                notation = chord.Chord(group.pitches, quarterLength=duration)
-            notation.volume.velocity = group.velocity
-            notation_voice.insert(
-                Fraction(group.start_units, GRID_DIVISIONS),
-                notation,
-            )
-        part.insert(0, notation_voice)
-
-
 def write_quantized_midi(scored: ScoredTranscription, destination: Path) -> None:
     try:
         scored.score.write("midi", fp=str(destination))
@@ -291,6 +273,8 @@ def write_musicxml(scored: ScoredTranscription, destination: Path) -> None:
         read_musicxml_structure(destination)
     except Exception as error:
         raise ScoreGenerationError("MusicXML 生成失败") from error
+
+
 def read_musicxml_structure(source: Path) -> dict[str, object]:
     from music21 import converter
 

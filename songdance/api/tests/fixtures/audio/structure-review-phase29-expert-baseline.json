@@ -1,0 +1,34 @@
+{
+  "schema_version": 1,
+  "recorded_at": "2026-08-13",
+  "suite_fingerprint": "7334aa7a0d67caa5c30cafe0fcbacedc5fc8a6d1a783c5d9f4adc2fe21e75be0",
+  "postprocess_version": "music21-10.5.0/beat-grid/pickup-v2",
+  "case_id": "04-arpeggios",
+  "rating": "needs_redo",
+  "reviewer": {
+    "professional_score_review": true
+  },
+  "findings": [
+    {
+      "code": "FALSE_PICKUP",
+      "summary": "第1小节误判为弱起，完整4/4小节只保留一个八分音符。"
+    },
+    {
+      "code": "SHIFTED_BARLINES",
+      "summary": "后续小节线整体错后一音，8音循环被拆成4+4或5+3。"
+    },
+    {
+      "code": "SUSTAIN_AS_POLYPHONY",
+      "summary": "延音踏板重叠被拆成伪多声部，并生成大量补位休止符。"
+    },
+    {
+      "code": "UNSTABLE_HAND_SPLIT",
+      "summary": "简单琶音应按C3/G3/C4为左手、E4/G4/C5/G4/E4为右手稳定分配。"
+    },
+    {
+      "code": "HARMONIC_AS_PLAYED_NOTE",
+      "summary": "延音产生的弱八度泛音被误记为实际演奏音。"
+    }
+  ],
+  "required_outcome": "修复后五项分别验证，并由专业评审复评到至少少量修改可用。"
+}

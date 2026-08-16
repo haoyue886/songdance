@@ -8,6 +8,7 @@ from app.pipeline.artifacts import artifact_paths, write_timeline
 from app.pipeline.audio import preprocess_audio
 from app.pipeline.cleanup import clean_note_events
 from app.pipeline.score import build_score, write_musicxml, write_quantized_midi
+from app.pipeline.sustain import extract_sustain_evidence
 from app.pipeline.transcribe import transcribe_audio, write_raw_midi
 from app.settings import Settings
 from scripts.human_quality_gate import (
@@ -43,13 +44,12 @@ def run(settings: Settings | None = None) -> None:
             events,
             active_settings.note_cleanup_config,
         )
-        structure_analysis = analyze_audio(
-            normalized, active_settings.structure_analysis_config
-        )
+        structure_analysis = analyze_audio(normalized, active_settings.structure_analysis_config)
         scored = build_score(
             cleanup_result.events,
             title=case["id"],
             analysis=structure_analysis,
+            sustain_evidence=extract_sustain_evidence(normalized, raw_midi),
         )
         write_raw_midi(raw_midi, paths["raw_midi"])
         parsed_raw_midi = pretty_midi.PrettyMIDI(str(paths["raw_midi"]))

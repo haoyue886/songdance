@@ -68,22 +68,51 @@ def build_package(output_dir: Path = DEFAULT_OUTPUT) -> Path:
 
 
 def _offline_html() -> str:
-    return (
-        HTML.replace(
-            "SongDance · Phase 15 结构谱面评审",
-            "SongDance · Phase 30 离线结构谱面复评",
-        )
-        .replace(
-            "逐段检查节拍、和弦、声部、左右手和小节排版；"
-            "至少 13/16 段需达到可直接使用或少量修改可用。",
-            "逐段检查节拍、和弦、声部、左右手和小节排版；"
-            "至少 13/16 段可用，04-arpeggios 必须至少为少量修改可用。",
-        )
-        .replace(
-            "已保存：${data.usable_count}/${data.total_count} 可用",
-            "已保存 completed-review.json：${data.usable_count}/${data.total_count} 可用",
-        )
+    rendered = _replace_once(
+        HTML,
+        "SongDance · Phase 15 结构谱面评审",
+        "SongDance · Phase 30 离线结构谱面复评",
     )
+    rendered = _replace_once(
+        rendered,
+        "逐段检查节拍、和弦、声部、左右手和小节排版；"
+        "至少 13/16 段需达到可直接使用或少量修改可用。",
+        "逐段检查节拍、和弦、声部、左右手和小节排版；"
+        "至少 13/16 段可用，04-arpeggios 必须至少为少量修改可用。",
+    )
+    rendered = _replace_once(
+        rendered,
+        '<main id="cases"></main><div class="save"><label><input '
+        'id="experience" type="checkbox"> 我具备 MIDI/DAW 使用经验</label>'
+        '<button id="save">保存评审</button><span id="status"></span></div>',
+        '<main id="cases"></main><div class="save"><span id="status">'
+        '评审完成后请截图此页面并发回项目维护者。</span></div>',
+    )
+    rendered = _replace_once(
+        rendered,
+        "document.querySelector('#experience').checked="
+        "r.reviewer.midi_daw_experience===true;",
+        "",
+    )
+    return _remove_section(
+        rendered,
+        "document.querySelector('#save').onclick=",
+        "init().catch",
+    )
+
+
+def _replace_once(source: str, old: str, new: str) -> str:
+    if source.count(old) != 1:
+        raise ValueError("离线评审 HTML 模板与基础页面不一致")
+    return source.replace(old, new, 1)
+
+
+def _remove_section(source: str, start: str, end: str) -> str:
+    before, found_start, remainder = source.partition(start)
+    _, found_end, after = remainder.partition(end)
+    if not found_start or not found_end:
+        raise ValueError("离线评审 HTML 模板与基础页面不一致")
+    return before + end + after
 
 
 def _readme(fingerprint: str) -> str:
@@ -97,13 +126,14 @@ def _readme(fingerprint: str) -> str:
 - macOS：双击 `start-review.command`，或运行 `python3 review.py`。
 - Windows：双击 `start-review.bat`，或运行 `python review.py`。
 - 浏览器会打开 `http://127.0.0.1:8766`，全程只访问本机文件。
+- 逐段播放音频或转录，选择评级并填写备注；完成后直接截图页面发回项目维护者。
 
 ## 评级门槛
 
-- 必须由具备 MIDI/DAW 使用经验的人完成全部 16 段。
+- 请完成全部 16 段评级，截图中保留段落编号、评级和备注。
 - 至少 13/16 段为“可直接使用”或“少量修改可用”。
 - `04-arpeggios` 必须至少为“少量修改可用”。
-- 保存后会在本目录生成 `completed-review.json`，请将该文件交回项目维护者。
+- 项目维护者会根据截图录入正式评级。
 
 运行 `python3 review.py --check` 可验证包内所有文件的 SHA-256 完整性。
 """

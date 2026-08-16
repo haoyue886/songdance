@@ -2,16 +2,12 @@ import argparse
 import hashlib
 import json
 import mimetypes
-import secrets
 import webbrowser
-from datetime import datetime, timezone
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
 from urllib.parse import unquote, urlparse
 
-RATINGS = {"direct_use", "minor_edits", "needs_redo"}
 PACKAGE_ROOT = Path(__file__).resolve().parent
-MAX_BODY_BYTES = 64 * 1024
 
 
 def verify_integrity(root: Path = PACKAGE_ROOT) -> dict[str, object]:
@@ -29,67 +25,17 @@ def verify_integrity(root: Path = PACKAGE_ROOT) -> dict[str, object]:
     return manifest
 
 
-def save_review(payload: dict, root: Path = PACKAGE_ROOT) -> dict[str, object]:
-    if not isinstance(payload, dict):
-        raise ValueError("invalid review payload")
-    if payload.get("midi_daw_experience") is not True:
-        raise ValueError("请由具备 MIDI/DAW 使用经验的人完成评审")
-    manifest = _read_json(root / "files/manifest.json")
-    expected_ids = [case["id"] for case in manifest["cases"]]
-    results = payload.get("results")
-    if not isinstance(results, list) or any(
-        not isinstance(case, dict) for case in results
-    ):
-        raise ValueError("请完成全部 16 段评级")
-    if [case.get("id") for case in results] != expected_ids:
-        raise ValueError("请完成全部 16 段评级")
-    if any(case.get("rating") not in RATINGS for case in results):
-        raise ValueError("请完成全部 16 段评级")
-    source = _read_json(root / "files/structure-review.json")
-    stored = {case["id"]: case for case in source["results"]}
-    normalized = [
-        {
-            "id": case["id"],
-            "raw_midi_note_count": stored[case["id"]]["raw_midi_note_count"],
-            "parser_validation": stored[case["id"]]["parser_validation"],
-            "rating": case["rating"],
-            "notes": str(case.get("notes", ""))[:1000],
-        }
-        for case in results
-    ]
-    # The packaged server supports system Python 3.9, which has no datetime.UTC.
-    source["reviewer"] = {
-        "midi_daw_experience": True,
-        "reviewed_at": datetime.now(timezone.utc).isoformat(),  # noqa: UP017
-    }
-    source["results"] = normalized
-    output = root / "completed-review.json"
-    output.write_text(
-        json.dumps(source, ensure_ascii=False, indent=2) + "\n", encoding="utf-8"
-    )
-    usable = sum(case["rating"] != "needs_redo" for case in normalized)
-    arpeggio = next(case for case in normalized if case["id"] == "04-arpeggios")
-    arpeggio_passed = arpeggio["rating"] in {"direct_use", "minor_edits"}
-    return {
-        "usable_count": usable,
-        "total_count": len(normalized),
-        "arpeggio_passed": arpeggio_passed,
-        "passed": usable >= source["minimum_readable_count"] and arpeggio_passed,
-        "output": output.name,
-    }
-
-
 class ReviewHandler(BaseHTTPRequestHandler):
-    token = secrets.token_urlsafe(24)
     package_root = PACKAGE_ROOT
+
+    def do_POST(self) -> None:
+        self._json(404, {"error": "offline review is screenshot-only"})
 
     def do_GET(self) -> None:
         path = urlparse(self.path).path
         if path == "/":
             html = (self.package_root / "index.html").read_text(encoding="utf-8")
-            body = html.replace(
-                "<body>", f'<body data-token="{self.token}">'
-            ).encode()
+            body = html.encode()
             self._send(200, "text/html; charset=utf-8", body)
             return
         if path.startswith("/files/"):
@@ -99,29 +45,6 @@ class ReviewHandler(BaseHTTPRequestHandler):
             self._serve_file(path.removeprefix("/piano/"), self.package_root / "piano")
             return
         self._json(404, {"error": "not found"})
-
-    def do_POST(self) -> None:
-        if self.path != "/review":
-            self._json(404, {"error": "not found"})
-            return
-        if self.headers.get("X-Review-Token") != self.token:
-            self._json(403, {"error": "invalid review token"})
-            return
-        try:
-            length = int(self.headers.get("Content-Length", "0"))
-        except ValueError:
-            self._json(400, {"error": "invalid request size"})
-            return
-        if length <= 0 or length > MAX_BODY_BYTES:
-            self._json(400, {"error": "invalid request size"})
-            return
-        try:
-            payload = json.loads(self.rfile.read(length))
-            outcome = save_review(payload, self.package_root)
-        except (KeyError, TypeError, ValueError, json.JSONDecodeError) as error:
-            self._json(400, {"error": str(error)})
-            return
-        self._json(200, outcome)
 
     def _serve_file(self, raw_path: str, root: Path) -> None:
         try:
@@ -146,12 +69,15 @@ class ReviewHandler(BaseHTTPRequestHandler):
         )
 
     def _send(self, status: int, content_type: str, body: bytes) -> None:
-        self.send_response(status)
-        self.send_header("Content-Type", content_type)
-        self.send_header("Content-Length", str(len(body)))
-        self.send_header("Cache-Control", "no-store")
-        self.end_headers()
-        self.wfile.write(body)
+        try:
+            self.send_response(status)
+            self.send_header("Content-Type", content_type)
+            self.send_header("Content-Length", str(len(body)))
+            self.send_header("Cache-Control", "no-store")
+            self.end_headers()
+            self.wfile.write(body)
+        except (BrokenPipeError, ConnectionResetError):
+            return
 
     def log_message(self, format: str, *args: object) -> None:
         return

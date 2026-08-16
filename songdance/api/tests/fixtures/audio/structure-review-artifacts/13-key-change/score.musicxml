@@ -22,33 +22,33 @@
     </scaling>
   </defaults>
   <part-list>
-    <score-part id="P360fec8f500e141a02439118330e2d54">
+    <score-part id="Pc1547a5da53062d58c91ae2a6e6a4550">
       <part-name>Piano · Right Hand</part-name>
       <part-abbreviation>Pno</part-abbreviation>
-      <score-instrument id="I353649428016f57e5e267980ea038162">
+      <score-instrument id="Ib00b0fcb4f72792a82ba689b3ded61c1">
         <instrument-name>Piano</instrument-name>
         <instrument-abbreviation>Pno</instrument-abbreviation>
       </score-instrument>
-      <midi-instrument id="I353649428016f57e5e267980ea038162">
+      <midi-instrument id="Ib00b0fcb4f72792a82ba689b3ded61c1">
         <midi-channel>1</midi-channel>
         <midi-program>1</midi-program>
       </midi-instrument>
     </score-part>
-    <score-part id="Pfb5c3a958b70ccfe33bdce4db8e8f752">
+    <score-part id="P4526ad00f740ba0a7e1bd380d1380ee2">
       <part-name>Piano · Left Hand</part-name>
       <part-abbreviation>Pno</part-abbreviation>
-      <score-instrument id="I4d752bef15e2bf3c1769083f2da827fa">
+      <score-instrument id="I0f527a1ec2792baa878d44bcd6590020">
         <instrument-name>Piano</instrument-name>
         <instrument-abbreviation>Pno</instrument-abbreviation>
       </score-instrument>
-      <midi-instrument id="I4d752bef15e2bf3c1769083f2da827fa">
+      <midi-instrument id="I0f527a1ec2792baa878d44bcd6590020">
         <midi-channel>2</midi-channel>
         <midi-program>1</midi-program>
       </midi-instrument>
     </score-part>
   </part-list>
   <!--=========================== Part 1 ===========================-->
-  <part id="P360fec8f500e141a02439118330e2d54">
+  <part id="Pc1547a5da53062d58c91ae2a6e6a4550">
     <!--========================= Measure 1 ==========================-->
     <measure implicit="no" number="1">
       <attributes>
@@ -4054,7 +4054,7 @@
     </measure>
   </part>
   <!--=========================== Part 2 ===========================-->
-  <part id="Pfb5c3a958b70ccfe33bdce4db8e8f752">
+  <part id="P4526ad00f740ba0a7e1bd380d1380ee2">
     <!--========================= Measure 1 ==========================-->
     <measure implicit="no" number="1">
       <attributes>

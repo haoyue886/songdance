@@ -1,6 +1,16 @@
 from app.pipeline.harmony import HarmonyConfig, NotationGroup, group_harmony
+from app.pipeline.simple_arpeggio import (
+    SIMPLE_ARPEGGIO_APPLIED,
+    SIMPLE_ARPEGGIO_CLEAR_ZONE,
+    SIMPLE_ARPEGGIO_REJECTED_CROSSING,
+    SIMPLE_ARPEGGIO_STABLE_TIMING,
+)
 from app.pipeline.transcribe import NoteEvent
-from app.pipeline.voicing import VoicingConfig, assign_hands, assign_voices
+from app.pipeline.voicing import (
+    VoicingConfig,
+    assign_hands,
+    assign_voices,
+)
 
 
 def test_harmony_groups_only_matching_onsets_and_near_equal_durations() -> None:
@@ -56,6 +66,131 @@ def test_voicing_allows_an_ambiguous_middle_note_to_remain_unknown() -> None:
     assert result.events[0].hand_confidence is not None
 
 
+def test_simple_arpeggio_uses_stable_zones_for_ac072_sequence() -> None:
+    pitches = (48, 55, 60, 64, 67, 72, 67, 64)
+    events = [
+        NoteEvent(index * 0.5, index * 0.5 + 0.4, pitch, 90, 0.9)
+        for index, pitch in enumerate(pitches)
+    ]
+
+    result = assign_hands(events)
+
+    assert [event.hand for event in result.events] == [
+        "left",
+        "left",
+        "left",
+        "right",
+        "right",
+        "right",
+        "right",
+        "right",
+    ]
+    assert result.strategy == "simple_arpeggio_stable_zone"
+    assert result.reason_codes == (
+        SIMPLE_ARPEGGIO_APPLIED,
+        SIMPLE_ARPEGGIO_STABLE_TIMING,
+        SIMPLE_ARPEGGIO_CLEAR_ZONE,
+    )
+    assert all((event.hand_confidence or 0.0) >= 0.92 for event in result.events)
+
+
+def test_simple_arpeggio_does_not_override_explicit_crossing_hands() -> None:
+    pitches = (48, 55, 60, 64, 67, 72, 67, 64)
+    events = [
+        NoteEvent(
+            index * 0.5,
+            index * 0.5 + 0.4,
+            pitch,
+            90,
+            0.9,
+            hand="right" if index == 0 else None,
+        )
+        for index, pitch in enumerate(pitches)
+    ]
+
+    result = assign_hands(events)
+
+    assert result.events[0].hand == "right"
+    assert result.strategy == "continuity"
+    assert result.reason_codes == (SIMPLE_ARPEGGIO_REJECTED_CROSSING,)
+
+
+def test_simple_arpeggio_rejects_unstable_onset_period() -> None:
+    pitches = (48, 55, 60, 64, 67, 72, 67, 64)
+    starts = (0.0, 0.1, 1.7, 2.0, 4.3, 4.4, 10.0, 10.1)
+    events = [
+        NoteEvent(start, start + 0.04, pitch, 90, 0.9)
+        for start, pitch in zip(starts, pitches, strict=True)
+    ]
+
+    result = assign_hands(events)
+
+    assert result.strategy == "continuity"
+    assert result.reason_codes == ()
+    assert all(event.hand != "left" or event.pitch <= 60 for event in result.events)
+
+
+def test_simple_arpeggio_rejects_out_of_zone_transposition() -> None:
+    pitches = (72, 79, 84, 88, 91, 96, 91, 88)
+    events = [
+        NoteEvent(index * 0.5, index * 0.5 + 0.4, pitch, 90, 0.9)
+        for index, pitch in enumerate(pitches)
+    ]
+
+    result = assign_hands(events)
+
+    assert result.strategy == "continuity"
+    assert result.reason_codes == ()
+    assert all(event.hand == "right" for event in result.events)
+    assert all(event.hand_confidence is not None for event in result.events)
+
+
+def test_repeated_arpeggio_ignores_resonant_candidates_before_stabilizing() -> None:
+    pattern = (48, 55, 60, 64, 67, 72, 67, 64)
+    events: list[NoteEvent] = []
+    for index, pitch in enumerate(pattern * 3):
+        start = index * 0.25
+        events.append(NoteEvent(start, start + 0.4, pitch, 90, 0.9))
+        if index:
+            previous_pitch = (pattern * 3)[index - 1]
+            events.append(
+                NoteEvent(start, start + 0.2, previous_pitch, 55, 0.4)
+            )
+        events.append(NoteEvent(start, start + 0.1, pitch + 12, 45, 0.35))
+
+    result = assign_hands(events)
+
+    assert result.strategy == "simple_arpeggio_stable_zone"
+    assert result.reason_codes[0] == SIMPLE_ARPEGGIO_APPLIED
+    assert all(
+        event.hand == "left" if event.pitch <= 60 else event.hand == "right"
+        for event in result.events
+    )
+
+
+def test_repeated_arpeggio_does_not_stabilize_an_unrelated_tail() -> None:
+    pattern = (48, 55, 60, 64, 67, 72, 67, 64)
+    events = [
+        NoteEvent(index * 0.25, index * 0.25 + 0.2, pitch, 90, 0.9)
+        for index, pitch in enumerate(pattern * 3)
+    ]
+    events.extend(
+        (
+            NoteEvent(10, 10.5, 48, 90, 0.9),
+            NoteEvent(10, 10.4, 72, 90, 0.9),
+            NoteEvent(11, 11.5, 55, 90, 0.9),
+            NoteEvent(11, 11.4, 65, 90, 0.9),
+        )
+    )
+
+    result = assign_hands(events)
+    tail = [event for event in result.events if event.start_sec >= 10]
+
+    assert result.strategy == "simple_arpeggio_stable_zone"
+    assert any(event.hand is None for event in tail)
+    assert all((event.hand_confidence or 0.0) < 0.92 for event in tail)
+
+
 def test_voice_assignment_never_overlaps_within_a_voice() -> None:
     groups = [
         NotationGroup(0, 8, (60,), 90, 0.9),
@@ -74,4 +209,5 @@ def test_voice_assignment_never_overlaps_within_a_voice() -> None:
 
 
 def test_voicing_config_version_changes_with_threshold() -> None:
+    assert VoicingConfig().version.startswith("voicing-v2/")
     assert VoicingConfig().version != VoicingConfig(minimum_confidence=0.3).version

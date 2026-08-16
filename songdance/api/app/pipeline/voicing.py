@@ -4,9 +4,10 @@ from dataclasses import asdict, dataclass, replace
 from statistics import median
 from typing import Protocol
 
+from app.pipeline.simple_arpeggio import apply_simple_arpeggio_strategy
 from app.pipeline.transcribe import NoteEvent
 
-VOICING_ALGORITHM_VERSION = "voicing-v1"
+VOICING_ALGORITHM_VERSION = "voicing-v2"
 UNKNOWN_HAND_NOTATION_FALLBACK = "UNKNOWN_HAND_NOTATION_FALLBACK"
 
 
@@ -40,6 +41,8 @@ class VoicingResult:
     right_count: int
     unknown_count: int
     mean_confidence: float
+    strategy: str
+    reason_codes: tuple[str, ...]
 
     def summary(self) -> dict[str, object]:
         return {
@@ -48,6 +51,8 @@ class VoicingResult:
             "right_count": self.right_count,
             "unknown_count": self.unknown_count,
             "mean_confidence": self.mean_confidence,
+            "strategy": self.strategy,
+            "reason_codes": self.reason_codes,
         }
 
 
@@ -127,6 +132,9 @@ def assign_hands(
         histories["left"].record(onset, hand_pitches["left"])
         histories["right"].record(onset, hand_pitches["right"])
 
+    strategy = "continuity"
+    reason_codes: tuple[str, ...] = ()
+    assigned, strategy, reason_codes = apply_simple_arpeggio_strategy(assigned, events)
     ordered_events = sorted(
         assigned, key=lambda item: (item.start_sec, item.pitch, item.end_sec)
     )
@@ -140,6 +148,8 @@ def assign_hands(
         mean_confidence=round(sum(confidences) / len(confidences), 6)
         if confidences
         else 0.0,
+        strategy=strategy,
+        reason_codes=reason_codes,
     )
 
 

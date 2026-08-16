@@ -5,9 +5,13 @@ from collections import Counter
 from dataclasses import asdict, dataclass, replace
 
 from app.pipeline.errors import NoteCleanupError
+from app.pipeline.harmonics import (
+    HarmonicEvidence,
+    HarmonicEvidenceConfig,
+)
 from app.pipeline.transcribe import NoteEvent
 
-CLEANUP_ALGORITHM_VERSION = "note-cleanup-v3"
+CLEANUP_ALGORITHM_VERSION = "note-cleanup-v4"
 LOW_CONFIDENCE_REMOVED = "LOW_CONFIDENCE_REMOVED"
 SHORT_NOTE_REMOVED = "SHORT_NOTE_REMOVED"
 DUPLICATE_NOTE_REMOVED = "DUPLICATE_NOTE_REMOVED"
@@ -15,6 +19,7 @@ EXCESSIVE_DURATION_CLIPPED = "EXCESSIVE_DURATION_CLIPPED"
 NOTE_PRESERVED = "NOTE_PRESERVED"
 ADJACENT_SAME_PITCH_PRESERVED = "ADJACENT_SAME_PITCH_PRESERVED"
 OVERLAPPING_SAME_PITCH_PRESERVED = "OVERLAPPING_SAME_PITCH_PRESERVED"
+HARMONIC_CANDIDATE_REMOVED = "HARMONIC_CANDIDATE_REMOVED"
 CLEANUP_REASON_CODES = (
     LOW_CONFIDENCE_REMOVED,
     SHORT_NOTE_REMOVED,
@@ -23,6 +28,7 @@ CLEANUP_REASON_CODES = (
     NOTE_PRESERVED,
     ADJACENT_SAME_PITCH_PRESERVED,
     OVERLAPPING_SAME_PITCH_PRESERVED,
+    HARMONIC_CANDIDATE_REMOVED,
 )
 
 
@@ -40,7 +46,10 @@ class CleanupConfig:
     def version(self) -> str:
         payload = json.dumps(self.as_dict(), sort_keys=True, separators=(",", ":"))
         fingerprint = hashlib.sha256(payload.encode()).hexdigest()[:12]
-        return f"{CLEANUP_ALGORITHM_VERSION}/{fingerprint}"
+        return (
+            f"{CLEANUP_ALGORITHM_VERSION}/{fingerprint}/"
+            f"{HarmonicEvidenceConfig().version}"
+        )
 
 
 @dataclass(frozen=True)
@@ -49,6 +58,7 @@ class CleanupResult:
     source_note_count: int
     reason_counts: dict[str, int]
     config: CleanupConfig
+    harmonic_evidence: HarmonicEvidence
 
     def summary(self) -> dict[str, object]:
         removed = sum(
@@ -57,6 +67,7 @@ class CleanupResult:
                 LOW_CONFIDENCE_REMOVED,
                 SHORT_NOTE_REMOVED,
                 DUPLICATE_NOTE_REMOVED,
+                HARMONIC_CANDIDATE_REMOVED,
             )
         )
         return {
@@ -69,15 +80,20 @@ class CleanupResult:
             "clipped_note_count": self.reason_counts[EXCESSIVE_DURATION_CLIPPED],
             "merged_note_count": 0,
             "reason_counts": dict(self.reason_counts),
+            "harmonic_evidence": self.harmonic_evidence.summary(),
             "fallback_used": False,
             "error_code": None,
         }
 
 
 def clean_note_events(
-    events: list[NoteEvent], config: CleanupConfig | None = None
+    events: list[NoteEvent],
+    config: CleanupConfig | None = None,
+    *,
+    harmonic_evidence: HarmonicEvidence | None = None,
 ) -> CleanupResult:
     active_config = config or CleanupConfig()
+    active_harmonics = harmonic_evidence or HarmonicEvidence.unavailable()
     _validate_config(active_config)
     ordered = sorted(events, key=_event_sort_key)
     if not ordered:
@@ -96,7 +112,10 @@ def clean_note_events(
             filtered.append(event)
 
     deduplicated = _deduplicate(filtered, counts)
-    normalized = _normalize_sustain(deduplicated, active_config, counts)
+    without_harmonics = _remove_harmonic_candidates(
+        deduplicated, active_harmonics, counts
+    )
+    normalized = _normalize_sustain(without_harmonics, active_config, counts)
     if not normalized:
         raise NoteCleanupError("音符清洗移除了全部原始事件")
     counts[NOTE_PRESERVED] = len(normalized)
@@ -105,6 +124,7 @@ def clean_note_events(
         source_note_count=len(ordered),
         reason_counts={reason: counts[reason] for reason in CLEANUP_REASON_CODES},
         config=active_config,
+        harmonic_evidence=active_harmonics,
     )
 
 
@@ -121,6 +141,7 @@ def failed_cleanup_summary(
         "clipped_note_count": 0,
         "merged_note_count": 0,
         "reason_counts": {reason: 0 for reason in CLEANUP_REASON_CODES},
+        "harmonic_evidence": HarmonicEvidence.unavailable().summary(),
         "fallback_used": True,
         "error_code": error_code,
     }
@@ -181,6 +202,22 @@ def _normalize_sustain(
                 continue
             previous = event
     return normalized
+
+
+def _remove_harmonic_candidates(
+    events: list[NoteEvent],
+    evidence: HarmonicEvidence,
+    counts: Counter[str],
+) -> list[NoteEvent]:
+    if evidence.status != "available" or not evidence.removals:
+        return events
+    kept = [
+        event
+        for event in events
+        if not any(removal.matches(event) for removal in evidence.removals)
+    ]
+    counts[HARMONIC_CANDIDATE_REMOVED] += len(events) - len(kept)
+    return kept
 
 
 def _validate_config(config: CleanupConfig) -> None:

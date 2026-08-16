@@ -106,7 +106,7 @@ def _complete_eighth_note_measure_evidence(
     first_velocity = _onset_velocity(events, first_onset, eighth_seconds * 0.2)
     downbeat_velocity = _onset_velocity(events, candidate_downbeat, eighth_seconds * 0.2)
     first_slots = _occupied_slots(
-        events, first_onset, eighth_seconds, start_slot=0, slot_count=8, tolerance=0.25
+        events, first_onset, eighth_seconds, start_slot=0, slot_count=8, tolerance=0.55
     )
     complete_cycle_count = _complete_cycle_count(events, first_onset, eighth_seconds)
     matching_cycles = sum(

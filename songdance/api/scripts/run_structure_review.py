@@ -8,6 +8,7 @@ from app.pipeline.analysis import analyze_audio
 from app.pipeline.artifacts import artifact_paths, write_timeline
 from app.pipeline.audio import preprocess_audio
 from app.pipeline.cleanup import clean_note_events
+from app.pipeline.harmonics import extract_harmonic_evidence
 from app.pipeline.score import build_score, write_musicxml, write_quantized_midi
 from app.pipeline.sustain import extract_sustain_evidence
 from app.pipeline.transcribe import transcribe_audio, write_raw_midi
@@ -38,7 +39,11 @@ def run(settings: Settings | None = None) -> None:
         normalized = case_dir / "normalized.wav"
         preprocess_audio(OUTPUT_DIR / f"{case_id}.wav", normalized)
         events, raw_midi = transcribe_audio(normalized)
-        cleaned = clean_note_events(events, active_settings.note_cleanup_config)
+        cleaned = clean_note_events(
+            events,
+            active_settings.note_cleanup_config,
+            harmonic_evidence=extract_harmonic_evidence(normalized, events),
+        )
         analysis = analyze_audio(normalized, active_settings.structure_analysis_config)
         scored = build_score(
             cleaned.events,

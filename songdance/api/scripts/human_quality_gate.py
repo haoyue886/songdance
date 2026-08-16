@@ -21,6 +21,7 @@ PIPELINE_FILES = (
     "audio.py",
     "transcribe.py",
     "cleanup.py",
+    "harmonics.py",
     "analysis.py",
     "analysis_features.py",
     "analysis_runtime.py",

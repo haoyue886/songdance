@@ -22,33 +22,33 @@
     </scaling>
   </defaults>
   <part-list>
-    <score-part id="P7574a2f69121e7de0f70ccd201366dbd">
+    <score-part id="P07bccd854cee0dcd87a3491f092f6cff">
       <part-name>Piano · Right Hand</part-name>
       <part-abbreviation>Pno</part-abbreviation>
-      <score-instrument id="I2647314fae7f675811ee9ca5fa73944e">
+      <score-instrument id="I596734ab5013ab9ce4f9b519dedd0fcf">
         <instrument-name>Piano</instrument-name>
         <instrument-abbreviation>Pno</instrument-abbreviation>
       </score-instrument>
-      <midi-instrument id="I2647314fae7f675811ee9ca5fa73944e">
+      <midi-instrument id="I596734ab5013ab9ce4f9b519dedd0fcf">
         <midi-channel>1</midi-channel>
         <midi-program>1</midi-program>
       </midi-instrument>
     </score-part>
-    <score-part id="Pf71776adfdbebac6fd74e49f6253d1d1">
+    <score-part id="P68dd6efe26312db9db16368ddbd4ed6c">
       <part-name>Piano · Left Hand</part-name>
       <part-abbreviation>Pno</part-abbreviation>
-      <score-instrument id="I0128c9e44c908ccf23a0bc7499c315da">
+      <score-instrument id="I1b58aa53087a6ba31b1f9fd62c5d8e32">
         <instrument-name>Piano</instrument-name>
         <instrument-abbreviation>Pno</instrument-abbreviation>
       </score-instrument>
-      <midi-instrument id="I0128c9e44c908ccf23a0bc7499c315da">
+      <midi-instrument id="I1b58aa53087a6ba31b1f9fd62c5d8e32">
         <midi-channel>2</midi-channel>
         <midi-program>1</midi-program>
       </midi-instrument>
     </score-part>
   </part-list>
   <!--=========================== Part 1 ===========================-->
-  <part id="P7574a2f69121e7de0f70ccd201366dbd">
+  <part id="P07bccd854cee0dcd87a3491f092f6cff">
     <!--========================= Measure 1 ==========================-->
     <measure implicit="no" number="1">
       <attributes>
@@ -889,7 +889,7 @@
         <voice>0</voice>
         <type>16th</type>
         <accidental>natural</accidental>
-        <stem>down</stem>
+        <stem>up</stem>
         <beam number="1">begin</beam>
         <beam number="2">begin</beam>
       </note>
@@ -902,7 +902,7 @@
         <duration>2520</duration>
         <voice>0</voice>
         <type>16th</type>
-        <stem>down</stem>
+        <stem>up</stem>
         <beam number="1">continue</beam>
         <beam number="2">end</beam>
       </note>
@@ -915,11 +915,11 @@
         <duration>2520</duration>
         <voice>0</voice>
         <type>16th</type>
-        <stem>down</stem>
+        <stem>up</stem>
         <beam number="1">continue</beam>
         <beam number="2">forward hook</beam>
       </note>
-      <note dynamics="81.11">
+      <note dynamics="71.11">
         <pitch>
           <step>C</step>
           <alter>0</alter>
@@ -928,19 +928,8 @@
         <duration>5040</duration>
         <voice>0</voice>
         <type>eighth</type>
-        <stem>down</stem>
+        <stem>up</stem>
         <beam number="1">end</beam>
-      </note>
-      <note dynamics="81.11">
-        <chord />
-        <pitch>
-          <step>C</step>
-          <alter>0</alter>
-          <octave>5</octave>
-        </pitch>
-        <duration>5040</duration>
-        <voice>0</voice>
-        <type>eighth</type>
       </note>
       <note dynamics="68.89">
         <pitch>
@@ -951,6 +940,7 @@
         <duration>5040</duration>
         <voice>0</voice>
         <type>eighth</type>
+        <accidental>natural</accidental>
         <stem>up</stem>
         <beam number="1">begin</beam>
       </note>
@@ -964,7 +954,6 @@
         <duration>5040</duration>
         <voice>0</voice>
         <type>eighth</type>
-        <accidental>natural</accidental>
       </note>
       <note dynamics="46.67">
         <pitch>
@@ -4294,7 +4283,7 @@
     </measure>
   </part>
   <!--=========================== Part 2 ===========================-->
-  <part id="Pf71776adfdbebac6fd74e49f6253d1d1">
+  <part id="P68dd6efe26312db9db16368ddbd4ed6c">
     <!--========================= Measure 1 ==========================-->
     <measure implicit="no" number="1">
       <attributes>

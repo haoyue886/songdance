@@ -6,14 +6,11 @@ from pathlib import Path
 from sqlalchemy.orm import Session, sessionmaker
 
 from app.models import JobStage, JobStatus, TranscriptionJob
-from app.pipeline.artifacts import (
-    ARTIFACT_TYPES,
-    artifact_paths,
-    write_raw_timeline,
-)
+from app.pipeline.artifacts import ARTIFACT_TYPES, artifact_paths, write_raw_timeline
 from app.pipeline.audio import preprocess_audio
 from app.pipeline.cleanup import clean_note_events, failed_cleanup_summary
 from app.pipeline.errors import NoteCleanupError, PipelineError
+from app.pipeline.harmonics import extract_harmonic_evidence
 from app.pipeline.quality import build_quality_report
 from app.pipeline.score import build_score, read_musicxml_structure
 from app.pipeline.sustain import extract_sustain_evidence
@@ -45,9 +42,7 @@ def run_transcription_job(
     job_id: str,
     settings: Settings,
     factory: sessionmaker[Session],
-    storage: ObjectStorage,
-    *,
-    attempt: int | None = None,
+    storage: ObjectStorage, *, attempt: int | None = None,
 ) -> None:
     source = _source_key(factory, job_id, attempt)
     if source is None:
@@ -144,7 +139,11 @@ def run_transcription_job(
                 return
             with observe_stage(factory, settings, job_id, "score"):
                 try:
-                    cleanup_result = clean_note_events(events, cleanup_config)
+                    cleanup_result = clean_note_events(
+                        events,
+                        cleanup_config,
+                        harmonic_evidence=extract_harmonic_evidence(normalized, events),
+                    )
                     cleaned_events = cleanup_result.events
                     cleanup_summary = cleanup_result.summary()
                     cleanup_flag = "NOTE_CLEANUP_APPLIED"
@@ -257,9 +256,7 @@ def _source_key(
 ) -> tuple[str, int] | None:
     with factory() as session:
         job = session.get(TranscriptionJob, job_id)
-        if job is None:
-            return None
-        if job.error_code in DELETE_ERROR_CODES:
+        if job is None or job.error_code in DELETE_ERROR_CODES:
             return None
         if job.source_asset is None:
             mark_failed(

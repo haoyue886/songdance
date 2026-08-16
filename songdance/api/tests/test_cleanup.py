@@ -7,6 +7,7 @@ from app.pipeline.cleanup import (
     ADJACENT_SAME_PITCH_PRESERVED,
     DUPLICATE_NOTE_REMOVED,
     EXCESSIVE_DURATION_CLIPPED,
+    HARMONIC_CANDIDATE_REMOVED,
     LOW_CONFIDENCE_REMOVED,
     NOTE_PRESERVED,
     OVERLAPPING_SAME_PITCH_PRESERVED,
@@ -39,6 +40,7 @@ def test_cleanup_filters_low_confidence_and_short_notes_with_reasons() -> None:
         NOTE_PRESERVED: 1,
         ADJACENT_SAME_PITCH_PRESERVED: 0,
         OVERLAPPING_SAME_PITCH_PRESERVED: 0,
+        HARMONIC_CANDIDATE_REMOVED: 0,
     }
     assert result.summary()["removed_note_count"] == 2
 

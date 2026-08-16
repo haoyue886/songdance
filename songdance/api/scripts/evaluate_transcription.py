@@ -9,6 +9,7 @@ import pretty_midi
 from app.pipeline.analysis import analyze_audio
 from app.pipeline.audio import preprocess_audio
 from app.pipeline.cleanup import clean_note_events
+from app.pipeline.harmonics import extract_harmonic_evidence
 from app.pipeline.quality import dependency_versions, evaluate_note_events
 from app.pipeline.score import build_score, read_musicxml_structure, write_musicxml
 from app.pipeline.transcribe import MODEL_VERSION, NoteEvent, transcribe_audio
@@ -42,7 +43,11 @@ def evaluate(settings: Settings | None = None) -> dict:
             reference_events = [
                 NoteEvent(start, end, pitch, 100, 1.0) for start, end, pitch in reference
             ]
-            cleanup_result = clean_note_events(estimated, cleanup_config)
+            cleanup_result = clean_note_events(
+                estimated,
+                cleanup_config,
+                harmonic_evidence=extract_harmonic_evidence(normalized, estimated),
+            )
             cleaned = cleanup_result.events
             structure_analysis = analyze_audio(normalized, analysis_config)
             raw_metrics = evaluate_note_events(estimated, reference_events)

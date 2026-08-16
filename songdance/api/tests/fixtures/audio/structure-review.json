@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "model_version": "basic-pitch-0.4.0/icassp-2022-onnx/o0.5-f0.3",
-  "suite_fingerprint": "bafe9885fd8c364056c30e69007bf4fd68308089941ace63618c73ed310acd2c",
+  "suite_fingerprint": "64a7d86d59c76e00f3e6cc16af6e6a88b275b85f5d3f0a6a2127d0a5111ef6b6",
   "reviewer": {
     "midi_daw_experience": null,
     "reviewed_at": null
@@ -143,7 +143,7 @@
         },
         "osmd": {
           "status": "passed",
-          "measure_count": 11,
+          "measure_count": 1,
           "svg_count": 1
         }
       }

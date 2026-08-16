@@ -257,8 +257,9 @@ def test_fixed_arpeggio_uses_audio_evidence_without_changing_note_events() -> No
     compression = scored.reconstruction["voice_compression"]
 
     assert events == original_events
+    assert timeline["cleanup"]["reason_counts"]["HARMONIC_CANDIDATE_REMOVED"] > 0
     assert compression["applied"] is True
-    assert compression["compressed_group_count"] >= 100
+    assert compression["compressed_group_count"] > 0
     assert compression["pedal_marking_applied"] is False
     assert structure["voice_count"] < 100
     assert structure["rest_count"] < 150

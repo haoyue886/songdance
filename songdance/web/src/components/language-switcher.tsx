@@ -2,11 +2,12 @@
 
 import { Languages } from "lucide-react";
 import { useLocale, useTranslations } from "next-intl";
+import { localePrefix, LOCALE_OPTIONS, stripLocalePrefix, type AppLocale } from "@/i18n/routing";
 
-function localizedPath(pathname: string, locale: string): string {
-  const logicalPath = pathname === "/zh" ? "/" : pathname.replace(/^\/zh(?=\/)/, "");
-  if (locale === "zh-CN") return logicalPath === "/" ? "/zh" : `/zh${logicalPath}`;
-  return logicalPath;
+function localizedPath(pathname: string, locale: AppLocale): string {
+  const logicalPath = stripLocalePrefix(pathname);
+  const prefix = localePrefix(locale);
+  return prefix ? (logicalPath === "/" ? prefix : `${prefix}${logicalPath}`) : logicalPath;
 }
 
 export function LanguageSwitcher() {
@@ -16,7 +17,7 @@ export function LanguageSwitcher() {
   const changeLocale = (nextLocale: string) => {
     if (nextLocale === locale) return;
     document.cookie = `NEXT_LOCALE=${nextLocale}; Path=/; Max-Age=31536000; SameSite=Lax`;
-    const nextPath = localizedPath(window.location.pathname, nextLocale);
+    const nextPath = localizedPath(window.location.pathname, nextLocale as AppLocale);
     window.location.assign(`${nextPath}${window.location.search}${window.location.hash}`);
   };
 
@@ -30,8 +31,9 @@ export function LanguageSwitcher() {
         value={locale}
         onChange={(event) => changeLocale(event.currentTarget.value)}
       >
-        <option value="en">{t("english")}</option>
-        <option value="zh-CN">{t("chinese")}</option>
+        {LOCALE_OPTIONS.map((option) => (
+          <option key={option.value} value={option.value}>{option.label}</option>
+        ))}
       </select>
     </label>
   );

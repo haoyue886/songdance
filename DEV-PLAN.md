@@ -37,6 +37,7 @@
 | Phase 27 | 已完成 | 海外 SEO 技术基线、核心 Audio-to-MIDI 页面与索引门禁；代码审查 Stage 1/2 PASS |
 | Phase 28 | 已完成 | 英语默认的中英文国际化、语言切换与核心 SEO 首页合并；代码审查 Stage 1/2 PASS |
 | Phase 29 | 开发中 | Basic Pitch 完整 90 秒结构分析与双手共享边界的 MusicXML 弱起优化 |
+| Phase 31 | 已完成（国际化范围） | 八语言入口、工具页核心文案、切换、SEO 与物理消息基线；代码审查 Stage 1/2 PASS |
 
 ## 功能依赖图
 
@@ -1157,6 +1158,50 @@ Phase 9 基线
 **停止条件：** 任一候选算法未达到对应乐器数值门槛、结构严重错误增加、固定集人工评级下降、许可不明确、超出资源预算，或破坏旧钢琴任务/下载 API，即停止该乐器晋级并保留上一版本。一个乐器失败只阻塞该乐器；完整混音失败不回滚已上线单乐器能力。生产默认值只能来自固定回归报告，不得凭示例页截图调整。
 
 ---
+
+---
+
+## Phase 31：八种语言国际化扩展
+
+**目标：** 在保留英语无前缀 URL 与简体中文 `/zh` 兼容路径的前提下，增加日语、韩语、西班牙语、巴西葡萄牙语、法语和德语，所有语言共享页面组件、业务行为和 API 错误码映射；首批完成入口核心文案，其他 namespace 以独立英语基线交付。
+
+**交付内容：**
+
+- 将 `routing.locales`、locale 前缀、服务端消息加载和 `<html lang>` 扩展为 `en`、`zh-CN`、`ja`、`ko`、`es`、`pt-BR`、`fr`、`de`。
+- 为八种语言提供物理且 key 完全对齐的消息目录；新增语言先覆盖入口核心文案，其余 namespace 使用可审计的英语基线；语言切换器显示本地化语言名称，切换时保留逻辑路径、任务 ID、查询参数和 hash。
+- 扩展稳定公开页面的 canonical、`hreflang` alternates、英语 `x-default` 和 sitemap；任务 URL 继续 `noindex` 且不进入 sitemap。
+- 保持 API 只返回稳定结构化状态和 `error_code`，所有用户可见错误由当前 locale 的 Web 消息目录渲染。
+- 增加消息 key 对齐、八语言 SSR HTML、动态任务路径切换、SEO metadata/sitemap 和 375 px 语言选择器回归测试。
+
+**关键文件：**
+
+- `songdance/web/src/i18n/routing.ts`、`request.ts`、`messages.ts`
+- `songdance/web/messages/*.json`
+- `songdance/web/src/components/language-switcher.tsx`
+- `songdance/web/src/lib/seo/locale.ts`、`src/app/sitemap.ts`
+- `songdance/web/e2e/i18n.spec.ts`、`src/i18n/messages.test.ts`
+
+**验收标准：**
+
+- 八种 locale 的首页和工具入口在不执行客户端 JavaScript 时输出核心对应语言 HTML；上传、处理中、成功、失败、结果、示例、法律页和 404 使用物理基线目录且消息 key 完全对齐，未审校 namespace 的英语状态在交付记录中明确。
+- 任意稳定页和 `/jobs/{id}` 在八种语言间切换后保留逻辑路径、任务 ID、查询参数和 hash；375 px 无页面级横向溢出。
+- 稳定页面 metadata 与 sitemap 为八种语言生成互相完整的 alternates、正确 canonical 和唯一英语 `x-default`；临时任务 URL 不被索引。
+- `pnpm test`、`pnpm lint`、`pnpm typecheck`、`pnpm build` 和 `pnpm test:e2e` 全部通过，且无回归英语/中文现有路径。
+
+**依赖与风险：**
+
+- 八套消息目录必须在 CI 中做叶子 key 对齐和空值检查；缺少物理目录或 key 时阻塞发布。英语基线必须显式存在，不能由运行时缺 key 静默生成。
+- 新 locale 的 URL 前缀与 BCP 47 `lang` 值必须固定，避免 sitemap、cookie 和 metadata 产生别名 URL。
+- 本 Phase 不改 API、任务数据模型或音频处理逻辑；翻译质量由上线前人工抽检负责。
+
+**完成证据（2026-08-17）：**
+
+- `pnpm test`：31 个测试文件、135 条测试通过；`pnpm lint`、`pnpm typecheck`、`git diff --check` 通过。
+- `pnpm build`：Next.js 16.2.12 生产构建通过，45 个静态页面单元生成。
+- `pnpm exec playwright test e2e/i18n.spec.ts`：4/4 通过，覆盖六个新增 locale 的首页、工具入口和 375 px 布局。
+- `pnpm exec playwright test e2e/seo.spec.ts`：4/4 通过，覆盖八语言 SEO 基线、sitemap、任务 noindex 和 404 状态。
+- fresh `code-reviewer`：Stage 1/2 PASS，0 HIGH、0 MEDIUM；locale 埋点为既有 SHOULD 级 LOW 建议。
+- 完整 E2E 仍有既有谱面小节定位用例的渲染失败（`phase7`、`quality-result`），不涉及本 Phase 文件；已单独记录，不以国际化测试通过冒充全套回归通过。
 
 ## 技术栈
 

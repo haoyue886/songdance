@@ -3,6 +3,7 @@ import { hasLocale, NextIntlClientProvider } from "next-intl";
 import { getMessages, setRequestLocale } from "next-intl/server";
 import { notFound } from "next/navigation";
 import { routing } from "@/i18n/routing";
+import { getAppMessages } from "@/i18n/messages";
 import { SITE_DESCRIPTION, SITE_NAME, SITE_URL } from "@/lib/seo/site";
 import "../globals.css";
 
@@ -18,22 +19,27 @@ export function generateStaticParams() {
 export async function generateMetadata({ params }: Omit<LayoutProps, "children">): Promise<Metadata> {
   const { locale } = await params;
   if (!hasLocale(routing.locales, locale)) return {};
+  const messages = getAppMessages(locale);
   const isEnglish = locale === "en";
-  const description = isEnglish
-    ? SITE_DESCRIPTION
-    : "将钢琴录音转换为可编辑的 MIDI、MusicXML 和可读乐谱。";
-  const title = isEnglish
-    ? "Audio to MIDI Converter for Piano Recordings | SongDance"
-    : "钢琴音频转 MIDI 转换器 | SongDance";
+  const description = isEnglish ? SITE_DESCRIPTION : messages.home.description;
+  const title = `${messages.home.title} | SongDance`;
+  const openGraphLocales: Record<string, string> = {
+    en: "en_US",
+    "zh-CN": "zh_CN",
+    ja: "ja_JP",
+    ko: "ko_KR",
+    es: "es_ES",
+    "pt-BR": "pt_BR",
+    fr: "fr_FR",
+    de: "de_DE",
+  };
   return {
     metadataBase: SITE_URL,
     title: { default: title, template: "%s | SongDance" },
     description,
     applicationName: SITE_NAME,
-    keywords: isEnglish
-      ? ["audio to MIDI converter", "piano audio to MIDI", "piano transcription", "MusicXML"]
-      : ["音频转 MIDI", "钢琴音频转 MIDI", "钢琴转录", "MusicXML"],
-    openGraph: { type: "website", locale: isEnglish ? "en_US" : "zh_CN", siteName: SITE_NAME, title, description },
+    keywords: [messages.home.title, "MIDI", "MusicXML", "piano transcription"],
+    openGraph: { type: "website", locale: openGraphLocales[locale] ?? "en_US", siteName: SITE_NAME, title, description },
     twitter: { card: "summary", title, description },
     verification: process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION
       ? { google: process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION }

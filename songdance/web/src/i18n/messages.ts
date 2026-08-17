@@ -1,11 +1,28 @@
 import en from "../../messages/en.json";
 import zhCN from "../../messages/zh-CN.json";
+import de from "../../messages/de.json";
+import es from "../../messages/es.json";
+import fr from "../../messages/fr.json";
+import ja from "../../messages/ja.json";
+import ko from "../../messages/ko.json";
+import ptBR from "../../messages/pt-BR.json";
 import type { AppLocale } from "./routing";
 
 export type AppMessages = typeof en;
 
+const BASE_MESSAGES: Record<Exclude<AppLocale, "en" | "zh-CN">, AppMessages> = {
+  ja,
+  ko,
+  es,
+  "pt-BR": ptBR,
+  fr,
+  de,
+};
+
 export function getAppMessages(locale: AppLocale): AppMessages {
-  return locale === "zh-CN" ? zhCN : en;
+  if (locale === "zh-CN") return zhCN;
+  if (locale === "en") return en;
+  return BASE_MESSAGES[locale];
 }
 
 export function formatMessage(

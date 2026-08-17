@@ -1,6 +1,7 @@
 import type { MetadataRoute } from "next";
+import { routing } from "@/i18n/routing";
 import { absoluteUrl } from "@/lib/seo/site";
-import { PUBLIC_PATHS, localePath } from "@/lib/seo/locale";
+import { PUBLIC_PATHS, localeAlternatesMap, localePath } from "@/lib/seo/locale";
 
 const ROUTE_SETTINGS = {
   "/": { changeFrequency: "weekly", priority: 1 },
@@ -11,10 +12,14 @@ const ROUTE_SETTINGS = {
 } as const;
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  return PUBLIC_PATHS.flatMap((path) => (["en", "zh-CN"] as const).map((locale) => ({
+  return PUBLIC_PATHS.flatMap((path) => routing.locales.map((locale) => ({
     url: absoluteUrl(localePath(locale, path)),
     changeFrequency: ROUTE_SETTINGS[path].changeFrequency,
     priority: ROUTE_SETTINGS[path].priority,
-    alternates: { languages: { en: absoluteUrl(localePath("en", path)), "zh-CN": absoluteUrl(localePath("zh-CN", path)), "x-default": absoluteUrl(localePath("en", path)) } },
+    alternates: {
+      languages: Object.fromEntries(
+        Object.entries(localeAlternatesMap(path)).map(([language, href]) => [language, absoluteUrl(href)]),
+      ),
+    },
   })));
 }

@@ -99,6 +99,22 @@ def raise_for_structure_errors(
         raise ValueError(", ".join(errors))
 
 
+def raise_for_piano_staff_layout(
+    score: stream.Score, *, max_voices: int | None = 1
+) -> None:
+    if len(score.parts) != 2:
+        raise ValueError("EXPECTED_TWO_PIANO_PARTS")
+    if max_voices is None:
+        return
+    overflow = [
+        part.id or str(index)
+        for index, part in enumerate(score.parts)
+        if len(list(part.getElementsByClass(stream.Voice))) > max_voices
+    ]
+    if overflow:
+        raise ValueError("PIANO_STAFF_VOICE_OVERFLOW:" + ",".join(overflow))
+
+
 def _measure_errors(score: stream.Score) -> tuple[int, int]:
     error_count = 0
     partial_final_count = 0

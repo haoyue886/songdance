@@ -3,6 +3,7 @@ import json
 import logging
 from dataclasses import asdict, dataclass
 from pathlib import Path
+from statistics import median
 
 import librosa
 import numpy as np
@@ -10,6 +11,7 @@ import pretty_midi
 
 SUSTAIN_EVIDENCE_VERSION = "sustain-evidence-v1"
 AUDIO_ONSET_RESONANCE = "AUDIO_ONSET_RESONANCE"
+AUDIO_SUSTAIN_PEDAL = "AUDIO_SUSTAIN_PEDAL"
 MIDI_CC64 = "MIDI_CC64"
 SUSTAIN_EVIDENCE_UNAVAILABLE = "SUSTAIN_EVIDENCE_UNAVAILABLE"
 logger = logging.getLogger(__name__)
@@ -20,6 +22,9 @@ class SustainEvidenceConfig:
     sample_rate: int = 22_050
     hop_length: int = 512
     minimum_resonance_ratio: float = 0.08
+    minimum_audio_pedal_intervals: int = 8
+    maximum_audio_pedal_gap_seconds: float = 0.35
+    maximum_audio_pedal_break_seconds: float = 0.08
 
     @property
     def version(self) -> str:
@@ -36,6 +41,7 @@ class SustainEvidence:
     independent_onset_seconds: tuple[float, ...]
     resonant_intervals: tuple[tuple[float, float], ...]
     cc64_intervals: tuple[tuple[float, float], ...]
+    audio_pedal_intervals: tuple[tuple[float, float], ...] = ()
 
     @classmethod
     def unavailable(cls) -> "SustainEvidence":
@@ -46,6 +52,7 @@ class SustainEvidence:
             independent_onset_seconds=(),
             resonant_intervals=(),
             cc64_intervals=(),
+            audio_pedal_intervals=(),
         )
 
     def summary(self) -> dict[str, object]:
@@ -56,6 +63,7 @@ class SustainEvidence:
             "independent_onset_count": len(self.independent_onset_seconds),
             "resonant_interval_count": len(self.resonant_intervals),
             "cc64_interval_count": len(self.cc64_intervals),
+            "audio_pedal_interval_count": len(self.audio_pedal_intervals),
         }
 
 
@@ -104,9 +112,12 @@ def extract_sustain_evidence(
             )
         )
         resonant = ()
+    audio_pedal = infer_audio_pedal_intervals(resonant, active)
     sources = []
     if resonant:
         sources.append(AUDIO_ONSET_RESONANCE)
+    if audio_pedal:
+        sources.append(AUDIO_SUSTAIN_PEDAL)
     if cc64:
         sources.append(MIDI_CC64)
     return SustainEvidence(
@@ -116,7 +127,39 @@ def extract_sustain_evidence(
         independent_onset_seconds=onset_seconds if sources else (),
         resonant_intervals=resonant,
         cc64_intervals=cc64,
+        audio_pedal_intervals=audio_pedal,
     )
+
+
+def infer_audio_pedal_intervals(
+    intervals: tuple[tuple[float, float], ...],
+    config: SustainEvidenceConfig | None = None,
+) -> tuple[tuple[float, float], ...]:
+    active = config or SustainEvidenceConfig()
+    if len(intervals) < active.minimum_audio_pedal_intervals:
+        return ()
+    onset_gaps = tuple(
+        right[0] - left[0] for left, right in zip(intervals, intervals[1:], strict=False)
+    )
+    if (
+        not onset_gaps
+        or median(onset_gaps) > active.maximum_audio_pedal_gap_seconds
+    ):
+        return ()
+    runs: list[tuple[float, float, int]] = []
+    start, end = intervals[0]
+    count = 1
+    for next_start, next_end in intervals[1:]:
+        if next_start <= end + active.maximum_audio_pedal_break_seconds:
+            end = max(end, next_end)
+            count += 1
+            continue
+        if count >= active.minimum_audio_pedal_intervals:
+            runs.append((start, end, count))
+        start, end, count = next_start, next_end, 1
+    if count >= active.minimum_audio_pedal_intervals:
+        runs.append((start, end, count))
+    return tuple((start, end) for start, end, _ in runs)
 
 
 def _resonant_intervals(

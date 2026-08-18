@@ -1,4 +1,5 @@
 from dataclasses import asdict, dataclass, replace
+from statistics import median
 
 from app.pipeline.analysis import StructureAnalysis
 from app.pipeline.transcribe import NoteEvent
@@ -37,11 +38,52 @@ def quantize_events(events: list[NoteEvent], analysis: StructureAnalysis) -> lis
                 event,
                 start_sec=round(start, 6),
                 end_sec=round(end, 6),
-                hand=None,
-                hand_confidence=None,
             )
         )
     return sorted(quantized, key=lambda item: (item.start_sec, item.pitch, item.end_sec))
+
+
+def align_repeating_eighth_note_cycles(
+    events: list[NoteEvent],
+    analysis: StructureAnalysis,
+    pickup: PickupDecision,
+) -> list[NoteEvent]:
+    if FALSE_PICKUP_REJECTED_FULL_MEASURE not in pickup.reason_codes:
+        return events
+
+    notation_eighth = seconds_per_quarter(analysis) / 2
+    observed_eighth = _observed_eighth_seconds(events, notation_eighth)
+    origin = min(event.start_sec for event in events)
+    aligned = []
+    for event in events:
+        start_slot = max(0, round((event.start_sec - origin) / observed_eighth))
+        duration_slots = max(1, round((event.end_sec - event.start_sec) / observed_eighth))
+        start = start_slot * notation_eighth
+        aligned.append(
+            replace(
+                event,
+                start_sec=round(start, 6),
+                end_sec=round(start + duration_slots * notation_eighth, 6),
+            )
+        )
+    return sorted(aligned, key=lambda item: (item.start_sec, item.pitch, item.end_sec))
+
+
+def _observed_eighth_seconds(events: list[NoteEvent], expected: float) -> float:
+    starts = sorted({event.start_sec for event in events})
+    clusters: list[list[float]] = []
+    for start in starts:
+        if clusters and start - clusters[-1][-1] <= expected * 0.25:
+            clusters[-1].append(start)
+        else:
+            clusters.append([start])
+    centers = [median(cluster) for cluster in clusters]
+    candidates = [
+        right - left
+        for left, right in zip(centers, centers[1:], strict=False)
+        if expected * 0.6 <= right - left <= expected * 1.4
+    ]
+    return median(candidates) if len(candidates) >= 7 else expected
 
 
 def seconds_per_quarter(analysis: StructureAnalysis) -> float:

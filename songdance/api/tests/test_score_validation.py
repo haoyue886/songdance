@@ -1,10 +1,15 @@
 import json
+from pathlib import Path
 
+import pretty_midi
 import pytest
+from music21 import expressions, stream
 
+from app.pipeline.analysis import StructureAnalysis
 from app.pipeline.artifacts import artifact_paths, write_timeline
 from app.pipeline.score import SCORE_RECONSTRUCTION_FALLBACK, build_score, write_musicxml
 from app.pipeline.score_validation import score_structure_errors
+from app.pipeline.sustain import extract_sustain_evidence
 from app.pipeline.transcribe import NoteEvent
 from scripts.score_parser_validation import validate_external_parsers
 
@@ -24,6 +29,36 @@ def test_reconstructed_score_has_chords_and_no_voice_overlap() -> None:
     assert scored.reconstruction["chord_count"] >= 1
     assert scored.reconstruction["voice_count"] >= 2
     assert score_structure_errors(scored.score) == []
+
+
+def test_repeated_arpeggio_is_rendered_as_two_single_voice_staves(tmp_path) -> None:
+    fixture_root = Path(__file__).parent / "fixtures/audio"
+    artifact_root = fixture_root / "structure-review-artifacts/04-arpeggios"
+    timeline = json.loads((artifact_root / "timeline.json").read_text(encoding="utf-8"))
+    events = [
+        NoteEvent(**{key: value for key, value in item.items() if key != "id"})
+        for item in timeline["notes"]
+    ]
+    evidence = extract_sustain_evidence(
+        fixture_root / "generated/04-arpeggios.wav",
+        pretty_midi.PrettyMIDI(str(fixture_root / "generated/04-arpeggios.mid")),
+    )
+
+    scored = build_score(
+        events,
+        analysis=StructureAnalysis(**timeline["analysis"]),
+        sustain_evidence=evidence,
+    )
+    destination = tmp_path / "arpeggio.musicxml"
+    write_musicxml(scored, destination)
+    xml = destination.read_text(encoding="utf-8")
+
+    assert xml.count("<part id=") == 2
+    assert "<voice>" not in xml
+    assert xml.count("<pedal ") == 2
+    assert len(list(scored.score.recurse().getElementsByClass(stream.Voice))) == 0
+    assert len(list(scored.score.recurse().getElementsByClass(expressions.PedalMark))) == 1
+    assert scored.reconstruction["voice_compression"]["single_voice_applied"] is True
 
 
 def test_reconstruction_failure_returns_explicit_basic_score_fallback(

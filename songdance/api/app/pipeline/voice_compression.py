@@ -5,9 +5,11 @@ from dataclasses import asdict, dataclass, replace
 from app.pipeline.harmony import NotationGroup
 from app.pipeline.quantize import GRID_DIVISIONS
 from app.pipeline.sustain import SUSTAIN_EVIDENCE_UNAVAILABLE, SustainEvidence
+from app.pipeline.voice_overlap import merge_same_pitch_overlaps
 
 VOICE_COMPRESSION_VERSION = "voice-compression-v1"
 DENSE_RESONANT_ONSETS_COMPRESSED = "DENSE_RESONANT_ONSETS_COMPRESSED"
+SAME_PITCH_RESONANCE_MERGED = "SAME_PITCH_RESONANCE_MERGED"
 
 
 @dataclass(frozen=True)
@@ -74,6 +76,9 @@ def compress_notation_durations(
     onset_units = _to_units(
         available.independent_onset_seconds, seconds_per_quarter, measure_offset_units
     )
+    groups, same_pitch_merge_count = merge_same_pitch_overlaps(
+        groups, onset_units, active.onset_tolerance_units
+    )
     interval_units = tuple(
         (
             _to_unit(left, seconds_per_quarter, measure_offset_units),
@@ -133,14 +138,20 @@ def compress_notation_durations(
         else:
             compressed.append(group)
     coalesced = _coalesce_onsets(compressed, set(next_start), active.maximum_chord_size)
+    reasons = []
+    if count:
+        reasons.append(DENSE_RESONANT_ONSETS_COMPRESSED)
+    if same_pitch_merge_count:
+        reasons.append(SAME_PITCH_RESONANCE_MERGED)
     return VoiceCompressionResult(
         groups=coalesced,
         version=active.version,
-        applied=count > 0,
+        applied=count > 0 or same_pitch_merge_count > 0,
         compressed_group_count=count,
-        coalesced_group_count=len(compressed) - len(coalesced),
+        coalesced_group_count=(len(compressed) - len(coalesced))
+        + same_pitch_merge_count,
         dense_run_count=len(runs),
-        reason_codes=(DENSE_RESONANT_ONSETS_COMPRESSED,) if count else (),
+        reason_codes=tuple(reasons),
         evidence=available,
     )
 

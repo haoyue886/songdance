@@ -10,13 +10,18 @@ from app.pipeline.score import build_score, write_musicxml
 from app.pipeline.score_validation import score_structure_summary
 from app.pipeline.sustain import (
     AUDIO_ONSET_RESONANCE,
+    AUDIO_SUSTAIN_PEDAL,
     MIDI_CC64,
     SustainEvidence,
     SustainEvidenceConfig,
     extract_sustain_evidence,
+    infer_audio_pedal_intervals,
 )
 from app.pipeline.transcribe import NoteEvent
-from app.pipeline.voice_compression import compress_notation_durations
+from app.pipeline.voice_compression import (
+    SAME_PITCH_RESONANCE_MERGED,
+    compress_notation_durations,
+)
 from app.pipeline.voicing import assign_voices
 
 FIXTURE_ROOT = Path(__file__).parent / "fixtures/audio"
@@ -70,6 +75,33 @@ def test_dense_same_pitch_retriggers_remain_distinct_onsets_in_one_voice() -> No
     assert [group.start_units for group in result.groups] == list(range(0, 16, 2))
 
 
+def test_overlapping_same_pitch_without_retrigger_evidence_is_merged() -> None:
+    evidence = SustainEvidence(
+        version=SustainEvidenceConfig().version,
+        status="available",
+        sources=(AUDIO_ONSET_RESONANCE,),
+        independent_onset_seconds=(0.0,),
+        resonant_intervals=((0.0, 0.5),),
+        cc64_intervals=(),
+    )
+    groups = [_group(0, 16, 60), _group(4, 12, 60)]
+
+    result = compress_notation_durations(groups, 0.5, 0, evidence)
+
+    assert [(group.start_units, group.end_units) for group in result.groups] == [(0, 16)]
+    assert result.coalesced_group_count == 1
+    assert result.reason_codes == (SAME_PITCH_RESONANCE_MERGED,)
+
+
+def test_overlapping_same_pitch_with_retrigger_evidence_stays_distinct() -> None:
+    groups = [_group(0, 16, 60), _group(4, 12, 60)]
+
+    result = compress_notation_durations(groups, 0.5, 0, _evidence((0.0, 0.5)))
+
+    assert result.groups == groups
+    assert len(assign_voices(result.groups)) == 2
+
+
 def test_sparse_sustained_chords_keep_their_full_durations() -> None:
     groups = [
         _group(0, 12, 48, 55, 60, 64),
@@ -117,6 +149,59 @@ def test_sustained_bass_across_dense_melody_is_preserved_as_independent_voice() 
     bass = next(group for group in result.groups if group.pitches == (36,))
     assert (bass.start_units, bass.end_units) == (0, 16)
     assert len(assign_voices(result.groups)) == 2
+
+
+def test_simple_arpeggio_keeps_evidenced_sustained_bass_end_to_end() -> None:
+    pitches = (48, 55, 60, 64, 67, 72, 67, 64)
+    events = [NoteEvent(0.0, 6.0, 36, 90, 0.9)]
+    events.extend(
+        NoteEvent(index * 0.25, index * 0.25 + 0.5, pitch, 80, 0.8)
+        for index, pitch in enumerate(pitches * 3)
+    )
+    onsets = tuple(index * 0.25 for index in range(24))
+
+    scored = build_score(events, sustain_evidence=_evidence(onsets))
+
+    bass_duration = sum(
+        float(item.duration.quarterLength)
+        for item in scored.score.recurse().notes
+        if item.isNote and item.pitch.midi == 36
+    )
+    compression = scored.reconstruction["voice_compression"]
+    assert scored.reconstruction["voicing"]["strategy"] == "simple_arpeggio_stable_zone"
+    assert compression["single_voice_applied"] is False
+    assert compression["notation_voice_count"] == 2
+    assert bass_duration == 12.0
+
+
+def test_preassigned_non_target_arpeggio_does_not_force_single_voice() -> None:
+    pitches = (53, 57, 59, 60, 65, 69, 74, 69)
+    events = [NoteEvent(0.125, 6.0, 48, 90, 0.9, hand="left")]
+    events.extend(
+        NoteEvent(
+            index * 0.25,
+            index * 0.25 + 0.5,
+            pitch,
+            80,
+            0.8,
+            hand="left" if pitch <= 60 else "right",
+        )
+        for index, pitch in enumerate(pitches * 3)
+    )
+    onsets = tuple(index * 0.25 for index in range(24))
+
+    scored = build_score(events, sustain_evidence=_evidence(onsets))
+
+    bass_duration = sum(
+        float(item.duration.quarterLength)
+        for item in scored.score.recurse().notes
+        if item.isNote and item.pitch.midi == 48
+    )
+    compression = scored.reconstruction["voice_compression"]
+    assert scored.reconstruction["voicing"]["strategy"] == "continuity"
+    assert compression["single_voice_applied"] is False
+    assert compression["notation_voice_count"] > 1
+    assert bass_duration == 11.75
 
 
 def test_sustained_inner_voice_entering_after_run_start_is_not_compressed() -> None:
@@ -198,8 +283,7 @@ def test_explicit_cc64_writes_pedal_mark_but_audio_resonance_alone_does_not(
     tmp_path: Path,
 ) -> None:
     events = [
-        NoteEvent(index * 0.25, index * 0.25 + 0.5, 60 + index, 80, 0.8)
-        for index in range(8)
+        NoteEvent(index * 0.25, index * 0.25 + 0.5, 60 + index, 80, 0.8) for index in range(8)
     ]
     cc64_evidence = SustainEvidence(
         version=SustainEvidenceConfig().version,
@@ -235,6 +319,42 @@ def test_explicit_cc64_writes_pedal_mark_but_audio_resonance_alone_does_not(
     assert "<pedal " not in audio_only_path.read_text(encoding="utf-8")
 
 
+def test_sparse_audio_resonance_does_not_create_a_pedal_mark() -> None:
+    onsets = tuple(float(index) for index in range(12))
+    events = [
+        NoteEvent(onset, onset + 1.5, 60 + index % 4, 80, 0.8) for index, onset in enumerate(onsets)
+    ]
+
+    scored = build_score(events, sustain_evidence=_evidence(onsets))
+
+    assert list(scored.score.recurse().getElementsByClass(expressions.PedalMark)) == []
+    assert scored.reconstruction["voice_compression"]["pedal_marking_applied"] is False
+
+
+def test_continuous_audio_pedal_evidence_creates_a_mark_for_non_arpeggio() -> None:
+    intervals = tuple((index * 0.25, (index + 1) * 0.25) for index in range(9))
+    audio_pedal = infer_audio_pedal_intervals(intervals)
+    evidence = SustainEvidence(
+        version=SustainEvidenceConfig().version,
+        status="available",
+        sources=(AUDIO_ONSET_RESONANCE, AUDIO_SUSTAIN_PEDAL),
+        independent_onset_seconds=tuple(index * 0.25 for index in range(10)),
+        resonant_intervals=intervals,
+        cc64_intervals=(),
+        audio_pedal_intervals=audio_pedal,
+    )
+    events = [
+        NoteEvent(index * 0.25, index * 0.25 + 0.5, 60 + index % 3, 80, 0.8)
+        for index in range(10)
+    ]
+
+    scored = build_score(events, sustain_evidence=evidence)
+
+    assert audio_pedal == ((0.0, 2.25),)
+    assert scored.reconstruction["voicing"]["strategy"] == "continuity"
+    assert len(list(scored.score.recurse().getElementsByClass(expressions.PedalMark))) == 1
+
+
 def test_fixed_arpeggio_uses_audio_evidence_without_changing_note_events() -> None:
     timeline_path = FIXTURE_ROOT / "structure-review-artifacts/04-arpeggios/timeline.json"
     timeline = json.loads(timeline_path.read_text(encoding="utf-8"))
@@ -260,7 +380,8 @@ def test_fixed_arpeggio_uses_audio_evidence_without_changing_note_events() -> No
     assert timeline["cleanup"]["reason_counts"]["HARMONIC_CANDIDATE_REMOVED"] > 0
     assert compression["applied"] is True
     assert compression["compressed_group_count"] > 0
-    assert compression["pedal_marking_applied"] is False
+    assert compression["pedal_marking_applied"] is True
+    assert compression["pedal_marking_count"] == 1
     assert structure["voice_count"] < 100
     assert structure["rest_count"] < 150
     assert structure["short_rest_count"] == 0

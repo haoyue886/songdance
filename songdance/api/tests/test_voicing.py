@@ -1,4 +1,5 @@
 from app.pipeline.harmony import HarmonyConfig, NotationGroup, group_harmony
+from app.pipeline.score import build_score
 from app.pipeline.simple_arpeggio import (
     SIMPLE_ARPEGGIO_APPLIED,
     SIMPLE_ARPEGGIO_CLEAR_ZONE,
@@ -113,6 +114,29 @@ def test_simple_arpeggio_does_not_override_explicit_crossing_hands() -> None:
     assert result.events[0].hand == "right"
     assert result.strategy == "continuity"
     assert result.reason_codes == (SIMPLE_ARPEGGIO_REJECTED_CROSSING,)
+
+
+def test_score_pipeline_preserves_explicit_crossing_hands() -> None:
+    pitches = (48, 55, 60, 64, 67, 72, 67, 64)
+    events = [
+        NoteEvent(
+            index * 0.5,
+            index * 0.5 + 0.4,
+            pitch,
+            90,
+            0.9,
+            hand="right" if index == 0 else None,
+        )
+        for index, pitch in enumerate(pitches)
+    ]
+
+    scored = build_score(events)
+
+    assert scored.notes[0].hand == "right"
+    assert scored.reconstruction["voicing"]["strategy"] == "continuity"
+    assert scored.reconstruction["voicing"]["reason_codes"] == (
+        SIMPLE_ARPEGGIO_REJECTED_CROSSING,
+    )
 
 
 def test_simple_arpeggio_rejects_unstable_onset_period() -> None:

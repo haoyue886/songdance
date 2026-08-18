@@ -26,7 +26,13 @@ def test_structure_review_suite_is_current_and_parser_clean() -> None:
     )
     ratings = {item["rating"] for item in review["results"]}
     if "pending" in ratings:
-        assert ratings == {"pending"}
+        known_failures = {
+            item["id"] for item in review["results"] if item["rating"] != "pending"
+        }
+        assert known_failures <= {"04-arpeggios"}
+        assert next(item for item in review["results"] if item["id"] == "04-arpeggios")[
+            "rating"
+        ] == "needs_redo"
         assert review["reviewer"]["midi_daw_experience"] is None
     else:
         assert ratings <= {"direct_use", "minor_edits", "needs_redo"}

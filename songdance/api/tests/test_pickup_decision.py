@@ -98,6 +98,9 @@ def test_complete_eighth_note_cycles_reject_false_pickup() -> None:
         "first_onset_velocity": 96,
         "candidate_downbeat_velocity": 84,
     }
+    assert [event.start_sec for event in scored.notes] == pytest.approx(
+        [index * 0.25 for index in range(24)]
+    )
     assert score_structure_errors(scored.score, validate_measure_durations=True) == []
 
 
@@ -177,9 +180,23 @@ def test_arpeggio_musicxml_barlines_match_every_complete_truth_cycle() -> None:
         assert all(measure.duration.quarterLength == 4 for measure in measures)
         boundaries = [float(measure.offset) for measure in measures[:complete_cycles]]
         assert boundaries == expected_boundaries
+        for measure in measures[:complete_cycles]:
+            assert {
+                float(item.offset) for item in measure.recurse().notes
+            } <= {index * 0.5 for index in range(8)}
         part_boundaries.append(boundaries)
 
     assert part_boundaries[0] == part_boundaries[1]
+    expected_onsets = {index * 0.5 for index in range(8)}
+    for measure_index in range(complete_cycles):
+        actual_onsets = {
+            float(item.offset)
+            for part in score.parts
+            for item in list(part.getElementsByClass(stream.Measure))[
+                measure_index
+            ].recurse().notes
+        }
+        assert actual_onsets == expected_onsets
 
     timeline = json.loads(
         (fixture_root / "structure-review-artifacts/04-arpeggios/timeline.json").read_text(

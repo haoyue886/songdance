@@ -92,9 +92,7 @@ def test_offline_structure_review_package_is_complete_and_self_verifying(
     package, package_root = package_bundle
 
     assert package.is_file()
-    manifest = json.loads(
-        (package_root / "integrity-manifest.json").read_text(encoding="utf-8")
-    )
+    manifest = json.loads((package_root / "integrity-manifest.json").read_text(encoding="utf-8"))
     assert len(list((package_root / "files/generated").glob("*.wav"))) == 16
     artifacts = package_root / "files/structure-review-artifacts"
     for filename in ("raw.mid", "score.mid", "score.musicxml", "timeline.json"):
@@ -114,13 +112,10 @@ def test_offline_structure_review_package_is_complete_and_self_verifying(
     assert "我具备 MIDI/DAW 使用经验" not in html
     assert "保存评审" not in html
     assert "fetch('/review'" not in html
-    assert "Python 3.9 或更高版本" in (package_root / "README.md").read_text(
-        encoding="utf-8"
-    )
+    assert "data.notation_notes||data.notes" in html
+    assert "Python 3.9 或更高版本" in (package_root / "README.md").read_text(encoding="utf-8")
     with zipfile.ZipFile(package) as archive:
-        command = next(
-            info for info in archive.infolist() if info.filename.endswith(".command")
-        )
+        command = next(info for info in archive.infolist() if info.filename.endswith(".command"))
         assert command.external_attr >> 16 & 0o111
     assert manifest["suite_fingerprint"][:12] in package.name
     system_python = shutil.which("python3") or sys.executable
@@ -136,6 +131,7 @@ def test_offline_structure_review_package_is_complete_and_self_verifying(
         "suite_fingerprint": manifest["suite_fingerprint"],
         "file_count": len(manifest["files"]),
     }
+
 
 def test_server_enforces_local_http_contract(
     package_bundle: tuple[Path, Path],
@@ -160,7 +156,5 @@ def test_run_binds_only_to_loopback(
     with patch.object(offline_server, "ThreadingHTTPServer") as server_class:
         offline_server.run(package_root, port=43210, open_browser=False)
 
-    server_class.assert_called_once_with(
-        ("127.0.0.1", 43210), offline_server.ReviewHandler
-    )
+    server_class.assert_called_once_with(("127.0.0.1", 43210), offline_server.ReviewHandler)
     server_class.return_value.serve_forever.assert_called_once_with()

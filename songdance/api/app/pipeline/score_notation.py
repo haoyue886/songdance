@@ -1,7 +1,7 @@
 from bisect import bisect_right
 from fractions import Fraction
 
-from music21 import chord, expressions, note, stream
+from music21 import chord, expressions, note, pitch, stream
 
 from app.pipeline.harmony import NotationGroup, group_harmony
 from app.pipeline.quantize import GRID_DIVISIONS
@@ -39,25 +39,26 @@ def populate_part(
     notation_groups = compression.groups
     collapsed = False
     if collapse_to_single_voice:
-        global_onsets = sorted(
-            {
-                round(event.start_sec / seconds_per_quarter * GRID_DIVISIONS)
-                + measure_offset_units
-                for event in events
-            }
+        global_groups = group_harmony(
+            events,
+            seconds_per_quarter,
+            measure_offset_units,
         )
-        notation_groups, collapsed = _collapse_to_single_voice(
-            notation_groups, global_onsets
-        )
+        notation_groups, collapsed = _collapse_to_single_voice(notation_groups, global_groups)
     voices = [notation_groups] if collapsed else assign_voices(notation_groups)
+    if not voices:
+        voices = [[]]
     for voice_index, voice_groups in enumerate(voices, start=1):
         notation_voice = stream.Voice(id=f"{hand}-voice-{voice_index}")
         for group in voice_groups:
             duration = Fraction(group.end_units - group.start_units, GRID_DIVISIONS)
             if len(group.pitches) == 1:
-                notation = note.Note(group.pitches[0], quarterLength=duration)
+                notation = note.Note(pitch.Pitch(midi=group.pitches[0]), quarterLength=duration)
             else:
-                notation = chord.Chord(group.pitches, quarterLength=duration)
+                notation = chord.Chord(
+                    [pitch.Pitch(midi=value) for value in group.pitches],
+                    quarterLength=duration,
+                )
             notation.volume.velocity = group.velocity
             notation_voice.insert(Fraction(group.start_units, GRID_DIVISIONS), notation)
         part.insert(0, notation_voice)
@@ -74,12 +75,12 @@ def populate_part(
 
 def _collapse_to_single_voice(
     groups: list[NotationGroup],
-    global_onsets: list[int],
+    global_groups: list[NotationGroup],
 ) -> tuple[list[NotationGroup], bool]:
     """Flatten resonant arpeggio groups without discarding simultaneous pitches."""
     if not groups:
         return groups, True
-    independent = _independent_polyphony_groups(groups)
+    independent = _independent_polyphony_groups(groups, global_groups)
     collapsible = [group for group in groups if group not in independent]
 
     by_start: dict[int, list[NotationGroup]] = {}
@@ -92,15 +93,14 @@ def _collapse_to_single_voice(
     ):
         return groups, False
 
+    global_onsets = sorted({group.start_units for group in global_groups})
     starts = sorted(by_start)
     flattened = []
     for index, start in enumerate(starts):
         start_groups = by_start[start]
         next_onset_index = bisect_right(global_onsets, start)
         next_start = (
-            global_onsets[next_onset_index]
-            if next_onset_index < len(global_onsets)
-            else None
+            global_onsets[next_onset_index] if next_onset_index < len(global_onsets) else None
         )
         if next_start is None and index + 1 < len(starts):
             next_start = starts[index + 1]
@@ -135,20 +135,26 @@ def _collapse_to_single_voice(
 
 def _independent_polyphony_groups(
     groups: list[NotationGroup],
+    global_groups: list[NotationGroup],
 ) -> set[NotationGroup]:
     config = VoiceCompressionConfig()
     independent = set()
     for group in groups:
-        for pitch in group.pitches:
-            if pitch in SIMPLE_ARPEGGIO_PATTERN:
+        for note_pitch in group.pitches:
+            onset_pitches = {
+                candidate_pitch
+                for candidate in global_groups
+                if candidate.start_units == group.start_units
+                for candidate_pitch in candidate.pitches
+            }
+            if note_pitch in SIMPLE_ARPEGGIO_PATTERN and onset_pitches == {note_pitch}:
                 continue
             separated_onsets = {
                 candidate.start_units
-                for candidate in groups
+                for candidate in global_groups
                 if group.start_units < candidate.start_units < group.end_units
                 and all(
-                    abs(pitch - other_pitch)
-                    >= config.minimum_independent_pitch_separation
+                    abs(note_pitch - other_pitch) >= config.minimum_independent_pitch_separation
                     for other_pitch in candidate.pitches
                 )
             }
@@ -197,20 +203,18 @@ def apply_sustain_pedal_marks(
     if evidence is None:
         return 0
 
-    intervals = _merge_pedal_intervals(
-        (*evidence.cc64_intervals, *evidence.audio_pedal_intervals)
-    )
+    intervals = _merge_pedal_intervals((*evidence.cc64_intervals, *evidence.audio_pedal_intervals))
     if not intervals:
         return 0
 
-    anchors = sorted(
-        (
-            (float(item.getOffsetInHierarchy(score)), item)
-            for item in score.recurse().notes
-        ),
-        key=lambda pair: pair[0],
-    )
-    if len(anchors) < 2:
+    anchors_by_staff = [
+        sorted(
+            ((float(item.getOffsetInHierarchy(score)), item) for item in part.recurse().notes),
+            key=lambda pair: pair[0],
+        )
+        for part in reversed(score.parts)
+    ]
+    if not any(len(anchors) >= 2 for anchors in anchors_by_staff):
         return 0
 
     applied = 0
@@ -218,12 +222,18 @@ def apply_sustain_pedal_marks(
     for start_seconds, end_seconds in intervals:
         start_quarters = start_seconds / seconds_per_quarter + offset_quarters
         end_quarters = end_seconds / seconds_per_quarter + offset_quarters
-        start_anchor = _first_anchor_at_or_after(anchors, start_quarters)
-        end_anchor = _first_anchor_at_or_after(anchors, end_quarters)
-        if end_anchor is None:
-            end_anchor = _last_anchor_at_or_before(anchors, end_quarters)
-        if start_anchor is None or end_anchor is None or start_anchor is end_anchor:
+        anchors = next(
+            (
+                pair
+                for staff_anchors in anchors_by_staff
+                if (pair := _pedal_anchor_pair(staff_anchors, start_quarters, end_quarters))
+                is not None
+            ),
+            None,
+        )
+        if anchors is None:
             continue
+        start_anchor, end_anchor = anchors
         pedal = expressions.PedalMark(start_anchor, end_anchor)
         pedal.pedalType = expressions.PedalType.Sustain
         pedal.pedalForm = expressions.PedalForm.Line
@@ -231,6 +241,18 @@ def apply_sustain_pedal_marks(
         score.insert(0, pedal)
         applied += 1
     return applied
+
+
+def _pedal_anchor_pair(
+    anchors: list[tuple[float, note.GeneralNote]], start: float, end: float
+) -> tuple[note.GeneralNote, note.GeneralNote] | None:
+    start_anchor = _first_anchor_at_or_after(anchors, start)
+    end_anchor = _first_anchor_at_or_after(anchors, end)
+    if end_anchor is None:
+        end_anchor = _last_anchor_at_or_before(anchors, end)
+    if start_anchor is None or end_anchor is None or start_anchor is end_anchor:
+        return None
+    return start_anchor, end_anchor
 
 
 def _merge_pedal_intervals(

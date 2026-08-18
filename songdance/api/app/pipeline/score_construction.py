@@ -1,6 +1,6 @@
 from fractions import Fraction
 
-from music21 import clef, instrument, key, metadata, meter, note, stream, tempo
+from music21 import clef, instrument, key, layout, metadata, meter, note, pitch, stream, tempo
 
 from app.pipeline.analysis import StructureAnalysis
 from app.pipeline.harmony import HarmonyConfig, group_harmony
@@ -33,8 +33,8 @@ def build_reconstructed_score(
 ) -> tuple[stream.Score, dict[str, object], dict[str, object]]:
     score = stream.Score(id="songdance-score")
     score.metadata = metadata.Metadata(title=title)
-    right = _new_part("right-hand", "Piano · Right Hand", clef.TrebleClef(), analysis)
-    left = _new_part("left-hand", "Piano · Left Hand", clef.BassClef(), analysis)
+    right = _new_staff("right-hand", clef.TrebleClef(), analysis, with_tempo=True)
+    left = _new_staff("left-hand", clef.BassClef(), analysis)
     right_compression = populate_part(
         right,
         events,
@@ -55,14 +55,12 @@ def build_reconstructed_score(
     )
     score.insert(0, right)
     score.insert(0, left)
+    _insert_piano_staff_group(score, right, left)
     if collapse_to_single_voice:
         single_voice_applied = bool(
-            right_compression["single_voice_applied"]
-            and left_compression["single_voice_applied"]
+            right_compression["single_voice_applied"] and left_compression["single_voice_applied"]
         )
-        raise_for_piano_staff_layout(
-            score, max_voices=1 if single_voice_applied else None
-        )
+        raise_for_piano_staff_layout(score, max_voices=1 if single_voice_applied else None)
     score, structure = _finalize_score(score, measure_offset_units)
     pedal_marking_count = apply_sustain_pedal_marks(
         score,
@@ -88,11 +86,17 @@ def build_basic_score(
 ) -> tuple[stream.Score, dict[str, object]]:
     score = stream.Score(id="songdance-score-fallback")
     score.metadata = metadata.Metadata(title=title)
-    for hand, part_id, name, staff_clef in (
-        ("right", "right-hand", "Piano · Right Hand", clef.TrebleClef()),
-        ("left", "left-hand", "Piano · Left Hand", clef.BassClef()),
+    staffs = []
+    for hand, part_id, staff_clef in (
+        ("right", "right-hand", clef.TrebleClef()),
+        ("left", "left-hand", clef.BassClef()),
     ):
-        part = _new_part(part_id, name, staff_clef, analysis)
+        part = _new_staff(
+            part_id,
+            staff_clef,
+            analysis,
+            with_tempo=hand == "right",
+        )
         candidates = group_harmony(
             [event for event in events if notation_hand(event) == hand],
             quarter_seconds,
@@ -105,22 +109,23 @@ def build_basic_score(
             if group.start_units < previous_end:
                 continue
             notation = note.Note(
-                group.pitches[0],
-                quarterLength=Fraction(
-                    group.end_units - group.start_units, GRID_DIVISIONS
-                ),
+                pitch.Pitch(midi=group.pitches[0]),
+                quarterLength=Fraction(group.end_units - group.start_units, GRID_DIVISIONS),
             )
             notation.volume.velocity = group.velocity
             voice.insert(Fraction(group.start_units, GRID_DIVISIONS), notation)
             previous_end = group.end_units
         part.insert(0, voice)
         score.insert(0, part)
+        staffs.append(part)
+    _insert_piano_staff_group(score, *staffs)
     return _finalize_score(score, measure_offset_units)
 
 
 def _finalize_score(
     score: stream.Score, measure_offset_units: int
 ) -> tuple[stream.Score, dict[str, object]]:
+    raise_for_piano_staff_layout(score, max_voices=None)
     raise_for_structure_errors(score)
     _fill_voice_gaps(score)
     score.makeNotation(inPlace=True)
@@ -143,18 +148,35 @@ def _fill_voice_gaps(score: stream.Score) -> None:
             )
 
 
-def _new_part(
+def _new_staff(
     part_id: str,
-    name: str,
     staff_clef: clef.Clef,
     analysis: StructureAnalysis,
-) -> stream.Part:
-    part = stream.Part(id=part_id)
-    part.partName = name
+    *,
+    with_tempo: bool = False,
+) -> stream.PartStaff:
+    part = stream.PartStaff(id=part_id)
+    part.partName = "Piano"
     part.insert(0, instrument.Piano())
     part.insert(0, staff_clef)
     tonic, mode = analysis.key_signature.split(" ", 1)
     part.insert(0, meter.TimeSignature(analysis.time_signature))
     part.insert(0, key.Key(tonic, mode))
-    part.insert(0, tempo.MetronomeMark(number=analysis.bpm))
+    if with_tempo:
+        part.insert(0, tempo.MetronomeMark(number=analysis.bpm))
     return part
+
+
+def _insert_piano_staff_group(
+    score: stream.Score, right: stream.PartStaff, left: stream.PartStaff
+) -> None:
+    score.insert(
+        0,
+        layout.StaffGroup(
+            [right, left],
+            name="Piano",
+            abbreviation="Pno.",
+            symbol="brace",
+            barTogether=True,
+        ),
+    )

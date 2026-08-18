@@ -17,6 +17,7 @@ from scripts.validate_human_review import validate
 def test_human_review_uses_local_piano_samples() -> None:
     assert "createOscillator" not in human_review_server.HTML
     assert "decodeAudioData" in human_review_server.HTML
+    assert "data.notation_notes||data.notes" in human_review_server.HTML
     assert len(list(human_review_server.PIANO_ASSET_ROOT.glob("*.mp3"))) == 30
 
 

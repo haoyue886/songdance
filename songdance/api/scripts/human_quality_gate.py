@@ -37,6 +37,7 @@ PIPELINE_FILES = (
     "score_notation.py",
     "score_validation.py",
     "simple_arpeggio.py",
+    "arpeggio_resonance.py",
     "voicing.py",
     "artifacts.py",
 )

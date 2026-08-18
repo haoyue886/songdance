@@ -22,7 +22,7 @@ class SustainEvidenceConfig:
     sample_rate: int = 22_050
     hop_length: int = 512
     minimum_resonance_ratio: float = 0.08
-    minimum_audio_pedal_intervals: int = 8
+    minimum_audio_pedal_onsets: int = 8
     maximum_audio_pedal_gap_seconds: float = 0.35
     maximum_audio_pedal_break_seconds: float = 0.08
 
@@ -136,15 +136,13 @@ def infer_audio_pedal_intervals(
     config: SustainEvidenceConfig | None = None,
 ) -> tuple[tuple[float, float], ...]:
     active = config or SustainEvidenceConfig()
-    if len(intervals) < active.minimum_audio_pedal_intervals:
+    required_interval_count = active.minimum_audio_pedal_onsets - 1
+    if len(intervals) < required_interval_count:
         return ()
     onset_gaps = tuple(
         right[0] - left[0] for left, right in zip(intervals, intervals[1:], strict=False)
     )
-    if (
-        not onset_gaps
-        or median(onset_gaps) > active.maximum_audio_pedal_gap_seconds
-    ):
+    if not onset_gaps or median(onset_gaps) > active.maximum_audio_pedal_gap_seconds:
         return ()
     runs: list[tuple[float, float, int]] = []
     start, end = intervals[0]
@@ -154,10 +152,10 @@ def infer_audio_pedal_intervals(
             end = max(end, next_end)
             count += 1
             continue
-        if count >= active.minimum_audio_pedal_intervals:
+        if count >= required_interval_count:
             runs.append((start, end, count))
         start, end, count = next_start, next_end, 1
-    if count >= active.minimum_audio_pedal_intervals:
+    if count >= required_interval_count:
         runs.append((start, end, count))
     return tuple((start, end) for start, end, _ in runs)
 

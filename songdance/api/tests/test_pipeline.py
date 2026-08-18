@@ -157,10 +157,7 @@ def test_transcription_uses_explicit_threshold_profile(
 
 
 def test_fast_polyphonic_bach_fixture_preserves_recall_baseline(tmp_path: Path) -> None:
-    source = (
-        Path(__file__).parent
-        / "fixtures/audio/human-generated/01-bach-capriccio.wav"
-    )
+    source = Path(__file__).parent / "fixtures/audio/human-generated/01-bach-capriccio.wav"
     normalized = tmp_path / "normalized.wav"
     raw_midi_path = tmp_path / "raw.mid"
 
@@ -189,8 +186,11 @@ def test_score_outputs_parseable_midi_musicxml_and_timeline(tmp_path: Path) -> N
 
     midi = pretty_midi.PrettyMIDI(str(paths["midi"]))
     assert sum(len(instrument.notes) for instrument in midi.instruments) >= 4
+    assert len(midi.instruments) == 2
+    assert {instrument.name for instrument in midi.instruments} == {"Piano"}
     parsed_score = converter.parse(str(paths["musicxml"]))
     assert len(parsed_score.parts) == 2
+    assert all(isinstance(part, stream.PartStaff) for part in parsed_score.parts)
     assert len(list(parsed_score.recurse().getElementsByClass("Measure"))) >= 1
     timeline = json.loads(paths["timeline"].read_text(encoding="utf-8"))
     assert timeline["time_signature"] == "4/4"

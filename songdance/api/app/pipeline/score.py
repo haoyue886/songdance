@@ -4,6 +4,10 @@ from music21 import stream
 from music21.exceptions21 import Music21Exception
 
 from app.pipeline.analysis import AnalysisConfig, StructureAnalysis, fallback_analysis
+from app.pipeline.arpeggio_resonance import (
+    SIMPLE_ARPEGGIO_FILTER_VERSION,
+    filter_simple_arpeggio_resonance,
+)
 from app.pipeline.errors import ScoreGenerationError
 from app.pipeline.harmony import HarmonyConfig
 from app.pipeline.quantize import (
@@ -29,6 +33,8 @@ from app.pipeline.score_io import (
     write_quantized_midi as write_quantized_midi,
 )
 from app.pipeline.sustain import (
+    AUDIO_SUSTAIN_PEDAL,
+    MIDI_CC64,
     SUSTAIN_EVIDENCE_UNAVAILABLE,
     SustainEvidence,
 )
@@ -42,7 +48,8 @@ from app.pipeline.voicing import (
 
 POSTPROCESS_VERSION = (
     "music21-10.5.0/beat-grid/pickup-v4/"
-    f"{HarmonyConfig().version}/{VoicingConfig().version}/{VoiceCompressionConfig().version}"
+    f"{HarmonyConfig().version}/{VoicingConfig().version}/{VoiceCompressionConfig().version}/"
+    f"{SIMPLE_ARPEGGIO_FILTER_VERSION}"
 )
 EIGHTH_CYCLE_ALIGNMENT_VERSION = "eighth-cycle-alignment-v2"
 TIME_SIGNATURE_ASSUMED = "TIME_SIGNATURE_ASSUMED_4_4"
@@ -56,6 +63,7 @@ RECOVERABLE_SCORE_ERRORS = (ValueError, Music21Exception)
 class ScoredTranscription:
     score: stream.Score
     notes: list[NoteEvent]
+    notation_notes: list[NoteEvent]
     tempo_bpm: float
     quality_flags: list[str]
     analysis: StructureAnalysis
@@ -76,13 +84,15 @@ def build_score(
         flags.append(TIME_SIGNATURE_ASSUMED)
     quantized = quantize_events(events, active_analysis)
     pickup = decide_notation_pickup(quantized, active_analysis)
-    notation_input = align_repeating_eighth_note_cycles(
-        events, active_analysis, pickup
-    )
+    notation_input = align_repeating_eighth_note_cycles(events, active_analysis, pickup)
     if notation_input is events:
         notation_input = quantized
     voicing = assign_hands(notation_input)
-    notation_events = voicing.events
+    arpeggio_filter = filter_simple_arpeggio_resonance(
+        voicing.events,
+        pedal_intervals=_notation_pedal_intervals(sustain_evidence),
+    )
+    notation_events = arpeggio_filter.events
     reconstruction_version = POSTPROCESS_VERSION
     if FALSE_PICKUP_REJECTED_FULL_MEASURE in pickup.reason_codes:
         reconstruction_version = f"{POSTPROCESS_VERSION}/{EIGHTH_CYCLE_ALIGNMENT_VERSION}"
@@ -110,6 +120,7 @@ def build_score(
             "fallback_used": False,
             "error_code": None,
             "voicing": voicing.summary(),
+            "arpeggio_filter": arpeggio_filter.summary(),
             "chord_count": structure["chord_count"],
             "voice_count": structure["voice_count"],
             "pickup": pickup.summary(),
@@ -134,6 +145,7 @@ def build_score(
             "error_code": "SCORE_RECONSTRUCTION_FAILED",
             "detail": type(error).__name__,
             "voicing": voicing.summary(),
+            "arpeggio_filter": arpeggio_filter.summary(),
             "chord_count": structure["chord_count"],
             "voice_count": structure["voice_count"],
             "pickup": pickup.summary(),
@@ -150,5 +162,24 @@ def build_score(
             },
         }
     return ScoredTranscription(
-        score, notation_events, active_analysis.bpm, flags, active_analysis, reconstruction
+        score=score,
+        notes=voicing.events,
+        notation_notes=notation_events,
+        tempo_bpm=active_analysis.bpm,
+        quality_flags=flags,
+        analysis=active_analysis,
+        reconstruction=reconstruction,
     )
+
+
+def _notation_pedal_intervals(
+    evidence: SustainEvidence | None,
+) -> tuple[tuple[float, float], ...]:
+    if evidence is None:
+        return ()
+    intervals = []
+    if MIDI_CC64 in evidence.sources:
+        intervals.extend(evidence.cc64_intervals)
+    if AUDIO_SUSTAIN_PEDAL in evidence.sources:
+        intervals.extend(evidence.audio_pedal_intervals)
+    return tuple(intervals)

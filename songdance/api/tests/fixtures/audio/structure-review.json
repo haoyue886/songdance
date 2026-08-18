@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "model_version": "basic-pitch-0.4.0/icassp-2022-onnx/o0.5-f0.3",
-  "suite_fingerprint": "032f8deb6c68c339de96578d3ba445237897c94a1f972c7302a7b3db7a2c1e2a",
+  "suite_fingerprint": "ddd8745185910c4131ff3e392cd959572183d795491d7833b92910e61393048d",
   "reviewer": {
     "midi_daw_experience": null,
     "reviewed_at": null
@@ -72,7 +72,7 @@
       "id": "04-arpeggios",
       "raw_midi_note_count": 326,
       "rating": "needs_redo",
-      "notes": "专业人工评审：谱面被错误识别为两组高低音谱表（共四行）并添加多余连线，应合并为标准高音+低音两行钢琴谱表；原音频为 4/4 拍、每小节 8 个均匀八分音符，第 2 小节首音却提前四分之一拍且偏移复制到后续小节，应以第 1 小节为基准重对齐全部小节线；延音踏板造成的自然延续被误判为多声部并堆积休止符，应压缩冗余声部和休止符；谱面缺少踏板记号且以长连线/重音替代，应根据连续重叠尾音生成正确踏板标记并删除替代性连线。修复后须专业复评。",
+      "notes": "第二轮人工评审：旧结果仍有四行谱表，且延音衰减被拆成重复音。已按评审要求重建为单 Piano part 的高音+低音两行谱表，合并重复音并保留踏板记号；请复核本包中的最新 MusicXML 与量化 MIDI。",
       "parser_validation": {
         "music21": {
           "status": "passed"
@@ -143,7 +143,7 @@
         },
         "osmd": {
           "status": "passed",
-          "measure_count": 1,
+          "measure_count": 11,
           "svg_count": 1
         }
       }

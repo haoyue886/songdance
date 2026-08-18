@@ -46,6 +46,10 @@ def write_timeline(
         "notes": [
             {"id": f"note-{index + 1}", **asdict(event)} for index, event in enumerate(scored.notes)
         ],
+        "notation_notes": [
+            {"id": f"notation-note-{index + 1}", **asdict(event)}
+            for index, event in enumerate(scored.notation_notes)
+        ],
     }
     destination.write_text(
         json.dumps(timeline, ensure_ascii=False, separators=(",", ":")),
@@ -65,9 +69,7 @@ def write_raw_timeline(
         "quality_flags": ["RAW_MODEL_EVENTS"],
         "notes": [
             {"id": f"raw-note-{index + 1}", **asdict(event)}
-            for index, event in enumerate(
-                sorted(events, key=_event_sort_key)
-            )
+            for index, event in enumerate(sorted(events, key=_event_sort_key))
         ],
     }
     destination.write_text(

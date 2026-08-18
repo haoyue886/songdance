@@ -1,6 +1,6 @@
 from fractions import Fraction
 
-from music21 import chord, key, meter, note, stream
+from music21 import chord, key, layout, meter, note, stream
 
 MIN_REST_QUARTER_LENGTH = Fraction(1, 4)
 
@@ -8,9 +8,7 @@ MIN_REST_QUARTER_LENGTH = Fraction(1, 4)
 def score_structure_summary(
     score: stream.Score, *, validate_measure_durations: bool = False
 ) -> dict[str, object]:
-    errors: list[str] = []
-    if len(score.parts) != 2:
-        errors.append("EXPECTED_TWO_PIANO_PARTS")
+    errors = _piano_staff_layout_errors(score)
     if not list(score.recurse().notes):
         errors.append("EMPTY_SCORE")
 
@@ -46,8 +44,7 @@ def score_structure_summary(
         errors.append("MEASURE_DURATION_MISMATCH")
 
     short_rest_count = sum(
-        Fraction(rest.duration.quarterLength) < MIN_REST_QUARTER_LENGTH
-        for rest in notation_rests
+        Fraction(rest.duration.quarterLength) < MIN_REST_QUARTER_LENGTH for rest in notation_rests
     )
     if short_rest_count:
         errors.append("SUB_GRID_REST_FRAGMENT")
@@ -83,27 +80,24 @@ def score_structure_errors(
     score: stream.Score, *, validate_measure_durations: bool = False
 ) -> list[str]:
     return list(
-        score_structure_summary(
-            score, validate_measure_durations=validate_measure_durations
-        )["errors"]
+        score_structure_summary(score, validate_measure_durations=validate_measure_durations)[
+            "errors"
+        ]
     )
 
 
 def raise_for_structure_errors(
     score: stream.Score, *, validate_measure_durations: bool = False
 ) -> None:
-    errors = score_structure_errors(
-        score, validate_measure_durations=validate_measure_durations
-    )
+    errors = score_structure_errors(score, validate_measure_durations=validate_measure_durations)
     if errors:
         raise ValueError(", ".join(errors))
 
 
-def raise_for_piano_staff_layout(
-    score: stream.Score, *, max_voices: int | None = 1
-) -> None:
-    if len(score.parts) != 2:
-        raise ValueError("EXPECTED_TWO_PIANO_PARTS")
+def raise_for_piano_staff_layout(score: stream.Score, *, max_voices: int | None = 1) -> None:
+    errors = _piano_staff_layout_errors(score)
+    if errors:
+        raise ValueError(", ".join(errors))
     if max_voices is None:
         return
     overflow = [
@@ -113,6 +107,20 @@ def raise_for_piano_staff_layout(
     ]
     if overflow:
         raise ValueError("PIANO_STAFF_VOICE_OVERFLOW:" + ",".join(overflow))
+
+
+def _piano_staff_layout_errors(score: stream.Score) -> list[str]:
+    errors = []
+    if len(score.parts) != 2:
+        errors.append("EXPECTED_TWO_PIANO_STAVES")
+    if any(not isinstance(part, stream.PartStaff) for part in score.parts):
+        errors.append("EXPECTED_PIANO_PART_STAVES")
+    groups = list(score.getElementsByClass(layout.StaffGroup))
+    if len(groups) != 1 or tuple(groups[0]) != tuple(score.parts):
+        errors.append("EXPECTED_ONE_PIANO_STAFF_GROUP")
+    elif groups[0].symbol != "brace" or groups[0].barTogether is not True:
+        errors.append("INVALID_PIANO_STAFF_GROUP")
+    return errors
 
 
 def _measure_errors(score: stream.Score) -> tuple[int, int]:

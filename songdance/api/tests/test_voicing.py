@@ -1,3 +1,7 @@
+from app.pipeline.arpeggio_resonance import (
+    SIMPLE_ARPEGGIO_RESONANCE_FILTERED,
+    filter_simple_arpeggio_resonance,
+)
 from app.pipeline.harmony import HarmonyConfig, NotationGroup, group_harmony
 from app.pipeline.score import build_score
 from app.pipeline.simple_arpeggio import (
@@ -134,9 +138,7 @@ def test_score_pipeline_preserves_explicit_crossing_hands() -> None:
 
     assert scored.notes[0].hand == "right"
     assert scored.reconstruction["voicing"]["strategy"] == "continuity"
-    assert scored.reconstruction["voicing"]["reason_codes"] == (
-        SIMPLE_ARPEGGIO_REJECTED_CROSSING,
-    )
+    assert scored.reconstruction["voicing"]["reason_codes"] == (SIMPLE_ARPEGGIO_REJECTED_CROSSING,)
 
 
 def test_simple_arpeggio_rejects_unstable_onset_period() -> None:
@@ -177,9 +179,7 @@ def test_repeated_arpeggio_ignores_resonant_candidates_before_stabilizing() -> N
         events.append(NoteEvent(start, start + 0.4, pitch, 90, 0.9))
         if index:
             previous_pitch = (pattern * 3)[index - 1]
-            events.append(
-                NoteEvent(start, start + 0.2, previous_pitch, 55, 0.4)
-            )
+            events.append(NoteEvent(start, start + 0.2, previous_pitch, 55, 0.4))
         events.append(NoteEvent(start, start + 0.1, pitch + 12, 45, 0.35))
 
     result = assign_hands(events)
@@ -190,6 +190,176 @@ def test_repeated_arpeggio_ignores_resonant_candidates_before_stabilizing() -> N
         event.hand == "left" if event.pitch <= 60 else event.hand == "right"
         for event in result.events
     )
+
+
+def test_pedal_supported_arpeggio_filters_wrong_slot_resonance_candidates() -> None:
+    pattern = (48, 55, 60, 64, 67, 72, 67, 64)
+    events = [NoteEvent(0.0, 6.0, 36, 90, 0.9)]
+    for index, pitch in enumerate(pattern * 3):
+        start = index * 0.25
+        events.append(NoteEvent(start, start + 0.4, pitch, 90, 0.9))
+        if index:
+            previous_pitch = (pattern * 3)[index - 1]
+            events.append(NoteEvent(start, start + 0.2, previous_pitch, 55, 0.4))
+
+    result = filter_simple_arpeggio_resonance(events, pedal_intervals=((0.0, 6.0),))
+    filtered_pattern = [event.pitch for event in result.events if event.pitch != 36]
+
+    assert filtered_pattern == list(pattern * 3)
+    assert any(event.pitch == 36 and event.end_sec == 6.0 for event in result.events)
+    assert result.applied is True
+    assert result.removed_event_count == 23
+    assert result.stable_cycle_count == 3
+    assert result.matched_slot_count == 24
+    assert result.reason_codes == (SIMPLE_ARPEGGIO_RESONANCE_FILTERED,)
+
+
+def test_arpeggio_resonance_filter_requires_pedal_evidence() -> None:
+    pattern = (48, 55, 60, 64, 67, 72, 67, 64)
+    events = [
+        NoteEvent(index * 0.25, index * 0.25 + 0.4, pitch, 90, 0.9)
+        for index, pitch in enumerate(pattern * 3)
+    ]
+    events.append(NoteEvent(0.25, 0.5, 48, 55, 0.4))
+
+    result = filter_simple_arpeggio_resonance(events, pedal_intervals=())
+
+    assert result.events is events
+    assert result.applied is False
+    assert result.removed_event_count == 0
+    assert result.stable_cycle_count == 0
+    assert result.matched_slot_count == 0
+
+
+def test_arpeggio_resonance_filter_requires_three_stable_cycles() -> None:
+    pattern = (48, 55, 60, 64, 67, 72, 67, 64)
+    events = [
+        NoteEvent(index * 0.25, index * 0.25 + 0.4, pitch, 90, 0.9)
+        for index, pitch in enumerate(pattern * 2)
+    ]
+    events.append(NoteEvent(0.25, 0.5, 48, 55, 0.4))
+
+    result = filter_simple_arpeggio_resonance(events, pedal_intervals=((0.0, 4.0),))
+
+    assert result.events is events
+    assert result.applied is False
+    assert result.stable_cycle_count == 0
+
+
+def test_arpeggio_resonance_filter_rejects_unstable_cycle_timing() -> None:
+    pattern = (48, 55, 60, 64, 67, 72, 67, 64)
+    events = []
+    for cycle_start in (0.0, 2.0, 6.0):
+        for index, pitch in enumerate(pattern):
+            start = cycle_start + index * 0.25
+            events.append(NoteEvent(start, start + 0.4, pitch, 90, 0.9))
+    resonance = NoteEvent(2.25, 2.5, 48, 55, 0.4)
+    events.append(resonance)
+
+    result = filter_simple_arpeggio_resonance(events, pedal_intervals=((0.0, 8.0),))
+
+    assert result.events is events
+    assert resonance in result.events
+    assert result.applied is False
+
+
+def test_arpeggio_resonance_filter_preserves_explicit_crossing_hands() -> None:
+    pattern = (48, 55, 60, 64, 67, 72, 67, 64)
+    events = [
+        NoteEvent(
+            index * 0.25,
+            index * 0.25 + 0.4,
+            pitch,
+            90,
+            0.9,
+            hand="right" if index == 0 else None,
+        )
+        for index, pitch in enumerate(pattern * 3)
+    ]
+    resonance = NoteEvent(0.25, 0.5, 48, 55, 0.4)
+    events.append(resonance)
+
+    result = filter_simple_arpeggio_resonance(events, pedal_intervals=((0.0, 8.0),))
+
+    assert result.events is events
+    assert resonance in result.events
+    assert result.applied is False
+
+
+def test_arpeggio_filter_ignores_low_confidence_inferred_crossing() -> None:
+    pattern = (48, 55, 60, 64, 67, 72, 67, 64)
+    events = [
+        NoteEvent(
+            index * 0.25,
+            index * 0.25 + 0.4,
+            pitch,
+            90,
+            0.9,
+            hand="left" if index == 23 else None,
+            hand_confidence=0.7 if index == 23 else None,
+        )
+        for index, pitch in enumerate(pattern * 3)
+    ]
+    resonance = NoteEvent(0.25, 0.5, 48, 55, 0.4)
+    events.append(resonance)
+
+    result = filter_simple_arpeggio_resonance(events, pedal_intervals=((0.0, 8.0),))
+
+    assert resonance not in result.events
+    assert result.applied is True
+
+
+def test_arpeggio_filter_keeps_independent_pattern_pitch_voice() -> None:
+    pattern = (48, 55, 60, 64, 67, 72, 67, 64)
+    events = [
+        NoteEvent(index * 0.25, index * 0.25 + 0.2, pitch, 90, 0.9)
+        for index, pitch in enumerate(pattern * 3)
+    ]
+    sustained = NoteEvent(0.25, 2.0, 48, 88, 0.85)
+    events.append(sustained)
+
+    result = filter_simple_arpeggio_resonance(events, pedal_intervals=((0.0, 6.0),))
+
+    assert sustained in result.events
+    assert result.removed_event_count == 0
+
+
+def test_arpeggio_filter_keeps_a_stable_parallel_pattern_voice() -> None:
+    pattern = (48, 55, 60, 64, 67, 72, 67, 64)
+    parallel = (55, 60, 48, 72, 55, 64, 55, 72)
+    events = []
+    for index, (primary, secondary) in enumerate(zip(pattern * 3, parallel * 3, strict=True)):
+        start = index * 0.25
+        events.extend(
+            (
+                NoteEvent(start, start + 0.2, primary, 90, 0.9),
+                NoteEvent(start, start + 0.2, secondary, 88, 0.88),
+            )
+        )
+
+    result = filter_simple_arpeggio_resonance(events, pedal_intervals=((0.0, 6.0),))
+
+    assert len(result.events) == 48
+    assert sum(event.velocity == 88 for event in result.events) == 24
+    assert result.removed_event_count == 0
+
+
+def test_arpeggio_filter_keeps_three_sustained_parallel_slots_per_cycle() -> None:
+    pattern = (48, 55, 60, 64, 67, 72, 67, 64)
+    parallel = (60, 67, 72)
+    events = []
+    for index, primary in enumerate(pattern * 3):
+        start = index * 0.25
+        events.append(NoteEvent(start, start + 0.2, primary, 90, 0.9))
+        slot = index % len(pattern)
+        if slot < len(parallel):
+            events.append(NoteEvent(start, start + 0.4, parallel[slot], 88, 0.88))
+
+    result = filter_simple_arpeggio_resonance(events, pedal_intervals=((0.0, 6.0),))
+
+    assert len(result.events) == 33
+    assert sum(event.velocity == 88 for event in result.events) == 9
+    assert result.removed_event_count == 0
 
 
 def test_repeated_arpeggio_does_not_stabilize_an_unrelated_tail() -> None:

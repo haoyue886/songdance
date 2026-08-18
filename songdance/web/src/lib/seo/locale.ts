@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { localePrefix, routing, type AppLocale } from "@/i18n/routing";
+import { languageTag, localePrefix, routing, type AppLocale } from "@/i18n/routing";
 
 const PUBLIC_PATHS = ["/", "/transcribe", "/examples", "/privacy", "/terms"] as const;
 
@@ -13,7 +13,7 @@ export function localePath(locale: AppLocale, path: string): string {
 
 export function localeAlternatesMap(path: PublicPath): Record<string, string> {
   return Object.fromEntries([
-    ...routing.locales.map((locale) => [locale, localePath(locale, path)]),
+    ...routing.locales.map((locale) => [languageTag(locale), localePath(locale, path)]),
     ["x-default", localePath("en", path)],
   ]);
 }

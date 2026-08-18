@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { hasLocale, NextIntlClientProvider } from "next-intl";
 import { getMessages, setRequestLocale } from "next-intl/server";
 import { notFound } from "next/navigation";
-import { routing } from "@/i18n/routing";
+import { languageTag, routing } from "@/i18n/routing";
 import { getAppMessages } from "@/i18n/messages";
 import { SITE_DESCRIPTION, SITE_NAME, SITE_URL } from "@/lib/seo/site";
 import "../globals.css";
@@ -25,11 +25,11 @@ export async function generateMetadata({ params }: Omit<LayoutProps, "children">
   const title = `${messages.home.title} | SongDance`;
   const openGraphLocales: Record<string, string> = {
     en: "en_US",
-    "zh-CN": "zh_CN",
+    zh: "zh_CN",
     ja: "ja_JP",
     ko: "ko_KR",
     es: "es_ES",
-    "pt-BR": "pt_BR",
+    "pt-br": "pt_BR",
     fr: "fr_FR",
     de: "de_DE",
   };
@@ -53,7 +53,7 @@ export default async function LocaleLayout({ children, params }: LayoutProps) {
   setRequestLocale(locale);
   const messages = await getMessages();
   return (
-    <html lang={locale} data-scroll-behavior="smooth">
+    <html lang={languageTag(locale)} data-scroll-behavior="smooth">
       <body>
         <NextIntlClientProvider messages={messages}>{children}</NextIntlClientProvider>
       </body>

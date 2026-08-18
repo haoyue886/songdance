@@ -10,17 +10,17 @@ import type { AppLocale } from "./routing";
 
 export type AppMessages = typeof en;
 
-const BASE_MESSAGES: Record<Exclude<AppLocale, "en" | "zh-CN">, AppMessages> = {
+const BASE_MESSAGES: Record<Exclude<AppLocale, "en" | "zh">, AppMessages> = {
   ja,
   ko,
   es,
-  "pt-BR": ptBR,
+  "pt-br": ptBR,
   fr,
   de,
 };
 
 export function getAppMessages(locale: AppLocale): AppMessages {
-  if (locale === "zh-CN") return zhCN;
+  if (locale === "zh") return zhCN;
   if (locale === "en") return en;
   return BASE_MESSAGES[locale];
 }

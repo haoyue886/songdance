@@ -46,7 +46,7 @@ export function TranscribeClient() {
     const result = await inspectAudioFile(file);
     if (requestId !== requestIdRef.current) return;
     if (!result.ok) {
-      setInspectionState({ status: "error", message: locale === "zh-CN" ? result.error : errors("invalidInput") });
+      setInspectionState({ status: "error", message: locale === "zh" ? result.error : errors("invalidInput") });
       return;
     }
     setClip(createDefaultClip(result.value.duration));

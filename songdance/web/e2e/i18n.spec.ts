@@ -14,7 +14,7 @@ test("switches locale while preserving the logical page, query and hash", async 
 
 test("keeps an anonymous job id when switching to Chinese", async ({ page }) => {
   await page.goto("/jobs/phase28-locale-job?source=header#result");
-  await page.getByLabel("Language").selectOption("zh-CN");
+  await page.getByLabel("Language").selectOption("zh");
   await expect(page).toHaveURL(/\/zh\/jobs\/phase28-locale-job\?source=header#result$/);
   await expect(page.locator("html")).toHaveAttribute("lang", "zh-CN");
 });
@@ -29,11 +29,13 @@ test("serves the additional locale pages with localized core metadata", async ({
     { path: "/de", lang: "de", heading: "Audio-zu-MIDI-Konverter für Klavieraufnahmen", transcribeHeading: "Eine klare Klavieraufnahme vorbereiten" },
   ];
   for (const locale of locales) {
-    await page.goto(locale.path);
+    const homeResponse = await page.goto(locale.path);
+    expect(homeResponse?.status()).toBe(200);
     await expect(page.locator("html")).toHaveAttribute("lang", locale.lang);
     await expect(page.getByRole("heading", { level: 1, name: locale.heading })).toBeVisible();
     await expect(page.locator("select option")).toHaveCount(8);
-    await page.goto(`${locale.path}/transcribe`);
+    const transcribeResponse = await page.goto(`${locale.path}/transcribe`);
+    expect(transcribeResponse?.status()).toBe(200);
     await expect(page.locator("html")).toHaveAttribute("lang", locale.lang);
     await expect(page.getByRole("heading", { level: 1, name: locale.transcribeHeading })).toBeVisible();
   }

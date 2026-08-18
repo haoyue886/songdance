@@ -27,7 +27,7 @@ const translator = (namespace?: string) => {
 vi.mock("next-intl", () => ({
   hasLocale: (locales: readonly string[], locale: string) => locales.includes(locale),
   NextIntlClientProvider: ({ children }: { children: React.ReactNode }) => children,
-  useLocale: () => "zh-CN",
+  useLocale: () => "zh",
   useMessages: () => zhMessages,
   useTranslations: translator,
 }));

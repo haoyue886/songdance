@@ -8,7 +8,7 @@ describe("SEO routes", () => {
   it("publishes every stable locale without exposing ephemeral or legacy URLs", () => {
     const paths = sitemap().map((entry) => new URL(entry.url).pathname);
     for (const locale of routing.locales) {
-      const prefix = locale === "en" ? "" : locale === "zh-CN" ? "/zh" : locale === "pt-BR" ? "/pt-br" : `/${locale}`;
+      const prefix = locale === "en" ? "" : `/${locale}`;
       expect(paths).toContain(`${prefix || "/"}`);
       expect(paths).toContain(`${prefix}/examples`);
     }
@@ -25,7 +25,7 @@ describe("SEO routes", () => {
 
   it("keeps localized job pages out of search indexes", async () => {
     const metadata = await generateJobMetadata({
-      params: Promise.resolve({ locale: "zh-CN", jobId: "job-1" }),
+      params: Promise.resolve({ locale: "zh", jobId: "job-1" }),
     });
     expect(metadata.robots).toMatchObject({ index: false, follow: false, nocache: true });
     expect(metadata.openGraph).toBeNull();

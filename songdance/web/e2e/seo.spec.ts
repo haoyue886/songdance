@@ -62,6 +62,12 @@ test("returns localized 404 pages with noindex metadata", async ({ page }) => {
   for (const locale of [
     { path: "/route-that-does-not-exist", title: "Page not found", lang: "en" },
     { path: "/zh/route-that-does-not-exist", title: "页面不存在", lang: "zh-CN" },
+    { path: "/ja/route-that-does-not-exist", title: "Page not found", lang: "ja" },
+    { path: "/ko/route-that-does-not-exist", title: "Page not found", lang: "ko" },
+    { path: "/es/route-that-does-not-exist", title: "Page not found", lang: "es" },
+    { path: "/pt-br/route-that-does-not-exist", title: "Page not found", lang: "pt-BR" },
+    { path: "/fr/route-that-does-not-exist", title: "Page not found", lang: "fr" },
+    { path: "/de/route-that-does-not-exist", title: "Page not found", lang: "de" },
   ]) {
     const response = await page.goto(locale.path);
     expect(response?.status()).toBe(404);

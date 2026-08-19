@@ -37,7 +37,7 @@ def test_quality_report_is_stable_and_keeps_raw_and_cleaned_counts() -> None:
     assert report["structure"]["short_rest_count"] == 0
     assert report["structure"]["key_signature_status"] == "detected"
     assert report["reconstruction"]["status"] in {"reconstructed", "fallback"}
-    assert report["reconstruction"]["voicing"]["version"].startswith("voicing-v2/")
+    assert report["reconstruction"]["voicing"]["version"].startswith("voicing-v4/")
 
 
 def test_quality_report_evaluates_reference_metrics_and_sorts_distinct_events() -> None:

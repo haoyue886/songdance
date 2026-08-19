@@ -35,12 +35,14 @@ def group_harmony(
     seconds_per_quarter: float,
     measure_offset_units: int,
     config: HarmonyConfig | None = None,
+    *,
+    divisions_per_quarter: int = GRID_DIVISIONS,
 ) -> list[NotationGroup]:
     active = config or HarmonyConfig()
     groups: list[list[tuple[int, int, NoteEvent]]] = []
     for event in sorted(events, key=lambda item: (item.start_sec, item.end_sec, item.pitch)):
         start_units, end_units = _event_units(
-            event, seconds_per_quarter, measure_offset_units
+            event, seconds_per_quarter, measure_offset_units, divisions_per_quarter
         )
         target = next(
             (
@@ -86,15 +88,18 @@ def group_harmony(
 
 
 def _event_units(
-    event: NoteEvent, seconds_per_quarter: float, measure_offset_units: int
+    event: NoteEvent,
+    seconds_per_quarter: float,
+    measure_offset_units: int,
+    divisions_per_quarter: int,
 ) -> tuple[int, int]:
     start_units = (
-        round(event.start_sec / seconds_per_quarter * GRID_DIVISIONS)
+        round(event.start_sec / seconds_per_quarter * divisions_per_quarter)
         + measure_offset_units
     )
     end_units = max(
         start_units + 1,
-        round(event.end_sec / seconds_per_quarter * GRID_DIVISIONS)
+        round(event.end_sec / seconds_per_quarter * divisions_per_quarter)
         + measure_offset_units,
     )
     return start_units, end_units

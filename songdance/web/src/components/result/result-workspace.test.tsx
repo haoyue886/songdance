@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import type { TranscriptionQualityReport } from "@/lib/result/quality-report";
-import { qualityWarnings } from "./quality-summary";
+import { qualityKeyText, qualityWarnings } from "./quality-summary";
 import { scoreAssumptionText } from "./task-summary";
 
 const report: TranscriptionQualityReport = {
@@ -58,6 +58,35 @@ describe("scoreAssumptionText", () => {
     ).toBe(
       "无法确定分手的音符按音高放入谱表；复杂谱面重建失败，已生成基础谱面；均为排版假设，并非原曲结构识别。",
     );
+  });
+
+  it("surfaces uncertain staff distribution as a review warning", () => {
+    expect(scoreAssumptionText(["STAFF_DISTRIBUTION_SUSPECT"])).toBe(
+      "左右手谱表分配存疑，请结合钢琴卷帘、MIDI 和原音校对。",
+    );
+  });
+});
+
+describe("qualityKeyText", () => {
+  it("labels audio-only tonal analysis as inferred", () => {
+    expect(qualityKeyText({
+      ...report,
+      analysis: {
+        ...report.analysis,
+        keySignature: "G major",
+        keySignatureSource: "librosa_chroma_krumhansl",
+      },
+    })).toBe("推断调性：G major");
+  });
+
+  it("does not relabel a reference-score key signature", () => {
+    expect(qualityKeyText({
+      ...report,
+      analysis: {
+        ...report.analysis,
+        keySignatureSource: "reference_score",
+      },
+    })).toBe("C major");
   });
 });
 

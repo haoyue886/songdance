@@ -1,9 +1,15 @@
 from dataclasses import dataclass
+from dataclasses import replace as dataclass_replace
 from statistics import median
 
 from music21 import stream
 from music21.exceptions21 import Music21Exception
 
+from app.pipeline.adaptive_quantization import (
+    ADAPTIVE_QUANTIZATION_VERSION,
+    QuantizationDecision,
+    select_quantization,
+)
 from app.pipeline.analysis import AnalysisConfig, StructureAnalysis, fallback_analysis
 from app.pipeline.arpeggio_resonance import (
     SIMPLE_ARPEGGIO_FILTER_VERSION,
@@ -11,13 +17,19 @@ from app.pipeline.arpeggio_resonance import (
 )
 from app.pipeline.errors import ScoreGenerationError
 from app.pipeline.harmony import HarmonyConfig
+from app.pipeline.notation_context import NotationContext, ResolvedNotationContext
+from app.pipeline.polyphony_limit import RESONANT_POLYPHONY_VERSION
 from app.pipeline.quantize import (
     FALSE_PICKUP_REJECTED_FULL_MEASURE,
+    PickupDecision,
     align_repeating_eighth_note_cycles,
     decide_notation_pickup,
     integer_tempo_bpm,
     quantize_events,
     seconds_per_quarter,
+)
+from app.pipeline.score_construction import (
+    VOICE_REST_PRUNING_VERSION,
 )
 from app.pipeline.score_construction import (
     build_basic_score as _build_basic_score,
@@ -37,6 +49,10 @@ from app.pipeline.score_io import (
 from app.pipeline.score_io import (
     write_quantized_midi as write_quantized_midi,
 )
+from app.pipeline.staff_distribution import (
+    STAFF_DISTRIBUTION_SUSPECT,
+    staff_distribution_summary,
+)
 from app.pipeline.sustain import (
     AUDIO_SUSTAIN_PEDAL,
     MIDI_CC64,
@@ -55,9 +71,10 @@ DYNAMIC_MARKING_VERSION = "dynamic-marking-v1"
 SCORE_METADATA_VERSION = "score-metadata-v1"
 MP_MAX_MEDIAN_VELOCITY = 96
 POSTPROCESS_VERSION = (
-    "music21-10.5.0/beat-grid/pickup-v4/"
+    f"music21-10.5.0/beat-grid/{ADAPTIVE_QUANTIZATION_VERSION}/pickup-v4/"
     f"{HarmonyConfig().version}/{VoicingConfig().version}/{VoiceCompressionConfig().version}/"
-    f"{SIMPLE_ARPEGGIO_FILTER_VERSION}/{DYNAMIC_MARKING_VERSION}/{SCORE_METADATA_VERSION}"
+    f"{SIMPLE_ARPEGGIO_FILTER_VERSION}/{RESONANT_POLYPHONY_VERSION}/"
+    f"{VOICE_REST_PRUNING_VERSION}/{DYNAMIC_MARKING_VERSION}/{SCORE_METADATA_VERSION}"
 )
 EIGHTH_CYCLE_ALIGNMENT_VERSION = "eighth-cycle-alignment-v2"
 TIME_SIGNATURE_ASSUMED = "TIME_SIGNATURE_ASSUMED_4_4"
@@ -75,6 +92,8 @@ class ScoredTranscription:
     tempo_bpm: int
     quality_flags: list[str]
     analysis: StructureAnalysis
+    notation: ResolvedNotationContext
+    quantization: QuantizationDecision
     reconstruction: dict[str, object]
 
 
@@ -83,6 +102,7 @@ def build_score(
     title: str = "SongDance Transcription",
     analysis: StructureAnalysis | None = None,
     sustain_evidence: SustainEvidence | None = None,
+    notation_context: NotationContext | None = None,
 ) -> ScoredTranscription:
     active_analysis = analysis or fallback_analysis(
         AnalysisConfig(), STRUCTURE_ANALYSIS_NOT_RUN, source="score_default"
@@ -90,8 +110,26 @@ def build_score(
     flags = [*active_analysis.reason_codes, HAND_ASSIGNMENT_INFERRED]
     if active_analysis.time_signature_source == "default":
         flags.append(TIME_SIGNATURE_ASSUMED)
-    quantized = quantize_events(events, active_analysis)
-    pickup = decide_notation_pickup(quantized, active_analysis)
+    active_notation = notation_context or NotationContext()
+    quantization = select_quantization(
+        events,
+        active_analysis,
+        forced_divisions_per_quarter=active_notation.quantization_divisions_per_quarter,
+        source=active_notation.quantization_source,
+    )
+    quantized = quantize_events(events, active_analysis, quantization)
+    pickup = decide_notation_pickup(
+        quantized,
+        active_analysis,
+        measure_offset_units=active_notation.measure_offset_units,
+        divisions_per_quarter=quantization.divisions_per_quarter,
+    )
+    notation = _resolve_notation_context(active_analysis, active_notation, pickup)
+    notation_analysis = dataclass_replace(
+        active_analysis,
+        key_signature=notation.key_signature,
+        key_signature_source=notation.key_signature_source,
+    )
     notation_input = align_repeating_eighth_note_cycles(events, active_analysis, pickup)
     if notation_input is events:
         notation_input = quantized
@@ -101,12 +139,19 @@ def build_score(
         pedal_intervals=_notation_pedal_intervals(sustain_evidence),
     )
     notation_events = arpeggio_filter.events
+    quarter_seconds = seconds_per_quarter(active_analysis)
+    staff_distribution = staff_distribution_summary(
+        notation_events,
+        seconds_per_quarter=quarter_seconds,
+        time_signature=active_analysis.time_signature,
+    )
     reconstruction_version = POSTPROCESS_VERSION
     if FALSE_PICKUP_REJECTED_FULL_MEASURE in pickup.reason_codes:
         reconstruction_version = f"{POSTPROCESS_VERSION}/{EIGHTH_CYCLE_ALIGNMENT_VERSION}"
     if voicing.unknown_count:
         flags.append(UNKNOWN_HAND_NOTATION_FALLBACK)
-    quarter_seconds = seconds_per_quarter(active_analysis)
+    if staff_distribution["status"] == "suspect":
+        flags.append(STAFF_DISTRIBUTION_SUSPECT)
     measure_offset_units = pickup.measure_offset_units
     if sustain_evidence is None or sustain_evidence.status != "available":
         flags.append(SUSTAIN_EVIDENCE_UNAVAILABLE)
@@ -117,10 +162,11 @@ def build_score(
         score, structure, compression = _build_reconstructed_score(
             notation_events,
             title,
-            active_analysis,
+            notation_analysis,
             quarter_seconds,
             measure_offset_units,
             sustain_evidence,
+            quantization.divisions_per_quarter,
             collapse_to_single_voice=collapse_to_single_voice,
             with_mp=with_mp,
         )
@@ -130,10 +176,13 @@ def build_score(
             "fallback_used": False,
             "error_code": None,
             "voicing": voicing.summary(),
+            "staff_distribution": staff_distribution,
             "arpeggio_filter": arpeggio_filter.summary(),
             "chord_count": structure["chord_count"],
             "voice_count": structure["voice_count"],
             "pickup": pickup.summary(),
+            "notation": notation.summary(),
+            "quantization": quantization.summary(),
             "voice_compression": compression,
         }
     except RECOVERABLE_SCORE_ERRORS as error:
@@ -141,9 +190,10 @@ def build_score(
             score, structure = _build_basic_score(
                 notation_events,
                 title,
-                active_analysis,
+                notation_analysis,
                 quarter_seconds,
                 measure_offset_units,
+                quantization.divisions_per_quarter,
                 with_mp=with_mp,
             )
         except RECOVERABLE_SCORE_ERRORS as fallback_error:
@@ -156,10 +206,13 @@ def build_score(
             "error_code": "SCORE_RECONSTRUCTION_FAILED",
             "detail": type(error).__name__,
             "voicing": voicing.summary(),
+            "staff_distribution": staff_distribution,
             "arpeggio_filter": arpeggio_filter.summary(),
             "chord_count": structure["chord_count"],
             "voice_count": structure["voice_count"],
             "pickup": pickup.summary(),
+            "notation": notation.summary(),
+            "quantization": quantization.summary(),
             "voice_compression": {
                 "version": VoiceCompressionConfig().version,
                 "applied": False,
@@ -179,7 +232,35 @@ def build_score(
         tempo_bpm=integer_tempo_bpm(active_analysis.bpm),
         quality_flags=flags,
         analysis=active_analysis,
+        notation=notation,
+        quantization=quantization,
         reconstruction=reconstruction,
+    )
+
+
+def _resolve_notation_context(
+    analysis: StructureAnalysis,
+    context: NotationContext,
+    pickup: PickupDecision,
+) -> ResolvedNotationContext:
+    key_signature_confidence = (
+        context.key_signature_confidence
+        if context.key_signature_confidence is not None
+        else analysis.key_confidence
+    )
+    if not 0 <= key_signature_confidence <= 1:
+        raise ValueError("notation key signature confidence must be between 0 and 1")
+    return ResolvedNotationContext(
+        local_tonal_center=analysis.key_signature,
+        local_tonal_center_confidence=analysis.key_confidence,
+        local_tonal_center_source=analysis.key_signature_source,
+        key_signature=context.key_signature or analysis.key_signature,
+        key_signature_source=context.key_signature_source
+        or "inferred_local_tonal_center",
+        key_signature_confidence=key_signature_confidence,
+        measure_offset_units=pickup.measure_offset_units,
+        measure_offset_source=context.measure_offset_source
+        or "audio_downbeat_analysis",
     )
 
 

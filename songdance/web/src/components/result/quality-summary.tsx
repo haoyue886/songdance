@@ -29,7 +29,14 @@ export function QualitySummary({ report }: { report: TranscriptionQualityReport 
     [t("cleanupActions"), report.cleanup.fallbackUsed ? t("fallback") : t("actionCount", { count: cleanupActionCount(report) })],
     [t("bpmConfidence"), confidenceText(report.analysis.bpmConfidence, t("notEvaluated"))],
     [t("timeConfidence"), confidenceText(report.analysis.timeSignatureConfidence, t("notEvaluated"))],
-    [t("key"), report.analysis.keySignature ?? t("notAnalyzed")],
+    [
+      t("key"),
+      qualityKeyText(
+        report,
+        (value) => t("inferredKey", { value }),
+        t("notAnalyzed"),
+      ),
+    ],
     [t("keyConfidence"), confidenceText(report.analysis.keyConfidence, t("notEvaluated"))],
     [t("noteConfidence"), confidenceText(report.noteConfidenceMean, t("notEvaluated"))],
   ];
@@ -109,6 +116,18 @@ export function qualityWarnings(report: TranscriptionQualityReport): string[] {
     warnings.push("五线谱结构校验未通过；请优先使用钢琴卷帘、MIDI 和原音校对。");
   }
   return warnings;
+}
+
+export function qualityKeyText(
+  report: TranscriptionQualityReport,
+  inferredText = (value: string) => `推断调性：${value}`,
+  missing = "未分析",
+): string {
+  const value = report.analysis.keySignature;
+  if (!value) return missing;
+  return report.analysis.keySignatureSource === "reference_score"
+    ? value
+    : inferredText(value);
 }
 
 function confidenceText(value: number | null, missing = "未评估"): string {

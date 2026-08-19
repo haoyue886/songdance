@@ -15,7 +15,7 @@
   "cases": [
     {"id": "01-bach-capriccio", "source_title": "File:J.S.Bach-kapricio c-moll.ogv", "start_sec": 20, "coverage": ["polyphony", "fast_passages"]},
     {"id": "02-brahms-intermezzo", "source_title": "File:Анна Михайловська - Брамс-Інтермеццо-A-dur.ogv", "start_sec": 35, "coverage": ["soft", "sustain"]},
-    {"id": "03-mozart-sonata", "source_title": "File:Варвара Семенчук - Моцарт-Соната-c-dur-part1.ogv", "start_sec": 25, "coverage": ["scales", "dynamics"]},
+    {"id": "03-mozart-sonata", "source_title": "File:Варвара Семенчук - Моцарт-Соната-c-dur-part1.ogv", "start_sec": 25, "coverage": ["scales", "dynamics"], "notation_context": {"key_signature": "C major", "key_signature_source": "reference_score", "key_signature_confidence": 1.0, "measure_offset_units": 0, "measure_offset_source": "reference_score", "quantization_divisions_per_quarter": 4, "quantization_source": "reference_score"}},
     {"id": "04-rachmaninoff-g-sharp", "source_title": "File:Варвара Семенчук - Рахманінов-прелюдія-gis-moll.ogv", "start_sec": 30, "coverage": ["chords", "sustain"]},
     {"id": "05-chopin-c-minor", "source_title": "File:Гліб Козирєв - Шопен-Прелюдія-c-moll.ogv", "start_sec": 12, "coverage": ["chords", "strong"]},
     {"id": "06-scriabin-etude", "source_title": "File:Константин Мамонтов - Скрябін-етюд-dis-moll-op8.ogv", "start_sec": 25, "coverage": ["fast_passages", "two_hand"]},

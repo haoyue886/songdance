@@ -1,12 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE score-partwise  PUBLIC "-//Recordare//DTD MusicXML 4.0 Partwise//EN" "http://www.musicxml.org/dtds/partwise.dtd">
 <score-partwise version="4.0">
-  <work>
-    <work-title>12-compound-68</work-title>
-  </work>
   <movement-title>12-compound-68</movement-title>
   <identification>
-    <creator type="composer">Music21</creator>
+    <creator type="composer" />
     <encoding>
       <encoding-date>2026-08-19</encoding-date>
       <software>music21 v.10.5.0</software>
@@ -22,21 +19,21 @@
     </scaling>
   </defaults>
   <part-list>
-    <score-part id="P50de68adb1561b5078b74244b788beec">
+    <score-part id="Pfa42bd6fa2c00e95ee991f0c1398dac3">
       <part-name>Piano</part-name>
       <part-abbreviation>Pno</part-abbreviation>
-      <score-instrument id="I45cccdf349ae4d377d1d9df219ccf999">
+      <score-instrument id="Ib235a3dd91241d3801de60d9cd2cf777">
         <instrument-name>Piano</instrument-name>
         <instrument-abbreviation>Pno</instrument-abbreviation>
       </score-instrument>
-      <midi-instrument id="I45cccdf349ae4d377d1d9df219ccf999">
+      <midi-instrument id="Ib235a3dd91241d3801de60d9cd2cf777">
         <midi-channel>1</midi-channel>
         <midi-program>1</midi-program>
       </midi-instrument>
     </score-part>
   </part-list>
   <!--=========================== Part 1 ===========================-->
-  <part id="P50de68adb1561b5078b74244b788beec">
+  <part id="Pfa42bd6fa2c00e95ee991f0c1398dac3">
     <!--========================= Measure 1 ==========================-->
     <measure implicit="no" number="1">
       <attributes>
@@ -173,7 +170,7 @@
         </pitch>
         <duration>20160</duration>
         <tie type="start" />
-        <voice>1</voice>
+        <voice>2</voice>
         <type>half</type>
         <staff>2</staff>
         <notations>
@@ -187,7 +184,7 @@
         </pitch>
         <duration>5040</duration>
         <tie type="stop" />
-        <voice>1</voice>
+        <voice>2</voice>
         <type>eighth</type>
         <staff>2</staff>
         <notations>
@@ -197,17 +194,8 @@
       <note>
         <rest />
         <duration>5040</duration>
-        <voice>1</voice>
-        <type>eighth</type>
-        <staff>2</staff>
-      </note>
-      <backup>
-        <duration>30240</duration>
-      </backup>
-      <note>
-        <rest measure="yes" />
-        <duration>30240</duration>
         <voice>2</voice>
+        <type>eighth</type>
         <staff>2</staff>
       </note>
     </measure>
@@ -389,7 +377,7 @@
         </pitch>
         <duration>20160</duration>
         <tie type="start" />
-        <voice>1</voice>
+        <voice>2</voice>
         <type>half</type>
         <staff>2</staff>
         <notations>
@@ -403,7 +391,7 @@
         </pitch>
         <duration>5040</duration>
         <tie type="stop" />
-        <voice>1</voice>
+        <voice>2</voice>
         <type>eighth</type>
         <staff>2</staff>
         <notations>
@@ -413,7 +401,7 @@
       <note>
         <rest />
         <duration>2520</duration>
-        <voice>1</voice>
+        <voice>2</voice>
         <type>16th</type>
         <staff>2</staff>
       </note>
@@ -424,21 +412,12 @@
         </pitch>
         <duration>2520</duration>
         <tie type="start" />
-        <voice>1</voice>
+        <voice>2</voice>
         <type>16th</type>
         <staff>2</staff>
         <notations>
           <tied type="start" />
         </notations>
-      </note>
-      <backup>
-        <duration>30240</duration>
-      </backup>
-      <note>
-        <rest measure="yes" />
-        <duration>30240</duration>
-        <voice>2</voice>
-        <staff>2</staff>
       </note>
     </measure>
     <!--========================= Measure 3 ==========================-->
@@ -600,7 +579,7 @@
         <duration>20160</duration>
         <tie type="stop" />
         <tie type="start" />
-        <voice>1</voice>
+        <voice>2</voice>
         <type>half</type>
         <staff>2</staff>
         <notations>
@@ -615,7 +594,7 @@
         </pitch>
         <duration>5040</duration>
         <tie type="stop" />
-        <voice>1</voice>
+        <voice>2</voice>
         <type>eighth</type>
         <staff>2</staff>
         <notations>
@@ -628,7 +607,7 @@
           <octave>2</octave>
         </pitch>
         <duration>2520</duration>
-        <voice>1</voice>
+        <voice>2</voice>
         <type>16th</type>
         <stem>up</stem>
         <staff>2</staff>
@@ -642,7 +621,7 @@
         </pitch>
         <duration>2520</duration>
         <tie type="start" />
-        <voice>1</voice>
+        <voice>2</voice>
         <type>16th</type>
         <stem>up</stem>
         <staff>2</staff>
@@ -651,15 +630,6 @@
         <notations>
           <tied type="start" />
         </notations>
-      </note>
-      <backup>
-        <duration>30240</duration>
-      </backup>
-      <note>
-        <rest measure="yes" />
-        <duration>30240</duration>
-        <voice>2</voice>
-        <staff>2</staff>
       </note>
     </measure>
     <!--========================= Measure 4 ==========================-->
@@ -832,7 +802,7 @@
         <duration>20160</duration>
         <tie type="stop" />
         <tie type="start" />
-        <voice>1</voice>
+        <voice>2</voice>
         <type>half</type>
         <staff>2</staff>
         <notations>
@@ -847,7 +817,7 @@
         </pitch>
         <duration>5040</duration>
         <tie type="stop" />
-        <voice>1</voice>
+        <voice>2</voice>
         <type>eighth</type>
         <staff>2</staff>
         <notations>
@@ -857,7 +827,7 @@
       <note>
         <rest />
         <duration>2520</duration>
-        <voice>1</voice>
+        <voice>2</voice>
         <type>16th</type>
         <staff>2</staff>
       </note>
@@ -868,21 +838,12 @@
         </pitch>
         <duration>2520</duration>
         <tie type="start" />
-        <voice>1</voice>
+        <voice>2</voice>
         <type>16th</type>
         <staff>2</staff>
         <notations>
           <tied type="start" />
         </notations>
-      </note>
-      <backup>
-        <duration>30240</duration>
-      </backup>
-      <note>
-        <rest measure="yes" />
-        <duration>30240</duration>
-        <voice>2</voice>
-        <staff>2</staff>
       </note>
     </measure>
     <!--========================= Measure 5 ==========================-->
@@ -1036,7 +997,7 @@
         <duration>20160</duration>
         <tie type="stop" />
         <tie type="start" />
-        <voice>1</voice>
+        <voice>2</voice>
         <type>half</type>
         <staff>2</staff>
         <notations>
@@ -1051,7 +1012,7 @@
         </pitch>
         <duration>5040</duration>
         <tie type="stop" />
-        <voice>1</voice>
+        <voice>2</voice>
         <type>eighth</type>
         <staff>2</staff>
         <notations>
@@ -1061,7 +1022,7 @@
       <note>
         <rest />
         <duration>2520</duration>
-        <voice>1</voice>
+        <voice>2</voice>
         <type>16th</type>
         <staff>2</staff>
       </note>
@@ -1072,21 +1033,12 @@
         </pitch>
         <duration>2520</duration>
         <tie type="start" />
-        <voice>1</voice>
+        <voice>2</voice>
         <type>16th</type>
         <staff>2</staff>
         <notations>
           <tied type="start" />
         </notations>
-      </note>
-      <backup>
-        <duration>30240</duration>
-      </backup>
-      <note>
-        <rest measure="yes" />
-        <duration>30240</duration>
-        <voice>2</voice>
-        <staff>2</staff>
       </note>
     </measure>
     <!--========================= Measure 6 ==========================-->
@@ -1207,7 +1159,7 @@
         <duration>20160</duration>
         <tie type="stop" />
         <tie type="start" />
-        <voice>1</voice>
+        <voice>2</voice>
         <type>half</type>
         <staff>2</staff>
         <notations>
@@ -1222,7 +1174,7 @@
         </pitch>
         <duration>2520</duration>
         <tie type="stop" />
-        <voice>1</voice>
+        <voice>2</voice>
         <type>16th</type>
         <staff>2</staff>
         <notations>
@@ -1235,7 +1187,7 @@
           <octave>2</octave>
         </pitch>
         <duration>2520</duration>
-        <voice>1</voice>
+        <voice>2</voice>
         <type>16th</type>
         <stem>up</stem>
         <staff>2</staff>
@@ -1249,7 +1201,7 @@
         </pitch>
         <duration>5040</duration>
         <tie type="start" />
-        <voice>1</voice>
+        <voice>2</voice>
         <type>eighth</type>
         <stem>up</stem>
         <staff>2</staff>
@@ -1257,15 +1209,6 @@
         <notations>
           <tied type="start" />
         </notations>
-      </note>
-      <backup>
-        <duration>30240</duration>
-      </backup>
-      <note>
-        <rest measure="yes" />
-        <duration>30240</duration>
-        <voice>2</voice>
-        <staff>2</staff>
       </note>
     </measure>
     <!--========================= Measure 7 ==========================-->
@@ -1397,7 +1340,7 @@
         <duration>10080</duration>
         <tie type="stop" />
         <tie type="start" />
-        <voice>1</voice>
+        <voice>2</voice>
         <type>quarter</type>
         <staff>2</staff>
         <notations>
@@ -1412,7 +1355,7 @@
         </pitch>
         <duration>2520</duration>
         <tie type="stop" />
-        <voice>1</voice>
+        <voice>2</voice>
         <type>16th</type>
         <staff>2</staff>
         <notations>
@@ -1425,14 +1368,14 @@
           <octave>2</octave>
         </pitch>
         <duration>10080</duration>
-        <voice>1</voice>
+        <voice>2</voice>
         <type>quarter</type>
         <staff>2</staff>
       </note>
       <note>
         <rest />
         <duration>2520</duration>
-        <voice>1</voice>
+        <voice>2</voice>
         <type>16th</type>
         <staff>2</staff>
       </note>
@@ -1443,21 +1386,12 @@
         </pitch>
         <duration>5040</duration>
         <tie type="start" />
-        <voice>1</voice>
+        <voice>2</voice>
         <type>eighth</type>
         <staff>2</staff>
         <notations>
           <tied type="start" />
         </notations>
-      </note>
-      <backup>
-        <duration>30240</duration>
-      </backup>
-      <note>
-        <rest measure="yes" />
-        <duration>30240</duration>
-        <voice>2</voice>
-        <staff>2</staff>
       </note>
     </measure>
     <!--========================= Measure 8 ==========================-->
@@ -1589,7 +1523,7 @@
         <duration>20160</duration>
         <tie type="stop" />
         <tie type="start" />
-        <voice>1</voice>
+        <voice>2</voice>
         <type>half</type>
         <staff>2</staff>
         <notations>
@@ -1604,7 +1538,7 @@
         </pitch>
         <duration>2520</duration>
         <tie type="stop" />
-        <voice>1</voice>
+        <voice>2</voice>
         <type>16th</type>
         <staff>2</staff>
         <notations>
@@ -1614,7 +1548,7 @@
       <note>
         <rest />
         <duration>2520</duration>
-        <voice>1</voice>
+        <voice>2</voice>
         <type>16th</type>
         <staff>2</staff>
       </note>
@@ -1625,21 +1559,12 @@
         </pitch>
         <duration>5040</duration>
         <tie type="start" />
-        <voice>1</voice>
+        <voice>2</voice>
         <type>eighth</type>
         <staff>2</staff>
         <notations>
           <tied type="start" />
         </notations>
-      </note>
-      <backup>
-        <duration>30240</duration>
-      </backup>
-      <note>
-        <rest measure="yes" />
-        <duration>30240</duration>
-        <voice>2</voice>
-        <staff>2</staff>
       </note>
     </measure>
     <!--========================= Measure 9 ==========================-->
@@ -1992,7 +1917,7 @@
         </pitch>
         <duration>20160</duration>
         <tie type="stop" />
-        <voice>1</voice>
+        <voice>2</voice>
         <type>half</type>
         <staff>2</staff>
         <notations>
@@ -2002,7 +1927,7 @@
       <note>
         <rest />
         <duration>2520</duration>
-        <voice>1</voice>
+        <voice>2</voice>
         <type>16th</type>
         <staff>2</staff>
       </note>
@@ -2013,22 +1938,13 @@
         </pitch>
         <duration>7560</duration>
         <tie type="start" />
-        <voice>1</voice>
+        <voice>2</voice>
         <type>eighth</type>
         <dot />
         <staff>2</staff>
         <notations>
           <tied type="start" />
         </notations>
-      </note>
-      <backup>
-        <duration>30240</duration>
-      </backup>
-      <note>
-        <rest measure="yes" />
-        <duration>30240</duration>
-        <voice>2</voice>
-        <staff>2</staff>
       </note>
     </measure>
     <!--========================= Measure 11 =========================-->
@@ -2185,7 +2101,7 @@
         </pitch>
         <duration>20160</duration>
         <tie type="stop" />
-        <voice>1</voice>
+        <voice>2</voice>
         <type>half</type>
         <staff>2</staff>
         <notations>
@@ -2195,7 +2111,7 @@
       <note>
         <rest />
         <duration>2520</duration>
-        <voice>1</voice>
+        <voice>2</voice>
         <type>16th</type>
         <staff>2</staff>
       </note>
@@ -2206,22 +2122,13 @@
         </pitch>
         <duration>7560</duration>
         <tie type="start" />
-        <voice>1</voice>
+        <voice>2</voice>
         <type>eighth</type>
         <dot />
         <staff>2</staff>
         <notations>
           <tied type="start" />
         </notations>
-      </note>
-      <backup>
-        <duration>30240</duration>
-      </backup>
-      <note>
-        <rest measure="yes" />
-        <duration>30240</duration>
-        <voice>2</voice>
-        <staff>2</staff>
       </note>
     </measure>
     <!--========================= Measure 12 =========================-->

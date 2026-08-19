@@ -30,7 +30,10 @@ PIPELINE_FILES = (
     "sustain.py",
     "voice_compression.py",
     "voice_overlap.py",
+    "polyphony_limit.py",
+    "adaptive_quantization.py",
     "quantize.py",
+    "notation_context.py",
     "score.py",
     "score_construction.py",
     "score_io.py",
@@ -39,6 +42,7 @@ PIPELINE_FILES = (
     "simple_arpeggio.py",
     "arpeggio_resonance.py",
     "voicing.py",
+    "staff_distribution.py",
     "artifacts.py",
 )
 RATING_DEFINITION = {

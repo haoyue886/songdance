@@ -105,6 +105,18 @@ def read_musicxml_piano_layout(source: Path) -> dict[str, object]:
             voice = notation.findtext("./voice")
             if voice:
                 voices_by_staff[staffs[0].text].add(voice)
+    maximum_voices_by_staff_measure = {"1": 0, "2": 0}
+    for measure in measures:
+        measure_voices: dict[str, set[str]] = {"1": set(), "2": set()}
+        for notation in measure.findall("./note"):
+            staff = notation.findtext("./staff")
+            voice = notation.findtext("./voice")
+            if staff in measure_voices and voice:
+                measure_voices[staff].add(voice)
+        for staff, voices in measure_voices.items():
+            maximum_voices_by_staff_measure[staff] = max(
+                maximum_voices_by_staff_measure[staff], len(voices)
+            )
 
     pedal_entries: list[tuple[str, str | None, str | None]] = []
     for direction in parts[0].findall("./measure/direction") if len(parts) == 1 else []:
@@ -153,6 +165,7 @@ def read_musicxml_piano_layout(source: Path) -> dict[str, object]:
         "clefs": {number: f"{value[0]}{value[1]}" for number, value in sorted(clefs.items())},
         "staff_numbers": sorted(staff_numbers),
         "voices_by_staff": {number: sorted(voices) for number, voices in voices_by_staff.items()},
+        "maximum_voices_by_staff_measure": maximum_voices_by_staff_measure,
         "backup_count": sum(len(measure.findall("./backup")) for measure in measures),
         "pedal_mark_count": pedal_mark_count,
     }

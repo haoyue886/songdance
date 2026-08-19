@@ -5,10 +5,14 @@ from music21 import note, stream
 from app.pipeline.quantize import GRID_DIVISIONS
 
 
-def apply_pickup_measures(score: stream.Score, measure_offset_units: int) -> None:
+def apply_pickup_measures(
+    score: stream.Score,
+    measure_offset_units: int,
+    divisions_per_quarter: int = GRID_DIVISIONS,
+) -> None:
     if measure_offset_units <= 0:
         return
-    padding = Fraction(measure_offset_units, GRID_DIVISIONS)
+    padding = Fraction(measure_offset_units, divisions_per_quarter)
     for part in score.parts:
         measures = list(part.getElementsByClass(stream.Measure))
         if not measures:

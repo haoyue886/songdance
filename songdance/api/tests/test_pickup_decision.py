@@ -4,11 +4,15 @@ from pathlib import Path
 
 import pretty_midi
 import pytest
-from music21 import converter, stream
+from music21 import converter, key, stream
 
 from app.pipeline.analysis import AnalysisConfig, fallback_analysis
-from app.pipeline.quantize import FALSE_PICKUP_REJECTED_FULL_MEASURE
-from app.pipeline.score import build_score, write_musicxml
+from app.pipeline.artifacts import write_timeline
+from app.pipeline.quantize import (
+    FALSE_PICKUP_REJECTED_FULL_MEASURE,
+    NOTATION_CONTEXT_MEASURE_OFFSET,
+)
+from app.pipeline.score import NotationContext, build_score, write_musicxml
 from app.pipeline.score_validation import score_structure_errors
 from app.pipeline.transcribe import NoteEvent
 
@@ -141,6 +145,57 @@ def test_sparse_half_slot_onsets_cannot_fill_two_eighth_note_slots() -> None:
 
     assert scored.reconstruction["pickup"]["applied"] is True
     assert scored.reconstruction["pickup"]["reason_codes"] == ()
+
+
+def test_reference_notation_context_separates_local_key_and_score_metadata(
+    tmp_path: Path,
+) -> None:
+    analysis = replace(
+        _analysis(downbeat=0.625),
+        key_signature="G major",
+        key_confidence=0.73566,
+        key_signature_source="librosa_chroma_krumhansl",
+    )
+    events = [
+        NoteEvent(index * 0.25, index * 0.25 + 0.2, 60 + index % 8, 84, 0.9)
+        for index in range(16)
+    ]
+
+    scored = build_score(
+        events,
+        analysis=analysis,
+        notation_context=NotationContext(
+            key_signature="C major",
+            key_signature_source="reference_score",
+            key_signature_confidence=1.0,
+            measure_offset_units=0,
+            measure_offset_source="reference_score",
+        ),
+    )
+    timeline_path = tmp_path / "timeline.json"
+    write_timeline(scored, timeline_path)
+    timeline = json.loads(timeline_path.read_text(encoding="utf-8"))
+
+    assert scored.reconstruction["pickup"]["reason_codes"] == (
+        NOTATION_CONTEXT_MEASURE_OFFSET,
+    )
+    assert scored.reconstruction["pickup"]["measure_offset_units"] == 0
+    signatures = scored.score.recurse().getElementsByClass(key.Key)
+    assert {signature.sharps for signature in signatures} == {0}
+    assert timeline["analysis"]["key_signature"] == "G major"
+    assert timeline["local_tonal_center"] == "G major"
+    assert timeline["notation_key_signature"] == "C major"
+    assert timeline["key_signature"] == "C major"
+    assert timeline["notation"] == {
+        "local_tonal_center": "G major",
+        "local_tonal_center_confidence": 0.73566,
+        "local_tonal_center_source": "librosa_chroma_krumhansl",
+        "notation_key_signature": "C major",
+        "notation_key_signature_source": "reference_score",
+        "notation_key_signature_confidence": 1.0,
+        "measure_offset_units": 0,
+        "measure_offset_source": "reference_score",
+    }
 
 
 def test_arpeggio_musicxml_barlines_match_every_complete_truth_cycle() -> None:

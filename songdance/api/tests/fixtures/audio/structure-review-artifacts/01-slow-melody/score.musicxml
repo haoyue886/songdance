@@ -1,12 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE score-partwise  PUBLIC "-//Recordare//DTD MusicXML 4.0 Partwise//EN" "http://www.musicxml.org/dtds/partwise.dtd">
 <score-partwise version="4.0">
-  <work>
-    <work-title>01-slow-melody</work-title>
-  </work>
   <movement-title>01-slow-melody</movement-title>
   <identification>
-    <creator type="composer">Music21</creator>
+    <creator type="composer" />
     <encoding>
       <encoding-date>2026-08-19</encoding-date>
       <software>music21 v.10.5.0</software>
@@ -22,21 +19,21 @@
     </scaling>
   </defaults>
   <part-list>
-    <score-part id="P12d5a63f5c060d9e8992b7a49f636f76">
+    <score-part id="P597e366c96b61d1a23fd42de554dc87e">
       <part-name>Piano</part-name>
       <part-abbreviation>Pno</part-abbreviation>
-      <score-instrument id="I4726f9da157ede24a66ef73396e0362d">
+      <score-instrument id="Ifc39e1728f1b4c8cd9d314d4c795f8d6">
         <instrument-name>Piano</instrument-name>
         <instrument-abbreviation>Pno</instrument-abbreviation>
       </score-instrument>
-      <midi-instrument id="I4726f9da157ede24a66ef73396e0362d">
+      <midi-instrument id="Ifc39e1728f1b4c8cd9d314d4c795f8d6">
         <midi-channel>1</midi-channel>
         <midi-program>1</midi-program>
       </midi-instrument>
     </score-part>
   </part-list>
   <!--=========================== Part 1 ===========================-->
-  <part id="P12d5a63f5c060d9e8992b7a49f636f76">
+  <part id="P597e366c96b61d1a23fd42de554dc87e">
     <!--========================= Measure 1 ==========================-->
     <measure implicit="no" number="1">
       <attributes>
@@ -273,16 +270,7 @@
       <note>
         <rest measure="yes" />
         <duration>40320</duration>
-        <voice>0</voice>
-        <staff>2</staff>
-      </note>
-      <backup>
-        <duration>40320</duration>
-      </backup>
-      <note>
-        <rest measure="yes" />
-        <duration>40320</duration>
-        <voice>1</voice>
+        <voice>2</voice>
         <staff>2</staff>
       </note>
     </measure>
@@ -391,16 +379,7 @@
       <note>
         <rest measure="yes" />
         <duration>40320</duration>
-        <voice>0</voice>
-        <staff>2</staff>
-      </note>
-      <backup>
-        <duration>40320</duration>
-      </backup>
-      <note>
-        <rest measure="yes" />
-        <duration>40320</duration>
-        <voice>1</voice>
+        <voice>2</voice>
         <staff>2</staff>
       </note>
     </measure>

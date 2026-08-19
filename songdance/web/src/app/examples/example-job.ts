@@ -1,20 +1,29 @@
 import type { TranscriptionJob } from "@/lib/api/jobs";
 import { timelineDuration, type NoteTimeline } from "@/lib/result/timeline";
 
+export type ExampleReviewRating = "pending" | "needs_redo" | "minor_edits" | "direct_use";
+
 export type ExampleProvenance = {
   clip_duration_sec: number;
   generated_at: string;
   source_page: string;
   license: string;
   license_url: string;
-  review_status: "pending" | "minor_edits" | "direct_use";
+  review_status: ExampleReviewRating;
   latest_completed_review: {
-    rating: "minor_edits" | "direct_use";
+    rating: Exclude<ExampleReviewRating, "pending">;
     reviewed_at: string;
     model_version: string;
   };
   artifacts: Record<"midi" | "musicxml" | "timeline", { size_bytes: number }>;
 };
+
+export function hasFailedExampleReview(provenance: ExampleProvenance): boolean {
+  return (
+    provenance.review_status === "needs_redo" ||
+    provenance.latest_completed_review.rating === "needs_redo"
+  );
+}
 
 export function buildExampleJob(
   timeline: NoteTimeline,

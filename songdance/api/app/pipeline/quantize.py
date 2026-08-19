@@ -2,11 +2,16 @@ from dataclasses import asdict, dataclass, replace
 from math import floor
 from statistics import median
 
+from app.pipeline.adaptive_quantization import (
+    DEFAULT_DIVISIONS_PER_QUARTER,
+    QuantizationDecision,
+)
 from app.pipeline.analysis import StructureAnalysis
 from app.pipeline.transcribe import NoteEvent
 
-GRID_DIVISIONS = 4
+GRID_DIVISIONS = DEFAULT_DIVISIONS_PER_QUARTER
 FALSE_PICKUP_REJECTED_FULL_MEASURE = "FALSE_PICKUP_REJECTED_FULL_MEASURE"
+NOTATION_CONTEXT_MEASURE_OFFSET = "NOTATION_CONTEXT_MEASURE_OFFSET"
 
 
 @dataclass(frozen=True)
@@ -26,8 +31,13 @@ class PickupDecision:
         return asdict(self)
 
 
-def quantize_events(events: list[NoteEvent], analysis: StructureAnalysis) -> list[NoteEvent]:
-    grid = _subdivision_grid(events, analysis)
+def quantize_events(
+    events: list[NoteEvent],
+    analysis: StructureAnalysis,
+    decision: QuantizationDecision | None = None,
+) -> list[NoteEvent]:
+    divisions = decision.divisions_per_quarter if decision else GRID_DIVISIONS
+    grid = _subdivision_grid(events, analysis, divisions)
     quantized = []
     for event in events:
         start = _nearest(grid, event.start_sec)
@@ -95,21 +105,48 @@ def integer_tempo_bpm(bpm: float) -> int:
     return floor(bpm + 0.5)
 
 
-def notation_measure_offset_units(analysis: StructureAnalysis) -> int:
+def notation_measure_offset_units(
+    analysis: StructureAnalysis, divisions_per_quarter: int = GRID_DIVISIONS
+) -> int:
     if not analysis.downbeat_grid_seconds:
         return 0
-    measure_units = _measure_units(analysis)
+    measure_units = _measure_units(analysis, divisions_per_quarter)
     downbeat_units = round(
-        analysis.downbeat_grid_seconds[0] / seconds_per_quarter(analysis) * GRID_DIVISIONS
+        analysis.downbeat_grid_seconds[0]
+        / seconds_per_quarter(analysis)
+        * divisions_per_quarter
     )
     return (-downbeat_units) % measure_units
 
 
-def decide_notation_pickup(events: list[NoteEvent], analysis: StructureAnalysis) -> PickupDecision:
-    offset_units = notation_measure_offset_units(analysis)
-    measure_units = _measure_units(analysis)
+def decide_notation_pickup(
+    events: list[NoteEvent],
+    analysis: StructureAnalysis,
+    *,
+    measure_offset_units: int | None = None,
+    divisions_per_quarter: int = GRID_DIVISIONS,
+) -> PickupDecision:
+    offset_units = notation_measure_offset_units(analysis, divisions_per_quarter)
+    measure_units = _measure_units(analysis, divisions_per_quarter)
+    if measure_offset_units is not None:
+        if not 0 <= measure_offset_units < measure_units:
+            raise ValueError("notation measure offset must fit inside one measure")
+        return PickupDecision(
+            measure_offset_units=measure_offset_units,
+            applied=measure_offset_units > 0,
+            reason_codes=(NOTATION_CONTEXT_MEASURE_OFFSET,),
+            candidate_pickup_units=measure_units - offset_units if offset_units else 0,
+            first_measure_occupied_slots=0,
+            complete_cycle_count=0,
+            matching_complete_cycles=0,
+            cycle_match_ratio=0.0,
+            first_onset_velocity=0,
+            candidate_downbeat_velocity=0,
+        )
     candidate_units = measure_units - offset_units if offset_units else 0
-    evidence = _complete_eighth_note_measure_evidence(events, analysis, candidate_units)
+    evidence = _complete_eighth_note_measure_evidence(
+        events, analysis, candidate_units, divisions_per_quarter
+    )
     if evidence is not None:
         return PickupDecision(
             measure_offset_units=0,
@@ -133,11 +170,14 @@ def decide_notation_pickup(events: list[NoteEvent], analysis: StructureAnalysis)
 
 
 def _complete_eighth_note_measure_evidence(
-    events: list[NoteEvent], analysis: StructureAnalysis, candidate_units: int
+    events: list[NoteEvent],
+    analysis: StructureAnalysis,
+    candidate_units: int,
+    divisions_per_quarter: int,
 ) -> dict[str, int | float] | None:
     if (
         analysis.time_signature != "4/4"
-        or candidate_units != GRID_DIVISIONS // 2
+        or candidate_units != divisions_per_quarter // 2
         or not events
         or not analysis.downbeat_grid_seconds
     ):
@@ -186,8 +226,9 @@ def _complete_eighth_note_measure_evidence(
     }
 
 
-def _measure_units(analysis: StructureAnalysis) -> int:
-    return {"3/4": 12, "4/4": 16, "6/8": 12}[analysis.time_signature]
+def _measure_units(analysis: StructureAnalysis, divisions_per_quarter: int) -> int:
+    measure_quarters = {"3/4": 3, "4/4": 4, "6/8": 3}[analysis.time_signature]
+    return measure_quarters * divisions_per_quarter
 
 
 def _onset_velocity(events: list[NoteEvent], target: float, tolerance: float) -> int:
@@ -227,7 +268,9 @@ def _complete_cycle_count(events: list[NoteEvent], origin: float, interval: floa
     return max(0, int((occupied_span_in_slots + 0.55) // 8))
 
 
-def _subdivision_grid(events: list[NoteEvent], analysis: StructureAnalysis) -> tuple[float, ...]:
+def _subdivision_grid(
+    events: list[NoteEvent], analysis: StructureAnalysis, divisions_per_quarter: int
+) -> tuple[float, ...]:
     end = max((event.end_sec for event in events), default=0.0)
     beat_grid = analysis.beat_grid_seconds
     anchor_grid = analysis.downbeat_grid_seconds or beat_grid
@@ -238,7 +281,7 @@ def _subdivision_grid(events: list[NoteEvent], analysis: StructureAnalysis) -> t
         positive = sorted(value for value in intervals if value > 0)
         if positive:
             interval = positive[len(positive) // 2]
-    step = interval / GRID_DIVISIONS
+    step = interval / divisions_per_quarter
     start_index = int((0.0 - anchor) // step) - 1
     end_index = int((end - anchor) // step) + 2
     return tuple(anchor + index * step for index in range(start_index, end_index + 1))

@@ -5,7 +5,11 @@ import { useTranslations } from "next-intl";
 import { ResultWorkspace } from "@/components/result/result-workspace";
 import type { TranscriptionJob } from "@/lib/api/jobs";
 import { parseTimeline, type NoteTimeline } from "@/lib/result/timeline";
-import { buildExampleJob, type ExampleProvenance } from "./example-job";
+import {
+  buildExampleJob,
+  hasFailedExampleReview,
+  type ExampleProvenance,
+} from "./example-job";
 
 const BASE_PATH = "/examples/mozart-sonata";
 
@@ -47,6 +51,15 @@ export function ExampleClient() {
     return () => controller.abort();
   }, []);
 
+  const reviewLabel = (status: ExampleProvenance["review_status"]) =>
+    status === "pending"
+      ? examples("reviewPending")
+      : status === "needs_redo"
+        ? examples("reviewNeedsRedo")
+        : status === "minor_edits"
+          ? examples("reviewMinorEdits")
+          : examples("reviewDirectUse");
+
   if (state.status === "loading") {
     return <div role="status" className="min-h-96 animate-pulse rounded-lg bg-white" />;
   }
@@ -57,12 +70,6 @@ export function ExampleClient() {
       </p>
     );
   }
-  const reviewLabel = (status: ExampleProvenance["review_status"]) =>
-    status === "pending"
-      ? examples("reviewPending")
-      : status === "minor_edits"
-        ? examples("reviewMinorEdits")
-        : examples("reviewDirectUse");
   return (
     <>
       <section
@@ -103,7 +110,11 @@ export function ExampleClient() {
         timeline={state.timeline}
         musicXml={state.musicXml}
         sourceUrl={`${BASE_PATH}/source.wav`}
-        warning={null}
+        warning={
+          hasFailedExampleReview(state.provenance)
+            ? examples("unavailableBody")
+            : null
+        }
         artifactPaths={{ midi: `${BASE_PATH}/score.mid` }}
         trackEvents={false}
         shareable={false}

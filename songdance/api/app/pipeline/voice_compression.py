@@ -21,6 +21,13 @@ class VoiceCompressionConfig:
     minimum_independent_overlap_onsets: int = 3
     minimum_independent_pitch_separation: int = 5
 
+    @classmethod
+    def for_units(cls, divisions_per_quarter: int) -> "VoiceCompressionConfig":
+        scale = max(1, divisions_per_quarter // GRID_DIVISIONS)
+        return replace(
+            cls(), maximum_dense_gap_units=divisions_per_quarter // 2, onset_tolerance_units=scale
+        )
+
     @property
     def version(self) -> str:
         payload = json.dumps(asdict(self), sort_keys=True, separators=(",", ":"))
@@ -58,8 +65,10 @@ def compress_notation_durations(
     measure_offset_units: int,
     evidence: SustainEvidence | None,
     config: VoiceCompressionConfig | None = None,
+    *,
+    divisions_per_quarter: int = GRID_DIVISIONS,
 ) -> VoiceCompressionResult:
-    active = config or VoiceCompressionConfig()
+    active = config or VoiceCompressionConfig.for_units(divisions_per_quarter)
     available = evidence or SustainEvidence.unavailable()
     if not groups or available.status != "available":
         return VoiceCompressionResult(
@@ -74,15 +83,18 @@ def compress_notation_durations(
         )
 
     onset_units = _to_units(
-        available.independent_onset_seconds, seconds_per_quarter, measure_offset_units
+        available.independent_onset_seconds,
+        seconds_per_quarter,
+        measure_offset_units,
+        divisions_per_quarter,
     )
     groups, same_pitch_merge_count = merge_same_pitch_overlaps(
         groups, onset_units, active.onset_tolerance_units
     )
     interval_units = tuple(
         (
-            _to_unit(left, seconds_per_quarter, measure_offset_units),
-            _to_unit(right, seconds_per_quarter, measure_offset_units),
+            _to_unit(left, seconds_per_quarter, measure_offset_units, divisions_per_quarter),
+            _to_unit(right, seconds_per_quarter, measure_offset_units, divisions_per_quarter),
         )
         for left, right in (*available.resonant_intervals, *available.cc64_intervals)
     )
@@ -201,13 +213,24 @@ def _has_independent_voice_evidence(
 
 
 def _to_units(
-    seconds: tuple[float, ...], seconds_per_quarter: float, offset: int
+    seconds: tuple[float, ...],
+    seconds_per_quarter: float,
+    offset: int,
+    divisions_per_quarter: int,
 ) -> tuple[int, ...]:
-    return tuple(sorted({_to_unit(value, seconds_per_quarter, offset) for value in seconds}))
+    return tuple(sorted(
+        _to_unit(value, seconds_per_quarter, offset, divisions_per_quarter)
+        for value in seconds
+    ))
 
 
-def _to_unit(value: float, seconds_per_quarter: float, offset: int) -> int:
-    return round(value / seconds_per_quarter * GRID_DIVISIONS) + offset
+def _to_unit(
+    value: float,
+    seconds_per_quarter: float,
+    offset: int,
+    divisions_per_quarter: int,
+) -> int:
+    return round(value / seconds_per_quarter * divisions_per_quarter) + offset
 
 
 def _dense_runs(starts: list[int], config: VoiceCompressionConfig) -> list[list[int]]:

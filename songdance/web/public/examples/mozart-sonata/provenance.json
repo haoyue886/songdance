@@ -8,29 +8,43 @@
   "clip_duration_sec": 30,
   "audio_sha256": "32975b2333e0ca318125335660e21e747e074e0ea28cf83e3ecbd5ce21fc298f",
   "model_version": "basic-pitch-0.4.0/icassp-2022-onnx/o0.5-f0.3",
-  "postprocess_version": "note-cleanup-v4/b83e55947b32/harmonic-evidence-v1/7c7962a7d8ce/structure-analysis-v2/9eafa86ad08d/music21-10.5.0/beat-grid/pickup-v4/harmony-v1/e59dc7bc9a81/voicing-v3/82652e2a152b/voice-compression-v1/0e515287c83d/simple-arpeggio-filter-v3/dynamic-marking-v1/score-metadata-v1",
+  "postprocess_version": "note-cleanup-v4/b83e55947b32/harmonic-evidence-v1/7c7962a7d8ce/structure-analysis-v2/9eafa86ad08d/music21-10.5.0/beat-grid/adaptive-quantization-v1/pickup-v4/harmony-v1/e59dc7bc9a81/voicing-v4/89dc2f83e506/voice-compression-v1/0e515287c83d/simple-arpeggio-filter-v3/resonant-polyphony-limit-v1/voice-rest-pruning-v1/dynamic-marking-v1/score-metadata-v1",
   "review_status": "pending",
   "latest_completed_review": {
-    "rating": "minor_edits",
-    "reviewed_at": "2026-08-06T10:24:43.117449+00:00",
+    "rating": "needs_redo",
+    "reviewed_at": "2026-08-19T07:37:57Z",
     "model_version": "basic-pitch-0.4.0/icassp-2022-onnx/o0.5-f0.3"
   },
-  "generated_at": "2026-08-19T04:52:30.344205+00:00",
-  "midi_sha256": "471587abbff968eeabcdd2305d80dde8d9261392bd38ac2dbab597774b301693",
-  "musicxml_sha256": "fdd4ca8df0b677c98a6aa5ccab53236b0039c1f5414095813011fe68618672b7",
-  "timeline_sha256": "f6aabc3c4d38f5672ed2e9051361d4b40fc444c5bf057be9dd65f04d070c529b",
+  "reference_validation": {
+    "status": "passed",
+    "contract_schema_version": 1,
+    "contract_sha256": "715e7c8b6b45f9be143ae9841db125ba9290dd4de1d04cb6ce20ebddb0869dd9",
+    "corpus_identifier": "mozart/k545/movement1",
+    "reference_score_sha256": "5b72d6c0ad5aa935865e30e80fc91422b5a131d3f72caf8303cc75d00c5a1556",
+    "reference_measure_range": [
+      1,
+      12
+    ],
+    "notation_key_signature": "C major",
+    "shortest_note_value": 16,
+    "divisions_per_quarter": 4
+  },
+  "generated_at": "2026-08-19T09:26:21.074635+00:00",
+  "midi_sha256": "3a2df6017fbded975a6b50af9c24164a938116cb44eea79339c3e112c02cf86b",
+  "musicxml_sha256": "85c98535d63a75b4b80b5b3496a9b649c8b8fb136de5853307e1809427ac32d1",
+  "timeline_sha256": "e5781f782a4c08c054a07656a33469708f6f9c6a3d81918d369c17b16c92ff53",
   "artifacts": {
     "midi": {
-      "sha256": "471587abbff968eeabcdd2305d80dde8d9261392bd38ac2dbab597774b301693",
-      "size_bytes": 2041
+      "sha256": "3a2df6017fbded975a6b50af9c24164a938116cb44eea79339c3e112c02cf86b",
+      "size_bytes": 2042
     },
     "musicxml": {
-      "sha256": "fdd4ca8df0b677c98a6aa5ccab53236b0039c1f5414095813011fe68618672b7",
-      "size_bytes": 145098
+      "sha256": "85c98535d63a75b4b80b5b3496a9b649c8b8fb136de5853307e1809427ac32d1",
+      "size_bytes": 121227
     },
     "timeline": {
-      "sha256": "f6aabc3c4d38f5672ed2e9051361d4b40fc444c5bf057be9dd65f04d070c529b",
-      "size_bytes": 108117
+      "sha256": "e5781f782a4c08c054a07656a33469708f6f9c6a3d81918d369c17b16c92ff53",
+      "size_bytes": 112202
     }
   },
   "parser_validation": {
@@ -43,7 +57,7 @@
     },
     "osmd": {
       "status": "passed",
-      "measure_count": 18,
+      "measure_count": 17,
       "svg_count": 1
     }
   }

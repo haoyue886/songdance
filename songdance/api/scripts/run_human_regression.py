@@ -8,7 +8,7 @@ from app.pipeline.artifacts import artifact_paths, write_timeline
 from app.pipeline.audio import preprocess_audio
 from app.pipeline.cleanup import clean_note_events
 from app.pipeline.harmonics import extract_harmonic_evidence
-from app.pipeline.score import build_score, write_musicxml, write_quantized_midi
+from app.pipeline.score import NotationContext, build_score, write_musicxml, write_quantized_midi
 from app.pipeline.sustain import extract_sustain_evidence
 from app.pipeline.transcribe import transcribe_audio, write_raw_midi
 from app.settings import Settings
@@ -52,6 +52,7 @@ def run(settings: Settings | None = None) -> None:
             title=case["id"],
             analysis=structure_analysis,
             sustain_evidence=extract_sustain_evidence(normalized, raw_midi),
+            notation_context=_notation_context(case),
         )
         write_raw_midi(raw_midi, paths["raw_midi"])
         parsed_raw_midi = pretty_midi.PrettyMIDI(str(paths["raw_midi"]))
@@ -64,6 +65,38 @@ def run(settings: Settings | None = None) -> None:
         print(f"transcribed {case['id']}: {raw_midi_note_counts[case['id']]} raw MIDI notes")
     record_raw_midi_note_counts(raw_midi_note_counts, REVIEW_PATH)
     bind_generated_suite(REVIEW_PATH, FIXTURE_ROOT)
+
+
+def _notation_context(case: dict[str, object]) -> NotationContext:
+    raw = case.get("notation_context")
+    if not isinstance(raw, dict):
+        return NotationContext()
+    return NotationContext(
+        key_signature=raw.get("key_signature")
+        if isinstance(raw.get("key_signature"), str)
+        else None,
+        key_signature_source=raw.get("key_signature_source")
+        if isinstance(raw.get("key_signature_source"), str)
+        else None,
+        key_signature_confidence=raw.get("key_signature_confidence")
+        if isinstance(raw.get("key_signature_confidence"), (int, float))
+        and not isinstance(raw.get("key_signature_confidence"), bool)
+        else None,
+        measure_offset_units=raw.get("measure_offset_units")
+        if isinstance(raw.get("measure_offset_units"), int)
+        else None,
+        measure_offset_source=raw.get("measure_offset_source")
+        if isinstance(raw.get("measure_offset_source"), str)
+        else None,
+        quantization_divisions_per_quarter=raw.get(
+            "quantization_divisions_per_quarter"
+        )
+        if isinstance(raw.get("quantization_divisions_per_quarter"), int)
+        else None,
+        quantization_source=raw.get("quantization_source")
+        if isinstance(raw.get("quantization_source"), str)
+        else None,
+    )
 
 
 if __name__ == "__main__":

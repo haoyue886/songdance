@@ -1,0 +1,1893 @@
+{
+  "schema_version": 1,
+  "generated_at": "2026-08-19T08:49:02.648488+00:00",
+  "experiment": "pitch_preserving_half_speed_basic_pitch",
+  "model_version": "basic-pitch-0.4.0/icassp-2022-onnx/o0.5-f0.3",
+  "time_stretch_rate": 0.5,
+  "production_path_changed": false,
+  "human_readability": {
+    "status": "pending",
+    "rating": null,
+    "reason": "HUMAN_SHORT_VALUE_REVIEW_REQUIRED"
+  },
+  "comparison": {
+    "original_speed": {
+      "precision": 0.799053,
+      "recall": 0.655396,
+      "f1": 0.705926,
+      "p95_elapsed_ms": 52.7,
+      "peak_memory_mb": 334.609
+    },
+    "half_speed": {
+      "precision": 0.768,
+      "recall": 0.821601,
+      "f1": 0.775572,
+      "p95_elapsed_ms": 172.7,
+      "peak_memory_mb": 334.609
+    },
+    "metric_deltas": {
+      "precision": -0.031053,
+      "recall": 0.166205,
+      "f1": 0.069646
+    },
+    "machine_gate_passed": false,
+    "production_eligible": false,
+    "blocking_reasons": [
+      "MACHINE_METRIC_GATE_FAILED",
+      "HUMAN_READABILITY_PENDING"
+    ]
+  },
+  "results": [
+    {
+      "id": "01-sixteenth",
+      "note_value": 16,
+      "reference_note_count": 17,
+      "original_speed": {
+        "elapsed_ms": 32,
+        "process_peak_memory_mb": 304.016,
+        "metrics": {
+          "status": "evaluated",
+          "reference_note_count": 17,
+          "estimated_note_count": 19,
+          "matched_note_count": 14,
+          "precision": 0.736842,
+          "recall": 0.823529,
+          "f1": 0.777778,
+          "overlap": 0.328526,
+          "mean_onset_error_ms": 6.108786,
+          "mean_pitch_error_semitones": 0.0
+        },
+        "events": [
+          {
+            "start_sec": 1.753107,
+            "end_sec": 1.985306,
+            "pitch": 76,
+            "velocity": 70,
+            "confidence": 0.5504297018051147,
+            "hand": null,
+            "hand_confidence": null
+          },
+          {
+            "start_sec": 1.625397,
+            "end_sec": 1.985306,
+            "pitch": 74,
+            "velocity": 85,
+            "confidence": 0.6679328680038452,
+            "hand": null,
+            "hand_confidence": null
+          },
+          {
+            "start_sec": 1.497687,
+            "end_sec": 1.985306,
+            "pitch": 72,
+            "velocity": 69,
+            "confidence": 0.5427677631378174,
+            "hand": null,
+            "hand_confidence": null
+          },
+          {
+            "start_sec": 1.381587,
+            "end_sec": 1.985306,
+            "pitch": 96,
+            "velocity": 52,
+            "confidence": 0.41196301579475403,
+            "hand": null,
+            "hand_confidence": null
+          },
+          {
+            "start_sec": 1.369977,
+            "end_sec": 1.753107,
+            "pitch": 77,
+            "velocity": 72,
+            "confidence": 0.5702596306800842,
+            "hand": null,
+            "hand_confidence": null
+          },
+          {
+            "start_sec": 1.126168,
+            "end_sec": 1.625397,
+            "pitch": 74,
+            "velocity": 80,
+            "confidence": 0.6280519366264343,
+            "hand": null,
+            "hand_confidence": null
+          },
+          {
+            "start_sec": 0.998458,
+            "end_sec": 1.497687,
+            "pitch": 72,
+            "velocity": 64,
+            "confidence": 0.507719874382019,
+            "hand": null,
+            "hand_confidence": null
+          },
+          {
+            "start_sec": 0.870748,
+            "end_sec": 1.230658,
+            "pitch": 96,
+            "velocity": 58,
+            "confidence": 0.4598410725593567,
+            "hand": null,
+            "hand_confidence": null
+          },
+          {
+            "start_sec": 0.870748,
+            "end_sec": 1.010068,
+            "pitch": 89,
+            "velocity": 34,
+            "confidence": 0.26618027687072754,
+            "hand": null,
+            "hand_confidence": null
+          },
+          {
+            "start_sec": 0.870748,
+            "end_sec": 1.369977,
+            "pitch": 77,
+            "velocity": 68,
+            "confidence": 0.5378940105438232,
+            "hand": null,
+            "hand_confidence": null
+          },
+          {
+            "start_sec": 0.626939,
+            "end_sec": 1.126168,
+            "pitch": 74,
+            "velocity": 79,
+            "confidence": 0.6213414669036865,
+            "hand": null,
+            "hand_confidence": null
+          },
+          {
+            "start_sec": 0.499229,
+            "end_sec": 0.998458,
+            "pitch": 72,
+            "velocity": 53,
+            "confidence": 0.4178147315979004,
+            "hand": null,
+            "hand_confidence": null
+          },
+          {
+            "start_sec": 0.371519,
+            "end_sec": 0.708209,
+            "pitch": 96,
+            "velocity": 56,
+            "confidence": 0.4426611661911011,
+            "hand": null,
+            "hand_confidence": null
+          },
+          {
+            "start_sec": 0.371519,
+            "end_sec": 0.870748,
+            "pitch": 77,
+            "velocity": 71,
+            "confidence": 0.5551770925521851,
+            "hand": null,
+            "hand_confidence": null
+          },
+          {
+            "start_sec": 0.1161,
+            "end_sec": 0.626939,
+            "pitch": 74,
+            "velocity": 78,
+            "confidence": 0.6126174330711365,
+            "hand": null,
+            "hand_confidence": null
+          },
+          {
+            "start_sec": 0.1161,
+            "end_sec": 0.812698,
+            "pitch": 67,
+            "velocity": 43,
+            "confidence": 0.33739298582077026,
+            "hand": null,
+            "hand_confidence": null
+          },
+          {
+            "start_sec": 0.01161,
+            "end_sec": 0.267029,
+            "pitch": 72,
+            "velocity": 81,
+            "confidence": 0.6396865844726562,
+            "hand": null,
+            "hand_confidence": null
+          },
+          {
+            "start_sec": 0.01161,
+            "end_sec": 1.857596,
+            "pitch": 48,
+            "velocity": 77,
+            "confidence": 0.6063991785049438,
+            "hand": null,
+            "hand_confidence": null
+          },
+          {
+            "start_sec": 0.22059,
+            "end_sec": 0.359909,
+            "pitch": 76,
+            "velocity": 77,
+            "confidence": 0.6099855303764343,
+            "hand": null,
+            "hand_confidence": null
+          }
+        ]
+      },
+      "half_speed": {
+        "elapsed_ms": 48,
+        "process_peak_memory_mb": 331.828,
+        "metrics": {
+          "status": "evaluated",
+          "reference_note_count": 17,
+          "estimated_note_count": 28,
+          "matched_note_count": 17,
+          "precision": 0.607143,
+          "recall": 1.0,
+          "f1": 0.755556,
+          "overlap": 0.456408,
+          "mean_onset_error_ms": 2.763176,
+          "mean_pitch_error_semitones": 0.0
+        },
+        "events": [
+          {
+            "start_sec": 1.881458,
+            "end_sec": 1.985948,
+            "pitch": 77,
+            "velocity": 86,
+            "confidence": 0.6781532168388367,
+            "hand": null,
+            "hand_confidence": null
+          },
+          {
+            "start_sec": 1.875653,
+            "end_sec": 1.962728,
+            "pitch": 96,
+            "velocity": 50,
+            "confidence": 0.39039215445518494,
+            "hand": null,
+            "hand_confidence": null
+          },
+          {
+            "start_sec": 1.753749,
+            "end_sec": 1.881458,
+            "pitch": 76,
+            "velocity": 76,
+            "confidence": 0.5989220142364502,
+            "hand": null,
+            "hand_confidence": null
+          },
+          {
+            "start_sec": 1.626039,
+            "end_sec": 1.985948,
+            "pitch": 74,
+            "velocity": 87,
+            "confidence": 0.6855444312095642,
+            "hand": null,
+            "hand_confidence": null
+          },
+          {
+            "start_sec": 1.498329,
+            "end_sec": 1.974338,
+            "pitch": 72,
+            "velocity": 64,
+            "confidence": 0.503580629825592,
+            "hand": null,
+            "hand_confidence": null
+          },
+          {
+            "start_sec": 1.376424,
+            "end_sec": 1.730529,
+            "pitch": 96,
+            "velocity": 56,
+            "confidence": 0.43758144974708557,
+            "hand": null,
+            "hand_confidence": null
+          },
+          {
+            "start_sec": 1.376424,
+            "end_sec": 1.753749,
+            "pitch": 77,
+            "velocity": 78,
+            "confidence": 0.6163358688354492,
+            "hand": null,
+            "hand_confidence": null
+          },
+          {
+            "start_sec": 1.248715,
+            "end_sec": 1.376424,
+            "pitch": 76,
+            "velocity": 76,
+            "confidence": 0.5982573628425598,
+            "hand": null,
+            "hand_confidence": null
+          },
+          {
+            "start_sec": 1.12681,
+            "end_sec": 1.626039,
+            "pitch": 74,
+            "velocity": 82,
+            "confidence": 0.6447389125823975,
+            "hand": null,
+            "hand_confidence": null
+          },
+          {
+            "start_sec": 0.9991,
+            "end_sec": 1.498329,
+            "pitch": 72,
+            "velocity": 59,
+            "confidence": 0.4683808982372284,
+            "hand": null,
+            "hand_confidence": null
+          },
+          {
+            "start_sec": 0.882358,
+            "end_sec": 1.1152,
+            "pitch": 89,
+            "velocity": 40,
+            "confidence": 0.31245577335357666,
+            "hand": null,
+            "hand_confidence": null
+          },
+          {
+            "start_sec": 0.882358,
+            "end_sec": 1.248715,
+            "pitch": 77,
+            "velocity": 80,
+            "confidence": 0.6263523101806641,
+            "hand": null,
+            "hand_confidence": null
+          },
+          {
+            "start_sec": 0.876553,
+            "end_sec": 1.225495,
+            "pitch": 96,
+            "velocity": 56,
+            "confidence": 0.442781925201416,
+            "hand": null,
+            "hand_confidence": null
+          },
+          {
+            "start_sec": 0.748844,
+            "end_sec": 0.882358,
+            "pitch": 76,
+            "velocity": 74,
+            "confidence": 0.5807461738586426,
+            "hand": null,
+            "hand_confidence": null
+          },
+          {
+            "start_sec": 0.626939,
+            "end_sec": 1.12681,
+            "pitch": 74,
+            "velocity": 82,
+            "confidence": 0.6475515365600586,
+            "hand": null,
+            "hand_confidence": null
+          },
+          {
+            "start_sec": 0.499229,
+            "end_sec": 0.772063,
+            "pitch": 72,
+            "velocity": 52,
+            "confidence": 0.40879392623901367,
+            "hand": null,
+            "hand_confidence": null
+          },
+          {
+            "start_sec": 0.377324,
+            "end_sec": 0.748844,
+            "pitch": 77,
+            "velocity": 77,
+            "confidence": 0.6073800325393677,
+            "hand": null,
+            "hand_confidence": null
+          },
+          {
+            "start_sec": 0.371519,
+            "end_sec": 0.655964,
+            "pitch": 96,
+            "velocity": 54,
+            "confidence": 0.42561426758766174,
+            "hand": null,
+            "hand_confidence": null
+          },
+          {
+            "start_sec": 0.249615,
+            "end_sec": 0.348299,
+            "pitch": 88,
+            "velocity": 43,
+            "confidence": 0.34243467450141907,
+            "hand": null,
+            "hand_confidence": null
+          },
+          {
+            "start_sec": 0.249615,
+            "end_sec": 0.377324,
+            "pitch": 76,
+            "velocity": 80,
+            "confidence": 0.6276069283485413,
+            "hand": null,
+            "hand_confidence": null
+          },
+          {
+            "start_sec": 0.121905,
+            "end_sec": 0.626939,
+            "pitch": 74,
+            "velocity": 81,
+            "confidence": 0.6354718804359436,
+            "hand": null,
+            "hand_confidence": null
+          },
+          {
+            "start_sec": 0.005805,
+            "end_sec": 0.25542,
+            "pitch": 72,
+            "velocity": 77,
+            "confidence": 0.6101825833320618,
+            "hand": null,
+            "hand_confidence": null
+          },
+          {
+            "start_sec": 0.005805,
+            "end_sec": 1.875653,
+            "pitch": 48,
+            "velocity": 78,
+            "confidence": 0.6132259964942932,
+            "hand": null,
+            "hand_confidence": null
+          },
+          {
+            "start_sec": 0.882358,
+            "end_sec": 0.993295,
+            "pitch": 72,
+            "velocity": 46,
+            "confidence": 0.3632030785083771,
+            "hand": null,
+            "hand_confidence": null
+          },
+          {
+            "start_sec": 0.005805,
+            "end_sec": 0.075465,
+            "pitch": 84,
+            "velocity": 59,
+            "confidence": 0.4680385887622833,
+            "hand": null,
+            "hand_confidence": null
+          },
+          {
+            "start_sec": 0.145125,
+            "end_sec": 0.824308,
+            "pitch": 67,
+            "velocity": 46,
+            "confidence": 0.3595978319644928,
+            "hand": null,
+            "hand_confidence": null
+          },
+          {
+            "start_sec": 0.005805,
+            "end_sec": 0.09288,
+            "pitch": 100,
+            "velocity": 46,
+            "confidence": 0.3625655174255371,
+            "hand": null,
+            "hand_confidence": null
+          },
+          {
+            "start_sec": 1.393839,
+            "end_sec": 1.498329,
+            "pitch": 89,
+            "velocity": 40,
+            "confidence": 0.3112793564796448,
+            "hand": null,
+            "hand_confidence": null
+          }
+        ]
+      }
+    },
+    {
+      "id": "02-thirty-second",
+      "note_value": 32,
+      "reference_note_count": 33,
+      "original_speed": {
+        "elapsed_ms": 30,
+        "process_peak_memory_mb": 331.875,
+        "metrics": {
+          "status": "evaluated",
+          "reference_note_count": 33,
+          "estimated_note_count": 27,
+          "matched_note_count": 24,
+          "precision": 0.888889,
+          "recall": 0.727273,
+          "f1": 0.8,
+          "overlap": 0.227894,
+          "mean_onset_error_ms": 5.114379,
+          "mean_pitch_error_semitones": 0.0
+        },
+        "events": [
+          {
+            "start_sec": 1.822766,
+            "end_sec": 1.985306,
+            "pitch": 74,
+            "velocity": 80,
+            "confidence": 0.6303648352622986,
+            "hand": null,
+            "hand_confidence": null
+          },
+          {
+            "start_sec": 1.753107,
+            "end_sec": 1.985306,
+            "pitch": 72,
+            "velocity": 76,
+            "confidence": 0.6013990044593811,
+            "hand": null,
+            "hand_confidence": null
+          },
+          {
+            "start_sec": 1.695057,
+            "end_sec": 1.985306,
+            "pitch": 77,
+            "velocity": 56,
+            "confidence": 0.4392830729484558,
+            "hand": null,
+            "hand_confidence": null
+          },
+          {
+            "start_sec": 1.555737,
+            "end_sec": 1.822766,
+            "pitch": 74,
+            "velocity": 81,
+            "confidence": 0.6364530920982361,
+            "hand": null,
+            "hand_confidence": null
+          },
+          {
+            "start_sec": 1.497687,
+            "end_sec": 1.753107,
+            "pitch": 72,
+            "velocity": 77,
+            "confidence": 0.609790563583374,
+            "hand": null,
+            "hand_confidence": null
+          },
+          {
+            "start_sec": 1.428027,
+            "end_sec": 1.695057,
+            "pitch": 77,
+            "velocity": 59,
+            "confidence": 0.46809038519859314,
+            "hand": null,
+            "hand_confidence": null
+          },
+          {
+            "start_sec": 1.311927,
+            "end_sec": 1.555737,
+            "pitch": 74,
+            "velocity": 79,
+            "confidence": 0.6197870969772339,
+            "hand": null,
+            "hand_confidence": null
+          },
+          {
+            "start_sec": 1.242268,
+            "end_sec": 1.497687,
+            "pitch": 72,
+            "velocity": 75,
+            "confidence": 0.5897214412689209,
+            "hand": null,
+            "hand_confidence": null
+          },
+          {
+            "start_sec": 1.184218,
+            "end_sec": 1.428027,
+            "pitch": 77,
+            "velocity": 58,
+            "confidence": 0.453864187002182,
+            "hand": null,
+            "hand_confidence": null
+          },
+          {
+            "start_sec": 1.056508,
+            "end_sec": 1.311927,
+            "pitch": 74,
+            "velocity": 79,
+            "confidence": 0.6234322190284729,
+            "hand": null,
+            "hand_confidence": null
+          },
+          {
+            "start_sec": 0.998458,
+            "end_sec": 1.242268,
+            "pitch": 72,
+            "velocity": 74,
+            "confidence": 0.5825790762901306,
+            "hand": null,
+            "hand_confidence": null
+          },
+          {
+            "start_sec": 0.940408,
+            "end_sec": 1.184218,
+            "pitch": 77,
+            "velocity": 61,
+            "confidence": 0.48272547125816345,
+            "hand": null,
+            "hand_confidence": null
+          },
+          {
+            "start_sec": 0.812698,
+            "end_sec": 1.056508,
+            "pitch": 74,
+            "velocity": 78,
+            "confidence": 0.6139316558837891,
+            "hand": null,
+            "hand_confidence": null
+          },
+          {
+            "start_sec": 0.743039,
+            "end_sec": 0.998458,
+            "pitch": 72,
+            "velocity": 72,
+            "confidence": 0.5678045749664307,
+            "hand": null,
+            "hand_confidence": null
+          },
+          {
+            "start_sec": 0.684989,
+            "end_sec": 1.950476,
+            "pitch": 96,
+            "velocity": 54,
+            "confidence": 0.42127928137779236,
+            "hand": null,
+            "hand_confidence": null
+          },
+          {
+            "start_sec": 0.684989,
+            "end_sec": 0.940408,
+            "pitch": 77,
+            "velocity": 57,
+            "confidence": 0.4450407326221466,
+            "hand": null,
+            "hand_confidence": null
+          },
+          {
+            "start_sec": 0.557279,
+            "end_sec": 0.812698,
+            "pitch": 74,
+            "velocity": 80,
+            "confidence": 0.6279676556587219,
+            "hand": null,
+            "hand_confidence": null
+          },
+          {
+            "start_sec": 0.499229,
+            "end_sec": 0.743039,
+            "pitch": 72,
+            "velocity": 66,
+            "confidence": 0.5175871849060059,
+            "hand": null,
+            "hand_confidence": null
+          },
+          {
+            "start_sec": 0.429569,
+            "end_sec": 0.684989,
+            "pitch": 77,
+            "velocity": 61,
+            "confidence": 0.4818672835826874,
+            "hand": null,
+            "hand_confidence": null
+          },
+          {
+            "start_sec": 0.313469,
+            "end_sec": 0.557279,
+            "pitch": 74,
+            "velocity": 76,
+            "confidence": 0.5954096913337708,
+            "hand": null,
+            "hand_confidence": null
+          },
+          {
+            "start_sec": 0.24381,
+            "end_sec": 0.499229,
+            "pitch": 72,
+            "velocity": 66,
+            "confidence": 0.5158684253692627,
+            "hand": null,
+            "hand_confidence": null
+          },
+          {
+            "start_sec": 0.18576,
+            "end_sec": 0.684989,
+            "pitch": 96,
+            "velocity": 60,
+            "confidence": 0.4754955470561981,
+            "hand": null,
+            "hand_confidence": null
+          },
+          {
+            "start_sec": 0.18576,
+            "end_sec": 0.429569,
+            "pitch": 77,
+            "velocity": 69,
+            "confidence": 0.5435357689857483,
+            "hand": null,
+            "hand_confidence": null
+          },
+          {
+            "start_sec": 0.05805,
+            "end_sec": 0.313469,
+            "pitch": 74,
+            "velocity": 77,
+            "confidence": 0.6031590104103088,
+            "hand": null,
+            "hand_confidence": null
+          },
+          {
+            "start_sec": 0.01161,
+            "end_sec": 0.2322,
+            "pitch": 72,
+            "velocity": 67,
+            "confidence": 0.5242724418640137,
+            "hand": null,
+            "hand_confidence": null
+          },
+          {
+            "start_sec": 0.01161,
+            "end_sec": 1.683447,
+            "pitch": 48,
+            "velocity": 76,
+            "confidence": 0.5957173705101013,
+            "hand": null,
+            "hand_confidence": null
+          },
+          {
+            "start_sec": 0.13932,
+            "end_sec": 0.696599,
+            "pitch": 67,
+            "velocity": 51,
+            "confidence": 0.4022306501865387,
+            "hand": null,
+            "hand_confidence": null
+          }
+        ]
+      },
+      "half_speed": {
+        "elapsed_ms": 184,
+        "process_peak_memory_mb": 334.609,
+        "metrics": {
+          "status": "evaluated",
+          "reference_note_count": 33,
+          "estimated_note_count": 30,
+          "matched_note_count": 26,
+          "precision": 0.866667,
+          "recall": 0.787879,
+          "f1": 0.825397,
+          "overlap": 0.26342,
+          "mean_onset_error_ms": 2.685801,
+          "mean_pitch_error_semitones": 0.0
+        },
+        "events": [
+          {
+            "start_sec": 1.875653,
+            "end_sec": 1.985948,
+            "pitch": 76,
+            "velocity": 66,
+            "confidence": 0.5165072083473206,
+            "hand": null,
+            "hand_confidence": null
+          },
+          {
+            "start_sec": 1.817603,
+            "end_sec": 1.985948,
+            "pitch": 74,
+            "velocity": 85,
+            "confidence": 0.6678265333175659,
+            "hand": null,
+            "hand_confidence": null
+          },
+          {
+            "start_sec": 1.753749,
+            "end_sec": 1.980143,
+            "pitch": 72,
+            "velocity": 70,
+            "confidence": 0.5508641004562378,
+            "hand": null,
+            "hand_confidence": null
+          },
+          {
+            "start_sec": 1.689894,
+            "end_sec": 1.875653,
+            "pitch": 77,
+            "velocity": 69,
+            "confidence": 0.5455302000045776,
+            "hand": null,
+            "hand_confidence": null
+          },
+          {
+            "start_sec": 1.562184,
+            "end_sec": 1.817603,
+            "pitch": 74,
+            "velocity": 82,
+            "confidence": 0.6448087692260742,
+            "hand": null,
+            "hand_confidence": null
+          },
+          {
+            "start_sec": 1.498329,
+            "end_sec": 1.753749,
+            "pitch": 72,
+            "velocity": 72,
+            "confidence": 0.5642657279968262,
+            "hand": null,
+            "hand_confidence": null
+          },
+          {
+            "start_sec": 1.434474,
+            "end_sec": 1.689894,
+            "pitch": 77,
+            "velocity": 66,
+            "confidence": 0.5167801380157471,
+            "hand": null,
+            "hand_confidence": null
+          },
+          {
+            "start_sec": 1.312569,
+            "end_sec": 1.562184,
+            "pitch": 74,
+            "velocity": 81,
+            "confidence": 0.6381540298461914,
+            "hand": null,
+            "hand_confidence": null
+          },
+          {
+            "start_sec": 1.248715,
+            "end_sec": 1.498329,
+            "pitch": 72,
+            "velocity": 70,
+            "confidence": 0.5486632585525513,
+            "hand": null,
+            "hand_confidence": null
+          },
+          {
+            "start_sec": 1.18486,
+            "end_sec": 1.434474,
+            "pitch": 77,
+            "velocity": 65,
+            "confidence": 0.510994017124176,
+            "hand": null,
+            "hand_confidence": null
+          },
+          {
+            "start_sec": 1.062955,
+            "end_sec": 1.312569,
+            "pitch": 74,
+            "velocity": 81,
+            "confidence": 0.6399873495101929,
+            "hand": null,
+            "hand_confidence": null
+          },
+          {
+            "start_sec": 0.9991,
+            "end_sec": 1.248715,
+            "pitch": 72,
+            "velocity": 67,
+            "confidence": 0.5293107628822327,
+            "hand": null,
+            "hand_confidence": null
+          },
+          {
+            "start_sec": 0.940408,
+            "end_sec": 1.18486,
+            "pitch": 77,
+            "velocity": 68,
+            "confidence": 0.5319308042526245,
+            "hand": null,
+            "hand_confidence": null
+          },
+          {
+            "start_sec": 0.812698,
+            "end_sec": 1.062955,
+            "pitch": 74,
+            "velocity": 81,
+            "confidence": 0.6369760036468506,
+            "hand": null,
+            "hand_confidence": null
+          },
+          {
+            "start_sec": 0.748844,
+            "end_sec": 0.9991,
+            "pitch": 72,
+            "velocity": 67,
+            "confidence": 0.5262118577957153,
+            "hand": null,
+            "hand_confidence": null
+          },
+          {
+            "start_sec": 0.684989,
+            "end_sec": 0.940408,
+            "pitch": 77,
+            "velocity": 61,
+            "confidence": 0.48324155807495117,
+            "hand": null,
+            "hand_confidence": null
+          },
+          {
+            "start_sec": 0.563084,
+            "end_sec": 0.812698,
+            "pitch": 74,
+            "velocity": 82,
+            "confidence": 0.6484861373901367,
+            "hand": null,
+            "hand_confidence": null
+          },
+          {
+            "start_sec": 0.499229,
+            "end_sec": 0.748844,
+            "pitch": 72,
+            "velocity": 60,
+            "confidence": 0.4685998857021332,
+            "hand": null,
+            "hand_confidence": null
+          },
+          {
+            "start_sec": 0.435374,
+            "end_sec": 0.684989,
+            "pitch": 77,
+            "velocity": 65,
+            "confidence": 0.5081853270530701,
+            "hand": null,
+            "hand_confidence": null
+          },
+          {
+            "start_sec": 0.313469,
+            "end_sec": 0.563084,
+            "pitch": 74,
+            "velocity": 79,
+            "confidence": 0.620071530342102,
+            "hand": null,
+            "hand_confidence": null
+          },
+          {
+            "start_sec": 0.249615,
+            "end_sec": 0.499229,
+            "pitch": 72,
+            "velocity": 57,
+            "confidence": 0.4488455653190613,
+            "hand": null,
+            "hand_confidence": null
+          },
+          {
+            "start_sec": 0.191565,
+            "end_sec": 0.435374,
+            "pitch": 77,
+            "velocity": 71,
+            "confidence": 0.5605667233467102,
+            "hand": null,
+            "hand_confidence": null
+          },
+          {
+            "start_sec": 0.18576,
+            "end_sec": 0.841723,
+            "pitch": 96,
+            "velocity": 53,
+            "confidence": 0.4195674657821655,
+            "hand": null,
+            "hand_confidence": null
+          },
+          {
+            "start_sec": 0.121905,
+            "end_sec": 0.191565,
+            "pitch": 76,
+            "velocity": 75,
+            "confidence": 0.5919740796089172,
+            "hand": null,
+            "hand_confidence": null
+          },
+          {
+            "start_sec": 0.005805,
+            "end_sec": 0.24381,
+            "pitch": 72,
+            "velocity": 60,
+            "confidence": 0.4738515019416809,
+            "hand": null,
+            "hand_confidence": null
+          },
+          {
+            "start_sec": 0.04644,
+            "end_sec": 0.307664,
+            "pitch": 74,
+            "velocity": 79,
+            "confidence": 0.6221625208854675,
+            "hand": null,
+            "hand_confidence": null
+          },
+          {
+            "start_sec": 0.005805,
+            "end_sec": 1.718919,
+            "pitch": 48,
+            "velocity": 77,
+            "confidence": 0.6024944186210632,
+            "hand": null,
+            "hand_confidence": null
+          },
+          {
+            "start_sec": 0.09288,
+            "end_sec": 0.650159,
+            "pitch": 67,
+            "velocity": 48,
+            "confidence": 0.37707939743995667,
+            "hand": null,
+            "hand_confidence": null
+          },
+          {
+            "start_sec": 0.981043,
+            "end_sec": 1.405449,
+            "pitch": 96,
+            "velocity": 46,
+            "confidence": 0.3625570833683014,
+            "hand": null,
+            "hand_confidence": null
+          },
+          {
+            "start_sec": 1.498329,
+            "end_sec": 1.835018,
+            "pitch": 96,
+            "velocity": 40,
+            "confidence": 0.3168371915817261,
+            "hand": null,
+            "hand_confidence": null
+          }
+        ]
+      }
+    },
+    {
+      "id": "03-sixty-fourth",
+      "note_value": 64,
+      "reference_note_count": 65,
+      "original_speed": {
+        "elapsed_ms": 55,
+        "process_peak_memory_mb": 334.609,
+        "metrics": {
+          "status": "evaluated",
+          "reference_note_count": 65,
+          "estimated_note_count": 35,
+          "matched_note_count": 27,
+          "precision": 0.771429,
+          "recall": 0.415385,
+          "f1": 0.54,
+          "overlap": 0.132353,
+          "mean_onset_error_ms": 4.61967,
+          "mean_pitch_error_semitones": 0.0
+        },
+        "events": [
+          {
+            "start_sec": 1.845986,
+            "end_sec": 1.985306,
+            "pitch": 77,
+            "velocity": 61,
+            "confidence": 0.4810790717601776,
+            "hand": null,
+            "hand_confidence": null
+          },
+          {
+            "start_sec": 1.787937,
+            "end_sec": 1.985306,
+            "pitch": 74,
+            "velocity": 68,
+            "confidence": 0.535014271736145,
+            "hand": null,
+            "hand_confidence": null
+          },
+          {
+            "start_sec": 1.753107,
+            "end_sec": 1.985306,
+            "pitch": 72,
+            "velocity": 74,
+            "confidence": 0.57904452085495,
+            "hand": null,
+            "hand_confidence": null
+          },
+          {
+            "start_sec": 1.729887,
+            "end_sec": 1.880816,
+            "pitch": 96,
+            "velocity": 52,
+            "confidence": 0.40829798579216003,
+            "hand": null,
+            "hand_confidence": null
+          },
+          {
+            "start_sec": 1.695057,
+            "end_sec": 1.845986,
+            "pitch": 76,
+            "velocity": 58,
+            "confidence": 0.4578368365764618,
+            "hand": null,
+            "hand_confidence": null
+          },
+          {
+            "start_sec": 1.648617,
+            "end_sec": 1.985306,
+            "pitch": 88,
+            "velocity": 55,
+            "confidence": 0.4298953413963318,
+            "hand": null,
+            "hand_confidence": null
+          },
+          {
+            "start_sec": 1.590567,
+            "end_sec": 1.729887,
+            "pitch": 96,
+            "velocity": 43,
+            "confidence": 0.34117937088012695,
+            "hand": null,
+            "hand_confidence": null
+          },
+          {
+            "start_sec": 1.532517,
+            "end_sec": 1.787937,
+            "pitch": 74,
+            "velocity": 73,
+            "confidence": 0.5741607546806335,
+            "hand": null,
+            "hand_confidence": null
+          },
+          {
+            "start_sec": 1.497687,
+            "end_sec": 1.753107,
+            "pitch": 72,
+            "velocity": 68,
+            "confidence": 0.5389989614486694,
+            "hand": null,
+            "hand_confidence": null
+          },
+          {
+            "start_sec": 1.462857,
+            "end_sec": 1.695057,
+            "pitch": 77,
+            "velocity": 62,
+            "confidence": 0.4849182069301605,
+            "hand": null,
+            "hand_confidence": null
+          },
+          {
+            "start_sec": 1.311927,
+            "end_sec": 1.462857,
+            "pitch": 76,
+            "velocity": 56,
+            "confidence": 0.440581351518631,
+            "hand": null,
+            "hand_confidence": null
+          },
+          {
+            "start_sec": 1.277098,
+            "end_sec": 1.532517,
+            "pitch": 74,
+            "velocity": 68,
+            "confidence": 0.5379255414009094,
+            "hand": null,
+            "hand_confidence": null
+          },
+          {
+            "start_sec": 1.242268,
+            "end_sec": 1.497687,
+            "pitch": 72,
+            "velocity": 64,
+            "confidence": 0.5030362606048584,
+            "hand": null,
+            "hand_confidence": null
+          },
+          {
+            "start_sec": 1.091338,
+            "end_sec": 1.311927,
+            "pitch": 77,
+            "velocity": 62,
+            "confidence": 0.48643091320991516,
+            "hand": null,
+            "hand_confidence": null
+          },
+          {
+            "start_sec": 1.033288,
+            "end_sec": 1.277098,
+            "pitch": 74,
+            "velocity": 70,
+            "confidence": 0.5549632906913757,
+            "hand": null,
+            "hand_confidence": null
+          },
+          {
+            "start_sec": 0.998458,
+            "end_sec": 1.242268,
+            "pitch": 72,
+            "velocity": 60,
+            "confidence": 0.4705663025379181,
+            "hand": null,
+            "hand_confidence": null
+          },
+          {
+            "start_sec": 0.940408,
+            "end_sec": 1.091338,
+            "pitch": 76,
+            "velocity": 57,
+            "confidence": 0.4452134668827057,
+            "hand": null,
+            "hand_confidence": null
+          },
+          {
+            "start_sec": 0.777868,
+            "end_sec": 1.033288,
+            "pitch": 74,
+            "velocity": 67,
+            "confidence": 0.5313807129859924,
+            "hand": null,
+            "hand_confidence": null
+          },
+          {
+            "start_sec": 0.743039,
+            "end_sec": 0.998458,
+            "pitch": 72,
+            "velocity": 61,
+            "confidence": 0.47892552614212036,
+            "hand": null,
+            "hand_confidence": null
+          },
+          {
+            "start_sec": 0.719819,
+            "end_sec": 0.940408,
+            "pitch": 77,
+            "velocity": 62,
+            "confidence": 0.48527997732162476,
+            "hand": null,
+            "hand_confidence": null
+          },
+          {
+            "start_sec": 0.592109,
+            "end_sec": 0.835918,
+            "pitch": 96,
+            "velocity": 41,
+            "confidence": 0.3203278183937073,
+            "hand": null,
+            "hand_confidence": null
+          },
+          {
+            "start_sec": 0.534059,
+            "end_sec": 0.777868,
+            "pitch": 74,
+            "velocity": 73,
+            "confidence": 0.5767660737037659,
+            "hand": null,
+            "hand_confidence": null
+          },
+          {
+            "start_sec": 0.499229,
+            "end_sec": 0.743039,
+            "pitch": 72,
+            "velocity": 52,
+            "confidence": 0.4131375253200531,
+            "hand": null,
+            "hand_confidence": null
+          },
+          {
+            "start_sec": 0.464399,
+            "end_sec": 0.719819,
+            "pitch": 77,
+            "velocity": 62,
+            "confidence": 0.4911361038684845,
+            "hand": null,
+            "hand_confidence": null
+          },
+          {
+            "start_sec": 0.313469,
+            "end_sec": 0.464399,
+            "pitch": 76,
+            "velocity": 60,
+            "confidence": 0.4714084267616272,
+            "hand": null,
+            "hand_confidence": null
+          },
+          {
+            "start_sec": 0.278639,
+            "end_sec": 0.534059,
+            "pitch": 74,
+            "velocity": 71,
+            "confidence": 0.5591545701026917,
+            "hand": null,
+            "hand_confidence": null
+          },
+          {
+            "start_sec": 0.24381,
+            "end_sec": 0.499229,
+            "pitch": 72,
+            "velocity": 51,
+            "confidence": 0.4050297439098358,
+            "hand": null,
+            "hand_confidence": null
+          },
+          {
+            "start_sec": 0.09288,
+            "end_sec": 0.870748,
+            "pitch": 89,
+            "velocity": 41,
+            "confidence": 0.3219630718231201,
+            "hand": null,
+            "hand_confidence": null
+          },
+          {
+            "start_sec": 0.08127,
+            "end_sec": 0.313469,
+            "pitch": 77,
+            "velocity": 64,
+            "confidence": 0.502036988735199,
+            "hand": null,
+            "hand_confidence": null
+          },
+          {
+            "start_sec": 0.02322,
+            "end_sec": 0.278639,
+            "pitch": 74,
+            "velocity": 73,
+            "confidence": 0.5786508917808533,
+            "hand": null,
+            "hand_confidence": null
+          },
+          {
+            "start_sec": 0.01161,
+            "end_sec": 1.428027,
+            "pitch": 48,
+            "velocity": 77,
+            "confidence": 0.6095445156097412,
+            "hand": null,
+            "hand_confidence": null
+          },
+          {
+            "start_sec": 0.01161,
+            "end_sec": 0.2322,
+            "pitch": 72,
+            "velocity": 52,
+            "confidence": 0.4087856709957123,
+            "hand": null,
+            "hand_confidence": null
+          },
+          {
+            "start_sec": 0.08127,
+            "end_sec": 0.673379,
+            "pitch": 67,
+            "velocity": 51,
+            "confidence": 0.4043673276901245,
+            "hand": null,
+            "hand_confidence": null
+          },
+          {
+            "start_sec": 1.102948,
+            "end_sec": 1.637007,
+            "pitch": 88,
+            "velocity": 44,
+            "confidence": 0.34823131561279297,
+            "hand": null,
+            "hand_confidence": null
+          },
+          {
+            "start_sec": 0.2322,
+            "end_sec": 0.464399,
+            "pitch": 96,
+            "velocity": 40,
+            "confidence": 0.3139691948890686,
+            "hand": null,
+            "hand_confidence": null
+          }
+        ]
+      },
+      "half_speed": {
+        "elapsed_ms": 71,
+        "process_peak_memory_mb": 334.609,
+        "metrics": {
+          "status": "evaluated",
+          "reference_note_count": 65,
+          "estimated_note_count": 53,
+          "matched_note_count": 44,
+          "precision": 0.830189,
+          "recall": 0.676923,
+          "f1": 0.745763,
+          "overlap": 0.205513,
+          "mean_onset_error_ms": 6.198539,
+          "mean_pitch_error_semitones": 0.0
+        },
+        "events": [
+          {
+            "start_sec": 1.904678,
+            "end_sec": 1.985948,
+            "pitch": 74,
+            "velocity": 59,
+            "confidence": 0.4676779806613922,
+            "hand": null,
+            "hand_confidence": null
+          },
+          {
+            "start_sec": 1.875653,
+            "end_sec": 1.985948,
+            "pitch": 72,
+            "velocity": 74,
+            "confidence": 0.5795164704322815,
+            "hand": null,
+            "hand_confidence": null
+          },
+          {
+            "start_sec": 1.846628,
+            "end_sec": 1.985948,
+            "pitch": 77,
+            "velocity": 69,
+            "confidence": 0.5458512306213379,
+            "hand": null,
+            "hand_confidence": null
+          },
+          {
+            "start_sec": 1.765359,
+            "end_sec": 1.904678,
+            "pitch": 74,
+            "velocity": 56,
+            "confidence": 0.4410485029220581,
+            "hand": null,
+            "hand_confidence": null
+          },
+          {
+            "start_sec": 1.747944,
+            "end_sec": 1.875653,
+            "pitch": 72,
+            "velocity": 75,
+            "confidence": 0.5932301878929138,
+            "hand": null,
+            "hand_confidence": null
+          },
+          {
+            "start_sec": 1.724724,
+            "end_sec": 1.846628,
+            "pitch": 77,
+            "velocity": 74,
+            "confidence": 0.5842641592025757,
+            "hand": null,
+            "hand_confidence": null
+          },
+          {
+            "start_sec": 1.643454,
+            "end_sec": 1.765359,
+            "pitch": 74,
+            "velocity": 65,
+            "confidence": 0.5126879811286926,
+            "hand": null,
+            "hand_confidence": null
+          },
+          {
+            "start_sec": 1.620234,
+            "end_sec": 1.747944,
+            "pitch": 72,
+            "velocity": 73,
+            "confidence": 0.577302873134613,
+            "hand": null,
+            "hand_confidence": null
+          },
+          {
+            "start_sec": 1.591209,
+            "end_sec": 1.835018,
+            "pitch": 96,
+            "velocity": 47,
+            "confidence": 0.3670009672641754,
+            "hand": null,
+            "hand_confidence": null
+          },
+          {
+            "start_sec": 1.591209,
+            "end_sec": 1.724724,
+            "pitch": 77,
+            "velocity": 71,
+            "confidence": 0.5594370365142822,
+            "hand": null,
+            "hand_confidence": null
+          },
+          {
+            "start_sec": 1.498329,
+            "end_sec": 1.620234,
+            "pitch": 72,
+            "velocity": 73,
+            "confidence": 0.5721932649612427,
+            "hand": null,
+            "hand_confidence": null
+          },
+          {
+            "start_sec": 1.469304,
+            "end_sec": 1.591209,
+            "pitch": 77,
+            "velocity": 70,
+            "confidence": 0.5482612252235413,
+            "hand": null,
+            "hand_confidence": null
+          },
+          {
+            "start_sec": 1.388034,
+            "end_sec": 1.643454,
+            "pitch": 74,
+            "velocity": 61,
+            "confidence": 0.48035928606987,
+            "hand": null,
+            "hand_confidence": null
+          },
+          {
+            "start_sec": 1.370619,
+            "end_sec": 1.498329,
+            "pitch": 72,
+            "velocity": 69,
+            "confidence": 0.5425556302070618,
+            "hand": null,
+            "hand_confidence": null
+          },
+          {
+            "start_sec": 1.341594,
+            "end_sec": 1.469304,
+            "pitch": 77,
+            "velocity": 69,
+            "confidence": 0.5453004240989685,
+            "hand": null,
+            "hand_confidence": null
+          },
+          {
+            "start_sec": 1.248715,
+            "end_sec": 1.370619,
+            "pitch": 72,
+            "velocity": 70,
+            "confidence": 0.5548396110534668,
+            "hand": null,
+            "hand_confidence": null
+          },
+          {
+            "start_sec": 1.21969,
+            "end_sec": 1.341594,
+            "pitch": 77,
+            "velocity": 72,
+            "confidence": 0.5655794143676758,
+            "hand": null,
+            "hand_confidence": null
+          },
+          {
+            "start_sec": 1.13842,
+            "end_sec": 1.388034,
+            "pitch": 74,
+            "velocity": 59,
+            "confidence": 0.4635923504829407,
+            "hand": null,
+            "hand_confidence": null
+          },
+          {
+            "start_sec": 1.121005,
+            "end_sec": 1.248715,
+            "pitch": 72,
+            "velocity": 70,
+            "confidence": 0.5548468828201294,
+            "hand": null,
+            "hand_confidence": null
+          },
+          {
+            "start_sec": 1.097785,
+            "end_sec": 1.21969,
+            "pitch": 77,
+            "velocity": 70,
+            "confidence": 0.549200177192688,
+            "hand": null,
+            "hand_confidence": null
+          },
+          {
+            "start_sec": 0.993295,
+            "end_sec": 1.121005,
+            "pitch": 72,
+            "velocity": 64,
+            "confidence": 0.5040658116340637,
+            "hand": null,
+            "hand_confidence": null
+          },
+          {
+            "start_sec": 0.969433,
+            "end_sec": 1.097785,
+            "pitch": 77,
+            "velocity": 69,
+            "confidence": 0.5409082174301147,
+            "hand": null,
+            "hand_confidence": null
+          },
+          {
+            "start_sec": 0.905578,
+            "end_sec": 1.13842,
+            "pitch": 74,
+            "velocity": 59,
+            "confidence": 0.4653484523296356,
+            "hand": null,
+            "hand_confidence": null
+          },
+          {
+            "start_sec": 0.876553,
+            "end_sec": 0.993295,
+            "pitch": 72,
+            "velocity": 68,
+            "confidence": 0.535273015499115,
+            "hand": null,
+            "hand_confidence": null
+          },
+          {
+            "start_sec": 0.847528,
+            "end_sec": 0.969433,
+            "pitch": 77,
+            "velocity": 75,
+            "confidence": 0.5943090319633484,
+            "hand": null,
+            "hand_confidence": null
+          },
+          {
+            "start_sec": 0.743039,
+            "end_sec": 0.876553,
+            "pitch": 72,
+            "velocity": 64,
+            "confidence": 0.5069114565849304,
+            "hand": null,
+            "hand_confidence": null
+          },
+          {
+            "start_sec": 0.684989,
+            "end_sec": 0.847528,
+            "pitch": 76,
+            "velocity": 60,
+            "confidence": 0.47293952107429504,
+            "hand": null,
+            "hand_confidence": null
+          },
+          {
+            "start_sec": 0.638549,
+            "end_sec": 0.905578,
+            "pitch": 74,
+            "velocity": 57,
+            "confidence": 0.4525851309299469,
+            "hand": null,
+            "hand_confidence": null
+          },
+          {
+            "start_sec": 0.621134,
+            "end_sec": 0.743039,
+            "pitch": 72,
+            "velocity": 59,
+            "confidence": 0.46068817377090454,
+            "hand": null,
+            "hand_confidence": null
+          },
+          {
+            "start_sec": 0.592109,
+            "end_sec": 0.684989,
+            "pitch": 77,
+            "velocity": 68,
+            "confidence": 0.5341644287109375,
+            "hand": null,
+            "hand_confidence": null
+          },
+          {
+            "start_sec": 0.516644,
+            "end_sec": 0.638549,
+            "pitch": 74,
+            "velocity": 59,
+            "confidence": 0.4624364972114563,
+            "hand": null,
+            "hand_confidence": null
+          },
+          {
+            "start_sec": 0.493424,
+            "end_sec": 0.621134,
+            "pitch": 72,
+            "velocity": 51,
+            "confidence": 0.40158188343048096,
+            "hand": null,
+            "hand_confidence": null
+          },
+          {
+            "start_sec": 0.464399,
+            "end_sec": 0.592109,
+            "pitch": 77,
+            "velocity": 63,
+            "confidence": 0.49991247057914734,
+            "hand": null,
+            "hand_confidence": null
+          },
+          {
+            "start_sec": 0.394739,
+            "end_sec": 0.516644,
+            "pitch": 74,
+            "velocity": 58,
+            "confidence": 0.46059468388557434,
+            "hand": null,
+            "hand_confidence": null
+          },
+          {
+            "start_sec": 0.371519,
+            "end_sec": 0.493424,
+            "pitch": 72,
+            "velocity": 52,
+            "confidence": 0.4075496792793274,
+            "hand": null,
+            "hand_confidence": null
+          },
+          {
+            "start_sec": 0.307664,
+            "end_sec": 0.464399,
+            "pitch": 76,
+            "velocity": 65,
+            "confidence": 0.510200023651123,
+            "hand": null,
+            "hand_confidence": null
+          },
+          {
+            "start_sec": 0.261224,
+            "end_sec": 0.394739,
+            "pitch": 74,
+            "velocity": 57,
+            "confidence": 0.45229268074035645,
+            "hand": null,
+            "hand_confidence": null
+          },
+          {
+            "start_sec": 0.249615,
+            "end_sec": 0.371519,
+            "pitch": 72,
+            "velocity": 51,
+            "confidence": 0.39956173300743103,
+            "hand": null,
+            "hand_confidence": null
+          },
+          {
+            "start_sec": 0.22059,
+            "end_sec": 0.307664,
+            "pitch": 77,
+            "velocity": 71,
+            "confidence": 0.5617905855178833,
+            "hand": null,
+            "hand_confidence": null
+          },
+          {
+            "start_sec": 0.13932,
+            "end_sec": 0.261224,
+            "pitch": 74,
+            "velocity": 57,
+            "confidence": 0.4524688124656677,
+            "hand": null,
+            "hand_confidence": null
+          },
+          {
+            "start_sec": 0.121905,
+            "end_sec": 0.249615,
+            "pitch": 72,
+            "velocity": 40,
+            "confidence": 0.313547819852829,
+            "hand": null,
+            "hand_confidence": null
+          },
+          {
+            "start_sec": 0.098685,
+            "end_sec": 1.951118,
+            "pitch": 89,
+            "velocity": 49,
+            "confidence": 0.3891892433166504,
+            "hand": null,
+            "hand_confidence": null
+          },
+          {
+            "start_sec": 0.09288,
+            "end_sec": 0.22059,
+            "pitch": 77,
+            "velocity": 65,
+            "confidence": 0.5149878859519958,
+            "hand": null,
+            "hand_confidence": null
+          },
+          {
+            "start_sec": 0.017415,
+            "end_sec": 0.13932,
+            "pitch": 74,
+            "velocity": 62,
+            "confidence": 0.4885445237159729,
+            "hand": null,
+            "hand_confidence": null
+          },
+          {
+            "start_sec": 0.005805,
+            "end_sec": 1.451889,
+            "pitch": 48,
+            "velocity": 78,
+            "confidence": 0.6173517107963562,
+            "hand": null,
+            "hand_confidence": null
+          },
+          {
+            "start_sec": 0.005805,
+            "end_sec": 0.1161,
+            "pitch": 72,
+            "velocity": 63,
+            "confidence": 0.49634209275245667,
+            "hand": null,
+            "hand_confidence": null
+          },
+          {
+            "start_sec": 0.696599,
+            "end_sec": 0.824308,
+            "pitch": 96,
+            "velocity": 51,
+            "confidence": 0.40146854519844055,
+            "hand": null,
+            "hand_confidence": null
+          },
+          {
+            "start_sec": 0.08127,
+            "end_sec": 0.580499,
+            "pitch": 67,
+            "velocity": 50,
+            "confidence": 0.39118945598602295,
+            "hand": null,
+            "hand_confidence": null
+          },
+          {
+            "start_sec": 1.504134,
+            "end_sec": 1.904678,
+            "pitch": 84,
+            "velocity": 42,
+            "confidence": 0.3339861035346985,
+            "hand": null,
+            "hand_confidence": null
+          },
+          {
+            "start_sec": 1.237105,
+            "end_sec": 1.318374,
+            "pitch": 84,
+            "velocity": 44,
+            "confidence": 0.3436413109302521,
+            "hand": null,
+            "hand_confidence": null
+          },
+          {
+            "start_sec": 0.992653,
+            "end_sec": 1.155835,
+            "pitch": 84,
+            "velocity": 42,
+            "confidence": 0.32807743549346924,
+            "hand": null,
+            "hand_confidence": null
+          },
+          {
+            "start_sec": 0.203175,
+            "end_sec": 0.284444,
+            "pitch": 96,
+            "velocity": 39,
+            "confidence": 0.3075690269470215,
+            "hand": null,
+            "hand_confidence": null
+          },
+          {
+            "start_sec": 0.145125,
+            "end_sec": 0.319274,
+            "pitch": 84,
+            "velocity": 40,
+            "confidence": 0.31555619835853577,
+            "hand": null,
+            "hand_confidence": null
+          }
+        ]
+      }
+    }
+  ]
+}

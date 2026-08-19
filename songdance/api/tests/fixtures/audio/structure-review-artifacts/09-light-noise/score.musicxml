@@ -1,12 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE score-partwise  PUBLIC "-//Recordare//DTD MusicXML 4.0 Partwise//EN" "http://www.musicxml.org/dtds/partwise.dtd">
 <score-partwise version="4.0">
-  <work>
-    <work-title>09-light-noise</work-title>
-  </work>
   <movement-title>09-light-noise</movement-title>
   <identification>
-    <creator type="composer">Music21</creator>
+    <creator type="composer" />
     <encoding>
       <encoding-date>2026-08-19</encoding-date>
       <software>music21 v.10.5.0</software>
@@ -22,21 +19,21 @@
     </scaling>
   </defaults>
   <part-list>
-    <score-part id="P95748bd739a4f2a7bb7364e8e996a895">
+    <score-part id="Pb7cf0b76bfe8cf73d5c6d02ccb5c047c">
       <part-name>Piano</part-name>
       <part-abbreviation>Pno</part-abbreviation>
-      <score-instrument id="Ia4eace9267105a0b2a6d3488420f115f">
+      <score-instrument id="I605e99122b0eec5d517cad49a2df3b38">
         <instrument-name>Piano</instrument-name>
         <instrument-abbreviation>Pno</instrument-abbreviation>
       </score-instrument>
-      <midi-instrument id="Ia4eace9267105a0b2a6d3488420f115f">
+      <midi-instrument id="I605e99122b0eec5d517cad49a2df3b38">
         <midi-channel>1</midi-channel>
         <midi-program>1</midi-program>
       </midi-instrument>
     </score-part>
   </part-list>
   <!--=========================== Part 1 ===========================-->
-  <part id="P95748bd739a4f2a7bb7364e8e996a895">
+  <part id="Pb7cf0b76bfe8cf73d5c6d02ccb5c047c">
     <!--========================= Measure 1 ==========================-->
     <measure implicit="no" number="1">
       <attributes>
@@ -143,16 +140,7 @@
       <note>
         <rest measure="yes" />
         <duration>40320</duration>
-        <voice>0</voice>
-        <staff>2</staff>
-      </note>
-      <backup>
-        <duration>40320</duration>
-      </backup>
-      <note>
-        <rest measure="yes" />
-        <duration>40320</duration>
-        <voice>1</voice>
+        <voice>2</voice>
         <staff>2</staff>
       </note>
     </measure>
@@ -247,16 +235,7 @@
       <note>
         <rest measure="yes" />
         <duration>40320</duration>
-        <voice>0</voice>
-        <staff>2</staff>
-      </note>
-      <backup>
-        <duration>40320</duration>
-      </backup>
-      <note>
-        <rest measure="yes" />
-        <duration>40320</duration>
-        <voice>1</voice>
+        <voice>2</voice>
         <staff>2</staff>
       </note>
     </measure>
@@ -308,7 +287,7 @@
       <note>
         <rest />
         <duration>30240</duration>
-        <voice>1</voice>
+        <voice>2</voice>
         <type>half</type>
         <dot />
         <staff>2</staff>
@@ -319,24 +298,15 @@
           <octave>4</octave>
         </pitch>
         <duration>5040</duration>
-        <voice>1</voice>
+        <voice>2</voice>
         <type>eighth</type>
         <staff>2</staff>
       </note>
       <note>
         <rest />
         <duration>5040</duration>
-        <voice>1</voice>
-        <type>eighth</type>
-        <staff>2</staff>
-      </note>
-      <backup>
-        <duration>40320</duration>
-      </backup>
-      <note>
-        <rest measure="yes" />
-        <duration>40320</duration>
         <voice>2</voice>
+        <type>eighth</type>
         <staff>2</staff>
       </note>
     </measure>

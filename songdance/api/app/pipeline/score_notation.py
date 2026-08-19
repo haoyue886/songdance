@@ -4,14 +4,12 @@ from fractions import Fraction
 from music21 import chord, expressions, note, pitch, stream
 
 from app.pipeline.harmony import NotationGroup, group_harmony
+from app.pipeline.polyphony_limit import limit_resonant_polyphony
 from app.pipeline.quantize import GRID_DIVISIONS
 from app.pipeline.simple_arpeggio import SIMPLE_ARPEGGIO_PATTERN
 from app.pipeline.sustain import SustainEvidence
 from app.pipeline.transcribe import NoteEvent
-from app.pipeline.voice_compression import (
-    VoiceCompressionConfig,
-    compress_notation_durations,
-)
+from app.pipeline.voice_compression import VoiceCompressionConfig, compress_notation_durations
 from app.pipeline.voicing import assign_voices, notation_hand
 
 
@@ -22,6 +20,7 @@ def populate_part(
     seconds_per_quarter: float,
     measure_offset_units: int,
     sustain_evidence: SustainEvidence | None,
+    divisions_per_quarter: int = GRID_DIVISIONS,
     *,
     collapse_to_single_voice: bool = False,
 ) -> dict[str, object]:
@@ -29,20 +28,29 @@ def populate_part(
         [event for event in events if notation_hand(event) == hand],
         seconds_per_quarter,
         measure_offset_units,
+        divisions_per_quarter=divisions_per_quarter,
     )
     compression = compress_notation_durations(
         groups,
         seconds_per_quarter,
         measure_offset_units,
         sustain_evidence,
+        divisions_per_quarter=divisions_per_quarter,
     )
     notation_groups = compression.groups
+    polyphony_limit = limit_resonant_polyphony(
+        notation_groups,
+        evidence_available=sustain_evidence is not None
+        and sustain_evidence.status == "available",
+    )
+    notation_groups = polyphony_limit.groups
     collapsed = False
     if collapse_to_single_voice:
         global_groups = group_harmony(
             events,
             seconds_per_quarter,
             measure_offset_units,
+            divisions_per_quarter=divisions_per_quarter,
         )
         notation_groups, collapsed = _collapse_to_single_voice(notation_groups, global_groups)
     voices = [notation_groups] if collapsed else assign_voices(notation_groups)
@@ -51,7 +59,7 @@ def populate_part(
     for voice_index, voice_groups in enumerate(voices, start=1):
         notation_voice = stream.Voice(id=f"{hand}-voice-{voice_index}")
         for group in voice_groups:
-            duration = Fraction(group.end_units - group.start_units, GRID_DIVISIONS)
+            duration = Fraction(group.end_units - group.start_units, divisions_per_quarter)
             if len(group.pitches) == 1:
                 notation = note.Note(pitch.Pitch(midi=group.pitches[0]), quarterLength=duration)
             else:
@@ -60,14 +68,20 @@ def populate_part(
                     quarterLength=duration,
                 )
             notation.volume.velocity = group.velocity
-            notation_voice.insert(Fraction(group.start_units, GRID_DIVISIONS), notation)
+            notation_voice.insert(
+                Fraction(group.start_units, divisions_per_quarter), notation
+            )
         part.insert(0, notation_voice)
     summary = compression.summary()
+    summary["reason_codes"] = tuple(
+        sorted({*summary["reason_codes"], *polyphony_limit.reason_codes})
+    )
     summary.update(
         {
             "notation_voice_count": len(voices),
             "single_voice_requested": collapse_to_single_voice,
             "single_voice_applied": collapsed,
+            "polyphony_limit": polyphony_limit.summary(),
         }
     )
     return summary
@@ -179,6 +193,10 @@ def combined_compression_summary(
         + int(left["compressed_group_count"]),
         "coalesced_group_count": int(right["coalesced_group_count"])
         + int(left["coalesced_group_count"]),
+        "polyphony_trimmed_group_count": int(
+            right.get("polyphony_limit", {}).get("trimmed_group_count", 0)
+        )
+        + int(left.get("polyphony_limit", {}).get("trimmed_group_count", 0)),
         "dense_run_count": int(right["dense_run_count"]) + int(left["dense_run_count"]),
         "reason_codes": tuple(reasons),
         "evidence": active_evidence.summary(),
@@ -199,6 +217,7 @@ def apply_sustain_pedal_marks(
     evidence: SustainEvidence | None,
     seconds_per_quarter: float,
     measure_offset_units: int,
+    divisions_per_quarter: int = GRID_DIVISIONS,
 ) -> int:
     if evidence is None:
         return 0
@@ -218,7 +237,7 @@ def apply_sustain_pedal_marks(
         return 0
 
     applied = 0
-    offset_quarters = measure_offset_units / GRID_DIVISIONS
+    offset_quarters = measure_offset_units / divisions_per_quarter
     for start_seconds, end_seconds in intervals:
         start_quarters = start_seconds / seconds_per_quarter + offset_quarters
         end_quarters = end_seconds / seconds_per_quarter + offset_quarters

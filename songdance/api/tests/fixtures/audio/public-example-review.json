@@ -1,7 +1,14 @@
 {
   "case_id": "03-mozart-sonata",
   "audio_sha256": "32975b2333e0ca318125335660e21e747e074e0ea28cf83e3ecbd5ce21fc298f",
-  "timeline_sha256": "f6aabc3c4d38f5672ed2e9051361d4b40fc444c5bf057be9dd65f04d070c529b",
+  "timeline_sha256": "e5781f782a4c08c054a07656a33469708f6f9c6a3d81918d369c17b16c92ff53",
+  "model_version": "basic-pitch-0.4.0/icassp-2022-onnx/o0.5-f0.3",
   "rating": "pending",
-  "reviewed_at": null
+  "reviewed_at": null,
+  "latest_completed_review": {
+    "rating": "needs_redo",
+    "reviewed_at": "2026-08-19T07:37:57Z",
+    "model_version": "basic-pitch-0.4.0/icassp-2022-onnx/o0.5-f0.3"
+  },
+  "notes": ""
 }

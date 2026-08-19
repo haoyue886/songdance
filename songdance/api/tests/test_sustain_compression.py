@@ -6,6 +6,10 @@ from music21 import converter, expressions
 
 from app.pipeline.analysis import StructureAnalysis
 from app.pipeline.harmony import NotationGroup
+from app.pipeline.polyphony_limit import (
+    RESONANT_POLYPHONY_TRIMMED,
+    limit_resonant_polyphony,
+)
 from app.pipeline.score import build_score, write_musicxml
 from app.pipeline.score_validation import score_structure_summary
 from app.pipeline.sustain import (
@@ -167,6 +171,58 @@ def test_missing_audio_or_cc64_evidence_never_compresses_overlap() -> None:
     assert result.applied is False
     assert result.groups == groups
     assert result.reason_codes == ("SUSTAIN_EVIDENCE_UNAVAILABLE",)
+
+
+def test_resonant_polyphony_limit_trims_unsubstantiated_overlap() -> None:
+    groups = [
+        _group(0, 12, 60),
+        _group(2, 14, 64),
+        _group(4, 16, 67),
+        _group(6, 18, 72),
+    ]
+
+    result = limit_resonant_polyphony(groups, evidence_available=True)
+
+    assert result.applied is True
+    assert result.trimmed_group_count == 3
+    assert result.voice_count_before == 4
+    assert result.voice_count_after == 1
+    assert [group.end_units for group in result.groups] == [2, 4, 6, 18]
+    assert result.reason_codes == (RESONANT_POLYPHONY_TRIMMED,)
+
+
+def test_resonant_polyphony_limit_requires_sustain_evidence() -> None:
+    groups = [
+        _group(0, 12, 60),
+        _group(2, 14, 64),
+        _group(4, 16, 67),
+    ]
+
+    result = limit_resonant_polyphony(groups, evidence_available=False)
+
+    assert result.applied is False
+    assert result.groups == groups
+    assert result.voice_count_before == 3
+    assert result.voice_count_after == 3
+
+
+def test_resonant_polyphony_limit_preserves_independent_sustained_bass() -> None:
+    bass = _group(0, 16, 36)
+    groups = [
+        bass,
+        _group(0, 8, 60),
+        _group(2, 10, 64),
+        _group(4, 12, 67),
+        _group(6, 14, 72),
+    ]
+
+    result = limit_resonant_polyphony(groups, evidence_available=True)
+
+    preserved_bass = next(group for group in result.groups if group.pitches == (36,))
+    assert preserved_bass == bass
+    assert result.applied is True
+    assert result.voice_count_before == 5
+    assert result.voice_count_after == 2
 
 
 def test_sustained_bass_across_dense_melody_is_preserved_as_independent_voice() -> None:

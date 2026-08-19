@@ -37,7 +37,9 @@
 | Phase 27 | 已完成 | 海外 SEO 技术基线、核心 Audio-to-MIDI 页面与索引门禁；代码审查 Stage 1/2 PASS |
 | Phase 28 | 已完成 | 英语默认的中英文国际化、语言切换与核心 SEO 首页合并；代码审查 Stage 1/2 PASS |
 | Phase 29 | 开发中 | Basic Pitch 完整 90 秒结构分析与双手共享边界的 MusicXML 弱起优化 |
+| Phase 30 | 复评中 | 专业评审驱动的琶音结构修复；自动门禁已完成，等待 `04-arpeggios` 专业复评通过 |
 | Phase 31 | 已完成（国际化范围） | 八语言入口、工具页核心文案、切换、SEO 与物理消息基线；代码审查 Stage 1/2 PASS |
+| Phase 32 | 开发中 | 公开示例撤回与初级曲目准入、调号语义、快速音型量化和分手密度门禁 |
 
 ## 功能依赖图
 
@@ -60,6 +62,8 @@ Phase 9 基线
                   └─ Phase 14 Beat / 调性 / 拍号与量化
                           └─ Phase 15 和弦 / 多声部 / 左右手
                                   └─ Phase 16 五线谱质量展示与产物版本
+                                          └─ Phase 29/30 结构与琶音修复
+                                                  └─ Phase 32 初级示例与快速音型质量门禁
                                           └─ Phase 23 固定谱面工作台与区间播放
                                                   └─ Phase 24 实时谱面拖选反馈
                                                           └─ Phase 25 选区边界二次调整
@@ -71,7 +75,7 @@ Phase 9 基线
                                                                                                   └─ Phase 22 多轨产品化
 ```
 
-依赖原则：Phase 2 和 Phase 3 都依赖 Phase 1，可并行开发但不能同时修改共享配置；Phase 4 依赖 Phase 3；Phase 5 依赖 Phase 2 和 Phase 4；Phase 6–8 依次收紧生产能力。Phase 13–16 按顺序消费 Phase 11 的质量基线；Phase 12 已取消，不再恢复候选模型路线。Phase 24 只消费 Phase 23 已稳定的乐谱时间映射、跨页几何和播放选区合同；Phase 25 在 Phase 24 的命中缓存、RAF draft 与稳定覆盖层上增加已提交选区的端点调整，在进入多乐器结果页扩展前完成。Phase 28 消费 Phase 27 已完成的 metadata、sitemap 和结构化数据基线，只替换语言路由与核心页面信息架构，不重做 SEO 基础设施。Phase 29 消费 Phase 11、13–16 的原始证据和结构基线，只优化 Basic Pitch 确定性后处理。Phase 17–20 按“共享领域模型 → 单音家族 → 吉他 → 鼓”顺序扩展单乐器能力；每个乐器独立过门禁。Phase 21 只有在 Phase 18–20 具备可复用单乐器路由后才评估完整混音，Phase 22 只消费 Phase 21 已批准的轨道来源，不在 UI 层猜乐器。
+依赖原则：Phase 2 和 Phase 3 都依赖 Phase 1，可并行开发但不能同时修改共享配置；Phase 4 依赖 Phase 3；Phase 5 依赖 Phase 2 和 Phase 4；Phase 6–8 依次收紧生产能力。Phase 13–16 按顺序消费 Phase 11 的质量基线；Phase 12 已取消，不再恢复候选模型路线。Phase 24 只消费 Phase 23 已稳定的乐谱时间映射、跨页几何和播放选区合同；Phase 25 在 Phase 24 的命中缓存、RAF draft 与稳定覆盖层上增加已提交选区的端点调整，在进入多乐器结果页扩展前完成。Phase 28 消费 Phase 27 已完成的 metadata、sitemap 和结构化数据基线，只替换语言路由与核心页面信息架构，不重做 SEO 基础设施。Phase 29 消费 Phase 11、13–16 的原始证据和结构基线，只优化 Basic Pitch 确定性后处理。Phase 32 消费 Phase 29/30 的结构产物与当前公开示例发布器：先撤回已被新评审判为 `needs_redo` 的莫扎特示例，再引入带参考谱的初级真实演奏；快速量化、半速推理和织体分手必须各自过固定真值门禁，不与示例替换绑成一次不可归因的上线。Phase 17–20 按“共享领域模型 → 单音家族 → 吉他 → 鼓”顺序扩展单乐器能力；每个乐器独立过门禁。Phase 21 只有在 Phase 18–20 具备可复用单乐器路由后才评估完整混音，Phase 22 只消费 Phase 21 已批准的轨道来源，不在 UI 层猜乐器。
 
 ---
 
@@ -1206,6 +1210,77 @@ Phase 9 基线
 - fresh `code-reviewer`：Stage 1/2 PASS，0 HIGH、0 MEDIUM；locale 埋点为既有 SHOULD 级 LOW 建议。
 - 完整 E2E 仍有既有谱面小节定位用例的渲染失败（`phase7`、`quality-result`），不涉及本 Phase 文件；已单独记录，不以国际化测试通过冒充全套回归通过。
 - 路由回归修复：新增 locale 的 route id 与公开 URL 段保持一致，`/pt-br` 不再经 `/pt-BR` 内部 rewrite；国际化 E2E 对六个新增 locale 的首页和工具页显式断言 HTTP 200，SEO E2E 对八个 locale 的 404 状态逐项断言。
+
+---
+
+## Phase 32：初级公开示例与快速音型质量门禁
+
+**目标：** 将已被新评审判为 `needs_redo` 的莫扎特复杂片段保留为失败对照并按参考谱继续修复，同时准备带真实演奏、明确授权和参考谱的初级钢琴默认示例；把调号、短时值、密集起音和双谱表分配拆成独立可测问题，不用换曲或单个专家的口头建议绕过算法缺陷。
+
+**Task 32.1 · 当前示例降级与持续修复：**
+
+- 将 `03-mozart-sonata` 当前产物正式记录为 `needs_redo`；当前评审覆盖 2026-08-06 的历史 `minor_edits`。
+- 发布器接受 `needs_redo` 作为有效评审记录；示例页显示醒目的失败警告，同时继续加载原音、MusicXML、钢琴卷帘和下载产物供对照，不把它渲染为产品质量证明。
+- 发布门禁增加调号、短时值分布和 staff 密度摘要，失败原因可审计。
+- 当前 K.545 以本地参考谱为真值继续修复调号、十六分音型与左右手织体，直至重新人工评为至少 `minor_edits`；新初级示例的上线不能替代该复评。
+
+**Task 32.2 · 初级曲目候选准入：**
+
+- 只评估哈农、车尔尼、拜厄或同等难度的真实钢琴演奏；候选必须有可验证授权、可下载参考谱和稳定单一拍号/记谱调号。
+- 为候选建立逐小节参考真值和当前流水线产物，先过解析与结构门禁，再由人工评为至少 `minor_edits`；未过门禁时保持网站示例不可用，不用合成音频顶替。
+- 网络检索、下载和授权核验单独留痕；来源不清的录音不进入仓库。
+
+**Task 32.3 · 调性与记谱调号分离：**
+
+- 数据结构区分 `local_tonal_center`、`notation_key_signature` 和各自来源/置信度。
+- 普通上传只凭片段音频时，UI 表述为推断调性；固定示例有参考谱时，MusicXML 的记谱调号必须匹配参考谱。
+- 为“作品 C 大调、片段局部 G 大调”的用例增加回归，禁止局部调性感静默覆盖参考谱调号。
+
+**Task 32.4 · 短时值与半速推理实验：**
+
+- 建立分别含十六分、三十二分、六十四分音型的参考真值集，先证明现有固定十六分网格的失败边界。
+- 实现可版本化的自适应量化候选，按起音间隔、拍点相位和小节守恒选择分辨率；K.545 参考谱中的十六分音型必须保持十六分。
+- 在隔离实验中加入保持音高的 0.5 倍速 Basic Pitch 路径，输出时间缩回原轴，与原速路径比较 note precision/recall/F1、人工可读性、P95 时延和峰值内存；门禁未通过时不接入生产 Worker。
+
+**Task 32.5 · 双谱表织体校验：**
+
+- 统计每小节左右 staff 的起音数、低音域覆盖、音高中心和连续性，发现低音独立起音存在但 bass staff 近乎为空时输出 `STAFF_DISTRIBUTION_SUSPECT`。
+- 织体修正候选结合音高层、相邻起音连续性、持续低音与分解和弦模式；保护跨手、内声部和真实延音，不按全曲比例硬搬音符。
+- 公开示例必须通过 staff 分布门禁；普通上传触发怀疑标记时保留原始 MIDI 和质量警告，不伪装成已正确分手。
+
+**实施记录（2026-08-19）：**
+
+- Task 32.3、32.5 已完成代码与自动门禁，Task 32.1 已完成失败对照状态与当前结构修复但仍等待完整参考谱逐小节映射：K.545 保持 321 个原始模型音符、320 个清理后音符，左右手/未知事件为 102/217/1；`STAFF_DISTRIBUTION_SUSPECT` 通过，低音分配、低音小节覆盖和高音分配均为 1.0。MusicXML 使用 C 大调、局部调性感继续记录 G 大调、无假弱起。
+- 延音伪多声部限制将 K.545 每谱表记谱层数从 3/4 层压到每小节最多 2 层，同时保护跨越至少 3 个独立起音的持续低音；冗余休止符从旧评审文件的 172 个降到 70 个，休止符密集小节从 15/17 降到 10/17，并删除 18 个纯静默 voice。发布门禁固定为总休止符不超过 80、任一谱表任一小节 voice 不超过 2。
+- K.545 新产物继续以 `pending` 发布为失败对照，最近完成评级保留 `needs_redo`；原音、双谱表、钢琴卷帘和下载产物继续可见，重新人工评为至少 `minor_edits` 前不得标为可用。
+- Task 32.4 已完成三类短时值真值集、自适应量化和隔离半速 A/B。原速 precision/recall/F1 为 0.7991/0.6554/0.7059，半速为 0.7680/0.8216/0.7756，但 precision 下降 0.0311、P95 时延由 52.7ms 增至 172.7ms，因此 `production_eligible=false`，生产模型路径保持原速；K.545 继续按参考谱锁定十六分量化。
+- 10 段真人钢琴集与 16 段结构集已按当前后处理版本重生成并绑定新指纹；16 份 MusicXML 的 music21、`xmllint`、OSMD 共 48 项全部通过。API 全量 335 passed/6 skipped，Web 单测 137 passed，TypeScript、ESLint 与 Next.js 生产构建通过。
+- Task 32.2 仍因没有已核验授权、真实演奏和可下载参考谱同时齐备的初级素材而阻塞；该阻塞不撤下 K.545，也不把合成音频冒充新默认示例。
+- K.545 参考真值新增独立合同文件，固定当前音频指纹、music21 K.545 参考谱标识与 SHA-256、C 大调、十六分最短时值和逐小节时值统计；发布 provenance 保存合同指纹与验证摘要，G 大调、32 分量化、staff `suspect/not_evaluated` 或缺字段的反例全部阻塞。普通上传结果页同时标明自动分析为“推断调性”，并把 `STAFF_DISTRIBUTION_SUSPECT` 显示为可见校对警告。
+- 发布门禁同时核对 timeline 顶层、`notation`、`reconstruction` 语义副本和最终 MusicXML 的实际 `<fifths>`/`<type>`，直接篡改任一层均阻塞。当前 music21 参考谱只含第 1–12 小节，尚缺固定 25–55 秒音频到完整参考谱的逐小节映射；该缺口保持 Task 32.1 打开且不影响 K.545 继续作为失败对照公开。
+- 第三次 fresh `code-reviewer` 从 Stage 1 独立复测：root/嵌套调号、来源、顶层/重建量化和最终 MusicXML 共 14 类篡改全部 fail-closed；仍有 1 个 HIGH 为上述完整参考谱逐小节映射缺失，因此 Stage 1 保持 FAIL、Stage 2 未执行，Phase 32 不标完成且不得以该结论撤下或替换 K.545。
+- 当前最终回归：API 除沙箱禁止 Redis、本地 HTTP 端口和无头 OSMD 的 3 个环境用例外为 343 passed/6 skipped/3 deselected；Web 为 140 passed，TypeScript、ESLint、Next.js 45 页面生产构建、Ruff 与 `git diff --check` 通过。OSMD 本轮外部授权服务过载未重跑，不把 provenance 中历史 `passed` 冒充本轮执行证据。
+
+**关键文件：**
+
+- `songdance/api/scripts/publish_public_example.py`、`tests/test_public_example.py`
+- `songdance/api/app/pipeline/analysis.py`、`analysis_features.py`、`quantize.py`
+- `songdance/api/app/pipeline/voicing.py`、`score_validation.py`、`score_io.py`
+- `songdance/web/src/app/examples/example-client.tsx`、`example-job.ts`
+- `songdance/api/tests/fixtures/audio/` 下新增初级真实演奏与短时值真值清单
+
+**验收标准：**
+
+- 当前 `needs_redo` 莫扎特产物以失败对照继续可见，历史评级不能覆盖新评审；修复任务保持打开直到按参考谱复评通过。
+- 新示例同时通过来源授权、参考谱、当前人工评级、music21/xmllint/OSMD、调号/拍号、短时值和 staff 分布门禁。
+- 自适应量化与半速候选分别有正反例；没有 note F1、可读性和时延证据时生产路径保持不变。
+- API/Web 全量测试、类型检查、lint、编译、OSMD 与 PDF 视觉复核通过；完成后 spawn `code-reviewer` 从 Stage 1 开始独立审查。
+
+**依赖与风险：**
+
+- 仅凭 30 秒音频无法可靠恢复整部作品的原谱调号；参考谱覆盖只适用于来源已知的固定示例，不能伪装成通用模型能力。
+- 时间拉伸可能改善起音分离，也可能产生瞬态伪影并把推理成本翻倍；未过 A/B 不进入生产。
+- 当前没有已核验的初级真实录音候选；网络检索恢复前 Task 32.2 保持阻塞，但不阻塞当前 K.545 的修复与失败对照展示。
 
 ## 技术栈
 

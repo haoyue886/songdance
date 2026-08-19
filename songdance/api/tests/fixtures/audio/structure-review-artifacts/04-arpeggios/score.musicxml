@@ -1,12 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE score-partwise  PUBLIC "-//Recordare//DTD MusicXML 4.0 Partwise//EN" "http://www.musicxml.org/dtds/partwise.dtd">
 <score-partwise version="4.0">
-  <work>
-    <work-title>04-arpeggios</work-title>
-  </work>
   <movement-title>04-arpeggios</movement-title>
   <identification>
-    <creator type="composer">Music21</creator>
+    <creator type="composer" />
     <encoding>
       <encoding-date>2026-08-19</encoding-date>
       <software>music21 v.10.5.0</software>
@@ -22,21 +19,21 @@
     </scaling>
   </defaults>
   <part-list>
-    <score-part id="P64c4defda76c3b20b37ccdcd6e1b65e9">
+    <score-part id="Pf0d510fde906ff99a6db8c90d48f3fad">
       <part-name>Piano</part-name>
       <part-abbreviation>Pno</part-abbreviation>
-      <score-instrument id="I4afc12ee44da056e969960d33e0978a4">
+      <score-instrument id="I0730ca4ecbe28325cb3625b08b42a5a3">
         <instrument-name>Piano</instrument-name>
         <instrument-abbreviation>Pno</instrument-abbreviation>
       </score-instrument>
-      <midi-instrument id="I4afc12ee44da056e969960d33e0978a4">
+      <midi-instrument id="I0730ca4ecbe28325cb3625b08b42a5a3">
         <midi-channel>1</midi-channel>
         <midi-program>1</midi-program>
       </midi-instrument>
     </score-part>
   </part-list>
   <!--=========================== Part 1 ===========================-->
-  <part id="P64c4defda76c3b20b37ccdcd6e1b65e9">
+  <part id="Pf0d510fde906ff99a6db8c90d48f3fad">
     <!--========================= Measure 1 ==========================-->
     <measure implicit="no" number="1">
       <attributes>

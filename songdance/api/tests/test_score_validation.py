@@ -16,6 +16,7 @@ from app.pipeline.score import (
     write_musicxml,
     write_quantized_midi,
 )
+from app.pipeline.score_construction import _prune_inactive_measure_voices
 from app.pipeline.score_io import read_musicxml_piano_layout, read_musicxml_structure
 from app.pipeline.score_validation import score_structure_errors
 from app.pipeline.sustain import extract_sustain_evidence
@@ -86,6 +87,7 @@ def test_repeated_arpeggio_is_one_piano_part_with_two_staves(tmp_path) -> None:
         "clefs": {"1": "G2", "2": "F4"},
         "staff_numbers": ["1", "2"],
         "voices_by_staff": {"1": ["1"], "2": ["2"]},
+        "maximum_voices_by_staff_measure": {"1": 1, "2": 1},
         "backup_count": 15,
         "pedal_mark_count": 1,
     }
@@ -205,6 +207,35 @@ def test_plain_parts_cannot_masquerade_as_a_piano_staff_group() -> None:
     score.insert(0, layout.StaffGroup([right, left], symbol="brace", barTogether=True))
 
     assert "EXPECTED_PIANO_PART_STAVES" in score_structure_errors(score)
+
+
+def test_inactive_measure_voices_do_not_create_redundant_rests() -> None:
+    score = stream.Score()
+    part = stream.PartStaff()
+    active_measure = stream.Measure(number=1)
+    primary = stream.Voice()
+    primary.append(note.Note("C4", quarterLength=4))
+    inactive = stream.Voice()
+    inactive.append(note.Rest(quarterLength=4))
+    active_measure.insert(0, primary)
+    active_measure.insert(0, inactive)
+    silent_measure = stream.Measure(number=2)
+    silent_measure.insert(0, stream.Voice([note.Rest(quarterLength=4)]))
+    silent_measure.insert(0, stream.Voice([note.Rest(quarterLength=4)]))
+    partial_measure = stream.Measure(number=3)
+    partial_measure.insert(0, stream.Voice([note.Note("C4", quarterLength=1)]))
+    partial_measure.insert(0, stream.Voice([note.Rest(quarterLength=4)]))
+    part.append(active_measure)
+    part.append(silent_measure)
+    part.append(partial_measure)
+    score.append(part)
+
+    removed = _prune_inactive_measure_voices(score)
+
+    assert removed == 2
+    assert len(list(active_measure.getElementsByClass(stream.Voice))) == 1
+    assert len(list(silent_measure.getElementsByClass(stream.Voice))) == 1
+    assert len(list(partial_measure.getElementsByClass(stream.Voice))) == 2
 
 
 @pytest.mark.parametrize(

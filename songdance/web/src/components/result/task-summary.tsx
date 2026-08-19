@@ -15,7 +15,11 @@ export function TaskSummary({ job, qualityFlags }: {
     [t("timeSignature"), job.result?.time_signature ?? t("notInferred")],
     [t("notes"), job.result?.note_count?.toString() ?? "0"],
   ];
-  const scoreAssumption = scoreAssumptionText(qualityFlags, locale);
+  const scoreAssumption = scoreAssumptionText(
+    qualityFlags,
+    locale,
+    t("staffDistributionWarning"),
+  );
   return (
     <aside className="border-b border-[#d9e3dd] pb-5 lg:border-b-0 lg:border-r lg:pb-0 lg:pr-5">
       <h2 className="text-sm font-bold uppercase text-[#667772]">{t("taskSummary")}</h2>
@@ -37,9 +41,14 @@ export function TaskSummary({ job, qualityFlags }: {
   );
 }
 
-export function scoreAssumptionText(qualityFlags: string[], locale = "zh-CN"): string | null {
+export function scoreAssumptionText(
+  qualityFlags: string[],
+  locale = "zh-CN",
+  staffDistributionWarning?: string,
+): string | null {
   const en = locale === "en";
   const assumptions: string[] = [];
+  const warnings: string[] = [];
   if (qualityFlags.includes("TIME_SIGNATURE_ASSUMED_4_4")) {
     assumptions.push(en ? "Time signature laid out as 4/4" : "拍号按 4/4 排版");
   }
@@ -52,7 +61,21 @@ export function scoreAssumptionText(qualityFlags: string[], locale = "zh-CN"): s
   if (qualityFlags.includes("SCORE_RECONSTRUCTION_FALLBACK")) {
     assumptions.push(en ? "Complex reconstruction failed; basic notation generated" : "复杂谱面重建失败，已生成基础谱面");
   }
-  return assumptions.length > 0
-    ? en ? `${assumptions.join("; ")}. These are layout assumptions, not detected original structure.` : `${assumptions.join("；")}；均为排版假设，并非原曲结构识别。`
-    : null;
+  if (qualityFlags.includes("STAFF_DISTRIBUTION_SUSPECT")) {
+    warnings.push(staffDistributionWarning ?? (en
+      ? "Staff assignment is uncertain; compare the piano roll, MIDI and source audio"
+      : "左右手谱表分配存疑，请结合钢琴卷帘、MIDI 和原音校对"));
+  }
+  const messages = [...assumptions, ...warnings];
+  if (messages.length === 0) return null;
+  const suffix = assumptions.length === 0
+    ? en ? "." : "。"
+    : warnings.length === 0
+      ? en
+        ? ". These are layout assumptions, not detected original structure."
+        : "；均为排版假设，并非原曲结构识别。"
+      : en
+        ? ". The layout assumptions are not detected original structure."
+        : "；其中排版假设并非原曲结构识别。";
+  return `${messages.join(en ? "; " : "；")}${suffix}`;
 }

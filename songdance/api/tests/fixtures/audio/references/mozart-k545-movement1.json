@@ -1,0 +1,37 @@
+{
+  "schema_version": 1,
+  "case_id": "03-mozart-sonata",
+  "work": "W.A. Mozart Piano Sonata No. 16 in C major, K.545, movement I",
+  "audio_binding": {
+    "sha256": "32975b2333e0ca318125335660e21e747e074e0ea28cf83e3ecbd5ce21fc298f",
+    "clip_start_sec": 25,
+    "clip_duration_sec": 30,
+    "source_page": "https://commons.wikimedia.org/wiki/File:%D0%92%D0%B0%D1%80%D0%B2%D0%B0%D1%80%D0%B0_%D0%A1%D0%B5%D0%BC%D0%B5%D0%BD%D1%87%D1%83%D0%BA_-_%D0%9C%D0%BE%D1%86%D0%B0%D1%80%D1%82-%D0%A1%D0%BE%D0%BD%D0%B0%D1%82%D0%B0-c-dur-part1.ogv"
+  },
+  "reference_score": {
+    "provider": "music21 bundled corpus",
+    "corpus_identifier": "mozart/k545/movement1",
+    "sha256": "5b72d6c0ad5aa935865e30e80fc91422b5a131d3f72caf8303cc75d00c5a1556",
+    "composition_rights": "Public domain",
+    "measure_range": [1, 12],
+    "notation_key_signature": "C major",
+    "key_signature_fifths": 0,
+    "shortest_note_value": 16,
+    "divisions_per_quarter": 4,
+    "note_type_counts": {
+      "16th": 106,
+      "eighth": 48,
+      "quarter": 24,
+      "half": 2,
+      "whole": 1
+    },
+    "measure_shortest_quarter_lengths": [0.5, 0.25, 0.5, 0.25, 0.25, 0.25, 0.25, 0.25, 0.25, 0.25, 0.25, 1.0]
+  },
+  "expected_transcription": {
+    "notation_key_signature": "C major",
+    "notation_key_signature_source": "reference_score",
+    "quantization_divisions_per_quarter": 4,
+    "shortest_note_value": 16,
+    "quantization_source": "reference_score"
+  }
+}

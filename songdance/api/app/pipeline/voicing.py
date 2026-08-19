@@ -7,7 +7,7 @@ from typing import Protocol
 from app.pipeline.simple_arpeggio import apply_simple_arpeggio_strategy
 from app.pipeline.transcribe import NoteEvent
 
-VOICING_ALGORITHM_VERSION = "voicing-v3"
+VOICING_ALGORITHM_VERSION = "voicing-v4"
 UNKNOWN_HAND_NOTATION_FALLBACK = "UNKNOWN_HAND_NOTATION_FALLBACK"
 
 
@@ -24,6 +24,7 @@ class VoicingConfig:
     continuity_weight: float = 0.75
     chord_role_bias: float = 0.12
     minimum_confidence: float = 0.16
+    dense_texture_minimum_confidence: float = 0.05
     maximum_prediction_semitones: float = 12.0
 
     @property
@@ -86,6 +87,12 @@ def assign_hands(
     events: list[NoteEvent], config: VoicingConfig | None = None
 ) -> VoicingResult:
     active = config or VoicingConfig()
+    dense_two_hand_texture = _has_dense_two_hand_texture(events)
+    minimum_confidence = (
+        active.dense_texture_minimum_confidence
+        if dense_two_hand_texture
+        else active.minimum_confidence
+    )
     histories = {"left": _HandHistory([]), "right": _HandHistory([])}
     assigned: list[NoteEvent] = []
     onsets: dict[float, list[NoteEvent]] = {}
@@ -101,6 +108,12 @@ def assign_hands(
             if event.hand in hand_pitches:
                 hand = event.hand
                 confidence = event.hand_confidence if event.hand_confidence is not None else 1.0
+            elif dense_two_hand_texture and event.pitch <= 59:
+                hand = "left"
+                confidence = 0.75
+            elif dense_two_hand_texture and event.pitch >= 64:
+                hand = "right"
+                confidence = 0.75
             else:
                 left_cost = _assignment_cost(
                     event.pitch,
@@ -121,7 +134,7 @@ def assign_hands(
                     active,
                 )
                 confidence = _assignment_confidence(left_cost, right_cost)
-                hand = None if confidence < active.minimum_confidence else (
+                hand = None if confidence < minimum_confidence else (
                     "left" if left_cost < right_cost else "right"
                 )
             assigned.append(
@@ -157,6 +170,18 @@ def notation_hand(event: NoteEvent) -> str:
     if event.hand in {"left", "right"}:
         return event.hand
     return "left" if event.pitch < 60 else "right"
+
+
+def _has_dense_two_hand_texture(events: list[NoteEvent]) -> bool:
+    if len(events) < 32:
+        return False
+    onsets: dict[float, list[int]] = {}
+    for event in events:
+        onsets.setdefault(event.start_sec, []).append(event.pitch)
+    return sum(
+        len(pitches) >= 2 and max(pitches) - min(pitches) >= 12
+        for pitches in onsets.values()
+    ) >= 4
 
 
 def assign_voices(groups: list[TimedGroup]) -> list[list[TimedGroup]]:

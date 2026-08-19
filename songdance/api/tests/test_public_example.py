@@ -5,10 +5,10 @@ import pytest
 
 import scripts.publish_public_example as publisher
 from scripts.human_quality_gate import file_sha256
+from scripts.public_example_review import MAXIMUM_PUBLIC_REST_COUNT
 from scripts.publish_public_example import (
     CASE_ID,
     FIXTURE_ROOT,
-    HUMAN_RATING_FILE,
     PUBLIC_ROOT,
     PUBLISHED_ARTIFACTS,
     SOURCE_AUDIO,
@@ -23,14 +23,10 @@ def test_public_example_matches_current_pipeline_and_provenance() -> None:
     assert "HAND_ASSIGNMENT_MIDDLE_C" not in result["timeline"]["quality_flags"]
     assert "TIME_SIGNATURE_DEFAULTED_4_4" not in result["timeline"]["quality_flags"]
     assert "TIME_SIGNATURE_ASSUMED_4_4" not in result["timeline"]["quality_flags"]
-    assert result["provenance"]["review_status"] in {
-        "pending",
-        "minor_edits",
-        "direct_use",
-    }
+    assert result["provenance"]["review_status"] == "pending"
     assert result["provenance"]["latest_completed_review"] == {
-        "rating": "minor_edits",
-        "reviewed_at": "2026-08-06T10:24:43.117449+00:00",
+        "rating": "needs_redo",
+        "reviewed_at": "2026-08-19T07:37:57Z",
         "model_version": "basic-pitch-0.4.0/icassp-2022-onnx/o0.5-f0.3",
     }
     assert result["visible_metadata"] == {
@@ -39,17 +35,162 @@ def test_public_example_matches_current_pipeline_and_provenance() -> None:
         "composers": [],
         "software": ["music21 v.10.5.0"],
     }
+    assert result["timeline"]["key_signature"] == "C major"
+    assert result["timeline"]["local_tonal_center"] == "G major"
+    assert result["timeline"]["notation_key_signature"] == "C major"
+    assert result["timeline"]["reconstruction"]["pickup"]["measure_offset_units"] == 0
+    assert result["timeline"]["reconstruction"]["staff_distribution"]["status"] == (
+        "passed"
+    )
+    assert result["timeline"]["reconstruction"]["voicing"]["unknown_count"] <= 32
+    assert result["structure"]["rest_count"] <= MAXIMUM_PUBLIC_REST_COUNT
+    assert result["structure"]["maximum_voices_by_staff_measure"] == {"1": 2, "2": 2}
     source_root = FIXTURE_ROOT / "human-review-artifacts" / CASE_ID
     ratings = {
         item["id"]: item["rating"]
-        for item in json.loads(HUMAN_RATING_FILE.read_text(encoding="utf-8"))["results"]
+        for item in json.loads(
+            (FIXTURE_ROOT / "human-review.json").read_text(encoding="utf-8")
+        )["results"]
     }
-    assert ratings[CASE_ID] in {"minor_edits", "direct_use"}
+    assert ratings[CASE_ID] == "pending"
     assert file_sha256(PUBLIC_ROOT / "source.wav") == file_sha256(SOURCE_AUDIO)
     assert all(
         file_sha256(PUBLIC_ROOT / filename) == file_sha256(source_root / filename)
         for filename in PUBLISHED_ARTIFACTS.values()
     )
+
+
+@pytest.mark.parametrize(
+    ("structure", "error"),
+    [
+        (
+            {"rest_count": 81, "maximum_voices_by_staff_measure": {"1": 2, "2": 2}},
+            "excessive notation rests",
+        ),
+        (
+            {"rest_count": 70, "maximum_voices_by_staff_measure": {"1": 3, "2": 2}},
+            "excessive notation voices",
+        ),
+    ],
+)
+def test_public_example_rejects_excessive_notation_density(
+    structure: dict[str, object], error: str
+) -> None:
+    with pytest.raises(ValueError, match=error):
+        publisher._validate_notation_density(structure)
+
+
+@pytest.mark.parametrize(
+    "staff_distribution",
+    [
+        {"status": "suspect"},
+        {"status": "not_evaluated"},
+        None,
+    ],
+)
+def test_public_example_rejects_unpassed_staff_distribution(
+    staff_distribution: dict[str, str] | None,
+) -> None:
+    source_root = FIXTURE_ROOT / "human-review-artifacts" / CASE_ID
+    timeline = json.loads((source_root / "timeline.json").read_text(encoding="utf-8"))
+    if staff_distribution is None:
+        timeline["reconstruction"].pop("staff_distribution", None)
+    else:
+        timeline["reconstruction"]["staff_distribution"] = staff_distribution
+    review = publisher._public_review(source_root)
+
+    with pytest.raises(ValueError, match="must pass staff distribution validation"):
+        publisher._validate_source(
+            source_root,
+            publisher._source_metadata(),
+            timeline,
+            publisher._completed_review(review),
+        )
+
+
+@pytest.mark.parametrize(
+    ("field", "stale_value"),
+    [
+        ("notation_key_signature", "G major"),
+        ("shortest_note_value", 32),
+    ],
+)
+def test_public_example_rejects_timeline_that_does_not_match_reference_score(
+    field: str, stale_value: object
+) -> None:
+    source_root = FIXTURE_ROOT / "human-review-artifacts" / CASE_ID
+    timeline = json.loads((source_root / "timeline.json").read_text(encoding="utf-8"))
+    if field == "notation_key_signature":
+        timeline[field] = stale_value
+    else:
+        timeline["quantization"][field] = stale_value
+    review = publisher._public_review(source_root)
+
+    with pytest.raises(ValueError, match="does not match the reference score truth"):
+        publisher._validate_source(
+            source_root,
+            publisher._source_metadata(),
+            timeline,
+            publisher._completed_review(review),
+        )
+
+
+@pytest.mark.parametrize(
+    ("section", "field", "stale_value"),
+    [
+        ("notation", "notation_key_signature", "G major"),
+        ("reconstruction.notation", "notation_key_signature", "G major"),
+        ("reconstruction.quantization", "shortest_note_value", 32),
+    ],
+)
+def test_public_example_rejects_stale_reference_truth_copies(
+    section: str, field: str, stale_value: object
+) -> None:
+    source_root = FIXTURE_ROOT / "human-review-artifacts" / CASE_ID
+    timeline = json.loads((source_root / "timeline.json").read_text(encoding="utf-8"))
+    target = timeline
+    for name in section.split("."):
+        target = target[name]
+    target[field] = stale_value
+    review = publisher._public_review(source_root)
+
+    with pytest.raises(ValueError, match="timeline does not match the reference score truth"):
+        publisher._validate_source(
+            source_root,
+            publisher._source_metadata(),
+            timeline,
+            publisher._completed_review(review),
+        )
+
+
+@pytest.mark.parametrize(
+    ("old", "new"),
+    [
+        ("<fifths>0</fifths>", "<fifths>1</fifths>"),
+        ("<type>16th</type>", "<type>32nd</type>"),
+    ],
+)
+def test_public_example_rejects_musicxml_that_does_not_match_reference_score(
+    tmp_path, old: str, new: str
+) -> None:
+    source_root = FIXTURE_ROOT / "human-review-artifacts" / CASE_ID
+    changed_root = tmp_path / CASE_ID
+    shutil.copytree(source_root, changed_root)
+    score_path = changed_root / "score.musicxml"
+    score = score_path.read_text(encoding="utf-8")
+    changed = score.replace(old, new, 1)
+    assert changed != score
+    score_path.write_text(changed, encoding="utf-8")
+    timeline = json.loads((source_root / "timeline.json").read_text(encoding="utf-8"))
+    review = publisher._public_review(source_root)
+
+    with pytest.raises(ValueError, match="MusicXML does not match the reference score truth"):
+        publisher._validate_source(
+            changed_root,
+            publisher._source_metadata(),
+            timeline,
+            publisher._completed_review(review),
+        )
 
 
 @pytest.mark.parametrize(
@@ -68,6 +209,7 @@ def test_public_example_matches_current_pipeline_and_provenance() -> None:
         ("timeline_sha256", "0" * 64),
         ("review_status", "minor_edits"),
         ("latest_completed_review", {"rating": "needs_redo"}),
+        ("reference_validation", {"status": "passed"}),
     ],
 )
 def test_public_example_rejects_stale_provenance(
@@ -101,6 +243,63 @@ def test_public_example_review_is_bound_to_current_artifacts(
         publisher.validate_published_example()
 
 
+def test_pending_replacement_can_publish_with_explicit_failed_history(
+    tmp_path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    public_root = tmp_path / "mozart-sonata"
+    monkeypatch.setattr(publisher, "PUBLIC_ROOT", public_root)
+    _allow_external_parsers(monkeypatch)
+
+    provenance = publisher.publish()
+
+    assert provenance["review_status"] == "pending"
+    assert provenance["latest_completed_review"]["rating"] == "needs_redo"
+    assert provenance["reference_validation"]["status"] == "passed"
+    assert (public_root / "score.musicxml").is_file()
+
+
+def test_reset_review_preserves_failed_history_for_the_new_artifacts(
+    tmp_path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    review_path = tmp_path / "public-example-review.json"
+    review_path.write_text(
+        publisher.PUBLIC_REVIEW_FILE.read_text(encoding="utf-8"), encoding="utf-8"
+    )
+    monkeypatch.setattr(publisher, "PUBLIC_REVIEW_FILE", review_path)
+
+    review = publisher.reset_review_for_current_artifacts()
+
+    assert review["rating"] == "pending"
+    assert review["reviewed_at"] is None
+    assert review["latest_completed_review"] == {
+        "rating": "needs_redo",
+        "reviewed_at": "2026-08-19T07:37:57Z",
+        "model_version": "basic-pitch-0.4.0/icassp-2022-onnx/o0.5-f0.3",
+    }
+    assert review["timeline_sha256"] == file_sha256(
+        FIXTURE_ROOT / "human-review-artifacts" / CASE_ID / "timeline.json"
+    )
+
+
+def test_pending_review_cannot_fall_back_to_an_older_approved_baseline(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    monkeypatch.setattr(
+        publisher,
+        "_read_json",
+        lambda _path: pytest.fail("legacy review baseline must not be read"),
+    )
+
+    with pytest.raises(ValueError, match="missing completed review history"):
+        publisher._completed_review(
+            {
+                "rating": "pending",
+                "reviewed_at": None,
+                "model_version": "model/current",
+            }
+        )
+
+
 def test_failed_parser_validation_does_not_overwrite_public_example(
     tmp_path, monkeypatch: pytest.MonkeyPatch
 ) -> None:
@@ -109,6 +308,7 @@ def test_failed_parser_validation_does_not_overwrite_public_example(
     sentinel = public_root / "timeline.json"
     sentinel.write_text("unchanged", encoding="utf-8")
     monkeypatch.setattr(publisher, "PUBLIC_ROOT", public_root)
+    _allow_approved_current_review(monkeypatch)
     monkeypatch.setattr(
         publisher,
         "validate_external_parsers",
@@ -161,6 +361,7 @@ def test_invalid_visible_metadata_does_not_overwrite_public_example(
     sentinel = public_root / "timeline.json"
     sentinel.write_text("unchanged", encoding="utf-8")
     monkeypatch.setattr(publisher, "PUBLIC_ROOT", public_root)
+    _allow_approved_current_review(monkeypatch)
     monkeypatch.setattr(
         publisher,
         "read_musicxml_visible_metadata",
@@ -182,6 +383,7 @@ def test_copy_failure_does_not_overwrite_public_example(
     sentinel = public_root / "timeline.json"
     sentinel.write_text("unchanged", encoding="utf-8")
     monkeypatch.setattr(publisher, "PUBLIC_ROOT", public_root)
+    _allow_approved_current_review(monkeypatch)
     monkeypatch.setattr(
         publisher,
         "validate_external_parsers",
@@ -219,6 +421,7 @@ def test_provenance_failure_does_not_overwrite_public_example(
     sentinel = public_root / "timeline.json"
     sentinel.write_text("unchanged", encoding="utf-8")
     monkeypatch.setattr(publisher, "PUBLIC_ROOT", public_root)
+    _allow_approved_current_review(monkeypatch)
     _allow_external_parsers(monkeypatch)
     original_write_text = publisher.Path.write_text
 
@@ -244,6 +447,7 @@ def test_activation_failure_restores_previous_public_example(
     sentinel = public_root / "timeline.json"
     sentinel.write_text("unchanged", encoding="utf-8")
     monkeypatch.setattr(publisher, "PUBLIC_ROOT", public_root)
+    _allow_approved_current_review(monkeypatch)
     _allow_external_parsers(monkeypatch)
     monkeypatch.setattr(
         publisher,
@@ -284,5 +488,17 @@ def _allow_external_parsers(monkeypatch: pytest.MonkeyPatch) -> None:
                 "xmllint": {"status": "passed"},
                 "osmd": {"status": "passed"},
             }
+        },
+    )
+
+
+def _allow_approved_current_review(monkeypatch: pytest.MonkeyPatch) -> None:
+    monkeypatch.setattr(
+        publisher,
+        "_public_review",
+        lambda _source_root: {
+            "rating": "minor_edits",
+            "reviewed_at": "2026-08-19T07:37:57Z",
+            "model_version": "basic-pitch-0.4.0/icassp-2022-onnx/o0.5-f0.3",
         },
     )

@@ -1,0 +1,19 @@
+{
+  "schema_version": 1,
+  "suite_type": "synthetic_short_value_truth",
+  "product_quality_gate": false,
+  "tempo_bpm": 120,
+  "time_signature": "4/4",
+  "duration_seconds": 2,
+  "sample_rate": 22050,
+  "authorization": {
+    "source": "Procedurally synthesized by the SongDance short-value generator",
+    "license": "CC0-1.0",
+    "third_party_audio": false
+  },
+  "cases": [
+    {"id": "01-sixteenth", "divisions_per_quarter": 4, "note_value": 16},
+    {"id": "02-thirty-second", "divisions_per_quarter": 8, "note_value": 32},
+    {"id": "03-sixty-fourth", "divisions_per_quarter": 16, "note_value": 64}
+  ]
+}

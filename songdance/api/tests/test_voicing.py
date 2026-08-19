@@ -10,9 +10,14 @@ from app.pipeline.simple_arpeggio import (
     SIMPLE_ARPEGGIO_REJECTED_CROSSING,
     SIMPLE_ARPEGGIO_STABLE_TIMING,
 )
+from app.pipeline.staff_distribution import (
+    STAFF_DISTRIBUTION_SUSPECT,
+    staff_distribution_summary,
+)
 from app.pipeline.transcribe import NoteEvent
 from app.pipeline.voicing import (
     VoicingConfig,
+    _has_dense_two_hand_texture,
     assign_hands,
     assign_voices,
 )
@@ -69,6 +74,106 @@ def test_voicing_allows_an_ambiguous_middle_note_to_remain_unknown() -> None:
     assert result.unknown_count == 1
     assert result.events[0].hand is None
     assert result.events[0].hand_confidence is not None
+
+
+def test_k545_like_texture_keeps_both_staffs_populated_without_history_starvation() -> None:
+    events = [
+        NoteEvent(index * 0.125, index * 0.125 + 0.1, pitch, 84, 0.9)
+        for index in range(40)
+        for pitch in (48 + index % 8, 64 + index % 5, 72 + index % 4)
+    ]
+
+    result = assign_hands(events)
+    distribution = staff_distribution_summary(result.events)
+
+    assert result.unknown_count == 0
+    assert result.left_count == 40
+    assert result.right_count == 80
+    assert distribution["status"] == "passed"
+    assert distribution["known_ratio"] >= 0.9
+
+
+def test_staff_distribution_gate_rejects_wide_texture_with_an_empty_hand() -> None:
+    events = [
+        NoteEvent(
+            onset * 0.25,
+            onset * 0.25 + 0.2,
+            pitch,
+            84,
+            0.9,
+            hand="right",
+            hand_confidence=1.0,
+        )
+        for onset in range(20)
+        for pitch in (48, 76)
+    ]
+
+    distribution = staff_distribution_summary(events)
+
+    assert distribution["status"] == "suspect"
+    assert distribution["reason_code"] == STAFF_DISTRIBUTION_SUSPECT
+
+
+def test_staff_distribution_gate_rejects_equal_but_swapped_staffs() -> None:
+    events = [
+        NoteEvent(
+            onset * 0.25,
+            onset * 0.25 + 0.2,
+            pitch,
+            84,
+            0.9,
+            hand=hand,
+            hand_confidence=1.0,
+        )
+        for onset in range(20)
+        for pitch, hand in ((48, "right"), (76, "left"))
+    ]
+
+    distribution = staff_distribution_summary(events)
+
+    assert distribution["minority_ratio"] == 0.5
+    assert distribution["bass_assignment_ratio"] == 0.0
+    assert distribution["treble_assignment_ratio"] == 0.0
+    assert distribution["status"] == "suspect"
+
+
+def test_staff_distribution_gate_checks_each_bass_measure() -> None:
+    events = [
+        NoteEvent(
+            measure * 2 + onset * 0.25,
+            measure * 2 + onset * 0.25 + 0.2,
+            pitch,
+            84,
+            0.9,
+            hand=hand,
+            hand_confidence=1.0,
+        )
+        for measure in range(4)
+        for onset in range(4)
+        for pitch, hand in (
+            (48, "left" if measure < 2 else "right"),
+            (76, "right"),
+        )
+    ]
+
+    distribution = staff_distribution_summary(events)
+
+    assert distribution["bass_measure_coverage_ratio"] == 0.5
+    assert distribution["suspect_measure_count"] == 2
+    assert distribution["status"] == "suspect"
+
+
+def test_dense_texture_activation_boundaries_are_explicit() -> None:
+    def texture(event_count: int, wide_onsets: int) -> list[NoteEvent]:
+        events = [NoteEvent(index, index + 0.2, 60, 80, 0.9) for index in range(event_count)]
+        for index in range(min(wide_onsets, event_count)):
+            pitch = 48 if index % 2 == 0 else 76
+            events[index] = NoteEvent(index // 2, index // 2 + 0.2, pitch, 80, 0.9)
+        return events
+
+    assert _has_dense_two_hand_texture(texture(31, 8)) is False
+    assert _has_dense_two_hand_texture(texture(32, 6)) is False
+    assert _has_dense_two_hand_texture(texture(32, 8)) is True
 
 
 def test_simple_arpeggio_uses_stable_zones_for_ac072_sequence() -> None:
@@ -403,5 +508,5 @@ def test_voice_assignment_never_overlaps_within_a_voice() -> None:
 
 
 def test_voicing_config_version_changes_with_threshold() -> None:
-    assert VoicingConfig().version.startswith("voicing-v3/")
+    assert VoicingConfig().version.startswith("voicing-v4/")
     assert VoicingConfig().version != VoicingConfig(minimum_confidence=0.3).version

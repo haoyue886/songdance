@@ -195,6 +195,12 @@ def test_service_persists_analysis_without_changing_raw_timeline(
     assert "analysis" not in raw
     assert cleaned["time_signature"] == "3/4"
     assert cleaned["key_signature"] == "G major"
+    assert cleaned["local_tonal_center"] == "G major"
+    assert cleaned["notation_key_signature"] == "G major"
+    assert cleaned["notation"]["notation_key_signature_source"] == (
+        "inferred_local_tonal_center"
+    )
+    assert cleaned["notation"]["notation_key_signature_confidence"] == 0.8
     assert cleaned["beat_grid_seconds"] == [0.0, 0.5, 1.0, 1.5]
     assert report["analysis"]["source"] == "fixture"
 

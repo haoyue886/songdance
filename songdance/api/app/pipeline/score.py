@@ -29,6 +29,9 @@ from app.pipeline.score_io import (
     read_musicxml_structure as read_musicxml_structure,
 )
 from app.pipeline.score_io import (
+    read_musicxml_visible_metadata as read_musicxml_visible_metadata,
+)
+from app.pipeline.score_io import (
     write_musicxml as write_musicxml,
 )
 from app.pipeline.score_io import (
@@ -49,11 +52,12 @@ from app.pipeline.voicing import (
 )
 
 DYNAMIC_MARKING_VERSION = "dynamic-marking-v1"
+SCORE_METADATA_VERSION = "score-metadata-v1"
 MP_MAX_MEDIAN_VELOCITY = 96
 POSTPROCESS_VERSION = (
     "music21-10.5.0/beat-grid/pickup-v4/"
     f"{HarmonyConfig().version}/{VoicingConfig().version}/{VoiceCompressionConfig().version}/"
-    f"{SIMPLE_ARPEGGIO_FILTER_VERSION}/{DYNAMIC_MARKING_VERSION}"
+    f"{SIMPLE_ARPEGGIO_FILTER_VERSION}/{DYNAMIC_MARKING_VERSION}/{SCORE_METADATA_VERSION}"
 )
 EIGHTH_CYCLE_ALIGNMENT_VERSION = "eighth-cycle-alignment-v2"
 TIME_SIGNATURE_ASSUMED = "TIME_SIGNATURE_ASSUMED_4_4"

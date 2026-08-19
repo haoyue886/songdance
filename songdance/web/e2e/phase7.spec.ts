@@ -25,8 +25,10 @@ test("plays, switches views and exports the public-domain example", async ({ pag
   test.setTimeout(infrastructureTimeout * 2);
   await page.goto("/zh/examples");
   await expect(page.getByRole("heading", { name: "先听原音，再检查转录结果" })).toBeVisible();
-  await expect(page.getByRole("link", { name: "Musopen 录音与乐谱" }))
-    .toHaveAttribute("href", /commons\.wikimedia\.org/);
+  for (const label of ["当前产物", "待人工复评", "最近完成人工评级", "少量修改可用"])
+    await expect(page.getByText(label)).toBeVisible();
+  await expect(page.getByRole("link", { name: "Wikimedia Commons 录音" })).toHaveAttribute("href", /commons\.wikimedia\.org/);
+  await expect(page.getByText("Public domain")).toBeVisible();
   const scorePages = page.locator('[aria-label="MusicXML 五线谱"] svg');
   await infrastructureExpect.poll(() => scorePages.count()).toBeGreaterThan(0);
   await infrastructureExpect

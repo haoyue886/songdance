@@ -64,13 +64,14 @@ function scoreMeasure(
   startRealValue: number,
   entries: Array<{ x: number; realValue: number }>,
   left = 0,
+  duration = 1,
 ) {
   return {
     ParentStaff: { isVisible: () => true },
     ParentMusicSystem: system,
     parentSourceMeasure: {
       AbsoluteTimestamp: { RealValue: startRealValue },
-      Duration: { RealValue: 1 },
+      Duration: { RealValue: duration },
     },
     PositionAndShape: {
       AbsolutePosition: { x: left, y: 0 },
@@ -134,6 +135,29 @@ describe("score hit map", () => {
     expect(scoreMeasureFractionAtQuarters(hitMap, 0, 2)).toBe(0.75);
     expect(scoreMeasureFractionAtQuarters(hitMap, 0, -1)).toBe(0);
     expect(scoreMeasureFractionAtQuarters(hitMap, 0, 5)).toBe(1);
+  });
+
+  it("maps pickup notation timestamps into the padded score timeline", () => {
+    const page = scorePage(1);
+    const pickupMap: ScoreTimeMap = {
+      ...timeMap,
+      offsetQuarters: 2.75,
+      downbeatAnchors: [{ scoreQuarters: 4, seconds: 0.625 }],
+      interpolationAnchors: [
+        { scoreQuarters: 2.75, seconds: 0 },
+        { scoreQuarters: 4, seconds: 0.625 },
+      ],
+    };
+    const osmd = scoreOsmd([{
+      page,
+      canvas: canvas(),
+      measures: [scoreMeasure(scoreSystem(page), 0, [{ x: 5, realValue: 0.0625 }], 0, 0.3125)],
+    }]);
+    const hitMap = createScoreHitMap(osmd, pickupMap, 10);
+
+    expect(scoreSecondsAtDomPoint(hitMap, { x: 50, y: 60 })).toBe(0.125);
+    expect(scoreMeasureFractionAtQuarters(hitMap, 0, 2.75)).toBe(0);
+    expect(scoreMeasureFractionAtQuarters(hitMap, 0, 4)).toBe(1);
   });
 
   it("snaps within eight CSS pixels and interpolates outside the radius", () => {

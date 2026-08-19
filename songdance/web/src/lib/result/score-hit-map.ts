@@ -1,21 +1,16 @@
 import type { OpenSheetMusicDisplay, PointF2D } from "opensheetmusicdisplay";
-import { scoreQuartersToSeconds, type ScoreTimeMap } from "./score-time-map";
-
+import { notationQuartersToScoreQuarters, scoreQuartersToSeconds, type ScoreTimeMap } from "./score-time-map";
 const EVENT_SNAP_RADIUS_PX = 8;
-
 export type ScorePoint = { x: number; y: number };
-
 type ScoreBackend = {
   graphicalMusicPage: OpenSheetMusicDisplay["GraphicSheet"]["MusicPages"][number];
   getCanvas: () => HTMLElement;
 };
-
 type HitAnchor = { x: number; scoreQuarters: number; isEvent: boolean };
 type HitRect = { left: number; top: number; right: number; bottom: number };
 type HitMeasure = HitRect & { measureIndex: number; anchors: HitAnchor[] };
 type HitSystem = HitRect & { measures: HitMeasure[] };
 type HitPage = { backend: ScoreBackend; systems: HitSystem[] };
-
 export type ScoreHitMap = {
   osmd: OpenSheetMusicDisplay;
   timeMap: ScoreTimeMap;
@@ -23,7 +18,6 @@ export type ScoreHitMap = {
   pages: HitPage[];
   pixelsPerUnit: number;
 };
-
 export function createScoreHitMap(
   osmd: OpenSheetMusicDisplay,
   timeMap: ScoreTimeMap,
@@ -42,7 +36,6 @@ export function createScoreHitMap(
     })),
   };
 }
-
 export function scoreSecondsAtDomPoint(hitMap: ScoreHitMap, domPoint: ScorePoint): number | null {
   const page = hitMap.pages.length ? nearestPage(hitMap.pages, domPoint) : null;
   const pagePoint = page
@@ -132,13 +125,18 @@ function buildMeasure(
   const measure = staffMeasures[0];
   const left = measure.PositionAndShape.AbsolutePosition.x;
   const right = left + measure.PositionAndShape.Size.width;
-  const start = finiteQuarters(measure.parentSourceMeasure.AbsoluteTimestamp.RealValue)
-    ?? measureIndex * timeMap.measureQuarters;
+  const notationStart = finiteQuarters(measure.parentSourceMeasure.AbsoluteTimestamp.RealValue);
+  const start = notationStart === null
+    ? measureIndex * timeMap.measureQuarters
+    : notationQuartersToScoreQuarters(timeMap, notationStart);
   const duration = finiteQuarters(measure.parentSourceMeasure.Duration?.RealValue)
     ?? timeMap.measureQuarters;
   const eventAnchors = staffMeasures.flatMap((staffMeasure) => staffMeasure.staffEntries.map((entry) => ({
     x: entry.PositionAndShape.AbsolutePosition.x,
-    scoreQuarters: entry.getAbsoluteTimestamp().RealValue * 4,
+    scoreQuarters: notationQuartersToScoreQuarters(
+      timeMap,
+      entry.getAbsoluteTimestamp().RealValue * 4,
+    ),
     isEvent: true,
   }))).filter(isFiniteAnchor);
   const anchors = dedupeAnchors([
@@ -223,7 +221,10 @@ function fallbackSecondsAtDomPoint(hitMap: ScoreHitMap, domPoint: ScorePoint): n
       ),
     );
     return timestamp && Number.isFinite(timestamp.RealValue)
-      ? secondsFromQuarters(hitMap, timestamp.RealValue * 4)
+      ? secondsFromQuarters(
+        hitMap,
+        notationQuartersToScoreQuarters(hitMap.timeMap, timestamp.RealValue * 4),
+      )
       : null;
   } catch {
     return null;

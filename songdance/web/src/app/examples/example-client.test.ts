@@ -25,6 +25,15 @@ describe("buildExampleJob", () => {
     const job = buildExampleJob(timeline, {
       clip_duration_sec: 30,
       generated_at: "2026-08-07T00:00:00Z",
+      source_page: "https://commons.wikimedia.org/wiki/File:example",
+      license: "Public domain",
+      license_url: "https://commons.wikimedia.org/wiki/File:example",
+      review_status: "pending",
+      latest_completed_review: {
+        rating: "minor_edits",
+        reviewed_at: "2026-08-06T00:00:00Z",
+        model_version: "model/baseline",
+      },
       artifacts: {
         midi: { size_bytes: 10 },
         musicxml: { size_bytes: 20 },

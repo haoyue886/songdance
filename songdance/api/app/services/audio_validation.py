@@ -29,6 +29,15 @@ class ValidatedAudio:
     duration: float
 
 
+def audio_extension(filename: str) -> str:
+    extension = Path(filename).suffix.lower().lstrip(".")
+    if extension:
+        return extension
+    if filename.startswith(".") and filename.count(".") == 1:
+        return filename[1:].lower()
+    return ""
+
+
 def _sniff_format(path: Path) -> str | None:
     with path.open("rb") as file:
         header = file.read(16)
@@ -69,7 +78,7 @@ def _probe(path: Path) -> tuple[float, list[str]]:
 
 
 def validate_audio_file(path: Path, filename: str, declared_mime: str | None) -> ValidatedAudio:
-    extension = Path(filename).suffix.lower().lstrip(".")
+    extension = audio_extension(filename)
     if extension not in MIME_TYPES:
         raise AudioValidationError("UNSUPPORTED_FORMAT", "只支持 MP3、WAV 或 M4A 文件")
     detected = _sniff_format(path)

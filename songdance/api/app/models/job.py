@@ -65,6 +65,7 @@ class SourceAsset(TimestampMixin, Base):
     size_bytes: Mapped[int] = mapped_column(Integer, nullable=False)
     duration_sec: Mapped[float] = mapped_column(Float, nullable=False)
     sha256: Mapped[str] = mapped_column(String(64), nullable=False)
+    original_filename: Mapped[str | None] = mapped_column(String(255))
 
     job: Mapped[TranscriptionJob] = relationship(back_populates="source_asset")
 

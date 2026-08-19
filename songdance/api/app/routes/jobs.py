@@ -15,6 +15,7 @@ from app.services.analytics import hash_job_id, record_event
 from app.services.audio_validation import (
     MAX_AUDIO_BYTES,
     AudioValidationError,
+    audio_extension,
     extract_clip_to_wav,
     validate_audio_file,
     validate_clip,
@@ -133,7 +134,7 @@ async def create_job(
 
     settings = _settings(request)
     settings.temp_path.mkdir(parents=True, exist_ok=True)
-    temp_path = settings.temp_path / f"{secrets.token_hex(16)}{Path(filename).suffix.lower()}"
+    temp_path = settings.temp_path / f"{secrets.token_hex(16)}.{audio_extension(filename)}"
     clip_path = settings.temp_path / f"{secrets.token_hex(16)}.wav"
     storage = _storage(request)
     storage_key: str | None = None
@@ -168,6 +169,7 @@ async def create_job(
             size_bytes=size_bytes,
             duration_sec=clipped.duration,
             sha256=sha256,
+            original_filename=filename,
         )
         session.add(job)
         session.commit()

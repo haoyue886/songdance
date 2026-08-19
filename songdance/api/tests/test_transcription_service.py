@@ -7,27 +7,11 @@ from music21 import converter
 
 from app.models import TranscriptionJob
 from app.pipeline.errors import ModelInferenceError, ScoreGenerationError
-from app.pipeline.transcribe import MODEL_VERSION, NoteEvent
+from app.pipeline.transcribe import MODEL_VERSION
 from app.services.transcription import run_transcription_job
 from tests.conftest import wav_bytes
 from tests.test_jobs import create_job
-
-
-def run_service(client, job_id: str) -> None:
-    run_transcription_job(
-        job_id,
-        client.app.state.settings,
-        client.app.state.session_factory,
-        client.app.state.storage,
-    )
-
-
-def fake_transcription(_audio_path: Path, **_kwargs):
-    midi = pretty_midi.PrettyMIDI(initial_tempo=120)
-    piano = pretty_midi.Instrument(program=0)
-    piano.notes.append(pretty_midi.Note(velocity=100, pitch=60, start=0, end=1))
-    midi.instruments.append(piano)
-    return [NoteEvent(0, 1, 60, 100, 0.9)], midi
+from tests.transcription_helpers import fake_transcription, run_service
 
 
 def test_real_pipeline_creates_parseable_private_artifacts(api_client) -> None:
@@ -191,9 +175,7 @@ def test_stale_attempt_cannot_clear_or_publish_the_current_attempt(api_client, m
     payload = client.get(f"/jobs/{job_id}").json()
     assert payload["status"] == "succeeded"
     artifact_files = [
-        path
-        for path in (storage_path / f"jobs/{job_id}/artifacts").rglob("*")
-        if path.is_file()
+        path for path in (storage_path / f"jobs/{job_id}/artifacts").rglob("*") if path.is_file()
     ]
     assert artifact_files
     assert all("attempt-2" in path.parts for path in artifact_files)

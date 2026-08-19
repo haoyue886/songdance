@@ -5,7 +5,7 @@ from pathlib import Path
 
 from sqlalchemy.orm import Session, sessionmaker
 
-from app.models import JobStage, JobStatus, TranscriptionJob
+from app.models import JobStage, JobStatus
 from app.pipeline.artifacts import ARTIFACT_TYPES, artifact_paths, write_raw_timeline
 from app.pipeline.audio import preprocess_audio
 from app.pipeline.cleanup import clean_note_events, failed_cleanup_summary
@@ -33,6 +33,7 @@ from app.services.transcription_persistence import (
     persist_result,
     set_stage,
 )
+from app.services.transcription_source import source_details
 from app.settings import Settings
 
 logger = logging.getLogger(__name__)
@@ -42,12 +43,14 @@ def run_transcription_job(
     job_id: str,
     settings: Settings,
     factory: sessionmaker[Session],
-    storage: ObjectStorage, *, attempt: int | None = None,
+    storage: ObjectStorage,
+    *,
+    attempt: int | None = None,
 ) -> None:
-    source = _source_key(factory, job_id, attempt)
+    source = source_details(factory, job_id, attempt)
     if source is None:
         return
-    source_key, active_attempt = source
+    source_key, active_attempt, score_title = source
     active_model_version = model_version(
         settings.model_onset_threshold, settings.model_frame_threshold
     )
@@ -167,6 +170,7 @@ def run_transcription_job(
                 try:
                     scored = build_score(
                         cleaned_events,
+                        title=score_title,
                         analysis=structure_analysis,
                         sustain_evidence=sustain_evidence,
                     )
@@ -249,27 +253,6 @@ def run_transcription_job(
                 )
     except PipelineError as error:
         mark_failed(factory, job_id, error.code, error.message, expected_attempt=active_attempt)
-
-
-def _source_key(
-    factory: sessionmaker[Session], job_id: str, expected_attempt: int | None
-) -> tuple[str, int] | None:
-    with factory() as session:
-        job = session.get(TranscriptionJob, job_id)
-        if job is None or job.error_code in DELETE_ERROR_CODES:
-            return None
-        if job.source_asset is None:
-            mark_failed(
-                factory,
-                job_id,
-                "UPLOAD_MISSING",
-                "上传的源文件不可用",
-                expected_attempt=expected_attempt,
-            )
-            return None
-        if expected_attempt is not None and job.attempt_count != expected_attempt:
-            return None
-        return job.source_asset.storage_key, job.attempt_count
 
 
 def _clear_previous_outputs(

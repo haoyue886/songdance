@@ -54,7 +54,10 @@ describe("score time map", () => {
     expect(map.offsetQuarters).toBe(2.75);
     expect(secondsToScoreQuarters(map, 0)).toBe(2.75);
     expect(secondsToScoreQuarters(map, 0.125)).toBe(3);
-    expect(scoreTimeMapMatches(map, pickupTimeline.downbeat_grid_seconds, [0, 1, 2])).toBe(true);
+    expect(scoreTimeMapMatches(map, pickupTimeline.downbeat_grid_seconds, [0, 0.3125, 1.3125]))
+      .toBe(true);
+    expect(scoreTimeMapMatches(map, pickupTimeline.downbeat_grid_seconds, [0, 0.5, 1.5]))
+      .toBe(false);
     expect(scoreTimeMapMatches(map, pickupTimeline.downbeat_grid_seconds, [0, 1])).toBe(false);
   });
 
@@ -72,7 +75,11 @@ describe("score time map", () => {
     expect(map).not.toBeNull();
     if (!map) return;
 
-    expect(scoreTimeMapMatches(map, downbeats, Array.from({ length: 18 }, (_, index) => index))).toBe(true);
+    const scoreMeasureStarts = [
+      0,
+      ...Array.from({ length: 17 }, (_, index) => 0.3125 + index),
+    ];
+    expect(scoreTimeMapMatches(map, downbeats, scoreMeasureStarts)).toBe(true);
     expect(scoreQuartersToSeconds(map, 4)).toBeCloseTo(downbeats[0], 6);
     expect(scoreQuartersToSeconds(map, 36)).toBeCloseTo(downbeats[8], 6);
     expect(scoreQuartersToSeconds(map, 68)).toBeCloseTo(downbeats[16], 6);

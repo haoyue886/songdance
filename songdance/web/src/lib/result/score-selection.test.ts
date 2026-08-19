@@ -116,6 +116,10 @@ describe("score selection geometry", () => {
         AbsolutePosition: { x: 0, y: 0 },
         Size: { width: 20, height: 4 },
       },
+      parentSourceMeasure: {
+        AbsoluteTimestamp: { RealValue: 0 },
+        Duration: { RealValue: 0.3125 },
+      },
     };
     const osmd = {
       GraphicSheet: { MeasureList: [[measure]] },
@@ -123,7 +127,7 @@ describe("score selection geometry", () => {
     } as unknown as OpenSheetMusicDisplay;
 
     expect(scoreSelectionRects(osmd, pickupMap, { start: 0, end: 0.125 }, 1)).toEqual([
-      { key: "page-0-system-0", left: 137.5, top: 0, width: 12.5, height: 40 },
+      { key: "page-0-system-0", left: 0, top: 0, width: 40, height: 40 },
     ]);
   });
 

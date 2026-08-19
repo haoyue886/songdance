@@ -1,5 +1,5 @@
 import type { OpenSheetMusicDisplay } from "opensheetmusicdisplay";
-import { secondsToScoreQuarters, type ScoreTimeMap } from "./score-time-map";
+import { notationQuartersToScoreQuarters, secondsToScoreQuarters, type ScoreTimeMap } from "./score-time-map";
 
 export type ScoreSelectionRect = { left: number; top: number; width: number; height: number };
 export type ScoreSelectionSegment = ScoreSelectionRect & { key: string };
@@ -76,7 +76,7 @@ export function scoreSelectionRects(
     const sourceStart = measure.parentSourceMeasure?.AbsoluteTimestamp?.RealValue;
     const sourceDuration = measure.parentSourceMeasure?.Duration?.RealValue;
     const measureStartQuarters = Number.isFinite(sourceStart)
-      ? sourceStart * 4
+      ? notationQuartersToScoreQuarters(map, sourceStart * 4)
       : measureIndex * map.measureQuarters;
     const measureDurationQuarters = Number.isFinite(sourceDuration) && sourceDuration > 0
       ? sourceDuration * 4

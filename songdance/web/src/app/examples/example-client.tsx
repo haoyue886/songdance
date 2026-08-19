@@ -12,10 +12,17 @@ const BASE_PATH = "/examples/mozart-sonata";
 type ExampleState =
   | { status: "loading" }
   | { status: "error" }
-  | { status: "ready"; timeline: NoteTimeline; musicXml: string; job: TranscriptionJob };
+  | {
+      status: "ready";
+      timeline: NoteTimeline;
+      musicXml: string;
+      job: TranscriptionJob;
+      provenance: ExampleProvenance;
+    };
 
 export function ExampleClient() {
   const t = useTranslations("result");
+  const examples = useTranslations("examples");
   const [state, setState] = useState<ExampleState>({ status: "loading" });
 
   useEffect(() => {
@@ -31,6 +38,7 @@ export function ExampleClient() {
           timeline,
           musicXml,
           job: buildExampleJob(timeline, provenance),
+          provenance,
         }),
       )
       .catch(() => {
@@ -49,18 +57,68 @@ export function ExampleClient() {
       </p>
     );
   }
+  const reviewLabel = (status: ExampleProvenance["review_status"]) =>
+    status === "pending"
+      ? examples("reviewPending")
+      : status === "minor_edits"
+        ? examples("reviewMinorEdits")
+        : examples("reviewDirectUse");
   return (
-    <ResultWorkspace
-      job={state.job}
-      timeline={state.timeline}
-      musicXml={state.musicXml}
-      sourceUrl={`${BASE_PATH}/source.wav`}
-      warning={null}
-      artifactPaths={{ midi: `${BASE_PATH}/score.mid` }}
-      trackEvents={false}
-      shareable={false}
-      expiresLabel={t("exampleAvailable")}
-    />
+    <>
+      <section
+        aria-label={examples("provenance")}
+        className="mb-6 border-y border-[#d9e3dd] bg-[#f5f8f6] px-4 py-4 sm:px-5"
+      >
+        <dl className="grid gap-4 text-sm sm:grid-cols-3">
+          <ProvenanceFact label={examples("currentReview")} value={reviewLabel(state.provenance.review_status)} />
+          <ProvenanceFact
+            label={examples("completedReview")}
+            value={reviewLabel(state.provenance.latest_completed_review.rating)}
+          />
+          <div>
+            <dt className="font-bold text-[#31443f]">{examples("sourcePrefix")}</dt>
+            <dd className="mt-1 flex flex-wrap gap-x-2 text-[#52635f]">
+              <a
+                className="font-semibold text-[#075e55] underline underline-offset-4"
+                href={state.provenance.source_page}
+                rel="noreferrer"
+                target="_blank"
+              >
+                {examples("sourceLink")}
+              </a>
+              <a
+                className="underline decoration-[#9cafaa] underline-offset-4"
+                href={state.provenance.license_url}
+                rel="noreferrer"
+                target="_blank"
+              >
+                {state.provenance.license}
+              </a>
+            </dd>
+          </div>
+        </dl>
+      </section>
+      <ResultWorkspace
+        job={state.job}
+        timeline={state.timeline}
+        musicXml={state.musicXml}
+        sourceUrl={`${BASE_PATH}/source.wav`}
+        warning={null}
+        artifactPaths={{ midi: `${BASE_PATH}/score.mid` }}
+        trackEvents={false}
+        shareable={false}
+        expiresLabel={t("exampleAvailable")}
+      />
+    </>
+  );
+}
+
+function ProvenanceFact({ label, value }: { label: string; value: string }) {
+  return (
+    <div>
+      <dt className="font-bold text-[#31443f]">{label}</dt>
+      <dd className="mt-1 text-[#52635f]">{value}</dd>
+    </div>
   );
 }
 

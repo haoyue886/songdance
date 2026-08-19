@@ -8,24 +8,29 @@
   "clip_duration_sec": 30,
   "audio_sha256": "32975b2333e0ca318125335660e21e747e074e0ea28cf83e3ecbd5ce21fc298f",
   "model_version": "basic-pitch-0.4.0/icassp-2022-onnx/o0.5-f0.3",
-  "postprocess_version": "note-cleanup-v4/b83e55947b32/harmonic-evidence-v1/7c7962a7d8ce/structure-analysis-v2/9eafa86ad08d/music21-10.5.0/beat-grid/pickup-v4/harmony-v1/e59dc7bc9a81/voicing-v2/82652e2a152b/voice-compression-v1/0e515287c83d",
+  "postprocess_version": "note-cleanup-v4/b83e55947b32/harmonic-evidence-v1/7c7962a7d8ce/structure-analysis-v2/9eafa86ad08d/music21-10.5.0/beat-grid/pickup-v4/harmony-v1/e59dc7bc9a81/voicing-v3/82652e2a152b/voice-compression-v1/0e515287c83d/simple-arpeggio-filter-v3/dynamic-marking-v1/score-metadata-v1",
   "review_status": "pending",
-  "generated_at": "2026-08-16T15:33:12.754219+00:00",
-  "midi_sha256": "bacef77af63667f0f0b66b2c9426df213b9c5b9956c12c95edcfde702b157970",
-  "musicxml_sha256": "8b02332c29885f9f61953891080b1648e8293466f746d889a1eea1716ec8511c",
-  "timeline_sha256": "f9111fc686bb777b96e9d761ee5e50ef2786e4270da4b80d921fae0589211182",
+  "latest_completed_review": {
+    "rating": "minor_edits",
+    "reviewed_at": "2026-08-06T10:24:43.117449+00:00",
+    "model_version": "basic-pitch-0.4.0/icassp-2022-onnx/o0.5-f0.3"
+  },
+  "generated_at": "2026-08-19T04:52:30.344205+00:00",
+  "midi_sha256": "471587abbff968eeabcdd2305d80dde8d9261392bd38ac2dbab597774b301693",
+  "musicxml_sha256": "fdd4ca8df0b677c98a6aa5ccab53236b0039c1f5414095813011fe68618672b7",
+  "timeline_sha256": "f6aabc3c4d38f5672ed2e9051361d4b40fc444c5bf057be9dd65f04d070c529b",
   "artifacts": {
     "midi": {
-      "sha256": "bacef77af63667f0f0b66b2c9426df213b9c5b9956c12c95edcfde702b157970",
-      "size_bytes": 3013
+      "sha256": "471587abbff968eeabcdd2305d80dde8d9261392bd38ac2dbab597774b301693",
+      "size_bytes": 2041
     },
     "musicxml": {
-      "sha256": "8b02332c29885f9f61953891080b1648e8293466f746d889a1eea1716ec8511c",
-      "size_bytes": 150017
+      "sha256": "fdd4ca8df0b677c98a6aa5ccab53236b0039c1f5414095813011fe68618672b7",
+      "size_bytes": 145098
     },
     "timeline": {
-      "sha256": "f9111fc686bb777b96e9d761ee5e50ef2786e4270da4b80d921fae0589211182",
-      "size_bytes": 54981
+      "sha256": "f6aabc3c4d38f5672ed2e9051361d4b40fc444c5bf057be9dd65f04d070c529b",
+      "size_bytes": 108117
     }
   },
   "parser_validation": {

@@ -73,6 +73,10 @@ export function secondsToScoreQuarters(map: ScoreTimeMap, seconds: number): numb
   );
 }
 
+export function notationQuartersToScoreQuarters(map: ScoreTimeMap, notationQuarters: number): number {
+  return notationQuarters + map.offsetQuarters;
+}
+
 export function scoreTimeMapMatches(
   map: ScoreTimeMap,
   downbeats: number[] | undefined,
@@ -89,18 +93,24 @@ export function scoreTimeMapMatches(
   }
   if (map.downbeatAnchors.length !== downbeats.length) return false;
   const expectedMeasureSeconds = map.measureQuarters * map.quarterSeconds;
-  const expectedMeasureDuration = map.measureQuarters / 4;
   const downbeatIntervals: number[] = [];
   for (let index = 1; index < scoreMeasureStarts.length; index += 1) {
-    const actualMeasureDuration = scoreMeasureStarts[index] - scoreMeasureStarts[index - 1];
-    if (Math.abs(actualMeasureDuration - expectedMeasureDuration) > 0.001) return false;
+    const actualMeasureQuarters = (scoreMeasureStarts[index] - scoreMeasureStarts[index - 1]) * 4;
+    const expectedMeasureQuarters = index === 1 && firstDownbeatMeasure === 1
+      ? map.measureQuarters - map.offsetQuarters
+      : map.measureQuarters;
+    if (Math.abs(actualMeasureQuarters - expectedMeasureQuarters) > 0.001) return false;
   }
   for (let index = 0; index < downbeats.length; index += 1) {
     const seconds = downbeats[index];
     const anchor = map.downbeatAnchors[index];
     const scoreMeasureIndex = index + firstDownbeatMeasure;
     if (!Number.isFinite(seconds) || seconds < 0 || Math.abs(anchor.seconds - seconds) > 0.000001) return false;
-    if (Math.abs(scoreMeasureStarts[scoreMeasureIndex] * 4 - anchor.scoreQuarters) > 0.001) return false;
+    const scoreMeasureStart = notationQuartersToScoreQuarters(
+      map,
+      scoreMeasureStarts[scoreMeasureIndex] * 4,
+    );
+    if (Math.abs(scoreMeasureStart - anchor.scoreQuarters) > 0.001) return false;
     if (index === 0) continue;
     const interval = seconds - downbeats[index - 1];
     downbeatIntervals.push(interval);

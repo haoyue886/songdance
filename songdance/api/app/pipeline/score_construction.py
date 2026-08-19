@@ -45,7 +45,7 @@ def build_reconstructed_score(
     with_mp: bool,
 ) -> tuple[stream.Score, dict[str, object], dict[str, object]]:
     score = stream.Score(id="songdance-score")
-    score.metadata = metadata.Metadata(title=title)
+    score.metadata = _score_metadata(title)
     right = _new_staff("right-hand", clef.TrebleClef(), analysis, with_tempo=True)
     left = _new_staff("left-hand", clef.BassClef(), analysis)
     right_compression = populate_part(
@@ -104,7 +104,7 @@ def build_basic_score(
     with_mp: bool = False,
 ) -> tuple[stream.Score, dict[str, object]]:
     score = stream.Score(id="songdance-score-fallback")
-    score.metadata = metadata.Metadata(title=title)
+    score.metadata = _score_metadata(title)
     staffs = []
     for hand, part_id, staff_clef in (
         ("right", "right-hand", clef.TrebleClef()),
@@ -156,6 +156,13 @@ def _finalize_score(
         _insert_initial_mp(score)
     raise_for_structure_errors(score, validate_measure_durations=True)
     return score, score_structure_summary(score, validate_measure_durations=True)
+
+
+def _score_metadata(title: str) -> metadata.Metadata:
+    score_metadata = metadata.Metadata()
+    score_metadata.movementName = title
+    score_metadata.composer = ""
+    return score_metadata
 
 
 def _fill_voice_gaps(score: stream.Score) -> None:

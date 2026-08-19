@@ -50,6 +50,24 @@ def write_musicxml(scored: "ScoredTranscription", destination: Path) -> None:
         raise ScoreGenerationError("MusicXML 生成失败") from error
 
 
+def read_musicxml_visible_metadata(source: Path) -> dict[str, object]:
+    root = ElementTree.parse(source).getroot()
+    return {
+        "work_title": root.findtext("./work/work-title"),
+        "movement_title": root.findtext("./movement-title"),
+        "composers": [
+            (creator.text or "").strip()
+            for creator in root.findall("./identification/creator")
+            if creator.get("type") == "composer" and (creator.text or "").strip()
+        ],
+        "software": [
+            (software.text or "").strip()
+            for software in root.findall("./identification/encoding/software")
+            if (software.text or "").strip()
+        ],
+    }
+
+
 def read_musicxml_structure(source: Path) -> dict[str, object]:
     layout = read_musicxml_piano_layout(source)
     parsed = converter.parse(str(source))

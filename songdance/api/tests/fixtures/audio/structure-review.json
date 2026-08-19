@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "model_version": "basic-pitch-0.4.0/icassp-2022-onnx/o0.5-f0.3",
-  "suite_fingerprint": "ddd8745185910c4131ff3e392cd959572183d795491d7833b92910e61393048d",
+  "suite_fingerprint": null,
   "reviewer": {
     "midi_daw_experience": null,
     "reviewed_at": null
@@ -10,323 +10,99 @@
   "results": [
     {
       "id": "01-slow-melody",
-      "raw_midi_note_count": 54,
+      "raw_midi_note_count": null,
       "rating": "pending",
-      "notes": "",
-      "parser_validation": {
-        "music21": {
-          "status": "passed"
-        },
-        "xmllint": {
-          "status": "passed",
-          "error": null
-        },
-        "osmd": {
-          "status": "passed",
-          "measure_count": 8,
-          "svg_count": 1
-        }
-      }
+      "notes": ""
     },
     {
       "id": "02-fast-scale",
-      "raw_midi_note_count": 204,
+      "raw_midi_note_count": null,
       "rating": "pending",
-      "notes": "",
-      "parser_validation": {
-        "music21": {
-          "status": "passed"
-        },
-        "xmllint": {
-          "status": "passed",
-          "error": null
-        },
-        "osmd": {
-          "status": "passed",
-          "measure_count": 15,
-          "svg_count": 1
-        }
-      }
+      "notes": ""
     },
     {
       "id": "03-block-chords",
-      "raw_midi_note_count": 128,
+      "raw_midi_note_count": null,
       "rating": "pending",
-      "notes": "",
-      "parser_validation": {
-        "music21": {
-          "status": "passed"
-        },
-        "xmllint": {
-          "status": "passed",
-          "error": null
-        },
-        "osmd": {
-          "status": "passed",
-          "measure_count": 6,
-          "svg_count": 1
-        }
-      }
+      "notes": ""
     },
     {
       "id": "04-arpeggios",
-      "raw_midi_note_count": 326,
+      "raw_midi_note_count": null,
       "rating": "needs_redo",
-      "notes": "第二轮人工评审：旧结果仍有四行谱表，且延音衰减被拆成重复音。已按评审要求重建为单 Piano part 的高音+低音两行谱表，合并重复音并保留踏板记号；请复核本包中的最新 MusicXML 与量化 MIDI。",
-      "parser_validation": {
-        "music21": {
-          "status": "passed"
-        },
-        "xmllint": {
-          "status": "passed",
-          "error": null
-        },
-        "osmd": {
-          "status": "passed",
-          "measure_count": 15,
-          "svg_count": 1
-        }
-      }
+      "notes": "第四次人工评审修复候选：对外 BPM 已改为普通四舍五入整数，C4 已移入高音谱表，低音谱表休止符按整拍组合，并在具有中弱力度证据时加入 mp；等待本轮产物完成 OSMD 校验后再次提交专业人工复评。"
     },
     {
       "id": "05-two-hand",
-      "raw_midi_note_count": 229,
+      "raw_midi_note_count": null,
       "rating": "pending",
-      "notes": "",
-      "parser_validation": {
-        "music21": {
-          "status": "passed"
-        },
-        "xmllint": {
-          "status": "passed",
-          "error": null
-        },
-        "osmd": {
-          "status": "passed",
-          "measure_count": 15,
-          "svg_count": 1
-        }
-      }
+      "notes": ""
     },
     {
       "id": "06-sustain",
-      "raw_midi_note_count": 111,
+      "raw_midi_note_count": null,
       "rating": "pending",
-      "notes": "",
-      "parser_validation": {
-        "music21": {
-          "status": "passed"
-        },
-        "xmllint": {
-          "status": "passed",
-          "error": null
-        },
-        "osmd": {
-          "status": "passed",
-          "measure_count": 6,
-          "svg_count": 1
-        }
-      }
+      "notes": ""
     },
     {
       "id": "07-soft",
-      "raw_midi_note_count": 77,
+      "raw_midi_note_count": null,
       "rating": "pending",
-      "notes": "",
-      "parser_validation": {
-        "music21": {
-          "status": "passed"
-        },
-        "xmllint": {
-          "status": "passed",
-          "error": null
-        },
-        "osmd": {
-          "status": "passed",
-          "measure_count": 11,
-          "svg_count": 1
-        }
-      }
+      "notes": ""
     },
     {
       "id": "08-dynamics",
-      "raw_midi_note_count": 111,
+      "raw_midi_note_count": null,
       "rating": "pending",
-      "notes": "",
-      "parser_validation": {
-        "music21": {
-          "status": "passed"
-        },
-        "xmllint": {
-          "status": "passed",
-          "error": null
-        },
-        "osmd": {
-          "status": "passed",
-          "measure_count": 15,
-          "svg_count": 1
-        }
-      }
+      "notes": ""
     },
     {
       "id": "09-light-noise",
-      "raw_midi_note_count": 36,
+      "raw_midi_note_count": null,
       "rating": "pending",
-      "notes": "",
-      "parser_validation": {
-        "music21": {
-          "status": "passed"
-        },
-        "xmllint": {
-          "status": "passed",
-          "error": null
-        },
-        "osmd": {
-          "status": "passed",
-          "measure_count": 8,
-          "svg_count": 1
-        }
-      }
+      "notes": ""
     },
     {
       "id": "10-device",
-      "raw_midi_note_count": 174,
+      "raw_midi_note_count": null,
       "rating": "pending",
-      "notes": "",
-      "parser_validation": {
-        "music21": {
-          "status": "passed"
-        },
-        "xmllint": {
-          "status": "passed",
-          "error": null
-        },
-        "osmd": {
-          "status": "passed",
-          "measure_count": 15,
-          "svg_count": 1
-        }
-      }
+      "notes": ""
     },
     {
       "id": "11-waltz-34",
-      "raw_midi_note_count": 129,
+      "raw_midi_note_count": null,
       "rating": "pending",
-      "notes": "",
-      "parser_validation": {
-        "music21": {
-          "status": "passed"
-        },
-        "xmllint": {
-          "status": "passed",
-          "error": null
-        },
-        "osmd": {
-          "status": "passed",
-          "measure_count": 20,
-          "svg_count": 1
-        }
-      }
+      "notes": ""
     },
     {
       "id": "12-compound-68",
-      "raw_midi_note_count": 310,
+      "raw_midi_note_count": null,
       "rating": "pending",
-      "notes": "",
-      "parser_validation": {
-        "music21": {
-          "status": "passed"
-        },
-        "xmllint": {
-          "status": "passed",
-          "error": null
-        },
-        "osmd": {
-          "status": "passed",
-          "measure_count": 20,
-          "svg_count": 1
-        }
-      }
+      "notes": ""
     },
     {
       "id": "13-key-change",
-      "raw_midi_note_count": 193,
+      "raw_midi_note_count": null,
       "rating": "pending",
-      "notes": "",
-      "parser_validation": {
-        "music21": {
-          "status": "passed"
-        },
-        "xmllint": {
-          "status": "passed",
-          "error": null
-        },
-        "osmd": {
-          "status": "passed",
-          "measure_count": 16,
-          "svg_count": 1
-        }
-      }
+      "notes": ""
     },
     {
       "id": "14-hand-crossing",
-      "raw_midi_note_count": 285,
+      "raw_midi_note_count": null,
       "rating": "pending",
-      "notes": "",
-      "parser_validation": {
-        "music21": {
-          "status": "passed"
-        },
-        "xmllint": {
-          "status": "passed",
-          "error": null
-        },
-        "osmd": {
-          "status": "passed",
-          "measure_count": 15,
-          "svg_count": 1
-        }
-      }
+      "notes": ""
     },
     {
       "id": "15-repeated-notes",
-      "raw_midi_note_count": 237,
+      "raw_midi_note_count": null,
       "rating": "pending",
-      "notes": "",
-      "parser_validation": {
-        "music21": {
-          "status": "passed"
-        },
-        "xmllint": {
-          "status": "passed",
-          "error": null
-        },
-        "osmd": {
-          "status": "passed",
-          "measure_count": 15,
-          "svg_count": 1
-        }
-      }
+      "notes": ""
     },
     {
       "id": "16-noisy-polyphony",
-      "raw_midi_note_count": 149,
+      "raw_midi_note_count": null,
       "rating": "pending",
-      "notes": "",
-      "parser_validation": {
-        "music21": {
-          "status": "passed"
-        },
-        "xmllint": {
-          "status": "passed",
-          "error": null
-        },
-        "osmd": {
-          "status": "passed",
-          "measure_count": 15,
-          "svg_count": 1
-        }
-      }
+      "notes": ""
     }
   ]
 }

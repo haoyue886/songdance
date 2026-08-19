@@ -1,11 +1,23 @@
 from fractions import Fraction
 
-from music21 import clef, instrument, key, layout, metadata, meter, note, pitch, stream, tempo
+from music21 import (
+    clef,
+    dynamics,
+    instrument,
+    key,
+    layout,
+    metadata,
+    meter,
+    note,
+    pitch,
+    stream,
+    tempo,
+)
 
 from app.pipeline.analysis import StructureAnalysis
 from app.pipeline.harmony import HarmonyConfig, group_harmony
 from app.pipeline.pickup import apply_pickup_measures
-from app.pipeline.quantize import GRID_DIVISIONS
+from app.pipeline.quantize import GRID_DIVISIONS, integer_tempo_bpm
 from app.pipeline.score_notation import (
     apply_sustain_pedal_marks,
     combined_compression_summary,
@@ -30,6 +42,7 @@ def build_reconstructed_score(
     sustain_evidence: SustainEvidence | None,
     *,
     collapse_to_single_voice: bool,
+    with_mp: bool,
 ) -> tuple[stream.Score, dict[str, object], dict[str, object]]:
     score = stream.Score(id="songdance-score")
     score.metadata = metadata.Metadata(title=title)
@@ -61,7 +74,11 @@ def build_reconstructed_score(
             right_compression["single_voice_applied"] and left_compression["single_voice_applied"]
         )
         raise_for_piano_staff_layout(score, max_voices=1 if single_voice_applied else None)
-    score, structure = _finalize_score(score, measure_offset_units)
+    score, structure = _finalize_score(
+        score,
+        measure_offset_units,
+        with_mp=with_mp,
+    )
     pedal_marking_count = apply_sustain_pedal_marks(
         score,
         sustain_evidence,
@@ -83,6 +100,8 @@ def build_basic_score(
     analysis: StructureAnalysis,
     quarter_seconds: float,
     measure_offset_units: int,
+    *,
+    with_mp: bool = False,
 ) -> tuple[stream.Score, dict[str, object]]:
     score = stream.Score(id="songdance-score-fallback")
     score.metadata = metadata.Metadata(title=title)
@@ -119,17 +138,22 @@ def build_basic_score(
         score.insert(0, part)
         staffs.append(part)
     _insert_piano_staff_group(score, *staffs)
-    return _finalize_score(score, measure_offset_units)
+    return _finalize_score(score, measure_offset_units, with_mp=with_mp)
 
 
 def _finalize_score(
-    score: stream.Score, measure_offset_units: int
+    score: stream.Score,
+    measure_offset_units: int,
+    *,
+    with_mp: bool = False,
 ) -> tuple[stream.Score, dict[str, object]]:
     raise_for_piano_staff_layout(score, max_voices=None)
     raise_for_structure_errors(score)
     _fill_voice_gaps(score)
     score.makeNotation(inPlace=True)
     apply_pickup_measures(score, measure_offset_units)
+    if with_mp:
+        _insert_initial_mp(score)
     raise_for_structure_errors(score, validate_measure_durations=True)
     return score, score_structure_summary(score, validate_measure_durations=True)
 
@@ -163,8 +187,15 @@ def _new_staff(
     part.insert(0, meter.TimeSignature(analysis.time_signature))
     part.insert(0, key.Key(tonic, mode))
     if with_tempo:
-        part.insert(0, tempo.MetronomeMark(number=analysis.bpm))
+        part.insert(0, tempo.MetronomeMark(number=integer_tempo_bpm(analysis.bpm)))
     return part
+
+
+def _insert_initial_mp(score: stream.Score) -> None:
+    marking = dynamics.Dynamic("mp")
+    marking.placement = "below"
+    first_measure = next(iter(score.parts[0].getElementsByClass(stream.Measure)))
+    first_measure.insert(0, marking)
 
 
 def _insert_piano_staff_group(

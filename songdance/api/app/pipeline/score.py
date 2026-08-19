@@ -1,4 +1,5 @@
 from dataclasses import dataclass
+from statistics import median
 
 from music21 import stream
 from music21.exceptions21 import Music21Exception
@@ -14,6 +15,7 @@ from app.pipeline.quantize import (
     FALSE_PICKUP_REJECTED_FULL_MEASURE,
     align_repeating_eighth_note_cycles,
     decide_notation_pickup,
+    integer_tempo_bpm,
     quantize_events,
     seconds_per_quarter,
 )
@@ -46,10 +48,12 @@ from app.pipeline.voicing import (
     assign_hands,
 )
 
+DYNAMIC_MARKING_VERSION = "dynamic-marking-v1"
+MP_MAX_MEDIAN_VELOCITY = 96
 POSTPROCESS_VERSION = (
     "music21-10.5.0/beat-grid/pickup-v4/"
     f"{HarmonyConfig().version}/{VoicingConfig().version}/{VoiceCompressionConfig().version}/"
-    f"{SIMPLE_ARPEGGIO_FILTER_VERSION}"
+    f"{SIMPLE_ARPEGGIO_FILTER_VERSION}/{DYNAMIC_MARKING_VERSION}"
 )
 EIGHTH_CYCLE_ALIGNMENT_VERSION = "eighth-cycle-alignment-v2"
 TIME_SIGNATURE_ASSUMED = "TIME_SIGNATURE_ASSUMED_4_4"
@@ -64,7 +68,7 @@ class ScoredTranscription:
     score: stream.Score
     notes: list[NoteEvent]
     notation_notes: list[NoteEvent]
-    tempo_bpm: float
+    tempo_bpm: int
     quality_flags: list[str]
     analysis: StructureAnalysis
     reconstruction: dict[str, object]
@@ -103,6 +107,7 @@ def build_score(
     if sustain_evidence is None or sustain_evidence.status != "available":
         flags.append(SUSTAIN_EVIDENCE_UNAVAILABLE)
     collapse_to_single_voice = voicing.strategy == "simple_arpeggio_stable_zone"
+    with_mp = _should_mark_mp(notation_events, collapse_to_single_voice)
 
     try:
         score, structure, compression = _build_reconstructed_score(
@@ -113,6 +118,7 @@ def build_score(
             measure_offset_units,
             sustain_evidence,
             collapse_to_single_voice=collapse_to_single_voice,
+            with_mp=with_mp,
         )
         reconstruction = {
             "status": "reconstructed",
@@ -134,6 +140,7 @@ def build_score(
                 active_analysis,
                 quarter_seconds,
                 measure_offset_units,
+                with_mp=with_mp,
             )
         except RECOVERABLE_SCORE_ERRORS as fallback_error:
             raise ScoreGenerationError() from fallback_error
@@ -165,7 +172,7 @@ def build_score(
         score=score,
         notes=voicing.events,
         notation_notes=notation_events,
-        tempo_bpm=active_analysis.bpm,
+        tempo_bpm=integer_tempo_bpm(active_analysis.bpm),
         quality_flags=flags,
         analysis=active_analysis,
         reconstruction=reconstruction,
@@ -183,3 +190,7 @@ def _notation_pedal_intervals(
     if AUDIO_SUSTAIN_PEDAL in evidence.sources:
         intervals.extend(evidence.audio_pedal_intervals)
     return tuple(intervals)
+
+
+def _should_mark_mp(events: list[NoteEvent], simple_arpeggio: bool) -> bool:
+    return bool(events) and simple_arpeggio and median(event.velocity for event in events) <= 96

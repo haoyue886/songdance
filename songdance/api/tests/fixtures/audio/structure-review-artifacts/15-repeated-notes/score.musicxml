@@ -8,7 +8,7 @@
   <identification>
     <creator type="composer">Music21</creator>
     <encoding>
-      <encoding-date>2026-08-18</encoding-date>
+      <encoding-date>2026-08-19</encoding-date>
       <software>music21 v.10.5.0</software>
       <supports element="beam" type="yes" />
       <supports element="stem" type="yes" />
@@ -22,21 +22,21 @@
     </scaling>
   </defaults>
   <part-list>
-    <score-part id="P1f83d78a64adf26b17ee5e54fb85b8c0">
+    <score-part id="P8a4395596e021573e6f2ead39434cc24">
       <part-name>Piano</part-name>
       <part-abbreviation>Pno</part-abbreviation>
-      <score-instrument id="Id000f79e84bf1aa5db5c65cf8585b5e1">
+      <score-instrument id="I5cedb4f732c8467dd50df8c348b003ee">
         <instrument-name>Piano</instrument-name>
         <instrument-abbreviation>Pno</instrument-abbreviation>
       </score-instrument>
-      <midi-instrument id="Id000f79e84bf1aa5db5c65cf8585b5e1">
+      <midi-instrument id="I5cedb4f732c8467dd50df8c348b003ee">
         <midi-channel>1</midi-channel>
         <midi-program>1</midi-program>
       </midi-instrument>
     </score-part>
   </part-list>
   <!--=========================== Part 1 ===========================-->
-  <part id="P1f83d78a64adf26b17ee5e54fb85b8c0">
+  <part id="P8a4395596e021573e6f2ead39434cc24">
     <!--========================= Measure 1 ==========================-->
     <measure implicit="no" number="1">
       <attributes>
@@ -63,11 +63,11 @@
         <direction-type>
           <metronome parentheses="no">
             <beat-unit>quarter</beat-unit>
-            <per-minute>117.453835</per-minute>
+            <per-minute>117</per-minute>
           </metronome>
         </direction-type>
         <staff>1</staff>
-        <sound tempo="117.453835" />
+        <sound tempo="117" />
       </direction>
       <note dynamics="107.78">
         <pitch>

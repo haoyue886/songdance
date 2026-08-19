@@ -83,7 +83,7 @@ def test_simple_arpeggio_uses_stable_zones_for_ac072_sequence() -> None:
     assert [event.hand for event in result.events] == [
         "left",
         "left",
-        "left",
+        "right",
         "right",
         "right",
         "right",
@@ -187,7 +187,7 @@ def test_repeated_arpeggio_ignores_resonant_candidates_before_stabilizing() -> N
     assert result.strategy == "simple_arpeggio_stable_zone"
     assert result.reason_codes[0] == SIMPLE_ARPEGGIO_APPLIED
     assert all(
-        event.hand == "left" if event.pitch <= 60 else event.hand == "right"
+        event.hand == "left" if event.pitch < 60 else event.hand == "right"
         for event in result.events
     )
 
@@ -403,5 +403,5 @@ def test_voice_assignment_never_overlaps_within_a_voice() -> None:
 
 
 def test_voicing_config_version_changes_with_threshold() -> None:
-    assert VoicingConfig().version.startswith("voicing-v2/")
+    assert VoicingConfig().version.startswith("voicing-v3/")
     assert VoicingConfig().version != VoicingConfig(minimum_confidence=0.3).version

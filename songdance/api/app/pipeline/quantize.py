@@ -1,4 +1,5 @@
 from dataclasses import asdict, dataclass, replace
+from math import floor
 from statistics import median
 
 from app.pipeline.analysis import StructureAnalysis
@@ -88,6 +89,10 @@ def _observed_eighth_seconds(events: list[NoteEvent], expected: float) -> float:
 
 def seconds_per_quarter(analysis: StructureAnalysis) -> float:
     return 60.0 / analysis.bpm
+
+
+def integer_tempo_bpm(bpm: float) -> int:
+    return floor(bpm + 0.5)
 
 
 def notation_measure_offset_units(analysis: StructureAnalysis) -> int:

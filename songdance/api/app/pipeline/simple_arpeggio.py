@@ -10,6 +10,7 @@ SIMPLE_ARPEGGIO_CLEAR_ZONE = "SIMPLE_ARPEGGIO_CLEAR_ZONE"
 SIMPLE_ARPEGGIO_PATTERN = (48, 55, 60, 64, 67, 72, 67, 64)
 SIMPLE_ARPEGGIO_LEFT_MAX = 60
 SIMPLE_ARPEGGIO_RIGHT_MIN = 64
+SIMPLE_ARPEGGIO_RIGHT_HAND_MIN = 60
 SIMPLE_ARPEGGIO_CONFIDENCE = 0.92
 
 
@@ -53,7 +54,7 @@ def _has_explicit_crossing(
         _in_ranges(event.start_sec, ranges)
         and (event.hand_confidence is None or event.hand_confidence >= SIMPLE_ARPEGGIO_CONFIDENCE)
         and (
-            (event.hand == "right" and event.pitch <= SIMPLE_ARPEGGIO_LEFT_MAX)
+            (event.hand == "right" and event.pitch < SIMPLE_ARPEGGIO_RIGHT_HAND_MIN)
             or (event.hand == "left" and event.pitch >= SIMPLE_ARPEGGIO_RIGHT_MIN)
         )
         for event in events
@@ -215,11 +216,9 @@ def _in_ranges(position: float, ranges: tuple[tuple[float, float], ...]) -> bool
 
 
 def _assign_clear_zone(event: NoteEvent) -> NoteEvent:
-    if event.pitch <= SIMPLE_ARPEGGIO_LEFT_MAX:
+    if event.pitch < SIMPLE_ARPEGGIO_RIGHT_HAND_MIN:
         hand = "left"
-    elif event.pitch >= SIMPLE_ARPEGGIO_RIGHT_MIN:
-        hand = "right"
     else:
-        return event
+        hand = "right"
     confidence = max(event.hand_confidence or 0.0, SIMPLE_ARPEGGIO_CONFIDENCE)
     return replace(event, hand=hand, hand_confidence=round(confidence, 6))

@@ -7,7 +7,7 @@ from typing import Protocol
 from app.pipeline.simple_arpeggio import apply_simple_arpeggio_strategy
 from app.pipeline.transcribe import NoteEvent
 
-VOICING_ALGORITHM_VERSION = "voicing-v2"
+VOICING_ALGORITHM_VERSION = "voicing-v3"
 UNKNOWN_HAND_NOTATION_FALLBACK = "UNKNOWN_HAND_NOTATION_FALLBACK"
 
 

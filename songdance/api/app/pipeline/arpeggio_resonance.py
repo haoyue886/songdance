@@ -9,7 +9,7 @@ from app.pipeline.simple_arpeggio import (
 )
 from app.pipeline.transcribe import NoteEvent
 
-SIMPLE_ARPEGGIO_FILTER_VERSION = "simple-arpeggio-filter-v2"
+SIMPLE_ARPEGGIO_FILTER_VERSION = "simple-arpeggio-filter-v3"
 SIMPLE_ARPEGGIO_RESONANCE_FILTERED = "SIMPLE_ARPEGGIO_RESONANCE_FILTERED"
 MINIMUM_PEDAL_CYCLES = 3
 MINIMUM_CYCLE_PEDAL_COVERAGE = 0.5

@@ -5,10 +5,11 @@ from xml.etree import ElementTree
 
 import pretty_midi
 import pytest
-from music21 import expressions, layout, stream
+from music21 import dynamics, expressions, layout, note, stream, tempo
 
 from app.pipeline.analysis import StructureAnalysis
 from app.pipeline.artifacts import artifact_paths, write_timeline
+from app.pipeline.quantize import integer_tempo_bpm
 from app.pipeline.score import (
     SCORE_RECONSTRUCTION_FALLBACK,
     build_score,
@@ -20,6 +21,11 @@ from app.pipeline.score_validation import score_structure_errors
 from app.pipeline.sustain import extract_sustain_evidence
 from app.pipeline.transcribe import NoteEvent
 from scripts.score_parser_validation import validate_external_parsers
+
+
+@pytest.mark.parametrize(("bpm", "expected"), [(117.49, 117), (117.5, 118), (118.5, 119)])
+def test_integer_tempo_uses_half_up_rounding(bpm: float, expected: int) -> None:
+    assert integer_tempo_bpm(bpm) == expected
 
 
 def test_reconstructed_score_has_chords_and_no_voice_overlap() -> None:
@@ -93,12 +99,15 @@ def test_repeated_arpeggio_is_one_piano_part_with_two_staves(tmp_path) -> None:
     assert xml.count("<staves>2</staves>") == 1
     assert xml.count("<metronome ") == 1
     assert xml.count("<sound tempo=") == 1
+    assert "<per-minute>117</per-minute>" in xml
+    assert '<sound tempo="117"' in xml
+    assert xml.count("<mp />") == 1
     assert xml.count("<pedal ") == 2
     assert len(list(scored.score.recurse().getElementsByClass(stream.Voice))) == 0
     assert len(list(scored.score.recurse().getElementsByClass(expressions.PedalMark))) == 1
     assert scored.reconstruction["voice_compression"]["single_voice_applied"] is True
     assert scored.reconstruction["arpeggio_filter"] == {
-        "version": "simple-arpeggio-filter-v2",
+        "version": "simple-arpeggio-filter-v3",
         "applied": True,
         "removed_event_count": 97,
         "stable_cycle_count": 14,
@@ -111,13 +120,24 @@ def test_repeated_arpeggio_is_one_piano_part_with_two_staves(tmp_path) -> None:
     assert len(written_midi.instruments) == 2
     assert {instrument.name for instrument in written_midi.instruments} == {"Piano"}
     assert len(written_midi.get_tempo_changes()[0]) == 1
+    assert [round(value) for value in written_midi.get_tempo_changes()[1]] == [117]
+    assert scored.tempo_bpm == 117
+    assert timeline["analysis"]["bpm"] == 117.453835
+    assert written_timeline["tempo_bpm"] == 117
+    assert [
+        mark.number
+        for mark in scored.score.recurse().getElementsByClass(tempo.MetronomeMark)
+    ] == [117]
+    assert [mark.value for mark in scored.score.recurse().getElementsByClass(dynamics.Dynamic)] == [
+        "mp"
+    ]
 
     left_expected = [
         (0.0, 48),
         (0.5, 55),
-        (1.0, 60),
     ]
     right_expected = [
+        (1.0, 60),
         (1.5, 64),
         (2.0, 67),
         (2.5, 72),
@@ -140,10 +160,18 @@ def test_repeated_arpeggio_is_one_piano_part_with_two_staves(tmp_path) -> None:
         assert right_actual == right_expected
         assert left_actual == left_expected
 
+        left_rests = [
+            (float(item.offset), float(item.quarterLength))
+            for item in list(left.getElementsByClass(stream.Measure))[measure_index]
+            .recurse()
+            .getElementsByClass(note.Rest)
+        ]
+        assert left_rests == [(1.0, 3.0)]
+
     assert [event.hand for event in scored.notation_notes[-7:]] == [
         "left",
         "left",
-        "left",
+        "right",
         "right",
         "right",
         "right",
@@ -151,8 +179,21 @@ def test_repeated_arpeggio_is_one_piano_part_with_two_staves(tmp_path) -> None:
     ]
     final_right = list(right.getElementsByClass(stream.Measure))[-1]
     final_left = list(left.getElementsByClass(stream.Measure))[-1]
-    assert [item.pitch.midi for item in final_right.recurse().notes] == [64, 67, 72, 67]
-    assert [item.pitch.midi for item in final_left.recurse().notes] == [48, 55, 60]
+    assert [item.pitch.midi for item in final_right.recurse().notes] == [60, 64, 67, 72, 67]
+    assert [item.pitch.midi for item in final_left.recurse().notes] == [48, 55]
+
+
+def test_loud_simple_arpeggio_does_not_receive_mp() -> None:
+    pattern = (48, 55, 60, 64, 67, 72, 67, 64)
+    scored = build_score(
+        [
+            NoteEvent(index * 0.25, index * 0.25 + 0.2, pitch, 127, 0.99)
+            for index, pitch in enumerate(pattern)
+        ]
+    )
+
+    assert scored.reconstruction["voicing"]["strategy"] == "simple_arpeggio_stable_zone"
+    assert list(scored.score.recurse().getElementsByClass(dynamics.Dynamic)) == []
 
 
 def test_plain_parts_cannot_masquerade_as_a_piano_staff_group() -> None:

@@ -39,18 +39,25 @@ def test_public_example_matches_current_pipeline_and_provenance() -> None:
     assert result["timeline"]["local_tonal_center"] == "G major"
     assert result["timeline"]["notation_key_signature"] == "C major"
     assert result["timeline"]["reconstruction"]["pickup"]["measure_offset_units"] == 0
-    assert result["timeline"]["reconstruction"]["staff_distribution"]["status"] == (
-        "passed"
-    )
+    assert result["timeline"]["reconstruction"]["staff_distribution"]["status"] == ("passed")
     assert result["timeline"]["reconstruction"]["voicing"]["unknown_count"] <= 32
     assert result["structure"]["rest_count"] <= MAXIMUM_PUBLIC_REST_COUNT
     assert result["structure"]["maximum_voices_by_staff_measure"] == {"1": 2, "2": 2}
+    reference = result["provenance"]["reference_validation"]
+    assert reference["provider"] == "IMSLP"
+    assert reference["reference_format"] == "midi"
+    assert reference["reference_measure_range"] == [1, 73]
+    assert reference["reference_measure_count"] == 73
+    assert reference["audio_reference_measure_count"] == 17
+    assert reference["audio_reference_mapping"] == [
+        {"audio_measure_index": index, "reference_measure_number": index} for index in range(1, 18)
+    ]
     source_root = FIXTURE_ROOT / "human-review-artifacts" / CASE_ID
     ratings = {
         item["id"]: item["rating"]
-        for item in json.loads(
-            (FIXTURE_ROOT / "human-review.json").read_text(encoding="utf-8")
-        )["results"]
+        for item in json.loads((FIXTURE_ROOT / "human-review.json").read_text(encoding="utf-8"))[
+            "results"
+        ]
     }
     assert ratings[CASE_ID] == "pending"
     assert file_sha256(PUBLIC_ROOT / "source.wav") == file_sha256(SOURCE_AUDIO)

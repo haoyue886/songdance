@@ -17,19 +17,94 @@
   },
   "reference_validation": {
     "status": "passed",
-    "contract_schema_version": 1,
-    "contract_sha256": "715e7c8b6b45f9be143ae9841db125ba9290dd4de1d04cb6ce20ebddb0869dd9",
-    "corpus_identifier": "mozart/k545/movement1",
-    "reference_score_sha256": "5b72d6c0ad5aa935865e30e80fc91422b5a131d3f72caf8303cc75d00c5a1556",
+    "contract_schema_version": 2,
+    "contract_sha256": "bd1fd1ec248f2313ca7b362ac0dd8015fb44bc3d2f9faa3173b82f4d3f73547b",
+    "provider": "IMSLP",
+    "source_url": "https://imslp.org/wiki/Piano_Sonata_No.16_in_C_major%2C_K.545_(Mozart%2C_Wolfgang_Amadeus)",
+    "download_url": "https://imslp.org/images/6/67/PMLP1855-sonata-in-c.mid",
+    "reference_format": "midi",
+    "reference_score_sha256": "e3ec5b0110ff11ff7ee0f39c8cf9aa80a8d05a7d1fd9b43f9ce5a579061641ea",
     "reference_measure_range": [
       1,
-      12
+      73
+    ],
+    "reference_measure_count": 73,
+    "audio_reference_measure_count": 17,
+    "audio_reference_mapping": [
+      {
+        "audio_measure_index": 1,
+        "reference_measure_number": 1
+      },
+      {
+        "audio_measure_index": 2,
+        "reference_measure_number": 2
+      },
+      {
+        "audio_measure_index": 3,
+        "reference_measure_number": 3
+      },
+      {
+        "audio_measure_index": 4,
+        "reference_measure_number": 4
+      },
+      {
+        "audio_measure_index": 5,
+        "reference_measure_number": 5
+      },
+      {
+        "audio_measure_index": 6,
+        "reference_measure_number": 6
+      },
+      {
+        "audio_measure_index": 7,
+        "reference_measure_number": 7
+      },
+      {
+        "audio_measure_index": 8,
+        "reference_measure_number": 8
+      },
+      {
+        "audio_measure_index": 9,
+        "reference_measure_number": 9
+      },
+      {
+        "audio_measure_index": 10,
+        "reference_measure_number": 10
+      },
+      {
+        "audio_measure_index": 11,
+        "reference_measure_number": 11
+      },
+      {
+        "audio_measure_index": 12,
+        "reference_measure_number": 12
+      },
+      {
+        "audio_measure_index": 13,
+        "reference_measure_number": 13
+      },
+      {
+        "audio_measure_index": 14,
+        "reference_measure_number": 14
+      },
+      {
+        "audio_measure_index": 15,
+        "reference_measure_number": 15
+      },
+      {
+        "audio_measure_index": 16,
+        "reference_measure_number": 16
+      },
+      {
+        "audio_measure_index": 17,
+        "reference_measure_number": 17
+      }
     ],
     "notation_key_signature": "C major",
     "shortest_note_value": 16,
     "divisions_per_quarter": 4
   },
-  "generated_at": "2026-08-19T09:26:21.074635+00:00",
+  "generated_at": "2026-08-20T14:02:58.296653+00:00",
   "midi_sha256": "3a2df6017fbded975a6b50af9c24164a938116cb44eea79339c3e112c02cf86b",
   "musicxml_sha256": "85c98535d63a75b4b80b5b3496a9b649c8b8fb136de5853307e1809427ac32d1",
   "timeline_sha256": "e5781f782a4c08c054a07656a33469708f6f9c6a3d81918d369c17b16c92ff53",

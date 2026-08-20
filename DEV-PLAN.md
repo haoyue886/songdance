@@ -1256,10 +1256,10 @@ Phase 9 基线
 - Task 32.4 已完成三类短时值真值集、自适应量化和隔离半速 A/B。原速 precision/recall/F1 为 0.7991/0.6554/0.7059，半速为 0.7680/0.8216/0.7756，但 precision 下降 0.0311、P95 时延由 52.7ms 增至 172.7ms，因此 `production_eligible=false`，生产模型路径保持原速；K.545 继续按参考谱锁定十六分量化。
 - 10 段真人钢琴集与 16 段结构集已按当前后处理版本重生成并绑定新指纹；16 份 MusicXML 的 music21、`xmllint`、OSMD 共 48 项全部通过。API 全量 335 passed/6 skipped，Web 单测 137 passed，TypeScript、ESLint 与 Next.js 生产构建通过。
 - Task 32.2 仍因没有已核验授权、真实演奏和可下载参考谱同时齐备的初级素材而阻塞；该阻塞不撤下 K.545，也不把合成音频冒充新默认示例。
-- K.545 参考真值新增独立合同文件，固定当前音频指纹、music21 K.545 参考谱标识与 SHA-256、C 大调、十六分最短时值和逐小节时值统计；发布 provenance 保存合同指纹与验证摘要，G 大调、32 分量化、staff `suspect/not_evaluated` 或缺字段的反例全部阻塞。普通上传结果页同时标明自动分析为“推断调性”，并把 `STAFF_DISTRIBUTION_SUSPECT` 显示为可见校对警告。
-- 发布门禁同时核对 timeline 顶层、`notation`、`reconstruction` 语义副本和最终 MusicXML 的实际 `<fifths>`/`<type>`，直接篡改任一层均阻塞。当前 music21 参考谱只含第 1–12 小节，尚缺固定 25–55 秒音频到完整参考谱的逐小节映射；该缺口保持 Task 32.1 打开且不影响 K.545 继续作为失败对照公开。
-- 第三次 fresh `code-reviewer` 从 Stage 1 独立复测：root/嵌套调号、来源、顶层/重建量化和最终 MusicXML 共 14 类篡改全部 fail-closed；仍有 1 个 HIGH 为上述完整参考谱逐小节映射缺失，因此 Stage 1 保持 FAIL、Stage 2 未执行，Phase 32 不标完成且不得以该结论撤下或替换 K.545。
-- 当前最终回归：API 除沙箱禁止 Redis、本地 HTTP 端口和无头 OSMD 的 3 个环境用例外为 343 passed/6 skipped/3 deselected；Web 为 140 passed，TypeScript、ESLint、Next.js 45 页面生产构建、Ruff 与 `git diff --check` 通过。OSMD 本轮外部授权服务过载未重跑，不把 provenance 中历史 `passed` 冒充本轮执行证据。
+- K.545 参考真值新增独立合同文件，固定当前音频指纹、IMSLP 公版 MIDI 的来源 URL、文件 SHA-256、73 小节完整覆盖、C 大调、十六分最短时值和当前 17 个产物小节到参考小节的有序映射；发布 provenance 保存合同指纹与验证摘要，G 大调、32 分量化、staff `suspect/not_evaluated`、参考文件缺失或映射缺项/乱序/越界的反例全部阻塞。普通上传结果页同时标明自动分析为“推断调性”，并把 `STAFF_DISTRIBUTION_SUSPECT` 显示为可见校对警告。
+- 上一轮发布门禁已能核对 timeline 顶层、`notation`、`reconstruction` 语义副本和最终 MusicXML 的实际 `<fifths>`/`<type>`；当时 music21 参考谱仅含第 1–12 小节，第三次 fresh `code-reviewer` 因缺少完整参考谱逐小节映射判定 Stage 1 FAIL。该历史缺口不再作为当前真值来源，也从未用于撤下或替换 K.545。
+- 已将用户下载的 IMSLP `PMLP1855-sonata-in-c.mid` 固定为仓库 fixture（format 1、2 个声部、73 小节、4/4、C 大调、SHA-256 `e3ec5b0110ff11ff7ee0f39c8cf9aa80a8d05a7d1fd9b43f9ce5a579061641ea`）；合同记录固定音频起点到参考第 1–17 小节的 17 项顺序映射，并校验 17 个 downbeat、68 个四分音符窗口与音高类别比对摘要。发布器改为离线解析该 MIDI，拒绝旧 music21 12 小节 corpus 和任何缺项/乱序/越界映射。
+- 当前最终回归：API 全量为 354 passed/6 skipped，沙箱内失败的 Redis、本地 HTTP 与无头 OSMD 3 个环境用例在沙箱外单独复跑全部通过；公开示例定向测试 49 passed。Web 单测 140 passed，TypeScript、ESLint、Next.js 45 页面生产构建、Ruff 与 `git diff --check` 通过；发布器 fresh `music21`、`xmllint`、OSMD 均通过并更新 provenance。Web E2E 当前为 18 passed/7 failed，暴露固定 `.data/e2e.sqlite3` 未隔离导致缺列，以及既有页面文案、历史 18 小节和 OSMD SVG 数量断言陈旧；该测试基础设施缺口不改变参考合同结果，但在 Phase 32 完成前仍需修复。
 
 **关键文件：**
 

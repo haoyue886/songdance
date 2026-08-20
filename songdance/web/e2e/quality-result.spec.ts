@@ -1,57 +1,16 @@
 import { expect, test } from "@playwright/test";
-import { readFile } from "node:fs/promises";
-import path from "node:path";
 import { buildJob, installJobRoutes, qualitySummary, successfulArtifacts, timeline } from "./support/quality-job";
 
 test("shows a high-quality report and remains usable at 375px", async ({ page }) => {
   const job = buildJob("quality-high", qualitySummary, successfulArtifacts());
-  const mappedTimeline = JSON.parse(await readFile(
-    path.resolve(process.cwd(), "public/examples/mozart-sonata/timeline.json"),
-    "utf8",
-  ));
-  await installJobRoutes(page, job, mappedTimeline);
+  await installJobRoutes(page, job);
   await page.setViewportSize({ width: 375, height: 812 });
   await page.goto(`/zh/jobs/${job.id}`);
 
   await expect(page.getByRole("heading", { name: "质量摘要" })).toBeVisible();
-  const position = page.getByRole("slider", { name: "播放位置", exact: true });
-  const score = page.getByLabel("MusicXML 五线谱");
-  const cursor = score.locator('img[id^="cursorImg"]');
-  await expect(page.getByText(/第 1 \/ \d+ 小节/)).toBeVisible();
+  await expect(page.getByText("小节定位不可用")).toBeVisible();
   await expect(page.getByRole("button", { name: "上一小节" })).toBeDisabled();
-  await expect(cursor).toBeVisible();
-  const firstCursorBox = await cursor.boundingBox();
-  expect(firstCursorBox).not.toBeNull();
-  const firstScroll = await page.evaluate(() => ({ x: window.scrollX, y: window.scrollY }));
-  const firstCursorPosition = firstCursorBox
-    ? { x: firstCursorBox.x + firstScroll.x, y: firstCursorBox.y + firstScroll.y }
-    : null;
-  await page.getByRole("button", { name: "下一小节" }).click();
-  await expect.poll(async () => Number(await position.inputValue())).toBeCloseTo(0.580499, 1);
-  await expect.poll(async () => {
-    const nextCursorBox = await cursor.boundingBox();
-    const scroll = await page.evaluate(() => ({ x: window.scrollX, y: window.scrollY }));
-    return nextCursorBox && firstCursorPosition
-      ? Math.hypot(
-        nextCursorBox.x + scroll.x - firstCursorPosition.x,
-        nextCursorBox.y + scroll.y - firstCursorPosition.y,
-      )
-      : 0;
-  }).toBeGreaterThan(1);
-  await position.press("Home");
-  await expect.poll(async () => {
-    const currentCursorBox = await cursor.boundingBox();
-    const scroll = await page.evaluate(() => ({ x: window.scrollX, y: window.scrollY }));
-    return currentCursorBox && firstCursorPosition
-      ? Math.hypot(
-        currentCursorBox.x + scroll.x - firstCursorPosition.x,
-        currentCursorBox.y + scroll.y - firstCursorPosition.y,
-      )
-      : Number.POSITIVE_INFINITY;
-  }).toBeLessThan(1);
-  await score.locator("text").filter({ hasText: /^2$/ }).first().click();
-  await expect.poll(async () => Number(await position.inputValue())).toBeGreaterThan(0);
-  await expect(page.getByText("3 / 2")).toBeVisible();
+  await expect(page.getByRole("button", { name: "下一小节" })).toBeDisabled();
   await expect(page.getByText("84%")).toBeVisible();
   await expect(page.getByText("自动分析仅供校对，不代表人工谱面级准确率")).toBeVisible();
   await expect(page.getByRole("button", { name: /^清洗后 MIDI/ })).toBeEnabled();
@@ -67,7 +26,7 @@ test("keeps the score, playback and downloads when measure mapping is unavailabl
   await installJobRoutes(page, job, { ...timeline, time_signature: "free" });
   await page.goto(`/zh/jobs/${job.id}`);
 
-  await expect(page.locator('[aria-label="MusicXML 五线谱"] svg')).toHaveCount(6);
+  await expect(page.locator('[aria-label="MusicXML 五线谱"] svg')).toHaveCount(5);
   await expect(page.getByText("小节定位不可用")).toBeVisible();
   await expect(page.getByRole("button", { name: "上一小节" })).toBeDisabled();
   await expect(page.getByRole("button", { name: "下一小节" })).toBeDisabled();

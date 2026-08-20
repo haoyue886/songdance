@@ -17,6 +17,16 @@ export const timeline = {
   ],
 };
 
+export const mappedTimeline = {
+  ...timeline,
+  beat_grid_seconds: Array.from({ length: 129 }, (_, index) => index * 0.508475),
+  downbeat_grid_seconds: Array.from({ length: 17 }, (_, index) => index * 2.033898),
+  notes: [
+    { id: "mapped-note-1", start_sec: 0, end_sec: 36, pitch: 60, velocity: 90, confidence: 0.9, hand: "right" },
+    { id: "mapped-note-2", start_sec: 0, end_sec: 36, pitch: 48, velocity: 82, confidence: 0.8, hand: "left" },
+  ],
+};
+
 export const qualitySummary = {
   schema_version: 4,
   quality_report_version: "quality-report-v6",

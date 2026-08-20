@@ -5,7 +5,7 @@ test("switches locale while preserving the logical page, query and hash", async 
   await page.getByLabel("语言").selectOption("en");
   await expect(page).toHaveURL(/\/examples\?source=phase28#sample-score$/);
   await expect(page.locator("html")).toHaveAttribute("lang", "en");
-  await expect(page.getByRole("heading", { level: 1, name: "Hear the source. Inspect the transcription." }))
+  await expect(page.getByRole("heading", { level: 1, name: "Public example under quality review" }))
     .toBeVisible();
 
   const cookie = (await context.cookies()).find((entry) => entry.name === "NEXT_LOCALE");

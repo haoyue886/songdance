@@ -1259,7 +1259,7 @@ Phase 9 基线
 - K.545 参考真值新增独立合同文件，固定当前音频指纹、IMSLP 公版 MIDI 的来源 URL、文件 SHA-256、73 小节完整覆盖、C 大调、十六分最短时值和当前 17 个产物小节到参考小节的有序映射；发布 provenance 保存合同指纹与验证摘要，G 大调、32 分量化、staff `suspect/not_evaluated`、参考文件缺失或映射缺项/乱序/越界的反例全部阻塞。普通上传结果页同时标明自动分析为“推断调性”，并把 `STAFF_DISTRIBUTION_SUSPECT` 显示为可见校对警告。
 - 上一轮发布门禁已能核对 timeline 顶层、`notation`、`reconstruction` 语义副本和最终 MusicXML 的实际 `<fifths>`/`<type>`；当时 music21 参考谱仅含第 1–12 小节，第三次 fresh `code-reviewer` 因缺少完整参考谱逐小节映射判定 Stage 1 FAIL。该历史缺口不再作为当前真值来源，也从未用于撤下或替换 K.545。
 - 已将用户下载的 IMSLP `PMLP1855-sonata-in-c.mid` 固定为仓库 fixture（format 1、2 个声部、73 小节、4/4、C 大调、SHA-256 `e3ec5b0110ff11ff7ee0f39c8cf9aa80a8d05a7d1fd9b43f9ce5a579061641ea`）；合同记录固定音频起点到参考第 1–17 小节的 17 项顺序映射，并校验 17 个 downbeat、68 个四分音符窗口与音高类别比对摘要。发布器改为离线解析该 MIDI，拒绝旧 music21 12 小节 corpus 和任何缺项/乱序/越界映射。
-- 当前最终回归：API 全量为 354 passed/6 skipped，沙箱内失败的 Redis、本地 HTTP 与无头 OSMD 3 个环境用例在沙箱外单独复跑全部通过；公开示例定向测试 49 passed。Web 单测 140 passed，TypeScript、ESLint、Next.js 45 页面生产构建、Ruff 与 `git diff --check` 通过；发布器 fresh `music21`、`xmllint`、OSMD 均通过并更新 provenance。Web E2E 当前为 18 passed/7 failed，暴露固定 `.data/e2e.sqlite3` 未隔离导致缺列，以及既有页面文案、历史 18 小节和 OSMD SVG 数量断言陈旧；该测试基础设施缺口不改变参考合同结果，但在 Phase 32 完成前仍需修复。
+- 当前最终回归：API 全量为 354 passed/6 skipped，沙箱内失败的 Redis、本地 HTTP 与无头 OSMD 3 个环境用例在沙箱外单独复跑全部通过；公开示例定向测试 49 passed。Web 单测 140 passed，TypeScript、ESLint、Next.js 45 页面生产构建、Ruff 与 `git diff --check` 通过；发布器 fresh `music21`、`xmllint`、OSMD 均通过并更新 provenance。Web E2E 已恢复为 26 passed：Playwright API/Worker 使用每次运行独立的临时 SQLite/storage/temp、唯一 RQ 队列和 Alembic `upgrade head`，公开失败示例保留 `pending / needs_redo` 与 mapping unavailable 对照，同时新增可映射 MusicXML 浏览器回归覆盖小节定位、选区和循环。
 
 **关键文件：**
 

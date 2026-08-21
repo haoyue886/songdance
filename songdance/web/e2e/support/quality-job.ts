@@ -1,9 +1,10 @@
 import type { Page } from "@playwright/test";
 import { readFile } from "node:fs/promises";
 import path from "node:path";
+import type { NoteTimeline } from "../../src/lib/result/timeline";
 import { createWav } from "./audio";
 
-export const timeline = {
+export const timeline: NoteTimeline = {
   schema_version: 1,
   model_version: "basic-pitch-test",
   tempo_bpm: 118,
@@ -17,15 +18,18 @@ export const timeline = {
   ],
 };
 
-export const mappedTimeline = {
-  ...timeline,
-  beat_grid_seconds: Array.from({ length: 129 }, (_, index) => index * 0.508475),
-  downbeat_grid_seconds: Array.from({ length: 17 }, (_, index) => index * 2.033898),
-  notes: [
-    { id: "mapped-note-1", start_sec: 0, end_sec: 36, pitch: 60, velocity: 90, confidence: 0.9, hand: "right" },
-    { id: "mapped-note-2", start_sec: 0, end_sec: 36, pitch: 48, velocity: 82, confidence: 0.8, hand: "left" },
-  ],
-};
+export function mappedReferenceTimeline(referenceTimeline: NoteTimeline): NoteTimeline {
+  // The committed score has 17 complete 4/4 measures. Keep the real note
+  // events, while replacing only the audio grid with an explicit score-time
+  // contract so this browser test exercises a valid mapped score.
+  const measureSeconds = (60 / referenceTimeline.tempo_bpm) * 4;
+  return {
+    ...referenceTimeline,
+    beat_grid_seconds: Array.from({ length: 17 * 4 }, (_, index) =>
+      index * (measureSeconds / 4)),
+    downbeat_grid_seconds: Array.from({ length: 17 }, (_, index) => index * measureSeconds),
+  };
+}
 
 export const qualitySummary = {
   schema_version: 4,
@@ -116,7 +120,7 @@ export function buildJob(id: string, summary: object, artifacts: Artifact[]) {
 export async function installJobRoutes(
   page: Page,
   job: ReturnType<typeof buildJob>,
-  timelineFixture = timeline,
+  timelineFixture: NoteTimeline = timeline,
 ): Promise<void> {
   const musicXmlPath = path.resolve(process.cwd(), "public/examples/mozart-sonata/score.musicxml");
   const musicXml = await readFile(musicXmlPath, "utf8");

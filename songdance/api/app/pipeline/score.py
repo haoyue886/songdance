@@ -69,6 +69,7 @@ from app.pipeline.voicing import (
 
 DYNAMIC_MARKING_VERSION = "dynamic-marking-v1"
 SCORE_METADATA_VERSION = "score-metadata-v1"
+TIME_SIGNATURE_REFERENCE_OVERRIDE = "TIME_SIGNATURE_REFERENCE_OVERRIDE"
 MP_MAX_MEDIAN_VELOCITY = 96
 POSTPROCESS_VERSION = (
     f"music21-10.5.0/beat-grid/{ADAPTIVE_QUANTIZATION_VERSION}/pickup-v4/"
@@ -92,6 +93,7 @@ class ScoredTranscription:
     tempo_bpm: int
     quality_flags: list[str]
     analysis: StructureAnalysis
+    detected_analysis: StructureAnalysis | None
     notation: ResolvedNotationContext
     quantization: QuantizationDecision
     reconstruction: dict[str, object]
@@ -107,10 +109,24 @@ def build_score(
     active_analysis = analysis or fallback_analysis(
         AnalysisConfig(), STRUCTURE_ANALYSIS_NOT_RUN, source="score_default"
     )
+    detected_analysis = active_analysis
+    active_notation = notation_context or NotationContext()
+    if active_notation.time_signature is not None:
+        active_analysis = dataclass_replace(
+            active_analysis,
+            time_signature=active_notation.time_signature,
+            time_signature_source=active_notation.time_signature_source or "reference_score",
+            time_signature_confidence=(
+                active_notation.time_signature_confidence
+                if active_notation.time_signature_confidence is not None
+                else 1.0
+            ),
+        )
     flags = [*active_analysis.reason_codes, HAND_ASSIGNMENT_INFERRED]
     if active_analysis.time_signature_source == "default":
         flags.append(TIME_SIGNATURE_ASSUMED)
-    active_notation = notation_context or NotationContext()
+    elif active_notation.time_signature is not None:
+        flags.append(TIME_SIGNATURE_REFERENCE_OVERRIDE)
     quantization = select_quantization(
         events,
         active_analysis,
@@ -129,6 +145,9 @@ def build_score(
         active_analysis,
         key_signature=notation.key_signature,
         key_signature_source=notation.key_signature_source,
+        time_signature=notation.time_signature,
+        time_signature_source=notation.time_signature_source,
+        time_signature_confidence=notation.time_signature_confidence,
     )
     notation_input = align_repeating_eighth_note_cycles(events, active_analysis, pickup)
     if notation_input is events:
@@ -232,6 +251,7 @@ def build_score(
         tempo_bpm=integer_tempo_bpm(active_analysis.bpm),
         quality_flags=flags,
         analysis=active_analysis,
+        detected_analysis=detected_analysis,
         notation=notation,
         quantization=quantization,
         reconstruction=reconstruction,
@@ -250,6 +270,13 @@ def _resolve_notation_context(
     )
     if not 0 <= key_signature_confidence <= 1:
         raise ValueError("notation key signature confidence must be between 0 and 1")
+    time_signature_confidence = (
+        context.time_signature_confidence
+        if context.time_signature_confidence is not None
+        else analysis.time_signature_confidence
+    )
+    if not 0 <= time_signature_confidence <= 1:
+        raise ValueError("notation time signature confidence must be between 0 and 1")
     return ResolvedNotationContext(
         local_tonal_center=analysis.key_signature,
         local_tonal_center_confidence=analysis.key_confidence,
@@ -258,6 +285,9 @@ def _resolve_notation_context(
         key_signature_source=context.key_signature_source
         or "inferred_local_tonal_center",
         key_signature_confidence=key_signature_confidence,
+        time_signature=context.time_signature or analysis.time_signature,
+        time_signature_source=context.time_signature_source or analysis.time_signature_source,
+        time_signature_confidence=time_signature_confidence,
         measure_offset_units=pickup.measure_offset_units,
         measure_offset_source=context.measure_offset_source
         or "audio_downbeat_analysis",

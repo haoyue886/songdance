@@ -27,6 +27,20 @@ def write_timeline(
     model_version: str = MODEL_VERSION,
     cleanup_summary: dict[str, object] | None = None,
 ) -> None:
+    detected_analysis = scored.detected_analysis or scored.analysis
+    analysis_override = None
+    if (
+        detected_analysis.time_signature != scored.analysis.time_signature
+        or detected_analysis.time_signature_source != scored.analysis.time_signature_source
+    ):
+        analysis_override = {
+            "detected_time_signature": detected_analysis.time_signature,
+            "detected_time_signature_source": detected_analysis.time_signature_source,
+            "detected_time_signature_confidence": detected_analysis.time_signature_confidence,
+            "notation_time_signature": scored.analysis.time_signature,
+            "notation_time_signature_source": scored.analysis.time_signature_source,
+            "notation_time_signature_confidence": scored.analysis.time_signature_confidence,
+        }
     timeline = {
         "schema_version": 1,
         "model_version": model_version,
@@ -43,8 +57,9 @@ def write_timeline(
         "local_tonal_center": scored.notation.local_tonal_center,
         "notation_key_signature": scored.notation.key_signature,
         "notation": scored.notation.summary(),
+        "analysis_override": analysis_override,
         "quantization": scored.quantization.summary(),
-        "analysis": scored.analysis.summary(),
+        "analysis": detected_analysis.summary(),
         "reconstruction": scored.reconstruction,
         "quality_flags": scored.quality_flags,
         "notes": [

@@ -6,6 +6,9 @@ class NotationContext:
     key_signature: str | None = None
     key_signature_source: str | None = None
     key_signature_confidence: float | None = None
+    time_signature: str | None = None
+    time_signature_source: str | None = None
+    time_signature_confidence: float | None = None
     measure_offset_units: int | None = None
     measure_offset_source: str | None = None
     quantization_divisions_per_quarter: int | None = None
@@ -19,6 +22,13 @@ class NotationContext:
             raise ValueError("notation key source and confidence require a key signature")
         if self.key_signature is not None and self.key_signature_source is None:
             raise ValueError("notation key signature requires a source")
+        if self.time_signature is None and (
+            self.time_signature_source is not None
+            or self.time_signature_confidence is not None
+        ):
+            raise ValueError("notation time source and confidence require a time signature")
+        if self.time_signature is not None and self.time_signature_source is None:
+            raise ValueError("notation time signature requires a source")
         if self.measure_offset_units is None and self.measure_offset_source is not None:
             raise ValueError("notation measure offset source requires an offset")
         if self.quantization_divisions_per_quarter is None and self.quantization_source is not None:
@@ -35,6 +45,9 @@ class ResolvedNotationContext:
     key_signature: str
     key_signature_source: str
     key_signature_confidence: float
+    time_signature: str
+    time_signature_source: str
+    time_signature_confidence: float
     measure_offset_units: int
     measure_offset_source: str
 
@@ -46,6 +59,9 @@ class ResolvedNotationContext:
             "notation_key_signature": self.key_signature,
             "notation_key_signature_source": self.key_signature_source,
             "notation_key_signature_confidence": self.key_signature_confidence,
+            "notation_time_signature": self.time_signature,
+            "notation_time_signature_source": self.time_signature_source,
+            "notation_time_signature_confidence": self.time_signature_confidence,
             "measure_offset_units": self.measure_offset_units,
             "measure_offset_source": self.measure_offset_source,
         }

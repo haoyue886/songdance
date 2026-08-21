@@ -1,0 +1,356 @@
+{
+  "schema_version": 1,
+  "candidate_id": "petzold-minuet-bwv-anh-114",
+  "status": "candidate_pending",
+  "title": "Christian Petzold - Minuet in G major, BWV Anh.114",
+  "composer": "Christian Petzold (formerly attributed to J.S. Bach)",
+  "performer": "KasraR",
+  "source": {
+    "source_page": "https://commons.wikimedia.org/wiki/File:Minuet-G-Major-BWV-Anh-114.ogv",
+    "download_url": "https://upload.wikimedia.org/wikipedia/commons/7/7d/Minuet-G-Major-BWV-Anh-114.ogv",
+    "license": "CC BY-SA 3.0 with public-domain dedication",
+    "license_url": "https://creativecommons.org/licenses/by-sa/3.0/deed.en",
+    "rights_note": "Wikimedia Commons page identifies the work as an own digital-piano performance by KasraR.",
+    "clip_start_sec": 0.0,
+    "clip_duration_sec": 42.0,
+    "clip_sha256": "f254ffd5cf31d113f2e6c640c28b8664258c2ce7ae7df7b1df13dde4e1602441"
+  },
+  "reference_score": {
+    "source_page": "https://pianovera.com/en/midi/menuet-en-sol/",
+    "midi_download_url": "https://pianovera.com/midi/files/menuet-en-sol.mid",
+    "pdf_download_url": "https://pianovera.com/midi/files/menuet-en-sol-piano-sheet.pdf",
+    "provider": "Pianovera / Mutopia Project",
+    "license": "Public domain",
+    "license_url": "https://www.mutopiaproject.org/",
+    "midi_sha256": "fd87a6673e18104047842a1c858d2c9d8eb9ad845d7a8fa46e3664b17642cb75",
+    "pdf_sha256": "6b34ba44122d9694156a113c749eee0bf3232f54ead431a44be6f2a1b6f32c8b",
+    "format": "midi",
+    "parts": 2,
+    "measure_count": 32,
+    "measure_counts_by_part": [
+      32,
+      32
+    ],
+    "notation_key_signature": [
+      "G major"
+    ],
+    "key_signature_fifths": [
+      1
+    ],
+    "time_signature": [
+      "3/4"
+    ],
+    "duration_quarter_length": 96.0,
+    "note_count": 200,
+    "shortest_note_quarter_length": 0.25,
+    "shortest_note_value": 16
+  },
+  "artifacts": {
+    "raw_midi": {
+      "path": "raw.mid",
+      "sha256": "a57111a03dfdf2e60f6b19feb5a1f6862b1998ea645119200b7a3ddc643a7dc5",
+      "size_bytes": 1478
+    },
+    "midi": {
+      "path": "score.mid",
+      "sha256": "85628f0089e93f774e9910b056d11754e0dbfd79b93d4982cf9941eefb24b3d3",
+      "size_bytes": 1522
+    },
+    "musicxml": {
+      "path": "score.musicxml",
+      "sha256": "59efdc1c9ad79d7b2ea035b11bae40010742110a24bab15b825c8735693f3402",
+      "size_bytes": 114147
+    },
+    "timeline": {
+      "path": "timeline.json",
+      "sha256": "57b66dcd83ea12ad4d5513bc886da68fbd6645cf3dcc86b5faf8cbc6e58b1bcc",
+      "size_bytes": 84679
+    }
+  },
+  "pipeline": {
+    "model_version": "basic-pitch-0.4.0/icassp-2022-onnx/o0.5-f0.3",
+    "postprocess_version": "note-cleanup-v4/b83e55947b32/harmonic-evidence-v1/7c7962a7d8ce/structure-analysis-v2/9eafa86ad08d/music21-10.5.0/beat-grid/adaptive-quantization-v1/pickup-v4/harmony-v1/e59dc7bc9a81/voicing-v4/89dc2f83e506/voice-compression-v1/0e515287c83d/simple-arpeggio-filter-v3/resonant-polyphony-limit-v1/voice-rest-pruning-v1/dynamic-marking-v1/score-metadata-v1",
+    "raw_midi_note_count": 223,
+    "analysis": {
+      "status": "analyzed_with_defaults",
+      "version": "structure-analysis-v2/9eafa86ad08d",
+      "source": "librosa-0.11.0",
+      "bpm": 135.999178,
+      "bpm_confidence": 1.0,
+      "beat_grid_seconds": [
+        2.252336,
+        2.693515,
+        3.088254,
+        3.529433,
+        3.947392,
+        4.458231,
+        4.87619,
+        5.34059,
+        5.804989,
+        6.292608,
+        6.780227,
+        7.267846,
+        7.732245,
+        8.173424,
+        8.637823,
+        9.125442,
+        9.520181,
+        10.0078,
+        10.4722,
+        10.913379,
+        11.354558,
+        11.818957,
+        12.283356,
+        12.724535,
+        13.188934,
+        13.606893,
+        14.048073,
+        14.489252,
+        14.930431,
+        15.37161,
+        15.812789,
+        16.253968,
+        16.695147,
+        17.159546,
+        17.623946,
+        18.088345,
+        18.529524,
+        18.970703,
+        19.411882,
+        19.876281,
+        20.31746,
+        20.781859,
+        21.269478,
+        21.733878,
+        22.175057,
+        22.639456,
+        23.103855,
+        23.545034,
+        24.032653,
+        24.473832,
+        24.915011,
+        25.37941,
+        25.913469,
+        26.401088,
+        26.865488,
+        27.329887,
+        27.794286,
+        28.258685,
+        28.676644,
+        29.117823,
+        29.582222,
+        30.046621,
+        30.4878,
+        30.9522,
+        31.370159,
+        31.880998,
+        32.322177,
+        32.809796,
+        33.250975,
+        33.692154,
+        34.133333,
+        34.597732,
+        35.062132,
+        35.503311,
+        35.94449,
+        36.385669,
+        36.803628,
+        37.244807,
+        37.709206,
+        38.173605,
+        38.638005,
+        39.079184,
+        39.566803,
+        40.031202,
+        40.495601
+      ],
+      "downbeat_grid_seconds": [
+        0.417959,
+        2.252336,
+        3.947392,
+        5.804989,
+        7.732245,
+        9.520181,
+        11.354558,
+        13.188934,
+        14.930431,
+        16.695147,
+        18.529524,
+        20.31746,
+        22.175057,
+        24.032653,
+        25.913469,
+        27.794286,
+        29.582222,
+        31.370159,
+        33.250975,
+        35.062132,
+        36.803628,
+        38.638005,
+        40.495601
+      ],
+      "downbeat_phase_index": 0,
+      "time_signature": "4/4",
+      "time_signature_confidence": 0.481898,
+      "time_signature_source": "default",
+      "time_signature_candidates": [
+        {
+          "value": "4/4",
+          "confidence": 0.481898,
+          "phase": 0
+        },
+        {
+          "value": "6/8",
+          "confidence": 0.280794,
+          "phase": 1
+        },
+        {
+          "value": "3/4",
+          "confidence": 0.237308,
+          "phase": 1
+        }
+      ],
+      "key_signature": "G major",
+      "key_confidence": 0.503492,
+      "key_signature_source": "librosa_chroma_krumhansl",
+      "key_candidates": [
+        {
+          "value": "G major",
+          "confidence": 0.503492
+        },
+        {
+          "value": "B minor",
+          "confidence": 0.0
+        },
+        {
+          "value": "E minor",
+          "confidence": 0.0
+        }
+      ],
+      "duration_seconds": 42.0,
+      "elapsed_seconds": 3.172718,
+      "reason_codes": [
+        "TIME_SIGNATURE_DEFAULTED_4_4"
+      ]
+    },
+    "notation": {
+      "local_tonal_center": "G major",
+      "local_tonal_center_confidence": 0.503492,
+      "local_tonal_center_source": "librosa_chroma_krumhansl",
+      "notation_key_signature": "G major",
+      "notation_key_signature_source": "reference_score",
+      "notation_key_signature_confidence": 1.0,
+      "notation_time_signature": "3/4",
+      "notation_time_signature_source": "reference_score",
+      "notation_time_signature_confidence": 1.0,
+      "measure_offset_units": 0,
+      "measure_offset_source": "reference_score"
+    },
+    "analysis_override": {
+      "detected_time_signature": "4/4",
+      "detected_time_signature_source": "default",
+      "detected_time_signature_confidence": 0.481898,
+      "notation_time_signature": "3/4",
+      "notation_time_signature_source": "reference_score",
+      "notation_time_signature_confidence": 1.0
+    },
+    "cleanup": {
+      "status": "applied",
+      "version": "note-cleanup-v4/b83e55947b32/harmonic-evidence-v1/7c7962a7d8ce",
+      "config": {
+        "min_confidence": 0.1,
+        "min_duration_seconds": 0.04,
+        "adjacent_same_pitch_gap_seconds": 0.03,
+        "max_note_duration_seconds": 30.0
+      },
+      "source_note_count": 223,
+      "output_note_count": 223,
+      "removed_note_count": 0,
+      "clipped_note_count": 0,
+      "merged_note_count": 0,
+      "reason_counts": {
+        "LOW_CONFIDENCE_REMOVED": 0,
+        "SHORT_NOTE_REMOVED": 0,
+        "DUPLICATE_NOTE_REMOVED": 0,
+        "EXCESSIVE_DURATION_CLIPPED": 0,
+        "NOTE_PRESERVED": 223,
+        "ADJACENT_SAME_PITCH_PRESERVED": 37,
+        "OVERLAPPING_SAME_PITCH_PRESERVED": 0,
+        "HARMONIC_CANDIDATE_REMOVED": 0
+      },
+      "harmonic_evidence": {
+        "version": "harmonic-evidence-v1/7c7962a7d8ce",
+        "status": "available",
+        "source": "AUDIO_STFT",
+        "removed_candidate_count": 0,
+        "removals": []
+      },
+      "fallback_used": false,
+      "error_code": null
+    },
+    "structure": {
+      "part_count": 1,
+      "measure_count": 32,
+      "chord_count": 24,
+      "voice_count": 40,
+      "rest_count": 104,
+      "short_rest_count": 0,
+      "measure_duration_error_count": 0,
+      "partial_final_measure_count": 0,
+      "time_signatures": [
+        "3/4"
+      ],
+      "key_signatures": [
+        1
+      ],
+      "key_signature_status": "detected",
+      "errors": [],
+      "music21_staff_count": 2,
+      "staff_measure_count": 64,
+      "musicxml_score_part_count": 1,
+      "musicxml_part_count": 1,
+      "staff_count": 2,
+      "clefs": {
+        "1": "G2",
+        "2": "F4"
+      },
+      "staff_numbers": [
+        "1",
+        "2"
+      ],
+      "voices_by_staff": {
+        "1": [
+          "0",
+          "1"
+        ],
+        "2": [
+          "0",
+          "1",
+          "2"
+        ]
+      },
+      "maximum_voices_by_staff_measure": {
+        "1": 2,
+        "2": 2
+      },
+      "backup_count": 52,
+      "pedal_mark_count": 2
+    },
+    "parser_validation": {
+      "xmllint": {
+        "status": "passed",
+        "error": null
+      },
+      "osmd": {
+        "status": "passed",
+        "measure_count": 32,
+        "svg_count": 1
+      }
+    }
+  },
+  "review": {
+    "rating": "pending",
+    "reviewed_at": null,
+    "notes": "等待人工评审；未达到 minor_edits 前不得作为可用公开示例。"
+  }
+}

@@ -186,16 +186,45 @@ def test_reference_notation_context_separates_local_key_and_score_metadata(
     assert timeline["local_tonal_center"] == "G major"
     assert timeline["notation_key_signature"] == "C major"
     assert timeline["key_signature"] == "C major"
+    assert timeline["analysis_override"] is None
     assert timeline["notation"] == {
         "local_tonal_center": "G major",
         "local_tonal_center_confidence": 0.73566,
         "local_tonal_center_source": "librosa_chroma_krumhansl",
         "notation_key_signature": "C major",
-        "notation_key_signature_source": "reference_score",
-        "notation_key_signature_confidence": 1.0,
-        "measure_offset_units": 0,
-        "measure_offset_source": "reference_score",
-    }
+            "notation_key_signature_source": "reference_score",
+            "notation_key_signature_confidence": 1.0,
+            "notation_time_signature": "4/4",
+            "notation_time_signature_source": "fixture",
+            "notation_time_signature_confidence": 0.0,
+            "measure_offset_units": 0,
+            "measure_offset_source": "reference_score",
+        }
+
+
+def test_reference_notation_context_can_override_meter_for_fixed_candidate() -> None:
+    scored = build_score(
+        [
+            NoteEvent(0.0, 0.5, 48, 84, 0.9),
+            NoteEvent(0.5, 1.0, 67, 84, 0.9),
+            NoteEvent(1.0, 1.5, 71, 84, 0.9),
+        ],
+        analysis=_analysis(),
+        notation_context=NotationContext(
+            key_signature="G major",
+            key_signature_source="reference_score",
+            key_signature_confidence=1.0,
+            time_signature="3/4",
+            time_signature_source="reference_score",
+            time_signature_confidence=1.0,
+        ),
+    )
+
+    assert scored.analysis.time_signature == "3/4"
+    assert scored.analysis.time_signature_source == "reference_score"
+    assert "TIME_SIGNATURE_REFERENCE_OVERRIDE" in scored.quality_flags
+    assert "TIME_SIGNATURE_ASSUMED_4_4" not in scored.quality_flags
+    assert scored.notation.summary()["notation_time_signature"] == "3/4"
 
 
 def test_arpeggio_musicxml_barlines_match_every_complete_truth_cycle() -> None:

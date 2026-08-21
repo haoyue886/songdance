@@ -1,5 +1,12 @@
 # 变更记录
 
+## [v1.33] - 2026-08-21
+
+### 新增
+
+- 用户确认将 Christian Petzold《G大调小步舞曲》BWV Anh.114 作为 Task 32.2 的初级候选；候选使用 Wikimedia Commons 上 KasraR 的真人数字钢琴演奏（CC BY-SA 3.0，并附公有领域声明），参考谱采用 Pianovera 页面提供的 Mutopia 公版钢琴 MIDI 与 PDF。
+- 候选固定条件为 G 大调、3/4 拍、32 小节、两声部、最短四分之一拍；在当前流水线产物完成人工评级至少 `minor_edits` 前，状态保持 `candidate_pending`，不替换 K.545 失败对照、不关闭其复评任务。
+
 ## [v1.32] - 2026-08-21
 
 ### 修改

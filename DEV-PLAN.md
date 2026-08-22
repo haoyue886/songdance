@@ -1229,7 +1229,7 @@ Phase 9 基线
 - 只评估哈农、车尔尼、拜厄或同等难度的真实钢琴演奏；候选必须有可验证授权、可下载参考谱和稳定单一拍号/记谱调号。
 - 为候选建立逐小节参考真值和当前流水线产物，先过解析与结构门禁，再由人工评为至少 `minor_edits`；未过门禁时保持网站示例不可用，不用合成音频顶替。
 - 网络检索、下载和授权核验单独留痕；来源不清的录音不进入仓库。
-- 已确认候选：Christian Petzold《G大调小步舞曲》BWV Anh.114。录音固定为 Wikimedia Commons `Minuet-G-Major-BWV-Anh-114.ogv`（KasraR 真人数字钢琴演奏，CC BY-SA 3.0，并附公有领域声明）；参考谱固定为 Pianovera `menuet-en-sol.mid` 与 `menuet-en-sol-piano-sheet.pdf`（页面声明源自 Mutopia 公版编排）。候选进入仓库后状态为 `candidate_pending`，不得替换 K.545 失败对照，必须完成解析、结构/谱面门禁和人工评级后才能进入公开示例发布判断。
+- 当前候选固定为 Freesound `522868` 的 Hanon Exercise No.1 `piano7_ex1_good_good.wav`（真人钢琴演奏，单条页面标记 CC0）；使用 Zenodo `10.5281/zenodo.3898631` 的 CC BY 4.0 数据集交叉核验原始 WAV、起音/色度标注和 LilyPond 真值，并绑定 IMSLP/Mutopia 可下载参考谱。入库前必须固定具体文件哈希与许可快照，实际转录和人工评级达到 `minor_edits` 前保持 `candidate_pending`。
 
 **Task 32.3 · 调性与记谱调号分离：**
 
@@ -1249,17 +1249,17 @@ Phase 9 基线
 - 织体修正候选结合音高层、相邻起音连续性、持续低音与分解和弦模式；保护跨手、内声部和真实延音，不按全曲比例硬搬音符。
 - 公开示例必须通过 staff 分布门禁；普通上传触发怀疑标记时保留原始 MIDI 和质量警告，不伪装成已正确分手。
 
-**实施记录（2026-08-19）：**
+**实施记录（截至 2026-08-22）：**
 
 - Task 32.3、32.5 已完成代码与自动门禁，Task 32.1 已完成失败对照状态与当前结构修复但仍等待完整参考谱逐小节映射：K.545 保持 321 个原始模型音符、320 个清理后音符，左右手/未知事件为 102/217/1；`STAFF_DISTRIBUTION_SUSPECT` 通过，低音分配、低音小节覆盖和高音分配均为 1.0。MusicXML 使用 C 大调、局部调性感继续记录 G 大调、无假弱起。
 - 延音伪多声部限制将 K.545 每谱表记谱层数从 3/4 层压到每小节最多 2 层，同时保护跨越至少 3 个独立起音的持续低音；冗余休止符从旧评审文件的 172 个降到 70 个，休止符密集小节从 15/17 降到 10/17，并删除 18 个纯静默 voice。发布门禁固定为总休止符不超过 80、任一谱表任一小节 voice 不超过 2。
 - K.545 新产物继续以 `pending` 发布为失败对照，最近完成评级保留 `needs_redo`，人工复评当前为 `review_paused`；原音、双谱表、钢琴卷帘和下载产物继续可见，重新人工评为至少 `minor_edits` 前不得标为可用。
 - Task 32.4 已完成三类短时值真值集、自适应量化和隔离半速 A/B。原速 precision/recall/F1 为 0.7991/0.6554/0.7059，半速为 0.7680/0.8216/0.7756，但 precision 下降 0.0311、P95 时延由 52.7ms 增至 172.7ms，因此 `production_eligible=false`，生产模型路径保持原速；K.545 继续按参考谱锁定十六分量化。
 - 10 段真人钢琴集与 16 段结构集已按当前后处理版本重生成并绑定新指纹；16 份 MusicXML 的 music21、`xmllint`、OSMD 共 48 项全部通过。API 全量 359 passed/6 skipped，Web 单测 140 passed，TypeScript、ESLint 与 Next.js 生产构建通过。
-- Task 32.2 已找到并经用户确认一个同时具备真实演奏、授权和可下载参考谱的初级候选（Petzold BWV Anh.114）；当前阻塞转为候选产物生成与人工评级，候选仍不得替代 K.545 失败对照或在未达到 `minor_edits` 前标为可用示例。
-- 候选 fixture 固定在 `songdance/api/tests/fixtures/audio/public-example-candidates/petzold-minuet/`：录音 42 秒，SHA-256 `f254ffd5cf31d113f2e6c640c28b8664258c2ce7ae7df7b1df13dde4e1602441`；参考 MIDI 32 小节、两声部、G 大调、3/4、最短十六分音符，参考 MIDI/PDF 与来源页指纹均写入 `candidate.json`。
-- 当前 Basic Pitch 音频分析仍把候选拍号判为 `4/4`（默认，置信度约 0.48）；固定候选在 MusicXML 记谱层使用 `reference_score` 的 3/4 覆盖，时间线保留原始分析并写入 `analysis_override`。生成产物为单个 Piano part、双 staff、32 小节，`xmllint` 与 OSMD 均通过；staff 分布通过但休止符为 104，仍需人工确认，候选保持 `candidate_pending`。
-- 已生成只读截图式评审包 `songdance/api/dist/songdance-petzold-minuet-candidate-review.zip`（dist 不入库），包含原音、参考 MIDI/PDF、Raw MIDI、量化 MIDI、MusicXML、时间线、来源清单和完整性清单；评审完成后截图回传，不在包内保存评级。
+- Petzold BWV Anh.114 曾完成来源固定、产物生成与评审包，但 2026-08-22 人工评审确认装饰音占用正拍并引发节奏偏移，且低音自然泛音形成多余高音；候选已改为 `candidate_rejected + needs_redo`，旧评审包撤出有效产物目录，保留 fixture 作为阻塞回归，不得重置为待发布候选。
+- Petzold 清理仅在 `human_review` 明确证据下删除两处误识别泛音，并保存起止时间、起音差、速度比、时长比和判定来源；通用低音基频优先删除默认关闭，音频证据不可用时不得按八度或泛音列机械删音。装饰音缺少逐音真值时输出 `ORNAMENT_REVIEW_REQUIRED` 并阻塞发布，不自动猜测 grace note。
+- 下一候选改为 Freesound `522868` 的 Hanon Exercise No.1 `piano7_ex1_good_good.wav`：预览音频 12.919 秒，SHA-256 `20dd58a626fcf928981df6a363f59669d6755290fa0c52001182629add71d860`，已检测 32 个起音组；后续仍须下载并固定原始 WAV、许可快照、Zenodo 标注真值和 IMSLP/Mutopia 参考谱，再运行当前生产流水线并生成人工评审包。
+- Petzold 修正使 10 段真人回归与 16 段结构回归的既有指纹按预期失效；当前 API 全量为 362 passed、6 skipped、6 failed，6 项均为 fail-closed 指纹门禁。必须重新生成两套回归产物、完成解析校验与人工复评，不能直接修改 fingerprint，也不能把本次 WIP 检查点宣称为 Phase 完成。
 - K.545 参考真值新增独立合同文件，固定当前音频指纹、IMSLP 公版 MIDI 的来源 URL、文件 SHA-256、73 小节完整覆盖、C 大调、十六分最短时值和当前 17 个产物小节到参考小节的有序映射；发布 provenance 保存合同指纹与验证摘要，G 大调、32 分量化、staff `suspect/not_evaluated`、参考文件缺失或映射缺项/乱序/越界的反例全部阻塞。普通上传结果页同时标明自动分析为“推断调性”，并把 `STAFF_DISTRIBUTION_SUSPECT` 显示为可见校对警告。
 - 上一轮发布门禁已能核对 timeline 顶层、`notation`、`reconstruction` 语义副本和最终 MusicXML 的实际 `<fifths>`/`<type>`；当时 music21 参考谱仅含第 1–12 小节，第三次 fresh `code-reviewer` 因缺少完整参考谱逐小节映射判定 Stage 1 FAIL。该历史缺口不再作为当前真值来源，也从未用于撤下或替换 K.545。
 - 已将用户下载的 IMSLP `PMLP1855-sonata-in-c.mid` 固定为仓库 fixture（format 1、2 个声部、73 小节、4/4、C 大调、SHA-256 `e3ec5b0110ff11ff7ee0f39c8cf9aa80a8d05a7d1fd9b43f9ce5a579061641ea`）；合同记录固定音频起点到参考第 1–17 小节的 17 项顺序映射，并校验 17 个 downbeat、68 个四分音符窗口与音高类别比对摘要。发布器改为离线解析该 MIDI，拒绝旧 music21 12 小节 corpus 和任何缺项/乱序/越界映射。
@@ -1284,7 +1284,7 @@ Phase 9 基线
 
 - 仅凭 30 秒音频无法可靠恢复整部作品的原谱调号；参考谱覆盖只适用于来源已知的固定示例，不能伪装成通用模型能力。
 - 时间拉伸可能改善起音分离，也可能产生瞬态伪影并把推理成本翻倍；未过 A/B 不进入生产。
-- 当前没有已核验的初级真实录音候选；网络检索恢复前 Task 32.2 保持阻塞，但不阻塞当前 K.545 的修复与失败对照展示。
+- Hanon No.1 已完成来源级候选核验，但尚未固定原始 WAV、参考真值、当前转录产物和人工评级；在这些证据齐全前 Task 32.2 仍处于开发中，不得标为可用示例，也不阻塞 K.545 的独立修复与失败对照展示。
 
 ## 技术栈
 

@@ -2,7 +2,7 @@ import hashlib
 import json
 import logging
 import math
-from dataclasses import asdict, dataclass
+from dataclasses import asdict, dataclass, replace
 from pathlib import Path
 
 import librosa
@@ -12,6 +12,7 @@ from app.pipeline.transcribe import NoteEvent
 
 HARMONIC_EVIDENCE_VERSION = "harmonic-evidence-v1"
 HARMONIC_AUDIO_EVIDENCE = "HARMONIC_AUDIO_EVIDENCE"
+HARMONIC_BASS_FUNDAMENTAL_EVIDENCE = "HARMONIC_BASS_FUNDAMENTAL_EVIDENCE"
 logger = logging.getLogger(__name__)
 
 
@@ -23,9 +24,22 @@ class HarmonicEvidenceConfig:
     maximum_harmonic_order: int = 6
     tuning_tolerance_cents: float = 35.0
     maximum_energy_ratio: float = 0.22
+    bass_priority_enabled: bool = False
+    bass_priority_source: str | None = None
+    bass_fundamental_max_pitch: int = 60
+    bass_priority_harmonic_order: int = 2
+    bass_maximum_energy_ratio: float = 0.75
+    bass_maximum_velocity_ratio: float = 0.55
+    bass_maximum_duration_ratio: float = 1.0
     onset_alignment_tolerance_seconds: float = 0.08
     onset_window_seconds: float = 0.08
     minimum_independent_onset_growth: float = 2.0
+
+    def __post_init__(self) -> None:
+        if self.bass_priority_enabled and self.bass_priority_source is None:
+            raise ValueError("bass harmonic priority requires an evidence source")
+        if not self.bass_priority_enabled and self.bass_priority_source is not None:
+            raise ValueError("bass harmonic evidence source requires enabled priority")
 
     @property
     def version(self) -> str:
@@ -45,6 +59,14 @@ class HarmonicRemoval:
     energy_ratio: float
     independent_onset: bool
     reason: str = HARMONIC_AUDIO_EVIDENCE
+    fundamental_start_sec: float | None = None
+    fundamental_end_sec: float | None = None
+    fundamental_velocity: int | None = None
+    harmonic_velocity: int | None = None
+    onset_delta_seconds: float | None = None
+    velocity_ratio: float | None = None
+    duration_ratio: float | None = None
+    decision_source: str = "audio_stft"
 
     def summary(self) -> dict[str, object]:
         return asdict(self)
@@ -134,27 +156,94 @@ def _find_removals(
     for candidate in sorted(events, key=_event_sort_key):
         pairs = _candidate_pairs(candidate, events, config)
         measured = [
-            _measure_pair(
+            (
                 fundamental,
-                candidate,
-                order,
-                cents,
-                spectrum,
-                frequencies,
-                sample_rate,
-                config,
+                _measure_pair(
+                    fundamental,
+                    candidate,
+                    order,
+                    cents,
+                    spectrum,
+                    frequencies,
+                    sample_rate,
+                    config,
+                ),
             )
             for fundamental, order, cents in pairs
         ]
-        eligible = [
-            item
-            for item in measured
-            if item.energy_ratio <= config.maximum_energy_ratio
-            and not item.independent_onset
-        ]
+        eligible = []
+        for fundamental, item in measured:
+            if item.independent_onset:
+                continue
+            if (
+                fundamental.pitch <= config.bass_fundamental_max_pitch
+                and not config.bass_priority_enabled
+            ):
+                continue
+            if item.energy_ratio <= config.maximum_energy_ratio:
+                if (
+                    fundamental.pitch <= config.bass_fundamental_max_pitch
+                    and not _bass_relative_event_evidence(fundamental, candidate, config)
+                ):
+                    continue
+                eligible.append(
+                    replace(
+                        item,
+                        reason=(
+                            HARMONIC_BASS_FUNDAMENTAL_EVIDENCE
+                            if fundamental.pitch <= config.bass_fundamental_max_pitch
+                            else item.reason
+                        ),
+                        decision_source=(
+                            config.bass_priority_source
+                            if fundamental.pitch <= config.bass_fundamental_max_pitch
+                            else item.decision_source
+                        ),
+                    )
+                )
+            elif _bass_fundamental_priority(fundamental, candidate, item, config):
+                eligible.append(
+                    replace(
+                        item,
+                        reason=HARMONIC_BASS_FUNDAMENTAL_EVIDENCE,
+                        decision_source=config.bass_priority_source or "unknown",
+                    )
+                )
         if eligible:
             removals.append(min(eligible, key=lambda item: item.energy_ratio))
     return tuple(removals)
+
+
+def _bass_fundamental_priority(
+    fundamental: NoteEvent,
+    candidate: NoteEvent,
+    measurement: HarmonicRemoval,
+    config: HarmonicEvidenceConfig,
+) -> bool:
+    return (
+        config.bass_priority_enabled
+        and fundamental.pitch <= config.bass_fundamental_max_pitch
+        and measurement.harmonic_number == config.bass_priority_harmonic_order
+        and measurement.energy_ratio <= config.bass_maximum_energy_ratio
+        and _bass_relative_event_evidence(fundamental, candidate, config)
+    )
+
+
+def _bass_relative_event_evidence(
+    fundamental: NoteEvent,
+    candidate: NoteEvent,
+    config: HarmonicEvidenceConfig,
+) -> bool:
+    fundamental_duration = fundamental.end_sec - fundamental.start_sec
+    candidate_duration = candidate.end_sec - candidate.start_sec
+    return (
+        abs(candidate.start_sec - fundamental.start_sec)
+        <= config.onset_alignment_tolerance_seconds
+        and candidate.velocity
+        <= fundamental.velocity * config.bass_maximum_velocity_ratio
+        and candidate_duration
+        <= fundamental_duration * config.bass_maximum_duration_ratio
+    )
 
 
 def _candidate_pairs(
@@ -219,6 +308,8 @@ def _measure_pair(
         > config.onset_alignment_tolerance_seconds
         and onset_growth >= config.minimum_independent_onset_growth
     )
+    fundamental_duration = fundamental.end_sec - fundamental.start_sec
+    harmonic_duration = candidate.end_sec - candidate.start_sec
     return HarmonicRemoval(
         fundamental_pitch=int(fundamental.pitch),
         harmonic_pitch=int(candidate.pitch),
@@ -228,6 +319,13 @@ def _measure_pair(
         tuning_error_cents=round(tuning_error_cents, 6),
         energy_ratio=round(harmonic_energy / (fundamental_energy + 1e-12), 6),
         independent_onset=bool(independent_onset),
+        fundamental_start_sec=float(fundamental.start_sec),
+        fundamental_end_sec=float(fundamental.end_sec),
+        fundamental_velocity=int(fundamental.velocity),
+        harmonic_velocity=int(candidate.velocity),
+        onset_delta_seconds=round(candidate.start_sec - fundamental.start_sec, 6),
+        velocity_ratio=round(candidate.velocity / max(fundamental.velocity, 1), 6),
+        duration_ratio=round(harmonic_duration / max(fundamental_duration, 1e-12), 6),
     )
 
 

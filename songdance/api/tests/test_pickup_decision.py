@@ -12,7 +12,12 @@ from app.pipeline.quantize import (
     FALSE_PICKUP_REJECTED_FULL_MEASURE,
     NOTATION_CONTEXT_MEASURE_OFFSET,
 )
-from app.pipeline.score import NotationContext, build_score, write_musicxml
+from app.pipeline.score import (
+    ORNAMENT_REVIEW_REQUIRED,
+    NotationContext,
+    build_score,
+    write_musicxml,
+)
 from app.pipeline.score_validation import score_structure_errors
 from app.pipeline.transcribe import NoteEvent
 
@@ -199,6 +204,8 @@ def test_reference_notation_context_separates_local_key_and_score_metadata(
             "notation_time_signature_confidence": 0.0,
             "measure_offset_units": 0,
             "measure_offset_source": "reference_score",
+            "ornamentation_expected": False,
+            "ornamentation_source": None,
         }
 
 
@@ -225,6 +232,34 @@ def test_reference_notation_context_can_override_meter_for_fixed_candidate() -> 
     assert "TIME_SIGNATURE_REFERENCE_OVERRIDE" in scored.quality_flags
     assert "TIME_SIGNATURE_ASSUMED_4_4" not in scored.quality_flags
     assert scored.notation.summary()["notation_time_signature"] == "3/4"
+
+
+def test_expected_ornamentation_requires_review_without_rewriting_notes() -> None:
+    events = [NoteEvent(0.0, 0.125, 66, 80, 0.9), NoteEvent(0.125, 0.5, 67, 84, 0.9)]
+
+    scored = build_score(
+        events,
+        analysis=_analysis(),
+        notation_context=NotationContext(
+            ornamentation_expected=True,
+            ornamentation_source="human_review",
+        ),
+    )
+
+    assert ORNAMENT_REVIEW_REQUIRED in scored.quality_flags
+    assert scored.notation.ornamentation_expected is True
+    assert scored.notation.ornamentation_source == "human_review"
+    assert [(event.pitch, event.start_sec, event.end_sec) for event in scored.notes] == [
+        (66, 0.0, 0.125),
+        (67, 0.125, 0.5),
+    ]
+
+
+def test_ornamentation_context_requires_consistent_provenance() -> None:
+    with pytest.raises(ValueError, match="expected ornamentation requires a source"):
+        NotationContext(ornamentation_expected=True)
+    with pytest.raises(ValueError, match="ornamentation source requires expected ornamentation"):
+        NotationContext(ornamentation_source="human_review")
 
 
 def test_arpeggio_musicxml_barlines_match_every_complete_truth_cycle() -> None:

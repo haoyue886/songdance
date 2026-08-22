@@ -13,7 +13,7 @@ from app.pipeline.analysis import AnalysisConfig, analyze_audio
 from app.pipeline.artifacts import artifact_paths, write_timeline
 from app.pipeline.audio import preprocess_audio
 from app.pipeline.cleanup import clean_note_events
-from app.pipeline.harmonics import extract_harmonic_evidence
+from app.pipeline.harmonics import HarmonicEvidenceConfig, extract_harmonic_evidence
 from app.pipeline.notation_context import NotationContext
 from app.pipeline.score import (
     build_score,
@@ -47,7 +47,14 @@ def prepare() -> dict[str, object]:
     cleanup = clean_note_events(
         events,
         config=None,
-        harmonic_evidence=extract_harmonic_evidence(normalized, events),
+        harmonic_evidence=extract_harmonic_evidence(
+            normalized,
+            events,
+            HarmonicEvidenceConfig(
+                bass_priority_enabled=True,
+                bass_priority_source="human_review",
+            ),
+        ),
     )
     analysis = analyze_audio(
         normalized,
@@ -69,6 +76,8 @@ def prepare() -> dict[str, object]:
             measure_offset_source="reference_score",
             quantization_divisions_per_quarter=4,
             quantization_source="reference_score",
+            ornamentation_expected=True,
+            ornamentation_source="human_review",
         ),
     )
     write_raw_midi(raw_midi, paths["raw_midi"])
@@ -100,7 +109,7 @@ def prepare() -> dict[str, object]:
     manifest = {
         "schema_version": 1,
         "candidate_id": CANDIDATE_ID,
-        "status": "candidate_pending",
+        "status": "candidate_rejected",
         "title": TITLE,
         "composer": "Christian Petzold (formerly attributed to J.S. Bach)",
         "performer": "KasraR",
@@ -145,9 +154,29 @@ def prepare() -> dict[str, object]:
             "parser_validation": external,
         },
         "review": {
-            "rating": "pending",
-            "reviewed_at": None,
-            "notes": "等待人工评审；未达到 minor_edits 前不得作为可用公开示例。",
+            "rating": "needs_redo",
+            "reviewed_at": "2026-08-22T00:00:00+08:00",
+            "notes": (
+                "人工评审判定装饰音占用正拍并引发节奏偏移，且低音自然泛音被误写为独立高音；"
+                "该候选不得作为初级公开示例。"
+            ),
+            "findings": [
+                {
+                    "code": "ORNAMENT_DURATION_SHIFT",
+                    "summary": "装饰音未按不占正拍的记号处理，导致后续节奏位置偏移。",
+                },
+                {
+                    "code": "BASS_HARMONIC_FALSE_POSITIVE",
+                    "summary": "低音基频的自然泛音被误识别为独立高音。",
+                },
+                {
+                    "code": "CANDIDATE_TEXTURE_TOO_COMPLEX",
+                    "summary": (
+                        "巴洛克装饰音与复调超出当前初级能力阶梯，"
+                        "下一候选优先核验哈农公式化练习。"
+                    ),
+                },
+            ],
         },
     }
     CANDIDATE_MANIFEST.write_text(

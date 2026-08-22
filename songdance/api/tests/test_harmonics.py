@@ -3,11 +3,13 @@ from pathlib import Path
 
 import numpy as np
 import pretty_midi
+import pytest
 import soundfile as sf
 
 from app.pipeline.cleanup import HARMONIC_CANDIDATE_REMOVED, clean_note_events
 from app.pipeline.harmonics import (
     HARMONIC_AUDIO_EVIDENCE,
+    HARMONIC_BASS_FUNDAMENTAL_EVIDENCE,
     HarmonicEvidence,
     HarmonicEvidenceConfig,
     HarmonicRemoval,
@@ -43,14 +45,14 @@ def _write_tones(
     sf.write(path, audio, SAMPLE_RATE)
 
 
-def test_weak_aligned_harmonic_is_removed_with_audio_evidence(tmp_path: Path) -> None:
+def test_weak_aligned_high_harmonic_is_removed_with_audio_evidence(tmp_path: Path) -> None:
     audio_path = tmp_path / "harmonic.wav"
     _write_tones(
         audio_path,
-        [(220.0, 0.8, 0.1, 1.0), (440.0, 0.08, 0.1, 1.0)],
+        [(440.0, 0.8, 0.1, 1.0), (880.0, 0.08, 0.1, 1.0)],
     )
-    fundamental = NoteEvent(0.1, 1.0, 57, 100, 0.9)
-    harmonic = NoteEvent(0.1, 1.0, 69, 100, 0.9)
+    fundamental = NoteEvent(0.1, 1.0, 69, 100, 0.9)
+    harmonic = NoteEvent(0.1, 1.0, 81, 20, 0.9)
 
     evidence = extract_harmonic_evidence(audio_path, [fundamental, harmonic])
     result = clean_note_events(
@@ -62,12 +64,35 @@ def test_weak_aligned_harmonic_is_removed_with_audio_evidence(tmp_path: Path) ->
     assert evidence.status == "available"
     assert len(evidence.removals) == 1
     removal = evidence.removals[0]
-    assert removal.fundamental_pitch == 57
-    assert removal.harmonic_pitch == 69
+    assert removal.fundamental_pitch == 69
+    assert removal.harmonic_pitch == 81
     assert removal.harmonic_number == 2
     assert removal.energy_ratio <= 0.22
     assert removal.independent_onset is False
     assert removal.reason == HARMONIC_AUDIO_EVIDENCE
+    assert removal.fundamental_start_sec == 0.1
+    assert removal.fundamental_end_sec == 1.0
+    assert removal.fundamental_velocity == 100
+    assert removal.harmonic_velocity == 20
+    assert removal.onset_delta_seconds == 0.0
+    assert removal.velocity_ratio == 0.2
+    assert removal.duration_ratio == 1.0
+
+
+def test_weak_bass_octave_is_preserved_without_confirmed_priority(
+    tmp_path: Path,
+) -> None:
+    audio_path = tmp_path / "unconfirmed-bass-octave.wav"
+    _write_tones(
+        audio_path,
+        [(220.0, 0.8, 0.1, 1.0), (440.0, 0.08, 0.1, 1.0)],
+    )
+    lower = NoteEvent(0.1, 1.0, 57, 100, 0.9)
+    upper = NoteEvent(0.1, 1.0, 69, 20, 0.9)
+
+    evidence = extract_harmonic_evidence(audio_path, [lower, upper])
+
+    assert evidence.removals == ()
 
 
 def test_independently_started_octave_is_preserved(tmp_path: Path) -> None:
@@ -79,13 +104,104 @@ def test_independently_started_octave_is_preserved(tmp_path: Path) -> None:
     fundamental = NoteEvent(0.1, 1.0, 57, 100, 0.9)
     octave = NoteEvent(0.5, 1.0, 69, 20, 0.9)
 
-    evidence = extract_harmonic_evidence(audio_path, [fundamental, octave])
+    evidence = extract_harmonic_evidence(
+        audio_path,
+        [fundamental, octave],
+        HarmonicEvidenceConfig(
+            bass_priority_enabled=True,
+            bass_priority_source="human_review",
+        ),
+    )
     result = clean_note_events([fundamental, octave], harmonic_evidence=evidence)
 
     assert evidence.status == "available"
     assert evidence.removals == ()
     assert result.events == [fundamental, octave]
     assert result.reason_counts[HARMONIC_CANDIDATE_REMOVED] == 0
+
+
+def test_aligned_weak_bass_octave_uses_bass_fundamental_priority(
+    tmp_path: Path,
+) -> None:
+    audio_path = tmp_path / "bass-harmonic.wav"
+    _write_tones(
+        audio_path,
+        [(261.63, 0.8, 0.1, 1.0), (523.25, 0.6, 0.1, 0.8)],
+    )
+    fundamental = NoteEvent(0.1, 1.0, 60, 100, 0.9)
+    harmonic = NoteEvent(0.1, 0.8, 72, 45, 0.9)
+
+    evidence = extract_harmonic_evidence(
+        audio_path,
+        [fundamental, harmonic],
+        HarmonicEvidenceConfig(
+            bass_priority_enabled=True,
+            bass_priority_source="human_review",
+        ),
+    )
+    result = clean_note_events(
+        [fundamental, harmonic], harmonic_evidence=evidence
+    )
+
+    assert result.events == [fundamental]
+    assert len(evidence.removals) == 1
+    assert evidence.removals[0].energy_ratio > 0.22
+    assert evidence.removals[0].reason == HARMONIC_BASS_FUNDAMENTAL_EVIDENCE
+
+
+def test_weak_high_register_octave_is_not_removed_by_bass_priority(
+    tmp_path: Path,
+) -> None:
+    audio_path = tmp_path / "high-octave.wav"
+    _write_tones(
+        audio_path,
+        [(493.88, 0.8, 0.1, 1.0), (987.77, 0.6, 0.1, 0.8)],
+    )
+    lower = NoteEvent(0.1, 1.0, 71, 100, 0.9)
+    upper = NoteEvent(0.1, 0.8, 83, 45, 0.9)
+
+    evidence = extract_harmonic_evidence(
+        audio_path,
+        [lower, upper],
+        HarmonicEvidenceConfig(
+            bass_priority_enabled=True,
+            bass_priority_source="human_review",
+        ),
+    )
+    result = clean_note_events([lower, upper], harmonic_evidence=evidence)
+
+    assert evidence.removals == ()
+    assert result.events == [lower, upper]
+
+
+def test_strong_aligned_bass_octave_is_preserved(tmp_path: Path) -> None:
+    audio_path = tmp_path / "played-bass-octave.wav"
+    _write_tones(
+        audio_path,
+        [(261.63, 0.8, 0.1, 1.0), (523.25, 0.08, 0.1, 0.8)],
+    )
+    lower = NoteEvent(0.1, 1.0, 60, 100, 0.9)
+    upper = NoteEvent(0.1, 0.8, 72, 80, 0.9)
+
+    evidence = extract_harmonic_evidence(
+        audio_path,
+        [lower, upper],
+        HarmonicEvidenceConfig(
+            bass_priority_enabled=True,
+            bass_priority_source="human_review",
+        ),
+    )
+    result = clean_note_events([lower, upper], harmonic_evidence=evidence)
+
+    assert evidence.removals == ()
+    assert result.events == [lower, upper]
+
+
+def test_bass_priority_requires_a_named_evidence_source() -> None:
+    with pytest.raises(ValueError, match="requires an evidence source"):
+        HarmonicEvidenceConfig(bass_priority_enabled=True)
+    with pytest.raises(ValueError, match="requires enabled priority"):
+        HarmonicEvidenceConfig(bass_priority_source="human_review")
 
 
 def test_midi_octave_without_audio_evidence_is_never_removed() -> None:

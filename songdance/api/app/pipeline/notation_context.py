@@ -13,6 +13,8 @@ class NotationContext:
     measure_offset_source: str | None = None
     quantization_divisions_per_quarter: int | None = None
     quantization_source: str | None = None
+    ornamentation_expected: bool = False
+    ornamentation_source: str | None = None
 
     def __post_init__(self) -> None:
         if self.key_signature is None and (
@@ -35,6 +37,10 @@ class NotationContext:
             raise ValueError("quantization source requires a fixed resolution")
         if self.quantization_divisions_per_quarter is not None and self.quantization_source is None:
             raise ValueError("fixed quantization resolution requires a source")
+        if self.ornamentation_expected and self.ornamentation_source is None:
+            raise ValueError("expected ornamentation requires a source")
+        if not self.ornamentation_expected and self.ornamentation_source is not None:
+            raise ValueError("ornamentation source requires expected ornamentation")
 
 
 @dataclass(frozen=True)
@@ -50,6 +56,8 @@ class ResolvedNotationContext:
     time_signature_confidence: float
     measure_offset_units: int
     measure_offset_source: str
+    ornamentation_expected: bool
+    ornamentation_source: str | None
 
     def summary(self) -> dict[str, object]:
         return {
@@ -64,4 +72,6 @@ class ResolvedNotationContext:
             "notation_time_signature_confidence": self.time_signature_confidence,
             "measure_offset_units": self.measure_offset_units,
             "measure_offset_source": self.measure_offset_source,
+            "ornamentation_expected": self.ornamentation_expected,
+            "ornamentation_source": self.ornamentation_source,
         }

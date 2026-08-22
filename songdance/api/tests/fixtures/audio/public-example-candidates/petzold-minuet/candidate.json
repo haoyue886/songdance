@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "candidate_id": "petzold-minuet-bwv-anh-114",
-  "status": "candidate_pending",
+  "status": "candidate_rejected",
   "title": "Christian Petzold - Minuet in G major, BWV Anh.114",
   "composer": "Christian Petzold (formerly attributed to J.S. Bach)",
   "performer": "KasraR",
@@ -53,23 +53,23 @@
     },
     "midi": {
       "path": "score.mid",
-      "sha256": "85628f0089e93f774e9910b056d11754e0dbfd79b93d4982cf9941eefb24b3d3",
-      "size_bytes": 1522
+      "sha256": "4ca10c2873f42e62c908ac48590816effdcb615023cba663e1491e1a0f24d35b",
+      "size_bytes": 1510
     },
     "musicxml": {
       "path": "score.musicxml",
-      "sha256": "59efdc1c9ad79d7b2ea035b11bae40010742110a24bab15b825c8735693f3402",
-      "size_bytes": 114147
+      "sha256": "7e684984c010641f6386e8e62af2d2ade3495512956104896eac831abb47d3be",
+      "size_bytes": 113236
     },
     "timeline": {
       "path": "timeline.json",
-      "sha256": "57b66dcd83ea12ad4d5513bc886da68fbd6645cf3dcc86b5faf8cbc6e58b1bcc",
-      "size_bytes": 84679
+      "sha256": "52f769caefbd0c563c6b71364b10bb2ecaaf3728a6d3f8642817b48b07185536",
+      "size_bytes": 85220
     }
   },
   "pipeline": {
     "model_version": "basic-pitch-0.4.0/icassp-2022-onnx/o0.5-f0.3",
-    "postprocess_version": "note-cleanup-v4/b83e55947b32/harmonic-evidence-v1/7c7962a7d8ce/structure-analysis-v2/9eafa86ad08d/music21-10.5.0/beat-grid/adaptive-quantization-v1/pickup-v4/harmony-v1/e59dc7bc9a81/voicing-v4/89dc2f83e506/voice-compression-v1/0e515287c83d/simple-arpeggio-filter-v3/resonant-polyphony-limit-v1/voice-rest-pruning-v1/dynamic-marking-v1/score-metadata-v1",
+    "postprocess_version": "note-cleanup-v4/b83e55947b32/harmonic-evidence-v1/62cecbe38ba9/structure-analysis-v2/9eafa86ad08d/music21-10.5.0/beat-grid/adaptive-quantization-v1/pickup-v4/harmony-v1/e59dc7bc9a81/voicing-v4/89dc2f83e506/voice-compression-v1/0e515287c83d/simple-arpeggio-filter-v3/resonant-polyphony-limit-v1/voice-rest-pruning-v1/dynamic-marking-v1/score-metadata-v1",
     "raw_midi_note_count": 223,
     "analysis": {
       "status": "analyzed_with_defaults",
@@ -228,7 +228,7 @@
         }
       ],
       "duration_seconds": 42.0,
-      "elapsed_seconds": 3.172718,
+      "elapsed_seconds": 3.656863,
       "reason_codes": [
         "TIME_SIGNATURE_DEFAULTED_4_4"
       ]
@@ -244,7 +244,9 @@
       "notation_time_signature_source": "reference_score",
       "notation_time_signature_confidence": 1.0,
       "measure_offset_units": 0,
-      "measure_offset_source": "reference_score"
+      "measure_offset_source": "reference_score",
+      "ornamentation_expected": true,
+      "ornamentation_source": "human_review"
     },
     "analysis_override": {
       "detected_time_signature": "4/4",
@@ -256,7 +258,7 @@
     },
     "cleanup": {
       "status": "applied",
-      "version": "note-cleanup-v4/b83e55947b32/harmonic-evidence-v1/7c7962a7d8ce",
+      "version": "note-cleanup-v4/b83e55947b32/harmonic-evidence-v1/62cecbe38ba9",
       "config": {
         "min_confidence": 0.1,
         "min_duration_seconds": 0.04,
@@ -264,8 +266,8 @@
         "max_note_duration_seconds": 30.0
       },
       "source_note_count": 223,
-      "output_note_count": 223,
-      "removed_note_count": 0,
+      "output_note_count": 221,
+      "removed_note_count": 2,
       "clipped_note_count": 0,
       "merged_note_count": 0,
       "reason_counts": {
@@ -273,17 +275,56 @@
         "SHORT_NOTE_REMOVED": 0,
         "DUPLICATE_NOTE_REMOVED": 0,
         "EXCESSIVE_DURATION_CLIPPED": 0,
-        "NOTE_PRESERVED": 223,
-        "ADJACENT_SAME_PITCH_PRESERVED": 37,
+        "NOTE_PRESERVED": 221,
+        "ADJACENT_SAME_PITCH_PRESERVED": 35,
         "OVERLAPPING_SAME_PITCH_PRESERVED": 0,
-        "HARMONIC_CANDIDATE_REMOVED": 0
+        "HARMONIC_CANDIDATE_REMOVED": 2
       },
       "harmonic_evidence": {
-        "version": "harmonic-evidence-v1/7c7962a7d8ce",
+        "version": "harmonic-evidence-v1/81586b2669fd",
         "status": "available",
         "source": "AUDIO_STFT",
-        "removed_candidate_count": 0,
-        "removals": []
+        "removed_candidate_count": 2,
+        "removals": [
+          {
+            "fundamental_pitch": 60,
+            "harmonic_pitch": 72,
+            "harmonic_start_sec": 6.818908390022676,
+            "harmonic_end_sec": 7.039497959183674,
+            "harmonic_number": 2,
+            "tuning_error_cents": 0.0,
+            "energy_ratio": 0.647611,
+            "independent_onset": false,
+            "reason": "HARMONIC_BASS_FUNDAMENTAL_EVIDENCE",
+            "fundamental_start_sec": 6.76085850340136,
+            "fundamental_end_sec": 7.074327891156463,
+            "fundamental_velocity": 85,
+            "harmonic_velocity": 37,
+            "onset_delta_seconds": 0.05805,
+            "velocity_ratio": 0.435294,
+            "duration_ratio": 0.703704,
+            "decision_source": "human_review"
+          },
+          {
+            "fundamental_pitch": 60,
+            "harmonic_pitch": 72,
+            "harmonic_start_sec": 28.648178684807256,
+            "harmonic_end_sec": 28.938428117913833,
+            "harmonic_number": 2,
+            "tuning_error_cents": 0.0,
+            "energy_ratio": 0.640558,
+            "independent_onset": false,
+            "reason": "HARMONIC_BASS_FUNDAMENTAL_EVIDENCE",
+            "fundamental_start_sec": 28.636568707482994,
+            "fundamental_end_sec": 28.938428117913833,
+            "fundamental_velocity": 90,
+            "harmonic_velocity": 40,
+            "onset_delta_seconds": 0.01161,
+            "velocity_ratio": 0.444444,
+            "duration_ratio": 0.961538,
+            "decision_source": "human_review"
+          }
+        ]
       },
       "fallback_used": false,
       "error_code": null
@@ -291,9 +332,9 @@
     "structure": {
       "part_count": 1,
       "measure_count": 32,
-      "chord_count": 24,
-      "voice_count": 40,
-      "rest_count": 104,
+      "chord_count": 23,
+      "voice_count": 38,
+      "rest_count": 102,
       "short_rest_count": 0,
       "measure_duration_error_count": 0,
       "partial_final_measure_count": 0,
@@ -333,7 +374,7 @@
         "1": 2,
         "2": 2
       },
-      "backup_count": 52,
+      "backup_count": 51,
       "pedal_mark_count": 2
     },
     "parser_validation": {
@@ -349,8 +390,22 @@
     }
   },
   "review": {
-    "rating": "pending",
-    "reviewed_at": null,
-    "notes": "等待人工评审；未达到 minor_edits 前不得作为可用公开示例。"
+    "rating": "needs_redo",
+    "reviewed_at": "2026-08-22T00:00:00+08:00",
+    "notes": "人工评审判定装饰音占用正拍并引发节奏偏移，且低音自然泛音被误写为独立高音；该候选不得作为初级公开示例。",
+    "findings": [
+      {
+        "code": "ORNAMENT_DURATION_SHIFT",
+        "summary": "装饰音未按不占正拍的记号处理，导致后续节奏位置偏移。"
+      },
+      {
+        "code": "BASS_HARMONIC_FALSE_POSITIVE",
+        "summary": "低音基频的自然泛音被误识别为独立高音。"
+      },
+      {
+        "code": "CANDIDATE_TEXTURE_TOO_COMPLEX",
+        "summary": "巴洛克装饰音与复调超出当前初级能力阶梯，下一候选优先核验哈农公式化练习。"
+      }
+    ]
   }
 }

@@ -4,7 +4,11 @@ import tempfile
 from pathlib import Path
 
 from app.pipeline.quality import pipeline_postprocess_version
-from app.pipeline.score import read_musicxml_structure, read_musicxml_visible_metadata
+from app.pipeline.score import (
+    ORNAMENT_REVIEW_REQUIRED,
+    read_musicxml_structure,
+    read_musicxml_visible_metadata,
+)
 from app.pipeline.transcribe import MODEL_VERSION
 from scripts.human_quality_gate import file_sha256
 from scripts.public_example_activation import exchange_directories as _exchange_directories
@@ -216,6 +220,7 @@ def _validate_source(
             "TIME_SIGNATURE_DEFAULTED_4_4",
             "TIME_SIGNATURE_ASSUMED_4_4",
             "STAFF_DISTRIBUTION_SUSPECT",
+            ORNAMENT_REVIEW_REQUIRED,
         }
     ):
         raise ValueError("public example source has a blocking quality flag")

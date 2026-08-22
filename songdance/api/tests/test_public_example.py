@@ -4,6 +4,7 @@ import shutil
 import pytest
 
 import scripts.publish_public_example as publisher
+from app.pipeline.score import ORNAMENT_REVIEW_REQUIRED
 from scripts.human_quality_gate import file_sha256
 from scripts.public_example_review import MAXIMUM_PUBLIC_REST_COUNT
 from scripts.publish_public_example import (
@@ -107,6 +108,21 @@ def test_public_example_rejects_unpassed_staff_distribution(
     review = publisher._public_review(source_root)
 
     with pytest.raises(ValueError, match="must pass staff distribution validation"):
+        publisher._validate_source(
+            source_root,
+            publisher._source_metadata(),
+            timeline,
+            publisher._completed_review(review),
+        )
+
+
+def test_public_example_rejects_required_ornament_review() -> None:
+    source_root = FIXTURE_ROOT / "human-review-artifacts" / CASE_ID
+    timeline = json.loads((source_root / "timeline.json").read_text(encoding="utf-8"))
+    timeline["quality_flags"].append(ORNAMENT_REVIEW_REQUIRED)
+    review = publisher._public_review(source_root)
+
+    with pytest.raises(ValueError, match="blocking quality flag"):
         publisher._validate_source(
             source_root,
             publisher._source_metadata(),

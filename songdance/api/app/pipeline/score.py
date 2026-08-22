@@ -69,6 +69,7 @@ from app.pipeline.voicing import (
 
 DYNAMIC_MARKING_VERSION = "dynamic-marking-v1"
 SCORE_METADATA_VERSION = "score-metadata-v1"
+ORNAMENT_REVIEW_REQUIRED = "ORNAMENT_REVIEW_REQUIRED"
 TIME_SIGNATURE_REFERENCE_OVERRIDE = "TIME_SIGNATURE_REFERENCE_OVERRIDE"
 MP_MAX_MEDIAN_VELOCITY = 96
 POSTPROCESS_VERSION = (
@@ -123,6 +124,8 @@ def build_score(
             ),
         )
     flags = [*active_analysis.reason_codes, HAND_ASSIGNMENT_INFERRED]
+    if active_notation.ornamentation_expected:
+        flags.append(ORNAMENT_REVIEW_REQUIRED)
     if active_analysis.time_signature_source == "default":
         flags.append(TIME_SIGNATURE_ASSUMED)
     elif active_notation.time_signature is not None:
@@ -291,6 +294,8 @@ def _resolve_notation_context(
         measure_offset_units=pickup.measure_offset_units,
         measure_offset_source=context.measure_offset_source
         or "audio_downbeat_analysis",
+        ornamentation_expected=context.ornamentation_expected,
+        ornamentation_source=context.ornamentation_source,
     )
 
 

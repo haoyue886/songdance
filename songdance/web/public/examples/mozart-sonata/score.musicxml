@@ -5,7 +5,7 @@
   <identification>
     <creator type="composer" />
     <encoding>
-      <encoding-date>2026-08-21</encoding-date>
+      <encoding-date>2026-08-22</encoding-date>
       <software>music21 v.10.5.0</software>
       <supports element="beam" type="yes" />
       <supports element="stem" type="yes" />
@@ -19,21 +19,21 @@
     </scaling>
   </defaults>
   <part-list>
-    <score-part id="P1d25be92e91bbbf399944b66ceff245c">
+    <score-part id="P24f08c7574e775d71b5a13ded45b4e01">
       <part-name>Piano</part-name>
       <part-abbreviation>Pno</part-abbreviation>
-      <score-instrument id="I1eda7f200d6e85e8044b6f30b033942e">
+      <score-instrument id="I565a41fd651a1a50ac0a921c03068cc1">
         <instrument-name>Piano</instrument-name>
         <instrument-abbreviation>Pno</instrument-abbreviation>
       </score-instrument>
-      <midi-instrument id="I1eda7f200d6e85e8044b6f30b033942e">
+      <midi-instrument id="I565a41fd651a1a50ac0a921c03068cc1">
         <midi-channel>1</midi-channel>
         <midi-program>1</midi-program>
       </midi-instrument>
     </score-part>
   </part-list>
   <!--=========================== Part 1 ===========================-->
-  <part id="P1d25be92e91bbbf399944b66ceff245c">
+  <part id="P24f08c7574e775d71b5a13ded45b4e01">
     <!--========================= Measure 1 ==========================-->
     <measure implicit="no" number="1">
       <attributes>
@@ -984,7 +984,7 @@
     </measure>
     <!--========================= Measure 4 ==========================-->
     <measure implicit="no" number="4">
-      <note dynamics="71.11">
+      <note dynamics="81.11">
         <pitch>
           <step>C</step>
           <octave>4</octave>
@@ -995,6 +995,17 @@
         <stem>up</stem>
         <staff>1</staff>
         <beam number="1">begin</beam>
+      </note>
+      <note dynamics="81.11">
+        <chord />
+        <pitch>
+          <step>C</step>
+          <octave>5</octave>
+        </pitch>
+        <duration>5040</duration>
+        <voice>1</voice>
+        <type>eighth</type>
+        <staff>1</staff>
       </note>
       <note dynamics="68.89">
         <pitch>

@@ -16,6 +16,7 @@ from app.pipeline.arpeggio_resonance import (
     filter_simple_arpeggio_resonance,
 )
 from app.pipeline.errors import ScoreGenerationError
+from app.pipeline.harmonics import HarmonicEvidence
 from app.pipeline.harmony import HarmonyConfig
 from app.pipeline.notation_context import NotationContext, ResolvedNotationContext
 from app.pipeline.polyphony_limit import RESONANT_POLYPHONY_VERSION
@@ -105,6 +106,7 @@ def build_score(
     title: str = "SongDance Transcription",
     analysis: StructureAnalysis | None = None,
     sustain_evidence: SustainEvidence | None = None,
+    harmonic_evidence: HarmonicEvidence | None = None,
     notation_context: NotationContext | None = None,
 ) -> ScoredTranscription:
     active_analysis = analysis or fallback_analysis(
@@ -159,6 +161,7 @@ def build_score(
     arpeggio_filter = filter_simple_arpeggio_resonance(
         voicing.events,
         pedal_intervals=_notation_pedal_intervals(sustain_evidence),
+        harmonic_evidence=harmonic_evidence,
     )
     notation_events = arpeggio_filter.events
     quarter_seconds = seconds_per_quarter(active_analysis)

@@ -41,6 +41,8 @@ PUBLISHED_ARTIFACTS = {
     "musicxml": "score.musicxml",
     "timeline": "timeline.json",
 }
+
+
 def publish() -> dict[str, object]:
     source_root = FIXTURE_ROOT / "human-review-artifacts" / CASE_ID
     source_metadata = _source_metadata()
@@ -103,6 +105,8 @@ def reset_review_for_current_artifacts() -> dict[str, object]:
         "model_version": MODEL_VERSION,
         "rating": "pending",
         "reviewed_at": None,
+        "review_state": previous["review_state"],
+        "review_resume_condition": previous["review_resume_condition"],
         "latest_completed_review": latest_completed,
         "notes": "",
     }
@@ -152,6 +156,8 @@ def validate_published_example() -> dict[str, object]:
         "clip_start_sec": source_metadata["start_sec"],
         "clip_duration_sec": source_metadata["duration_seconds"],
         "audio_sha256": source_metadata["clip_sha256"],
+        "review_state": review["review_state"],
+        "review_resume_condition": review["review_resume_condition"],
         "latest_completed_review": _completed_review(review),
         "reference_validation": reference_validation,
     }
@@ -271,6 +277,16 @@ def _public_review(source_root: Path) -> dict[str, object]:
         raise ValueError("completed public example review requires a review timestamp")
     if rating not in {"pending", *COMPLETED_REVIEW_RATINGS}:
         raise ValueError("invalid public example review rating")
+    review_state = review.get("review_state")
+    resume_condition = review.get("review_resume_condition")
+    if review_state not in {"active", "review_paused"}:
+        raise ValueError("invalid public example review state")
+    if review_state == "review_paused" and resume_condition != (
+        "reference_aligned_transcription_ready"
+    ):
+        raise ValueError("paused public example review requires a recovery condition")
+    if review_state == "active" and resume_condition is not None:
+        raise ValueError("active public example review cannot have a recovery condition")
     if rating == "pending":
         _completed_review(review)
     return review

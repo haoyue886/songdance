@@ -25,6 +25,10 @@ def test_public_example_matches_current_pipeline_and_provenance() -> None:
     assert "TIME_SIGNATURE_DEFAULTED_4_4" not in result["timeline"]["quality_flags"]
     assert "TIME_SIGNATURE_ASSUMED_4_4" not in result["timeline"]["quality_flags"]
     assert result["provenance"]["review_status"] == "pending"
+    assert result["provenance"]["review_state"] == "review_paused"
+    assert result["provenance"]["review_resume_condition"] == (
+        "reference_aligned_transcription_ready"
+    )
     assert result["provenance"]["latest_completed_review"] == {
         "rating": "needs_redo",
         "reviewed_at": "2026-08-19T07:37:57Z",
@@ -231,6 +235,8 @@ def test_public_example_rejects_musicxml_that_does_not_match_reference_score(
         ("musicxml_sha256", "0" * 64),
         ("timeline_sha256", "0" * 64),
         ("review_status", "minor_edits"),
+        ("review_state", "active"),
+        ("review_resume_condition", None),
         ("latest_completed_review", {"rating": "needs_redo"}),
         ("reference_validation", {"status": "passed"}),
     ],
@@ -276,6 +282,8 @@ def test_pending_replacement_can_publish_with_explicit_failed_history(
     provenance = publisher.publish()
 
     assert provenance["review_status"] == "pending"
+    assert provenance["review_state"] == "review_paused"
+    assert provenance["review_resume_condition"] == ("reference_aligned_transcription_ready")
     assert provenance["latest_completed_review"]["rating"] == "needs_redo"
     assert provenance["reference_validation"]["status"] == "passed"
     assert (public_root / "score.musicxml").is_file()
@@ -294,6 +302,8 @@ def test_reset_review_preserves_failed_history_for_the_new_artifacts(
 
     assert review["rating"] == "pending"
     assert review["reviewed_at"] is None
+    assert review["review_state"] == "review_paused"
+    assert review["review_resume_condition"] == ("reference_aligned_transcription_ready")
     assert review["latest_completed_review"] == {
         "rating": "needs_redo",
         "reviewed_at": "2026-08-19T07:37:57Z",
@@ -523,5 +533,7 @@ def _allow_approved_current_review(monkeypatch: pytest.MonkeyPatch) -> None:
             "rating": "minor_edits",
             "reviewed_at": "2026-08-19T07:37:57Z",
             "model_version": "basic-pitch-0.4.0/icassp-2022-onnx/o0.5-f0.3",
+            "review_state": "active",
+            "review_resume_condition": None,
         },
     )

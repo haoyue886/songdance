@@ -76,12 +76,27 @@ export function ExampleClient() {
         aria-label={examples("provenance")}
         className="mb-6 border-y border-[#d9e3dd] bg-[#f5f8f6] px-4 py-4 sm:px-5"
       >
-        <dl className="grid gap-4 text-sm sm:grid-cols-3">
-          <ProvenanceFact label={examples("currentReview")} value={reviewLabel(state.provenance.review_status)} />
+        <dl className="grid gap-4 text-sm sm:grid-cols-2 lg:grid-cols-4">
+          <ProvenanceFact
+            label={examples("currentReview")}
+            value={
+              state.provenance.review_state === "review_paused"
+                ? examples("reviewPaused")
+                : reviewLabel(state.provenance.review_status)
+            }
+          />
           <ProvenanceFact
             label={examples("completedReview")}
             value={reviewLabel(state.provenance.latest_completed_review.rating)}
           />
+          {state.provenance.review_state === "review_paused" &&
+          state.provenance.review_resume_condition ===
+            "reference_aligned_transcription_ready" ? (
+            <ProvenanceFact
+              label={examples("reviewResumeCondition")}
+              value={examples("reviewResumeAfterFix")}
+            />
+          ) : null}
           <div>
             <dt className="font-bold text-[#31443f]">{examples("sourcePrefix")}</dt>
             <dd className="mt-1 flex flex-wrap gap-x-2 text-[#52635f]">

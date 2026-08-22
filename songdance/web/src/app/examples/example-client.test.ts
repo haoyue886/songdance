@@ -31,6 +31,8 @@ const provenance: ExampleProvenance = {
   license: "Public domain",
   license_url: "https://commons.wikimedia.org/wiki/File:example",
   review_status: "pending",
+  review_state: "review_paused",
+  review_resume_condition: "reference_aligned_transcription_ready",
   latest_completed_review: {
     rating: "minor_edits",
     reviewed_at: "2026-08-06T00:00:00Z",

@@ -5,7 +5,7 @@
   <identification>
     <creator type="composer" />
     <encoding>
-      <encoding-date>2026-08-21</encoding-date>
+      <encoding-date>2026-08-22</encoding-date>
       <software>music21 v.10.5.0</software>
       <supports element="beam" type="yes" />
       <supports element="stem" type="yes" />
@@ -19,21 +19,21 @@
     </scaling>
   </defaults>
   <part-list>
-    <score-part id="Pb725b95a09254337d1bf225f3bb94568">
+    <score-part id="P23b3c797839667ce2448d6ed76cc90b4">
       <part-name>Piano</part-name>
       <part-abbreviation>Pno</part-abbreviation>
-      <score-instrument id="Ifdb521959c3fde71f7e5649c78d5fbda">
+      <score-instrument id="Ia7e0427a45ee90b67c93a5a81b97accf">
         <instrument-name>Piano</instrument-name>
         <instrument-abbreviation>Pno</instrument-abbreviation>
       </score-instrument>
-      <midi-instrument id="Ifdb521959c3fde71f7e5649c78d5fbda">
+      <midi-instrument id="Ia7e0427a45ee90b67c93a5a81b97accf">
         <midi-channel>1</midi-channel>
         <midi-program>1</midi-program>
       </midi-instrument>
     </score-part>
   </part-list>
   <!--=========================== Part 1 ===========================-->
-  <part id="Pb725b95a09254337d1bf225f3bb94568">
+  <part id="P23b3c797839667ce2448d6ed76cc90b4">
     <!--========================= Measure 1 ==========================-->
     <measure implicit="no" number="1">
       <attributes>
@@ -101,11 +101,37 @@
       <backup>
         <duration>10080</duration>
       </backup>
+      <note dynamics="47.78">
+        <pitch>
+          <step>G</step>
+          <octave>5</octave>
+        </pitch>
+        <duration>2520</duration>
+        <voice>1</voice>
+        <type>16th</type>
+        <stem>down</stem>
+        <staff>1</staff>
+        <beam number="1">begin</beam>
+        <beam number="2">begin</beam>
+      </note>
+      <note dynamics="44.44">
+        <pitch>
+          <step>G</step>
+          <octave>5</octave>
+        </pitch>
+        <duration>2520</duration>
+        <voice>1</voice>
+        <type>16th</type>
+        <stem>down</stem>
+        <staff>1</staff>
+        <beam number="1">end</beam>
+        <beam number="2">end</beam>
+      </note>
       <note>
         <rest />
-        <duration>10080</duration>
+        <duration>5040</duration>
         <voice>1</voice>
-        <type>quarter</type>
+        <type>eighth</type>
         <staff>1</staff>
       </note>
       <backup>
@@ -134,18 +160,7 @@
     </measure>
     <!--========================= Measure 2 ==========================-->
     <measure implicit="no" number="2">
-      <note dynamics="71.11">
-        <pitch>
-          <step>D</step>
-          <octave>4</octave>
-        </pitch>
-        <duration>10080</duration>
-        <voice>0</voice>
-        <type>quarter</type>
-        <staff>1</staff>
-      </note>
-      <note dynamics="71.11">
-        <chord />
+      <note dynamics="72.22">
         <pitch>
           <step>F</step>
           <octave>4</octave>
@@ -155,7 +170,7 @@
         <type>quarter</type>
         <staff>1</staff>
       </note>
-      <note dynamics="71.11">
+      <note dynamics="72.22">
         <chord />
         <pitch>
           <step>A</step>
@@ -166,9 +181,9 @@
         <type>quarter</type>
         <staff>1</staff>
       </note>
-      <note dynamics="83.33">
+      <note dynamics="81.11">
         <pitch>
-          <step>D</step>
+          <step>G</step>
           <octave>4</octave>
         </pitch>
         <duration>10080</duration>
@@ -176,7 +191,17 @@
         <type>quarter</type>
         <staff>1</staff>
       </note>
-      <note dynamics="83.33">
+      <note dynamics="91.11">
+        <pitch>
+          <step>E</step>
+          <octave>4</octave>
+        </pitch>
+        <duration>10080</duration>
+        <voice>0</voice>
+        <type>quarter</type>
+        <staff>1</staff>
+      </note>
+      <note dynamics="91.11">
         <chord />
         <pitch>
           <step>G</step>
@@ -187,7 +212,7 @@
         <type>quarter</type>
         <staff>1</staff>
       </note>
-      <note dynamics="83.33">
+      <note dynamics="84.44">
         <pitch>
           <step>C</step>
           <octave>4</octave>
@@ -197,7 +222,7 @@
         <type>quarter</type>
         <staff>1</staff>
       </note>
-      <note dynamics="83.33">
+      <note dynamics="84.44">
         <chord />
         <pitch>
           <step>E</step>
@@ -208,28 +233,7 @@
         <type>quarter</type>
         <staff>1</staff>
       </note>
-      <note dynamics="83.33">
-        <chord />
-        <pitch>
-          <step>G</step>
-          <octave>4</octave>
-        </pitch>
-        <duration>10080</duration>
-        <voice>0</voice>
-        <type>quarter</type>
-        <staff>1</staff>
-      </note>
-      <note dynamics="93.33">
-        <pitch>
-          <step>E</step>
-          <octave>4</octave>
-        </pitch>
-        <duration>10080</duration>
-        <voice>0</voice>
-        <type>quarter</type>
-        <staff>1</staff>
-      </note>
-      <note dynamics="93.33">
+      <note dynamics="84.44">
         <chord />
         <pitch>
           <step>G</step>
@@ -258,12 +262,30 @@
         <duration>2520</duration>
         <voice>1</voice>
         <type>16th</type>
+        <staff>1</staff>
+      </note>
+      <note>
+        <rest />
+        <duration>7560</duration>
+        <voice>1</voice>
+        <type>eighth</type>
+        <dot />
+        <staff>1</staff>
+      </note>
+      <note dynamics="50.00">
+        <pitch>
+          <step>G</step>
+          <octave>5</octave>
+        </pitch>
+        <duration>2520</duration>
+        <voice>1</voice>
+        <type>16th</type>
         <stem>down</stem>
         <staff>1</staff>
         <beam number="1">begin</beam>
         <beam number="2">begin</beam>
       </note>
-      <note dynamics="43.33">
+      <note dynamics="44.44">
         <pitch>
           <step>G</step>
           <octave>5</octave>
@@ -283,28 +305,10 @@
         <type>eighth</type>
         <staff>1</staff>
       </note>
-      <note dynamics="50.00">
-        <pitch>
-          <step>G</step>
-          <octave>5</octave>
-        </pitch>
-        <duration>2520</duration>
-        <voice>1</voice>
-        <type>16th</type>
-        <staff>1</staff>
-      </note>
-      <note>
-        <rest />
-        <duration>7560</duration>
-        <voice>1</voice>
-        <type>eighth</type>
-        <dot />
-        <staff>1</staff>
-      </note>
       <backup>
         <duration>40320</duration>
       </backup>
-      <note dynamics="100.00">
+      <note dynamics="84.44">
         <pitch>
           <step>D</step>
           <octave>3</octave>
@@ -314,28 +318,68 @@
         <type>quarter</type>
         <staff>2</staff>
       </note>
-      <note dynamics="100.00">
+      <note dynamics="84.44">
+        <chord />
         <pitch>
-          <step>G</step>
-          <octave>2</octave>
+          <step>D</step>
+          <octave>4</octave>
         </pitch>
         <duration>10080</duration>
         <voice>0</voice>
         <type>quarter</type>
         <staff>2</staff>
       </note>
-      <note dynamics="100.00">
+      <note dynamics="95.56">
+        <pitch>
+          <step>G</step>
+          <octave>2</octave>
+        </pitch>
+        <duration>7560</duration>
+        <voice>0</voice>
+        <type>eighth</type>
+        <dot />
+        <stem>up</stem>
+        <staff>2</staff>
+        <beam number="1">begin</beam>
+      </note>
+      <note dynamics="95.56">
         <chord />
         <pitch>
           <step>B</step>
           <octave>3</octave>
         </pitch>
-        <duration>10080</duration>
+        <duration>7560</duration>
         <voice>0</voice>
-        <type>quarter</type>
+        <type>eighth</type>
+        <dot />
         <staff>2</staff>
       </note>
-      <note dynamics="98.89">
+      <note dynamics="95.56">
+        <chord />
+        <pitch>
+          <step>D</step>
+          <octave>4</octave>
+        </pitch>
+        <duration>7560</duration>
+        <voice>0</voice>
+        <type>eighth</type>
+        <dot />
+        <staff>2</staff>
+      </note>
+      <note dynamics="52.22">
+        <pitch>
+          <step>G</step>
+          <octave>3</octave>
+        </pitch>
+        <duration>2520</duration>
+        <voice>0</voice>
+        <type>16th</type>
+        <stem>up</stem>
+        <staff>2</staff>
+        <beam number="1">end</beam>
+        <beam number="2">backward hook</beam>
+      </note>
+      <note dynamics="83.33">
         <pitch>
           <step>C</step>
           <octave>3</octave>
@@ -345,17 +389,7 @@
         <type>quarter</type>
         <staff>2</staff>
       </note>
-      <note dynamics="84.44">
-        <pitch>
-          <step>C</step>
-          <octave>3</octave>
-        </pitch>
-        <duration>10080</duration>
-        <voice>0</voice>
-        <type>quarter</type>
-        <staff>2</staff>
-      </note>
-      <note dynamics="84.44">
+      <note dynamics="83.33">
         <chord />
         <pitch>
           <step>C</step>
@@ -366,6 +400,16 @@
         <type>quarter</type>
         <staff>2</staff>
       </note>
+      <note dynamics="100.00">
+        <pitch>
+          <step>C</step>
+          <octave>3</octave>
+        </pitch>
+        <duration>10080</duration>
+        <voice>0</voice>
+        <type>quarter</type>
+        <staff>2</staff>
+      </note>
       <backup>
         <duration>40320</duration>
       </backup>
@@ -376,14 +420,25 @@
         <type>quarter</type>
         <staff>2</staff>
       </note>
-      <note dynamics="52.22">
+      <note dynamics="53.33">
         <pitch>
           <step>G</step>
           <octave>1</octave>
         </pitch>
-        <duration>2520</duration>
+        <duration>5040</duration>
         <voice>1</voice>
-        <type>16th</type>
+        <type>eighth</type>
+        <staff>2</staff>
+      </note>
+      <note dynamics="53.33">
+        <chord />
+        <pitch>
+          <step>G</step>
+          <octave>3</octave>
+        </pitch>
+        <duration>5040</duration>
+        <voice>1</voice>
+        <type>eighth</type>
         <staff>2</staff>
       </note>
       <note>
@@ -395,10 +450,9 @@
       </note>
       <note>
         <rest />
-        <duration>7560</duration>
+        <duration>5040</duration>
         <voice>1</voice>
         <type>eighth</type>
-        <dot />
         <staff>2</staff>
       </note>
     </measure>
@@ -425,9 +479,9 @@
         <type>quarter</type>
         <staff>1</staff>
       </note>
-      <note dynamics="82.22">
+      <note dynamics="80.00">
         <pitch>
-          <step>D</step>
+          <step>G</step>
           <octave>4</octave>
         </pitch>
         <duration>10080</duration>
@@ -435,7 +489,17 @@
         <type>quarter</type>
         <staff>1</staff>
       </note>
-      <note dynamics="82.22">
+      <note dynamics="91.11">
+        <pitch>
+          <step>E</step>
+          <octave>4</octave>
+        </pitch>
+        <duration>10080</duration>
+        <voice>0</voice>
+        <type>quarter</type>
+        <staff>1</staff>
+      </note>
+      <note dynamics="91.11">
         <chord />
         <pitch>
           <step>G</step>
@@ -446,7 +510,7 @@
         <type>quarter</type>
         <staff>1</staff>
       </note>
-      <note dynamics="83.33">
+      <note dynamics="84.44">
         <pitch>
           <step>C</step>
           <octave>4</octave>
@@ -456,7 +520,7 @@
         <type>quarter</type>
         <staff>1</staff>
       </note>
-      <note dynamics="83.33">
+      <note dynamics="84.44">
         <chord />
         <pitch>
           <step>E</step>
@@ -467,28 +531,7 @@
         <type>quarter</type>
         <staff>1</staff>
       </note>
-      <note dynamics="83.33">
-        <chord />
-        <pitch>
-          <step>G</step>
-          <octave>4</octave>
-        </pitch>
-        <duration>10080</duration>
-        <voice>0</voice>
-        <type>quarter</type>
-        <staff>1</staff>
-      </note>
-      <note dynamics="92.22">
-        <pitch>
-          <step>E</step>
-          <octave>4</octave>
-        </pitch>
-        <duration>10080</duration>
-        <voice>0</voice>
-        <type>quarter</type>
-        <staff>1</staff>
-      </note>
-      <note dynamics="92.22">
+      <note dynamics="84.44">
         <chord />
         <pitch>
           <step>G</step>
@@ -517,29 +560,14 @@
         <duration>2520</duration>
         <voice>1</voice>
         <type>16th</type>
-        <stem>down</stem>
         <staff>1</staff>
-        <beam number="1">begin</beam>
-        <beam number="2">begin</beam>
-      </note>
-      <note dynamics="43.33">
-        <pitch>
-          <step>G</step>
-          <octave>5</octave>
-        </pitch>
-        <duration>2520</duration>
-        <voice>1</voice>
-        <type>16th</type>
-        <stem>down</stem>
-        <staff>1</staff>
-        <beam number="1">end</beam>
-        <beam number="2">end</beam>
       </note>
       <note>
         <rest />
-        <duration>5040</duration>
+        <duration>7560</duration>
         <voice>1</voice>
         <type>eighth</type>
+        <dot />
         <staff>1</staff>
       </note>
       <note dynamics="48.89">
@@ -584,28 +612,57 @@
         <type>quarter</type>
         <staff>2</staff>
       </note>
-      <note dynamics="100.00">
+      <note dynamics="94.44">
         <pitch>
           <step>G</step>
           <octave>2</octave>
         </pitch>
-        <duration>10080</duration>
+        <duration>7560</duration>
         <voice>0</voice>
-        <type>quarter</type>
+        <type>eighth</type>
+        <dot />
+        <stem>up</stem>
         <staff>2</staff>
+        <beam number="1">begin</beam>
       </note>
-      <note dynamics="100.00">
+      <note dynamics="94.44">
         <chord />
         <pitch>
           <step>B</step>
           <octave>3</octave>
         </pitch>
-        <duration>10080</duration>
+        <duration>7560</duration>
         <voice>0</voice>
-        <type>quarter</type>
+        <type>eighth</type>
+        <dot />
         <staff>2</staff>
       </note>
-      <note dynamics="98.89">
+      <note dynamics="94.44">
+        <chord />
+        <pitch>
+          <step>D</step>
+          <octave>4</octave>
+        </pitch>
+        <duration>7560</duration>
+        <voice>0</voice>
+        <type>eighth</type>
+        <dot />
+        <staff>2</staff>
+      </note>
+      <note dynamics="52.22">
+        <pitch>
+          <step>G</step>
+          <octave>3</octave>
+        </pitch>
+        <duration>2520</duration>
+        <voice>0</voice>
+        <type>16th</type>
+        <stem>up</stem>
+        <staff>2</staff>
+        <beam number="1">end</beam>
+        <beam number="2">backward hook</beam>
+      </note>
+      <note dynamics="83.33">
         <pitch>
           <step>C</step>
           <octave>3</octave>
@@ -615,21 +672,21 @@
         <type>quarter</type>
         <staff>2</staff>
       </note>
-      <note dynamics="84.44">
-        <pitch>
-          <step>C</step>
-          <octave>3</octave>
-        </pitch>
-        <duration>10080</duration>
-        <voice>0</voice>
-        <type>quarter</type>
-        <staff>2</staff>
-      </note>
-      <note dynamics="84.44">
+      <note dynamics="83.33">
         <chord />
         <pitch>
           <step>C</step>
           <octave>4</octave>
+        </pitch>
+        <duration>10080</duration>
+        <voice>0</voice>
+        <type>quarter</type>
+        <staff>2</staff>
+      </note>
+      <note dynamics="101.11">
+        <pitch>
+          <step>C</step>
+          <octave>3</octave>
         </pitch>
         <duration>10080</duration>
         <voice>0</voice>
@@ -651,9 +708,20 @@
           <step>G</step>
           <octave>1</octave>
         </pitch>
-        <duration>2520</duration>
+        <duration>5040</duration>
         <voice>1</voice>
-        <type>16th</type>
+        <type>eighth</type>
+        <staff>2</staff>
+      </note>
+      <note dynamics="57.78">
+        <chord />
+        <pitch>
+          <step>G</step>
+          <octave>3</octave>
+        </pitch>
+        <duration>5040</duration>
+        <voice>1</voice>
+        <type>eighth</type>
         <staff>2</staff>
       </note>
       <note>
@@ -665,16 +733,26 @@
       </note>
       <note>
         <rest />
-        <duration>7560</duration>
+        <duration>5040</duration>
         <voice>1</voice>
         <type>eighth</type>
-        <dot />
         <staff>2</staff>
       </note>
     </measure>
     <!--========================= Measure 4 ==========================-->
     <measure implicit="no" number="4">
-      <note dynamics="73.33">
+      <note dynamics="71.11">
+        <pitch>
+          <step>D</step>
+          <octave>4</octave>
+        </pitch>
+        <duration>10080</duration>
+        <voice>0</voice>
+        <type>quarter</type>
+        <staff>1</staff>
+      </note>
+      <note dynamics="71.11">
+        <chord />
         <pitch>
           <step>F</step>
           <octave>4</octave>
@@ -684,7 +762,7 @@
         <type>quarter</type>
         <staff>1</staff>
       </note>
-      <note dynamics="73.33">
+      <note dynamics="71.11">
         <chord />
         <pitch>
           <step>A</step>
@@ -748,7 +826,18 @@
         <type>quarter</type>
         <staff>1</staff>
       </note>
-      <note dynamics="93.33">
+      <note dynamics="84.44">
+        <pitch>
+          <step>C</step>
+          <octave>4</octave>
+        </pitch>
+        <duration>10080</duration>
+        <voice>0</voice>
+        <type>quarter</type>
+        <staff>1</staff>
+      </note>
+      <note dynamics="84.44">
+        <chord />
         <pitch>
           <step>E</step>
           <octave>4</octave>
@@ -758,7 +847,7 @@
         <type>quarter</type>
         <staff>1</staff>
       </note>
-      <note dynamics="93.33">
+      <note dynamics="84.44">
         <chord />
         <pitch>
           <step>G</step>
@@ -772,14 +861,356 @@
       <backup>
         <duration>40320</duration>
       </backup>
+      <note dynamics="51.11">
+        <pitch>
+          <step>F</step>
+          <octave>5</octave>
+        </pitch>
+        <duration>2520</duration>
+        <voice>1</voice>
+        <type>16th</type>
+        <staff>1</staff>
+      </note>
+      <note>
+        <rest />
+        <duration>17640</duration>
+        <voice>1</voice>
+        <type>quarter</type>
+        <dot />
+        <dot />
+        <staff>1</staff>
+      </note>
+      <note dynamics="51.11">
+        <pitch>
+          <step>G</step>
+          <octave>5</octave>
+        </pitch>
+        <duration>2520</duration>
+        <voice>1</voice>
+        <type>16th</type>
+        <staff>1</staff>
+      </note>
+      <note>
+        <rest />
+        <duration>7560</duration>
+        <voice>1</voice>
+        <type>eighth</type>
+        <dot />
+        <staff>1</staff>
+      </note>
+      <note dynamics="47.78">
+        <pitch>
+          <step>G</step>
+          <octave>5</octave>
+        </pitch>
+        <duration>2520</duration>
+        <voice>1</voice>
+        <type>16th</type>
+        <staff>1</staff>
+      </note>
+      <note>
+        <rest />
+        <duration>7560</duration>
+        <voice>1</voice>
+        <type>eighth</type>
+        <dot />
+        <staff>1</staff>
+      </note>
+      <backup>
+        <duration>40320</duration>
+      </backup>
+      <note dynamics="101.11">
+        <pitch>
+          <step>D</step>
+          <octave>3</octave>
+        </pitch>
+        <duration>10080</duration>
+        <voice>0</voice>
+        <type>quarter</type>
+        <staff>2</staff>
+      </note>
+      <note dynamics="100.00">
+        <pitch>
+          <step>G</step>
+          <octave>2</octave>
+        </pitch>
+        <duration>7560</duration>
+        <voice>0</voice>
+        <type>eighth</type>
+        <dot />
+        <stem>up</stem>
+        <staff>2</staff>
+        <beam number="1">begin</beam>
+      </note>
+      <note dynamics="100.00">
+        <chord />
+        <pitch>
+          <step>B</step>
+          <octave>3</octave>
+        </pitch>
+        <duration>7560</duration>
+        <voice>0</voice>
+        <type>eighth</type>
+        <dot />
+        <staff>2</staff>
+      </note>
+      <note dynamics="51.11">
+        <pitch>
+          <step>G</step>
+          <octave>3</octave>
+        </pitch>
+        <duration>2520</duration>
+        <voice>0</voice>
+        <type>16th</type>
+        <stem>up</stem>
+        <staff>2</staff>
+        <beam number="1">end</beam>
+        <beam number="2">backward hook</beam>
+      </note>
+      <note dynamics="97.78">
+        <pitch>
+          <step>C</step>
+          <octave>3</octave>
+        </pitch>
+        <duration>10080</duration>
+        <voice>0</voice>
+        <type>quarter</type>
+        <staff>2</staff>
+      </note>
+      <note dynamics="100.00">
+        <pitch>
+          <step>C</step>
+          <octave>3</octave>
+        </pitch>
+        <duration>7560</duration>
+        <voice>0</voice>
+        <type>eighth</type>
+        <dot />
+        <staff>2</staff>
+      </note>
+      <note>
+        <rest />
+        <duration>2520</duration>
+        <voice>0</voice>
+        <type>16th</type>
+        <staff>2</staff>
+      </note>
+      <backup>
+        <duration>40320</duration>
+      </backup>
+      <note>
+        <rest />
+        <duration>10080</duration>
+        <voice>1</voice>
+        <type>quarter</type>
+        <staff>2</staff>
+      </note>
+      <note dynamics="56.67">
+        <pitch>
+          <step>G</step>
+          <octave>1</octave>
+        </pitch>
+        <duration>5040</duration>
+        <voice>1</voice>
+        <type>eighth</type>
+        <staff>2</staff>
+      </note>
+      <note dynamics="56.67">
+        <chord />
+        <pitch>
+          <step>G</step>
+          <octave>3</octave>
+        </pitch>
+        <duration>5040</duration>
+        <voice>1</voice>
+        <type>eighth</type>
+        <staff>2</staff>
+      </note>
       <note>
         <rest />
         <duration>20160</duration>
         <voice>1</voice>
         <type>half</type>
+        <staff>2</staff>
+      </note>
+      <note>
+        <rest />
+        <duration>5040</duration>
+        <voice>1</voice>
+        <type>eighth</type>
+        <staff>2</staff>
+      </note>
+    </measure>
+    <!--========================= Measure 5 ==========================-->
+    <measure implicit="no" number="5">
+      <note dynamics="70.00">
+        <pitch>
+          <step>D</step>
+          <octave>4</octave>
+        </pitch>
+        <duration>10080</duration>
+        <voice>0</voice>
+        <type>quarter</type>
         <staff>1</staff>
       </note>
+      <note dynamics="70.00">
+        <chord />
+        <pitch>
+          <step>F</step>
+          <octave>4</octave>
+        </pitch>
+        <duration>10080</duration>
+        <voice>0</voice>
+        <type>quarter</type>
+        <staff>1</staff>
+      </note>
+      <note dynamics="70.00">
+        <chord />
+        <pitch>
+          <step>A</step>
+          <octave>4</octave>
+        </pitch>
+        <duration>10080</duration>
+        <voice>0</voice>
+        <type>quarter</type>
+        <staff>1</staff>
+      </note>
+      <note dynamics="82.22">
+        <pitch>
+          <step>D</step>
+          <octave>4</octave>
+        </pitch>
+        <duration>10080</duration>
+        <voice>0</voice>
+        <type>quarter</type>
+        <staff>1</staff>
+      </note>
+      <note dynamics="82.22">
+        <chord />
+        <pitch>
+          <step>G</step>
+          <octave>4</octave>
+        </pitch>
+        <duration>10080</duration>
+        <voice>0</voice>
+        <type>quarter</type>
+        <staff>1</staff>
+      </note>
+      <note dynamics="84.44">
+        <pitch>
+          <step>C</step>
+          <octave>4</octave>
+        </pitch>
+        <duration>10080</duration>
+        <voice>0</voice>
+        <type>quarter</type>
+        <staff>1</staff>
+      </note>
+      <note dynamics="84.44">
+        <chord />
+        <pitch>
+          <step>E</step>
+          <octave>4</octave>
+        </pitch>
+        <duration>10080</duration>
+        <voice>0</voice>
+        <type>quarter</type>
+        <staff>1</staff>
+      </note>
+      <note dynamics="84.44">
+        <chord />
+        <pitch>
+          <step>G</step>
+          <octave>4</octave>
+        </pitch>
+        <duration>10080</duration>
+        <voice>0</voice>
+        <type>quarter</type>
+        <staff>1</staff>
+      </note>
+      <note dynamics="84.44">
+        <pitch>
+          <step>C</step>
+          <octave>4</octave>
+        </pitch>
+        <duration>7560</duration>
+        <voice>0</voice>
+        <type>eighth</type>
+        <dot />
+        <staff>1</staff>
+      </note>
+      <note dynamics="84.44">
+        <chord />
+        <pitch>
+          <step>E</step>
+          <octave>4</octave>
+        </pitch>
+        <duration>7560</duration>
+        <voice>0</voice>
+        <type>eighth</type>
+        <dot />
+        <staff>1</staff>
+      </note>
+      <note dynamics="84.44">
+        <chord />
+        <pitch>
+          <step>G</step>
+          <octave>4</octave>
+        </pitch>
+        <duration>7560</duration>
+        <voice>0</voice>
+        <type>eighth</type>
+        <dot />
+        <staff>1</staff>
+      </note>
+      <note>
+        <rest />
+        <duration>2520</duration>
+        <voice>0</voice>
+        <type>16th</type>
+        <staff>1</staff>
+      </note>
+      <backup>
+        <duration>40320</duration>
+      </backup>
       <note dynamics="51.11">
+        <pitch>
+          <step>F</step>
+          <octave>5</octave>
+        </pitch>
+        <duration>2520</duration>
+        <voice>1</voice>
+        <type>16th</type>
+        <staff>1</staff>
+      </note>
+      <note>
+        <rest />
+        <duration>17640</duration>
+        <voice>1</voice>
+        <type>quarter</type>
+        <dot />
+        <dot />
+        <staff>1</staff>
+      </note>
+      <note dynamics="50.00">
+        <pitch>
+          <step>G</step>
+          <octave>5</octave>
+        </pitch>
+        <duration>2520</duration>
+        <voice>1</voice>
+        <type>16th</type>
+        <staff>1</staff>
+      </note>
+      <note>
+        <rest />
+        <duration>7560</duration>
+        <voice>1</voice>
+        <type>eighth</type>
+        <dot />
+        <staff>1</staff>
+      </note>
+      <note dynamics="46.67">
         <pitch>
           <step>G</step>
           <octave>5</octave>
@@ -812,368 +1243,13 @@
         <type>eighth</type>
         <staff>1</staff>
       </note>
-      <note dynamics="47.78">
-        <pitch>
-          <step>G</step>
-          <octave>5</octave>
-        </pitch>
-        <duration>2520</duration>
-        <voice>1</voice>
-        <type>16th</type>
-        <stem>down</stem>
-        <staff>1</staff>
-        <beam number="1">begin</beam>
-        <beam number="2">begin</beam>
-      </note>
-      <note dynamics="43.33">
-        <pitch>
-          <step>G</step>
-          <octave>5</octave>
-        </pitch>
-        <duration>2520</duration>
-        <voice>1</voice>
-        <type>16th</type>
-        <stem>down</stem>
-        <staff>1</staff>
-        <beam number="1">end</beam>
-        <beam number="2">end</beam>
-      </note>
-      <note>
-        <rest />
-        <duration>5040</duration>
-        <voice>1</voice>
-        <type>eighth</type>
-        <staff>1</staff>
-      </note>
       <backup>
         <duration>40320</duration>
       </backup>
-      <note dynamics="84.44">
+      <note dynamics="98.89">
         <pitch>
           <step>D</step>
           <octave>3</octave>
-        </pitch>
-        <duration>10080</duration>
-        <voice>0</voice>
-        <type>quarter</type>
-        <staff>2</staff>
-      </note>
-      <note dynamics="84.44">
-        <chord />
-        <pitch>
-          <step>D</step>
-          <octave>4</octave>
-        </pitch>
-        <duration>10080</duration>
-        <voice>0</voice>
-        <type>quarter</type>
-        <staff>2</staff>
-      </note>
-      <note dynamics="100.00">
-        <pitch>
-          <step>G</step>
-          <octave>2</octave>
-        </pitch>
-        <duration>10080</duration>
-        <voice>0</voice>
-        <type>quarter</type>
-        <staff>2</staff>
-      </note>
-      <note dynamics="100.00">
-        <chord />
-        <pitch>
-          <step>B</step>
-          <octave>3</octave>
-        </pitch>
-        <duration>10080</duration>
-        <voice>0</voice>
-        <type>quarter</type>
-        <staff>2</staff>
-      </note>
-      <note dynamics="97.78">
-        <pitch>
-          <step>C</step>
-          <octave>3</octave>
-        </pitch>
-        <duration>10080</duration>
-        <voice>0</voice>
-        <type>quarter</type>
-        <staff>2</staff>
-      </note>
-      <note dynamics="84.44">
-        <pitch>
-          <step>C</step>
-          <octave>3</octave>
-        </pitch>
-        <duration>10080</duration>
-        <voice>0</voice>
-        <type>quarter</type>
-        <staff>2</staff>
-      </note>
-      <note dynamics="84.44">
-        <chord />
-        <pitch>
-          <step>C</step>
-          <octave>4</octave>
-        </pitch>
-        <duration>10080</duration>
-        <voice>0</voice>
-        <type>quarter</type>
-        <staff>2</staff>
-      </note>
-      <backup>
-        <duration>40320</duration>
-      </backup>
-      <note>
-        <rest />
-        <duration>10080</duration>
-        <voice>1</voice>
-        <type>quarter</type>
-        <staff>2</staff>
-      </note>
-      <note dynamics="58.89">
-        <pitch>
-          <step>G</step>
-          <octave>1</octave>
-        </pitch>
-        <duration>2520</duration>
-        <voice>1</voice>
-        <type>16th</type>
-        <staff>2</staff>
-      </note>
-      <note>
-        <rest />
-        <duration>20160</duration>
-        <voice>1</voice>
-        <type>half</type>
-        <staff>2</staff>
-      </note>
-      <note>
-        <rest />
-        <duration>7560</duration>
-        <voice>1</voice>
-        <type>eighth</type>
-        <dot />
-        <staff>2</staff>
-      </note>
-    </measure>
-    <!--========================= Measure 5 ==========================-->
-    <measure implicit="no" number="5">
-      <note dynamics="71.11">
-        <pitch>
-          <step>F</step>
-          <octave>4</octave>
-        </pitch>
-        <duration>7560</duration>
-        <voice>0</voice>
-        <type>eighth</type>
-        <dot />
-        <staff>1</staff>
-      </note>
-      <note dynamics="71.11">
-        <chord />
-        <pitch>
-          <step>A</step>
-          <octave>4</octave>
-        </pitch>
-        <duration>7560</duration>
-        <voice>0</voice>
-        <type>eighth</type>
-        <dot />
-        <staff>1</staff>
-      </note>
-      <note>
-        <rest />
-        <duration>2520</duration>
-        <voice>0</voice>
-        <type>16th</type>
-        <staff>1</staff>
-      </note>
-      <note dynamics="80.00">
-        <pitch>
-          <step>G</step>
-          <octave>4</octave>
-        </pitch>
-        <duration>10080</duration>
-        <voice>0</voice>
-        <type>quarter</type>
-        <staff>1</staff>
-      </note>
-      <note dynamics="84.44">
-        <pitch>
-          <step>C</step>
-          <octave>4</octave>
-        </pitch>
-        <duration>10080</duration>
-        <voice>0</voice>
-        <type>quarter</type>
-        <staff>1</staff>
-      </note>
-      <note dynamics="84.44">
-        <chord />
-        <pitch>
-          <step>E</step>
-          <octave>4</octave>
-        </pitch>
-        <duration>10080</duration>
-        <voice>0</voice>
-        <type>quarter</type>
-        <staff>1</staff>
-      </note>
-      <note dynamics="84.44">
-        <chord />
-        <pitch>
-          <step>G</step>
-          <octave>4</octave>
-        </pitch>
-        <duration>10080</duration>
-        <voice>0</voice>
-        <type>quarter</type>
-        <staff>1</staff>
-      </note>
-      <note dynamics="92.22">
-        <pitch>
-          <step>E</step>
-          <octave>4</octave>
-        </pitch>
-        <duration>7560</duration>
-        <voice>0</voice>
-        <type>eighth</type>
-        <dot />
-        <staff>1</staff>
-      </note>
-      <note dynamics="92.22">
-        <chord />
-        <pitch>
-          <step>G</step>
-          <octave>4</octave>
-        </pitch>
-        <duration>7560</duration>
-        <voice>0</voice>
-        <type>eighth</type>
-        <dot />
-        <staff>1</staff>
-      </note>
-      <note>
-        <rest />
-        <duration>2520</duration>
-        <voice>0</voice>
-        <type>16th</type>
-        <staff>1</staff>
-      </note>
-      <backup>
-        <duration>40320</duration>
-      </backup>
-      <note>
-        <rest />
-        <duration>20160</duration>
-        <voice>1</voice>
-        <type>half</type>
-        <staff>1</staff>
-      </note>
-      <note dynamics="50.00">
-        <pitch>
-          <step>G</step>
-          <octave>5</octave>
-        </pitch>
-        <duration>2520</duration>
-        <voice>1</voice>
-        <type>16th</type>
-        <stem>down</stem>
-        <staff>1</staff>
-        <beam number="1">begin</beam>
-        <beam number="2">begin</beam>
-      </note>
-      <note dynamics="44.44">
-        <pitch>
-          <step>G</step>
-          <octave>5</octave>
-        </pitch>
-        <duration>2520</duration>
-        <voice>1</voice>
-        <type>16th</type>
-        <stem>down</stem>
-        <staff>1</staff>
-        <beam number="1">end</beam>
-        <beam number="2">end</beam>
-      </note>
-      <note>
-        <rest />
-        <duration>5040</duration>
-        <voice>1</voice>
-        <type>eighth</type>
-        <staff>1</staff>
-      </note>
-      <note dynamics="46.67">
-        <pitch>
-          <step>G</step>
-          <octave>5</octave>
-        </pitch>
-        <duration>2520</duration>
-        <voice>1</voice>
-        <type>16th</type>
-        <staff>1</staff>
-      </note>
-      <note>
-        <rest />
-        <duration>7560</duration>
-        <voice>1</voice>
-        <type>eighth</type>
-        <dot />
-        <staff>1</staff>
-      </note>
-      <backup>
-        <duration>40320</duration>
-      </backup>
-      <note dynamics="83.33">
-        <pitch>
-          <step>D</step>
-          <octave>3</octave>
-        </pitch>
-        <duration>10080</duration>
-        <voice>0</voice>
-        <type>quarter</type>
-        <staff>2</staff>
-      </note>
-      <note dynamics="83.33">
-        <chord />
-        <pitch>
-          <step>D</step>
-          <octave>4</octave>
-        </pitch>
-        <duration>10080</duration>
-        <voice>0</voice>
-        <type>quarter</type>
-        <staff>2</staff>
-      </note>
-      <note dynamics="94.44">
-        <pitch>
-          <step>G</step>
-          <octave>2</octave>
-        </pitch>
-        <duration>7560</duration>
-        <voice>0</voice>
-        <type>eighth</type>
-        <dot />
-        <staff>2</staff>
-      </note>
-      <note dynamics="94.44">
-        <chord />
-        <pitch>
-          <step>B</step>
-          <octave>3</octave>
-        </pitch>
-        <duration>7560</duration>
-        <voice>0</voice>
-        <type>eighth</type>
-        <dot />
-        <staff>2</staff>
-      </note>
-      <note dynamics="94.44">
-        <chord />
-        <pitch>
-          <step>D</step>
-          <octave>4</octave>
         </pitch>
         <duration>7560</duration>
         <voice>0</voice>
@@ -1190,17 +1266,21 @@
       </note>
       <note dynamics="98.89">
         <pitch>
-          <step>C</step>
-          <octave>3</octave>
+          <step>G</step>
+          <octave>2</octave>
         </pitch>
-        <duration>10080</duration>
+        <duration>7560</duration>
         <voice>0</voice>
-        <type>quarter</type>
+        <type>eighth</type>
+        <dot />
+        <stem>up</stem>
         <staff>2</staff>
+        <beam number="1">begin</beam>
       </note>
-      <note dynamics="84.44">
+      <note dynamics="98.89">
+        <chord />
         <pitch>
-          <step>C</step>
+          <step>B</step>
           <octave>3</octave>
         </pitch>
         <duration>7560</duration>
@@ -1209,11 +1289,33 @@
         <dot />
         <staff>2</staff>
       </note>
-      <note dynamics="84.44">
-        <chord />
+      <note dynamics="52.22">
+        <pitch>
+          <step>G</step>
+          <octave>3</octave>
+        </pitch>
+        <duration>2520</duration>
+        <voice>0</voice>
+        <type>16th</type>
+        <stem>up</stem>
+        <staff>2</staff>
+        <beam number="1">end</beam>
+        <beam number="2">backward hook</beam>
+      </note>
+      <note dynamics="98.89">
         <pitch>
           <step>C</step>
-          <octave>4</octave>
+          <octave>3</octave>
+        </pitch>
+        <duration>10080</duration>
+        <voice>0</voice>
+        <type>quarter</type>
+        <staff>2</staff>
+      </note>
+      <note dynamics="100.00">
+        <pitch>
+          <step>C</step>
+          <octave>3</octave>
         </pitch>
         <duration>7560</duration>
         <voice>0</voice>
@@ -1238,14 +1340,25 @@
         <type>quarter</type>
         <staff>2</staff>
       </note>
-      <note dynamics="52.22">
+      <note dynamics="53.33">
         <pitch>
           <step>G</step>
           <octave>1</octave>
         </pitch>
-        <duration>2520</duration>
+        <duration>5040</duration>
         <voice>1</voice>
-        <type>16th</type>
+        <type>eighth</type>
+        <staff>2</staff>
+      </note>
+      <note dynamics="53.33">
+        <chord />
+        <pitch>
+          <step>G</step>
+          <octave>3</octave>
+        </pitch>
+        <duration>5040</duration>
+        <voice>1</voice>
+        <type>eighth</type>
         <staff>2</staff>
       </note>
       <note>
@@ -1257,10 +1370,9 @@
       </note>
       <note>
         <rest />
-        <duration>7560</duration>
+        <duration>5040</duration>
         <voice>1</voice>
         <type>eighth</type>
-        <dot />
         <staff>2</staff>
       </note>
     </measure>
@@ -1299,18 +1411,7 @@
         <type>quarter</type>
         <staff>1</staff>
       </note>
-      <note dynamics="88.89">
-        <pitch>
-          <step>C</step>
-          <octave>4</octave>
-        </pitch>
-        <duration>10080</duration>
-        <voice>0</voice>
-        <type>quarter</type>
-        <staff>1</staff>
-      </note>
-      <note dynamics="88.89">
-        <chord />
+      <note dynamics="95.56">
         <pitch>
           <step>E</step>
           <octave>4</octave>
@@ -1320,7 +1421,7 @@
         <type>quarter</type>
         <staff>1</staff>
       </note>
-      <note dynamics="88.89">
+      <note dynamics="95.56">
         <chord />
         <pitch>
           <step>G</step>
@@ -1348,11 +1449,22 @@
       <backup>
         <duration>40320</duration>
       </backup>
+      <note dynamics="52.22">
+        <pitch>
+          <step>F</step>
+          <octave>5</octave>
+        </pitch>
+        <duration>2520</duration>
+        <voice>1</voice>
+        <type>16th</type>
+        <staff>1</staff>
+      </note>
       <note>
         <rest />
-        <duration>10080</duration>
+        <duration>7560</duration>
         <voice>1</voice>
-        <type>quarter</type>
+        <type>eighth</type>
+        <dot />
         <staff>1</staff>
       </note>
       <note dynamics="85.56">
@@ -1427,9 +1539,9 @@
         <beam number="1">begin</beam>
         <beam number="2">forward hook</beam>
       </note>
-      <note dynamics="100.00">
+      <note dynamics="77.78">
         <pitch>
-          <step>B</step>
+          <step>G</step>
           <octave>3</octave>
         </pitch>
         <duration>7560</duration>
@@ -1440,7 +1552,19 @@
         <staff>2</staff>
         <beam number="1">end</beam>
       </note>
-      <note dynamics="105.56">
+      <note dynamics="77.78">
+        <chord />
+        <pitch>
+          <step>B</step>
+          <octave>3</octave>
+        </pitch>
+        <duration>7560</duration>
+        <voice>0</voice>
+        <type>eighth</type>
+        <dot />
+        <staff>2</staff>
+      </note>
+      <note dynamics="88.89">
         <pitch>
           <step>C</step>
           <octave>3</octave>
@@ -1449,11 +1573,23 @@
         <voice>0</voice>
         <type>eighth</type>
         <dot />
-        <stem>up</stem>
+        <stem>down</stem>
         <staff>2</staff>
         <beam number="1">begin</beam>
       </note>
-      <note dynamics="111.11">
+      <note dynamics="88.89">
+        <chord />
+        <pitch>
+          <step>C</step>
+          <octave>4</octave>
+        </pitch>
+        <duration>7560</duration>
+        <voice>0</voice>
+        <type>eighth</type>
+        <dot />
+        <staff>2</staff>
+      </note>
+      <note dynamics="93.33">
         <pitch>
           <step>C</step>
           <octave>3</octave>
@@ -1461,10 +1597,21 @@
         <duration>2520</duration>
         <voice>0</voice>
         <type>16th</type>
-        <stem>up</stem>
+        <stem>down</stem>
         <staff>2</staff>
         <beam number="1">end</beam>
         <beam number="2">backward hook</beam>
+      </note>
+      <note dynamics="93.33">
+        <chord />
+        <pitch>
+          <step>C</step>
+          <octave>4</octave>
+        </pitch>
+        <duration>2520</duration>
+        <voice>0</voice>
+        <type>16th</type>
+        <staff>2</staff>
       </note>
       <note print-object="no" print-spacing="yes">
         <rest />

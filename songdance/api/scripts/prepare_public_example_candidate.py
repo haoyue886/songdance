@@ -44,17 +44,18 @@ def prepare() -> dict[str, object]:
     normalized = CANDIDATE_ROOT / ".normalized.wav"
     preprocess_audio(SOURCE_AUDIO, normalized)
     events, raw_midi = transcribe_audio(normalized)
+    harmonic_evidence = extract_harmonic_evidence(
+        normalized,
+        events,
+        HarmonicEvidenceConfig(
+            bass_priority_enabled=True,
+            bass_priority_source="human_review",
+        ),
+    )
     cleanup = clean_note_events(
         events,
         config=None,
-        harmonic_evidence=extract_harmonic_evidence(
-            normalized,
-            events,
-            HarmonicEvidenceConfig(
-                bass_priority_enabled=True,
-                bass_priority_source="human_review",
-            ),
-        ),
+        harmonic_evidence=harmonic_evidence,
     )
     analysis = analyze_audio(
         normalized,
@@ -65,6 +66,7 @@ def prepare() -> dict[str, object]:
         title=TITLE,
         analysis=analysis,
         sustain_evidence=extract_sustain_evidence(normalized, raw_midi),
+        harmonic_evidence=harmonic_evidence,
         notation_context=NotationContext(
             key_signature="G major",
             key_signature_source="reference_score",

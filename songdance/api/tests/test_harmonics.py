@@ -55,9 +55,7 @@ def test_weak_aligned_high_harmonic_is_removed_with_audio_evidence(tmp_path: Pat
     harmonic = NoteEvent(0.1, 1.0, 81, 20, 0.9)
 
     evidence = extract_harmonic_evidence(audio_path, [fundamental, harmonic])
-    result = clean_note_events(
-        [fundamental, harmonic], harmonic_evidence=evidence
-    )
+    result = clean_note_events([fundamental, harmonic], harmonic_evidence=evidence)
 
     assert result.events == [fundamental]
     assert result.reason_counts[HARMONIC_CANDIDATE_REMOVED] == 1
@@ -77,6 +75,29 @@ def test_weak_aligned_high_harmonic_is_removed_with_audio_evidence(tmp_path: Pat
     assert removal.onset_delta_seconds == 0.0
     assert removal.velocity_ratio == 0.2
     assert removal.duration_ratio == 1.0
+
+
+@pytest.mark.parametrize("upper_end", [0.2, 0.3])
+def test_true_simultaneous_high_octave_survives_complete_cleanup(
+    tmp_path: Path,
+    upper_end: float,
+) -> None:
+    audio_path = tmp_path / f"played-high-octave-{upper_end}.wav"
+    _write_tones(
+        audio_path,
+        [(440.0, 0.35, 0.1, 0.3), (880.0, 0.1, 0.1, upper_end)],
+        duration=0.5,
+    )
+    fundamental = NoteEvent(0.1, 0.3, 69, 90, 0.9)
+    octave = NoteEvent(0.1, upper_end, 81, 40, 0.9)
+
+    evidence = extract_harmonic_evidence(audio_path, [fundamental, octave])
+    result = clean_note_events([fundamental, octave], harmonic_evidence=evidence)
+
+    assert evidence.status == "available"
+    assert evidence.removals == ()
+    assert result.events == [fundamental, octave]
+    assert result.reason_counts[HARMONIC_CANDIDATE_REMOVED] == 0
 
 
 def test_weak_bass_octave_is_preserved_without_confirmed_priority(
@@ -139,9 +160,7 @@ def test_aligned_weak_bass_octave_uses_bass_fundamental_priority(
             bass_priority_source="human_review",
         ),
     )
-    result = clean_note_events(
-        [fundamental, harmonic], harmonic_evidence=evidence
-    )
+    result = clean_note_events([fundamental, harmonic], harmonic_evidence=evidence)
 
     assert result.events == [fundamental]
     assert len(evidence.removals) == 1
@@ -233,9 +252,7 @@ def test_missing_or_silent_audio_disables_harmonic_removal(tmp_path: Path) -> No
     assert clean_note_events(events, harmonic_evidence=silent).events == events
 
 
-def test_service_keeps_raw_artifacts_and_audits_harmonic_removal(
-    api_client, monkeypatch
-) -> None:
+def test_service_keeps_raw_artifacts_and_audits_harmonic_removal(api_client, monkeypatch) -> None:
     client, _queue, storage_path = api_client
     job_id = create_job(client).json()["id"]
     fundamental = NoteEvent(0.1, 1.0, 57, 100, 0.9)
@@ -314,9 +331,7 @@ def test_arpeggio_fixture_removes_harmonics_without_recall_loss() -> None:
 
     raw_events = read_events(raw_midi_path)
     reference_events = read_events(reference_midi_path)
-    evidence = extract_harmonic_evidence(
-        fixture_root / "generated/04-arpeggios.wav", raw_events
-    )
+    evidence = extract_harmonic_evidence(fixture_root / "generated/04-arpeggios.wav", raw_events)
     cleaned = clean_note_events(raw_events, harmonic_evidence=evidence)
 
     raw_metrics = evaluate_note_events(raw_events, reference_events)

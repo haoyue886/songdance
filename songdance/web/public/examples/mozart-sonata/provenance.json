@@ -8,8 +8,10 @@
   "clip_duration_sec": 30,
   "audio_sha256": "32975b2333e0ca318125335660e21e747e074e0ea28cf83e3ecbd5ce21fc298f",
   "model_version": "basic-pitch-0.4.0/icassp-2022-onnx/o0.5-f0.3",
-  "postprocess_version": "note-cleanup-v4/b83e55947b32/harmonic-evidence-v1/7c7962a7d8ce/structure-analysis-v2/9eafa86ad08d/music21-10.5.0/beat-grid/adaptive-quantization-v1/pickup-v4/harmony-v1/e59dc7bc9a81/voicing-v4/89dc2f83e506/voice-compression-v1/0e515287c83d/simple-arpeggio-filter-v3/resonant-polyphony-limit-v1/voice-rest-pruning-v1/dynamic-marking-v1/score-metadata-v1",
+  "postprocess_version": "note-cleanup-v4/b83e55947b32/harmonic-evidence-v3/49e6771e3577/structure-analysis-v2/9eafa86ad08d/music21-10.5.0/beat-grid/adaptive-quantization-v1/pickup-v4/harmony-v1/e59dc7bc9a81/voicing-v4/89dc2f83e506/voice-compression-v1/0e515287c83d/simple-arpeggio-filter-v6/resonant-polyphony-limit-v1/voice-rest-pruning-v1/dynamic-marking-v1/score-metadata-v1",
   "review_status": "pending",
+  "review_state": "review_paused",
+  "review_resume_condition": "reference_aligned_transcription_ready",
   "latest_completed_review": {
     "rating": "needs_redo",
     "reviewed_at": "2026-08-19T07:37:57Z",
@@ -104,22 +106,22 @@
     "shortest_note_value": 16,
     "divisions_per_quarter": 4
   },
-  "generated_at": "2026-08-21T12:24:22.030973+00:00",
-  "midi_sha256": "3a2df6017fbded975a6b50af9c24164a938116cb44eea79339c3e112c02cf86b",
-  "musicxml_sha256": "fdf91f06d9d0508e821ec803f6caa7a4e6d749e24842196832fd2315812a3007",
-  "timeline_sha256": "623e48a2d1a6f3bc1a53fb4080aabdffa474752730fd584184ba291e2efbaf27",
+  "generated_at": "2026-08-22T11:25:10.376671+00:00",
+  "midi_sha256": "1354a7f7c06701e56563ff4138041ee7c6b77cf3deec5a24a19498ea80bbc0ef",
+  "musicxml_sha256": "9d8162b5eb084603e5f29efc29b38ce366cb1398d5447cd6cd8c54839cdc59bb",
+  "timeline_sha256": "169be89f207b35e9fbbce935a5fa5eeab46f8eeed391f63684d4744e91b03866",
   "artifacts": {
     "midi": {
-      "sha256": "3a2df6017fbded975a6b50af9c24164a938116cb44eea79339c3e112c02cf86b",
-      "size_bytes": 2042
+      "sha256": "1354a7f7c06701e56563ff4138041ee7c6b77cf3deec5a24a19498ea80bbc0ef",
+      "size_bytes": 2048
     },
     "musicxml": {
-      "sha256": "fdf91f06d9d0508e821ec803f6caa7a4e6d749e24842196832fd2315812a3007",
-      "size_bytes": 121227
+      "sha256": "9d8162b5eb084603e5f29efc29b38ce366cb1398d5447cd6cd8c54839cdc59bb",
+      "size_bytes": 121488
     },
     "timeline": {
-      "sha256": "623e48a2d1a6f3bc1a53fb4080aabdffa474752730fd584184ba291e2efbaf27",
-      "size_bytes": 112495
+      "sha256": "169be89f207b35e9fbbce935a5fa5eeab46f8eeed391f63684d4744e91b03866",
+      "size_bytes": 153436
     }
   },
   "parser_validation": {

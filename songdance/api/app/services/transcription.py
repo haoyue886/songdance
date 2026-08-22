@@ -142,10 +142,11 @@ def run_transcription_job(
                 return
             with observe_stage(factory, settings, job_id, "score"):
                 try:
+                    harmonic_evidence = extract_harmonic_evidence(normalized, events)
                     cleanup_result = clean_note_events(
                         events,
                         cleanup_config,
-                        harmonic_evidence=extract_harmonic_evidence(normalized, events),
+                        harmonic_evidence=harmonic_evidence,
                     )
                     cleaned_events = cleanup_result.events
                     cleanup_summary = cleanup_result.summary()
@@ -173,6 +174,7 @@ def run_transcription_job(
                         title=score_title,
                         analysis=structure_analysis,
                         sustain_evidence=sustain_evidence,
+                        harmonic_evidence=harmonic_evidence,
                     )
                     scored = replace(
                         scored,

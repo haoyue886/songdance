@@ -1,5 +1,11 @@
 from dataclasses import dataclass
 
+from app.pipeline.arpeggio_audio_evidence import (
+    build_evidence_time_map,
+    has_confirmed_harmonic_pair,
+    is_confirmed_same_pitch_decay,
+)
+from app.pipeline.harmonics import HarmonicEvidence
 from app.pipeline.simple_arpeggio import (
     SIMPLE_ARPEGGIO_PATTERN,
     _has_explicit_crossing,
@@ -9,7 +15,7 @@ from app.pipeline.simple_arpeggio import (
 )
 from app.pipeline.transcribe import NoteEvent
 
-SIMPLE_ARPEGGIO_FILTER_VERSION = "simple-arpeggio-filter-v3"
+SIMPLE_ARPEGGIO_FILTER_VERSION = "simple-arpeggio-filter-v6"
 SIMPLE_ARPEGGIO_RESONANCE_FILTERED = "SIMPLE_ARPEGGIO_RESONANCE_FILTERED"
 MINIMUM_PEDAL_CYCLES = 3
 MINIMUM_CYCLE_PEDAL_COVERAGE = 0.5
@@ -39,8 +45,14 @@ class ArpeggioFilterResult:
 
 
 def filter_simple_arpeggio_resonance(
-    events: list[NoteEvent], *, pedal_intervals: tuple[tuple[float, float], ...]
+    events: list[NoteEvent],
+    *,
+    pedal_intervals: tuple[tuple[float, float], ...],
+    harmonic_evidence: HarmonicEvidence | None = None,
 ) -> ArpeggioFilterResult:
+    evidence = harmonic_evidence or HarmonicEvidence.unavailable()
+    if evidence.status != "available":
+        return _filter_result(events)
     match = _stable_repeated_cycle_match(events)
     if match is None:
         return _filter_result(events)
@@ -61,39 +73,52 @@ def filter_simple_arpeggio_resonance(
     expected_by_group = {
         group_index: SIMPLE_ARPEGGIO_PATTERN[slot] for group_index, slot in slot_by_group.items()
     }
+    time_map = build_evidence_time_map(evidence, match)
+    if time_map is None:
+        return _filter_result(events)
     parallel_events = _stable_parallel_event_ids(match, supported_cycles, slot_by_group)
-    pattern_pitches = set(SIMPLE_ARPEGGIO_PATTERN)
-    removed_ids: set[int] = set()
+    selected_by_group: dict[int, NoteEvent] = {}
     for group_index, (_, group) in enumerate(match.groups):
         expected_pitch = expected_by_group.get(group_index)
         if expected_pitch is None:
             continue
         candidates = [event for event in group if event.pitch == expected_pitch]
-        if not candidates:
+        if candidates:
+            selected_by_group[group_index] = max(candidates, key=_candidate_rank)
+
+    removed_ids: set[int] = set()
+    for group_index, (_, group) in enumerate(match.groups):
+        selected = selected_by_group.get(group_index)
+        if selected is None:
             continue
-        selected = max(
-            candidates,
-            key=lambda event: (
-                event.confidence,
-                event.velocity,
-                event.end_sec - event.start_sec,
-            ),
-        )
         for event in group:
             if (
                 event is selected
                 or id(event) in parallel_events
-                or event.pitch not in pattern_pitches
                 or _is_independent_pattern_voice(event, expected_by_group, match.groups)
             ):
                 continue
-            removed_ids.add(id(event))
+            if has_confirmed_harmonic_pair(event, selected, evidence, time_map) or (
+                event.pitch in SIMPLE_ARPEGGIO_PATTERN
+                and is_confirmed_same_pitch_decay(
+                    event,
+                    group_index,
+                    selected_by_group,
+                    evidence,
+                    time_map,
+                )
+            ):
+                removed_ids.add(id(event))
     return _filter_result(
         [event for event in events if id(event) not in removed_ids],
         len(removed_ids),
         stable_cycle_count=len(supported_cycles),
         matched_slot_count=len(expected_by_group),
     )
+
+
+def _candidate_rank(event: NoteEvent) -> tuple[float, int, float]:
+    return event.confidence, event.velocity, event.end_sec - event.start_sec
 
 
 def _supported_cycle_indexes(
@@ -138,7 +163,6 @@ def _stable_parallel_event_ids(
     supported_cycles: tuple[int, ...],
     slot_by_group: dict[int, int],
 ) -> set[int]:
-    pattern_pitches = set(SIMPLE_ARPEGGIO_PATTERN)
     parallel_by_slot: dict[int, set[int]] = {}
     sustained_slots: set[int] = set()
     for slot, expected_pitch in enumerate(SIMPLE_ARPEGGIO_PATTERN):
@@ -149,8 +173,7 @@ def _stable_parallel_event_ids(
                 {
                     event.pitch
                     for event in match.groups[group_index][1]
-                    if event.pitch in pattern_pitches
-                    and event.pitch != expected_pitch
+                    if event.pitch != expected_pitch
                     and abs(event.pitch - expected_pitch) >= MINIMUM_PARALLEL_PITCH_SEPARATION
                 }
             )

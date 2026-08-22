@@ -43,10 +43,11 @@ def evaluate(settings: Settings | None = None) -> dict:
             reference_events = [
                 NoteEvent(start, end, pitch, 100, 1.0) for start, end, pitch in reference
             ]
+            harmonic_evidence = extract_harmonic_evidence(normalized, estimated)
             cleanup_result = clean_note_events(
                 estimated,
                 cleanup_config,
-                harmonic_evidence=extract_harmonic_evidence(normalized, estimated),
+                harmonic_evidence=harmonic_evidence,
             )
             cleaned = cleanup_result.events
             structure_analysis = analyze_audio(normalized, analysis_config)
@@ -56,7 +57,10 @@ def evaluate(settings: Settings | None = None) -> dict:
             structure: dict[str, object] = {}
             try:
                 scored = build_score(
-                    cleaned, title=case_id, analysis=structure_analysis
+                    cleaned,
+                    title=case_id,
+                    analysis=structure_analysis,
+                    harmonic_evidence=harmonic_evidence,
                 )
                 musicxml_path = workdir / f"{case_id}.musicxml"
                 write_musicxml(scored, musicxml_path)

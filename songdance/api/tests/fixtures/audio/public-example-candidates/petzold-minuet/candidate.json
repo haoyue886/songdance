@@ -58,18 +58,18 @@
     },
     "musicxml": {
       "path": "score.musicxml",
-      "sha256": "7e684984c010641f6386e8e62af2d2ade3495512956104896eac831abb47d3be",
+      "sha256": "9a5f74ca5c48d59cc3b2671f159c281fe4c3a2fabb33496be23e13bc895060d3",
       "size_bytes": 113236
     },
     "timeline": {
       "path": "timeline.json",
-      "sha256": "52f769caefbd0c563c6b71364b10bb2ecaaf3728a6d3f8642817b48b07185536",
-      "size_bytes": 85220
+      "sha256": "6a0f6b0c46e58ef73a68c5a4e2667e451f6a80f3fff010716a08b90eff96ab20",
+      "size_bytes": 113412
     }
   },
   "pipeline": {
     "model_version": "basic-pitch-0.4.0/icassp-2022-onnx/o0.5-f0.3",
-    "postprocess_version": "note-cleanup-v4/b83e55947b32/harmonic-evidence-v1/62cecbe38ba9/structure-analysis-v2/9eafa86ad08d/music21-10.5.0/beat-grid/adaptive-quantization-v1/pickup-v4/harmony-v1/e59dc7bc9a81/voicing-v4/89dc2f83e506/voice-compression-v1/0e515287c83d/simple-arpeggio-filter-v3/resonant-polyphony-limit-v1/voice-rest-pruning-v1/dynamic-marking-v1/score-metadata-v1",
+    "postprocess_version": "note-cleanup-v4/b83e55947b32/harmonic-evidence-v2/62cecbe38ba9/structure-analysis-v2/9eafa86ad08d/music21-10.5.0/beat-grid/adaptive-quantization-v1/pickup-v4/harmony-v1/e59dc7bc9a81/voicing-v4/89dc2f83e506/voice-compression-v1/0e515287c83d/simple-arpeggio-filter-v6/resonant-polyphony-limit-v1/voice-rest-pruning-v1/dynamic-marking-v1/score-metadata-v1",
     "raw_midi_note_count": 223,
     "analysis": {
       "status": "analyzed_with_defaults",
@@ -228,7 +228,7 @@
         }
       ],
       "duration_seconds": 42.0,
-      "elapsed_seconds": 3.656863,
+      "elapsed_seconds": 3.087713,
       "reason_codes": [
         "TIME_SIGNATURE_DEFAULTED_4_4"
       ]
@@ -258,7 +258,7 @@
     },
     "cleanup": {
       "status": "applied",
-      "version": "note-cleanup-v4/b83e55947b32/harmonic-evidence-v1/62cecbe38ba9",
+      "version": "note-cleanup-v4/b83e55947b32/harmonic-evidence-v2/62cecbe38ba9",
       "config": {
         "min_confidence": 0.1,
         "min_duration_seconds": 0.04,
@@ -281,7 +281,7 @@
         "HARMONIC_CANDIDATE_REMOVED": 2
       },
       "harmonic_evidence": {
-        "version": "harmonic-evidence-v1/81586b2669fd",
+        "version": "harmonic-evidence-v2/81586b2669fd",
         "status": "available",
         "source": "AUDIO_STFT",
         "removed_candidate_count": 2,
@@ -323,6 +323,1611 @@
             "velocity_ratio": 0.444444,
             "duration_ratio": 0.961538,
             "decision_source": "human_review"
+          }
+        ],
+        "observed_pair_count": 2,
+        "observations": [
+          {
+            "fundamental_pitch": 60,
+            "harmonic_pitch": 72,
+            "harmonic_start_sec": 6.818908390022676,
+            "harmonic_end_sec": 7.039497959183674,
+            "harmonic_number": 2,
+            "tuning_error_cents": 0.0,
+            "energy_ratio": 0.647611,
+            "independent_onset": false,
+            "reason": "HARMONIC_AUDIO_EVIDENCE",
+            "fundamental_start_sec": 6.76085850340136,
+            "fundamental_end_sec": 7.074327891156463,
+            "fundamental_velocity": 85,
+            "harmonic_velocity": 37,
+            "onset_delta_seconds": 0.05805,
+            "velocity_ratio": 0.435294,
+            "duration_ratio": 0.703704,
+            "decision_source": "audio_stft"
+          },
+          {
+            "fundamental_pitch": 60,
+            "harmonic_pitch": 72,
+            "harmonic_start_sec": 28.648178684807256,
+            "harmonic_end_sec": 28.938428117913833,
+            "harmonic_number": 2,
+            "tuning_error_cents": 0.0,
+            "energy_ratio": 0.640558,
+            "independent_onset": false,
+            "reason": "HARMONIC_AUDIO_EVIDENCE",
+            "fundamental_start_sec": 28.636568707482994,
+            "fundamental_end_sec": 28.938428117913833,
+            "fundamental_velocity": 90,
+            "harmonic_velocity": 40,
+            "onset_delta_seconds": 0.01161,
+            "velocity_ratio": 0.444444,
+            "duration_ratio": 0.961538,
+            "decision_source": "audio_stft"
+          }
+        ],
+        "observed_onset_count": 223,
+        "onset_observations": [
+          {
+            "pitch": 74,
+            "start_sec": 3.925456235827664,
+            "end_sec": 4.077669841269841,
+            "onset_growth": 26.127632,
+            "independent_onset": true
+          },
+          {
+            "pitch": 59,
+            "start_sec": 3.9486761904761902,
+            "end_sec": 4.391139229024943,
+            "onset_growth": 6.660047,
+            "independent_onset": true
+          },
+          {
+            "pitch": 71,
+            "start_sec": 3.9602861678004535,
+            "end_sec": 4.216989569160997,
+            "onset_growth": 9.541178,
+            "independent_onset": true
+          },
+          {
+            "pitch": 55,
+            "start_sec": 3.9718961451247163,
+            "end_sec": 4.4143591836734695,
+            "onset_growth": 13.903031,
+            "independent_onset": true
+          },
+          {
+            "pitch": 62,
+            "start_sec": 3.9718961451247163,
+            "end_sec": 4.367919274376417,
+            "onset_growth": 3.845196,
+            "independent_onset": true
+          },
+          {
+            "pitch": 55,
+            "start_sec": 4.4143591836734695,
+            "end_sec": 4.809098412698413,
+            "onset_growth": 0.665712,
+            "independent_onset": false
+          },
+          {
+            "pitch": 67,
+            "start_sec": 4.4143591836734695,
+            "end_sec": 4.669778684807256,
+            "onset_growth": 3.983655,
+            "independent_onset": true
+          },
+          {
+            "pitch": 69,
+            "start_sec": 4.634948752834467,
+            "end_sec": 4.994858049886621,
+            "onset_growth": 54.076519,
+            "independent_onset": true
+          },
+          {
+            "pitch": 57,
+            "start_sec": 4.820708390022675,
+            "end_sec": 5.285107482993197,
+            "onset_growth": 24.833737,
+            "independent_onset": true
+          },
+          {
+            "pitch": 71,
+            "start_sec": 4.855538321995465,
+            "end_sec": 5.099347845804989,
+            "onset_growth": 18.336117,
+            "independent_onset": true
+          },
+          {
+            "pitch": 72,
+            "start_sec": 5.099347845804989,
+            "end_sec": 5.273497505668934,
+            "onset_growth": 6.516888,
+            "independent_onset": true
+          },
+          {
+            "pitch": 59,
+            "start_sec": 5.29671746031746,
+            "end_sec": 6.180359637188209,
+            "onset_growth": 5.523107,
+            "independent_onset": true
+          },
+          {
+            "pitch": 71,
+            "start_sec": 5.308327437641723,
+            "end_sec": 5.540526984126984,
+            "onset_growth": 4.129302,
+            "independent_onset": true
+          },
+          {
+            "pitch": 74,
+            "start_sec": 5.308327437641723,
+            "end_sec": 5.8539963718820855,
+            "onset_growth": 16.055389,
+            "independent_onset": true
+          },
+          {
+            "pitch": 67,
+            "start_sec": 5.784336507936508,
+            "end_sec": 6.26162947845805,
+            "onset_growth": 22.754668,
+            "independent_onset": true
+          },
+          {
+            "pitch": 67,
+            "start_sec": 6.26162947845805,
+            "end_sec": 6.9582281179138326,
+            "onset_growth": 12.31971,
+            "independent_onset": true
+          },
+          {
+            "pitch": 76,
+            "start_sec": 6.749248526077098,
+            "end_sec": 7.2600875283446715,
+            "onset_growth": 22.812059,
+            "independent_onset": true
+          },
+          {
+            "pitch": 60,
+            "start_sec": 6.76085850340136,
+            "end_sec": 7.074327891156463,
+            "onset_growth": 9.966809,
+            "independent_onset": true
+          },
+          {
+            "pitch": 72,
+            "start_sec": 6.818908390022676,
+            "end_sec": 7.039497959183674,
+            "onset_growth": 2.782141,
+            "independent_onset": true
+          },
+          {
+            "pitch": 72,
+            "start_sec": 7.051107936507937,
+            "end_sec": 7.225257596371883,
+            "onset_growth": 3.269528,
+            "independent_onset": true
+          },
+          {
+            "pitch": 60,
+            "start_sec": 7.074327891156463,
+            "end_sec": 7.910246258503402,
+            "onset_growth": 0.862406,
+            "independent_onset": false
+          },
+          {
+            "pitch": 72,
+            "start_sec": 7.225257596371883,
+            "end_sec": 7.503897052154195,
+            "onset_growth": 3.440225,
+            "independent_onset": true
+          },
+          {
+            "pitch": 74,
+            "start_sec": 7.492287074829932,
+            "end_sec": 7.7128766439909295,
+            "onset_growth": 17.661257,
+            "independent_onset": true
+          },
+          {
+            "pitch": 76,
+            "start_sec": 7.689656689342404,
+            "end_sec": 8.085679818594103,
+            "onset_growth": 21.167128,
+            "independent_onset": true
+          },
+          {
+            "pitch": 78,
+            "start_sec": 7.898636281179138,
+            "end_sec": 8.120509750566892,
+            "onset_growth": 13.945992,
+            "independent_onset": true
+          },
+          {
+            "pitch": 59,
+            "start_sec": 8.10889977324263,
+            "end_sec": 9.02608798185941,
+            "onset_growth": 19.349876,
+            "independent_onset": true
+          },
+          {
+            "pitch": 71,
+            "start_sec": 8.120509750566892,
+            "end_sec": 8.329489342403628,
+            "onset_growth": 27.748795,
+            "independent_onset": true
+          },
+          {
+            "pitch": 79,
+            "start_sec": 8.120509750566892,
+            "end_sec": 8.631348752834466,
+            "onset_growth": 33.213478,
+            "independent_onset": true
+          },
+          {
+            "pitch": 83,
+            "start_sec": 8.120509750566892,
+            "end_sec": 8.271439455782312,
+            "onset_growth": 22.288825,
+            "independent_onset": true
+          },
+          {
+            "pitch": 67,
+            "start_sec": 8.596518820861677,
+            "end_sec": 9.084137868480726,
+            "onset_growth": 38.219282,
+            "independent_onset": true
+          },
+          {
+            "pitch": 67,
+            "start_sec": 9.084137868480726,
+            "end_sec": 9.548536961451246,
+            "onset_growth": 9.030523,
+            "independent_onset": true
+          },
+          {
+            "pitch": 57,
+            "start_sec": 9.478877097505668,
+            "end_sec": 9.931666213151926,
+            "onset_growth": 17.277317,
+            "independent_onset": true
+          },
+          {
+            "pitch": 72,
+            "start_sec": 9.502097052154195,
+            "end_sec": 9.664636734693877,
+            "onset_growth": 50.010807,
+            "independent_onset": true
+          },
+          {
+            "pitch": 71,
+            "start_sec": 9.664636734693877,
+            "end_sec": 9.838786394557824,
+            "onset_growth": 44.644155,
+            "independent_onset": true
+          },
+          {
+            "pitch": 72,
+            "start_sec": 9.838786394557824,
+            "end_sec": 9.979390022675737,
+            "onset_growth": 13.866781,
+            "independent_onset": true
+          },
+          {
+            "pitch": 74,
+            "start_sec": 9.991000000000001,
+            "end_sec": 10.350909297052155,
+            "onset_growth": 34.023434,
+            "independent_onset": true
+          },
+          {
+            "pitch": 72,
+            "start_sec": 10.211589569161,
+            "end_sec": 10.420569160997733,
+            "onset_growth": 24.83761,
+            "independent_onset": true
+          },
+          {
+            "pitch": 71,
+            "start_sec": 10.420569160997733,
+            "end_sec": 10.722428571428573,
+            "onset_growth": 41.902423,
+            "independent_onset": true
+          },
+          {
+            "pitch": 69,
+            "start_sec": 10.64115873015873,
+            "end_sec": 10.931408163265306,
+            "onset_growth": 64.410053,
+            "independent_onset": true
+          },
+          {
+            "pitch": 71,
+            "start_sec": 10.896578231292517,
+            "end_sec": 11.314537414965987,
+            "onset_growth": 11.534446,
+            "independent_onset": true
+          },
+          {
+            "pitch": 55,
+            "start_sec": 10.954628117913833,
+            "end_sec": 11.70927664399093,
+            "onset_growth": 2.247269,
+            "independent_onset": true
+          },
+          {
+            "pitch": 72,
+            "start_sec": 11.314537414965987,
+            "end_sec": 11.535126984126984,
+            "onset_growth": 63.78874,
+            "independent_onset": true
+          },
+          {
+            "pitch": 71,
+            "start_sec": 11.535126984126984,
+            "end_sec": 11.906646258503402,
+            "onset_growth": 23.803244,
+            "independent_onset": true
+          },
+          {
+            "pitch": 69,
+            "start_sec": 11.802156462585035,
+            "end_sec": 12.17495963718821,
+            "onset_growth": 33.645899,
+            "independent_onset": true
+          },
+          {
+            "pitch": 55,
+            "start_sec": 12.012419954648527,
+            "end_sec": 12.198179591836736,
+            "onset_growth": 1.51001,
+            "independent_onset": false
+          },
+          {
+            "pitch": 67,
+            "start_sec": 12.012419954648527,
+            "end_sec": 12.25622947845805,
+            "onset_growth": 30.347439,
+            "independent_onset": true
+          },
+          {
+            "pitch": 66,
+            "start_sec": 12.25622947845805,
+            "end_sec": 12.616138775510205,
+            "onset_growth": 20.746608,
+            "independent_onset": true
+          },
+          {
+            "pitch": 78,
+            "start_sec": 12.25622947845805,
+            "end_sec": 12.418769160997734,
+            "onset_growth": 37.183704,
+            "independent_onset": true
+          },
+          {
+            "pitch": 62,
+            "start_sec": 12.267839455782314,
+            "end_sec": 12.616138775510205,
+            "onset_growth": 20.578638,
+            "independent_onset": true
+          },
+          {
+            "pitch": 67,
+            "start_sec": 12.662578684807256,
+            "end_sec": 12.98765804988662,
+            "onset_growth": 33.042673,
+            "independent_onset": true
+          },
+          {
+            "pitch": 59,
+            "start_sec": 12.685798639455783,
+            "end_sec": 13.103757823129252,
+            "onset_growth": 13.480525,
+            "independent_onset": true
+          },
+          {
+            "pitch": 71,
+            "start_sec": 12.685798639455783,
+            "end_sec": 12.964438095238096,
+            "onset_growth": 60.067646,
+            "independent_onset": true
+          },
+          {
+            "pitch": 69,
+            "start_sec": 12.894778231292518,
+            "end_sec": 13.219857596371883,
+            "onset_growth": 60.209907,
+            "independent_onset": true
+          },
+          {
+            "pitch": 71,
+            "start_sec": 13.150197732426305,
+            "end_sec": 13.55654693877551,
+            "onset_growth": 8.198936,
+            "independent_onset": true
+          },
+          {
+            "pitch": 55,
+            "start_sec": 13.185027664399094,
+            "end_sec": 13.695866666666667,
+            "onset_growth": 7.690037,
+            "independent_onset": true
+          },
+          {
+            "pitch": 67,
+            "start_sec": 13.347567346938776,
+            "end_sec": 13.67264671201814,
+            "onset_growth": 0.614369,
+            "independent_onset": false
+          },
+          {
+            "pitch": 71,
+            "start_sec": 13.55654693877551,
+            "end_sec": 13.85840634920635,
+            "onset_growth": 12.824866,
+            "independent_onset": true
+          },
+          {
+            "pitch": 62,
+            "start_sec": 13.602986848072563,
+            "end_sec": 13.95257006802721,
+            "onset_growth": 11.001806,
+            "independent_onset": true
+          },
+          {
+            "pitch": 69,
+            "start_sec": 13.695866666666667,
+            "end_sec": 13.999009977324263,
+            "onset_growth": 54.985411,
+            "independent_onset": true
+          },
+          {
+            "pitch": 50,
+            "start_sec": 14.010619954648526,
+            "end_sec": 14.33569931972789,
+            "onset_growth": 38.480234,
+            "independent_onset": true
+          },
+          {
+            "pitch": 60,
+            "start_sec": 14.219599546485261,
+            "end_sec": 14.440189115646259,
+            "onset_growth": 42.544961,
+            "independent_onset": true
+          },
+          {
+            "pitch": 69,
+            "start_sec": 14.231209523809524,
+            "end_sec": 14.37052925170068,
+            "onset_growth": 1.214046,
+            "independent_onset": false
+          },
+          {
+            "pitch": 59,
+            "start_sec": 14.440189115646259,
+            "end_sec": 14.892978231292517,
+            "onset_growth": 5.2611,
+            "independent_onset": true
+          },
+          {
+            "pitch": 57,
+            "start_sec": 14.614338775510204,
+            "end_sec": 14.892978231292517,
+            "onset_growth": 17.960606,
+            "independent_onset": true
+          },
+          {
+            "pitch": 59,
+            "start_sec": 14.892978231292517,
+            "end_sec": 15.705676643990929,
+            "onset_growth": 6.724631,
+            "independent_onset": true
+          },
+          {
+            "pitch": 74,
+            "start_sec": 14.892978231292517,
+            "end_sec": 15.427037188208617,
+            "onset_growth": 25.56915,
+            "independent_onset": true
+          },
+          {
+            "pitch": 83,
+            "start_sec": 14.892978231292517,
+            "end_sec": 15.032297959183673,
+            "onset_growth": 15.864268,
+            "independent_onset": true
+          },
+          {
+            "pitch": 67,
+            "start_sec": 15.334157369614513,
+            "end_sec": 15.705676643990929,
+            "onset_growth": 35.164213,
+            "independent_onset": true
+          },
+          {
+            "pitch": 69,
+            "start_sec": 15.55474693877551,
+            "end_sec": 15.939160090702948,
+            "onset_growth": 30.070936,
+            "independent_onset": true
+          },
+          {
+            "pitch": 71,
+            "start_sec": 15.775336507936508,
+            "end_sec": 15.973990022675736,
+            "onset_growth": 7.265254,
+            "independent_onset": true
+          },
+          {
+            "pitch": 57,
+            "start_sec": 15.78694648526077,
+            "end_sec": 16.206189569160998,
+            "onset_growth": 12.653206,
+            "independent_onset": true
+          },
+          {
+            "pitch": 72,
+            "start_sec": 15.973990022675736,
+            "end_sec": 16.206189569160998,
+            "onset_growth": 49.873799,
+            "independent_onset": true
+          },
+          {
+            "pitch": 74,
+            "start_sec": 16.206189569160998,
+            "end_sec": 16.670588662131518,
+            "onset_growth": 60.294953,
+            "independent_onset": true
+          },
+          {
+            "pitch": 55,
+            "start_sec": 16.229409523809522,
+            "end_sec": 16.670588662131518,
+            "onset_growth": 12.361345,
+            "independent_onset": true
+          },
+          {
+            "pitch": 67,
+            "start_sec": 16.658978684807256,
+            "end_sec": 17.123377777777776,
+            "onset_growth": 6.974734,
+            "independent_onset": true
+          },
+          {
+            "pitch": 55,
+            "start_sec": 16.670588662131518,
+            "end_sec": 17.13498775510204,
+            "onset_growth": 1.02785,
+            "independent_onset": false
+          },
+          {
+            "pitch": 59,
+            "start_sec": 16.68219863945578,
+            "end_sec": 17.123377777777776,
+            "onset_growth": 15.056944,
+            "independent_onset": true
+          },
+          {
+            "pitch": 71,
+            "start_sec": 16.68219863945578,
+            "end_sec": 17.030497959183673,
+            "onset_growth": 33.619316,
+            "independent_onset": true
+          },
+          {
+            "pitch": 67,
+            "start_sec": 17.123377777777776,
+            "end_sec": 17.715486621315193,
+            "onset_growth": 3.067477,
+            "independent_onset": true
+          },
+          {
+            "pitch": 55,
+            "start_sec": 17.13498775510204,
+            "end_sec": 17.761926530612243,
+            "onset_growth": 13.268781,
+            "independent_onset": true
+          },
+          {
+            "pitch": 60,
+            "start_sec": 17.5877768707483,
+            "end_sec": 18.657178684807256,
+            "onset_growth": 19.956409,
+            "independent_onset": true
+          },
+          {
+            "pitch": 76,
+            "start_sec": 17.5877768707483,
+            "end_sec": 18.06506984126984,
+            "onset_growth": 26.13798,
+            "independent_onset": true
+          },
+          {
+            "pitch": 72,
+            "start_sec": 17.878026303854874,
+            "end_sec": 18.053459863945577,
+            "onset_growth": 4.948497,
+            "independent_onset": true
+          },
+          {
+            "pitch": 72,
+            "start_sec": 18.053459863945577,
+            "end_sec": 18.26243945578231,
+            "onset_growth": 1.186512,
+            "independent_onset": false
+          },
+          {
+            "pitch": 74,
+            "start_sec": 18.28565941043084,
+            "end_sec": 18.58751882086168,
+            "onset_growth": 14.475831,
+            "independent_onset": true
+          },
+          {
+            "pitch": 76,
+            "start_sec": 18.494639002267572,
+            "end_sec": 18.76166848072562,
+            "onset_growth": 12.562502,
+            "independent_onset": true
+          },
+          {
+            "pitch": 78,
+            "start_sec": 18.71522857142857,
+            "end_sec": 18.935818140589568,
+            "onset_growth": 6.659699,
+            "independent_onset": true
+          },
+          {
+            "pitch": 79,
+            "start_sec": 18.935818140589568,
+            "end_sec": 19.3653873015873,
+            "onset_growth": 10.155955,
+            "independent_onset": true
+          },
+          {
+            "pitch": 83,
+            "start_sec": 18.94742811791383,
+            "end_sec": 19.13318775510204,
+            "onset_growth": 43.674551,
+            "independent_onset": true
+          },
+          {
+            "pitch": 59,
+            "start_sec": 18.959038095238093,
+            "end_sec": 19.3653873015873,
+            "onset_growth": 8.515529,
+            "independent_onset": true
+          },
+          {
+            "pitch": 71,
+            "start_sec": 18.959038095238093,
+            "end_sec": 19.16801768707483,
+            "onset_growth": 17.920841,
+            "independent_onset": true
+          },
+          {
+            "pitch": 60,
+            "start_sec": 19.376997278911563,
+            "end_sec": 19.609196825396825,
+            "onset_growth": 25.525445,
+            "independent_onset": true
+          },
+          {
+            "pitch": 67,
+            "start_sec": 19.376997278911563,
+            "end_sec": 19.853006349206346,
+            "onset_growth": 24.776617,
+            "independent_onset": true
+          },
+          {
+            "pitch": 59,
+            "start_sec": 19.609196825396825,
+            "end_sec": 19.923950113378687,
+            "onset_growth": 3.652724,
+            "independent_onset": true
+          },
+          {
+            "pitch": 71,
+            "start_sec": 19.74851655328798,
+            "end_sec": 19.923950113378687,
+            "onset_growth": 1.018481,
+            "independent_onset": false
+          },
+          {
+            "pitch": 57,
+            "start_sec": 19.82978639455782,
+            "end_sec": 20.086489795918368,
+            "onset_growth": 6.896683,
+            "independent_onset": true
+          },
+          {
+            "pitch": 67,
+            "start_sec": 19.853006349206346,
+            "end_sec": 20.063269841269843,
+            "onset_growth": 4.298365,
+            "independent_onset": true
+          },
+          {
+            "pitch": 55,
+            "start_sec": 20.04004988662132,
+            "end_sec": 20.376739229024945,
+            "onset_growth": 16.219236,
+            "independent_onset": true
+          },
+          {
+            "pitch": 72,
+            "start_sec": 20.272249433106577,
+            "end_sec": 20.411569160997733,
+            "onset_growth": 26.96495,
+            "independent_onset": true
+          },
+          {
+            "pitch": 57,
+            "start_sec": 20.295469387755105,
+            "end_sec": 20.910798185941044,
+            "onset_growth": 2.983791,
+            "independent_onset": true
+          },
+          {
+            "pitch": 71,
+            "start_sec": 20.411569160997733,
+            "end_sec": 20.574108843537417,
+            "onset_growth": 24.953491,
+            "independent_onset": true
+          },
+          {
+            "pitch": 72,
+            "start_sec": 20.574108843537417,
+            "end_sec": 20.759868480725626,
+            "onset_growth": 11.099753,
+            "independent_onset": true
+          },
+          {
+            "pitch": 74,
+            "start_sec": 20.748258503401363,
+            "end_sec": 21.061727891156465,
+            "onset_growth": 39.769166,
+            "independent_onset": true
+          },
+          {
+            "pitch": 72,
+            "start_sec": 21.026897959183675,
+            "end_sec": 21.224267573696146,
+            "onset_growth": 5.952181,
+            "independent_onset": true
+          },
+          {
+            "pitch": 71,
+            "start_sec": 21.224267573696146,
+            "end_sec": 21.54934693877551,
+            "onset_growth": 17.611568,
+            "independent_onset": true
+          },
+          {
+            "pitch": 54,
+            "start_sec": 21.28231746031746,
+            "end_sec": 21.677056689342404,
+            "onset_growth": 29.15796,
+            "independent_onset": true
+          },
+          {
+            "pitch": 69,
+            "start_sec": 21.456467120181408,
+            "end_sec": 21.76993650793651,
+            "onset_growth": 36.967206,
+            "independent_onset": true
+          },
+          {
+            "pitch": 71,
+            "start_sec": 21.711886621315195,
+            "end_sec": 22.13112970521542,
+            "onset_growth": 11.268569,
+            "independent_onset": true
+          },
+          {
+            "pitch": 55,
+            "start_sec": 21.804766439909297,
+            "end_sec": 22.08468979591837,
+            "onset_growth": 0.877159,
+            "independent_onset": false
+          },
+          {
+            "pitch": 72,
+            "start_sec": 22.13112970521542,
+            "end_sec": 22.351719274376418,
+            "onset_growth": 27.054413,
+            "independent_onset": true
+          },
+          {
+            "pitch": 71,
+            "start_sec": 22.351719274376418,
+            "end_sec": 22.688408616780045,
+            "onset_growth": 35.893556,
+            "independent_onset": true
+          },
+          {
+            "pitch": 59,
+            "start_sec": 22.54908888888889,
+            "end_sec": 23.036707936507938,
+            "onset_growth": 16.660825,
+            "independent_onset": true
+          },
+          {
+            "pitch": 69,
+            "start_sec": 22.595528798185942,
+            "end_sec": 22.88577823129252,
+            "onset_growth": 47.325498,
+            "independent_onset": true
+          },
+          {
+            "pitch": 67,
+            "start_sec": 22.827728344671204,
+            "end_sec": 23.176027664399093,
+            "onset_growth": 28.079677,
+            "independent_onset": true
+          },
+          {
+            "pitch": 60,
+            "start_sec": 23.07153786848073,
+            "end_sec": 23.489497052154196,
+            "onset_growth": 11.962736,
+            "independent_onset": true
+          },
+          {
+            "pitch": 69,
+            "start_sec": 23.094757823129253,
+            "end_sec": 23.559156916099774,
+            "onset_growth": 8.929765,
+            "independent_onset": true
+          },
+          {
+            "pitch": 71,
+            "start_sec": 23.51271700680272,
+            "end_sec": 23.826186394557823,
+            "onset_growth": 21.180346,
+            "independent_onset": true
+          },
+          {
+            "pitch": 62,
+            "start_sec": 23.524326984126986,
+            "end_sec": 23.885520181405898,
+            "onset_growth": 3.167106,
+            "independent_onset": true
+          },
+          {
+            "pitch": 69,
+            "start_sec": 23.779746485260773,
+            "end_sec": 24.09449977324263,
+            "onset_growth": 18.208539,
+            "independent_onset": true
+          },
+          {
+            "pitch": 67,
+            "start_sec": 23.990009977324263,
+            "end_sec": 24.500848979591836,
+            "onset_growth": 34.737329,
+            "independent_onset": true
+          },
+          {
+            "pitch": 50,
+            "start_sec": 24.01322993197279,
+            "end_sec": 24.651778684807258,
+            "onset_growth": 17.052405,
+            "independent_onset": true
+          },
+          {
+            "pitch": 55,
+            "start_sec": 24.500848979591836,
+            "end_sec": 25.03490793650794,
+            "onset_growth": 15.98098,
+            "independent_onset": true
+          },
+          {
+            "pitch": 67,
+            "start_sec": 24.500848979591836,
+            "end_sec": 25.000078004535148,
+            "onset_growth": 4.752087,
+            "independent_onset": true
+          },
+          {
+            "pitch": 43,
+            "start_sec": 25.03490793650794,
+            "end_sec": 25.5805768707483,
+            "onset_growth": 23.510259,
+            "independent_onset": true
+          },
+          {
+            "pitch": 55,
+            "start_sec": 25.03490793650794,
+            "end_sec": 25.754726530612245,
+            "onset_growth": 5.466614,
+            "independent_onset": true
+          },
+          {
+            "pitch": 74,
+            "start_sec": 25.883720181405895,
+            "end_sec": 26.371339229024944,
+            "onset_growth": 43.78555,
+            "independent_onset": true
+          },
+          {
+            "pitch": 59,
+            "start_sec": 25.895330158730157,
+            "end_sec": 26.464219047619046,
+            "onset_growth": 33.3789,
+            "independent_onset": true
+          },
+          {
+            "pitch": 71,
+            "start_sec": 25.895330158730157,
+            "end_sec": 26.220409523809522,
+            "onset_growth": 62.715,
+            "independent_onset": true
+          },
+          {
+            "pitch": 55,
+            "start_sec": 25.930160090702948,
+            "end_sec": 26.371339229024944,
+            "onset_growth": 1.563148,
+            "independent_onset": false
+          },
+          {
+            "pitch": 62,
+            "start_sec": 25.930160090702948,
+            "end_sec": 26.301679365079366,
+            "onset_growth": 4.723462,
+            "independent_onset": true
+          },
+          {
+            "pitch": 67,
+            "start_sec": 25.930160090702948,
+            "end_sec": 26.139139682539682,
+            "onset_growth": 50.512241,
+            "independent_onset": true
+          },
+          {
+            "pitch": 55,
+            "start_sec": 26.371339229024944,
+            "end_sec": 26.74285850340136,
+            "onset_growth": 0.654991,
+            "independent_onset": false
+          },
+          {
+            "pitch": 67,
+            "start_sec": 26.371339229024944,
+            "end_sec": 26.754468480725624,
+            "onset_growth": 4.260135,
+            "independent_onset": true
+          },
+          {
+            "pitch": 69,
+            "start_sec": 26.603538775510206,
+            "end_sec": 26.89378820861678,
+            "onset_growth": 63.631903,
+            "independent_onset": true
+          },
+          {
+            "pitch": 57,
+            "start_sec": 26.77768843537415,
+            "end_sec": 27.207257596371882,
+            "onset_growth": 22.27934,
+            "independent_onset": true
+          },
+          {
+            "pitch": 71,
+            "start_sec": 26.81251836734694,
+            "end_sec": 27.056327891156464,
+            "onset_growth": 25.458618,
+            "independent_onset": true
+          },
+          {
+            "pitch": 72,
+            "start_sec": 27.056327891156464,
+            "end_sec": 27.242087528344673,
+            "onset_growth": 25.91512,
+            "independent_onset": true
+          },
+          {
+            "pitch": 59,
+            "start_sec": 27.242087528344673,
+            "end_sec": 27.881920181405896,
+            "onset_growth": 22.730697,
+            "independent_onset": true
+          },
+          {
+            "pitch": 71,
+            "start_sec": 27.242087528344673,
+            "end_sec": 27.54394693877551,
+            "onset_growth": 2.372816,
+            "independent_onset": true
+          },
+          {
+            "pitch": 74,
+            "start_sec": 27.288527437641722,
+            "end_sec": 27.81097641723356,
+            "onset_growth": 44.688946,
+            "independent_onset": true
+          },
+          {
+            "pitch": 67,
+            "start_sec": 27.76453650793651,
+            "end_sec": 28.20699954648526,
+            "onset_growth": 26.452757,
+            "independent_onset": true
+          },
+          {
+            "pitch": 59,
+            "start_sec": 27.881920181405896,
+            "end_sec": 28.160559637188207,
+            "onset_growth": 1.059446,
+            "independent_onset": false
+          },
+          {
+            "pitch": 67,
+            "start_sec": 28.20699954648526,
+            "end_sec": 28.648178684807256,
+            "onset_growth": 5.896721,
+            "independent_onset": true
+          },
+          {
+            "pitch": 60,
+            "start_sec": 28.636568707482994,
+            "end_sec": 28.938428117913833,
+            "onset_growth": 26.073319,
+            "independent_onset": true
+          },
+          {
+            "pitch": 67,
+            "start_sec": 28.648178684807256,
+            "end_sec": 28.833938321995465,
+            "onset_growth": 0.492755,
+            "independent_onset": false
+          },
+          {
+            "pitch": 72,
+            "start_sec": 28.648178684807256,
+            "end_sec": 28.938428117913833,
+            "onset_growth": 12.941885,
+            "independent_onset": true
+          },
+          {
+            "pitch": 76,
+            "start_sec": 28.65978866213152,
+            "end_sec": 29.27511746031746,
+            "onset_growth": 16.965833,
+            "independent_onset": true
+          },
+          {
+            "pitch": 60,
+            "start_sec": 28.938428117913833,
+            "end_sec": 29.3563873015873,
+            "onset_growth": 0.823777,
+            "independent_onset": false
+          },
+          {
+            "pitch": 72,
+            "start_sec": 28.938428117913833,
+            "end_sec": 29.07774784580499,
+            "onset_growth": 2.890081,
+            "independent_onset": true
+          },
+          {
+            "pitch": 72,
+            "start_sec": 29.07774784580499,
+            "end_sec": 29.286727437641723,
+            "onset_growth": 1.094402,
+            "independent_onset": false
+          },
+          {
+            "pitch": 60,
+            "start_sec": 29.3563873015873,
+            "end_sec": 29.5769768707483,
+            "onset_growth": 0.888542,
+            "independent_onset": false
+          },
+          {
+            "pitch": 74,
+            "start_sec": 29.3563873015873,
+            "end_sec": 29.62341678004535,
+            "onset_growth": 24.816483,
+            "independent_onset": true
+          },
+          {
+            "pitch": 76,
+            "start_sec": 29.565366893424034,
+            "end_sec": 29.98460997732426,
+            "onset_growth": 13.416008,
+            "independent_onset": true
+          },
+          {
+            "pitch": 60,
+            "start_sec": 29.5769768707483,
+            "end_sec": 29.89173015873016,
+            "onset_growth": 0.828517,
+            "independent_onset": false
+          },
+          {
+            "pitch": 78,
+            "start_sec": 29.785956462585034,
+            "end_sec": 29.996219954648524,
+            "onset_growth": 5.814328,
+            "independent_onset": true
+          },
+          {
+            "pitch": 59,
+            "start_sec": 29.98460997732426,
+            "end_sec": 30.843748299319728,
+            "onset_growth": 11.62321,
+            "independent_onset": true
+          },
+          {
+            "pitch": 71,
+            "start_sec": 29.996219954648524,
+            "end_sec": 30.216809523809523,
+            "onset_growth": 15.486637,
+            "independent_onset": true
+          },
+          {
+            "pitch": 79,
+            "start_sec": 29.996219954648524,
+            "end_sec": 30.483839002267572,
+            "onset_growth": 31.598027,
+            "independent_onset": true
+          },
+          {
+            "pitch": 67,
+            "start_sec": 30.44900907029478,
+            "end_sec": 30.913408163265306,
+            "onset_growth": 36.192621,
+            "independent_onset": true
+          },
+          {
+            "pitch": 67,
+            "start_sec": 30.913408163265306,
+            "end_sec": 31.447467120181404,
+            "onset_growth": 9.207271,
+            "independent_onset": true
+          },
+          {
+            "pitch": 57,
+            "start_sec": 31.34297732426304,
+            "end_sec": 31.784156462585035,
+            "onset_growth": 17.279587,
+            "independent_onset": true
+          },
+          {
+            "pitch": 72,
+            "start_sec": 31.34297732426304,
+            "end_sec": 31.493907029478457,
+            "onset_growth": 18.363392,
+            "independent_onset": true
+          },
+          {
+            "pitch": 71,
+            "start_sec": 31.493907029478457,
+            "end_sec": 31.679666666666666,
+            "onset_growth": 94.357102,
+            "independent_onset": true
+          },
+          {
+            "pitch": 72,
+            "start_sec": 31.679666666666666,
+            "end_sec": 31.83188027210884,
+            "onset_growth": 8.804586,
+            "independent_onset": true
+          },
+          {
+            "pitch": 74,
+            "start_sec": 31.843490249433103,
+            "end_sec": 32.22661950113378,
+            "onset_growth": 47.284714,
+            "independent_onset": true
+          },
+          {
+            "pitch": 72,
+            "start_sec": 32.075689795918365,
+            "end_sec": 32.27305941043084,
+            "onset_growth": 21.422617,
+            "independent_onset": true
+          },
+          {
+            "pitch": 71,
+            "start_sec": 32.27305941043084,
+            "end_sec": 32.77228843537415,
+            "onset_growth": 62.515157,
+            "independent_onset": true
+          },
+          {
+            "pitch": 69,
+            "start_sec": 32.5052589569161,
+            "end_sec": 32.911608163265306,
+            "onset_growth": 87.516922,
+            "independent_onset": true
+          },
+          {
+            "pitch": 71,
+            "start_sec": 32.77228843537415,
+            "end_sec": 33.225077551020405,
+            "onset_growth": 30.184326,
+            "independent_onset": true
+          },
+          {
+            "pitch": 55,
+            "start_sec": 32.8187283446712,
+            "end_sec": 33.329567346938774,
+            "onset_growth": 7.211633,
+            "independent_onset": true
+          },
+          {
+            "pitch": 72,
+            "start_sec": 33.225077551020405,
+            "end_sec": 33.399227210884355,
+            "onset_growth": 38.091024,
+            "independent_onset": true
+          },
+          {
+            "pitch": 71,
+            "start_sec": 33.399227210884355,
+            "end_sec": 33.77074648526077,
+            "onset_growth": 27.326677,
+            "independent_onset": true
+          },
+          {
+            "pitch": 69,
+            "start_sec": 33.65464671201814,
+            "end_sec": 34.08549977324263,
+            "onset_growth": 69.297314,
+            "independent_onset": true
+          },
+          {
+            "pitch": 67,
+            "start_sec": 33.88813015873016,
+            "end_sec": 34.097109750566894,
+            "onset_growth": 37.601961,
+            "independent_onset": true
+          },
+          {
+            "pitch": 66,
+            "start_sec": 34.097109750566894,
+            "end_sec": 34.53828888888889,
+            "onset_growth": 18.76547,
+            "independent_onset": true
+          },
+          {
+            "pitch": 78,
+            "start_sec": 34.097109750566894,
+            "end_sec": 34.282869387755106,
+            "onset_growth": 65.241087,
+            "independent_onset": true
+          },
+          {
+            "pitch": 62,
+            "start_sec": 34.12032970521542,
+            "end_sec": 34.51506893424036,
+            "onset_growth": 21.024626,
+            "independent_onset": true
+          },
+          {
+            "pitch": 67,
+            "start_sec": 34.56150884353742,
+            "end_sec": 34.9446380952381,
+            "onset_growth": 23.666298,
+            "independent_onset": true
+          },
+          {
+            "pitch": 59,
+            "start_sec": 34.57311882086168,
+            "end_sec": 34.95624807256236,
+            "onset_growth": 17.129435,
+            "independent_onset": true
+          },
+          {
+            "pitch": 71,
+            "start_sec": 34.57311882086168,
+            "end_sec": 34.79370839002268,
+            "onset_growth": 38.148242,
+            "independent_onset": true
+          },
+          {
+            "pitch": 69,
+            "start_sec": 34.79370839002268,
+            "end_sec": 35.08395782312925,
+            "onset_growth": 48.342697,
+            "independent_onset": true
+          },
+          {
+            "pitch": 71,
+            "start_sec": 34.79370839002268,
+            "end_sec": 35.025907936507934,
+            "onset_growth": 1.132662,
+            "independent_onset": false
+          },
+          {
+            "pitch": 71,
+            "start_sec": 35.025907936507934,
+            "end_sec": 35.45547709750567,
+            "onset_growth": 7.874892,
+            "independent_onset": true
+          },
+          {
+            "pitch": 55,
+            "start_sec": 35.037517913832204,
+            "end_sec": 35.26971746031746,
+            "onset_growth": 11.832296,
+            "independent_onset": true
+          },
+          {
+            "pitch": 55,
+            "start_sec": 35.26971746031746,
+            "end_sec": 35.60640680272109,
+            "onset_growth": 0.919285,
+            "independent_onset": false
+          },
+          {
+            "pitch": 67,
+            "start_sec": 35.26971746031746,
+            "end_sec": 35.60640680272109,
+            "onset_growth": 3.319247,
+            "independent_onset": true
+          },
+          {
+            "pitch": 71,
+            "start_sec": 35.45547709750567,
+            "end_sec": 35.77023038548752,
+            "onset_growth": 23.095143,
+            "independent_onset": true
+          },
+          {
+            "pitch": 62,
+            "start_sec": 35.467087074829934,
+            "end_sec": 35.64123673469388,
+            "onset_growth": 7.953096,
+            "independent_onset": true
+          },
+          {
+            "pitch": 69,
+            "start_sec": 35.629626757369614,
+            "end_sec": 35.909550113378685,
+            "onset_growth": 40.868471,
+            "independent_onset": true
+          },
+          {
+            "pitch": 62,
+            "start_sec": 35.64123673469388,
+            "end_sec": 35.80506031746032,
+            "onset_growth": 0.980916,
+            "independent_onset": false
+          },
+          {
+            "pitch": 50,
+            "start_sec": 35.897940136054416,
+            "end_sec": 36.281069387755096,
+            "onset_growth": 17.674339,
+            "independent_onset": true
+          },
+          {
+            "pitch": 60,
+            "start_sec": 36.13013968253968,
+            "end_sec": 36.339119274376415,
+            "onset_growth": 15.209849,
+            "independent_onset": true
+          },
+          {
+            "pitch": 69,
+            "start_sec": 36.14174965986394,
+            "end_sec": 36.443609070294784,
+            "onset_growth": 0.830781,
+            "independent_onset": false
+          },
+          {
+            "pitch": 59,
+            "start_sec": 36.339119274376415,
+            "end_sec": 36.768688435374145,
+            "onset_growth": 3.502167,
+            "independent_onset": true
+          },
+          {
+            "pitch": 57,
+            "start_sec": 36.51326893424036,
+            "end_sec": 36.78029841269841,
+            "onset_growth": 21.62525,
+            "independent_onset": true
+          },
+          {
+            "pitch": 59,
+            "start_sec": 36.768688435374145,
+            "end_sec": 37.60460680272109,
+            "onset_growth": 5.743264,
+            "independent_onset": true
+          },
+          {
+            "pitch": 74,
+            "start_sec": 36.768688435374145,
+            "end_sec": 37.267917460317456,
+            "onset_growth": 12.513811,
+            "independent_onset": true
+          },
+          {
+            "pitch": 67,
+            "start_sec": 37.19825759637188,
+            "end_sec": 37.592996825396824,
+            "onset_growth": 25.471882,
+            "independent_onset": true
+          },
+          {
+            "pitch": 69,
+            "start_sec": 37.43045714285714,
+            "end_sec": 37.72070657596372,
+            "onset_growth": 23.551683,
+            "independent_onset": true
+          },
+          {
+            "pitch": 57,
+            "start_sec": 37.6626566893424,
+            "end_sec": 38.12833968253968,
+            "onset_growth": 7.727444,
+            "independent_onset": true
+          },
+          {
+            "pitch": 71,
+            "start_sec": 37.6626566893424,
+            "end_sec": 37.88453015873016,
+            "onset_growth": 5.958438,
+            "independent_onset": true
+          },
+          {
+            "pitch": 72,
+            "start_sec": 37.88453015873016,
+            "end_sec": 38.139949659863944,
+            "onset_growth": 29.315674,
+            "independent_onset": true
+          },
+          {
+            "pitch": 74,
+            "start_sec": 38.12833968253968,
+            "end_sec": 38.581128798185944,
+            "onset_growth": 36.486167,
+            "independent_onset": true
+          },
+          {
+            "pitch": 55,
+            "start_sec": 38.16316961451247,
+            "end_sec": 38.60434875283447,
+            "onset_growth": 13.410743,
+            "independent_onset": true
+          },
+          {
+            "pitch": 55,
+            "start_sec": 38.60434875283447,
+            "end_sec": 39.04552789115646,
+            "onset_growth": 1.0378,
+            "independent_onset": false
+          },
+          {
+            "pitch": 67,
+            "start_sec": 38.60434875283447,
+            "end_sec": 39.04552789115646,
+            "onset_growth": 7.006374,
+            "independent_onset": true
+          },
+          {
+            "pitch": 59,
+            "start_sec": 38.61595873015873,
+            "end_sec": 39.04552789115646,
+            "onset_growth": 5.777406,
+            "independent_onset": true
+          },
+          {
+            "pitch": 55,
+            "start_sec": 39.04552789115646,
+            "end_sec": 39.53314693877551,
+            "onset_growth": 7.918811,
+            "independent_onset": true
+          },
+          {
+            "pitch": 67,
+            "start_sec": 39.04552789115646,
+            "end_sec": 39.63763673469388,
+            "onset_growth": 1.430881,
+            "independent_onset": false
+          },
+          {
+            "pitch": 76,
+            "start_sec": 39.53314693877551,
+            "end_sec": 39.97560997732427,
+            "onset_growth": 14.601863,
+            "independent_onset": true
+          },
+          {
+            "pitch": 60,
+            "start_sec": 39.54475691609977,
+            "end_sec": 39.97560997732427,
+            "onset_growth": 1.76581,
+            "independent_onset": false
+          },
+          {
+            "pitch": 72,
+            "start_sec": 39.77824036281179,
+            "end_sec": 39.97560997732427,
+            "onset_growth": 2.586286,
+            "independent_onset": true
+          },
+          {
+            "pitch": 60,
+            "start_sec": 39.97560997732427,
+            "end_sec": 40.64898866213152,
+            "onset_growth": 0.794141,
+            "independent_onset": false
+          },
+          {
+            "pitch": 72,
+            "start_sec": 39.97560997732427,
+            "end_sec": 40.277469387755104,
+            "onset_growth": 3.290441,
+            "independent_onset": true
+          },
+          {
+            "pitch": 74,
+            "start_sec": 40.24263945578232,
+            "end_sec": 40.56771882086168,
+            "onset_growth": 44.246281,
+            "independent_onset": true
+          },
+          {
+            "pitch": 76,
+            "start_sec": 40.440009070294785,
+            "end_sec": 40.834748299319735,
+            "onset_growth": 34.481886,
+            "independent_onset": true
+          },
+          {
+            "pitch": 78,
+            "start_sec": 40.660598639455785,
+            "end_sec": 40.90440816326531,
+            "onset_growth": 12.737056,
+            "independent_onset": true
+          },
+          {
+            "pitch": 79,
+            "start_sec": 40.90440816326531,
+            "end_sec": 41.36880725623583,
+            "onset_growth": 17.121133,
+            "independent_onset": true
+          },
+          {
+            "pitch": 59,
+            "start_sec": 40.939238095238096,
+            "end_sec": 41.34558730158731,
+            "onset_growth": 10.627597,
+            "independent_onset": true
+          },
+          {
+            "pitch": 71,
+            "start_sec": 40.939238095238096,
+            "end_sec": 41.310757369614514,
+            "onset_growth": 31.395005,
+            "independent_onset": true
+          },
+          {
+            "pitch": 83,
+            "start_sec": 40.939238095238096,
+            "end_sec": 41.101777777777784,
+            "onset_growth": 26.47401,
+            "independent_onset": true
+          },
+          {
+            "pitch": 60,
+            "start_sec": 41.35719727891157,
+            "end_sec": 41.62422675736962,
+            "onset_growth": 17.300527,
+            "independent_onset": true
+          },
+          {
+            "pitch": 67,
+            "start_sec": 41.36880725623583,
+            "end_sec": 41.71710657596372,
+            "onset_growth": 19.538361,
+            "independent_onset": true
           }
         ]
       },

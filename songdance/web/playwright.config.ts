@@ -1,5 +1,5 @@
 import { defineConfig } from "@playwright/test";
-import { mkdtempSync, writeFileSync } from "node:fs";
+import { mkdirSync, mkdtempSync, writeFileSync } from "node:fs";
 import os from "node:os";
 import path from "node:path";
 
@@ -14,6 +14,9 @@ const webPort = process.env.PLAYWRIGHT_WEB_PORT ?? "3001";
 const webOrigin = `http://localhost:${webPort}`;
 const apiOrigin = `http://127.0.0.1:${apiPort}`;
 const e2eRoot = mkdtempSync(path.join(os.tmpdir(), "songdance-e2e-"));
+const e2eWebDistDir = path.join(".next", `e2e-${path.basename(e2eRoot)}`);
+const e2eTsconfigRoot = path.join(".next", "e2e-config");
+const e2eTsconfigPath = path.join(e2eTsconfigRoot, "tsconfig.json");
 const e2eDatabaseUrl = `sqlite:///${path.join(e2eRoot, "e2e.sqlite3")}`;
 const e2eQueueName = `songdance-e2e-${path.basename(e2eRoot)}`;
 const e2eEnvironment = {
@@ -25,8 +28,16 @@ const e2eEnvironment = {
 };
 const e2eEnvironmentFile = path.join(e2eRoot, "environment.json");
 writeFileSync(e2eEnvironmentFile, JSON.stringify(e2eEnvironment), { encoding: "utf8", mode: 0o600 });
+mkdirSync(e2eTsconfigRoot, { recursive: true });
+writeFileSync(
+  e2eTsconfigPath,
+  JSON.stringify({ extends: path.relative(e2eTsconfigRoot, path.resolve("tsconfig.json")) }),
+  { encoding: "utf8", mode: 0o600 },
+);
 process.env.SONGDANCE_E2E_ENV_FILE = e2eEnvironmentFile;
 process.env.SONGDANCE_E2E_ROOT = e2eRoot;
+process.env.SONGDANCE_E2E_WEB_DIST_DIR = path.resolve(e2eWebDistDir);
+process.env.SONGDANCE_E2E_TSCONFIG_ROOT = path.resolve(e2eTsconfigRoot);
 
 export default defineConfig({
   testDir: "./e2e",
@@ -66,6 +77,8 @@ export default defineConfig({
       env: {
         NEXT_PUBLIC_API_URL: apiOrigin,
         NEXT_PUBLIC_SITE_URL: webOrigin,
+        SONGDANCE_NEXT_DIST_DIR: e2eWebDistDir,
+        SONGDANCE_TSCONFIG_PATH: e2eTsconfigPath,
       },
       url: webOrigin,
       reuseExistingServer: false,

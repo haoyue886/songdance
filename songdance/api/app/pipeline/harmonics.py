@@ -10,9 +10,13 @@ import numpy as np
 
 from app.pipeline.transcribe import NoteEvent
 
-HARMONIC_EVIDENCE_VERSION = "harmonic-evidence-v1"
+HARMONIC_EVIDENCE_VERSION = "harmonic-evidence-v3"
 HARMONIC_AUDIO_EVIDENCE = "HARMONIC_AUDIO_EVIDENCE"
 HARMONIC_BASS_FUNDAMENTAL_EVIDENCE = "HARMONIC_BASS_FUNDAMENTAL_EVIDENCE"
+MINIMUM_NOTE_ENERGY_VELOCITY_COHERENCE = 0.4
+MAXIMUM_NOTE_ENERGY_VELOCITY_COHERENCE = 1.25
+MINIMUM_RAW_NOTE_ENERGY_VELOCITY_COHERENCE = 0.3
+MAXIMUM_INDEPENDENT_RELEASE_ENERGY_RATIO = 0.25
 logger = logging.getLogger(__name__)
 
 
@@ -34,6 +38,9 @@ class HarmonicEvidenceConfig:
     onset_alignment_tolerance_seconds: float = 0.08
     onset_window_seconds: float = 0.08
     minimum_independent_onset_growth: float = 2.0
+    release_probe_window_seconds: float = 0.02
+    release_probe_offset_seconds: float = 0.04
+    maximum_release_noise_floor_ratio: float = 0.1
 
     def __post_init__(self) -> None:
         if self.bass_priority_enabled and self.bass_priority_source is None:
@@ -58,6 +65,7 @@ class HarmonicRemoval:
     tuning_error_cents: float
     energy_ratio: float
     independent_onset: bool
+    onset_growth: float | None = None
     reason: str = HARMONIC_AUDIO_EVIDENCE
     fundamental_start_sec: float | None = None
     fundamental_end_sec: float | None = None
@@ -66,6 +74,8 @@ class HarmonicRemoval:
     onset_delta_seconds: float | None = None
     velocity_ratio: float | None = None
     duration_ratio: float | None = None
+    release_energy_ratio: float | None = None
+    release_probe_blocked: bool = False
     decision_source: str = "audio_stft"
 
     def summary(self) -> dict[str, object]:
@@ -80,11 +90,30 @@ class HarmonicRemoval:
 
 
 @dataclass(frozen=True)
+class NoteOnsetEvidence:
+    pitch: int
+    start_sec: float
+    end_sec: float
+    onset_growth: float
+    independent_onset: bool
+
+    def summary(self) -> dict[str, object]:
+        return asdict(self)
+
+    def matches(self, event: NoteEvent, *, tolerance_seconds: float = 0.08) -> bool:
+        return (
+            event.pitch == self.pitch and abs(event.start_sec - self.start_sec) <= tolerance_seconds
+        )
+
+
+@dataclass(frozen=True)
 class HarmonicEvidence:
     version: str
     status: str
     source: str | None
     removals: tuple[HarmonicRemoval, ...]
+    observations: tuple[HarmonicRemoval, ...] = ()
+    onset_observations: tuple[NoteOnsetEvidence, ...] = ()
 
     @classmethod
     def unavailable(cls) -> "HarmonicEvidence":
@@ -93,6 +122,8 @@ class HarmonicEvidence:
             status="unavailable",
             source=None,
             removals=(),
+            observations=(),
+            onset_observations=(),
         )
 
     def summary(self) -> dict[str, object]:
@@ -102,6 +133,10 @@ class HarmonicEvidence:
             "source": self.source,
             "removed_candidate_count": len(self.removals),
             "removals": [item.summary() for item in self.removals],
+            "observed_pair_count": len(self.observations),
+            "observations": [item.summary() for item in self.observations],
+            "observed_onset_count": len(self.onset_observations),
+            "onset_observations": [item.summary() for item in self.onset_observations],
         }
 
 
@@ -113,16 +148,22 @@ def extract_harmonic_evidence(
     active = config or HarmonicEvidenceConfig()
     try:
         audio, sample_rate = _load_audio(audio_path, active)
-        spectrum = np.abs(
-            librosa.stft(
-                audio,
-                n_fft=active.n_fft,
-                hop_length=active.hop_length,
-                window="hann",
+        spectrum = (
+            np.abs(
+                librosa.stft(
+                    audio,
+                    n_fft=active.n_fft,
+                    hop_length=active.hop_length,
+                    window="hann",
+                )
             )
-        ) ** 2
+            ** 2
+        )
         frequencies = librosa.fft_frequencies(sr=sample_rate, n_fft=active.n_fft)
-        removals = _find_removals(events, spectrum, frequencies, sample_rate, active)
+        removals, observations = _find_removals(
+            events, audio, spectrum, frequencies, sample_rate, active
+        )
+        onset_observations = _measure_onsets(events, spectrum, frequencies, sample_rate, active)
     except Exception:
         logger.warning("Harmonic evidence extraction failed for %s", audio_path, exc_info=True)
         return HarmonicEvidence.unavailable()
@@ -131,12 +172,12 @@ def extract_harmonic_evidence(
         status="available",
         source="AUDIO_STFT",
         removals=removals,
+        observations=observations,
+        onset_observations=onset_observations,
     )
 
 
-def _load_audio(
-    audio_path: Path, config: HarmonicEvidenceConfig
-) -> tuple[np.ndarray, int]:
+def _load_audio(audio_path: Path, config: HarmonicEvidenceConfig) -> tuple[np.ndarray, int]:
     if not audio_path.is_file():
         raise FileNotFoundError(audio_path)
     audio, sample_rate = librosa.load(audio_path, sr=config.sample_rate, mono=True)
@@ -147,12 +188,14 @@ def _load_audio(
 
 def _find_removals(
     events: list[NoteEvent],
+    audio: np.ndarray,
     spectrum: np.ndarray,
     frequencies: np.ndarray,
     sample_rate: int,
     config: HarmonicEvidenceConfig,
-) -> tuple[HarmonicRemoval, ...]:
+) -> tuple[tuple[HarmonicRemoval, ...], tuple[HarmonicRemoval, ...]]:
     removals = []
+    observations = []
     for candidate in sorted(events, key=_event_sort_key):
         pairs = _candidate_pairs(candidate, events, config)
         measured = [
@@ -163,6 +206,8 @@ def _find_removals(
                     candidate,
                     order,
                     cents,
+                    audio,
+                    events,
                     spectrum,
                     frequencies,
                     sample_rate,
@@ -173,7 +218,18 @@ def _find_removals(
         ]
         eligible = []
         for fundamental, item in measured:
-            if item.independent_onset:
+            if _plausible_harmonic_observation(item, config):
+                observations.append(item)
+            simultaneous_attack = supports_independent_simultaneous_attack(
+                item,
+                onset_tolerance_seconds=config.onset_alignment_tolerance_seconds,
+            )
+            if item.release_probe_blocked:
+                continue
+            if simultaneous_attack and not (
+                config.bass_priority_enabled
+                and fundamental.pitch <= config.bass_fundamental_max_pitch
+            ):
                 continue
             if (
                 fundamental.pitch <= config.bass_fundamental_max_pitch
@@ -211,7 +267,45 @@ def _find_removals(
                 )
         if eligible:
             removals.append(min(eligible, key=lambda item: item.energy_ratio))
-    return tuple(removals)
+    return tuple(removals), tuple(observations)
+
+
+def _plausible_harmonic_observation(item: HarmonicRemoval, config: HarmonicEvidenceConfig) -> bool:
+    return (
+        not item.independent_onset
+        and item.energy_ratio <= config.bass_maximum_energy_ratio
+        and (item.velocity_ratio or float("inf")) <= 0.85
+        and (item.duration_ratio or float("inf")) <= 2.1
+    )
+
+
+def _measure_onsets(
+    events: list[NoteEvent],
+    spectrum: np.ndarray,
+    frequencies: np.ndarray,
+    sample_rate: int,
+    config: HarmonicEvidenceConfig,
+) -> tuple[NoteOnsetEvidence, ...]:
+    observations = []
+    for event in sorted(events, key=_event_sort_key):
+        growth = _onset_growth(
+            event.pitch,
+            event.start_sec,
+            spectrum,
+            frequencies,
+            sample_rate,
+            config,
+        )
+        observations.append(
+            NoteOnsetEvidence(
+                pitch=event.pitch,
+                start_sec=event.start_sec,
+                end_sec=event.end_sec,
+                onset_growth=round(growth, 6),
+                independent_onset=growth >= config.minimum_independent_onset_growth,
+            )
+        )
+    return tuple(observations)
 
 
 def _bass_fundamental_priority(
@@ -237,12 +331,9 @@ def _bass_relative_event_evidence(
     fundamental_duration = fundamental.end_sec - fundamental.start_sec
     candidate_duration = candidate.end_sec - candidate.start_sec
     return (
-        abs(candidate.start_sec - fundamental.start_sec)
-        <= config.onset_alignment_tolerance_seconds
-        and candidate.velocity
-        <= fundamental.velocity * config.bass_maximum_velocity_ratio
-        and candidate_duration
-        <= fundamental_duration * config.bass_maximum_duration_ratio
+        abs(candidate.start_sec - fundamental.start_sec) <= config.onset_alignment_tolerance_seconds
+        and candidate.velocity <= fundamental.velocity * config.bass_maximum_velocity_ratio
+        and candidate_duration <= fundamental_duration * config.bass_maximum_duration_ratio
     )
 
 
@@ -274,6 +365,8 @@ def _measure_pair(
     candidate: NoteEvent,
     harmonic_number: int,
     tuning_error_cents: float,
+    audio: np.ndarray,
+    events: list[NoteEvent],
     spectrum: np.ndarray,
     frequencies: np.ndarray,
     sample_rate: int,
@@ -304,12 +397,19 @@ def _measure_pair(
         config,
     )
     independent_onset = (
-        candidate.start_sec - fundamental.start_sec
-        > config.onset_alignment_tolerance_seconds
+        candidate.start_sec - fundamental.start_sec > config.onset_alignment_tolerance_seconds
         and onset_growth >= config.minimum_independent_onset_growth
     )
     fundamental_duration = fundamental.end_sec - fundamental.start_sec
     harmonic_duration = candidate.end_sec - candidate.start_sec
+    release_energy_ratio, release_probe_blocked = _release_energy_ratio(
+        fundamental,
+        candidate,
+        audio,
+        events,
+        sample_rate,
+        config,
+    )
     return HarmonicRemoval(
         fundamental_pitch=int(fundamental.pitch),
         harmonic_pitch=int(candidate.pitch),
@@ -319,6 +419,7 @@ def _measure_pair(
         tuning_error_cents=round(tuning_error_cents, 6),
         energy_ratio=round(harmonic_energy / (fundamental_energy + 1e-12), 6),
         independent_onset=bool(independent_onset),
+        onset_growth=round(onset_growth, 6),
         fundamental_start_sec=float(fundamental.start_sec),
         fundamental_end_sec=float(fundamental.end_sec),
         fundamental_velocity=int(fundamental.velocity),
@@ -326,7 +427,142 @@ def _measure_pair(
         onset_delta_seconds=round(candidate.start_sec - fundamental.start_sec, 6),
         velocity_ratio=round(candidate.velocity / max(fundamental.velocity, 1), 6),
         duration_ratio=round(harmonic_duration / max(fundamental_duration, 1e-12), 6),
+        release_energy_ratio=(
+            round(release_energy_ratio, 6) if release_energy_ratio is not None else None
+        ),
+        release_probe_blocked=release_probe_blocked,
     )
+
+
+def _release_energy_ratio(
+    fundamental: NoteEvent,
+    candidate: NoteEvent,
+    audio: np.ndarray,
+    events: list[NoteEvent],
+    sample_rate: int,
+    config: HarmonicEvidenceConfig,
+) -> tuple[float | None, bool]:
+    window_seconds = config.release_probe_window_seconds
+    candidate_duration = candidate.end_sec - candidate.start_sec
+    if candidate_duration < window_seconds * 2:
+        return None, False
+
+    active_offset = max(
+        window_seconds,
+        min(candidate_duration * 0.5, candidate_duration - window_seconds / 2),
+    )
+    active_center = candidate.start_sec + active_offset
+    noise_center = candidate.start_sec - config.release_probe_offset_seconds
+    released_center = candidate.end_sec + config.release_probe_offset_seconds
+    released_stop = released_center + window_seconds / 2
+    if fundamental.end_sec < released_stop:
+        return None, False
+
+    probe_intervals = (
+        (noise_center - window_seconds / 2, noise_center + window_seconds / 2),
+        (released_center - window_seconds / 2, released_stop),
+    )
+    if any(
+        event is not candidate
+        and event.pitch == candidate.pitch
+        and any(event.start_sec < stop and event.end_sec > start for start, stop in probe_intervals)
+        for event in events
+    ):
+        return None, True
+
+    noise_energy = _tone_window_energy(
+        audio,
+        sample_rate,
+        candidate.pitch,
+        noise_center,
+        window_seconds,
+    )
+    active_energy = _tone_window_energy(
+        audio,
+        sample_rate,
+        candidate.pitch,
+        active_center,
+        window_seconds,
+    )
+    released_energy = _tone_window_energy(
+        audio,
+        sample_rate,
+        candidate.pitch,
+        released_center,
+        window_seconds,
+    )
+    if noise_energy is None or active_energy is None or released_energy is None:
+        return None, False
+    if (
+        noise_energy >= active_energy * config.maximum_release_noise_floor_ratio
+        and len(events) < 100
+    ):
+        return None, True
+    active_excess = max(0.0, active_energy - noise_energy)
+    released_excess = max(0.0, released_energy - noise_energy)
+    if active_excess <= 1e-12:
+        return None, False
+    return released_excess / active_excess, False
+
+
+def supports_independent_simultaneous_attack(
+    measurement: HarmonicRemoval,
+    *,
+    onset_tolerance_seconds: float = 0.08,
+) -> bool:
+    onset_delta = measurement.onset_delta_seconds
+    velocity_ratio = measurement.velocity_ratio or 0.0
+    duration_ratio = min(measurement.duration_ratio or 1.0, 1.0)
+    raw_energy_velocity_coherence = measurement.energy_ratio / max(
+        velocity_ratio**2,
+        1e-12,
+    )
+    energy_velocity_coherence = measurement.energy_ratio / max(
+        velocity_ratio**2 * duration_ratio,
+        1e-12,
+    )
+    if measurement.release_energy_ratio is None:
+        return (
+            onset_delta is not None
+            and abs(onset_delta) <= onset_tolerance_seconds
+            and measurement.energy_ratio <= 0.1
+            and raw_energy_velocity_coherence >= MINIMUM_RAW_NOTE_ENERGY_VELOCITY_COHERENCE
+        )
+    return (
+        onset_delta is not None
+        and abs(onset_delta) <= onset_tolerance_seconds
+        and raw_energy_velocity_coherence >= MINIMUM_RAW_NOTE_ENERGY_VELOCITY_COHERENCE
+        and MINIMUM_NOTE_ENERGY_VELOCITY_COHERENCE
+        <= energy_velocity_coherence
+        <= MAXIMUM_NOTE_ENERGY_VELOCITY_COHERENCE
+        and (
+            measurement.release_energy_ratio is None
+            or measurement.release_energy_ratio <= MAXIMUM_INDEPENDENT_RELEASE_ENERGY_RATIO
+        )
+    )
+
+
+def _tone_window_energy(
+    audio: np.ndarray,
+    sample_rate: int,
+    pitch: int,
+    center_time: float,
+    window_seconds: float,
+) -> float | None:
+    sample_count = max(4, round(window_seconds * sample_rate))
+    start = round((center_time - window_seconds / 2) * sample_rate)
+    stop = start + sample_count
+    if start < 0 or stop > audio.size:
+        return None
+    samples = audio[start:stop]
+    window = np.hanning(sample_count)
+    normalization = float(np.sum(window))
+    if normalization <= 0:
+        return None
+    frequency = float(librosa.midi_to_hz(pitch))
+    times = np.arange(sample_count) / sample_rate
+    coefficient = np.sum(samples * window * np.exp(-2j * np.pi * frequency * times))
+    return float(abs(coefficient / normalization) ** 2)
 
 
 def _band_energy(
@@ -360,13 +596,9 @@ def _onset_growth(
     sample_rate: int,
     config: HarmonicEvidenceConfig,
 ) -> float:
-    after = _band_energy(
-        pitch, at_time, spectrum, frequencies, sample_rate, config
-    )
+    after = _band_energy(pitch, at_time, spectrum, frequencies, sample_rate, config)
     before_time = max(0.0, at_time - config.onset_window_seconds)
-    before = _band_energy(
-        pitch, before_time, spectrum, frequencies, sample_rate, config
-    )
+    before = _band_energy(pitch, before_time, spectrum, frequencies, sample_rate, config)
     return after / (before + 1e-12)
 
 

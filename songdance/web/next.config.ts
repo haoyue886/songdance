@@ -5,7 +5,11 @@ const withNextIntl = createNextIntlPlugin("./src/i18n/request.ts");
 
 const nextConfig: NextConfig = {
   allowedDevOrigins: ["127.0.0.1"],
+  distDir: process.env.SONGDANCE_NEXT_DIST_DIR ?? ".next",
   output: "standalone",
+  typescript: {
+    tsconfigPath: process.env.SONGDANCE_TSCONFIG_PATH ?? "tsconfig.json",
+  },
   async redirects() {
     return [
       {

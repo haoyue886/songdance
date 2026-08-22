@@ -20,7 +20,14 @@ test("keeps the failed public-domain example available for review", async ({ pag
   test.setTimeout(infrastructureTimeout * 2);
   await page.goto("/zh/examples");
   await expect(page.getByRole("heading", { name: "公开示例正在质量复核" })).toBeVisible();
-  for (const label of ["当前产物", "待人工复评", "最近完成人工评级", "需要重新转录"])
+  for (const label of [
+    "当前产物",
+    "人工复评已暂停",
+    "恢复条件",
+    "参考谱对齐修复完成后重新评审",
+    "最近完成人工评级",
+    "需要重新转录",
+  ])
     await expect(page.getByText(label)).toBeVisible();
   await expect(page.getByRole("link", { name: "Wikimedia Commons 录音" })).toHaveAttribute("href", /commons\.wikimedia\.org/);
   await expect(page.getByText("Public domain")).toBeVisible();

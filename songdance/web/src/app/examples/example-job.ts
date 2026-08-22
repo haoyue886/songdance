@@ -2,6 +2,7 @@ import type { TranscriptionJob } from "@/lib/api/jobs";
 import { timelineDuration, type NoteTimeline } from "@/lib/result/timeline";
 
 export type ExampleReviewRating = "pending" | "needs_redo" | "minor_edits" | "direct_use";
+export type ExampleReviewState = "active" | "review_paused";
 
 export type ExampleProvenance = {
   clip_duration_sec: number;
@@ -10,6 +11,8 @@ export type ExampleProvenance = {
   license: string;
   license_url: string;
   review_status: ExampleReviewRating;
+  review_state: ExampleReviewState;
+  review_resume_condition: "reference_aligned_transcription_ready" | null;
   latest_completed_review: {
     rating: Exclude<ExampleReviewRating, "pending">;
     reviewed_at: string;

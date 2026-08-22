@@ -9,6 +9,7 @@ from music21 import dynamics, expressions, layout, note, stream, tempo
 
 from app.pipeline.analysis import StructureAnalysis
 from app.pipeline.artifacts import artifact_paths, write_timeline
+from app.pipeline.harmonics import extract_harmonic_evidence
 from app.pipeline.quantize import integer_tempo_bpm
 from app.pipeline.score import (
     SCORE_RECONSTRUCTION_FALLBACK,
@@ -58,11 +59,21 @@ def test_repeated_arpeggio_is_one_piano_part_with_two_staves(tmp_path) -> None:
         fixture_root / "generated/04-arpeggios.wav",
         pretty_midi.PrettyMIDI(str(fixture_root / "generated/04-arpeggios.mid")),
     )
+    raw_midi = pretty_midi.PrettyMIDI(str(artifact_root / "raw.mid"))
+    raw_events = [
+        NoteEvent(note.start, note.end, note.pitch, note.velocity, 1.0)
+        for instrument in raw_midi.instruments
+        for note in instrument.notes
+    ]
+    harmonic_evidence = extract_harmonic_evidence(
+        fixture_root / "generated/04-arpeggios.wav", raw_events
+    )
 
     scored = build_score(
         events,
         analysis=StructureAnalysis(**timeline["analysis"]),
         sustain_evidence=evidence,
+        harmonic_evidence=harmonic_evidence,
     )
     destination = tmp_path / "arpeggio.musicxml"
     write_musicxml(scored, destination)
@@ -109,16 +120,16 @@ def test_repeated_arpeggio_is_one_piano_part_with_two_staves(tmp_path) -> None:
     assert len(list(scored.score.recurse().getElementsByClass(expressions.PedalMark))) == 1
     assert scored.reconstruction["voice_compression"]["single_voice_applied"] is True
     assert scored.reconstruction["arpeggio_filter"] == {
-        "version": "simple-arpeggio-filter-v3",
+        "version": "simple-arpeggio-filter-v6",
         "applied": True,
-        "removed_event_count": 97,
+        "removed_event_count": 133,
         "stable_cycle_count": 14,
         "matched_slot_count": 119,
         "reason_codes": ("SIMPLE_ARPEGGIO_RESONANCE_FILTERED",),
     }
-    assert len(written_timeline["notes"]) == timeline["cleanup"]["output_note_count"] == 216
+    assert len(written_timeline["notes"]) == timeline["cleanup"]["output_note_count"] == 252
     assert len(written_timeline["notation_notes"]) == 119
-    assert sum(len(instrument.notes) for instrument in written_midi.instruments) == 216
+    assert sum(len(instrument.notes) for instrument in written_midi.instruments) == 252
     assert len(written_midi.instruments) == 2
     assert {instrument.name for instrument in written_midi.instruments} == {"Piano"}
     assert len(written_midi.get_tempo_changes()[0]) == 1

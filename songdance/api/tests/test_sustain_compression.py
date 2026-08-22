@@ -5,6 +5,7 @@ import pretty_midi
 from music21 import converter, expressions
 
 from app.pipeline.analysis import StructureAnalysis
+from app.pipeline.harmonics import extract_harmonic_evidence
 from app.pipeline.harmony import NotationGroup
 from app.pipeline.polyphony_limit import (
     RESONANT_POLYPHONY_TRIMMED,
@@ -542,11 +543,23 @@ def test_fixed_arpeggio_filters_resonance_before_voice_compression() -> None:
         FIXTURE_ROOT / "generated/04-arpeggios.wav",
         pretty_midi.PrettyMIDI(str(FIXTURE_ROOT / "generated/04-arpeggios.mid")),
     )
+    raw_midi = pretty_midi.PrettyMIDI(
+        str(FIXTURE_ROOT / "structure-review-artifacts/04-arpeggios/raw.mid")
+    )
+    raw_events = [
+        NoteEvent(note.start, note.end, note.pitch, note.velocity, 1.0)
+        for instrument in raw_midi.instruments
+        for note in instrument.notes
+    ]
+    harmonic_evidence = extract_harmonic_evidence(
+        FIXTURE_ROOT / "generated/04-arpeggios.wav", raw_events
+    )
 
     scored = build_score(
         events,
         analysis=StructureAnalysis(**timeline["analysis"]),
         sustain_evidence=evidence,
+        harmonic_evidence=harmonic_evidence,
     )
     structure = score_structure_summary(scored.score, validate_measure_durations=True)
     compression = scored.reconstruction["voice_compression"]
@@ -555,7 +568,7 @@ def test_fixed_arpeggio_filters_resonance_before_voice_compression() -> None:
     assert events == original_events
     assert timeline["cleanup"]["reason_counts"]["HARMONIC_CANDIDATE_REMOVED"] > 0
     assert arpeggio_filter["applied"] is True
-    assert arpeggio_filter["removed_event_count"] == 97
+    assert arpeggio_filter["removed_event_count"] == 133
     assert arpeggio_filter["matched_slot_count"] == 119
     assert compression["applied"] is False
     assert compression["compressed_group_count"] == 0

@@ -41,10 +41,11 @@ def run(settings: Settings | None = None) -> None:
             onset_threshold=active_settings.model_onset_threshold,
             frame_threshold=active_settings.model_frame_threshold,
         )
+        harmonic_evidence = extract_harmonic_evidence(normalized, events)
         cleanup_result = clean_note_events(
             events,
             active_settings.note_cleanup_config,
-            harmonic_evidence=extract_harmonic_evidence(normalized, events),
+            harmonic_evidence=harmonic_evidence,
         )
         structure_analysis = analyze_audio(normalized, active_settings.structure_analysis_config)
         scored = build_score(
@@ -52,6 +53,7 @@ def run(settings: Settings | None = None) -> None:
             title=case["id"],
             analysis=structure_analysis,
             sustain_evidence=extract_sustain_evidence(normalized, raw_midi),
+            harmonic_evidence=harmonic_evidence,
             notation_context=_notation_context(case),
         )
         write_raw_midi(raw_midi, paths["raw_midi"])

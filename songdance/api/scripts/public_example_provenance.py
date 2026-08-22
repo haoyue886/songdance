@@ -24,6 +24,8 @@ def build_provenance(
         "model_version": timeline["model_version"],
         "postprocess_version": timeline["postprocess_version"],
         "review_status": review["rating"],
+        "review_state": review["review_state"],
+        "review_resume_condition": review["review_resume_condition"],
         "latest_completed_review": completed_review,
         "reference_validation": reference_validation,
         "generated_at": datetime.now(UTC).isoformat(),

@@ -39,10 +39,11 @@ def run(settings: Settings | None = None) -> None:
         normalized = case_dir / "normalized.wav"
         preprocess_audio(OUTPUT_DIR / f"{case_id}.wav", normalized)
         events, raw_midi = transcribe_audio(normalized)
+        harmonic_evidence = extract_harmonic_evidence(normalized, events)
         cleaned = clean_note_events(
             events,
             active_settings.note_cleanup_config,
-            harmonic_evidence=extract_harmonic_evidence(normalized, events),
+            harmonic_evidence=harmonic_evidence,
         )
         analysis = analyze_audio(normalized, active_settings.structure_analysis_config)
         scored = build_score(
@@ -50,6 +51,7 @@ def run(settings: Settings | None = None) -> None:
             title=case_id,
             analysis=analysis,
             sustain_evidence=extract_sustain_evidence(normalized, raw_midi),
+            harmonic_evidence=harmonic_evidence,
         )
         write_raw_midi(raw_midi, paths["raw_midi"])
         write_quantized_midi(scored, paths["midi"])

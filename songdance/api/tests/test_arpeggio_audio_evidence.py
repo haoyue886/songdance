@@ -3,6 +3,10 @@ from pathlib import Path
 import numpy as np
 import soundfile as sf
 
+from app.pipeline.arpeggio_audio_evidence import (
+    EvidenceTimeMap,
+    is_confirmed_same_pitch_decay,
+)
 from app.pipeline.arpeggio_resonance import filter_simple_arpeggio_resonance
 from app.pipeline.cleanup import clean_note_events
 from app.pipeline.harmonics import (
@@ -16,6 +20,69 @@ from app.pipeline.transcribe import NoteEvent
 
 SAMPLE_RATE = 22_050
 PATTERN = (48, 55, 60, 64, 67, 72, 67, 64)
+
+
+def _same_pitch_evidence(
+    candidate: NoteEvent,
+    *,
+    onset_growth: float = 1.0,
+) -> HarmonicEvidence:
+    return HarmonicEvidence(
+        version=HarmonicEvidenceConfig().version,
+        status="available",
+        source="AUDIO_STFT",
+        removals=(),
+        onset_observations=(
+            NoteOnsetEvidence(
+                pitch=candidate.pitch,
+                start_sec=candidate.start_sec,
+                end_sec=candidate.end_sec,
+                onset_growth=onset_growth,
+                independent_onset=False,
+                pre_onset_energy=2.0,
+                onset_energy=2.0 * onset_growth,
+            ),
+        ),
+    )
+
+
+def test_same_pitch_decay_requires_velocity_and_duration_coherence() -> None:
+    previous = NoteEvent(0.0, 0.4, 60, 90, 0.9)
+    confirmed = NoteEvent(0.25, 0.45, 60, 55, 0.4)
+    strong = NoteEvent(0.25, 0.45, 60, 80, 0.4)
+    long = NoteEvent(0.25, 1.1, 60, 55, 0.4)
+    time_map = EvidenceTimeMap(0.0, 0.25, 0.0, 0.25)
+
+    measurement = is_confirmed_same_pitch_decay(
+        confirmed,
+        {60: previous},
+        _same_pitch_evidence(confirmed),
+        time_map,
+    )
+
+    assert measurement is not None
+    assert abs(measurement.overlap_seconds - 0.15) < 1e-9
+    assert measurement.energy_ratio == 1.0
+    assert measurement.velocity_ratio == 55 / 90
+    assert abs(measurement.duration_ratio - 0.5) < 1e-9
+    assert (
+        is_confirmed_same_pitch_decay(
+            strong,
+            {60: previous},
+            _same_pitch_evidence(strong),
+            time_map,
+        )
+        is None
+    )
+    assert (
+        is_confirmed_same_pitch_decay(
+            long,
+            {60: previous},
+            _same_pitch_evidence(long),
+            time_map,
+        )
+        is None
+    )
 
 
 def _write_repeated_octaves(
@@ -213,6 +280,14 @@ def test_release_probe_fails_closed_when_next_same_pitch_occupies_window(
     assert len(matching_observations) == len(upper_notes)
     assert all(item.release_energy_ratio is None for item in matching_observations)
     assert all(upper in cleaned.events for upper in upper_notes)
+    result = filter_simple_arpeggio_resonance(
+        cleaned.events,
+        pedal_intervals=((0.0, 6.0),),
+        harmonic_evidence=evidence,
+    )
+    assert all(upper in result.events for upper in upper_notes)
+    assert all(note in result.events for note in following_notes)
+    assert result.removed_event_count == 0
 
 
 def test_production_audio_evidence_removes_natural_third_partials(
@@ -249,6 +324,13 @@ def test_production_audio_evidence_removes_natural_third_partials(
     )
     assert all(partial not in result.events for partial in false_partials)
     assert result.removed_event_count == len(false_partials)
+    assert len(result.removals) == result.removed_event_count
+    assert len(result.summary()["removals"]) == result.removed_event_count
+    assert all(item.evidence_type == "harmonic_pair" for item in result.removals)
+    assert all(item.harmonic_order == 3 for item in result.removals)
+    assert all(item.energy_ratio is not None for item in result.removals)
+    assert all(item.release_energy_ratio is not None for item in result.removals)
+    assert all(item.decision_reason == "CONFIRMED_HARMONIC_PAIR" for item in result.removals)
 
 
 def test_harmonic_pair_evidence_only_authorizes_its_own_cycle() -> None:
@@ -281,6 +363,7 @@ def test_harmonic_pair_evidence_only_authorizes_its_own_cycle() -> None:
                 onset_delta_seconds=0.0,
                 velocity_ratio=40 / 90,
                 duration_ratio=0.5,
+                release_energy_ratio=0.5,
             ),
         ),
         onset_observations=tuple(
@@ -289,7 +372,7 @@ def test_harmonic_pair_evidence_only_authorizes_its_own_cycle() -> None:
                 start_sec=event.start_sec,
                 end_sec=event.end_sec,
                 onset_growth=1.0,
-                independent_onset=False,
+                independent_onset=any(event is item for item in shortened_octaves[1:]),
             )
             for event in events
         ),
@@ -303,3 +386,60 @@ def test_harmonic_pair_evidence_only_authorizes_its_own_cycle() -> None:
     assert shortened_octaves[0] not in result.events
     assert all(octave in result.events for octave in shortened_octaves[1:])
     assert result.removed_event_count == 1
+
+
+def test_unmeasurable_release_does_not_authorize_harmonic_pair_removal() -> None:
+    events, octaves = _events_with_true_octaves()
+    fundamentals = [event for event in events if event.pitch == 60]
+    candidate = NoteEvent(octaves[0].start_sec, octaves[0].start_sec + 0.1, 79, 40, 0.8)
+    events = [event for event in events if event is not octaves[0]] + [candidate]
+    evidence = HarmonicEvidence(
+        version=HarmonicEvidenceConfig().version,
+        status="available",
+        source="AUDIO_STFT",
+        removals=(),
+        observations=(
+            HarmonicRemoval(
+                fundamental_pitch=60,
+                harmonic_pitch=79,
+                harmonic_start_sec=candidate.start_sec,
+                harmonic_end_sec=candidate.end_sec,
+                harmonic_number=3,
+                tuning_error_cents=-1.955001,
+                energy_ratio=0.05,
+                independent_onset=False,
+                fundamental_start_sec=fundamentals[0].start_sec,
+                fundamental_end_sec=fundamentals[0].end_sec,
+                fundamental_velocity=90,
+                harmonic_velocity=40,
+                onset_delta_seconds=0.0,
+                velocity_ratio=40 / 90,
+                duration_ratio=0.5,
+                release_energy_ratio=None,
+            ),
+        ),
+        onset_observations=tuple(
+            NoteOnsetEvidence(
+                pitch=event.pitch,
+                start_sec=event.start_sec,
+                end_sec=event.end_sec,
+                onset_growth=1.0,
+                independent_onset=False,
+            )
+            for event in events
+        ),
+    )
+
+    result = filter_simple_arpeggio_resonance(
+        events,
+        pedal_intervals=((0.0, 6.0),),
+        harmonic_evidence=evidence,
+    )
+
+    assert candidate in result.events
+    assert not any(
+        item.candidate_pitch == candidate.pitch
+        and item.candidate_start_sec == candidate.start_sec
+        and item.candidate_end_sec == candidate.end_sec
+        for item in result.removals
+    )

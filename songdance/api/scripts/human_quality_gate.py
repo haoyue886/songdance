@@ -41,6 +41,7 @@ PIPELINE_FILES = (
     "score_validation.py",
     "simple_arpeggio.py",
     "arpeggio_audio_evidence.py",
+    "arpeggio_audit.py",
     "arpeggio_resonance.py",
     "voicing.py",
     "staff_distribution.py",

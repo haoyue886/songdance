@@ -49,10 +49,11 @@ def test_weak_aligned_high_harmonic_is_removed_with_audio_evidence(tmp_path: Pat
     audio_path = tmp_path / "harmonic.wav"
     _write_tones(
         audio_path,
-        [(440.0, 0.8, 0.1, 1.0), (880.0, 0.08, 0.1, 1.0)],
+        [(440.0, 0.8, 0.1, 1.2), (880.0, 0.08, 0.1, 1.0)],
+        duration=1.4,
     )
-    fundamental = NoteEvent(0.1, 1.0, 69, 100, 0.9)
-    harmonic = NoteEvent(0.1, 1.0, 81, 20, 0.9)
+    fundamental = NoteEvent(0.1, 1.2, 69, 100, 0.9)
+    harmonic = NoteEvent(0.1, 0.8, 81, 20, 0.9)
 
     evidence = extract_harmonic_evidence(audio_path, [fundamental, harmonic])
     result = clean_note_events([fundamental, harmonic], harmonic_evidence=evidence)
@@ -69,12 +70,66 @@ def test_weak_aligned_high_harmonic_is_removed_with_audio_evidence(tmp_path: Pat
     assert removal.independent_onset is False
     assert removal.reason == HARMONIC_AUDIO_EVIDENCE
     assert removal.fundamental_start_sec == 0.1
-    assert removal.fundamental_end_sec == 1.0
+    assert removal.fundamental_end_sec == 1.2
     assert removal.fundamental_velocity == 100
     assert removal.harmonic_velocity == 20
     assert removal.onset_delta_seconds == 0.0
     assert removal.velocity_ratio == 0.2
-    assert removal.duration_ratio == 1.0
+    assert removal.duration_ratio == pytest.approx(0.7 / 1.1)
+    assert removal.release_energy_ratio is not None
+
+
+def test_equal_velocity_high_octave_is_preserved_despite_low_band_energy(
+    tmp_path: Path,
+) -> None:
+    audio_path = tmp_path / "played-equal-velocity-octave.wav"
+    _write_tones(
+        audio_path,
+        [(440.0, 0.8, 0.1, 1.2), (880.0, 0.08, 0.1, 0.8)],
+        duration=1.4,
+    )
+    fundamental = NoteEvent(0.1, 1.2, 69, 100, 0.9)
+    octave = NoteEvent(0.1, 0.8, 81, 100, 0.9)
+
+    evidence = extract_harmonic_evidence(audio_path, [fundamental, octave])
+    result = clean_note_events([fundamental, octave], harmonic_evidence=evidence)
+
+    assert evidence.status == "available"
+    assert evidence.removals == ()
+    assert result.events == [fundamental, octave]
+    assert result.reason_counts[HARMONIC_CANDIDATE_REMOVED] == 0
+
+
+@pytest.mark.parametrize("event_count", [99, 100])
+def test_release_noise_gate_is_invariant_at_dense_batch_boundary(
+    tmp_path: Path,
+    event_count: int,
+) -> None:
+    audio_path = tmp_path / f"noise-gate-{event_count}.wav"
+    _write_tones(
+        audio_path,
+        [(440.0, 0.35, 0.1, 1.1), (880.0, 0.1, 0.1, 0.5)],
+        duration=1.3,
+    )
+    fundamental = NoteEvent(0.1, 1.1, 69, 90, 0.9)
+    octave = NoteEvent(0.1, 0.5, 81, 40, 0.9)
+    unrelated = [
+        NoteEvent(0.2 + index * 0.001, 0.3 + index * 0.001, 40, 70, 0.9)
+        for index in range(event_count - 2)
+    ]
+    events = [fundamental, octave, *unrelated]
+
+    evidence = extract_harmonic_evidence(audio_path, events)
+    result = clean_note_events(events, harmonic_evidence=evidence)
+
+    observation = next(
+        item
+        for item in evidence.observations
+        if item.fundamental_pitch == 69 and item.harmonic_pitch == 81
+    )
+    assert observation.release_energy_ratio is not None
+    assert octave in result.events
+    assert not any(removal.matches(octave) for removal in evidence.removals)
 
 
 @pytest.mark.parametrize("upper_end", [0.2, 0.3])
@@ -98,6 +153,29 @@ def test_true_simultaneous_high_octave_survives_complete_cleanup(
     assert evidence.removals == ()
     assert result.events == [fundamental, octave]
     assert result.reason_counts[HARMONIC_CANDIDATE_REMOVED] == 0
+
+
+def test_dense_batch_does_not_override_simultaneous_octave_protection(
+    tmp_path: Path,
+) -> None:
+    audio_path = tmp_path / "dense-played-high-octave.wav"
+    _write_tones(
+        audio_path,
+        [(440.0, 0.35, 0.1, 1.1), (880.0, 0.1, 0.1, 0.5)],
+        duration=1.3,
+    )
+    fundamental = NoteEvent(0.1, 1.1, 69, 90, 0.9)
+    octave = NoteEvent(0.1, 0.5, 81, 40, 0.9)
+    unrelated = [
+        NoteEvent(0.2 + index * 0.001, 0.3 + index * 0.001, 40, 70, 0.9) for index in range(101)
+    ]
+    events = [fundamental, octave, *unrelated]
+
+    evidence = extract_harmonic_evidence(audio_path, events)
+    result = clean_note_events(events, harmonic_evidence=evidence)
+
+    assert octave in result.events
+    assert not any(removal.matches(octave) for removal in evidence.removals)
 
 
 def test_weak_bass_octave_is_preserved_without_confirmed_priority(

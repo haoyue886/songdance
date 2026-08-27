@@ -568,14 +568,20 @@ def test_fixed_arpeggio_filters_resonance_before_voice_compression() -> None:
     assert events == original_events
     assert timeline["cleanup"]["reason_counts"]["HARMONIC_CANDIDATE_REMOVED"] > 0
     assert arpeggio_filter["applied"] is True
-    assert arpeggio_filter["removed_event_count"] == 133
+    assert arpeggio_filter["removed_event_count"] == 3
+    assert len(arpeggio_filter["removals"]) == arpeggio_filter["removed_event_count"]
+    assert {item["evidence_type"] for item in arpeggio_filter["removals"]} == {"harmonic_pair"}
+    assert all(item["energy_ratio"] is not None for item in arpeggio_filter["removals"])
+    assert all(item["velocity_ratio"] is not None for item in arpeggio_filter["removals"])
+    assert all(item["duration_ratio"] is not None for item in arpeggio_filter["removals"])
+    assert all(item["release_energy_ratio"] is not None for item in arpeggio_filter["removals"])
     assert arpeggio_filter["matched_slot_count"] == 119
-    assert compression["applied"] is False
-    assert compression["compressed_group_count"] == 0
+    assert compression["applied"] is True
+    assert compression["notation_voice_count"] <= 2
     assert compression["pedal_marking_applied"] is True
     assert compression["pedal_marking_count"] == 1
-    assert len(list(scored.score.recurse().notes)) == 119
-    assert structure["voice_count"] == 0
+    assert len(scored.notation_notes) == 279
+    assert structure["voice_count"] > 0
     assert structure["rest_count"] < 150
     assert structure["short_rest_count"] == 0
     assert structure["errors"] == []

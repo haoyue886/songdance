@@ -35,6 +35,7 @@ def _audio_evidence(
     independent_harmonic_pairs: bool = False,
     decays: tuple[NoteEvent, ...] = (),
     independent: tuple[NoteEvent, ...] = (),
+    decay_growth: float = 1.0,
 ) -> HarmonicEvidence:
     return HarmonicEvidence(
         version=HarmonicEvidenceConfig().version,
@@ -59,6 +60,7 @@ def _audio_evidence(
                 velocity_ratio=harmonic.velocity / fundamental.velocity,
                 duration_ratio=(harmonic.end_sec - harmonic.start_sec)
                 / (fundamental.end_sec - fundamental.start_sec),
+                release_energy_ratio=0.5,
             )
             for fundamental, harmonic in harmonic_pairs
         ),
@@ -67,15 +69,13 @@ def _audio_evidence(
                 pitch=event.pitch,
                 start_sec=event.start_sec,
                 end_sec=event.end_sec,
-                onset_growth=(
-                    1.0
-                    if any(event is decay for decay in decays)
-                    else 3.0
-                ),
+                onset_growth=(decay_growth if any(event is decay for decay in decays) else 3.0),
                 independent_onset=(
                     not any(event is decay for decay in decays)
                     and any(event is item for item in independent)
                 ),
+                pre_onset_energy=1.0,
+                onset_energy=(decay_growth if any(event is decay for decay in decays) else 3.0),
             )
             for event in (*decays, *independent)
         ),
@@ -372,9 +372,7 @@ def test_pedal_supported_arpeggio_filters_wrong_slot_resonance_candidates() -> N
     result = filter_simple_arpeggio_resonance(
         events,
         pedal_intervals=((0.0, 6.0),),
-        harmonic_evidence=_audio_evidence(
-            decays=tuple(resonances), independent=tuple(events)
-        ),
+        harmonic_evidence=_audio_evidence(decays=tuple(resonances), independent=tuple(events)),
     )
     filtered_pattern = [event.pitch for event in result.events if event.pitch != 36]
 
@@ -382,9 +380,64 @@ def test_pedal_supported_arpeggio_filters_wrong_slot_resonance_candidates() -> N
     assert any(event.pitch == 36 and event.end_sec == 6.0 for event in result.events)
     assert result.applied is True
     assert result.removed_event_count == 23
+    assert len(result.removals) == result.removed_event_count
     assert result.stable_cycle_count == 3
     assert result.matched_slot_count == 24
     assert result.reason_codes == (SIMPLE_ARPEGGIO_RESONANCE_FILTERED,)
+    assert all(item.energy_ratio == 1.0 for item in result.removals)
+    assert all(item.velocity_ratio == 55 / 90 for item in result.removals)
+    assert all(abs((item.duration_ratio or 0.0) - 0.5) < 1e-9 for item in result.removals)
+    assert all(item.overlap_seconds > 0 for item in result.removals)
+    assert all(item.pre_onset_energy == 1.0 for item in result.removals)
+    assert all(item.onset_energy == 1.0 for item in result.removals)
+
+
+def test_arpeggio_filter_keeps_same_pitch_candidate_after_previous_note_ended() -> None:
+    pattern = (48, 55, 60, 64, 67, 72, 67, 64)
+    events: list[NoteEvent] = []
+    candidates = []
+    for index, pitch in enumerate(pattern * 3):
+        start = index * 0.25
+        events.append(NoteEvent(start, start + 0.2, pitch, 90, 0.9))
+        if index:
+            candidate = NoteEvent(start, start + 0.15, (pattern * 3)[index - 1], 55, 0.4)
+            events.append(candidate)
+            candidates.append(candidate)
+
+    result = filter_simple_arpeggio_resonance(
+        events,
+        pedal_intervals=((0.0, 6.0),),
+        harmonic_evidence=_audio_evidence(decays=tuple(candidates), independent=tuple(events)),
+    )
+
+    assert all(candidate in result.events for candidate in candidates)
+    assert result.removed_event_count == 0
+
+
+def test_arpeggio_filter_keeps_overlapping_same_pitch_with_energy_growth() -> None:
+    pattern = (48, 55, 60, 64, 67, 72, 67, 64)
+    events: list[NoteEvent] = []
+    candidates = []
+    for index, pitch in enumerate(pattern * 3):
+        start = index * 0.25
+        events.append(NoteEvent(start, start + 0.4, pitch, 90, 0.9))
+        if index:
+            candidate = NoteEvent(start, start + 0.2, (pattern * 3)[index - 1], 55, 0.4)
+            events.append(candidate)
+            candidates.append(candidate)
+
+    result = filter_simple_arpeggio_resonance(
+        events,
+        pedal_intervals=((0.0, 6.0),),
+        harmonic_evidence=_audio_evidence(
+            decays=tuple(candidates),
+            independent=tuple(events),
+            decay_growth=1.5,
+        ),
+    )
+
+    assert all(candidate in result.events for candidate in candidates)
+    assert result.removed_event_count == 0
 
 
 def test_pedal_supported_arpeggio_filters_weak_slot_harmonics() -> None:
@@ -415,6 +468,10 @@ def test_pedal_supported_arpeggio_filters_weak_slot_harmonics() -> None:
     assert all(harmonic not in result.events for harmonic in harmonics)
     assert [event.pitch for event in result.events] == list(pattern * 3)
     assert result.removed_event_count == 3
+    assert len(result.removals) == result.removed_event_count
+    assert {item.evidence_type for item in result.removals} == {"harmonic_pair"}
+    assert all(item.harmonic_order == 2 for item in result.removals)
+    assert all(item.release_energy_ratio == 0.5 for item in result.removals)
 
 
 def test_arpeggio_filter_keeps_stable_out_of_pattern_parallel_voice() -> None:

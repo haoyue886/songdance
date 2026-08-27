@@ -1,9 +1,13 @@
-from dataclasses import dataclass
-
 from app.pipeline.arpeggio_audio_evidence import (
     build_evidence_time_map,
     has_confirmed_harmonic_pair,
     is_confirmed_same_pitch_decay,
+)
+from app.pipeline.arpeggio_audit import (
+    ArpeggioFilterResult,
+    ArpeggioRemovalAudit,
+    audit_harmonic_removal,
+    audit_same_pitch_removal,
 )
 from app.pipeline.harmonics import HarmonicEvidence
 from app.pipeline.simple_arpeggio import (
@@ -15,33 +19,12 @@ from app.pipeline.simple_arpeggio import (
 )
 from app.pipeline.transcribe import NoteEvent
 
-SIMPLE_ARPEGGIO_FILTER_VERSION = "simple-arpeggio-filter-v6"
+SIMPLE_ARPEGGIO_FILTER_VERSION = "simple-arpeggio-filter-v7"
 SIMPLE_ARPEGGIO_RESONANCE_FILTERED = "SIMPLE_ARPEGGIO_RESONANCE_FILTERED"
 MINIMUM_PEDAL_CYCLES = 3
 MINIMUM_CYCLE_PEDAL_COVERAGE = 0.5
 MINIMUM_PARALLEL_SLOT_RUN = 3
 MINIMUM_PARALLEL_PITCH_SEPARATION = 5
-
-
-@dataclass(frozen=True)
-class ArpeggioFilterResult:
-    events: list[NoteEvent]
-    version: str
-    applied: bool
-    removed_event_count: int
-    stable_cycle_count: int
-    matched_slot_count: int
-    reason_codes: tuple[str, ...]
-
-    def summary(self) -> dict[str, object]:
-        return {
-            "version": self.version,
-            "applied": self.applied,
-            "removed_event_count": self.removed_event_count,
-            "stable_cycle_count": self.stable_cycle_count,
-            "matched_slot_count": self.matched_slot_count,
-            "reason_codes": self.reason_codes,
-        }
 
 
 def filter_simple_arpeggio_resonance(
@@ -68,8 +51,15 @@ def filter_simple_arpeggio_resonance(
         for cycle_index in supported_cycles
         for slot, group_index in enumerate(match.cycles[cycle_index])
     }
+    cycle_by_group = {
+        group_index: cycle_index
+        for cycle_index in supported_cycles
+        for group_index in match.cycles[cycle_index]
+    }
     if supported_cycles[-1] == len(match.cycles) - 1:
-        slot_by_group.update(_trailing_pattern_slot_indexes(match))
+        trailing_slots = _trailing_pattern_slot_indexes(match)
+        slot_by_group.update(trailing_slots)
+        cycle_by_group.update({group_index: len(match.cycles) for group_index in trailing_slots})
     expected_by_group = {
         group_index: SIMPLE_ARPEGGIO_PATTERN[slot] for group_index, slot in slot_by_group.items()
     }
@@ -87,31 +77,55 @@ def filter_simple_arpeggio_resonance(
             selected_by_group[group_index] = max(candidates, key=_candidate_rank)
 
     removed_ids: set[int] = set()
+    removals: list[ArpeggioRemovalAudit] = []
+    previous_by_pitch: dict[int, NoteEvent] = {}
     for group_index, (_, group) in enumerate(match.groups):
         selected = selected_by_group.get(group_index)
         if selected is None:
+            previous_by_pitch.update({event.pitch: event for event in group})
             continue
         for event in group:
-            if (
-                event is selected
-                or id(event) in parallel_events
-                or _is_independent_pattern_voice(event, expected_by_group, match.groups)
+            if event is selected:
+                continue
+            harmonic_measurement = has_confirmed_harmonic_pair(event, selected, evidence, time_map)
+            same_pitch_evidence = is_confirmed_same_pitch_decay(
+                event,
+                previous_by_pitch,
+                evidence,
+                time_map,
+            )
+            if harmonic_measurement is not None:
+                removed_ids.add(id(event))
+                removals.append(
+                    audit_harmonic_removal(
+                        event,
+                        selected,
+                        group_index,
+                        cycle_by_group[group_index],
+                        slot_by_group[group_index],
+                        harmonic_measurement,
+                    )
+                )
+            elif same_pitch_evidence is not None:
+                removed_ids.add(id(event))
+                removals.append(
+                    audit_same_pitch_removal(
+                        event,
+                        same_pitch_evidence.previous,
+                        group_index,
+                        cycle_by_group[group_index],
+                        slot_by_group[group_index],
+                        same_pitch_evidence,
+                    )
+                )
+            elif id(event) in parallel_events or _is_independent_pattern_voice(
+                event, expected_by_group, match.groups
             ):
                 continue
-            if has_confirmed_harmonic_pair(event, selected, evidence, time_map) or (
-                event.pitch in SIMPLE_ARPEGGIO_PATTERN
-                and is_confirmed_same_pitch_decay(
-                    event,
-                    group_index,
-                    selected_by_group,
-                    evidence,
-                    time_map,
-                )
-            ):
-                removed_ids.add(id(event))
+        previous_by_pitch.update({event.pitch: event for event in group})
     return _filter_result(
         [event for event in events if id(event) not in removed_ids],
-        len(removed_ids),
+        removals=tuple(removals),
         stable_cycle_count=len(supported_cycles),
         matched_slot_count=len(expected_by_group),
     )
@@ -251,17 +265,18 @@ def _merge_intervals(intervals: tuple[tuple[float, float], ...]) -> tuple[tuple[
 
 def _filter_result(
     events: list[NoteEvent],
-    removed: int = 0,
     *,
+    removals: tuple[ArpeggioRemovalAudit, ...] = (),
     stable_cycle_count: int = 0,
     matched_slot_count: int = 0,
 ) -> ArpeggioFilterResult:
     return ArpeggioFilterResult(
         events=events,
         version=SIMPLE_ARPEGGIO_FILTER_VERSION,
-        applied=removed > 0,
-        removed_event_count=removed,
+        applied=bool(removals),
+        removed_event_count=len(removals),
         stable_cycle_count=stable_cycle_count,
         matched_slot_count=matched_slot_count,
-        reason_codes=(SIMPLE_ARPEGGIO_RESONANCE_FILTERED,) if removed else (),
+        reason_codes=(SIMPLE_ARPEGGIO_RESONANCE_FILTERED,) if removals else (),
+        removals=removals,
     )

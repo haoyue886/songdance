@@ -67,6 +67,8 @@ export default defineConfig({
         SONGDANCE_AUTO_CREATE_SCHEMA: "true",
         SONGDANCE_QUEUE_NAME: e2eQueueName,
         SONGDANCE_QUOTA_BACKEND: "memory",
+        SONGDANCE_HOURLY_JOB_LIMIT: "100",
+        SONGDANCE_DAILY_JOB_LIMIT: "100",
       },
       url: `${apiOrigin}/health`,
       reuseExistingServer: false,

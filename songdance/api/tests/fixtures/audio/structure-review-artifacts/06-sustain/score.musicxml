@@ -5,7 +5,7 @@
   <identification>
     <creator type="composer" />
     <encoding>
-      <encoding-date>2026-08-22</encoding-date>
+      <encoding-date>2026-08-27</encoding-date>
       <software>music21 v.10.5.0</software>
       <supports element="beam" type="yes" />
       <supports element="stem" type="yes" />
@@ -19,21 +19,21 @@
     </scaling>
   </defaults>
   <part-list>
-    <score-part id="P5d0a826f2e409cf5a9205be4c7ca684d">
+    <score-part id="P3ac0b505f51d7df4d3f780dd12d17559">
       <part-name>Piano</part-name>
       <part-abbreviation>Pno</part-abbreviation>
-      <score-instrument id="If40d7a14724f729d5b02681d4efc4636">
+      <score-instrument id="I23f41bcbb8e96efe9b3af3786686e007">
         <instrument-name>Piano</instrument-name>
         <instrument-abbreviation>Pno</instrument-abbreviation>
       </score-instrument>
-      <midi-instrument id="If40d7a14724f729d5b02681d4efc4636">
+      <midi-instrument id="I23f41bcbb8e96efe9b3af3786686e007">
         <midi-channel>1</midi-channel>
         <midi-program>1</midi-program>
       </midi-instrument>
     </score-part>
   </part-list>
   <!--=========================== Part 1 ===========================-->
-  <part id="P5d0a826f2e409cf5a9205be4c7ca684d">
+  <part id="P3ac0b505f51d7df4d3f780dd12d17559">
     <!--========================= Measure 1 ==========================-->
     <measure implicit="no" number="1">
       <attributes>
@@ -90,7 +90,7 @@
       <backup>
         <duration>10080</duration>
       </backup>
-      <note dynamics="62.22">
+      <note dynamics="58.89">
         <pitch>
           <step>G</step>
           <octave>4</octave>
@@ -100,10 +100,21 @@
         <type>16th</type>
         <staff>1</staff>
       </note>
-      <note dynamics="62.22">
+      <note dynamics="58.89">
         <chord />
         <pitch>
           <step>C</step>
+          <octave>5</octave>
+        </pitch>
+        <duration>2520</duration>
+        <voice>1</voice>
+        <type>16th</type>
+        <staff>1</staff>
+      </note>
+      <note dynamics="58.89">
+        <chord />
+        <pitch>
+          <step>E</step>
           <octave>5</octave>
         </pitch>
         <duration>2520</duration>

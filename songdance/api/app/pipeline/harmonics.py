@@ -10,12 +10,12 @@ import numpy as np
 
 from app.pipeline.transcribe import NoteEvent
 
-HARMONIC_EVIDENCE_VERSION = "harmonic-evidence-v3"
+HARMONIC_EVIDENCE_VERSION = "harmonic-evidence-v4"
 HARMONIC_AUDIO_EVIDENCE = "HARMONIC_AUDIO_EVIDENCE"
 HARMONIC_BASS_FUNDAMENTAL_EVIDENCE = "HARMONIC_BASS_FUNDAMENTAL_EVIDENCE"
 MINIMUM_NOTE_ENERGY_VELOCITY_COHERENCE = 0.4
 MAXIMUM_NOTE_ENERGY_VELOCITY_COHERENCE = 1.25
-MINIMUM_RAW_NOTE_ENERGY_VELOCITY_COHERENCE = 0.3
+MINIMUM_RAW_NOTE_ENERGY_VELOCITY_COHERENCE = 0.32
 MAXIMUM_INDEPENDENT_RELEASE_ENERGY_RATIO = 0.25
 logger = logging.getLogger(__name__)
 
@@ -28,6 +28,8 @@ class HarmonicEvidenceConfig:
     maximum_harmonic_order: int = 6
     tuning_tolerance_cents: float = 35.0
     maximum_energy_ratio: float = 0.22
+    maximum_velocity_ratio: float = 0.85
+    maximum_duration_ratio: float = 2.1
     bass_priority_enabled: bool = False
     bass_priority_source: str | None = None
     bass_fundamental_max_pitch: int = 60
@@ -96,6 +98,8 @@ class NoteOnsetEvidence:
     end_sec: float
     onset_growth: float
     independent_onset: bool
+    pre_onset_energy: float | None = None
+    onset_energy: float | None = None
 
     def summary(self) -> dict[str, object]:
         return asdict(self)
@@ -220,6 +224,8 @@ def _find_removals(
         for fundamental, item in measured:
             if _plausible_harmonic_observation(item, config):
                 observations.append(item)
+            if item.release_energy_ratio is None:
+                continue
             simultaneous_attack = supports_independent_simultaneous_attack(
                 item,
                 onset_tolerance_seconds=config.onset_alignment_tolerance_seconds,
@@ -237,6 +243,8 @@ def _find_removals(
             ):
                 continue
             if item.energy_ratio <= config.maximum_energy_ratio:
+                if not _relative_harmonic_event_evidence(item, config):
+                    continue
                 if (
                     fundamental.pitch <= config.bass_fundamental_max_pitch
                     and not _bass_relative_event_evidence(fundamental, candidate, config)
@@ -274,8 +282,18 @@ def _plausible_harmonic_observation(item: HarmonicRemoval, config: HarmonicEvide
     return (
         not item.independent_onset
         and item.energy_ratio <= config.bass_maximum_energy_ratio
-        and (item.velocity_ratio or float("inf")) <= 0.85
-        and (item.duration_ratio or float("inf")) <= 2.1
+        and _relative_harmonic_event_evidence(item, config)
+    )
+
+
+def _relative_harmonic_event_evidence(
+    item: HarmonicRemoval, config: HarmonicEvidenceConfig
+) -> bool:
+    return (
+        item.velocity_ratio is not None
+        and item.velocity_ratio <= config.maximum_velocity_ratio
+        and item.duration_ratio is not None
+        and item.duration_ratio <= config.maximum_duration_ratio
     )
 
 
@@ -288,7 +306,7 @@ def _measure_onsets(
 ) -> tuple[NoteOnsetEvidence, ...]:
     observations = []
     for event in sorted(events, key=_event_sort_key):
-        growth = _onset_growth(
+        pre_onset_energy, onset_energy = _onset_energies(
             event.pitch,
             event.start_sec,
             spectrum,
@@ -296,6 +314,7 @@ def _measure_onsets(
             sample_rate,
             config,
         )
+        growth = onset_energy / (pre_onset_energy + 1e-12)
         observations.append(
             NoteOnsetEvidence(
                 pitch=event.pitch,
@@ -303,6 +322,8 @@ def _measure_onsets(
                 end_sec=event.end_sec,
                 onset_growth=round(growth, 6),
                 independent_onset=growth >= config.minimum_independent_onset_growth,
+                pre_onset_energy=round(pre_onset_energy, 6),
+                onset_energy=round(onset_energy, 6),
             )
         )
     return tuple(observations)
@@ -493,10 +514,7 @@ def _release_energy_ratio(
     )
     if noise_energy is None or active_energy is None or released_energy is None:
         return None, False
-    if (
-        noise_energy >= active_energy * config.maximum_release_noise_floor_ratio
-        and len(events) < 100
-    ):
+    if noise_energy >= active_energy * config.maximum_release_noise_floor_ratio:
         return None, True
     active_excess = max(0.0, active_energy - noise_energy)
     released_excess = max(0.0, released_energy - noise_energy)
@@ -522,12 +540,7 @@ def supports_independent_simultaneous_attack(
         1e-12,
     )
     if measurement.release_energy_ratio is None:
-        return (
-            onset_delta is not None
-            and abs(onset_delta) <= onset_tolerance_seconds
-            and measurement.energy_ratio <= 0.1
-            and raw_energy_velocity_coherence >= MINIMUM_RAW_NOTE_ENERGY_VELOCITY_COHERENCE
-        )
+        return False
     return (
         onset_delta is not None
         and abs(onset_delta) <= onset_tolerance_seconds
@@ -535,10 +548,7 @@ def supports_independent_simultaneous_attack(
         and MINIMUM_NOTE_ENERGY_VELOCITY_COHERENCE
         <= energy_velocity_coherence
         <= MAXIMUM_NOTE_ENERGY_VELOCITY_COHERENCE
-        and (
-            measurement.release_energy_ratio is None
-            or measurement.release_energy_ratio <= MAXIMUM_INDEPENDENT_RELEASE_ENERGY_RATIO
-        )
+        and measurement.release_energy_ratio <= MAXIMUM_INDEPENDENT_RELEASE_ENERGY_RATIO
     )
 
 
@@ -596,10 +606,29 @@ def _onset_growth(
     sample_rate: int,
     config: HarmonicEvidenceConfig,
 ) -> float:
+    before, after = _onset_energies(
+        pitch,
+        at_time,
+        spectrum,
+        frequencies,
+        sample_rate,
+        config,
+    )
+    return after / (before + 1e-12)
+
+
+def _onset_energies(
+    pitch: int,
+    at_time: float,
+    spectrum: np.ndarray,
+    frequencies: np.ndarray,
+    sample_rate: int,
+    config: HarmonicEvidenceConfig,
+) -> tuple[float, float]:
     after = _band_energy(pitch, at_time, spectrum, frequencies, sample_rate, config)
     before_time = max(0.0, at_time - config.onset_window_seconds)
     before = _band_energy(pitch, before_time, spectrum, frequencies, sample_rate, config)
-    return after / (before + 1e-12)
+    return before, after
 
 
 def _event_sort_key(event: NoteEvent) -> tuple[float, int, float]:

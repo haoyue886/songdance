@@ -1,6 +1,10 @@
 from dataclasses import asdict, dataclass
 
 from app.pipeline.arpeggio_audio_evidence import SamePitchDecayEvidence
+from app.pipeline.arpeggio_pattern_evidence import (
+    PatternDecayEvidence,
+    StableHarmonicEvidence,
+)
 from app.pipeline.harmonics import HarmonicRemoval
 from app.pipeline.transcribe import NoteEvent
 
@@ -25,10 +29,14 @@ class ArpeggioRemovalAudit:
     velocity_ratio: float | None
     duration_ratio: float | None
     release_energy_ratio: float | None
+    tracking_energy_ratio: float | None
+    tracking_threshold: float | None
     release_probe_blocked: bool
     pre_onset_energy: float | None
     onset_energy: float | None
     overlap_seconds: float | None
+    recurrence_count: int | None
+    slots_since_attack: int | None
     decision_reason: str
 
     def summary(self) -> dict[str, object]:
@@ -85,7 +93,11 @@ def audit_harmonic_removal(
         measurement.velocity_ratio,
         measurement.duration_ratio,
         measurement.release_energy_ratio,
+        measurement.tracking_energy_ratio,
+        measurement.tracking_threshold,
         measurement.release_probe_blocked,
+        None,
+        None,
         None,
         None,
         None,
@@ -120,9 +132,92 @@ def audit_same_pitch_removal(
         evidence.velocity_ratio,
         evidence.duration_ratio,
         None,
+        None,
+        None,
         False,
         evidence.onset.pre_onset_energy,
         evidence.onset.onset_energy,
         evidence.overlap_seconds,
+        None,
+        None,
         "CONFIRMED_SAME_PITCH_DECAY",
+    )
+
+
+def audit_stable_harmonic_removal(
+    candidate: NoteEvent,
+    selected: NoteEvent,
+    group_index: int,
+    cycle_index: int,
+    slot_index: int,
+    evidence: StableHarmonicEvidence,
+) -> ArpeggioRemovalAudit:
+    measurement = evidence.measurement
+    return ArpeggioRemovalAudit(
+        candidate.pitch,
+        candidate.start_sec,
+        candidate.end_sec,
+        group_index,
+        cycle_index,
+        slot_index,
+        selected.pitch,
+        selected.start_sec,
+        selected.end_sec,
+        "stable_harmonic_partial",
+        measurement.harmonic_number,
+        measurement.energy_ratio,
+        measurement.independent_onset,
+        measurement.onset_growth,
+        measurement.onset_delta_seconds,
+        measurement.velocity_ratio,
+        measurement.duration_ratio,
+        measurement.release_energy_ratio,
+        measurement.tracking_energy_ratio,
+        measurement.tracking_threshold,
+        measurement.release_probe_blocked,
+        None,
+        None,
+        None,
+        evidence.recurrence_count,
+        None,
+        "STABLE_HARMONIC_PARTIAL",
+    )
+
+
+def audit_pattern_decay_removal(
+    candidate: NoteEvent,
+    group_index: int,
+    cycle_index: int,
+    slot_index: int,
+    evidence: PatternDecayEvidence,
+) -> ArpeggioRemovalAudit:
+    previous = evidence.previous
+    return ArpeggioRemovalAudit(
+        candidate.pitch,
+        candidate.start_sec,
+        candidate.end_sec,
+        group_index,
+        cycle_index,
+        slot_index,
+        previous.pitch,
+        previous.start_sec,
+        previous.end_sec,
+        "pattern_decay",
+        None,
+        evidence.energy_ratio,
+        evidence.onset.independent_onset,
+        evidence.onset.onset_growth,
+        candidate.start_sec - previous.start_sec,
+        evidence.velocity_ratio,
+        evidence.duration_ratio,
+        None,
+        None,
+        None,
+        False,
+        evidence.onset.pre_onset_energy,
+        evidence.onset.onset_energy,
+        None,
+        None,
+        evidence.slots_since_attack,
+        "CONFIRMED_PATTERN_DECAY",
     )

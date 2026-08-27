@@ -108,6 +108,22 @@ def has_harmonic_observation(
     )
 
 
+def matching_harmonic_observation(
+    candidate: NoteEvent,
+    fundamental: NoteEvent,
+    evidence: HarmonicEvidence,
+    time_map: EvidenceTimeMap,
+) -> HarmonicRemoval | None:
+    return next(
+        (
+            item
+            for item in evidence.observations
+            if _measurement_matches(item, fundamental, candidate, time_map)
+        ),
+        None,
+    )
+
+
 def is_confirmed_same_pitch_decay(
     candidate: NoteEvent,
     previous_by_pitch: dict[int, NoteEvent],

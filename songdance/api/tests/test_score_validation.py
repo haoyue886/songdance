@@ -97,9 +97,9 @@ def test_repeated_arpeggio_is_one_piano_part_with_two_staves(tmp_path) -> None:
         "measure_count": 15,
         "clefs": {"1": "G2", "2": "F4"},
         "staff_numbers": ["1", "2"],
-        "voices_by_staff": {"1": ["1"], "2": ["1", "2"]},
-        "maximum_voices_by_staff_measure": {"1": 1, "2": 2},
-        "backup_count": 20,
+        "voices_by_staff": {"1": ["1"], "2": ["2"]},
+        "maximum_voices_by_staff_measure": {"1": 1, "2": 1},
+        "backup_count": 15,
         "pedal_mark_count": 1,
     }
     structure = read_musicxml_structure(destination)
@@ -116,19 +116,20 @@ def test_repeated_arpeggio_is_one_piano_part_with_two_staves(tmp_path) -> None:
     assert '<sound tempo="117"' in xml
     assert xml.count("<mp />") == 1
     assert xml.count("<pedal ") == 2
-    assert len(list(scored.score.recurse().getElementsByClass(stream.Voice))) > 0
+    assert len(list(scored.score.recurse().getElementsByClass(stream.Voice))) == 0
     assert len(list(scored.score.recurse().getElementsByClass(expressions.PedalMark))) == 1
-    assert scored.reconstruction["voice_compression"]["notation_voice_count"] <= 2
+    assert scored.reconstruction["voice_compression"]["notation_voice_count"] == 1
+    assert scored.reconstruction["voice_compression"]["single_voice_applied"] is True
     arpeggio_filter = scored.reconstruction["arpeggio_filter"]
-    assert arpeggio_filter["version"] == "simple-arpeggio-filter-v7"
+    assert arpeggio_filter["version"] == "simple-arpeggio-filter-v8"
     assert arpeggio_filter["applied"] is True
-    assert arpeggio_filter["removed_event_count"] == 3
+    assert arpeggio_filter["removed_event_count"] == 163
     assert arpeggio_filter["stable_cycle_count"] == 14
     assert arpeggio_filter["matched_slot_count"] == 119
     assert arpeggio_filter["reason_codes"] == ("SIMPLE_ARPEGGIO_RESONANCE_FILTERED",)
     assert len(arpeggio_filter["removals"]) == arpeggio_filter["removed_event_count"]
     assert len(written_timeline["notes"]) == timeline["cleanup"]["output_note_count"] == 282
-    assert len(written_timeline["notation_notes"]) == 279
+    assert len(written_timeline["notation_notes"]) == 119
     assert sum(len(instrument.notes) for instrument in written_midi.instruments) == 282
     assert len(written_midi.instruments) == 2
     assert {instrument.name for instrument in written_midi.instruments} == {"Piano"}
@@ -171,8 +172,22 @@ def test_repeated_arpeggio_is_one_piano_part_with_two_staves(tmp_path) -> None:
             for item in list(left.getElementsByClass(stream.Measure))[measure_index].recurse().notes
             for item_pitch in (item.pitches if item.isChord else (item.pitch,))
         )
-        assert set(right_expected).issubset(right_actual)
-        assert set(left_expected).issubset(left_actual)
+        right_rests = [
+            (float(item.offset), float(item.quarterLength))
+            for item in list(right.getElementsByClass(stream.Measure))[measure_index]
+            .recurse()
+            .getElementsByClass(note.Rest)
+        ]
+        left_rests = [
+            (float(item.offset), float(item.quarterLength))
+            for item in list(left.getElementsByClass(stream.Measure))[measure_index]
+            .recurse()
+            .getElementsByClass(note.Rest)
+        ]
+        assert right_actual == right_expected
+        assert left_actual == left_expected
+        assert right_rests == [(0.0, 1.0)]
+        assert left_rests == [(1.0, 3.0)]
 
     final_right = list(right.getElementsByClass(stream.Measure))[-1]
     final_left = list(left.getElementsByClass(stream.Measure))[-1]

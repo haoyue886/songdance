@@ -200,6 +200,15 @@ def test_production_audio_evidence_preserves_short_independent_octaves(
         harmonic_evidence=evidence,
     )
 
+    matching_observations = [
+        item
+        for item in evidence.observations
+        if item.fundamental_pitch == 60 and item.harmonic_pitch == 72
+    ]
+    assert all(
+        item.tracking_energy_ratio is not None and item.tracking_energy_ratio < 0.3
+        for item in matching_observations
+    )
     assert all(octave in result.events for octave in octaves)
     assert all(octave in cleaned.events for octave in octaves)
     assert result.removed_event_count == 0
@@ -320,6 +329,10 @@ def test_production_audio_evidence_removes_natural_third_partials(
     assert len(matching_observations) == len(false_partials)
     assert all(
         item.release_energy_ratio is not None and item.release_energy_ratio > 0.25
+        for item in matching_observations
+    )
+    assert all(
+        item.tracking_energy_ratio is not None and item.tracking_energy_ratio >= 0.3
         for item in matching_observations
     )
     assert all(partial not in result.events for partial in false_partials)

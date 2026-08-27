@@ -17,6 +17,7 @@ MINIMUM_NOTE_ENERGY_VELOCITY_COHERENCE = 0.4
 MAXIMUM_NOTE_ENERGY_VELOCITY_COHERENCE = 1.25
 MINIMUM_RAW_NOTE_ENERGY_VELOCITY_COHERENCE = 0.32
 MAXIMUM_INDEPENDENT_RELEASE_ENERGY_RATIO = 0.25
+MINIMUM_HARMONIC_TRACKING_RATIO = 0.3
 logger = logging.getLogger(__name__)
 
 
@@ -43,6 +44,7 @@ class HarmonicEvidenceConfig:
     release_probe_window_seconds: float = 0.02
     release_probe_offset_seconds: float = 0.04
     maximum_release_noise_floor_ratio: float = 0.1
+    minimum_harmonic_tracking_ratio: float = MINIMUM_HARMONIC_TRACKING_RATIO
 
     def __post_init__(self) -> None:
         if self.bass_priority_enabled and self.bass_priority_source is None:
@@ -77,6 +79,8 @@ class HarmonicRemoval:
     velocity_ratio: float | None = None
     duration_ratio: float | None = None
     release_energy_ratio: float | None = None
+    tracking_energy_ratio: float | None = None
+    tracking_threshold: float = MINIMUM_HARMONIC_TRACKING_RATIO
     release_probe_blocked: bool = False
     decision_source: str = "audio_stft"
 
@@ -431,6 +435,14 @@ def _measure_pair(
         sample_rate,
         config,
     )
+    tracking_energy_ratio = _harmonic_tracking_ratio(
+        fundamental,
+        candidate,
+        spectrum,
+        frequencies,
+        sample_rate,
+        config,
+    )
     return HarmonicRemoval(
         fundamental_pitch=int(fundamental.pitch),
         harmonic_pitch=int(candidate.pitch),
@@ -451,8 +463,45 @@ def _measure_pair(
         release_energy_ratio=(
             round(release_energy_ratio, 6) if release_energy_ratio is not None else None
         ),
+        tracking_energy_ratio=(
+            round(tracking_energy_ratio, 6) if tracking_energy_ratio is not None else None
+        ),
+        tracking_threshold=config.minimum_harmonic_tracking_ratio,
         release_probe_blocked=release_probe_blocked,
     )
+
+
+def _harmonic_tracking_ratio(
+    fundamental: NoteEvent,
+    candidate: NoteEvent,
+    spectrum: np.ndarray,
+    frequencies: np.ndarray,
+    sample_rate: int,
+    config: HarmonicEvidenceConfig,
+) -> float | None:
+    duration = candidate.end_sec - candidate.start_sec
+    active_time = candidate.start_sec + min(duration * 0.5, duration - 0.04)
+    released_time = candidate.end_sec + config.release_probe_offset_seconds
+    spectrum_duration = spectrum.shape[1] * config.hop_length / sample_rate
+    if active_time <= candidate.start_sec or released_time >= spectrum_duration:
+        return None
+    fundamental_active = _band_energy(
+        fundamental.pitch, active_time, spectrum, frequencies, sample_rate, config
+    )
+    fundamental_released = _band_energy(
+        fundamental.pitch, released_time, spectrum, frequencies, sample_rate, config
+    )
+    if fundamental_active <= 1e-12 or fundamental_released < fundamental_active * 0.05:
+        return None
+    harmonic_active = _band_energy(
+        candidate.pitch, active_time, spectrum, frequencies, sample_rate, config
+    )
+    harmonic_released = _band_energy(
+        candidate.pitch, released_time, spectrum, frequencies, sample_rate, config
+    )
+    active_ratio = harmonic_active / fundamental_active
+    released_ratio = harmonic_released / fundamental_released
+    return released_ratio / max(active_ratio, 1e-12)
 
 
 def _release_energy_ratio(
@@ -528,27 +577,37 @@ def supports_independent_simultaneous_attack(
     *,
     onset_tolerance_seconds: float = 0.08,
 ) -> bool:
-    onset_delta = measurement.onset_delta_seconds
-    velocity_ratio = measurement.velocity_ratio or 0.0
-    duration_ratio = min(measurement.duration_ratio or 1.0, 1.0)
-    raw_energy_velocity_coherence = measurement.energy_ratio / max(
-        velocity_ratio**2,
-        1e-12,
-    )
-    energy_velocity_coherence = measurement.energy_ratio / max(
-        velocity_ratio**2 * duration_ratio,
-        1e-12,
-    )
     if measurement.release_energy_ratio is None:
         return False
     return (
+        supports_energy_velocity_attack(
+            measurement,
+            onset_tolerance_seconds=onset_tolerance_seconds,
+        )
+        and measurement.release_energy_ratio <= MAXIMUM_INDEPENDENT_RELEASE_ENERGY_RATIO
+    )
+
+
+def supports_energy_velocity_attack(
+    measurement: HarmonicRemoval,
+    *,
+    onset_tolerance_seconds: float = 0.08,
+) -> bool:
+    onset_delta = measurement.onset_delta_seconds
+    velocity_ratio = measurement.velocity_ratio or 0.0
+    duration_ratio = min(measurement.duration_ratio or 1.0, 1.0)
+    raw_coherence = measurement.energy_ratio / max(velocity_ratio**2, 1e-12)
+    duration_coherence = measurement.energy_ratio / max(
+        velocity_ratio**2 * duration_ratio,
+        1e-12,
+    )
+    return (
         onset_delta is not None
         and abs(onset_delta) <= onset_tolerance_seconds
-        and raw_energy_velocity_coherence >= MINIMUM_RAW_NOTE_ENERGY_VELOCITY_COHERENCE
+        and raw_coherence >= MINIMUM_RAW_NOTE_ENERGY_VELOCITY_COHERENCE
         and MINIMUM_NOTE_ENERGY_VELOCITY_COHERENCE
-        <= energy_velocity_coherence
+        <= duration_coherence
         <= MAXIMUM_NOTE_ENERGY_VELOCITY_COHERENCE
-        and measurement.release_energy_ratio <= MAXIMUM_INDEPENDENT_RELEASE_ENERGY_RATIO
     )
 
 

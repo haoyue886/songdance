@@ -7,8 +7,12 @@ from app.pipeline.arpeggio_audit import (
     ArpeggioFilterResult,
     ArpeggioRemovalAudit,
     audit_harmonic_removal,
+    audit_pattern_decay_removal,
     audit_same_pitch_removal,
+    audit_stable_harmonic_removal,
 )
+from app.pipeline.arpeggio_pattern_evidence import build_pattern_evidence_index
+from app.pipeline.arpeggio_pedal_support import supported_cycle_indexes
 from app.pipeline.harmonics import HarmonicEvidence
 from app.pipeline.simple_arpeggio import (
     SIMPLE_ARPEGGIO_PATTERN,
@@ -19,10 +23,8 @@ from app.pipeline.simple_arpeggio import (
 )
 from app.pipeline.transcribe import NoteEvent
 
-SIMPLE_ARPEGGIO_FILTER_VERSION = "simple-arpeggio-filter-v7"
+SIMPLE_ARPEGGIO_FILTER_VERSION = "simple-arpeggio-filter-v8"
 SIMPLE_ARPEGGIO_RESONANCE_FILTERED = "SIMPLE_ARPEGGIO_RESONANCE_FILTERED"
-MINIMUM_PEDAL_CYCLES = 3
-MINIMUM_CYCLE_PEDAL_COVERAGE = 0.5
 MINIMUM_PARALLEL_SLOT_RUN = 3
 MINIMUM_PARALLEL_PITCH_SEPARATION = 5
 
@@ -39,8 +41,8 @@ def filter_simple_arpeggio_resonance(
     match = _stable_repeated_cycle_match(events)
     if match is None:
         return _filter_result(events)
-    supported_cycles = _supported_cycle_indexes(match, pedal_intervals)
-    if len(supported_cycles) < MINIMUM_PEDAL_CYCLES:
+    supported_cycles = supported_cycle_indexes(match, pedal_intervals)
+    if not supported_cycles:
         return _filter_result(events)
     supported_ranges = tuple(match.ranges[index] for index in supported_cycles)
     if _has_explicit_crossing(events, supported_ranges):
@@ -75,6 +77,14 @@ def filter_simple_arpeggio_resonance(
         candidates = [event for event in group if event.pitch == expected_pitch]
         if candidates:
             selected_by_group[group_index] = max(candidates, key=_candidate_rank)
+    pattern_evidence = build_pattern_evidence_index(
+        match,
+        slot_by_group,
+        cycle_by_group,
+        selected_by_group,
+        evidence,
+        time_map,
+    )
 
     removed_ids: set[int] = set()
     removals: list[ArpeggioRemovalAudit] = []
@@ -94,6 +104,14 @@ def filter_simple_arpeggio_resonance(
                 evidence,
                 time_map,
             )
+            stable_harmonic = pattern_evidence.stable_harmonics.get(id(event))
+            pattern_decay = pattern_evidence.decays.get(id(event))
+            if (
+                id(event) in parallel_events
+                or id(event) in pattern_evidence.independent_harmonics
+                or _is_independent_pattern_voice(event, expected_by_group, match.groups)
+            ):
+                continue
             if harmonic_measurement is not None:
                 removed_ids.add(id(event))
                 removals.append(
@@ -104,6 +122,18 @@ def filter_simple_arpeggio_resonance(
                         cycle_by_group[group_index],
                         slot_by_group[group_index],
                         harmonic_measurement,
+                    )
+                )
+            elif stable_harmonic is not None:
+                removed_ids.add(id(event))
+                removals.append(
+                    audit_stable_harmonic_removal(
+                        event,
+                        selected,
+                        group_index,
+                        cycle_by_group[group_index],
+                        slot_by_group[group_index],
+                        stable_harmonic,
                     )
                 )
             elif same_pitch_evidence is not None:
@@ -118,10 +148,17 @@ def filter_simple_arpeggio_resonance(
                         same_pitch_evidence,
                     )
                 )
-            elif id(event) in parallel_events or _is_independent_pattern_voice(
-                event, expected_by_group, match.groups
-            ):
-                continue
+            elif pattern_decay is not None:
+                removed_ids.add(id(event))
+                removals.append(
+                    audit_pattern_decay_removal(
+                        event,
+                        group_index,
+                        cycle_by_group[group_index],
+                        slot_by_group[group_index],
+                        pattern_decay,
+                    )
+                )
         previous_by_pitch.update({event.pitch: event for event in group})
     return _filter_result(
         [event for event in events if id(event) not in removed_ids],
@@ -133,43 +170,6 @@ def filter_simple_arpeggio_resonance(
 
 def _candidate_rank(event: NoteEvent) -> tuple[float, int, float]:
     return event.confidence, event.velocity, event.end_sec - event.start_sec
-
-
-def _supported_cycle_indexes(
-    match: _RepeatedCycleMatch, pedal_intervals: tuple[tuple[float, float], ...]
-) -> tuple[int, ...]:
-    intervals = _merge_intervals(pedal_intervals)
-    covered = [
-        _coverage_ratio(cycle_range, intervals) >= MINIMUM_CYCLE_PEDAL_COVERAGE
-        for cycle_range in match.ranges
-    ]
-    supported = []
-    start = 0
-    while start < len(covered):
-        if not covered[start]:
-            start += 1
-            continue
-        end = start + 1
-        while end < len(covered) and covered[end]:
-            end += 1
-        if end - start >= MINIMUM_PEDAL_CYCLES:
-            supported.extend(range(start, end))
-        start = end
-    return tuple(supported)
-
-
-def _coverage_ratio(
-    cycle_range: tuple[float, float], intervals: tuple[tuple[float, float], ...]
-) -> float:
-    start, end = cycle_range
-    duration = end - start
-    if duration <= 0:
-        return 0.0
-    covered = sum(
-        max(0.0, min(end, interval_end) - max(start, interval_start))
-        for interval_start, interval_end in intervals
-    )
-    return min(1.0, covered / duration)
 
 
 def _stable_parallel_event_ids(
@@ -249,18 +249,6 @@ def _is_independent_pattern_voice(
         for index, expected_pitch in expected_by_group.items()
     )
     return separated_slots >= 3
-
-
-def _merge_intervals(intervals: tuple[tuple[float, float], ...]) -> tuple[tuple[float, float], ...]:
-    merged: list[tuple[float, float]] = []
-    for start, end in sorted(intervals):
-        if end <= start:
-            continue
-        if merged and start <= merged[-1][1]:
-            merged[-1] = (merged[-1][0], max(merged[-1][1], end))
-        else:
-            merged.append((start, end))
-    return tuple(merged)
 
 
 def _filter_result(

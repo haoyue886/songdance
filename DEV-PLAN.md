@@ -40,6 +40,9 @@
 | Phase 30 | 复评中 | 专业评审驱动的琶音结构修复；自动门禁已完成，等待 `04-arpeggios` 专业复评通过 |
 | Phase 31 | 已完成（国际化范围） | 八语言入口、工具页核心文案、切换、SEO 与物理消息基线；代码审查 Stage 1/2 PASS |
 | Phase 32 | 开发中 | 公开示例撤回与初级曲目准入、调号语义、快速音型量化和分手密度门禁 |
+| Phase 33 | 计划中 | 局部调性真值集、终止式/和弦证据、主音化与转调判定及候选校准 |
+| Phase 34 | 计划中 | 保守调号、小调临时变音、最多两个候选和单谱表/大谱表语义输出 |
+| Phase 35 | 计划中（P1） | 中国五声、日本都节与布鲁斯调式家族研究门禁 |
 
 ## 功能依赖图
 
@@ -64,6 +67,9 @@ Phase 9 基线
                                   └─ Phase 16 五线谱质量展示与产物版本
                                           └─ Phase 29/30 结构与琶音修复
                                                   └─ Phase 32 初级示例与快速音型质量门禁
+                                                          └─ Phase 33 局部调性证据与候选校准
+                                                                  └─ Phase 34 保守调号与语义谱表输出
+                                                                          └─ Phase 35 非西洋调式家族 P1 门禁
                                           └─ Phase 23 固定谱面工作台与区间播放
                                                   └─ Phase 24 实时谱面拖选反馈
                                                           └─ Phase 25 选区边界二次调整
@@ -75,7 +81,7 @@ Phase 9 基线
                                                                                                   └─ Phase 22 多轨产品化
 ```
 
-依赖原则：Phase 2 和 Phase 3 都依赖 Phase 1，可并行开发但不能同时修改共享配置；Phase 4 依赖 Phase 3；Phase 5 依赖 Phase 2 和 Phase 4；Phase 6–8 依次收紧生产能力。Phase 13–16 按顺序消费 Phase 11 的质量基线；Phase 12 已取消，不再恢复候选模型路线。Phase 24 只消费 Phase 23 已稳定的乐谱时间映射、跨页几何和播放选区合同；Phase 25 在 Phase 24 的命中缓存、RAF draft 与稳定覆盖层上增加已提交选区的端点调整，在进入多乐器结果页扩展前完成。Phase 28 消费 Phase 27 已完成的 metadata、sitemap 和结构化数据基线，只替换语言路由与核心页面信息架构，不重做 SEO 基础设施。Phase 29 消费 Phase 11、13–16 的原始证据和结构基线，只优化 Basic Pitch 确定性后处理。Phase 32 消费 Phase 29/30 的结构产物与当前公开示例发布器：先撤回已被新评审判为 `needs_redo` 的莫扎特示例，再引入带参考谱的初级真实演奏；快速量化、半速推理和织体分手必须各自过固定真值门禁，不与示例替换绑成一次不可归因的上线。Phase 17–20 按“共享领域模型 → 单音家族 → 吉他 → 鼓”顺序扩展单乐器能力；每个乐器独立过门禁。Phase 21 只有在 Phase 18–20 具备可复用单乐器路由后才评估完整混音，Phase 22 只消费 Phase 21 已批准的轨道来源，不在 UI 层猜乐器。
+依赖原则：Phase 2 和 Phase 3 都依赖 Phase 1，可并行开发但不能同时修改共享配置；Phase 4 依赖 Phase 3；Phase 5 依赖 Phase 2 和 Phase 4；Phase 6–8 依次收紧生产能力。Phase 13–16 按顺序消费 Phase 11 的质量基线；Phase 12 已取消，不再恢复候选模型路线。Phase 24 只消费 Phase 23 已稳定的乐谱时间映射、跨页几何和播放选区合同；Phase 25 在 Phase 24 的命中缓存、RAF draft 与稳定覆盖层上增加已提交选区的端点调整，在进入多乐器结果页扩展前完成。Phase 28 消费 Phase 27 已完成的 metadata、sitemap 和结构化数据基线，只替换语言路由与核心页面信息架构，不重做 SEO 基础设施。Phase 29 消费 Phase 11、13–16 的原始证据和结构基线，只优化 Basic Pitch 确定性后处理。Phase 32 消费 Phase 29/30 的结构产物与当前公开示例发布器：先撤回已被新评审判为 `needs_redo` 的莫扎特示例，再引入带参考谱的初级真实演奏；快速量化、半速推理和织体分手必须各自过固定真值门禁，不与示例替换绑成一次不可归因的上线。Phase 33 消费已完成的 Phase 14–16 与 Phase 32 Task 32.3 调号语义，只新增版本化局部调性证据，不改写 Basic Pitch 原始事件；开始编码前必须冻结当前 Phase 32 共享流水线与固定集指纹，避免同时修改 `analysis.py`、`score.py`。Phase 34 只消费 Phase 33 已校准候选，负责记谱与 UI，不在展示层重新猜调性；Phase 35 为 P1，必须在 Phase 33 的证据合同稳定后隔离开发，失败不能阻塞 major/minor P0。Phase 17–20 按“共享领域模型 → 单音家族 → 吉他 → 鼓”顺序扩展单乐器能力；每个乐器独立过门禁。Phase 21 只有在 Phase 18–20 具备可复用单乐器路由后才评估完整混音，Phase 22 只消费 Phase 21 已批准的轨道来源，不在 UI 层猜乐器。
 
 ---
 
@@ -1129,12 +1135,12 @@ Phase 9 基线
 
 ---
 
-## Phase 11–29 需求追踪
+## Phase 11–35 需求追踪
 
 | Product Spec | 开发阶段 | 必须交付的证据 |
 |---|---|---|
 | AC-021 原始证据、清洗计数与原因 | Phase 11、13 | 产物关系、reason code 汇总、清洗回归报告 |
-| AC-022 Beat/BPM/拍号/调性与置信度 | Phase 14 | 结构真值对比、低置信度回退、耗时报告 |
+| AC-022 Beat/BPM/拍号/局部调性与证据 | Phase 14、33–34 | 结构真值对比、top-2 候选、终止式/和弦/导音证据、保守调号和耗时报告 |
 | AC-023 Chord 与合法多声部 | Phase 15 | music21 结构断言、OSMD 渲染和外部解析器结果 |
 | AC-024 左右手分配与 `unknown` | Phase 15–16 | 交叉手样本、分手置信度、结果页假设标记 |
 | AC-025 可读谱面门禁 | Phase 11、15 | 至少 16 段固定集、机器校验、至少 13/16 人工可读 |
@@ -1153,6 +1159,12 @@ Phase 9 基线
 | AC-038–AC-039 轨道来源与未知乐器边界 | Phase 21–22 | 分轨/AMT A/B、逐轨元数据和 `other` 保护 |
 | AC-040–AC-041 部分成功与级联删除 | Phase 22 | 单轨失败/重试 E2E 和对象存储清理证据 |
 | AC-042 完整混音生产门禁 | Phase 21 | 逐 program 质量、许可、时延和内存报告 |
+| AC-095 结尾音/色度不得单独决定调性 | Phase 33 | G 结尾无 F♯/终止式反例、候选与证据审计 |
+| AC-096 完整终止式、候选与保守调号 | Phase 33–34 | 乐句边界终止式、独立证据、top-2 UI、无确定调号 MusicXML |
+| AC-097 五声音集合与调式家族分离 | Phase 35 | 成对对抗样本、家族标签、`mode_variant=unknown` 和主音证据 |
+| AC-098 单高音谱表与大谱表语义 | Phase 34 | 单旋律/稀疏真实低音正反例、MusicXML staff 数和 OSMD/PDF 渲染 |
+| AC-099 小调形态与临时变音 | Phase 34 | A minor 自然/和声/旋律形态混合 fixture、固定调号和逐音 accidental |
+| AC-100 主音化与转调分离 | Phase 33 | `V/x→x` 回原调反例、持续新调正例和候选升级审计 |
 | SCOPE-016 混音分离适配器 | Phase 21–22 | 技术门禁、隔离 Worker、多轨编排和回退报告 |
 | SCOPE-018 单乐器模式与路由 | Phase 17 | InstrumentProfile、选择器、兼容 API 和白名单路由 |
 | SCOPE-019 单音家族 | Phase 18 | 六类输入逐乐器固定集、模型 A/B 和谱面合同 |
@@ -1160,7 +1172,7 @@ Phase 9 基线
 | SCOPE-021 鼓转录 | Phase 20 | 鼓事件、GM MIDI、鼓件 lane 和打击乐谱 |
 | SCOPE-022 完整混音多轨 | Phase 21–22 | 分轨/直接 AMT 门禁、多轨 UI、部分成功和删除 |
 
-**交接顺序：** 当前先完成 Phase 29 的 Basic Pitch 谱面可读性闭环，再严格按 Phase 17 → 18 → 19 → 20 → 21 → 22 推进多乐器。每个乐器过门禁后才能在选择器中启用；不得为了等完整混音而阻塞已通过的单乐器能力。每个 Phase 单独提交，不允许把数据库迁移、谱面算法和 UI 改动混进一个不可归因的提交。
+**交接顺序：** 当前共享流水线先冻结 Phase 32 已完成的调号/量化/织体实现和固定集指纹，再按 Phase 33 → 34 完成 P0 局部调性与记谱修订；Phase 35 是独立 P1，不阻塞后续多乐器。随后严格按 Phase 17 → 18 → 19 → 20 → 21 → 22 推进多乐器。每个乐器过门禁后才能在选择器中启用；不得为了等完整混音而阻塞已通过的单乐器能力。每个 Phase 单独提交，不允许把真值集、调性算法、谱表结构和非西洋模式混进一个不可归因的提交。
 
 **停止条件：** 任一候选算法未达到对应乐器数值门槛、结构严重错误增加、固定集人工评级下降、许可不明确、超出资源预算，或破坏旧钢琴任务/下载 API，即停止该乐器晋级并保留上一版本。一个乐器失败只阻塞该乐器；完整混音失败不回滚已上线单乐器能力。生产默认值只能来自固定回归报告，不得凭示例页截图调整。
 
@@ -1287,6 +1299,152 @@ Phase 9 基线
 - 时间拉伸可能改善起音分离，也可能产生瞬态伪影并把推理成本翻倍；未过 A/B 不进入生产。
 - Hanon No.1 已完成来源级候选核验，但尚未固定原始 WAV、参考真值、当前转录产物和人工评级；在这些证据齐全前 Task 32.2 仍处于开发中，不得标为可用示例，也不阻塞 K.545 的独立修复与失败对照展示。
 
+---
+
+## Phase 33：局部调性证据、主音化判定与候选校准
+
+**目标：** 用带真值的乐句、终止式、和弦、低音、导音和特征音证据替代“色度模板第一名等于调性”的旧路径；先生成可审计、可弃权的局部调性候选，不在本阶段直接改变用户谱面的调号。
+
+**Task 33.1 · 独立局部调性真值集：**
+
+- 建立至少 20 段局部调性固定集：至少 12 段来自带许可、音频指纹和可追溯参考谱的公版真实演奏，至少 8 段为受控对抗样本；被测算法不得生成自己的真值。
+- 为每段保存片段边界、乐句边界、和弦/低音摘要、终止式类型、主音、major/minor、原谱调号、局部调性、一次主音化或持续转调标签，以及人工复核来源。
+- 覆盖正格终止、半终止/未终止、G 结尾但无 F♯/属功能、一次 `V/x→x` 后回原调、延续到下一完整乐句的新调、自然/和声/旋律小调形态并存和 C/G 等近邻调混淆。
+
+**Task 33.2 · 版本化调性证据引擎：**
+
+- 保留 `librosa` 色度模板输出作为 pitch-class 先验，新增基于清洗后音符、beat/downbeat 与和弦聚合的乐句级证据；输出终止式、和弦根音/三音、低音进行、导音/特征音、结构重音主音回归和反证。
+- 将孤立 `V/x→x` 标记为 tonicization evidence；只有新主音延续到后续完整乐句或获得第二个独立终止证据时，才升级为稳定局部调性候选。
+- 生成不超过两个候选、归一化候选权重、候选差、证据版本和 `notation_eligible`；色度第一名不得绕过证据门禁直接变成确定调号。
+
+**Task 33.3 · 校准、回退与兼容合同：**
+
+- 用固定集校准 top-1、top-2、候选权重和候选差阈值；阈值集中进入类型化配置和版本指纹，禁止散落魔法数字。
+- 扩展时间线和质量报告，保存 `local_tonal_center`、top-2、终止式/和弦/导音/特征音证据、`mode_family`、`mode_variant`、`minor_form_evidence` 和 `notation_eligible`；旧任务缺字段时按“未分析”读取，不伪造 C major。
+- 保持 Basic Pitch 原始事件、原始 MIDI、清洗事件和 beat/downbeat 指纹不变；Phase 33 只新增分析结果，Phase 34 才消费它决定记谱。
+
+**关键文件：**
+
+- `songdance/api/app/pipeline/tonality.py` — 乐句、终止式、和声证据及候选聚合。
+- `songdance/api/app/pipeline/analysis.py`、`analysis_features.py` — 保留色度先验并输出版本化调性证据。
+- `songdance/api/app/pipeline/harmony.py` — 复用和弦/低音结构，不复制另一套和声聚合。
+- `songdance/api/app/pipeline/quality.py`、`artifacts.py` — 新分析合同、旧任务兼容与质量报告版本。
+- `songdance/api/app/settings.py` — 候选、候选差和写谱资格阈值配置。
+- `songdance/api/scripts/evaluate_tonality.py` — 固定集评测、校准和门禁报告。
+- `songdance/api/tests/fixtures/tonality/manifest.json` — 音频、参考谱、许可、真值和人工复核清单。
+- `songdance/api/tests/test_tonality.py`、`test_analysis.py` — 终止式、主音化、转调、反证和兼容回归。
+
+**验收标准：**
+
+- AC-095 与 AC-100 通过：G 结尾无终止式/导音不得写成 G major；一次 `V/x→x` 后回原调不得判转调，持续到下一完整乐句或第二个终止证据才可升级候选。
+- 至少 20 段固定集全部有独立真值与来源；评测报告记录 top-1、top-2、候选校准误差、弃权率和确定调号误写率，确定调号误写率超过 5% 时 `notation_eligible` 门禁整体失败。
+- 相同输入、分析版本和阈值重复执行两次，候选、证据摘要和门禁结果完全一致；原始事件、原始 MIDI、清洗事件和 beat/downbeat 指纹不变。
+- 90 秒输入新增调性证据分析 P95 不超过 5 秒，结构分析总预算继续不超过 15 秒；超时或失败时返回最多两个未确认候选或“未可靠推断”，不回退成已确定的 C major。
+- API pytest、Ruff、固定集评测和 `git diff --check` 通过；完成后 spawn `code-reviewer` 从 Stage 1 审查数据真值、证据泄漏和回退语义。
+
+**依赖与风险：**
+
+- Phase 33 依赖 Phase 14–16 和 Phase 32 Task 32.3；开始前冻结当前共享流水线与固定集指纹，不与 Phase 32 对 `analysis.py`、`score.py` 的改动并行。
+- Basic Pitch 错音会污染和弦与终止式证据；固定集必须同时保存参考谱真值和当前转录输入，分别报告“真值事件上限”与“生产转录实际表现”，不能把上游错音伪装成调性算法错误。
+- 本阶段不引入新生产依赖；复用已锁定的 `librosa 0.11.0`、`music21 10.5.0` 和现有和弦聚合。任何新 MIR 模型先走许可与固定集离线审计，不直接进入 Worker。
+
+---
+
+## Phase 34：保守调号、小调临时变音与语义谱表输出
+
+**目标：** 只把 Phase 33 已达到写谱资格的局部调性转换为推断调号；证据不足时保留临时变音和最多两个候选，同时按演奏者可读性在全段单高音谱表与钢琴大谱表之间稳定选择。
+
+**Task 34.1 · 可空记谱调号与小调语义：**
+
+- 将 `local_tonal_center`、`notation_key_signature` 和各自来源/置信度继续分离；参考谱/用户输入优先于局部推断，普通片段只有 `notation_eligible=true` 时可使用 `inferred_local_tonality` 调号。
+- 支持“没有确定调号”的记谱状态：MusicXML 可以为渲染兼容序列化 0 个升降号，但质量报告和 UI 来源必须为 `unspecified/default`，不得显示成已识别 C major。
+- 小调只输出“主音 + minor”；自然、和声、旋律小调倾向留在诊断证据，常规小调调号保持不变，升高的第六/第七级按实际音高写临时升降号。
+
+**Task 34.2 · 单谱表/大谱表语义决策：**
+
+- 在记谱事件稳定后计算一次全段 `staff_layout`，同一片段不得中途切换谱表数量；决策保存版本、支持证据和反对证据。
+- 只有去除装饰音后整段为功能性单旋律、没有同时持续的独立声部/真实左手织体，且最低音不低于高音谱表第三条下加线时，生成一个 Piano part 和单一高音谱表。
+- 任一完整乐句存在经音高层、起音连续性和织体共同确认的独立低音或左手伴奏时，全段保留同一 Piano part 内的高低音大谱表；`04-arpeggios`、K.545 和真实持续低音回归不得被折叠。
+- 扩展 MusicXML 结构校验、导入校验和 PDF/OSMD 渲染，使合法结果同时接受一谱表或大谱表，但继续拒绝两个 Piano part 展开成四行的旧缺陷。
+
+**Task 34.3 · 候选展示与旧任务兼容：**
+
+- 结果页最多显示两个局部调性候选和校准权重；证据不足时固定显示“请根据完整音频确认主音”，并区分“推断调性”“参考谱调号”“未确定调号”。
+- 八种语言共享同一候选/调号状态合同；新增消息 key 时同步八个物理目录，未审校语言使用显式英语基线，禁止运行时缺 key 回退。
+- 旧任务只有 `key_signature` 时继续按旧产物展示并标记 legacy；不得回写新证据、改变旧 MusicXML 下载或使结果页解析失败。
+
+**关键文件：**
+
+- `songdance/api/app/pipeline/notation_context.py`、`score.py` — 可空调号、来源优先级与调性候选消费。
+- `songdance/api/app/pipeline/score_construction.py` — 小调临时变音和一/双谱表 MusicXML 构建。
+- `songdance/api/app/pipeline/staff_layout.py` — 全段单旋律、大谱表证据与版本化决策。
+- `songdance/api/app/pipeline/score_validation.py`、`score_io.py` — 一/双谱表结构、调号来源和外部解析校验。
+- `songdance/api/tests/test_notation_context.py`、`test_score_validation.py`、`test_pipeline.py` — 调号、小调和 staff 正反例。
+- `songdance/web/src/lib/result/quality-report.ts` — top-2、来源、候选权重与 legacy 解析。
+- `songdance/web/src/components/result/quality-summary.tsx` — 推断调性、未确定调号和候选提示。
+- `songdance/web/messages/*.json`、`web/e2e/quality-result.spec.ts` — 八语言状态和真实结果页回归。
+
+**验收标准：**
+
+- AC-096、AC-098、AC-099 通过：完整终止式加独立证据可写推断调号；证据不足不写确定调号；A minor 的 F♯/G♯ 使用临时升号且调号不变；单旋律输出单高音谱表，任一真实低声部让全段保留大谱表。
+- K.545 的参考谱调号继续覆盖局部候选；普通上传不把 `unspecified/default` 0 个升降号显示成 C major；候选最多两个且提示文案存在。
+- `04-arpeggios`、K.545、交叉手、持续低音和稀疏左手固定集继续输出一个 Piano part 内的双谱表；纯单旋律正例输出一个 Piano part/一个 staff，且所有产物通过 music21、xmllint、OSMD 和 PDF 视觉复核。
+- 旧任务、旧质量报告和旧 MusicXML 下载保持可用；API/Web 全量单测、Ruff、TypeScript、ESLint、生产构建、八语言 key 对齐和 Playwright 通过。
+- 完成后 spawn `code-reviewer` 从 Stage 1 审查调号误写、旧任务兼容、staff 丢音和 UI 误导文案；任何一个已通过样本退化即回 Phase 33 修正证据或本 Phase 修正记谱，不以提高弃权率掩盖。
+
+**依赖与风险：**
+
+- music21/OSMD 可能把未指定调号序列化或解释为 C major；必须同时检查原始 XML、质量报告来源和用户文案，不能只看渲染画面。
+- 当前 `score_validation.py`、`score_io.py` 和多项测试固定假设两个 `PartStaff`；扩展时必须保留双谱表严格合同，再增加单谱表合法分支，不能放宽成任意 part/staff 数。
+- Phase 34 与 Phase 33 顺序执行，不同时修改 `analysis.py`、`notation_context.py`、`score.py`；模式家族不在本 Phase 顺手实现。
+
+---
+
+## Phase 35：非西洋调式家族 P1 研究与生产门禁
+
+**目标：** 在不破坏 major/minor P0 的前提下，研究并按独立真值集识别 `Chinese pentatonic`、`Japanese miyakobushi`、`Blues` 家族；首版不强猜宫/商/角/徵/羽或布鲁斯大小调变体。
+
+**Task 35.1 · 模式家族真值与反例：**
+
+- 每个家族建立至少 8 段独立固定样本，其中至少 4 段为带许可、参考谱/权威分析和人工复核的真实演奏，至少 4 段为受控正反例；保存音阶集合、旋律音程分布、主音证据和家族标签。
+- 固定中国五声与西洋大调共享 `do/re/mi/sol/la` 的配对反例，包括 `1-3-5-5-6-5 / 3-1-5-5-5-3-1`；禁止用五个 pitch class 直接决定家族。
+- 为主音保存乐句终止/停驻、结构重音回归、稳定低音或持续音证据；至少两类证据一致才输出主音，否则家族可成立但 `tonic=unknown`。
+
+**Task 35.2 · 隔离分类与弃权：**
+
+- 在 Phase 33 候选合同上增加版本化 `mode_family` 评分，使用 pitch-class 集合、旋律二/三度进行、显著跳进、结构重音与主音证据；major/minor 和三个 P1 家族使用同一候选/弃权框架。
+- 首个生产合同只输出 `Chinese pentatonic`、`Japanese miyakobushi`、`Blues` 或 `unknown`；`mode_variant` 固定为 `unknown`，宫/商/角/徵/羽与布鲁斯大小调变体不进入 UI 或确定调号。
+- 使用独立 feature flag 运行离线/灰度评测；门禁未通过时生产继续只显示 major/minor 或未可靠推断，不允许 P1 标签污染调号。
+
+**Task 35.3 · 评测、展示与回退：**
+
+- 输出每家族 precision/recall/F1、macro F1、高置信误标率、弃权率、主音准确率和 P95 时延；保存逐样本证据与反证。
+- 只有 macro F1 不低于 0.80、任一家族高置信误标率不高于 5%、主音不满足两类证据时能够弃权，才允许开启生产标签。
+- 结果页只显示家族与可选主音，不显示未经验证的细分变体；低置信度统一显示“未可靠推断”，不生成模式专属调号。
+
+**关键文件：**
+
+- `songdance/api/app/pipeline/mode_family.py` — 家族特征、候选评分、主音证据和弃权。
+- `songdance/api/app/pipeline/tonality.py`、`quality.py` — 复用 Phase 33 合同并隔离 P1 版本。
+- `songdance/api/app/settings.py` — P1 feature flag、阈值和版本配置。
+- `songdance/api/scripts/evaluate_mode_family.py` — 家族/主音指标与生产门禁。
+- `songdance/api/tests/fixtures/mode-family/manifest.json` — 三家族真实样本、受控反例、许可与真值。
+- `songdance/api/tests/test_mode_family.py` — 五声音集合冲突、主音证据、弃权和 major/minor 保护。
+- `songdance/web/src/components/result/quality-summary.tsx`、`messages/*.json` — 家族标签、未知状态与八语言基线。
+
+**验收标准：**
+
+- AC-097 与 Q-011 合同通过：共享五声音集合的两段不会被机械判成同一家族；首版只显示家族，细分变体保持 `unknown`。
+- 每个家族至少 8 段独立真值，macro F1、高置信误标率、弃权率和主音准确率达到门禁；任何一个家族失败只关闭该家族，不影响 major/minor 与其他已通过家族。
+- P1 feature flag 关闭时 API、时间线、质量报告和 UI 与 Phase 34 完全一致；开启但低置信时不写模式标签或调号。
+- API/Web 全量检查、固定集报告、八语言 key 对齐、OSMD/PDF 回归和代码审查 Stage 1/2 通过后才能标为生产可用。
+
+**依赖与风险：**
+
+- 中国五声、日本都节和布鲁斯不是仅靠音阶集合即可稳定区分的标签；真实样本的风格、和声编配和转录错音可能让分类器学到错误捷径，必须保留配对反例和逐样本人工复核。
+- 本 Phase 不新增印度、埃及等体系，也不训练自有模型；任何第三方 mode 模型先审计许可、权重来源、数据偏差和运行成本，未通过只作研究参考。
+- Phase 35 是 P1，不能拖延 Phase 33–34 的 major/minor、保守调号和谱表可读性上线。
+
 ## 技术栈
 
 | 层级 | 技术 | 版本 | 说明 |
@@ -1305,8 +1463,8 @@ Phase 9 基线
 | 单音候选 | librosa pYIN / CREPE | librosa 0.11.0 / CREPE 固定提交待验证 | Phase 18 与 Basic Pitch 按乐器 A/B；CREPE MIT 但维护与 TensorFlow 兼容需验证 |
 | 任务模型候选 | Omnizart | 固定提交/checkpoint 待审计 | Phase 18 人声与 Phase 20 鼓；代码 MIT，权重和 ARM/Python 兼容需验证 |
 | 直接多轨候选 | MT3 | 固定提交/checkpoint 待审计 | Phase 21 多 instrument program A/B；代码 Apache-2.0、非官方支持产品、T5X/GPU 依赖隔离 |
-| 音频分析 | librosa | 0.11.0 | 当前已由 Basic Pitch 间接锁定；Phase 14 提升为显式依赖并验证 BPM、beat、起音和调性基线 |
-| 乐谱后处理 | music21 | 10.5.0 | MIDI 量化、分手和 MusicXML |
+| 音频分析 | librosa | 0.11.0 | Phase 14 的 BPM/beat/色度基线；Phase 33 起色度只作调性候选先验，不可直接写调号 |
+| 乐谱后处理与和声证据 | music21 | 10.5.0 | MIDI 量化、分手、MusicXML，以及 Phase 33–35 已量化事件的和弦/终止式证据；不新增生产 MIR 依赖 |
 | 可选分轨 | Demucs/维护分支 | P1 实验，固定提交待审计 | Meta 上游仓库已归档；四轨/六轨在独立 Worker 评估，不进入主 API 镜像 |
 | 媒体处理 | FFmpeg | 7.x 或部署平台稳定版 | 解码、裁剪和规范化；镜像内固定小版本 |
 | 数据库 | PostgreSQL | 17.x | 任务和产物元数据 |
@@ -1314,7 +1472,7 @@ Phase 9 基线
 | 对象存储 | S3 兼容存储 | 服务端版本 | 私有临时音频和产物 |
 | 包管理 | pnpm / uv | pnpm 10.x / uv 当前稳定版 | Web 与 Python 依赖管理 |
 
-版本说明：前端和核心 Python 包版本于 2026-07-28 通过 npm/PyPI 查询；2026-08-05 复核当前锁文件与官方仓库，确认 librosa 0.11.0 已锁定、Basic Pitch 明确支持跨乐器复音但建议一次一个乐器、Demucs 上游已归档且六轨钢琴质量有限、MT3 提供多乐器 checkpoint 但不属于官方支持产品、Omnizart 存在 ARM 兼容限制。开发时先在隔离环境验证固定提交、checkpoint 哈希、许可和资源预算；未选中的模型不得进入主 Worker。Essentia 为 AGPL-3.0，madmom 的源代码与模型数据许可不同，二者未完成审计前只允许离线评估。
+版本说明：前端和核心 Python 包版本于 2026-07-28 通过 npm/PyPI 查询；2026-08-05 复核当前锁文件与官方仓库，确认 librosa 0.11.0 已锁定、Basic Pitch 明确支持跨乐器复音但建议一次一个乐器、Demucs 上游已归档且六轨钢琴质量有限、MT3 提供多乐器 checkpoint 但不属于官方支持产品、Omnizart 存在 ARM 兼容限制。2026-08-28 的 Phase 33–35 计划不新增外部运行依赖，复用锁文件中的 librosa/music21 和现有和弦聚合，因此不产生新的版本选型；若实现中提出新 MIR 模型，必须先重新联网核验版本、许可、权重与兼容性再更新本计划。开发时先在隔离环境验证固定提交、checkpoint 哈希、许可和资源预算；未选中的模型不得进入主 Worker。Essentia 为 AGPL-3.0，madmom 的源代码与模型数据许可不同，二者未完成审计前只允许离线评估。
 
 ## 数据库表
 
@@ -1322,9 +1480,9 @@ Phase 9 基线
 |---|---|---|
 | `transcription_jobs` | Phase 3 | 任务状态、阶段、区间、过期和错误码 |
 | `source_assets` | Phase 3 | 输入文件元数据和对象键 |
-| `transcription_results` | Phase 4 | 模型版本、速度、拍号、音符数和质量标记 |
+| `transcription_results` | Phase 4、33–34 | 模型版本、速度、拍号、局部调性 top-2/证据、记谱调号来源、staff layout、音符数和质量标记；优先扩展版本化 JSON 合同，确需结构列时再单独迁移 |
 | `artifacts` | Phase 4 | MIDI、MusicXML、JSON、PDF 产物元数据 |
-| `transcription_quality_reports` | Phase 11 | 原始/清洗音符统计、结构错误、置信度、模型和后处理版本 |
+| `transcription_quality_reports` | Phase 11、33–35 | 原始/清洗音符统计、结构错误、调性/模式候选证据、staff layout、置信度、模型和后处理版本 |
 | `transcription_tracks` | Phase 17 | 乐器 profile、模型路由、轨道状态、两级置信度和版本 |
 | `stem_assets` | Phase 22 | 完整混音内部 stem、来源模型、对象键和过期时间 |
 | `analytics_events` | Phase 6 | 白名单产品事件和阶段耗时 |

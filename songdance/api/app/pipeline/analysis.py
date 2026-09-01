@@ -2,7 +2,7 @@ import hashlib
 import json
 import math
 import time
-from dataclasses import asdict, dataclass, replace
+from dataclasses import asdict, dataclass, field, replace
 from pathlib import Path
 
 import librosa
@@ -18,6 +18,7 @@ from app.pipeline.analysis_features import (
     rank_meter_candidates as _rank_meter_candidates,
 )
 from app.pipeline.errors import StructureAnalysisError
+from app.pipeline.transcribe import NoteEvent
 
 ANALYSIS_ALGORITHM_VERSION = "structure-analysis-v2"
 DEFAULT_BPM = 120.0
@@ -70,9 +71,39 @@ class StructureAnalysis:
     duration_seconds: float
     elapsed_seconds: float
     reason_codes: tuple[str, ...]
+    tonality_evidence: dict[str, object] = field(
+        default_factory=lambda: {"status": "not_analyzed"}
+    )
+    notation_eligible: bool = False
+    mode_family: str = "unknown"
+    mode_variant: str = "unknown"
+    minor_form_evidence: dict[str, object] = field(
+        default_factory=lambda: {"status": "not_analyzed"}
+    )
 
     def summary(self) -> dict[str, object]:
         return asdict(self)
+
+
+def enrich_analysis_with_tonality(
+    analysis: StructureAnalysis,
+    events: list["NoteEvent"],
+) -> StructureAnalysis:
+    from app.pipeline.tonality import analyze_local_tonality
+    if not all(isinstance(event, NoteEvent) for event in events):
+        raise TypeError("tonality enrichment requires NoteEvent values")
+    evidence = analyze_local_tonality(events, analysis.key_candidates)
+    return replace(
+        analysis,
+        tonality_evidence=evidence.summary(),
+        notation_eligible=evidence.notation_eligible,
+        mode_family="major_minor" if evidence.candidates else "unknown",
+        mode_variant="unknown",
+        minor_form_evidence={"status": "not_analyzed"},
+        reason_codes=tuple(
+            dict.fromkeys((*analysis.reason_codes, *evidence.reason_codes))
+        ),
+    )
 
 
 def analyze_audio(

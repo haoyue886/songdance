@@ -124,6 +124,11 @@ def _not_applied_analysis() -> dict[str, object]:
         "version": AnalysisConfig().version,
         "source": "not_applied",
         "reason_codes": ["STRUCTURE_ANALYSIS_NOT_RUN"],
+        "tonality_evidence": {"status": "not_analyzed"},
+        "notation_eligible": False,
+        "mode_family": "unknown",
+        "mode_variant": "unknown",
+        "minor_form_evidence": {"status": "not_analyzed"},
     }
 
 

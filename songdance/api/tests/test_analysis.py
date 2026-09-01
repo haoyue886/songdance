@@ -17,9 +17,11 @@ from app.pipeline.analysis import (
     _rank_key_candidates,
     _rank_meter_candidates,
     analyze_audio,
+    enrich_analysis_with_tonality,
     fallback_analysis,
 )
 from app.pipeline.errors import StructureAnalysisError
+from app.pipeline.quality import _not_applied_analysis
 from app.pipeline.quantize import quantize_events
 from app.pipeline.transcribe import NoteEvent
 from app.services.transcription import run_transcription_job
@@ -144,6 +146,33 @@ def test_quantize_caps_high_register_resonance_at_next_independent_onset() -> No
     quantized = quantize_events(events, analysis)
 
     assert [round(event.end_sec - event.start_sec, 6) for event in quantized[:-1]] == [0.5] * 7
+
+
+def test_analysis_tonality_enrichment_is_versioned_and_keeps_raw_analysis_fields() -> None:
+    analysis = replace(
+        fallback_analysis(AnalysisConfig(), "fixture"),
+        key_candidates=(
+            {"value": "C major"},
+        ),
+    )
+    enriched = enrich_analysis_with_tonality(
+        analysis,
+        [NoteEvent(0.0, 0.5, 60, 90, 0.9), NoteEvent(0.5, 1.0, 62, 90, 0.9)],
+    )
+
+    assert enriched.key_signature == analysis.key_signature
+    assert enriched.tonality_evidence["version"].startswith("local-tonality-evidence-v1/")
+    assert enriched.notation_eligible is False
+    assert "TONICIZATION_ONLY" in enriched.reason_codes
+
+
+def test_fallback_analysis_marks_tonality_as_not_analyzed() -> None:
+    analysis = fallback_analysis(AnalysisConfig(), "fixture")
+
+    assert analysis.mode_family == "unknown"
+    assert analysis.tonality_evidence == {"status": "not_analyzed"}
+    assert analysis.minor_form_evidence == {"status": "not_analyzed"}
+    assert _not_applied_analysis()["mode_family"] == "unknown"
 
 
 def test_quantize_uses_analysis_grid_without_mutating_raw_events() -> None:

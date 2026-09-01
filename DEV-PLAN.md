@@ -1359,6 +1359,12 @@ Phase 9 基线
 - 证据合同包含 `chord_roots`、`chord_triads`、真实最低音 pitch class、结构主音回归、反证、候选差和 `notation_eligible`；无事件/单起音输入均有稳定降级。
 - `tests/test_tonality.py` 6 tests passed，Ruff 和 `git diff --check` 通过；独立 `code-reviewer` Stage 1/2 PASS，0 HIGH/MEDIUM。重复分组 helper 和概率四舍五入误差为 LOW，留到后续 Task 处理。
 
+**实施记录（2026-09-01）：**
+
+- Task 33.3 已接入 `StructureAnalysis`、`build_score`、timeline 和 quality report：清洗后的 `NoteEvent` 进入 `enrich_analysis_with_tonality`，原始事件与 raw timeline 保持不变。
+- 新字段统一为 `tonality_evidence`、`notation_eligible`、`mode_family`、`mode_variant`、`minor_form_evidence`；旧任务/未执行分析明确返回 `unknown` 或 `not_analyzed`，不伪造 C major。
+- 专项测试 `analysis.py + tonality.py` 共 25 passed，Ruff 与 `git diff --check` 通过；独立 code-reviewer Stage 1/2 PASS，0 HIGH/MEDIUM。额外回归 `pickup + score_validation + pipeline` 为 45 passed、1 failed，唯一失败是宿主 Chrome 导致 OSMD SIGABRT，非本 Task 引入。
+
 ---
 
 ## Phase 34：保守调号、小调临时变音与语义谱表输出

@@ -10,7 +10,12 @@ from app.pipeline.adaptive_quantization import (
     QuantizationDecision,
     select_quantization,
 )
-from app.pipeline.analysis import AnalysisConfig, StructureAnalysis, fallback_analysis
+from app.pipeline.analysis import (
+    AnalysisConfig,
+    StructureAnalysis,
+    enrich_analysis_with_tonality,
+    fallback_analysis,
+)
 from app.pipeline.arpeggio_resonance import (
     SIMPLE_ARPEGGIO_FILTER_VERSION,
     filter_simple_arpeggio_resonance,
@@ -112,6 +117,7 @@ def build_score(
     active_analysis = analysis or fallback_analysis(
         AnalysisConfig(), STRUCTURE_ANALYSIS_NOT_RUN, source="score_default"
     )
+    active_analysis = enrich_analysis_with_tonality(active_analysis, events)
     detected_analysis = active_analysis
     active_notation = notation_context or NotationContext()
     if active_notation.time_signature is not None:

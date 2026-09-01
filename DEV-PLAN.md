@@ -1353,6 +1353,12 @@ Phase 9 基线
 - Basic Pitch 错音会污染和弦与终止式证据；固定集必须同时保存参考谱真值和当前转录输入，分别报告“真值事件上限”与“生产转录实际表现”，不能把上游错音伪装成调性算法错误。
 - 本阶段不引入新生产依赖；复用已锁定的 `librosa 0.11.0`、`music21 10.5.0` 和现有和弦聚合。任何新 MIR 模型先走许可与固定集离线审计，不直接进入 Worker。
 
+**实施记录（2026-09-01）：**
+
+- Task 33.2 已交付 `songdance/api/app/pipeline/tonality.py`：支持最多两个候选、top-2 归一化、完整句末三和弦终止式、孤立主音化弃权、导音比例门禁、未知模式拒绝和版本化证据摘要。
+- 证据合同包含 `chord_roots`、`chord_triads`、真实最低音 pitch class、结构主音回归、反证、候选差和 `notation_eligible`；无事件/单起音输入均有稳定降级。
+- `tests/test_tonality.py` 6 tests passed，Ruff 和 `git diff --check` 通过；独立 `code-reviewer` Stage 1/2 PASS，0 HIGH/MEDIUM。重复分组 helper 和概率四舍五入误差为 LOW，留到后续 Task 处理。
+
 ---
 
 ## Phase 34：保守调号、小调临时变音与语义谱表输出

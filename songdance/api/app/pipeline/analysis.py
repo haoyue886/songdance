@@ -25,6 +25,7 @@ DEFAULT_TIME_SIGNATURE = "4/4"
 TEMPO_DEFAULTED = "TEMPO_DEFAULTED"
 TIME_SIGNATURE_DEFAULTED = "TIME_SIGNATURE_DEFAULTED_4_4"
 KEY_SIGNATURE_DEFAULTED = "KEY_SIGNATURE_DEFAULTED_C_MAJOR"
+KEY_SIGNATURE_LEADING_TONE_ABSENT = "KEY_SIGNATURE_LEADING_TONE_ABSENT"
 ANALYSIS_DISABLED = "STRUCTURE_ANALYSIS_DISABLED"
 
 @dataclass(frozen=True)
@@ -128,11 +129,19 @@ def _analyze_audio_core(source: Path, active: AnalysisConfig) -> StructureAnalys
         meter_candidates = _rank_meter_candidates(
             onset_envelope, beat_frames, bass_onset_envelope
         )
-        key_candidates = _rank_key_candidates(
-            librosa.feature.chroma_cqt(
-                y=audio, sr=sample_rate, hop_length=active.hop_length
-            )
+        chroma = librosa.feature.chroma_cqt(
+            y=audio, sr=sample_rate, hop_length=active.hop_length
         )
+        onset_frames_for_tonic = librosa.onset.onset_detect(
+            y=audio, sr=sample_rate, hop_length=active.hop_length, units="frames"
+        )
+        tonic_hint = (
+            int(np.argmax(chroma[:, int(onset_frames_for_tonic[0])]) % 12)
+            if len(onset_frames_for_tonic)
+            and int(onset_frames_for_tonic[0]) < chroma.shape[1]
+            else None
+        )
+        key_candidates = _rank_key_candidates(chroma, tonic_hint=tonic_hint)
         _raise_if_timed_out(started, active)
     except StructureAnalysisError:
         raise
@@ -158,6 +167,11 @@ def _analyze_audio_core(source: Path, active: AnalysisConfig) -> StructureAnalys
         meter_source = "librosa_onset_accent"
     selected_key = key_candidates[0]
     key_confidence = float(selected_key["confidence"])
+    if any(
+        not bool(candidate.get("leading_tone_supported", True))
+        for candidate in key_candidates
+    ):
+        reasons.append(KEY_SIGNATURE_LEADING_TONE_ABSENT)
     if key_confidence < active.min_key_confidence:
         key_signature = DEFAULT_KEY_SIGNATURE
         key_source = "default"

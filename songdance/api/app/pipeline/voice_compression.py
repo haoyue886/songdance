@@ -10,6 +10,7 @@ from app.pipeline.voice_overlap import merge_same_pitch_overlaps
 VOICE_COMPRESSION_VERSION = "voice-compression-v1"
 DENSE_RESONANT_ONSETS_COMPRESSED = "DENSE_RESONANT_ONSETS_COMPRESSED"
 SAME_PITCH_RESONANCE_MERGED = "SAME_PITCH_RESONANCE_MERGED"
+MONOPHONIC_RESONANCE_CAPPED = "MONOPHONIC_RESONANCE_CAPPED"
 
 
 @dataclass(frozen=True)
@@ -149,16 +150,21 @@ def compress_notation_durations(
             count += 1
         else:
             compressed.append(group)
+    compressed, monophonic_cap_count = _cap_monophonic_resonance(
+        compressed, onset_units, divisions_per_quarter
+    )
     coalesced = _coalesce_onsets(compressed, set(next_start), active.maximum_chord_size)
     reasons = []
     if count:
         reasons.append(DENSE_RESONANT_ONSETS_COMPRESSED)
     if same_pitch_merge_count:
         reasons.append(SAME_PITCH_RESONANCE_MERGED)
+    if monophonic_cap_count:
+        reasons.append(MONOPHONIC_RESONANCE_CAPPED)
     return VoiceCompressionResult(
         groups=coalesced,
         version=active.version,
-        applied=count > 0 or same_pitch_merge_count > 0,
+        applied=count > 0 or same_pitch_merge_count > 0 or monophonic_cap_count > 0,
         compressed_group_count=count,
         coalesced_group_count=(len(compressed) - len(coalesced))
         + same_pitch_merge_count,
@@ -166,6 +172,39 @@ def compress_notation_durations(
         reason_codes=tuple(reasons),
         evidence=available,
     )
+
+
+def _cap_monophonic_resonance(
+    groups: list[NotationGroup], onset_units: tuple[int, ...], divisions_per_quarter: int
+) -> tuple[list[NotationGroup], int]:
+    """Keep isolated melody notes at their next attack, excluding chords/bass beds."""
+    if len(groups) < 2 or not onset_units:
+        return groups, 0
+    all_pitches = {pitch for group in groups for pitch in group.pitches}
+    if min(all_pitches, default=0) < 60 or len(all_pitches) < 3:
+        return groups, 0
+    starts = sorted(set(onset_units))
+    gaps = [right - left for left, right in zip(starts, starts[1:], strict=False)]
+    if not gaps:
+        return groups, 0
+    median_gap = sorted(gaps)[len(gaps) // 2]
+    if median_gap < divisions_per_quarter or median_gap > divisions_per_quarter * 1.25:
+        return groups, 0
+    next_start = {left: right for left, right in zip(starts, starts[1:], strict=False)}
+    capped = []
+    count = 0
+    for group in groups:
+        boundary = next_start.get(group.start_units)
+        if (
+            boundary is not None
+            and all(pitch >= 60 for pitch in group.pitches)
+            and group.end_units > boundary
+        ):
+            capped.append(replace(group, end_units=boundary))
+            count += 1
+        else:
+            capped.append(group)
+    return capped, count
 
 
 def _pitch_retriggers(

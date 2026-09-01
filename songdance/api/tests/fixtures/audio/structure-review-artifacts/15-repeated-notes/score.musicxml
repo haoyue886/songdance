@@ -5,7 +5,7 @@
   <identification>
     <creator type="composer" />
     <encoding>
-      <encoding-date>2026-08-27</encoding-date>
+      <encoding-date>2026-08-31</encoding-date>
       <software>music21 v.10.5.0</software>
       <supports element="beam" type="yes" />
       <supports element="stem" type="yes" />
@@ -19,27 +19,27 @@
     </scaling>
   </defaults>
   <part-list>
-    <score-part id="P5eaa5c083720906adc76c513583af18f">
+    <score-part id="P1959f2f7610c50f0a0afdd5c7724dca3">
       <part-name>Piano</part-name>
       <part-abbreviation>Pno</part-abbreviation>
-      <score-instrument id="If7f6ef53c4fb0ccdd14fd90e6588d08c">
+      <score-instrument id="I37722ae816b5fa34f91cb99bbcc7b460">
         <instrument-name>Piano</instrument-name>
         <instrument-abbreviation>Pno</instrument-abbreviation>
       </score-instrument>
-      <midi-instrument id="If7f6ef53c4fb0ccdd14fd90e6588d08c">
+      <midi-instrument id="I37722ae816b5fa34f91cb99bbcc7b460">
         <midi-channel>1</midi-channel>
         <midi-program>1</midi-program>
       </midi-instrument>
     </score-part>
   </part-list>
   <!--=========================== Part 1 ===========================-->
-  <part id="P5eaa5c083720906adc76c513583af18f">
+  <part id="P1959f2f7610c50f0a0afdd5c7724dca3">
     <!--========================= Measure 1 ==========================-->
     <measure implicit="no" number="1">
       <attributes>
         <divisions>10080</divisions>
         <key>
-          <fifths>1</fifths>
+          <fifths>0</fifths>
           <mode>major</mode>
         </key>
         <time>

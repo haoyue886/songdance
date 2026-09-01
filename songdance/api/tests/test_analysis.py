@@ -1,5 +1,6 @@
 import json
 import time
+from dataclasses import replace
 from pathlib import Path
 from unittest.mock import Mock
 
@@ -122,6 +123,27 @@ def test_key_candidates_detect_c_major_profile() -> None:
 
     assert candidates[0]["value"] == "C major"
     assert float(candidates[0]["confidence"]) > 0
+
+
+def test_key_candidates_use_first_onset_to_disambiguate_relative_major() -> None:
+    chroma = np.zeros((12, 8))
+    chroma[[0, 4, 7, 9, 11]] = np.asarray([[1.0], [0.8], [0.9], [0.7], [0.8]])
+
+    candidates = _rank_key_candidates(chroma, tonic_hint=0)
+
+    assert candidates[0]["value"] == "C major"
+
+
+def test_quantize_caps_high_register_resonance_at_next_independent_onset() -> None:
+    analysis = replace(fallback_analysis(AnalysisConfig(), "fixture"), bpm=120)
+    events = [
+        NoteEvent(index * 0.5, index * 0.5 + 1.0, 64 + index % 5, 38, 0.9)
+        for index in range(8)
+    ]
+
+    quantized = quantize_events(events, analysis)
+
+    assert [round(event.end_sec - event.start_sec, 6) for event in quantized[:-1]] == [0.5] * 7
 
 
 def test_quantize_uses_analysis_grid_without_mutating_raw_events() -> None:

@@ -1,0 +1,66 @@
+{
+  "schema_version": 1,
+  "phase": "36",
+  "case_id": "07-soft",
+  "rating": "needs_redo",
+  "source_pdf": {
+    "path": "/Users/lixinyue/Downloads/songdance-XbnjRjSC.pdf",
+    "sha256": "53e9196f27239b63c869f51e109bfc2994ac1b1c7500a310b573a964f412189e",
+    "pages": 2
+  },
+  "offline_package": {
+    "path": "songdance/api/dist/songdance-structure-review-2065d538e23d.zip",
+    "sha256": "3fa1178bcee4efa0ef8b067cedd83ce7d06c38ed8bbe4a2172eb637a2bf6dba2",
+    "case_artifacts": {
+      "audio_sha256": "380160b2a85112599a6923e9cbec855bafc860ac6fce697cd563868d8a68ba12",
+      "score_musicxml_sha256": "368e3d93784672e89647dfe2c813857f9059e014b102d1e46e7c7e847d5af6ee"
+    }
+  },
+  "reviewer_notes": [
+    {
+      "code": "FALSE_PICKUP_QUARTER_NOTE",
+      "severity": "high",
+      "description": "第一拍为完整小节起始，第一个音符应位于第一拍；错误弱起使后续小节线整体前移一拍。",
+      "required_fix": "恢复完整首小节，设置 measure_offset_units=0，并将后续小节线依次后移一拍。"
+    },
+    {
+      "code": "LEADING_TONE_ABSENT_KEY_MISREAD",
+      "severity": "high",
+      "description": "原曲为 C 大调，全曲没有 F# 起音或属和弦证据，却被写成一升号调号。",
+      "required_fix": "增加导音/特征音反证；无 F# 时不得把 G major 等一升号候选写入谱面，目标调号为 C major。"
+    },
+    {
+      "code": "RESONANCE_AS_NOTE_DURATION",
+      "severity": "high",
+      "description": "每个独立起音实际为一拍四分音符，钢琴残响跨拍不等于音符持续。",
+      "required_fix": "按独立起音和 beat 网格恢复四分音符；残响仅保留在 sustain evidence，不改写音符时值。"
+    }
+  ],
+  "reproduction": {
+    "package_case": "files/structure-review-artifacts/07-soft",
+    "current_analysis": {
+      "time_signature": "4/4",
+      "key_signature": "E minor",
+      "key_confidence": 0.227204,
+      "measure_offset_units": 12,
+      "notation_key_signature_source": "inferred_local_tonal_center"
+    },
+    "expected": {
+      "time_signature": "4/4",
+      "notation_key_signature": "C major",
+      "measure_offset_units": 0,
+      "independent_note_quarter_length": 1
+    }
+  },
+  "resolution": {
+    "status": "resolved_pending_full_suite_review",
+    "minimum_rating": "minor_edits",
+    "must_regenerate_package": true,
+    "must_keep_history": true
+  },
+  "re_review": {
+    "reviewed_at": "2026-08-31",
+    "rating": "minor_edits",
+    "notes": "专业复评通过：首拍完整小节、C 大调无升降号、独立起音为四分音符且残响未污染记谱时值。"
+  }
+}

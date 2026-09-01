@@ -154,7 +154,11 @@ def build_score(
         time_signature_source=notation.time_signature_source,
         time_signature_confidence=notation.time_signature_confidence,
     )
-    notation_input = align_repeating_eighth_note_cycles(events, active_analysis, pickup)
+    notation_input = (
+        align_repeating_eighth_note_cycles(events, active_analysis, pickup)
+        if pickup.candidate_pickup_units == quantization.divisions_per_quarter // 2
+        else events
+    )
     if notation_input is events:
         notation_input = quantized
     voicing = assign_hands(notation_input)

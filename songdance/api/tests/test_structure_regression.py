@@ -59,3 +59,45 @@ def test_phase29_expert_failure_baseline_is_preserved() -> None:
         "UNSTABLE_HAND_SPLIT",
         "HARMONIC_AS_PLAYED_NOTE",
     }
+
+
+def test_phase36_07_soft_failure_and_repaired_structure_are_explicit() -> None:
+    fixture_root = Path(__file__).parent / "fixtures/audio"
+    review = json.loads((fixture_root / "structure-review.json").read_text(encoding="utf-8"))
+    result = next(item for item in review["results"] if item["id"] == "07-soft")
+    assert result["rating"] == "needs_redo"
+    assert {finding["code"] for finding in result["findings"]} == {
+        "FALSE_PICKUP_QUARTER_NOTE",
+        "LEADING_TONE_ABSENT_KEY_MISREAD",
+        "RESONANCE_AS_NOTE_DURATION",
+    }
+
+    timeline = json.loads(
+        (fixture_root / "structure-review-artifacts/07-soft/timeline.json").read_text(
+            encoding="utf-8"
+        )
+    )
+    assert timeline["analysis"]["key_signature"] == "C major"
+    assert timeline["analysis"]["key_signature_source"] == "default"
+    assert "KEY_SIGNATURE_DEFAULTED_C_MAJOR" in timeline["analysis"]["reason_codes"]
+    assert timeline["reconstruction"]["pickup"]["measure_offset_units"] == 0
+    assert "FALSE_PICKUP_REJECTED_FULL_MEASURE" in timeline["reconstruction"][
+        "pickup"
+    ]["reason_codes"]
+    assert "MONOPHONIC_RESONANCE_CAPPED" in timeline["reconstruction"][
+        "voice_compression"
+    ]["reason_codes"]
+    durations = [
+        round(item["end_sec"] - item["start_sec"], 6)
+        for item in timeline["notation_notes"]
+        if item["pitch"] < 96
+    ]
+    assert max(durations) <= 0.75
+    baseline = json.loads(
+        (
+            fixture_root / "structure-review-phase36-07-soft-baseline.json"
+        ).read_text(encoding="utf-8")
+    )
+    assert baseline["rating"] == "needs_redo"
+    assert baseline["re_review"]["rating"] == "minor_edits"
+    assert baseline["resolution"]["status"] == "resolved_pending_full_suite_review"

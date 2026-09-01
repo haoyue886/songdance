@@ -113,6 +113,25 @@ def test_complete_eighth_note_cycles_reject_false_pickup() -> None:
     assert score_structure_errors(scored.score, validate_measure_durations=True) == []
 
 
+def test_complete_quarter_note_cycles_reject_one_beat_false_pickup() -> None:
+    events = [
+        NoteEvent(index * 0.5, index * 0.5 + 0.42, pitch, 38, 0.9)
+        for index, pitch in enumerate((72, 71, 69, 67, 64, 67, 69, 71) * 2)
+    ]
+    scored = build_score(events, analysis=_analysis(downbeat=0.5))
+
+    first_measures = [
+        list(part.getElementsByClass(stream.Measure))[0] for part in scored.score.parts
+    ]
+    assert [measure.paddingLeft for measure in first_measures] == [0, 0]
+    assert scored.reconstruction["pickup"]["measure_offset_units"] == 0
+    assert scored.reconstruction["pickup"]["first_measure_occupied_slots"] == 4
+    assert max(
+        event.end_sec - event.start_sec for event in scored.notation_notes
+    ) <= 0.5
+    assert score_structure_errors(scored.score, validate_measure_durations=True) == []
+
+
 def test_quiet_eighth_note_pickup_is_preserved() -> None:
     events = [
         NoteEvent(index * 0.25, index * 0.25 + 0.2, 60 + index % 5, 40 if index == 0 else 90, 0.9)

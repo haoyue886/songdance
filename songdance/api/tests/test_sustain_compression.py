@@ -164,6 +164,28 @@ def test_sparse_sustained_chords_keep_their_full_durations() -> None:
     ] == before
 
 
+def test_high_register_monophonic_resonance_is_capped_at_next_onset() -> None:
+    groups = [
+        _group(start, start + 8, 64 + index % 5)
+        for index, start in enumerate(range(0, 20, 4))
+    ]
+
+    result = compress_notation_durations(
+        groups,
+        seconds_per_quarter=0.5,
+        measure_offset_units=0,
+        evidence=_evidence(tuple(index * 0.5 for index in range(5))),
+    )
+
+    assert [(group.start_units, group.end_units) for group in result.groups] == [
+        (0, 4),
+        (4, 8),
+        (8, 12),
+        (12, 16),
+        (16, 24),
+    ]
+
+
 def test_missing_audio_or_cc64_evidence_never_compresses_overlap() -> None:
     groups = [_group(start, start + 4, 60 + index) for index, start in enumerate(range(0, 16, 2))]
 

@@ -43,6 +43,7 @@
 | Phase 33 | 计划中 | 局部调性真值集、终止式/和弦证据、主音化与转调判定及候选校准 |
 | Phase 34 | 计划中 | 保守调号、小调临时变音、最多两个候选和单谱表/大谱表语义输出 |
 | Phase 35 | 计划中（P1） | 中国五声、日本都节与布鲁斯调式家族研究门禁 |
+| Phase 36 | 已完成 | `07-soft` 三项专业缺陷修复；人工复评 `minor_edits`，自动门禁通过 |
 
 ## 功能依赖图
 
@@ -70,6 +71,7 @@ Phase 9 基线
                                                           └─ Phase 33 局部调性证据与候选校准
                                                                   └─ Phase 34 保守调号与语义谱表输出
                                                                           └─ Phase 35 非西洋调式家族 P1 门禁
+                                                                                  └─ Phase 36 `07-soft` 三项失败修复与复评
                                           └─ Phase 23 固定谱面工作台与区间播放
                                                   └─ Phase 24 实时谱面拖选反馈
                                                           └─ Phase 25 选区边界二次调整
@@ -1165,6 +1167,9 @@ Phase 9 基线
 | AC-098 单高音谱表与大谱表语义 | Phase 34 | 单旋律/稀疏真实低音正反例、MusicXML staff 数和 OSMD/PDF 渲染 |
 | AC-099 小调形态与临时变音 | Phase 34 | A minor 自然/和声/旋律形态混合 fixture、固定调号和逐音 accidental |
 | AC-100 主音化与转调分离 | Phase 33 | `V/x→x` 回原调反例、持续新调正例和候选升级审计 |
+| AC-101 `07-soft` 四分音符假弱起 | Phase 36 | 首拍完整小节、四分音符周期、后移一拍的小节线和 `paddingLeft=0` |
+| AC-102 `07-soft` 导音缺失调号反证 | Phase 36 | 无 F♯ 的 C 大调反例、`leading_tone_absent` 审计和无一升号 MusicXML |
+| AC-103 `07-soft` 残响时值隔离 | Phase 36 | 独立起音/beat 时值为四分音符，残响只在 sustain evidence，禁止二分/附点污染 |
 | SCOPE-016 混音分离适配器 | Phase 21–22 | 技术门禁、隔离 Worker、多轨编排和回退报告 |
 | SCOPE-018 单乐器模式与路由 | Phase 17 | InstrumentProfile、选择器、兼容 API 和白名单路由 |
 | SCOPE-019 单音家族 | Phase 18 | 六类输入逐乐器固定集、模型 A/B 和谱面合同 |
@@ -1172,7 +1177,7 @@ Phase 9 基线
 | SCOPE-021 鼓转录 | Phase 20 | 鼓事件、GM MIDI、鼓件 lane 和打击乐谱 |
 | SCOPE-022 完整混音多轨 | Phase 21–22 | 分轨/直接 AMT 门禁、多轨 UI、部分成功和删除 |
 
-**交接顺序：** 当前共享流水线先冻结 Phase 32 已完成的调号/量化/织体实现和固定集指纹，再按 Phase 33 → 34 完成 P0 局部调性与记谱修订；Phase 35 是独立 P1，不阻塞后续多乐器。随后严格按 Phase 17 → 18 → 19 → 20 → 21 → 22 推进多乐器。每个乐器过门禁后才能在选择器中启用；不得为了等完整混音而阻塞已通过的单乐器能力。每个 Phase 单独提交，不允许把真值集、调性算法、谱表结构和非西洋模式混进一个不可归因的提交。
+**交接顺序：** 当前共享流水线先冻结 Phase 32 已完成的调号/量化/织体实现和固定集指纹，完成 Phase 36 对 `07-soft` 的三项失败复现与自动回归，再按 Phase 33 → 34 完成 P0 局部调性与记谱修订；Phase 35 是独立 P1，不阻塞后续多乐器。Phase 36 与 Phase 33–34 不并行修改 `analysis.py`、`quantize.py`、`score.py`；修复后的 `07-soft` 必须重新生成人工评审包，专业复评至少达到 `minor_edits` 才能解除该样本阻塞。随后严格按 Phase 17 → 18 → 19 → 20 → 21 → 22 推进多乐器。每个乐器过门禁后才能在选择器中启用；不得为了等完整混音而阻塞已通过的单乐器能力。每个 Phase 单独提交，不允许把真值集、调性算法、谱表结构和非西洋模式混进一个不可归因的提交。
 
 **停止条件：** 任一候选算法未达到对应乐器数值门槛、结构严重错误增加、固定集人工评级下降、许可不明确、超出资源预算，或破坏旧钢琴任务/下载 API，即停止该乐器晋级并保留上一版本。一个乐器失败只阻塞该乐器；完整混音失败不回滚已上线单乐器能力。生产默认值只能来自固定回归报告，不得凭示例页截图调整。
 
@@ -1444,6 +1449,62 @@ Phase 9 基线
 - 中国五声、日本都节和布鲁斯不是仅靠音阶集合即可稳定区分的标签；真实样本的风格、和声编配和转录错音可能让分类器学到错误捷径，必须保留配对反例和逐样本人工复核。
 - 本 Phase 不新增印度、埃及等体系，也不训练自有模型；任何第三方 mode 模型先审计许可、权重来源、数据偏差和运行成本，未通过只作研究参考。
 - Phase 35 是 P1，不能拖延 Phase 33–34 的 major/minor、保守调号和谱表可读性上线。
+
+---
+
+## Phase 36：`07-soft` 专业失败复现与三项结构修复
+
+**目标：** 针对最终离线评审包中 `07-soft` 的真实专业失败，分别修复四分音符型假弱起、无 F♯ 证据却写一升号调号、钢琴残响污染独立起音时值三项问题；不借总体 16 段统计或其他示例通过掩盖该失败样本。
+
+**Task 36.1 · 四分音符完整首小节与弱起反证：**
+
+- 在现有八分音符周期反证之外，增加 4/4 四分音符型检测：首个起音到候选 downbeat 约一拍、首个起音后连续占满至少两个完整四分音符小节时，判定首拍为完整小节并将 `measure_offset_units=0`。
+- 保留真实弱起和现有 `04-arpeggios` 反例；弱起判定不能简化为永远关闭。
+
+**Task 36.2 · 导音缺失的调号保护：**
+
+- 对需要升号导音的 major/minor 候选计算真实 pitch-class/和声证据；没有 F♯ 起音或属和弦 F♯ 时，不得把 G major、E minor 等候选直接写为一升号调号。
+- `07-soft` 目标结果为 C major/0 sharps（或等价的未确定调号保守路径），质量报告记录 `leading_tone_absent`，不得只靠色度模板候选排序。
+
+**Task 36.3 · 独立起音时值与残响隔离：**
+
+- 以相邻独立起音和 beat 网格决定单旋律基本时值；音频残响只进入 `SustainEvidence`，不得把尾音当作事件 `end_sec` 延长。
+- 对单旋律规则四分音符增加正反例：无 CC64/独立低音时，记谱事件保持四分音符；有真实 CC64 或独立持续低音时只保留相应证据和独立声部，不能把整条旋律改成二分/附点音符。
+
+**Task 36.4 · 失败样本重生成与复评包：**
+
+- 将 `07-soft` 的 PDF、离线包内音频/MusicXML/WAV SHA-256 和人工缺陷写入独立 baseline；修复后重跑该样本与 16 段结构集，更新产物指纹。
+- 评审包继续显示 `07-soft` 的逐项评级，修复前后的 `needs_redo` 历史不可被 `pending` 覆盖；重评至少达到 `minor_edits` 后才可完成 Phase 36。
+
+**关键文件：**
+
+- `songdance/api/app/pipeline/quantize.py` — 四分音符周期弱起反证和完整首小节对齐。
+- `songdance/api/app/pipeline/analysis.py`、`analysis_features.py` — 导音/pitch-class 反证和候选保护。
+- `songdance/api/app/pipeline/score.py`、`score_notation.py`、`voice_compression.py` — 调号消费、独立起音时值与残响压缩边界。
+- `songdance/api/tests/test_pickup_decision.py`、`test_analysis.py`、`test_sustain_compression.py`、`test_score_validation.py` — 三项缺陷的最小复现与旧回归。
+- `songdance/api/tests/fixtures/audio/structure-review-phase36-07-soft-baseline.json` — PDF/包指纹、专业原文、逐项失败状态和恢复条件。
+- `songdance/api/scripts/run_structure_review.py`、`structure_quality_gate.py` — 重生成、指纹和评审包绑定。
+
+**验收标准：**
+
+- AC-101 通过：`07-soft` 首小节 `paddingLeft=0`、4/4 时值守恒，后续小节线相对旧产物后移一拍；真实弱起和八分音符完整周期回归继续通过。
+- AC-102 通过：无 F♯ 起音/和声证据的 C 大调反例不写一升号，质量报告含 `leading_tone_absent`；参考谱调号覆盖仍优先。
+- AC-103 通过：规则四分音符旋律事件保持一拍，残响不制造二分/附点时值；真实 CC64/独立持续低音证据仍保留且不污染其他音符。
+- 07-soft 修复产物通过 music21、xmllint、OSMD 和 PDF 视觉复核；16 段结构集重新生成并保存新指纹，任何已有通过样本不得退化。
+- API `pytest`、Ruff、Web TypeScript/ESLint/生产构建、`git diff --check` 和 `code-reviewer` Stage 1/2 全部通过；专业复评未达到 `minor_edits` 时保留 `needs_redo` 阻塞并不得标记完成。
+
+**依赖与风险：**
+
+- Phase 36 消费 Phase 29–32 的当前产物，必须先冻结 Phase 32 固定集；与 Phase 33–34 不并行改写相同分析/记谱文件。
+- 07-soft 是合成结构集，不代表真实踏板录音；它用于证明算法没有把已知独立起音和结构相位弄错，真实录音仍需后续专业复评。
+- music21 可能把 0 sharps 序列化为 C major，因此必须同时检查 `notation_key_signature_source`、`leading_tone_absent` 和最终 XML 的 `<fifths>/<mode>`，不能只看渲染结果。
+
+**实施记录（2026-08-31）：**
+
+- `07-soft` 已按当前代码重生成：`measure_offset_units=0`，弱起反证为 `FALSE_PICKUP_REJECTED_FULL_MEASURE`；调性为 C major/default，并记录 `KEY_SIGNATURE_LEADING_TONE_ABSENT`；记谱音符（排除高音泛音候选）最大时值为 0.743039 秒，MusicXML music21 校验最大四分音符时值为 1.0，超过一拍的事件为 0。
+- 新增四分音符完整小节、导音缺失和高音旋律残响截断回归；Phase 36 专项回归 `65 passed`，Ruff 和 `git diff --check` 通过。同步真人集与结构集指纹后，API 全量在沙箱外为 `400 passed, 6 skipped`，覆盖 Redis、本地 HTTP 和 OSMD/Chrome 解析门禁。
+- 新离线包已生成：`songdance/api/dist/songdance-structure-review-60b230c89273.zip`，SHA-256 `189c050b39c5324a9dbe4af86b55157dcb7d1802f141d374995086c9462bb507`；`07-soft` 修复产物已由专业评审复评为 `minor_edits`，解除 Phase 36 阻塞，原始 `needs_redo` 记录仍保留。
+- 独立 `code-reviewer` 复审确认 AC-101～103 行为通过；Stage 2 提醒相关模块超过 300 行且截断规则只覆盖高音规则旋律，已在本 Phase 风险中保留，不扩展成未经真值验证的全局规则。
 
 ## 技术栈
 

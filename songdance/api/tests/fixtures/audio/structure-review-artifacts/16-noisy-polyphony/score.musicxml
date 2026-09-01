@@ -5,7 +5,7 @@
   <identification>
     <creator type="composer" />
     <encoding>
-      <encoding-date>2026-08-27</encoding-date>
+      <encoding-date>2026-08-31</encoding-date>
       <software>music21 v.10.5.0</software>
       <supports element="beam" type="yes" />
       <supports element="stem" type="yes" />
@@ -19,21 +19,21 @@
     </scaling>
   </defaults>
   <part-list>
-    <score-part id="P183090a6818b804a133f8d085ee6fb6d">
+    <score-part id="Pd931ecd5d6f898a5fa83507104325863">
       <part-name>Piano</part-name>
       <part-abbreviation>Pno</part-abbreviation>
-      <score-instrument id="I64fc66485f7f46629103c87f5e2fdf4a">
+      <score-instrument id="I8d7ffadfb157efb86ea2ada232b6a29a">
         <instrument-name>Piano</instrument-name>
         <instrument-abbreviation>Pno</instrument-abbreviation>
       </score-instrument>
-      <midi-instrument id="I64fc66485f7f46629103c87f5e2fdf4a">
+      <midi-instrument id="I8d7ffadfb157efb86ea2ada232b6a29a">
         <midi-channel>1</midi-channel>
         <midi-program>1</midi-program>
       </midi-instrument>
     </score-part>
   </part-list>
   <!--=========================== Part 1 ===========================-->
-  <part id="P183090a6818b804a133f8d085ee6fb6d">
+  <part id="Pd931ecd5d6f898a5fa83507104325863">
     <!--========================= Measure 1 ==========================-->
     <measure implicit="no" number="1">
       <attributes>
@@ -390,10 +390,10 @@
         <type>quarter</type>
         <staff>1</staff>
       </note>
-      <note dynamics="85.56">
+      <note dynamics="44.44">
         <pitch>
-          <step>E</step>
-          <octave>5</octave>
+          <step>G</step>
+          <octave>4</octave>
         </pitch>
         <duration>2520</duration>
         <tie type="start" />
@@ -430,10 +430,10 @@
         <dot />
         <staff>1</staff>
       </note>
-      <note dynamics="44.44">
+      <note dynamics="85.56">
         <pitch>
-          <step>G</step>
-          <octave>4</octave>
+          <step>E</step>
+          <octave>5</octave>
         </pitch>
         <duration>2520</duration>
         <tie type="start" />
@@ -619,10 +619,10 @@
     </measure>
     <!--========================= Measure 3 ==========================-->
     <measure implicit="no" number="3">
-      <note dynamics="85.56">
+      <note dynamics="44.44">
         <pitch>
-          <step>E</step>
-          <octave>5</octave>
+          <step>G</step>
+          <octave>4</octave>
         </pitch>
         <duration>7560</duration>
         <tie type="stop" />
@@ -696,17 +696,17 @@
       <backup>
         <duration>40320</duration>
       </backup>
-      <note dynamics="44.44">
+      <note dynamics="85.56">
         <pitch>
-          <step>G</step>
-          <octave>4</octave>
+          <step>E</step>
+          <octave>5</octave>
         </pitch>
         <duration>7560</duration>
         <tie type="stop" />
         <voice>1</voice>
         <type>eighth</type>
         <dot />
-        <stem>up</stem>
+        <stem>down</stem>
         <staff>1</staff>
         <beam number="1">begin</beam>
         <notations>
@@ -721,7 +721,7 @@
         <duration>2520</duration>
         <voice>1</voice>
         <type>16th</type>
-        <stem>up</stem>
+        <stem>down</stem>
         <staff>1</staff>
         <beam number="1">end</beam>
         <beam number="2">backward hook</beam>
@@ -2107,10 +2107,10 @@
         <type>quarter</type>
         <staff>1</staff>
       </note>
-      <note dynamics="86.67">
+      <note dynamics="44.44">
         <pitch>
-          <step>E</step>
-          <octave>5</octave>
+          <step>G</step>
+          <octave>4</octave>
         </pitch>
         <duration>7560</duration>
         <tie type="start" />
@@ -2147,10 +2147,10 @@
         <dot />
         <staff>1</staff>
       </note>
-      <note dynamics="44.44">
+      <note dynamics="86.67">
         <pitch>
-          <step>G</step>
-          <octave>4</octave>
+          <step>E</step>
+          <octave>5</octave>
         </pitch>
         <duration>7560</duration>
         <tie type="start" />
@@ -2349,10 +2349,10 @@
     </measure>
     <!--========================= Measure 9 ==========================-->
     <measure implicit="no" number="9">
-      <note dynamics="86.67">
+      <note dynamics="44.44">
         <pitch>
-          <step>E</step>
-          <octave>5</octave>
+          <step>G</step>
+          <octave>4</octave>
         </pitch>
         <duration>2520</duration>
         <tie type="stop" />
@@ -2423,10 +2423,10 @@
       <backup>
         <duration>40320</duration>
       </backup>
-      <note dynamics="44.44">
+      <note dynamics="86.67">
         <pitch>
-          <step>G</step>
-          <octave>4</octave>
+          <step>E</step>
+          <octave>5</octave>
         </pitch>
         <duration>2520</duration>
         <tie type="stop" />

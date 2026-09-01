@@ -51,7 +51,35 @@ def quantize_events(
                 end_sec=round(end, 6),
             )
         )
-    return sorted(quantized, key=lambda item: (item.start_sec, item.pitch, item.end_sec))
+    return _cap_high_register_melody_durations(
+        sorted(quantized, key=lambda item: (item.start_sec, item.pitch, item.end_sec)),
+        analysis,
+    )
+
+
+def _cap_high_register_melody_durations(
+    events: list[NoteEvent], analysis: StructureAnalysis
+) -> list[NoteEvent]:
+    """Separate piano resonance from note duration for regular high-register melodies."""
+    if len(events) < 8 or not events or min(event.pitch for event in events) < 60:
+        return events
+    starts = sorted({event.start_sec for event in events})
+    if len(starts) < 8:
+        return events
+    expected = seconds_per_quarter(analysis)
+    gaps = [right - left for left, right in zip(starts, starts[1:], strict=False)]
+    median_gap = median(gaps)
+    if not expected or not expected * 0.75 <= median_gap <= expected * 1.25:
+        return events
+    return [
+        replace(
+            event,
+            end_sec=round(
+                min(event.end_sec, event.start_sec + expected), 6
+            ),
+        )
+        for event in events
+    ]
 
 
 def align_repeating_eighth_note_cycles(
@@ -144,9 +172,13 @@ def decide_notation_pickup(
             candidate_downbeat_velocity=0,
         )
     candidate_units = measure_units - offset_units if offset_units else 0
-    evidence = _complete_eighth_note_measure_evidence(
+    evidence = _complete_quarter_note_measure_evidence(
         events, analysis, candidate_units, divisions_per_quarter
     )
+    if evidence is None:
+        evidence = _complete_eighth_note_measure_evidence(
+        events, analysis, candidate_units, divisions_per_quarter
+        )
     if evidence is not None:
         return PickupDecision(
             measure_offset_units=0,
@@ -167,6 +199,64 @@ def decide_notation_pickup(
         first_onset_velocity=0,
         candidate_downbeat_velocity=0,
     )
+
+
+def _complete_quarter_note_measure_evidence(
+    events: list[NoteEvent],
+    analysis: StructureAnalysis,
+    candidate_units: int,
+    divisions_per_quarter: int,
+) -> dict[str, int | float] | None:
+    """Reject a one-beat false pickup when the melody starts on a full beat."""
+    if (
+        analysis.time_signature != "4/4"
+        or candidate_units != divisions_per_quarter
+        or len(events) < 8
+        or not analysis.downbeat_grid_seconds
+    ):
+        return None
+    first_onset = min(event.start_sec for event in events)
+    candidate_downbeat = analysis.downbeat_grid_seconds[0]
+    quarter_seconds = candidate_downbeat - first_onset
+    expected_quarter = seconds_per_quarter(analysis)
+    if quarter_seconds <= 0 or abs(quarter_seconds - expected_quarter) > expected_quarter * 0.2:
+        return None
+    first_slots = _occupied_slots(
+        events, first_onset, quarter_seconds, start_slot=0, slot_count=4, tolerance=0.35
+    )
+    complete_cycle_count = _complete_cycle_count_for_slots(
+        events, first_onset, quarter_seconds, slots_per_measure=4
+    )
+    matching_cycles = sum(
+        _occupied_slots(
+            events,
+            first_onset,
+            quarter_seconds,
+            start_slot=cycle * 4,
+            slot_count=4,
+            tolerance=0.35,
+        )
+        == 4
+        for cycle in range(complete_cycle_count)
+    )
+    cycle_match_ratio = matching_cycles / complete_cycle_count if complete_cycle_count else 0.0
+    first_velocity = _onset_velocity(events, first_onset, quarter_seconds * 0.2)
+    downbeat_velocity = _onset_velocity(events, candidate_downbeat, quarter_seconds * 0.2)
+    if (
+        first_slots < 4
+        or complete_cycle_count < 2
+        or cycle_match_ratio < 0.8
+        or first_velocity < downbeat_velocity
+    ):
+        return None
+    return {
+        "first_measure_occupied_slots": first_slots,
+        "complete_cycle_count": complete_cycle_count,
+        "matching_complete_cycles": matching_cycles,
+        "cycle_match_ratio": round(cycle_match_ratio, 6),
+        "first_onset_velocity": first_velocity,
+        "candidate_downbeat_velocity": downbeat_velocity,
+    }
 
 
 def _complete_eighth_note_measure_evidence(
@@ -263,9 +353,15 @@ def _occupied_slots(
 
 
 def _complete_cycle_count(events: list[NoteEvent], origin: float, interval: float) -> int:
+    return _complete_cycle_count_for_slots(events, origin, interval, slots_per_measure=8)
+
+
+def _complete_cycle_count_for_slots(
+    events: list[NoteEvent], origin: float, interval: float, *, slots_per_measure: int
+) -> int:
     last_onset = max(event.start_sec for event in events)
     occupied_span_in_slots = (last_onset - origin) / interval + 1
-    return max(0, int((occupied_span_in_slots + 0.55) // 8))
+    return max(0, int((occupied_span_in_slots + 0.55) // slots_per_measure))
 
 
 def _subdivision_grid(

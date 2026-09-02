@@ -1371,6 +1371,13 @@ Phase 9 基线
 - 新字段统一为 `tonality_evidence`、`notation_eligible`、`mode_family`、`mode_variant`、`minor_form_evidence`；旧任务/未执行分析明确返回 `unknown` 或 `not_analyzed`，不伪造 C major。
 - 专项测试 `analysis.py + tonality.py` 共 25 passed，Ruff 与 `git diff --check` 通过；独立 code-reviewer Stage 1/2 PASS，0 HIGH/MEDIUM。额外回归 `pickup + score_validation + pipeline` 为 45 passed、1 failed，唯一失败是宿主 Chrome 导致 OSMD SIGABRT，非本 Task 引入。
 
+**Task 33.1 状态记录（2026-09-02）：**
+
+- 已提交局部调性固定集评测器基础设施（`8401722`），专项测试 8 passed，Ruff 与 `git diff --check` 通过。
+- 已收集 11 段技术候选录音；其中 Mozart K.545、Chopin Op.28 No.7 和 Haydn Hob. XVIII:11 已核验参考谱来源与文件哈希，但均未完成片段级人工音乐真值。
+- 人工标注暂缓；候选资料保存在 `tmp/tonality-candidates/`，不进入正式 `tests/fixtures/tonality/manifest.json`，不计入固定集指标。
+- 当前正式可用真实样本数为 0，Phase 33.1 保持未完成；恢复人工确认后统一补录乐句边界、终止式、局部调性、对齐和 reviewer 信息，再运行固定集门禁。
+
 ---
 
 ## Phase 34：保守调号、小调临时变音与语义谱表输出

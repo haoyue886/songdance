@@ -1,0 +1,182 @@
+{
+  "production_eligible": false,
+  "status": "accepted_candidates_frozen_not_production_release",
+  "acceptance_sha256": "45606abfdc64604c44985a3fa184223aeda4b6b564c4bdf49bd854aeedda9eec",
+  "builder_sha256": "8d6cfd3f2d12bd55269997caf8550f04d840b8cb8c1be031656a03927709da5a",
+  "acceptance_source": "user_message",
+  "confirmation_text": "都没问题进行下一步",
+  "musescore_validation": "user_acceptance_not_automated_validation",
+  "cases": [
+    {
+      "case_id": "06-sustain",
+      "status": "user_accepted_candidate",
+      "source_kind": "new_synthetic_teacher_pattern_not_original_audio",
+      "known_limitations": [],
+      "files": {
+        "score.musicxml": {
+          "path": "06-sustain/score.musicxml",
+          "sha256": "3aeb4ee2528a2839905139ba5c91923ef51ab042737e606f17460e7aa2ce0616"
+        },
+        "source.wav": {
+          "path": "06-sustain/source.wav",
+          "sha256": "fe811f1edc1c33e9207b9f96988a933de096fb1f5a63ac3b54ef5349fac70e24"
+        }
+      },
+      "structure": {
+        "part_count": 1,
+        "measure_count": 8,
+        "chord_count": 15,
+        "voice_count": 0,
+        "rest_count": 0,
+        "short_rest_count": 0,
+        "measure_duration_error_count": 0,
+        "partial_final_measure_count": 1,
+        "time_signatures": [
+          "4/4"
+        ],
+        "key_signatures": [],
+        "key_signature_status": "not_analyzed",
+        "errors": [],
+        "music21_staff_count": 1,
+        "staff_measure_count": 8,
+        "musicxml_score_part_count": 1,
+        "musicxml_part_count": 1,
+        "staff_count": 1,
+        "clefs": {
+          "1": "G2"
+        },
+        "staff_numbers": [
+          "1"
+        ],
+        "voices_by_staff": {
+          "1": [
+            "1"
+          ]
+        },
+        "maximum_voices_by_staff_measure": {
+          "1": 1
+        },
+        "backup_count": 0,
+        "pedal_mark_count": 0
+      }
+    },
+    {
+      "case_id": "07-soft",
+      "status": "user_accepted_candidate",
+      "source_kind": "original_fixture",
+      "known_limitations": [],
+      "files": {
+        "score.musicxml": {
+          "path": "07-soft/score.musicxml",
+          "sha256": "3db345f7a6e5e0df1f278dc1334ce3d7fbe2c2eb67136c03e1c8ae0384f59dca"
+        },
+        "source.wav": {
+          "path": "07-soft/source.wav",
+          "sha256": "380160b2a85112599a6923e9cbec855bafc860ac6fce697cd563868d8a68ba12"
+        }
+      },
+      "structure": {
+        "part_count": 1,
+        "measure_count": 15,
+        "chord_count": 0,
+        "voice_count": 0,
+        "rest_count": 0,
+        "short_rest_count": 0,
+        "measure_duration_error_count": 0,
+        "partial_final_measure_count": 0,
+        "time_signatures": [
+          "4/4"
+        ],
+        "key_signatures": [
+          0
+        ],
+        "key_signature_status": "detected",
+        "errors": [],
+        "music21_staff_count": 1,
+        "staff_measure_count": 15,
+        "musicxml_score_part_count": 1,
+        "musicxml_part_count": 1,
+        "staff_count": 1,
+        "clefs": {
+          "1": "G2"
+        },
+        "staff_numbers": [
+          "1"
+        ],
+        "voices_by_staff": {
+          "1": [
+            "1"
+          ]
+        },
+        "maximum_voices_by_staff_measure": {
+          "1": 1
+        },
+        "backup_count": 0,
+        "pedal_mark_count": 0
+      }
+    },
+    {
+      "case_id": "10-device",
+      "status": "user_accepted_candidate",
+      "source_kind": "original_fixture",
+      "known_limitations": [
+        "model still misses C2 at 0/15/16 seconds; score acceptance does not erase this finding"
+      ],
+      "files": {
+        "score.musicxml": {
+          "path": "10-device/score.musicxml",
+          "sha256": "d6b4b9a1c9f8704fb26f86908cb624572d85b8685c8026b1dc918e5ba6e62692"
+        },
+        "source.wav": {
+          "path": "10-device/source.wav",
+          "sha256": "2a364af3fd70cbb4b7cf45dfc6d36eccfbdc0d3d43ec6e0eeb60588197ca2381"
+        }
+      },
+      "structure": {
+        "part_count": 1,
+        "measure_count": 15,
+        "chord_count": 0,
+        "voice_count": 0,
+        "rest_count": 4,
+        "short_rest_count": 0,
+        "measure_duration_error_count": 0,
+        "partial_final_measure_count": 0,
+        "time_signatures": [
+          "4/4"
+        ],
+        "key_signatures": [
+          0
+        ],
+        "key_signature_status": "detected",
+        "errors": [],
+        "music21_staff_count": 2,
+        "staff_measure_count": 30,
+        "musicxml_score_part_count": 1,
+        "musicxml_part_count": 1,
+        "staff_count": 2,
+        "clefs": {
+          "1": "G2",
+          "2": "F4"
+        },
+        "staff_numbers": [
+          "1",
+          "2"
+        ],
+        "voices_by_staff": {
+          "1": [
+            "1"
+          ],
+          "2": [
+            "2"
+          ]
+        },
+        "maximum_voices_by_staff_measure": {
+          "1": 1,
+          "2": 1
+        },
+        "backup_count": 15,
+        "pedal_mark_count": 0
+      }
+    }
+  ]
+}

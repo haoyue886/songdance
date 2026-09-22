@@ -1,0 +1,32 @@
+{
+  "schema_version": 1,
+  "generated_at": "2026-09-03",
+  "source_inventory": "real-sample-gap-inventory.json",
+  "counts": {
+    "technical_recording_candidates": 11,
+    "recordings_required": 12,
+    "recordings_missing": 1,
+    "matching_reference_files_with_sha256": 4,
+    "reference_files_required_for_12_recordings": 12,
+    "reference_files_missing": 8,
+    "human_truth_confirmed": 0,
+    "controlled_adversarial_required": 8
+  },
+  "matching_reference_cases": [
+    "03-mozart-sonata",
+    "08-chopin-a-major",
+    "10-rachmaninoff-c-sharp",
+    "haydn-concerto-d-vivace-chestnut"
+  ],
+  "blocked_identity_cases": [
+    "01-bach-capriccio",
+    "02-brahms-intermezzo",
+    "04-rachmaninoff-g-sharp",
+    "05-chopin-c-minor",
+    "06-scriabin-etude",
+    "07-chopin-ballade",
+    "09-chopin-waltz"
+  ],
+  "gate_state": "collection_incomplete_manual_truth_deferred",
+  "next_action": "Resolve exact work identity, acquire eight additional matching public/open score files, and add one more real recording before the unified human annotation pass."
+}

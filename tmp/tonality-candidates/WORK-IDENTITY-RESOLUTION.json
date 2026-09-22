@@ -1,0 +1,57 @@
+{
+  "schema_version": 1,
+  "source": "human-provenance.json descriptions and work-title uniqueness",
+  "status": "partial_resolution",
+  "resolved": [
+    {
+      "case_id": "01-bach-capriccio",
+      "work_identity": "J.S. Bach Partita No. 2 in C minor, BWV 826, final Capriccio",
+      "confidence": "high",
+      "basis": "Provenance explicitly says Capriccio from Partita C minor #2; BWV 826 is the C-minor Partita No. 2 containing a Capriccio movement."
+    },
+    {
+      "case_id": "02-brahms-intermezzo",
+      "work_identity": "J. Brahms 4 Pieces, Op. 118 No. 2, Intermezzo in A major",
+      "confidence": "high",
+      "basis": "The A-major Brahms Intermezzo is uniquely identified in the standard piano repertoire as Op. 118 No. 2."
+    },
+    {
+      "case_id": "04-rachmaninoff-g-sharp",
+      "work_identity": "S. Rachmaninoff 13 Preludes, Op. 32 No. 12, Prelude in G-sharp minor",
+      "confidence": "high",
+      "basis": "Op. 32 No. 12 is the standard Rachmaninoff G-sharp-minor Prelude; verify against recording page before final binding."
+    },
+    {
+      "case_id": "07-chopin-ballade",
+      "work_identity": "F. Chopin Ballade No. 1 in G minor, Op. 23",
+      "confidence": "high",
+      "basis": "Ballade No. 1 has the unique standard catalog identity Op. 23 in G minor."
+    },
+    {
+      "case_id": "10-rachmaninoff-c-sharp",
+      "work_identity": "S. Rachmaninoff Morceaux de fantaisie, Op. 3 No. 2, Prelude in C-sharp minor",
+      "confidence": "high",
+      "basis": "The printed IMSLP Op. 3 score is already downloaded and matched to the provenance title."
+    }
+  ],
+  "unresolved": [
+    {
+      "case_id": "05-chopin-c-minor",
+      "possibilities": ["Prelude Op. 28 No. 20 in C minor", "another Chopin C-minor prelude"],
+      "confidence": "medium",
+      "next_action": "confirm the prelude number from the recording page or audible opening before binding Op. 28 score"
+    },
+    {
+      "case_id": "06-scriabin-etude",
+      "possibilities": ["Op. 33 etude, number unknown", "Op. 8 No. 12 in D-sharp minor if provenance opus is a typo"],
+      "confidence": "low",
+      "next_action": "resolve the explicit Op. 33 versus Op. 8 conflict; do not use the downloaded Op. 8 score"
+    },
+    {
+      "case_id": "09-chopin-waltz",
+      "possibilities": ["Waltz Op. 42 in A-flat major", "Waltz Op. 69 No. 1", "Waltz Op. 70 No. 2", "posthumous A-flat waltz"],
+      "confidence": "low",
+      "next_action": "confirm opus number from recording page or score before binding a reference"
+    }
+  ]
+}

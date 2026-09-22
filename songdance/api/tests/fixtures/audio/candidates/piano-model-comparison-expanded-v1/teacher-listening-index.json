@@ -1,0 +1,27 @@
+{
+  "production_eligible": false,
+  "final_review_package": false,
+  "items": [
+    {
+      "case_id": "06-sustain",
+      "candidate": "transkun-v2/chord-sync-candidate.musicxml",
+      "rule": "同和弦簇同步结束，跨和弦边界截断",
+      "preserves": "48个事件、15个和弦簇、13个和弦",
+      "risk": "延音可能被截短，需听音确认"
+    },
+    {
+      "case_id": "07-soft",
+      "candidate": "transkun-v2/monophonic-candidate.musicxml",
+      "rule": "单旋律延音截断到下一独立起音",
+      "preserves": "40个事件、单高音谱表、单voice",
+      "risk": "需要确认弱音尾音是否应保留为踏板"
+    },
+    {
+      "case_id": "10-device",
+      "candidate": "transkun-v2/duration-candidate.musicxml",
+      "rule": "低音固定左手一拍，高音组内截断",
+      "preserves": "27个低音、60个高音、双谱表",
+      "risk": "0.9秒低音时值仍是实验假设"
+    }
+  ]
+}

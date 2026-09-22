@@ -1,0 +1,34 @@
+[
+  {
+    "case_id": "06-sustain",
+    "events": 48,
+    "voices": 20,
+    "rests": 25,
+    "measure_duration_errors": 0,
+    "production_eligible": false
+  },
+  {
+    "case_id": "07-soft",
+    "events": 40,
+    "voices": 0,
+    "rests": 15,
+    "measure_duration_errors": 0,
+    "production_eligible": false
+  },
+  {
+    "case_id": "10-device",
+    "events": 87,
+    "voices": 0,
+    "rests": 21,
+    "measure_duration_errors": 0,
+    "production_eligible": false
+  },
+  {
+    "case_id": "14-hand-crossing",
+    "events": 105,
+    "voices": 14,
+    "rests": 34,
+    "measure_duration_errors": 0,
+    "production_eligible": false
+  }
+]

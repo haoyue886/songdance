@@ -1,0 +1,42 @@
+{
+  "integrity": "passed",
+  "audio": [
+    {
+      "source": "original.wav",
+      "duration": 30,
+      "advanced": true,
+      "error": null
+    },
+    {
+      "source": "before/playback.wav",
+      "duration": 32.853333,
+      "advanced": true,
+      "error": null
+    },
+    {
+      "source": "after/playback.wav",
+      "duration": 33.050703,
+      "advanced": true,
+      "error": null
+    }
+  ],
+  "links": [
+    "before/score.pdf",
+    "before/score.musicxml",
+    "before/score.mid",
+    "after/score.pdf",
+    "after/score.musicxml",
+    "after/score.mid"
+  ],
+  "layouts": [
+    {
+      "width": 375,
+      "fits": true
+    },
+    {
+      "width": 1280,
+      "fits": true
+    }
+  ],
+  "production_eligible": false
+}

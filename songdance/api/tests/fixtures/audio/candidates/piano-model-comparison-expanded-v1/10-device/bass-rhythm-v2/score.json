@@ -1,0 +1,171 @@
+{
+  "production_eligible": false,
+  "status": "rhythm_hypothesis_missing_bass_unresolved",
+  "source_sha256": "6940a929dadb3947c61b0bbe73acd51fb928deda1ab43a4c923a978dc1c258d0",
+  "output_sha256": "d6b4b9a1c9f8704fb26f86908cb624572d85b8685c8026b1dc918e5ba6e62692",
+  "changes": [
+    {
+      "measure": "1",
+      "before": 17640,
+      "after": 20160,
+      "absorbed_rest": 2520
+    },
+    {
+      "measure": "2",
+      "before": 17640,
+      "after": 20160,
+      "absorbed_rest": 2520
+    },
+    {
+      "measure": "2",
+      "before": 17640,
+      "after": 20160,
+      "absorbed_rest": 2520
+    },
+    {
+      "measure": "3",
+      "before": 17640,
+      "after": 20160,
+      "absorbed_rest": 2520
+    },
+    {
+      "measure": "3",
+      "before": 17640,
+      "after": 20160,
+      "absorbed_rest": 2520
+    },
+    {
+      "measure": "4",
+      "before": 17640,
+      "after": 20160,
+      "absorbed_rest": 2520
+    },
+    {
+      "measure": "4",
+      "before": 17640,
+      "after": 20160,
+      "absorbed_rest": 2520
+    },
+    {
+      "measure": "5",
+      "before": 17640,
+      "after": 20160,
+      "absorbed_rest": 2520
+    },
+    {
+      "measure": "5",
+      "before": 17640,
+      "after": 20160,
+      "absorbed_rest": 2520
+    },
+    {
+      "measure": "6",
+      "before": 17640,
+      "after": 20160,
+      "absorbed_rest": 2520
+    },
+    {
+      "measure": "6",
+      "before": 17640,
+      "after": 20160,
+      "absorbed_rest": 2520
+    },
+    {
+      "measure": "7",
+      "before": 17640,
+      "after": 20160,
+      "absorbed_rest": 2520
+    },
+    {
+      "measure": "7",
+      "before": 17640,
+      "after": 20160,
+      "absorbed_rest": 2520
+    },
+    {
+      "measure": "9",
+      "before": 17640,
+      "after": 20160,
+      "absorbed_rest": 2520
+    },
+    {
+      "measure": "10",
+      "before": 17640,
+      "after": 20160,
+      "absorbed_rest": 2520
+    },
+    {
+      "measure": "10",
+      "before": 17640,
+      "after": 20160,
+      "absorbed_rest": 2520
+    },
+    {
+      "measure": "11",
+      "before": 17640,
+      "after": 20160,
+      "absorbed_rest": 2520
+    },
+    {
+      "measure": "11",
+      "before": 17640,
+      "after": 20160,
+      "absorbed_rest": 2520
+    },
+    {
+      "measure": "12",
+      "before": 17640,
+      "after": 20160,
+      "absorbed_rest": 2520
+    },
+    {
+      "measure": "12",
+      "before": 17640,
+      "after": 20160,
+      "absorbed_rest": 2520
+    },
+    {
+      "measure": "13",
+      "before": 17640,
+      "after": 20160,
+      "absorbed_rest": 2520
+    },
+    {
+      "measure": "13",
+      "before": 17640,
+      "after": 20160,
+      "absorbed_rest": 2520
+    },
+    {
+      "measure": "14",
+      "before": 17640,
+      "after": 20160,
+      "absorbed_rest": 2520
+    },
+    {
+      "measure": "14",
+      "before": 17640,
+      "after": 20160,
+      "absorbed_rest": 2520
+    },
+    {
+      "measure": "15",
+      "before": 17640,
+      "after": 20160,
+      "absorbed_rest": 2520
+    },
+    {
+      "measure": "15",
+      "before": 17640,
+      "after": 20160,
+      "absorbed_rest": 2520
+    }
+  ],
+  "pitch_onsets_preserved": true,
+  "treble_unchanged": true,
+  "missing_C2_reference_seconds": [
+    0,
+    15,
+    16
+  ]
+}

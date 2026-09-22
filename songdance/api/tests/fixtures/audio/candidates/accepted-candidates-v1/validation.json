@@ -1,0 +1,32 @@
+{
+  "candidate_integrity_passed": true,
+  "production_eligible": false,
+  "scope": "file identity and parser checks only; not model readiness or new human review",
+  "manifest_sha256": "73b0515f238dae91bf2612a46a65f2967a5c31d946f056eb19511d56b1d6b423",
+  "validator_sha256": "c280a2d7ca0b0a43cd5874737b1788dbdbeb9affe89f96034efd249d1af2b402",
+  "cases": [
+    {
+      "case_id": "06-sustain",
+      "frozen_artifacts_verified": true,
+      "known_limitations": [],
+      "staff_count": 1,
+      "measure_duration_errors": 0
+    },
+    {
+      "case_id": "07-soft",
+      "frozen_artifacts_verified": true,
+      "known_limitations": [],
+      "staff_count": 1,
+      "measure_duration_errors": 0
+    },
+    {
+      "case_id": "10-device",
+      "frozen_artifacts_verified": true,
+      "known_limitations": [
+        "model still misses C2 at 0/15/16 seconds; score acceptance does not erase this finding"
+      ],
+      "staff_count": 2,
+      "measure_duration_errors": 0
+    }
+  ]
+}

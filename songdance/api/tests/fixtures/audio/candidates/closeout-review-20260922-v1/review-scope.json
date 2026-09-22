@@ -1,0 +1,814 @@
+{
+  "production_eligible": false,
+  "difference_report_sha256": "da743acaf2ebaec527ecdec77f99f8f2b0f9b64ccbfe7be8ff45aa18c9c5feb5",
+  "script_sha256": "cf17234703c6b9897ec87a8748caf0e8a3eb9240aab1fec76af04f850cbb45ba",
+  "cases": [
+    {
+      "suite": "structure",
+      "case_id": "01-slow-melody",
+      "old_count": 45,
+      "new_count": 45,
+      "pitch_counts_changed": false,
+      "ordered_pitch_sequence_changed": false,
+      "timing_changed": true,
+      "velocity_changed": false,
+      "visible_metadata_changed": false,
+      "review_focus": "节奏/时值/小节对齐复核",
+      "rating": "pending",
+      "inputs": {
+        "raw.mid": {
+          "old": "071e74acf65e521ad439c03bce51eb1c6f2e451231ba31571aa01b74ae58c267",
+          "new": "071e74acf65e521ad439c03bce51eb1c6f2e451231ba31571aa01b74ae58c267"
+        },
+        "score.mid": {
+          "old": "7467459e1b79bae0982e50b9b85b85738702cf4294345066a225ae4daef83391",
+          "new": "89153edcbc34a61f9654808a49ffe4b81d8c36de542c597a61d78b22b864527d"
+        },
+        "score.musicxml": {
+          "old": "289fec75241becba4e7f1d6c0dac4361c532b6b36d2e6891da542bdc8e6c423a",
+          "new": "966f36fa79552491606c438bd8f1fb45feb5e7dcd4f819fa7f998f610fd2ea4b"
+        },
+        "timeline.json": {
+          "old": "9b02de80a3064b7a7277b6bc3595a49608311ada87d1734db6546a2ef1da9975",
+          "new": "1be0fd30811105b3a218235d6cdafdd0e39c74970bfef869e38aefa124c3fe35"
+        }
+      }
+    },
+    {
+      "suite": "structure",
+      "case_id": "02-fast-scale",
+      "old_count": 183,
+      "new_count": 183,
+      "pitch_counts_changed": false,
+      "ordered_pitch_sequence_changed": true,
+      "timing_changed": true,
+      "velocity_changed": true,
+      "visible_metadata_changed": true,
+      "review_focus": "音符数量/顺序及完整谱面复核",
+      "rating": "pending",
+      "inputs": {
+        "raw.mid": {
+          "old": "70348b09957db9f882766fe536124590f2c2f63d38996bcd66bbd21a9eeb3e23",
+          "new": "70348b09957db9f882766fe536124590f2c2f63d38996bcd66bbd21a9eeb3e23"
+        },
+        "score.mid": {
+          "old": "e5afe2646982be8d4581172665fa38c9ff833355b1a6a2ae2368e78b4b134da7",
+          "new": "9b689bc6c4ac103d3e9c7afc7a78d095bb1c1e27d545588d057d5aa8f1d5af52"
+        },
+        "score.musicxml": {
+          "old": "01e0ad4f6321eecf05f246e0b998759e59c7fad81f2c03dc83d1c45fedbd03b9",
+          "new": "d0e069402af10c5aa77c1cb733f63cbc7095be12a2c139dcb01d6adefc6275c8"
+        },
+        "timeline.json": {
+          "old": "b505aff4e4a3cead81b978576ac18a4ff7a2f21e6b5042128fb0341797205c0a",
+          "new": "2eac0b1a01a0165014cd1ea49a9785ae34b0bd73d07ae16e515c6a047e970f3d"
+        }
+      }
+    },
+    {
+      "suite": "structure",
+      "case_id": "03-block-chords",
+      "old_count": 118,
+      "new_count": 118,
+      "pitch_counts_changed": false,
+      "ordered_pitch_sequence_changed": true,
+      "timing_changed": true,
+      "velocity_changed": true,
+      "visible_metadata_changed": false,
+      "review_focus": "音符数量/顺序及完整谱面复核",
+      "rating": "pending",
+      "inputs": {
+        "raw.mid": {
+          "old": "6081626f45b925bfdf29989ca9b6e40b342f5f2377d88c1d5a96e78d0301ea62",
+          "new": "6081626f45b925bfdf29989ca9b6e40b342f5f2377d88c1d5a96e78d0301ea62"
+        },
+        "score.mid": {
+          "old": "b2ed3e0ef3885358f47a423f7c7857274a9ca7a10f3ed5ebc7d19937405246b2",
+          "new": "32314454f2f165ee5c2dc64bfeaa4f0f7299ea5d8f65131036e8466b227588ea"
+        },
+        "score.musicxml": {
+          "old": "e154220e86e81ce16293abbf9ccc4217fe821e474864805ce296fc39ff1c5c2f",
+          "new": "3e74961648eb729463d4a8adfb8906da61f807b336d0b8c857a2e569ea3b4e45"
+        },
+        "timeline.json": {
+          "old": "48923445556fb32d114417437a0e4102ce7b78ccb94276c156d56eff7202a8ab",
+          "new": "1e1a72defded74b97cb4b78e2589f58cd89bb99ecc699146975cdbdee941984a"
+        }
+      }
+    },
+    {
+      "suite": "structure",
+      "case_id": "04-arpeggios",
+      "old_count": 282,
+      "new_count": 282,
+      "pitch_counts_changed": false,
+      "ordered_pitch_sequence_changed": false,
+      "timing_changed": true,
+      "velocity_changed": false,
+      "visible_metadata_changed": true,
+      "review_focus": "节奏/时值/小节对齐复核",
+      "rating": "pending",
+      "inputs": {
+        "raw.mid": {
+          "old": "a501b03d926f950a25e9bf0ef01e504c61180bb133025aa52bf297672868a823",
+          "new": "a501b03d926f950a25e9bf0ef01e504c61180bb133025aa52bf297672868a823"
+        },
+        "score.mid": {
+          "old": "f2e7be2248b15fcd7c4b1b378351fdb1f74a4e54e476e37131c826688f994fa8",
+          "new": "f854dda6be6375195f1589586e11d8ecb2265303d0ba218a1512731e8df1a7fe"
+        },
+        "score.musicxml": {
+          "old": "c1a67d5aca951855662d626be1cdd229d51b22e4fb4e8a3d1db7c3c5e42c445d",
+          "new": "b3768b70fe3bb6ac77d2dc8b2cc7a535c82ba1c1ff0b6e40d77b8239082ebb84"
+        },
+        "timeline.json": {
+          "old": "c43536e499f8924cce930d1b737730b0522afd2ecbd569915d205c76231ec95a",
+          "new": "82ef9c3cbbc029835354c31278a0c7cc02c5d2b72d5d4241856a29f0f1b05566"
+        }
+      }
+    },
+    {
+      "suite": "structure",
+      "case_id": "05-two-hand",
+      "old_count": 208,
+      "new_count": 208,
+      "pitch_counts_changed": false,
+      "ordered_pitch_sequence_changed": true,
+      "timing_changed": true,
+      "velocity_changed": true,
+      "visible_metadata_changed": true,
+      "review_focus": "音符数量/顺序及完整谱面复核",
+      "rating": "pending",
+      "inputs": {
+        "raw.mid": {
+          "old": "2db9a1e570c0cac17dc5bfa5edc8b81bbe549fa409876554d20e43b59146b72d",
+          "new": "2db9a1e570c0cac17dc5bfa5edc8b81bbe549fa409876554d20e43b59146b72d"
+        },
+        "score.mid": {
+          "old": "40ad6bf0dcf7faa26f87499faf753d359e782a721bc325f37ad8ddfd54208f22",
+          "new": "22eda1bbd95e952b5c34fcca79f74e2829ef97df6d2cd9f8166eac21e445e7af"
+        },
+        "score.musicxml": {
+          "old": "9028c36f825ee08af973535063cb92af3f6ad42a826a1d66635895b895408c96",
+          "new": "90098493340ee3f5db2b1c892fce9801b2a05ff25b60806ca6648de6a7a431a1"
+        },
+        "timeline.json": {
+          "old": "a80c7066deeeb9104acef3d932b8ac671f977fdd452c5a7982f1c5b3f04bc370",
+          "new": "e2bc77012f1ce5a9c30e8eeafbc7169c12eb2baedbe48b0e99679d89ceccbd3a"
+        }
+      }
+    },
+    {
+      "suite": "structure",
+      "case_id": "06-sustain",
+      "old_count": 101,
+      "new_count": 101,
+      "pitch_counts_changed": false,
+      "ordered_pitch_sequence_changed": false,
+      "timing_changed": true,
+      "velocity_changed": false,
+      "visible_metadata_changed": false,
+      "review_focus": "节奏/时值/小节对齐复核",
+      "rating": "pending",
+      "inputs": {
+        "raw.mid": {
+          "old": "60a808d3b99bef66518afa9518c94a8f34a34ad6f72630dbeacdce0036966ad9",
+          "new": "60a808d3b99bef66518afa9518c94a8f34a34ad6f72630dbeacdce0036966ad9"
+        },
+        "score.mid": {
+          "old": "18b66e361752d506404cc2a5953bae730a52b914c2c2bc76d0e0a2693ef4e763",
+          "new": "af73ba5fc590385af828eb0a6da770a8b97ddd098c2e4071fa47e9587a764800"
+        },
+        "score.musicxml": {
+          "old": "7ad69aa26c769df74b14e7b6a1e2b5fb6272eb0ff6ccd82d7b9c5a5f997475c0",
+          "new": "efdebdacba6dbd1f6300019529e55b95d3e27b2d1c90dfc14ee7c773e64f10b8"
+        },
+        "timeline.json": {
+          "old": "0bf51c80b8f09de1ceef502b469a7bc0d7b6d853042de6ad458f7f8b8ff60754",
+          "new": "765d4e73f76ac3304cfa45db0ac2115319e778a97366a2a074e001e83ff46bf5"
+        }
+      }
+    },
+    {
+      "suite": "structure",
+      "case_id": "07-soft",
+      "old_count": 58,
+      "new_count": 58,
+      "pitch_counts_changed": false,
+      "ordered_pitch_sequence_changed": true,
+      "timing_changed": true,
+      "velocity_changed": true,
+      "visible_metadata_changed": true,
+      "review_focus": "音符数量/顺序及完整谱面复核",
+      "rating": "pending",
+      "inputs": {
+        "raw.mid": {
+          "old": "76a0992a4946e9fb11bb6afd187d86f5d3be858a1c5479bbab00c9f97ed9431d",
+          "new": "76a0992a4946e9fb11bb6afd187d86f5d3be858a1c5479bbab00c9f97ed9431d"
+        },
+        "score.mid": {
+          "old": "1fe73a123b5b1259b952bbabb9b1a89cdd0e7e2b0156c32759d2fb2f9b7e3349",
+          "new": "5b33e9a7bf7e06cc870a2aa66cdc45aa4a5d9af35f43ed5d89a982fbfb69517c"
+        },
+        "score.musicxml": {
+          "old": "1856f64cd22351279604f512128d60ce7b6dfa366cc5c033b089076fea9a62d3",
+          "new": "43e200ea10c019325358c2bc514768c9758aa765430437da9193e4404d13073d"
+        },
+        "timeline.json": {
+          "old": "8cfa7a9bdee5512df67f30c4606457067c57172952953c761b7e3a1a38d8a0cf",
+          "new": "88e1309bf0a1c63159f6e993f966db3df9904110d5c3443458231643fbe654ec"
+        }
+      }
+    },
+    {
+      "suite": "structure",
+      "case_id": "08-dynamics",
+      "old_count": 90,
+      "new_count": 92,
+      "pitch_counts_changed": true,
+      "ordered_pitch_sequence_changed": true,
+      "timing_changed": true,
+      "velocity_changed": true,
+      "visible_metadata_changed": false,
+      "review_focus": "音符数量/顺序及完整谱面复核",
+      "rating": "pending",
+      "inputs": {
+        "raw.mid": {
+          "old": "8513364f0b09c32405a04eb284ce34d4fb5e667ebda7f15ca09a22c0d372299f",
+          "new": "8513364f0b09c32405a04eb284ce34d4fb5e667ebda7f15ca09a22c0d372299f"
+        },
+        "score.mid": {
+          "old": "e49ffa6759874721badc8487f06e8fe35d0eb23f690f4bb9be8944b98528caf3",
+          "new": "db958d36623e5c6ae5b48b97120eb12d86fc8aa8b0626a609eebb88959da257c"
+        },
+        "score.musicxml": {
+          "old": "23fc75db12a75339a1b4bb91c293ec335c569b1a113ccc57ef17ea6a5adf7dde",
+          "new": "d6af914d9d5f4fa5d51025be769947aae7d956c816e8c2bf3b9480a059c1087a"
+        },
+        "timeline.json": {
+          "old": "b3eb7cd63dbc69c64276575a37688b07bb7ae9cd1dc743ed92c699260c690b6e",
+          "new": "5a7e1086daaa2703bdc73081a57a943a9eb9acfe6d64828b27a957f517bc591a"
+        }
+      }
+    },
+    {
+      "suite": "structure",
+      "case_id": "09-light-noise",
+      "old_count": 30,
+      "new_count": 30,
+      "pitch_counts_changed": false,
+      "ordered_pitch_sequence_changed": false,
+      "timing_changed": true,
+      "velocity_changed": false,
+      "visible_metadata_changed": false,
+      "review_focus": "节奏/时值/小节对齐复核",
+      "rating": "pending",
+      "inputs": {
+        "raw.mid": {
+          "old": "a4c115754637c90ce5062c26a42a37874a03cde10f91fbb0d0d7294caec0f5b1",
+          "new": "a4c115754637c90ce5062c26a42a37874a03cde10f91fbb0d0d7294caec0f5b1"
+        },
+        "score.mid": {
+          "old": "d8441d3099ff836cf410ba18d5f4bb5777a4c22eee005f86eb4a4fb81e0b4276",
+          "new": "df383d01766c72cd446dce37b2d75e994f0911e85ba77de67bfa2b0c342f837b"
+        },
+        "score.musicxml": {
+          "old": "afc2c7393d5f4e8a87e0ae1c7ca39f433e04cd791999b8003cc7d0781c432ef8",
+          "new": "cf518d261a9856012783745d2afdfbea50d73e424a9f10b00428593cd956130d"
+        },
+        "timeline.json": {
+          "old": "93c6dc160bd8db555908dacf25ea83b7580958a5ad328cdc4f5821ad1b435735",
+          "new": "721767c37277ba5a95569ee9f7aa24089296f97a893cb1711b6bdbd7d2c80ebe"
+        }
+      }
+    },
+    {
+      "suite": "structure",
+      "case_id": "10-device",
+      "old_count": 174,
+      "new_count": 174,
+      "pitch_counts_changed": false,
+      "ordered_pitch_sequence_changed": true,
+      "timing_changed": true,
+      "velocity_changed": true,
+      "visible_metadata_changed": true,
+      "review_focus": "音符数量/顺序及完整谱面复核",
+      "rating": "pending",
+      "inputs": {
+        "raw.mid": {
+          "old": "f2af178b7feaa8072b5b6f1102a5f11f15106d98e20a69b29cfa76d53957b94e",
+          "new": "f2af178b7feaa8072b5b6f1102a5f11f15106d98e20a69b29cfa76d53957b94e"
+        },
+        "score.mid": {
+          "old": "8bc0ea90b04876d9dadfc9579e446f17d0853738e81d1e49ab5c3bc7fd357727",
+          "new": "0552ec70b8f43ae7b548a311a21ec280e1082c33d4a1ecff4774c93eea5ffe94"
+        },
+        "score.musicxml": {
+          "old": "02d0599ffbe387498c2c264b05583ff2c742579d7a8328c19054fb3ebb84e219",
+          "new": "bd6d7b034a1a260378a67563db0e8bdead7161dfc43ccf5b5001162f59d1276a"
+        },
+        "timeline.json": {
+          "old": "afa19d21d975e257b2d422b78f380e9907314ffd1911919be70fd02c52d0768c",
+          "new": "a02c8380a6bbf2a1f85c730feffff33f1680aeaee836dfe1d52debce30eec741"
+        }
+      }
+    },
+    {
+      "suite": "structure",
+      "case_id": "11-waltz-34",
+      "old_count": 117,
+      "new_count": 117,
+      "pitch_counts_changed": false,
+      "ordered_pitch_sequence_changed": false,
+      "timing_changed": true,
+      "velocity_changed": false,
+      "visible_metadata_changed": true,
+      "review_focus": "节奏/时值/小节对齐复核",
+      "rating": "pending",
+      "inputs": {
+        "raw.mid": {
+          "old": "15a3ffddf6ade2453876051ce56fd2a09e5a6f4fe4582dff3dd2e4db874eed4d",
+          "new": "15a3ffddf6ade2453876051ce56fd2a09e5a6f4fe4582dff3dd2e4db874eed4d"
+        },
+        "score.mid": {
+          "old": "b49fd392ebbe8e4551f700bff5e64355f3fec2aa2a6dbd61e5b20c7cf88d333f",
+          "new": "8df96e63dc92dcf4b096029a69f071f60bec88be8084a70dd18704393fb3787e"
+        },
+        "score.musicxml": {
+          "old": "b537b6de786562f7a2775597facc778d3cbb0056348e3d43e75f72391fdd5b8c",
+          "new": "ae130ca47e397d664b5c4a3c26d733163018e802b7e5d6476436dd9d6e211d4e"
+        },
+        "timeline.json": {
+          "old": "c8018430abd5d154a269442e99a8769e64fa559c9b05672f0146b8f4102a54a9",
+          "new": "171cd64e320dffa8f875275b625b2fe99848c55f3b68520d86b442202b4149a2"
+        }
+      }
+    },
+    {
+      "suite": "structure",
+      "case_id": "12-compound-68",
+      "old_count": 119,
+      "new_count": 119,
+      "pitch_counts_changed": true,
+      "ordered_pitch_sequence_changed": true,
+      "timing_changed": true,
+      "velocity_changed": true,
+      "visible_metadata_changed": false,
+      "review_focus": "音符数量/顺序及完整谱面复核",
+      "rating": "pending",
+      "inputs": {
+        "raw.mid": {
+          "old": "bbf17c68a2285e70895dd0a91d8774febe20b9aba8ba4c1f4da4b72dda09488d",
+          "new": "bbf17c68a2285e70895dd0a91d8774febe20b9aba8ba4c1f4da4b72dda09488d"
+        },
+        "score.mid": {
+          "old": "3b64e702ed791ea1d4c32e44e94e2747245cf4a546a2132361a184eee17b402f",
+          "new": "cceb9bd0bc0665b73cb948bc7844179d18cd46c3d4ebab8ce67ee762648800c6"
+        },
+        "score.musicxml": {
+          "old": "525608d0190ec859472d5d4dc9d4fd403842c3d81b26e2977e9390727f7fe328",
+          "new": "2f478565d39c28bca37498011e082cff3e1bf52def62f376ce3c4394945cca2f"
+        },
+        "timeline.json": {
+          "old": "9eb0437e220fc00eb9de7c2f93564cff43b802b176f4ed8d3f19f09ac9c8b78b",
+          "new": "3c89d0a09d76dfb9532559651d2a3092d31ffdd9926613a51b732d88d91f4101"
+        }
+      }
+    },
+    {
+      "suite": "structure",
+      "case_id": "13-key-change",
+      "old_count": 60,
+      "new_count": 60,
+      "pitch_counts_changed": false,
+      "ordered_pitch_sequence_changed": false,
+      "timing_changed": true,
+      "velocity_changed": false,
+      "visible_metadata_changed": false,
+      "review_focus": "节奏/时值/小节对齐复核",
+      "rating": "pending",
+      "inputs": {
+        "raw.mid": {
+          "old": "f456e7e06f0232389677b87f138d030b782dc60f2603364f29141d8b739c8379",
+          "new": "f456e7e06f0232389677b87f138d030b782dc60f2603364f29141d8b739c8379"
+        },
+        "score.mid": {
+          "old": "cfb87aab868495d09d10eae3b93154f10531a1acb96c8f72d231e5167db6fc44",
+          "new": "84af5768149d067ebd46159920d1d57b19586e62fcc079515dbdd3b3536f73c6"
+        },
+        "score.musicxml": {
+          "old": "7d7d1c241dce0c9842e817151edbe3e66baefdfdffa3ab250667d1dc06e61dd2",
+          "new": "50b82f1137e0a551ae9cea85c4398a2ba9cdf7f8448709ce2e3709c7ada8f95f"
+        },
+        "timeline.json": {
+          "old": "03bb39df9d12cda6598fefc67973d2ecea69fe2d0123d2220d7a4970a733344f",
+          "new": "25cb5afd63db50ca400cf8f92ce44fdba7d6c8c1b4e9960a6dca5db4df3d5046"
+        }
+      }
+    },
+    {
+      "suite": "structure",
+      "case_id": "14-hand-crossing",
+      "old_count": 264,
+      "new_count": 239,
+      "pitch_counts_changed": true,
+      "ordered_pitch_sequence_changed": true,
+      "timing_changed": true,
+      "velocity_changed": true,
+      "visible_metadata_changed": true,
+      "review_focus": "音符数量/顺序及完整谱面复核",
+      "rating": "pending",
+      "inputs": {
+        "raw.mid": {
+          "old": "a7c998985f1a76813c827b7a0fb089783acc4935dbbfdae4f9c72643c92d024b",
+          "new": "a7c998985f1a76813c827b7a0fb089783acc4935dbbfdae4f9c72643c92d024b"
+        },
+        "score.mid": {
+          "old": "27473b0efbe8b73db26fb11624f13a38e098c652fcd3a3004c69cdaaf8aba23d",
+          "new": "7dba83100944b0fc606394dabbfe5b6229d218c046e49d552a71393fcdad5500"
+        },
+        "score.musicxml": {
+          "old": "eda625eb87ace49f2c8e3a9f0c2ac1319b372e5675d2d5ef923f3cfe118d6566",
+          "new": "356c7b9f310d3cb64da4eab9a4fccac78eb2971c93e1ee32f4e86872adcc9ef1"
+        },
+        "timeline.json": {
+          "old": "8b0f35500bde6884a32111c8dfcfa29ee3870dcfa97a6a8ca43025c0b61b7b98",
+          "new": "68d9939cdfa6528f3f841a3d98e3b8951b5f1de91919c1d82073a7a3bf2ba040"
+        }
+      }
+    },
+    {
+      "suite": "structure",
+      "case_id": "15-repeated-notes",
+      "old_count": 237,
+      "new_count": 237,
+      "pitch_counts_changed": false,
+      "ordered_pitch_sequence_changed": false,
+      "timing_changed": false,
+      "velocity_changed": false,
+      "visible_metadata_changed": false,
+      "review_focus": "已比较内容未变；检查版面与旧评审适用性",
+      "rating": "pending",
+      "inputs": {
+        "raw.mid": {
+          "old": "c6c9950c1704c4ab5051b373359cf7ad8f75251d6a811f58ee161d03a067fad1",
+          "new": "c6c9950c1704c4ab5051b373359cf7ad8f75251d6a811f58ee161d03a067fad1"
+        },
+        "score.mid": {
+          "old": "11a75b43570badfe7ab24a75377af669976a9c0672f40d2e602d9d1182f0eaae",
+          "new": "11a75b43570badfe7ab24a75377af669976a9c0672f40d2e602d9d1182f0eaae"
+        },
+        "score.musicxml": {
+          "old": "82db50bd3d5a58383d0d7a9930a20c28afc66762120c665f7db3fe5e1bec9cdb",
+          "new": "300672a5119667645ab50eb99ff1126443d2110414af7a81e4cf2cbecb9317db"
+        },
+        "timeline.json": {
+          "old": "b6aeb0b472e013b7782d889f435cb8c20ceecd1ecfcb4626d0f74bb567edf8e6",
+          "new": "2a92d4a1e93836c1fed625e0115445685a80307568d65400e12f69528d08cbcf"
+        }
+      }
+    },
+    {
+      "suite": "structure",
+      "case_id": "16-noisy-polyphony",
+      "old_count": 149,
+      "new_count": 149,
+      "pitch_counts_changed": false,
+      "ordered_pitch_sequence_changed": true,
+      "timing_changed": true,
+      "velocity_changed": true,
+      "visible_metadata_changed": true,
+      "review_focus": "音符数量/顺序及完整谱面复核",
+      "rating": "pending",
+      "inputs": {
+        "raw.mid": {
+          "old": "8209e585394a670dc9b44b990272404050cdce7a95a21b0ebf99ef2191e4af33",
+          "new": "8209e585394a670dc9b44b990272404050cdce7a95a21b0ebf99ef2191e4af33"
+        },
+        "score.mid": {
+          "old": "4256972ca9f1807c443898395a7a78741b772131e4a1b250e10bab343114b887",
+          "new": "c2160b00998456433e40f1b3912bcec18780ad62718b8f8a0ee616de2800ebcd"
+        },
+        "score.musicxml": {
+          "old": "af1e6a341cb42a7e3cfded79f288d111e402596b026402ea59b1f4052ad6671c",
+          "new": "8d7713a2b646f4ff1a18772c6f6b9a39b0c3f56aad634e1aaa67b44247ee9e74"
+        },
+        "timeline.json": {
+          "old": "c3af6680781671113604312a16387c768747ecc157f7840386fbe1622e1d4803",
+          "new": "e1a83b704f723f2b000ace9a881b27eeec024925e18709344125867dff9b7811"
+        }
+      }
+    },
+    {
+      "suite": "human",
+      "case_id": "01-bach-capriccio",
+      "old_count": 275,
+      "new_count": 275,
+      "pitch_counts_changed": false,
+      "ordered_pitch_sequence_changed": false,
+      "timing_changed": false,
+      "velocity_changed": false,
+      "visible_metadata_changed": false,
+      "review_focus": "已比较内容未变；检查版面与旧评审适用性",
+      "rating": "pending",
+      "inputs": {
+        "raw.mid": {
+          "old": "91b62d96639f0bbaddfeaf2121b12dbe60c332b472b1dc1b52cea6f9e4d5b7ca",
+          "new": "91b62d96639f0bbaddfeaf2121b12dbe60c332b472b1dc1b52cea6f9e4d5b7ca"
+        },
+        "score.mid": {
+          "old": "e1f9084217fbcffdbb050ba97f468b59a3b1f83cbde40e0824c983b77baae785",
+          "new": "e1f9084217fbcffdbb050ba97f468b59a3b1f83cbde40e0824c983b77baae785"
+        },
+        "score.musicxml": {
+          "old": "4695be10adf64546b3b7ac6f2f751fdb0575c6b0c90a9c863ea3be33299f30c9",
+          "new": "8e8e81a00798f60dad3ec133e5d2e9f3835a2f6b1c5c0c8fd2704d6c71f1b641"
+        },
+        "timeline.json": {
+          "old": "420faa8fb980362fec95e0e5d67e9d870115787ee2b6c1435b44e89f56899e74",
+          "new": "b971afea1a335e7dcf468085a826f881074840ddac5d8d87647ad93942cb6444"
+        }
+      }
+    },
+    {
+      "suite": "human",
+      "case_id": "02-brahms-intermezzo",
+      "old_count": 242,
+      "new_count": 242,
+      "pitch_counts_changed": false,
+      "ordered_pitch_sequence_changed": false,
+      "timing_changed": false,
+      "velocity_changed": false,
+      "visible_metadata_changed": false,
+      "review_focus": "已比较内容未变；检查版面与旧评审适用性",
+      "rating": "pending",
+      "inputs": {
+        "raw.mid": {
+          "old": "0a3538473602a8c3076afdf247e79bab7ba03b4bdc282d8b19fa3540b2c59524",
+          "new": "0a3538473602a8c3076afdf247e79bab7ba03b4bdc282d8b19fa3540b2c59524"
+        },
+        "score.mid": {
+          "old": "93c0ec0e9edde2280c499f76d97b0e5f18fc18f00c690162609987172c5a1730",
+          "new": "93c0ec0e9edde2280c499f76d97b0e5f18fc18f00c690162609987172c5a1730"
+        },
+        "score.musicxml": {
+          "old": "404dad05ee574f0a8eebc9ba8dba1893f0baffdbaba5ac62cac6dd4b114277b1",
+          "new": "90253adc8759770355befb2afbc222bf40b49d7cca8c5a6ae2e2153c4e1eec67"
+        },
+        "timeline.json": {
+          "old": "5c20289070d36227f7c68e92b22931f7cbd79fd7f418bab13080d1dd090efde5",
+          "new": "5c2c10393b15a39b23ae603b17949b18962f75634a5c96c74869d02c17248e76"
+        }
+      }
+    },
+    {
+      "suite": "human",
+      "case_id": "03-mozart-sonata",
+      "old_count": 321,
+      "new_count": 321,
+      "pitch_counts_changed": false,
+      "ordered_pitch_sequence_changed": false,
+      "timing_changed": false,
+      "velocity_changed": false,
+      "visible_metadata_changed": false,
+      "review_focus": "已比较内容未变；检查版面与旧评审适用性",
+      "rating": "pending",
+      "inputs": {
+        "raw.mid": {
+          "old": "9c394a3587702b9460a757a88a5377136fb8e38f1b688537c627f3f6a43f2859",
+          "new": "9c394a3587702b9460a757a88a5377136fb8e38f1b688537c627f3f6a43f2859"
+        },
+        "score.mid": {
+          "old": "1354a7f7c06701e56563ff4138041ee7c6b77cf3deec5a24a19498ea80bbc0ef",
+          "new": "1354a7f7c06701e56563ff4138041ee7c6b77cf3deec5a24a19498ea80bbc0ef"
+        },
+        "score.musicxml": {
+          "old": "0f703f0fee539de1ab2632c1f38c1726a75b998a1294d60821bdd22ac50d6b12",
+          "new": "4b9d5fc30be6ec34da989b1107d1e2299392c45f26845166edcd2d5e248f1c88"
+        },
+        "timeline.json": {
+          "old": "9bdb08970476f6402253fbf2460c08c7f1ab58026b524994d8231e02dbef9587",
+          "new": "15597cce1a7d28eb2e34cdea68e5ac9df8640e3967ffb88ed962450bd60ed572"
+        }
+      }
+    },
+    {
+      "suite": "human",
+      "case_id": "04-rachmaninoff-g-sharp",
+      "old_count": 372,
+      "new_count": 372,
+      "pitch_counts_changed": false,
+      "ordered_pitch_sequence_changed": false,
+      "timing_changed": false,
+      "velocity_changed": false,
+      "visible_metadata_changed": false,
+      "review_focus": "已比较内容未变；检查版面与旧评审适用性",
+      "rating": "pending",
+      "inputs": {
+        "raw.mid": {
+          "old": "f238e933b0d7975e603f54f079430a6e6648096da220fb6157dd5e17b493b72a",
+          "new": "f238e933b0d7975e603f54f079430a6e6648096da220fb6157dd5e17b493b72a"
+        },
+        "score.mid": {
+          "old": "fba47f0d786a2f7d957478ccecff5e39a4672475f6b86606b2aca7fa9df21ea3",
+          "new": "fba47f0d786a2f7d957478ccecff5e39a4672475f6b86606b2aca7fa9df21ea3"
+        },
+        "score.musicxml": {
+          "old": "d8dc336a0639c9b28789c2eae46e3239733501c5f4e3ca08ba2fdb34b444aed5",
+          "new": "2f693153a9ca2721e153ce98314ec90d915e2f8e9ffad28f1b6ef36a9d4ad571"
+        },
+        "timeline.json": {
+          "old": "87245ca2fa4492587803dd670bdc6ce70befaba3943ffc6c0463d4c013106472",
+          "new": "5cc945a9057e73c4ea94a7b6500131229c5e70b52820838816413f4afd7f2dbc"
+        }
+      }
+    },
+    {
+      "suite": "human",
+      "case_id": "05-chopin-c-minor",
+      "old_count": 143,
+      "new_count": 143,
+      "pitch_counts_changed": false,
+      "ordered_pitch_sequence_changed": false,
+      "timing_changed": false,
+      "velocity_changed": false,
+      "visible_metadata_changed": false,
+      "review_focus": "已比较内容未变；检查版面与旧评审适用性",
+      "rating": "pending",
+      "inputs": {
+        "raw.mid": {
+          "old": "0b62f40606f3c922d41a50670b82c787f1d1e19a32c5e017102fbfaaac4ffcfe",
+          "new": "0b62f40606f3c922d41a50670b82c787f1d1e19a32c5e017102fbfaaac4ffcfe"
+        },
+        "score.mid": {
+          "old": "9bba89681c08d07957d5d4ea9bbdab6538925588e3cfa74d091b2f8878b46828",
+          "new": "9bba89681c08d07957d5d4ea9bbdab6538925588e3cfa74d091b2f8878b46828"
+        },
+        "score.musicxml": {
+          "old": "25d3419b2dcc84538bcde4680ca2ad80eab1a80f06832a3d844b3d2b4c3655d7",
+          "new": "2d3828605ad440bd52a353a54c3afa4295c3b8cdb32fd379f2367c4b0013a3cd"
+        },
+        "timeline.json": {
+          "old": "4ce2b95715bee000e7516e7ae942238c8fec79a18ce8262abdc1ceb3cdc1ef4e",
+          "new": "948180add59928cf7ef6cc23516fdc10c291d9eb617ee54b79f216a7b4ab2a37"
+        }
+      }
+    },
+    {
+      "suite": "human",
+      "case_id": "06-scriabin-etude",
+      "old_count": 305,
+      "new_count": 305,
+      "pitch_counts_changed": false,
+      "ordered_pitch_sequence_changed": false,
+      "timing_changed": false,
+      "velocity_changed": false,
+      "visible_metadata_changed": false,
+      "review_focus": "已比较内容未变；检查版面与旧评审适用性",
+      "rating": "pending",
+      "inputs": {
+        "raw.mid": {
+          "old": "b621a36fc7bc9279a3b7d8bf0c51d7b904c10c42944326358c3cc7e90cde4db4",
+          "new": "b621a36fc7bc9279a3b7d8bf0c51d7b904c10c42944326358c3cc7e90cde4db4"
+        },
+        "score.mid": {
+          "old": "ea8379628dcd6a59cfb302c90841584eca908cd0cd486a651d685560d815b2d5",
+          "new": "ea8379628dcd6a59cfb302c90841584eca908cd0cd486a651d685560d815b2d5"
+        },
+        "score.musicxml": {
+          "old": "5cea7567374bc1b0fa8669cbccb806a1b9d79318cc09827ca0aaa6a3c36a7425",
+          "new": "ec52b4a80b35dd6c5992d51a323d904d27986411e6a8adedccdfbd55d6be3e00"
+        },
+        "timeline.json": {
+          "old": "fd3cfe975647ff3ce8dfd566d74a74c8f320c08bf6dd273cf8f3a93a0c58056a",
+          "new": "411ac8ac10ccf4914332ebdc1c02fe4073693eddb130772e461c31d6ae6d5905"
+        }
+      }
+    },
+    {
+      "suite": "human",
+      "case_id": "07-chopin-ballade",
+      "old_count": 222,
+      "new_count": 222,
+      "pitch_counts_changed": false,
+      "ordered_pitch_sequence_changed": false,
+      "timing_changed": false,
+      "velocity_changed": false,
+      "visible_metadata_changed": false,
+      "review_focus": "已比较内容未变；检查版面与旧评审适用性",
+      "rating": "pending",
+      "inputs": {
+        "raw.mid": {
+          "old": "cf15a5ea7d447f22f9fb8c27bfcbc7ba6ac00a1b7b9b2434d101882151856d10",
+          "new": "cf15a5ea7d447f22f9fb8c27bfcbc7ba6ac00a1b7b9b2434d101882151856d10"
+        },
+        "score.mid": {
+          "old": "5e5cec3be0ba00cffe69f97344666c68dd8da89289485a91d9d7c06a09d8ad9a",
+          "new": "5e5cec3be0ba00cffe69f97344666c68dd8da89289485a91d9d7c06a09d8ad9a"
+        },
+        "score.musicxml": {
+          "old": "5582f111f6c5f99a4b4a0b41cdb96ace9a9778a13daca5f0e4725bfc267f5f93",
+          "new": "ba194569beeaba630405cd67b58c1d991e3e97364c38839102ba548d6565e8da"
+        },
+        "timeline.json": {
+          "old": "908b16590370fc559923c933b6341107e06e2678d794dab98b648bbde40ce599",
+          "new": "0a3f286aad5de065ceedc035ba6a7383f0d35d6405ed7b0fc2d73e2b8b9de32f"
+        }
+      }
+    },
+    {
+      "suite": "human",
+      "case_id": "08-chopin-a-major",
+      "old_count": 213,
+      "new_count": 213,
+      "pitch_counts_changed": false,
+      "ordered_pitch_sequence_changed": false,
+      "timing_changed": false,
+      "velocity_changed": false,
+      "visible_metadata_changed": false,
+      "review_focus": "已比较内容未变；检查版面与旧评审适用性",
+      "rating": "pending",
+      "inputs": {
+        "raw.mid": {
+          "old": "bb47c89319349ff1082a0f5de91b242f496c8adf6352bacecfb7fcd59cbd2955",
+          "new": "bb47c89319349ff1082a0f5de91b242f496c8adf6352bacecfb7fcd59cbd2955"
+        },
+        "score.mid": {
+          "old": "d1b66bf1bfe1489b54e42f51bc9e01352851f9a4568672a2fbe5ac8774ff224a",
+          "new": "d1b66bf1bfe1489b54e42f51bc9e01352851f9a4568672a2fbe5ac8774ff224a"
+        },
+        "score.musicxml": {
+          "old": "962ea0a544ff1023ff7cd8c197284ffc76ec241b53630f11b80f7d681d6767c4",
+          "new": "48862e8782efa21e794c7db39228aae6e7d22f66b43c39155b547dad060d24cf"
+        },
+        "timeline.json": {
+          "old": "bc3262e537ee1e425affba37f086ee0a905367b57769c559c9e76862aa3356a7",
+          "new": "46822c55a259c878adcb9384dccc7b273f9f18e2ba29dafad02e2f8d9efdf995"
+        }
+      }
+    },
+    {
+      "suite": "human",
+      "case_id": "09-chopin-waltz",
+      "old_count": 194,
+      "new_count": 194,
+      "pitch_counts_changed": false,
+      "ordered_pitch_sequence_changed": false,
+      "timing_changed": false,
+      "velocity_changed": false,
+      "visible_metadata_changed": false,
+      "review_focus": "已比较内容未变；检查版面与旧评审适用性",
+      "rating": "pending",
+      "inputs": {
+        "raw.mid": {
+          "old": "622002cc5694e847d0e7121103e520956200b39c41c76985fd4b27363f3105d0",
+          "new": "622002cc5694e847d0e7121103e520956200b39c41c76985fd4b27363f3105d0"
+        },
+        "score.mid": {
+          "old": "b5691eb72d357430c9b0e52ec366c3f86b62197f01b79ca94d0463848c5476a7",
+          "new": "b5691eb72d357430c9b0e52ec366c3f86b62197f01b79ca94d0463848c5476a7"
+        },
+        "score.musicxml": {
+          "old": "1ddd5fdb6b5bda1fbdafacc94451fd116ff0fb8d2e18a7643f08ad67639ecc10",
+          "new": "42f6aace2d3e57602489cf1db062bb953c64c0f2ae29d7431b9eb10f86930358"
+        },
+        "timeline.json": {
+          "old": "779929123b1bf015f0b377a71844fc3a1a586f0256937a776e6e10905a3c1485",
+          "new": "84219f7d40f12a61e2a0f3bb1b767a1a08c5b0c03108dd460a6988325d17254c"
+        }
+      }
+    },
+    {
+      "suite": "human",
+      "case_id": "10-rachmaninoff-c-sharp",
+      "old_count": 83,
+      "new_count": 83,
+      "pitch_counts_changed": false,
+      "ordered_pitch_sequence_changed": false,
+      "timing_changed": false,
+      "velocity_changed": false,
+      "visible_metadata_changed": false,
+      "review_focus": "已比较内容未变；检查版面与旧评审适用性",
+      "rating": "pending",
+      "inputs": {
+        "raw.mid": {
+          "old": "932c41042115b925c58558856b9f2bfa847a036b87c7c35696d6629020f73a55",
+          "new": "932c41042115b925c58558856b9f2bfa847a036b87c7c35696d6629020f73a55"
+        },
+        "score.mid": {
+          "old": "e76e91558c42e2abed01468a7d9c3452648d735a840642dd8ed92db76425c1df",
+          "new": "e76e91558c42e2abed01468a7d9c3452648d735a840642dd8ed92db76425c1df"
+        },
+        "score.musicxml": {
+          "old": "7f2dc83d3e87afc9eacded76e75c5d29dc311e56f4f38ad32f91e4b74c032fe2",
+          "new": "050cf58c890268d88adf58d145953127e50b1c33301d6669d50f8ad43d91c7d4"
+        },
+        "timeline.json": {
+          "old": "f0af2ebe427de9eb67e7d965ef9d1476406c5e6d0e3055bc0bbe7ec205aa1daa",
+          "new": "41ba25a4d9171c6a75542ac1b82780e3a82a2c2d5e1f86a860ea2e237876ede8"
+        }
+      }
+    }
+  ],
+  "limitation": "review priority only; not approval or exhaustive visual equivalence"
+}

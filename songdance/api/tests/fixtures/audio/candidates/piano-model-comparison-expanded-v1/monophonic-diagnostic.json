@@ -1,0 +1,20 @@
+[
+  {
+    "case_id": "07-soft",
+    "events": 40,
+    "onset_clusters": 40,
+    "simultaneous_clusters": 0,
+    "low_register_events": 0,
+    "monophonic_candidate": true,
+    "production_eligible": false
+  },
+  {
+    "case_id": "10-device",
+    "events": 87,
+    "onset_clusters": 60,
+    "simultaneous_clusters": 27,
+    "low_register_events": 27,
+    "monophonic_candidate": false,
+    "production_eligible": false
+  }
+]

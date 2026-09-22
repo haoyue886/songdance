@@ -1,0 +1,95 @@
+{
+  "schema_version": 2,
+  "case_id": "03-mozart-sonata",
+  "work": "W.A. Mozart Piano Sonata No. 16 in C major, K.545, movement I",
+  "audio_binding": {
+    "sha256": "32975b2333e0ca318125335660e21e747e074e0ea28cf83e3ecbd5ce21fc298f",
+    "clip_start_sec": 25,
+    "clip_duration_sec": 30,
+    "source_page": "https://commons.wikimedia.org/wiki/File:%D0%92%D0%B0%D1%80%D0%B2%D0%B0%D1%80%D0%B0_%D0%A1%D0%B5%D0%BC%D0%B5%D0%BD%D1%87%D1%83%D0%BA_-_%D0%9C%D0%BE%D1%86%D0%B0%D1%80%D1%82-%D0%A1%D0%BE%D0%BD%D0%B0%D1%82%D0%B0-c-dur-part1.ogv"
+  },
+  "reference_score": {
+    "format": "midi",
+    "path": "mozart-k545-complete.mid",
+    "provider": "IMSLP",
+    "source_url": "https://imslp.org/wiki/Piano_Sonata_No.16_in_C_major%2C_K.545_(Mozart%2C_Wolfgang_Amadeus)",
+    "download_url": "https://imslp.org/images/6/67/PMLP1855-sonata-in-c.mid",
+    "composition_rights": "Public domain",
+    "sha256": "e3ec5b0110ff11ff7ee0f39c8cf9aa80a8d05a7d1fd9b43f9ce5a579061641ea",
+    "measure_range": [1, 73],
+    "measure_count": 73,
+    "midi_resolution": 480,
+    "time_signature": "4/4",
+    "notation_key_signature": "C major",
+    "key_signature_fifths": 0,
+    "shortest_note_value": 16,
+    "divisions_per_quarter": 4,
+    "note_type_counts": {
+      "16th": 918,
+      "eighth": 148,
+      "quarter": 128,
+      "half": 10,
+      "whole": 1,
+      "complex": 4
+    },
+    "measure_shortest_quarter_lengths": [
+      0.5, 0.25, 0.5, 0.25, 0.25, 0.25, 0.25, 0.25, 0.25, 0.25,
+      0.25, 0.5, 0.25, 0.25, 0.25, 0.25, 0.25, 0.25, 0.25, 0.25,
+      0.25, 0.25, 0.25, 0.25, 0.25, 0.25, 0.25, 0.5, 0.25, 0.25,
+      0.25, 0.25, 0.25, 0.25, 0.25, 0.25, 0.25, 0.25, 0.25, 0.25,
+      0.25, 0.5, 0.25, 0.5, 0.25, 0.25, 0.25, 0.25, 0.25, 0.25,
+      0.25, 0.25, 0.25, 0.25, 0.25, 0.25, 0.5, 0.25, 0.25, 0.25,
+      0.25, 0.25, 0.25, 0.25, 0.25, 0.25, 0.25, 0.25, 0.25, 0.25,
+      0.25, 0.25, 0.5
+    ]
+  },
+  "audio_reference_mapping": {
+    "schema_version": 1,
+    "audio_measure_count": 17,
+    "reference_measure_range": [1, 17],
+    "mapping": [
+      {"audio_measure_index": 1, "reference_measure_number": 1},
+      {"audio_measure_index": 2, "reference_measure_number": 2},
+      {"audio_measure_index": 3, "reference_measure_number": 3},
+      {"audio_measure_index": 4, "reference_measure_number": 4},
+      {"audio_measure_index": 5, "reference_measure_number": 5},
+      {"audio_measure_index": 6, "reference_measure_number": 6},
+      {"audio_measure_index": 7, "reference_measure_number": 7},
+      {"audio_measure_index": 8, "reference_measure_number": 8},
+      {"audio_measure_index": 9, "reference_measure_number": 9},
+      {"audio_measure_index": 10, "reference_measure_number": 10},
+      {"audio_measure_index": 11, "reference_measure_number": 11},
+      {"audio_measure_index": 12, "reference_measure_number": 12},
+      {"audio_measure_index": 13, "reference_measure_number": 13},
+      {"audio_measure_index": 14, "reference_measure_number": 14},
+      {"audio_measure_index": 15, "reference_measure_number": 15},
+      {"audio_measure_index": 16, "reference_measure_number": 16},
+      {"audio_measure_index": 17, "reference_measure_number": 17}
+    ],
+    "alignment_evidence": {
+      "method": "fixed-clip-tempo-and-pitch-class-window",
+      "audio_origin_sec": 0.0,
+      "audio_duration_sec": 30.0,
+      "tempo_bpm": 136,
+      "time_signature": "4/4",
+      "audio_downbeat_count": 17,
+      "audio_quarter_length_estimate": 68.0,
+      "reference_window_quarter_length": 68.0,
+      "pitch_class_cosine_mean": 0.648296,
+      "pitch_class_cosine_median": 0.704531,
+      "pitch_class_cosine_by_measure": [
+        0.855295, 0.921288, 0.704531, 0.659153, 0.748554,
+        0.758733, 0.767069, 0.864249, 0.54463, 0.529737,
+        0.593362, 0.401256, 0.627355, 0.731159, 0.29733,
+        0.74193, 0.275405
+      ]
+    }
+  },
+  "expected_transcription": {
+    "notation_key_signature": "C major",
+    "notation_key_signature_source": "reference_score",
+    "quantization_divisions_per_quarter": 4,
+    "shortest_note_value": 16,
+    "quantization_source": "reference_score"
+  }
+}

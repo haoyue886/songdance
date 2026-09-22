@@ -1,0 +1,14 @@
+{
+  "status": "failed",
+  "stage": "inference",
+  "production_eligible": false,
+  "source_sha256": "380160b2a85112599a6923e9cbec855bafc860ac6fce697cd563868d8a68ba12",
+  "runner_sha256": "7938525ee33d215a606cf89d71e7e61af1c8493d86d41a59ca00a0608ef7e1e5",
+  "manifest_sha256": "f9d32e157566df7fcb9f8e7e0a88cfdbe2546842f771f93a4b74293ca2533101",
+  "pipeline_sha256": "5fdb25797a8e1b0a67a019e1d258980549d0e5cd63d7253eb724df06029f29aa",
+  "preprocessor_sha256": "da1dfae6e7e0b25268fb9575e1c5138890812dd9010ee2436ed78b467119e168",
+  "input_sha256": "e77fbe5cadd5cdbbc7d0fc896b0509ec7945c6e964674a31306d198aaf347730",
+  "duration_seconds": 30.0,
+  "error_type": "CalledProcessError",
+  "error": "Command '['/opt/homebrew/Cellar/python@3.11/3.11.12_1/Frameworks/Python.framework/Versions/3.11/bin/python3.11', '/Users/lixinyue/Desktop/project/songDance/songdance/api/experiments/models/transkun/run_cpu.py', '--source-root', '/private/tmp/songdance-transkun-audit/source', '--manifest', '/Users/lixinyue/Desktop/project/songDance/songdance/api/experiments/models/transkun/source_manifest.json', '--audio', '/Users/lixinyue/Desktop/project/songDance/songdance/api/tests/fixtures/audio/candidates/transkun-entry-smoke-07-v1/normalized.wav', '--output', '/Users/lixinyue/Desktop/project/songDance/songdance/api/tests/fixtures/audio/candidates/transkun-entry-smoke-07-v1/model']' returned non-zero exit status 1."
+}

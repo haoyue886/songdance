@@ -1,0 +1,2580 @@
+{
+  "production_eligible": false,
+  "status": "experimental_not_teacher_approved",
+  "prior_sha256": "4f4ebd05a99c7fc5625a41dc0c65fcbacb81e8b09840b3d3988811568db799b1",
+  "comparison_sha256": "33aa42be9d9b30833c37c8e55875954c3e0a988bfc92fc8a0d6d94b139c7fd32",
+  "script_sha256": "59a69f629ffaebd73cc3b906103a7ae26c855efc815b753724aeb5488864a597",
+  "evidence_sha256": "bc78854c99c8283a7cba0e763d0e484ff61df94ccf3cdbbe7fc170ac30c7b131",
+  "metric_sha256": "d3c1862d40d42698cde1628233450353e6fceed996bb961c24d88a77975004bf",
+  "midi_sha256": "80e1527cb92b8d1a77f07875418ef80365b14c7df027c377aa6279d402781df2",
+  "events": [
+    {
+      "pitch": 55,
+      "start_sec": 0.0,
+      "end_sec": 2.005729166666667,
+      "velocity": 39
+    },
+    {
+      "pitch": 60,
+      "start_sec": 0.0,
+      "end_sec": 1.996658049886621,
+      "velocity": 39
+    },
+    {
+      "pitch": 64,
+      "start_sec": 0.0,
+      "end_sec": 2.0067708333333334,
+      "velocity": 51
+    },
+    {
+      "pitch": 57,
+      "start_sec": 1.9880208333333331,
+      "end_sec": 4.003125,
+      "velocity": 42
+    },
+    {
+      "pitch": 65,
+      "start_sec": 1.9895833333333335,
+      "end_sec": 4.049479166666667,
+      "velocity": 54
+    },
+    {
+      "pitch": 60,
+      "start_sec": 1.996658049886621,
+      "end_sec": 3.9807291666666664,
+      "velocity": 90
+    },
+    {
+      "pitch": 59,
+      "start_sec": 3.9953125,
+      "end_sec": 6.046875,
+      "velocity": 42
+    },
+    {
+      "pitch": 62,
+      "start_sec": 3.9953125,
+      "end_sec": 6.0,
+      "velocity": 48
+    },
+    {
+      "start_sec": 4.006468027210884,
+      "end_sec": 6.004668027210885,
+      "pitch": 55,
+      "velocity": 85,
+      "confidence": 0.6721208095550537,
+      "hand": null,
+      "hand_confidence": null
+    },
+    {
+      "pitch": 64,
+      "start_sec": 5.993229166666667,
+      "end_sec": 8.0203125,
+      "velocity": 51
+    },
+    {
+      "pitch": 55,
+      "start_sec": 5.9937499999999995,
+      "end_sec": 7.996874999999999,
+      "velocity": 39
+    },
+    {
+      "pitch": 60,
+      "start_sec": 5.994270833333333,
+      "end_sec": 8.002868027210884,
+      "velocity": 39
+    },
+    {
+      "pitch": 57,
+      "start_sec": 7.990625,
+      "end_sec": 9.99375,
+      "velocity": 41
+    },
+    {
+      "pitch": 65,
+      "start_sec": 7.991666666666667,
+      "end_sec": 10.3203125,
+      "velocity": 52
+    },
+    {
+      "pitch": 60,
+      "start_sec": 8.002868027210884,
+      "end_sec": 10.016145833333333,
+      "velocity": 89
+    },
+    {
+      "pitch": 55,
+      "start_sec": 9.991145833333333,
+      "end_sec": 11.827083333333333,
+      "velocity": 36
+    },
+    {
+      "pitch": 59,
+      "start_sec": 9.991145833333333,
+      "end_sec": 12.0140625,
+      "velocity": 40
+    },
+    {
+      "pitch": 62,
+      "start_sec": 9.991145833333333,
+      "end_sec": 12.013541666666667,
+      "velocity": 48
+    },
+    {
+      "pitch": 60,
+      "start_sec": 11.991666666666667,
+      "end_sec": 13.893749999999999,
+      "velocity": 38
+    },
+    {
+      "pitch": 64,
+      "start_sec": 11.9921875,
+      "end_sec": 14.034374999999999,
+      "velocity": 51
+    },
+    {
+      "pitch": 55,
+      "start_sec": 11.99375,
+      "end_sec": 13.987499999999999,
+      "velocity": 39
+    },
+    {
+      "pitch": 57,
+      "start_sec": 13.990625,
+      "end_sec": 15.984375,
+      "velocity": 41
+    },
+    {
+      "pitch": 60,
+      "start_sec": 13.9921875,
+      "end_sec": 15.984375,
+      "velocity": 40
+    },
+    {
+      "pitch": 65,
+      "start_sec": 13.9921875,
+      "end_sec": 15.985416666666666,
+      "velocity": 54
+    },
+    {
+      "pitch": 55,
+      "start_sec": 15.990104166666665,
+      "end_sec": 18.005478004535146,
+      "velocity": 36
+    },
+    {
+      "pitch": 59,
+      "start_sec": 15.990625000000001,
+      "end_sec": 17.981770833333332,
+      "velocity": 40
+    },
+    {
+      "pitch": 62,
+      "start_sec": 15.991145833333334,
+      "end_sec": 17.959895833333334,
+      "velocity": 50
+    },
+    {
+      "pitch": 64,
+      "start_sec": 17.9890625,
+      "end_sec": 20.070833333333333,
+      "velocity": 51
+    },
+    {
+      "pitch": 60,
+      "start_sec": 17.989583333333332,
+      "end_sec": 20.00367800453515,
+      "velocity": 39
+    },
+    {
+      "pitch": 55,
+      "start_sec": 18.005478004535146,
+      "end_sec": 20.0703125,
+      "velocity": 89
+    },
+    {
+      "pitch": 57,
+      "start_sec": 19.994791666666668,
+      "end_sec": 21.952604166666667,
+      "velocity": 40
+    },
+    {
+      "pitch": 65,
+      "start_sec": 19.994791666666668,
+      "end_sec": 21.976041666666667,
+      "velocity": 51
+    },
+    {
+      "pitch": 60,
+      "start_sec": 20.00367800453515,
+      "end_sec": 21.975520833333334,
+      "velocity": 90
+    },
+    {
+      "pitch": 59,
+      "start_sec": 21.992708333333333,
+      "end_sec": 23.994791666666668,
+      "velocity": 41
+    },
+    {
+      "pitch": 62,
+      "start_sec": 21.993229166666666,
+      "end_sec": 23.994791666666668,
+      "velocity": 48
+    },
+    {
+      "start_sec": 22.001878004535147,
+      "end_sec": 24.01168798185941,
+      "pitch": 55,
+      "velocity": 85,
+      "confidence": 0.6714379191398621,
+      "hand": null,
+      "hand_confidence": null
+    },
+    {
+      "pitch": 64,
+      "start_sec": 23.991145833333334,
+      "end_sec": 26.038541666666667,
+      "velocity": 50
+    },
+    {
+      "pitch": 55,
+      "start_sec": 23.991666666666667,
+      "end_sec": 26.038020833333334,
+      "velocity": 39
+    },
+    {
+      "pitch": 60,
+      "start_sec": 23.9921875,
+      "end_sec": 26.00988798185941,
+      "velocity": 39
+    },
+    {
+      "pitch": 57,
+      "start_sec": 25.988541666666666,
+      "end_sec": 28.0359375,
+      "velocity": 40
+    },
+    {
+      "pitch": 65,
+      "start_sec": 25.990624999999998,
+      "end_sec": 28.3609375,
+      "velocity": 51
+    },
+    {
+      "pitch": 60,
+      "start_sec": 26.00988798185941,
+      "end_sec": 27.989583333333332,
+      "velocity": 89
+    },
+    {
+      "pitch": 59,
+      "start_sec": 27.991666666666667,
+      "end_sec": 29.984895833333333,
+      "velocity": 39
+    },
+    {
+      "pitch": 62,
+      "start_sec": 27.9921875,
+      "end_sec": 29.985416666666666,
+      "velocity": 48
+    },
+    {
+      "pitch": 55,
+      "start_sec": 27.992708333333333,
+      "end_sec": 29.985416666666666,
+      "velocity": 35
+    }
+  ],
+  "audit": [
+    {
+      "candidate": {
+        "start_sec": 27.996478004535145,
+        "end_sec": 28.24028752834467,
+        "pitch": 74,
+        "velocity": 40,
+        "confidence": 0.3145599365234375,
+        "hand": null,
+        "hand_confidence": null
+      },
+      "measurement": {
+        "event": {
+          "start_sec": 27.996478004535145,
+          "end_sec": 28.24028752834467,
+          "pitch": 74,
+          "velocity": 40,
+          "confidence": 0.3145599365234375,
+          "hand": null,
+          "hand_confidence": null
+        },
+        "before_amplitude": 3.4085256434369227e-07,
+        "after_amplitude": 0.10805599791788871,
+        "amplitude_ratio": 317016.82551794586,
+        "independent_attack_confirmed": false,
+        "status": "measurement_only"
+      },
+      "competing_lower_events": [
+        {
+          "pitch": 62,
+          "start_sec": 27.9921875,
+          "end_sec": 29.985416666666666,
+          "velocity": 48
+        },
+        {
+          "pitch": 55,
+          "start_sec": 27.992708333333333,
+          "end_sec": 29.985416666666666,
+          "velocity": 35
+        },
+        {
+          "start_sec": 27.996478004535145,
+          "end_sec": 29.983068027210884,
+          "pitch": 62,
+          "velocity": 92,
+          "confidence": 0.7231568694114685,
+          "hand": null,
+          "hand_confidence": null
+        },
+        {
+          "start_sec": 27.996478004535145,
+          "end_sec": 29.97145804988662,
+          "pitch": 55,
+          "velocity": 90,
+          "confidence": 0.7113763689994812,
+          "hand": null,
+          "hand_confidence": null
+        }
+      ],
+      "decision": "abstain"
+    },
+    {
+      "candidate": {
+        "start_sec": 26.00988798185941,
+        "end_sec": 26.90514013605442,
+        "pitch": 77,
+        "velocity": 57,
+        "confidence": 0.4491409957408905,
+        "hand": null,
+        "hand_confidence": null
+      },
+      "measurement": {
+        "event": {
+          "start_sec": 26.00988798185941,
+          "end_sec": 26.90514013605442,
+          "pitch": 77,
+          "velocity": 57,
+          "confidence": 0.4491409957408905,
+          "hand": null,
+          "hand_confidence": null
+        },
+        "before_amplitude": 3.0061309172681656e-07,
+        "after_amplitude": 0.07577929873730703,
+        "amplitude_ratio": 252082.49681345146,
+        "independent_attack_confirmed": false,
+        "status": "measurement_only"
+      },
+      "competing_lower_events": [
+        {
+          "pitch": 65,
+          "start_sec": 25.990624999999998,
+          "end_sec": 28.3609375,
+          "velocity": 51
+        },
+        {
+          "start_sec": 25.99827800453515,
+          "end_sec": 27.915208163265305,
+          "pitch": 65,
+          "velocity": 85,
+          "confidence": 0.6673930287361145,
+          "hand": null,
+          "hand_confidence": null
+        }
+      ],
+      "decision": "abstain"
+    },
+    {
+      "candidate": {
+        "start_sec": 25.99827800453515,
+        "end_sec": 26.416237188208616,
+        "pitch": 84,
+        "velocity": 45,
+        "confidence": 0.35336577892303467,
+        "hand": null,
+        "hand_confidence": null
+      },
+      "measurement": {
+        "event": {
+          "start_sec": 25.99827800453515,
+          "end_sec": 26.416237188208616,
+          "pitch": 84,
+          "velocity": 45,
+          "confidence": 0.35336577892303467,
+          "hand": null,
+          "hand_confidence": null
+        },
+        "before_amplitude": 0.0003467410170632771,
+        "after_amplitude": 0.0652235097832345,
+        "amplitude_ratio": 188.10439657714855,
+        "independent_attack_confirmed": false,
+        "status": "measurement_only"
+      },
+      "competing_lower_events": [
+        {
+          "pitch": 60,
+          "start_sec": 23.9921875,
+          "end_sec": 26.00988798185941,
+          "velocity": 39
+        },
+        {
+          "pitch": 60,
+          "start_sec": 26.00988798185941,
+          "end_sec": 27.989583333333332,
+          "velocity": 89
+        },
+        {
+          "pitch": 65,
+          "start_sec": 25.990624999999998,
+          "end_sec": 28.3609375,
+          "velocity": 51
+        },
+        {
+          "start_sec": 26.00988798185941,
+          "end_sec": 27.926818140589567,
+          "pitch": 60,
+          "velocity": 89,
+          "confidence": 0.7022117972373962,
+          "hand": null,
+          "hand_confidence": null
+        },
+        {
+          "start_sec": 25.99827800453515,
+          "end_sec": 27.915208163265305,
+          "pitch": 65,
+          "velocity": 85,
+          "confidence": 0.6673930287361145,
+          "hand": null,
+          "hand_confidence": null
+        },
+        {
+          "start_sec": 24.000078004535148,
+          "end_sec": 26.00988798185941,
+          "pitch": 60,
+          "velocity": 85,
+          "confidence": 0.6687543392181396,
+          "hand": null,
+          "hand_confidence": null
+        }
+      ],
+      "decision": "abstain"
+    },
+    {
+      "candidate": {
+        "start_sec": 24.01168798185941,
+        "end_sec": 24.77794648526077,
+        "pitch": 72,
+        "velocity": 48,
+        "confidence": 0.37550750374794006,
+        "hand": null,
+        "hand_confidence": null
+      },
+      "measurement": {
+        "event": {
+          "start_sec": 24.01168798185941,
+          "end_sec": 24.77794648526077,
+          "pitch": 72,
+          "velocity": 48,
+          "confidence": 0.37550750374794006,
+          "hand": null,
+          "hand_confidence": null
+        },
+        "before_amplitude": 1.6266804557184931e-06,
+        "after_amplitude": 0.07577073231846224,
+        "amplitude_ratio": 46579.973375898735,
+        "independent_attack_confirmed": false,
+        "status": "measurement_only"
+      },
+      "competing_lower_events": [
+        {
+          "pitch": 60,
+          "start_sec": 23.9921875,
+          "end_sec": 26.00988798185941,
+          "velocity": 39
+        },
+        {
+          "start_sec": 24.000078004535148,
+          "end_sec": 26.00988798185941,
+          "pitch": 60,
+          "velocity": 85,
+          "confidence": 0.6687543392181396,
+          "hand": null,
+          "hand_confidence": null
+        }
+      ],
+      "decision": "abstain"
+    },
+    {
+      "candidate": {
+        "start_sec": 24.000078004535148,
+        "end_sec": 24.545746938775512,
+        "pitch": 76,
+        "velocity": 49,
+        "confidence": 0.38751569390296936,
+        "hand": null,
+        "hand_confidence": null
+      },
+      "measurement": {
+        "event": {
+          "start_sec": 24.000078004535148,
+          "end_sec": 24.545746938775512,
+          "pitch": 76,
+          "velocity": 49,
+          "confidence": 0.38751569390296936,
+          "hand": null,
+          "hand_confidence": null
+        },
+        "before_amplitude": 1.3850775079506049e-06,
+        "after_amplitude": 0.0763780291842652,
+        "amplitude_ratio": 55143.50550481181,
+        "independent_attack_confirmed": false,
+        "status": "measurement_only"
+      },
+      "competing_lower_events": [
+        {
+          "pitch": 64,
+          "start_sec": 23.991145833333334,
+          "end_sec": 26.038541666666667,
+          "velocity": 50
+        },
+        {
+          "start_sec": 24.000078004535148,
+          "end_sec": 25.951838095238095,
+          "pitch": 64,
+          "velocity": 85,
+          "confidence": 0.6701383590698242,
+          "hand": null,
+          "hand_confidence": null
+        }
+      ],
+      "decision": "abstain"
+    },
+    {
+      "candidate": {
+        "start_sec": 24.000078004535148,
+        "end_sec": 24.766336507936508,
+        "pitch": 67,
+        "velocity": 49,
+        "confidence": 0.3843960762023926,
+        "hand": null,
+        "hand_confidence": null
+      },
+      "measurement": {
+        "event": {
+          "start_sec": 24.000078004535148,
+          "end_sec": 24.766336507936508,
+          "pitch": 67,
+          "velocity": 49,
+          "confidence": 0.3843960762023926,
+          "hand": null,
+          "hand_confidence": null
+        },
+        "before_amplitude": 0.00098373450664223,
+        "after_amplitude": 0.0762614386625675,
+        "amplitude_ratio": 77.52237839340395,
+        "independent_attack_confirmed": false,
+        "status": "measurement_only"
+      },
+      "competing_lower_events": [
+        {
+          "pitch": 55,
+          "start_sec": 23.991666666666667,
+          "end_sec": 26.038020833333334,
+          "velocity": 39
+        },
+        {
+          "start_sec": 24.01168798185941,
+          "end_sec": 25.951838095238095,
+          "pitch": 55,
+          "velocity": 89,
+          "confidence": 0.7001572847366333,
+          "hand": null,
+          "hand_confidence": null
+        },
+        {
+          "start_sec": 22.001878004535147,
+          "end_sec": 24.01168798185941,
+          "pitch": 55,
+          "velocity": 85,
+          "confidence": 0.6714379191398621,
+          "hand": null,
+          "hand_confidence": null
+        }
+      ],
+      "decision": "abstain"
+    },
+    {
+      "candidate": {
+        "start_sec": 22.001878004535147,
+        "end_sec": 22.24568752834467,
+        "pitch": 74,
+        "velocity": 39,
+        "confidence": 0.30391067266464233,
+        "hand": null,
+        "hand_confidence": null
+      },
+      "measurement": {
+        "event": {
+          "start_sec": 22.001878004535147,
+          "end_sec": 22.24568752834467,
+          "pitch": 74,
+          "velocity": 39,
+          "confidence": 0.30391067266464233,
+          "hand": null,
+          "hand_confidence": null
+        },
+        "before_amplitude": 6.197708346684609e-07,
+        "after_amplitude": 0.10677030736955788,
+        "amplitude_ratio": 172273.8492957214,
+        "independent_attack_confirmed": false,
+        "status": "measurement_only"
+      },
+      "competing_lower_events": [
+        {
+          "pitch": 62,
+          "start_sec": 21.993229166666666,
+          "end_sec": 23.994791666666668,
+          "velocity": 48
+        },
+        {
+          "start_sec": 22.001878004535147,
+          "end_sec": 23.942028117913832,
+          "pitch": 62,
+          "velocity": 89,
+          "confidence": 0.7028748989105225,
+          "hand": null,
+          "hand_confidence": null
+        },
+        {
+          "start_sec": 22.001878004535147,
+          "end_sec": 24.01168798185941,
+          "pitch": 55,
+          "velocity": 85,
+          "confidence": 0.6714379191398621,
+          "hand": null,
+          "hand_confidence": null
+        }
+      ],
+      "decision": "abstain"
+    },
+    {
+      "candidate": {
+        "start_sec": 22.001878004535147,
+        "end_sec": 24.01168798185941,
+        "pitch": 55,
+        "velocity": 85,
+        "confidence": 0.6714379191398621,
+        "hand": null,
+        "hand_confidence": null
+      },
+      "measurement": {
+        "event": {
+          "start_sec": 22.001878004535147,
+          "end_sec": 24.01168798185941,
+          "pitch": 55,
+          "velocity": 85,
+          "confidence": 0.6714379191398621,
+          "hand": null,
+          "hand_confidence": null
+        },
+        "before_amplitude": 5.168019830456388e-06,
+        "after_amplitude": 0.19636268975401258,
+        "amplitude_ratio": 37995.73070459209,
+        "independent_attack_confirmed": false,
+        "status": "measurement_only"
+      },
+      "competing_lower_events": [],
+      "decision": "experimental_add"
+    },
+    {
+      "candidate": {
+        "start_sec": 19.992068027210887,
+        "end_sec": 20.410027210884355,
+        "pitch": 84,
+        "velocity": 42,
+        "confidence": 0.32959869503974915,
+        "hand": null,
+        "hand_confidence": null
+      },
+      "measurement": {
+        "event": {
+          "start_sec": 19.992068027210887,
+          "end_sec": 20.410027210884355,
+          "pitch": 84,
+          "velocity": 42,
+          "confidence": 0.32959869503974915,
+          "hand": null,
+          "hand_confidence": null
+        },
+        "before_amplitude": 0.0003524885385602193,
+        "after_amplitude": 0.0657208781761459,
+        "amplitude_ratio": 186.44826990571246,
+        "independent_attack_confirmed": false,
+        "status": "measurement_only"
+      },
+      "competing_lower_events": [
+        {
+          "pitch": 60,
+          "start_sec": 17.989583333333332,
+          "end_sec": 20.00367800453515,
+          "velocity": 39
+        },
+        {
+          "pitch": 60,
+          "start_sec": 20.00367800453515,
+          "end_sec": 21.975520833333334,
+          "velocity": 90
+        },
+        {
+          "pitch": 65,
+          "start_sec": 19.994791666666668,
+          "end_sec": 21.976041666666667,
+          "velocity": 51
+        },
+        {
+          "start_sec": 20.00367800453515,
+          "end_sec": 21.908998185941044,
+          "pitch": 65,
+          "velocity": 86,
+          "confidence": 0.6747226715087891,
+          "hand": null,
+          "hand_confidence": null
+        },
+        {
+          "start_sec": 20.00367800453515,
+          "end_sec": 21.920608163265307,
+          "pitch": 60,
+          "velocity": 90,
+          "confidence": 0.7081354260444641,
+          "hand": null,
+          "hand_confidence": null
+        },
+        {
+          "start_sec": 18.005478004535146,
+          "end_sec": 20.00367800453515,
+          "pitch": 60,
+          "velocity": 85,
+          "confidence": 0.6672149896621704,
+          "hand": null,
+          "hand_confidence": null
+        }
+      ],
+      "decision": "abstain"
+    },
+    {
+      "candidate": {
+        "start_sec": 18.005478004535146,
+        "end_sec": 18.841396371882084,
+        "pitch": 72,
+        "velocity": 47,
+        "confidence": 0.3728027641773224,
+        "hand": null,
+        "hand_confidence": null
+      },
+      "measurement": {
+        "event": {
+          "start_sec": 18.005478004535146,
+          "end_sec": 18.841396371882084,
+          "pitch": 72,
+          "velocity": 47,
+          "confidence": 0.3728027641773224,
+          "hand": null,
+          "hand_confidence": null
+        },
+        "before_amplitude": 1.3335649644794435e-06,
+        "after_amplitude": 0.0762416900285637,
+        "amplitude_ratio": 57171.33552494355,
+        "independent_attack_confirmed": false,
+        "status": "measurement_only"
+      },
+      "competing_lower_events": [
+        {
+          "pitch": 60,
+          "start_sec": 17.989583333333332,
+          "end_sec": 20.00367800453515,
+          "velocity": 39
+        },
+        {
+          "start_sec": 18.005478004535146,
+          "end_sec": 20.00367800453515,
+          "pitch": 60,
+          "velocity": 85,
+          "confidence": 0.6672149896621704,
+          "hand": null,
+          "hand_confidence": null
+        }
+      ],
+      "decision": "abstain"
+    },
+    {
+      "candidate": {
+        "start_sec": 18.005478004535146,
+        "end_sec": 18.81817641723356,
+        "pitch": 67,
+        "velocity": 48,
+        "confidence": 0.3790082633495331,
+        "hand": null,
+        "hand_confidence": null
+      },
+      "measurement": {
+        "event": {
+          "start_sec": 18.005478004535146,
+          "end_sec": 18.81817641723356,
+          "pitch": 67,
+          "velocity": 48,
+          "confidence": 0.3790082633495331,
+          "hand": null,
+          "hand_confidence": null
+        },
+        "before_amplitude": 0.0009697983013460116,
+        "after_amplitude": 0.0760362456751748,
+        "amplitude_ratio": 78.40418525134747,
+        "independent_attack_confirmed": false,
+        "status": "measurement_only"
+      },
+      "competing_lower_events": [
+        {
+          "pitch": 55,
+          "start_sec": 15.990104166666665,
+          "end_sec": 18.005478004535146,
+          "velocity": 36
+        },
+        {
+          "pitch": 55,
+          "start_sec": 18.005478004535146,
+          "end_sec": 20.0703125,
+          "velocity": 89
+        },
+        {
+          "start_sec": 18.005478004535146,
+          "end_sec": 19.945628117913834,
+          "pitch": 55,
+          "velocity": 89,
+          "confidence": 0.6985675096511841,
+          "hand": null,
+          "hand_confidence": null
+        },
+        {
+          "start_sec": 16.007278004535145,
+          "end_sec": 18.005478004535146,
+          "pitch": 55,
+          "velocity": 86,
+          "confidence": 0.6757950186729431,
+          "hand": null,
+          "hand_confidence": null
+        }
+      ],
+      "decision": "abstain"
+    },
+    {
+      "candidate": {
+        "start_sec": 17.993868027210883,
+        "end_sec": 18.66724671201814,
+        "pitch": 76,
+        "velocity": 47,
+        "confidence": 0.36739999055862427,
+        "hand": null,
+        "hand_confidence": null
+      },
+      "measurement": {
+        "event": {
+          "start_sec": 17.993868027210883,
+          "end_sec": 18.66724671201814,
+          "pitch": 76,
+          "velocity": 47,
+          "confidence": 0.36739999055862427,
+          "hand": null,
+          "hand_confidence": null
+        },
+        "before_amplitude": 1.3370119217161247e-06,
+        "after_amplitude": 0.0766626547212536,
+        "amplitude_ratio": 57338.79666746208,
+        "independent_attack_confirmed": false,
+        "status": "measurement_only"
+      },
+      "competing_lower_events": [
+        {
+          "pitch": 64,
+          "start_sec": 17.9890625,
+          "end_sec": 20.070833333333333,
+          "velocity": 51
+        },
+        {
+          "start_sec": 18.005478004535146,
+          "end_sec": 19.945628117913834,
+          "pitch": 64,
+          "velocity": 85,
+          "confidence": 0.67042475938797,
+          "hand": null,
+          "hand_confidence": null
+        }
+      ],
+      "decision": "abstain"
+    },
+    {
+      "candidate": {
+        "start_sec": 16.007278004535145,
+        "end_sec": 16.239477551020407,
+        "pitch": 74,
+        "velocity": 41,
+        "confidence": 0.3243328630924225,
+        "hand": null,
+        "hand_confidence": null
+      },
+      "measurement": {
+        "event": {
+          "start_sec": 16.007278004535145,
+          "end_sec": 16.239477551020407,
+          "pitch": 74,
+          "velocity": 41,
+          "confidence": 0.3243328630924225,
+          "hand": null,
+          "hand_confidence": null
+        },
+        "before_amplitude": 7.131389334332941e-07,
+        "after_amplitude": 0.1054348261731092,
+        "amplitude_ratio": 147846.12258583328,
+        "independent_attack_confirmed": false,
+        "status": "measurement_only"
+      },
+      "competing_lower_events": [
+        {
+          "pitch": 55,
+          "start_sec": 15.990104166666665,
+          "end_sec": 18.005478004535146,
+          "velocity": 36
+        },
+        {
+          "pitch": 62,
+          "start_sec": 15.991145833333334,
+          "end_sec": 17.959895833333334,
+          "velocity": 50
+        },
+        {
+          "start_sec": 16.007278004535145,
+          "end_sec": 17.935818140589568,
+          "pitch": 62,
+          "velocity": 90,
+          "confidence": 0.7064871191978455,
+          "hand": null,
+          "hand_confidence": null
+        },
+        {
+          "start_sec": 16.007278004535145,
+          "end_sec": 18.005478004535146,
+          "pitch": 55,
+          "velocity": 86,
+          "confidence": 0.6757950186729431,
+          "hand": null,
+          "hand_confidence": null
+        }
+      ],
+      "decision": "abstain"
+    },
+    {
+      "candidate": {
+        "start_sec": 14.009078004535148,
+        "end_sec": 14.91594013605442,
+        "pitch": 77,
+        "velocity": 56,
+        "confidence": 0.4380699396133423,
+        "hand": null,
+        "hand_confidence": null
+      },
+      "measurement": {
+        "event": {
+          "start_sec": 14.009078004535148,
+          "end_sec": 14.91594013605442,
+          "pitch": 77,
+          "velocity": 56,
+          "confidence": 0.4380699396133423,
+          "hand": null,
+          "hand_confidence": null
+        },
+        "before_amplitude": 5.235774237368604e-07,
+        "after_amplitude": 0.07598544377173913,
+        "amplitude_ratio": 145127.42591041874,
+        "independent_attack_confirmed": false,
+        "status": "measurement_only"
+      },
+      "competing_lower_events": [
+        {
+          "pitch": 65,
+          "start_sec": 13.9921875,
+          "end_sec": 15.985416666666666,
+          "velocity": 54
+        },
+        {
+          "start_sec": 14.009078004535148,
+          "end_sec": 15.914398185941042,
+          "pitch": 65,
+          "velocity": 85,
+          "confidence": 0.6699428558349609,
+          "hand": null,
+          "hand_confidence": null
+        }
+      ],
+      "decision": "abstain"
+    },
+    {
+      "candidate": {
+        "start_sec": 13.997468027210884,
+        "end_sec": 14.461867120181406,
+        "pitch": 84,
+        "velocity": 41,
+        "confidence": 0.3214496970176697,
+        "hand": null,
+        "hand_confidence": null
+      },
+      "measurement": {
+        "event": {
+          "start_sec": 13.997468027210884,
+          "end_sec": 14.461867120181406,
+          "pitch": 84,
+          "velocity": 41,
+          "confidence": 0.3214496970176697,
+          "hand": null,
+          "hand_confidence": null
+        },
+        "before_amplitude": 0.00034753587269605604,
+        "after_amplitude": 0.06538484118316004,
+        "amplitude_ratio": 188.13839468118323,
+        "independent_attack_confirmed": false,
+        "status": "measurement_only"
+      },
+      "competing_lower_events": [
+        {
+          "pitch": 60,
+          "start_sec": 13.9921875,
+          "end_sec": 15.984375,
+          "velocity": 40
+        },
+        {
+          "pitch": 65,
+          "start_sec": 13.9921875,
+          "end_sec": 15.985416666666666,
+          "velocity": 54
+        },
+        {
+          "start_sec": 14.009078004535148,
+          "end_sec": 15.914398185941042,
+          "pitch": 65,
+          "velocity": 85,
+          "confidence": 0.6699428558349609,
+          "hand": null,
+          "hand_confidence": null
+        },
+        {
+          "start_sec": 14.009078004535148,
+          "end_sec": 15.926008163265305,
+          "pitch": 60,
+          "velocity": 89,
+          "confidence": 0.7032277584075928,
+          "hand": null,
+          "hand_confidence": null
+        },
+        {
+          "start_sec": 11.999268027210885,
+          "end_sec": 14.009078004535148,
+          "pitch": 60,
+          "velocity": 85,
+          "confidence": 0.6701707243919373,
+          "hand": null,
+          "hand_confidence": null
+        }
+      ],
+      "decision": "abstain"
+    },
+    {
+      "candidate": {
+        "start_sec": 11.999268027210885,
+        "end_sec": 12.777136507936508,
+        "pitch": 76,
+        "velocity": 46,
+        "confidence": 0.35938793420791626,
+        "hand": null,
+        "hand_confidence": null
+      },
+      "measurement": {
+        "event": {
+          "start_sec": 11.999268027210885,
+          "end_sec": 12.777136507936508,
+          "pitch": 76,
+          "velocity": 46,
+          "confidence": 0.35938793420791626,
+          "hand": null,
+          "hand_confidence": null
+        },
+        "before_amplitude": 1.5718744536964304e-06,
+        "after_amplitude": 0.07658764083104466,
+        "amplitude_ratio": 48723.76457988783,
+        "independent_attack_confirmed": false,
+        "status": "measurement_only"
+      },
+      "competing_lower_events": [
+        {
+          "pitch": 64,
+          "start_sec": 11.9921875,
+          "end_sec": 14.034374999999999,
+          "velocity": 51
+        },
+        {
+          "start_sec": 11.999268027210885,
+          "end_sec": 13.951028117913832,
+          "pitch": 64,
+          "velocity": 85,
+          "confidence": 0.6697064638137817,
+          "hand": null,
+          "hand_confidence": null
+        }
+      ],
+      "decision": "abstain"
+    },
+    {
+      "candidate": {
+        "start_sec": 11.999268027210885,
+        "end_sec": 12.777136507936508,
+        "pitch": 72,
+        "velocity": 48,
+        "confidence": 0.37588465213775635,
+        "hand": null,
+        "hand_confidence": null
+      },
+      "measurement": {
+        "event": {
+          "start_sec": 11.999268027210885,
+          "end_sec": 12.777136507936508,
+          "pitch": 72,
+          "velocity": 48,
+          "confidence": 0.37588465213775635,
+          "hand": null,
+          "hand_confidence": null
+        },
+        "before_amplitude": 7.001960202607441e-07,
+        "after_amplitude": 0.07666272396085459,
+        "amplitude_ratio": 109487.51741306152,
+        "independent_attack_confirmed": false,
+        "status": "measurement_only"
+      },
+      "competing_lower_events": [
+        {
+          "pitch": 60,
+          "start_sec": 11.991666666666667,
+          "end_sec": 13.893749999999999,
+          "velocity": 38
+        },
+        {
+          "start_sec": 11.999268027210885,
+          "end_sec": 14.009078004535148,
+          "pitch": 60,
+          "velocity": 85,
+          "confidence": 0.6701707243919373,
+          "hand": null,
+          "hand_confidence": null
+        }
+      ],
+      "decision": "abstain"
+    },
+    {
+      "candidate": {
+        "start_sec": 11.999268027210885,
+        "end_sec": 12.788746485260772,
+        "pitch": 67,
+        "velocity": 49,
+        "confidence": 0.3832634389400482,
+        "hand": null,
+        "hand_confidence": null
+      },
+      "measurement": {
+        "event": {
+          "start_sec": 11.999268027210885,
+          "end_sec": 12.788746485260772,
+          "pitch": 67,
+          "velocity": 49,
+          "confidence": 0.3832634389400482,
+          "hand": null,
+          "hand_confidence": null
+        },
+        "before_amplitude": 0.0009856393397544483,
+        "after_amplitude": 0.07646386629151582,
+        "amplitude_ratio": 77.57793668276797,
+        "independent_attack_confirmed": false,
+        "status": "measurement_only"
+      },
+      "competing_lower_events": [
+        {
+          "pitch": 55,
+          "start_sec": 11.99375,
+          "end_sec": 13.987499999999999,
+          "velocity": 39
+        },
+        {
+          "start_sec": 11.999268027210885,
+          "end_sec": 13.951028117913832,
+          "pitch": 55,
+          "velocity": 90,
+          "confidence": 0.7072123885154724,
+          "hand": null,
+          "hand_confidence": null
+        },
+        {
+          "start_sec": 10.001068027210886,
+          "end_sec": 11.999268027210885,
+          "pitch": 55,
+          "velocity": 86,
+          "confidence": 0.6754882335662842,
+          "hand": null,
+          "hand_confidence": null
+        }
+      ],
+      "decision": "abstain"
+    },
+    {
+      "candidate": {
+        "start_sec": 10.001068027210886,
+        "end_sec": 10.198437641723357,
+        "pitch": 74,
+        "velocity": 44,
+        "confidence": 0.34257662296295166,
+        "hand": null,
+        "hand_confidence": null
+      },
+      "measurement": {
+        "event": {
+          "start_sec": 10.001068027210886,
+          "end_sec": 10.198437641723357,
+          "pitch": 74,
+          "velocity": 44,
+          "confidence": 0.34257662296295166,
+          "hand": null,
+          "hand_confidence": null
+        },
+        "before_amplitude": 8.241505111635491e-07,
+        "after_amplitude": 0.10728743134464347,
+        "amplitude_ratio": 130179.41491436235,
+        "independent_attack_confirmed": false,
+        "status": "measurement_only"
+      },
+      "competing_lower_events": [
+        {
+          "pitch": 55,
+          "start_sec": 9.991145833333333,
+          "end_sec": 11.827083333333333,
+          "velocity": 36
+        },
+        {
+          "pitch": 62,
+          "start_sec": 9.991145833333333,
+          "end_sec": 12.013541666666667,
+          "velocity": 48
+        },
+        {
+          "start_sec": 10.001068027210886,
+          "end_sec": 11.94121814058957,
+          "pitch": 62,
+          "velocity": 90,
+          "confidence": 0.7048159241676331,
+          "hand": null,
+          "hand_confidence": null
+        },
+        {
+          "start_sec": 10.001068027210886,
+          "end_sec": 11.999268027210885,
+          "pitch": 55,
+          "velocity": 86,
+          "confidence": 0.6754882335662842,
+          "hand": null,
+          "hand_confidence": null
+        }
+      ],
+      "decision": "abstain"
+    },
+    {
+      "candidate": {
+        "start_sec": 7.991258049886621,
+        "end_sec": 8.455657142857142,
+        "pitch": 84,
+        "velocity": 42,
+        "confidence": 0.3300122022628784,
+        "hand": null,
+        "hand_confidence": null
+      },
+      "measurement": {
+        "event": {
+          "start_sec": 7.991258049886621,
+          "end_sec": 8.455657142857142,
+          "pitch": 84,
+          "velocity": 42,
+          "confidence": 0.3300122022628784,
+          "hand": null,
+          "hand_confidence": null
+        },
+        "before_amplitude": 0.00035284698623255924,
+        "after_amplitude": 0.06597430332947682,
+        "amplitude_ratio": 186.97709178106334,
+        "independent_attack_confirmed": false,
+        "status": "measurement_only"
+      },
+      "competing_lower_events": [
+        {
+          "pitch": 60,
+          "start_sec": 5.994270833333333,
+          "end_sec": 8.002868027210884,
+          "velocity": 39
+        },
+        {
+          "pitch": 60,
+          "start_sec": 8.002868027210884,
+          "end_sec": 10.016145833333333,
+          "velocity": 89
+        },
+        {
+          "pitch": 65,
+          "start_sec": 7.991666666666667,
+          "end_sec": 10.3203125,
+          "velocity": 52
+        },
+        {
+          "start_sec": 8.002868027210884,
+          "end_sec": 9.919798185941044,
+          "pitch": 65,
+          "velocity": 85,
+          "confidence": 0.6657983064651489,
+          "hand": null,
+          "hand_confidence": null
+        },
+        {
+          "start_sec": 8.002868027210884,
+          "end_sec": 9.919798185941044,
+          "pitch": 60,
+          "velocity": 89,
+          "confidence": 0.7019187211990356,
+          "hand": null,
+          "hand_confidence": null
+        },
+        {
+          "start_sec": 6.004668027210885,
+          "end_sec": 8.002868027210884,
+          "pitch": 60,
+          "velocity": 85,
+          "confidence": 0.668336033821106,
+          "hand": null,
+          "hand_confidence": null
+        }
+      ],
+      "decision": "abstain"
+    },
+    {
+      "candidate": {
+        "start_sec": 6.004668027210885,
+        "end_sec": 6.678046712018141,
+        "pitch": 76,
+        "velocity": 47,
+        "confidence": 0.3669413626194,
+        "hand": null,
+        "hand_confidence": null
+      },
+      "measurement": {
+        "event": {
+          "start_sec": 6.004668027210885,
+          "end_sec": 6.678046712018141,
+          "pitch": 76,
+          "velocity": 47,
+          "confidence": 0.3669413626194,
+          "hand": null,
+          "hand_confidence": null
+        },
+        "before_amplitude": 1.2108164305239816e-06,
+        "after_amplitude": 0.07663673570612443,
+        "amplitude_ratio": 63293.43885180005,
+        "independent_attack_confirmed": false,
+        "status": "measurement_only"
+      },
+      "competing_lower_events": [
+        {
+          "pitch": 64,
+          "start_sec": 5.993229166666667,
+          "end_sec": 8.0203125,
+          "velocity": 51
+        },
+        {
+          "start_sec": 6.004668027210885,
+          "end_sec": 7.956428117913832,
+          "pitch": 64,
+          "velocity": 85,
+          "confidence": 0.6706229448318481,
+          "hand": null,
+          "hand_confidence": null
+        }
+      ],
+      "decision": "abstain"
+    },
+    {
+      "candidate": {
+        "start_sec": 6.004668027210885,
+        "end_sec": 6.805756462585034,
+        "pitch": 72,
+        "velocity": 49,
+        "confidence": 0.38225239515304565,
+        "hand": null,
+        "hand_confidence": null
+      },
+      "measurement": {
+        "event": {
+          "start_sec": 6.004668027210885,
+          "end_sec": 6.805756462585034,
+          "pitch": 72,
+          "velocity": 49,
+          "confidence": 0.38225239515304565,
+          "hand": null,
+          "hand_confidence": null
+        },
+        "before_amplitude": 1.1676198888780566e-06,
+        "after_amplitude": 0.07671791157363572,
+        "amplitude_ratio": 65704.52619418164,
+        "independent_attack_confirmed": false,
+        "status": "measurement_only"
+      },
+      "competing_lower_events": [
+        {
+          "pitch": 60,
+          "start_sec": 5.994270833333333,
+          "end_sec": 8.002868027210884,
+          "velocity": 39
+        },
+        {
+          "start_sec": 6.004668027210885,
+          "end_sec": 8.002868027210884,
+          "pitch": 60,
+          "velocity": 85,
+          "confidence": 0.668336033821106,
+          "hand": null,
+          "hand_confidence": null
+        }
+      ],
+      "decision": "abstain"
+    },
+    {
+      "candidate": {
+        "start_sec": 6.004668027210885,
+        "end_sec": 6.689656689342404,
+        "pitch": 67,
+        "velocity": 51,
+        "confidence": 0.40198203921318054,
+        "hand": null,
+        "hand_confidence": null
+      },
+      "measurement": {
+        "event": {
+          "start_sec": 6.004668027210885,
+          "end_sec": 6.689656689342404,
+          "pitch": 67,
+          "velocity": 51,
+          "confidence": 0.40198203921318054,
+          "hand": null,
+          "hand_confidence": null
+        },
+        "before_amplitude": 0.0009713346298149461,
+        "after_amplitude": 0.07651866061931516,
+        "amplitude_ratio": 78.77682754283467,
+        "independent_attack_confirmed": false,
+        "status": "measurement_only"
+      },
+      "competing_lower_events": [
+        {
+          "pitch": 55,
+          "start_sec": 5.9937499999999995,
+          "end_sec": 7.996874999999999,
+          "velocity": 39
+        },
+        {
+          "start_sec": 6.004668027210885,
+          "end_sec": 7.944818140589568,
+          "pitch": 55,
+          "velocity": 89,
+          "confidence": 0.6978803277015686,
+          "hand": null,
+          "hand_confidence": null
+        },
+        {
+          "start_sec": 4.006468027210884,
+          "end_sec": 6.004668027210885,
+          "pitch": 55,
+          "velocity": 85,
+          "confidence": 0.6721208095550537,
+          "hand": null,
+          "hand_confidence": null
+        }
+      ],
+      "decision": "abstain"
+    },
+    {
+      "candidate": {
+        "start_sec": 4.006468027210884,
+        "end_sec": 4.215447619047619,
+        "pitch": 74,
+        "velocity": 43,
+        "confidence": 0.33867448568344116,
+        "hand": null,
+        "hand_confidence": null
+      },
+      "measurement": {
+        "event": {
+          "start_sec": 4.006468027210884,
+          "end_sec": 4.215447619047619,
+          "pitch": 74,
+          "velocity": 43,
+          "confidence": 0.33867448568344116,
+          "hand": null,
+          "hand_confidence": null
+        },
+        "before_amplitude": 8.120908377379208e-07,
+        "after_amplitude": 0.10656959094702671,
+        "amplitude_ratio": 131228.6581681876,
+        "independent_attack_confirmed": false,
+        "status": "measurement_only"
+      },
+      "competing_lower_events": [
+        {
+          "pitch": 62,
+          "start_sec": 3.9953125,
+          "end_sec": 6.0,
+          "velocity": 48
+        },
+        {
+          "start_sec": 4.006468027210884,
+          "end_sec": 5.946618140589569,
+          "pitch": 62,
+          "velocity": 89,
+          "confidence": 0.7040785551071167,
+          "hand": null,
+          "hand_confidence": null
+        },
+        {
+          "start_sec": 4.006468027210884,
+          "end_sec": 6.004668027210885,
+          "pitch": 55,
+          "velocity": 85,
+          "confidence": 0.6721208095550537,
+          "hand": null,
+          "hand_confidence": null
+        }
+      ],
+      "decision": "abstain"
+    },
+    {
+      "candidate": {
+        "start_sec": 4.006468027210884,
+        "end_sec": 6.004668027210885,
+        "pitch": 55,
+        "velocity": 85,
+        "confidence": 0.6721208095550537,
+        "hand": null,
+        "hand_confidence": null
+      },
+      "measurement": {
+        "event": {
+          "start_sec": 4.006468027210884,
+          "end_sec": 6.004668027210885,
+          "pitch": 55,
+          "velocity": 85,
+          "confidence": 0.6721208095550537,
+          "hand": null,
+          "hand_confidence": null
+        },
+        "before_amplitude": 4.324623767316929e-06,
+        "after_amplitude": 0.19733478327095397,
+        "amplitude_ratio": 45630.508892426464,
+        "independent_attack_confirmed": false,
+        "status": "measurement_only"
+      },
+      "competing_lower_events": [],
+      "decision": "experimental_add"
+    },
+    {
+      "candidate": {
+        "start_sec": 1.996658049886621,
+        "end_sec": 3.019619954648526,
+        "pitch": 77,
+        "velocity": 57,
+        "confidence": 0.4449169635772705,
+        "hand": null,
+        "hand_confidence": null
+      },
+      "measurement": {
+        "event": {
+          "start_sec": 1.996658049886621,
+          "end_sec": 3.019619954648526,
+          "pitch": 77,
+          "velocity": 57,
+          "confidence": 0.4449169635772705,
+          "hand": null,
+          "hand_confidence": null
+        },
+        "before_amplitude": 1.0466637213354052e-06,
+        "after_amplitude": 0.07039914240765147,
+        "amplitude_ratio": 67260.51641288515,
+        "independent_attack_confirmed": false,
+        "status": "measurement_only"
+      },
+      "competing_lower_events": [
+        {
+          "pitch": 65,
+          "start_sec": 1.9895833333333335,
+          "end_sec": 4.049479166666667,
+          "velocity": 54
+        },
+        {
+          "start_sec": 1.996658049886621,
+          "end_sec": 3.9135882086167797,
+          "pitch": 65,
+          "velocity": 86,
+          "confidence": 0.6762012243270874,
+          "hand": null,
+          "hand_confidence": null
+        }
+      ],
+      "decision": "abstain"
+    },
+    {
+      "candidate": {
+        "start_sec": 1.9850480725623583,
+        "end_sec": 2.4494471655328796,
+        "pitch": 84,
+        "velocity": 43,
+        "confidence": 0.338548481464386,
+        "hand": null,
+        "hand_confidence": null
+      },
+      "measurement": {
+        "event": {
+          "start_sec": 1.9850480725623583,
+          "end_sec": 2.4494471655328796,
+          "pitch": 84,
+          "velocity": 43,
+          "confidence": 0.338548481464386,
+          "hand": null,
+          "hand_confidence": null
+        },
+        "before_amplitude": 0.0004098484404885838,
+        "after_amplitude": 0.06044344362336001,
+        "amplitude_ratio": 147.4775493870487,
+        "independent_attack_confirmed": false,
+        "status": "measurement_only"
+      },
+      "competing_lower_events": [
+        {
+          "pitch": 60,
+          "start_sec": 0.0,
+          "end_sec": 1.996658049886621,
+          "velocity": 39
+        },
+        {
+          "pitch": 60,
+          "start_sec": 1.996658049886621,
+          "end_sec": 3.9807291666666664,
+          "velocity": 90
+        },
+        {
+          "pitch": 65,
+          "start_sec": 1.9895833333333335,
+          "end_sec": 4.049479166666667,
+          "velocity": 54
+        },
+        {
+          "start_sec": 1.996658049886621,
+          "end_sec": 3.9135882086167797,
+          "pitch": 65,
+          "velocity": 86,
+          "confidence": 0.6762012243270874,
+          "hand": null,
+          "hand_confidence": null
+        },
+        {
+          "start_sec": 1.996658049886621,
+          "end_sec": 3.925198185941043,
+          "pitch": 60,
+          "velocity": 90,
+          "confidence": 0.7106381058692932,
+          "hand": null,
+          "hand_confidence": null
+        },
+        {
+          "start_sec": 0.0,
+          "end_sec": 1.996658049886621,
+          "pitch": 60,
+          "velocity": 86,
+          "confidence": 0.6786404848098755,
+          "hand": null,
+          "hand_confidence": null
+        }
+      ],
+      "decision": "abstain"
+    },
+    {
+      "candidate": {
+        "start_sec": 0.0,
+        "end_sec": 0.6950566893424037,
+        "pitch": 76,
+        "velocity": 49,
+        "confidence": 0.3853360414505005,
+        "hand": null,
+        "hand_confidence": null
+      },
+      "measurement": {
+        "event": {
+          "start_sec": 0.0,
+          "end_sec": 0.6950566893424037,
+          "pitch": 76,
+          "velocity": 49,
+          "confidence": 0.3853360414505005,
+          "hand": null,
+          "hand_confidence": null
+        },
+        "before_amplitude": null,
+        "after_amplitude": 0.07347355543836927,
+        "amplitude_ratio": null,
+        "independent_attack_confirmed": false,
+        "status": "boundary_unavailable"
+      },
+      "competing_lower_events": [
+        {
+          "pitch": 64,
+          "start_sec": 0.0,
+          "end_sec": 2.0067708333333334,
+          "velocity": 51
+        },
+        {
+          "start_sec": 0.0,
+          "end_sec": 1.9502181405895689,
+          "pitch": 64,
+          "velocity": 86,
+          "confidence": 0.6789786219596863,
+          "hand": null,
+          "hand_confidence": null
+        }
+      ],
+      "decision": "abstain"
+    },
+    {
+      "candidate": {
+        "start_sec": 0.0,
+        "end_sec": 0.9736961451247166,
+        "pitch": 67,
+        "velocity": 49,
+        "confidence": 0.3854314684867859,
+        "hand": null,
+        "hand_confidence": null
+      },
+      "measurement": {
+        "event": {
+          "start_sec": 0.0,
+          "end_sec": 0.9736961451247166,
+          "pitch": 67,
+          "velocity": 49,
+          "confidence": 0.3854314684867859,
+          "hand": null,
+          "hand_confidence": null
+        },
+        "before_amplitude": null,
+        "after_amplitude": 0.07365040375180122,
+        "amplitude_ratio": null,
+        "independent_attack_confirmed": false,
+        "status": "boundary_unavailable"
+      },
+      "competing_lower_events": [
+        {
+          "pitch": 55,
+          "start_sec": 0.0,
+          "end_sec": 2.005729166666667,
+          "velocity": 39
+        },
+        {
+          "start_sec": 0.0,
+          "end_sec": 1.9502181405895689,
+          "pitch": 55,
+          "velocity": 90,
+          "confidence": 0.7080929279327393,
+          "hand": null,
+          "hand_confidence": null
+        }
+      ],
+      "decision": "abstain"
+    },
+    {
+      "candidate": {
+        "start_sec": 19.992068027210887,
+        "end_sec": 20.922150113378684,
+        "pitch": 77,
+        "velocity": 58,
+        "confidence": 0.45618993043899536,
+        "hand": null,
+        "hand_confidence": null
+      },
+      "measurement": {
+        "event": {
+          "start_sec": 19.992068027210887,
+          "end_sec": 20.922150113378684,
+          "pitch": 77,
+          "velocity": 58,
+          "confidence": 0.45618993043899536,
+          "hand": null,
+          "hand_confidence": null
+        },
+        "before_amplitude": 6.025912621972854e-07,
+        "after_amplitude": 0.0773794824318453,
+        "amplitude_ratio": 128411.22546266134,
+        "independent_attack_confirmed": false,
+        "status": "measurement_only"
+      },
+      "competing_lower_events": [
+        {
+          "pitch": 65,
+          "start_sec": 19.994791666666668,
+          "end_sec": 21.976041666666667,
+          "velocity": 51
+        },
+        {
+          "start_sec": 20.00367800453515,
+          "end_sec": 21.908998185941044,
+          "pitch": 65,
+          "velocity": 86,
+          "confidence": 0.6747226715087891,
+          "hand": null,
+          "hand_confidence": null
+        }
+      ],
+      "decision": "abstain"
+    },
+    {
+      "candidate": {
+        "start_sec": 7.991258049886621,
+        "end_sec": 8.932950113378686,
+        "pitch": 77,
+        "velocity": 55,
+        "confidence": 0.43521058559417725,
+        "hand": null,
+        "hand_confidence": null
+      },
+      "measurement": {
+        "event": {
+          "start_sec": 7.991258049886621,
+          "end_sec": 8.932950113378686,
+          "pitch": 77,
+          "velocity": 55,
+          "confidence": 0.43521058559417725,
+          "hand": null,
+          "hand_confidence": null
+        },
+        "before_amplitude": 2.8904387628979515e-07,
+        "after_amplitude": 0.07768374635656226,
+        "amplitude_ratio": 268761.08691082115,
+        "independent_attack_confirmed": false,
+        "status": "measurement_only"
+      },
+      "competing_lower_events": [
+        {
+          "pitch": 65,
+          "start_sec": 7.991666666666667,
+          "end_sec": 10.3203125,
+          "velocity": 52
+        },
+        {
+          "start_sec": 8.002868027210884,
+          "end_sec": 9.919798185941044,
+          "pitch": 65,
+          "velocity": 85,
+          "confidence": 0.6657983064651489,
+          "hand": null,
+          "hand_confidence": null
+        }
+      ],
+      "decision": "abstain"
+    },
+    {
+      "candidate": {
+        "start_sec": 0.0100680272108844,
+        "end_sec": 0.811156462585034,
+        "pitch": 72,
+        "velocity": 50,
+        "confidence": 0.3911568224430084,
+        "hand": null,
+        "hand_confidence": null
+      },
+      "measurement": {
+        "event": {
+          "start_sec": 0.0100680272108844,
+          "end_sec": 0.811156462585034,
+          "pitch": 72,
+          "velocity": 50,
+          "confidence": 0.3911568224430084,
+          "hand": null,
+          "hand_confidence": null
+        },
+        "before_amplitude": null,
+        "after_amplitude": 0.07459197872151149,
+        "amplitude_ratio": null,
+        "independent_attack_confirmed": false,
+        "status": "boundary_unavailable"
+      },
+      "competing_lower_events": [
+        {
+          "pitch": 60,
+          "start_sec": 0.0,
+          "end_sec": 1.996658049886621,
+          "velocity": 39
+        },
+        {
+          "start_sec": 0.0,
+          "end_sec": 1.996658049886621,
+          "pitch": 60,
+          "velocity": 86,
+          "confidence": 0.6786404848098755,
+          "hand": null,
+          "hand_confidence": null
+        }
+      ],
+      "decision": "abstain"
+    },
+    {
+      "candidate": {
+        "start_sec": 24.03490793650794,
+        "end_sec": 24.243887528344672,
+        "pitch": 92,
+        "velocity": 40,
+        "confidence": 0.3135550916194916,
+        "hand": null,
+        "hand_confidence": null
+      },
+      "measurement": {
+        "event": {
+          "start_sec": 24.03490793650794,
+          "end_sec": 24.243887528344672,
+          "pitch": 92,
+          "velocity": 40,
+          "confidence": 0.3135550916194916,
+          "hand": null,
+          "hand_confidence": null
+        },
+        "before_amplitude": 5.833693241943041e-07,
+        "after_amplitude": 0.003074809256438046,
+        "amplitude_ratio": 5270.77638284236,
+        "independent_attack_confirmed": false,
+        "status": "measurement_only"
+      },
+      "competing_lower_events": [
+        {
+          "pitch": 64,
+          "start_sec": 23.991145833333334,
+          "end_sec": 26.038541666666667,
+          "velocity": 50
+        },
+        {
+          "start_sec": 24.000078004535148,
+          "end_sec": 25.951838095238095,
+          "pitch": 64,
+          "velocity": 85,
+          "confidence": 0.6701383590698242,
+          "hand": null,
+          "hand_confidence": null
+        }
+      ],
+      "decision": "abstain"
+    },
+    {
+      "candidate": {
+        "start_sec": 28.669856689342403,
+        "end_sec": 28.973,
+        "pitch": 74,
+        "velocity": 38,
+        "confidence": 0.30063596367836,
+        "hand": null,
+        "hand_confidence": null
+      },
+      "measurement": {
+        "event": {
+          "start_sec": 28.669856689342403,
+          "end_sec": 28.973,
+          "pitch": 74,
+          "velocity": 38,
+          "confidence": 0.30063596367836,
+          "hand": null,
+          "hand_confidence": null
+        },
+        "before_amplitude": 0.014745079918246628,
+        "after_amplitude": 0.019838016811975608,
+        "amplitude_ratio": 1.3453990701960599,
+        "independent_attack_confirmed": false,
+        "status": "measurement_only"
+      },
+      "competing_lower_events": [
+        {
+          "pitch": 62,
+          "start_sec": 27.9921875,
+          "end_sec": 29.985416666666666,
+          "velocity": 48
+        },
+        {
+          "pitch": 55,
+          "start_sec": 27.992708333333333,
+          "end_sec": 29.985416666666666,
+          "velocity": 35
+        },
+        {
+          "start_sec": 27.996478004535145,
+          "end_sec": 29.983068027210884,
+          "pitch": 62,
+          "velocity": 92,
+          "confidence": 0.7231568694114685,
+          "hand": null,
+          "hand_confidence": null
+        },
+        {
+          "start_sec": 27.996478004535145,
+          "end_sec": 29.97145804988662,
+          "pitch": 55,
+          "velocity": 90,
+          "confidence": 0.7113763689994812,
+          "hand": null,
+          "hand_confidence": null
+        }
+      ],
+      "decision": "abstain"
+    },
+    {
+      "candidate": {
+        "start_sec": 0.03328798185941051,
+        "end_sec": 0.2538775510204081,
+        "pitch": 92,
+        "velocity": 39,
+        "confidence": 0.30999472737312317,
+        "hand": null,
+        "hand_confidence": null
+      },
+      "measurement": {
+        "event": {
+          "start_sec": 0.03328798185941051,
+          "end_sec": 0.2538775510204081,
+          "pitch": 92,
+          "velocity": 39,
+          "confidence": 0.30999472737312317,
+          "hand": null,
+          "hand_confidence": null
+        },
+        "before_amplitude": null,
+        "after_amplitude": 0.003420044048241541,
+        "amplitude_ratio": null,
+        "independent_attack_confirmed": false,
+        "status": "boundary_unavailable"
+      },
+      "competing_lower_events": [
+        {
+          "pitch": 64,
+          "start_sec": 0.0,
+          "end_sec": 2.0067708333333334,
+          "velocity": 51
+        },
+        {
+          "start_sec": 0.0,
+          "end_sec": 1.9502181405895689,
+          "pitch": 64,
+          "velocity": 86,
+          "confidence": 0.6789786219596863,
+          "hand": null,
+          "hand_confidence": null
+        }
+      ],
+      "decision": "abstain"
+    }
+  ],
+  "metrics": {
+    "0.05": {
+      "onset_tolerance_seconds": 0.05,
+      "reference_count": 45,
+      "estimated_count": 45,
+      "matched_count": 45,
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0,
+      "extra_count": 0,
+      "missing_count": 0,
+      "missing_reference_notes": [],
+      "unmatched_estimated_notes": [],
+      "matches": [
+        {
+          "reference_index": 0,
+          "estimated_index": 0,
+          "onset_error_seconds": 0.0
+        },
+        {
+          "reference_index": 1,
+          "estimated_index": 1,
+          "onset_error_seconds": 0.0
+        },
+        {
+          "reference_index": 2,
+          "estimated_index": 2,
+          "onset_error_seconds": 0.0
+        },
+        {
+          "reference_index": 3,
+          "estimated_index": 3,
+          "onset_error_seconds": -0.011979166666666874
+        },
+        {
+          "reference_index": 4,
+          "estimated_index": 5,
+          "onset_error_seconds": -0.0033419501133789
+        },
+        {
+          "reference_index": 5,
+          "estimated_index": 4,
+          "onset_error_seconds": -0.010416666666666519
+        },
+        {
+          "reference_index": 6,
+          "estimated_index": 8,
+          "onset_error_seconds": 0.006468027210884131
+        },
+        {
+          "reference_index": 7,
+          "estimated_index": 6,
+          "onset_error_seconds": -0.004687500000000178
+        },
+        {
+          "reference_index": 8,
+          "estimated_index": 7,
+          "onset_error_seconds": -0.004687500000000178
+        },
+        {
+          "reference_index": 9,
+          "estimated_index": 10,
+          "onset_error_seconds": -0.006250000000000533
+        },
+        {
+          "reference_index": 10,
+          "estimated_index": 11,
+          "onset_error_seconds": -0.005729166666666785
+        },
+        {
+          "reference_index": 11,
+          "estimated_index": 9,
+          "onset_error_seconds": -0.0067708333333333925
+        },
+        {
+          "reference_index": 12,
+          "estimated_index": 12,
+          "onset_error_seconds": -0.009375000000000355
+        },
+        {
+          "reference_index": 13,
+          "estimated_index": 14,
+          "onset_error_seconds": 0.002868027210883639
+        },
+        {
+          "reference_index": 14,
+          "estimated_index": 13,
+          "onset_error_seconds": -0.00833333333333286
+        },
+        {
+          "reference_index": 15,
+          "estimated_index": 15,
+          "onset_error_seconds": -0.008854166666667496
+        },
+        {
+          "reference_index": 16,
+          "estimated_index": 16,
+          "onset_error_seconds": -0.008854166666667496
+        },
+        {
+          "reference_index": 17,
+          "estimated_index": 17,
+          "onset_error_seconds": -0.008854166666667496
+        },
+        {
+          "reference_index": 18,
+          "estimated_index": 20,
+          "onset_error_seconds": -0.006249999999999645
+        },
+        {
+          "reference_index": 19,
+          "estimated_index": 18,
+          "onset_error_seconds": -0.00833333333333286
+        },
+        {
+          "reference_index": 20,
+          "estimated_index": 19,
+          "onset_error_seconds": -0.0078125
+        },
+        {
+          "reference_index": 21,
+          "estimated_index": 21,
+          "onset_error_seconds": -0.009375000000000355
+        },
+        {
+          "reference_index": 22,
+          "estimated_index": 22,
+          "onset_error_seconds": -0.0078125
+        },
+        {
+          "reference_index": 23,
+          "estimated_index": 23,
+          "onset_error_seconds": -0.0078125
+        },
+        {
+          "reference_index": 24,
+          "estimated_index": 24,
+          "onset_error_seconds": -0.009895833333334991
+        },
+        {
+          "reference_index": 25,
+          "estimated_index": 25,
+          "onset_error_seconds": -0.009374999999998579
+        },
+        {
+          "reference_index": 26,
+          "estimated_index": 26,
+          "onset_error_seconds": -0.00885416666666572
+        },
+        {
+          "reference_index": 27,
+          "estimated_index": 29,
+          "onset_error_seconds": 0.005478004535145686
+        },
+        {
+          "reference_index": 28,
+          "estimated_index": 28,
+          "onset_error_seconds": -0.010416666666667851
+        },
+        {
+          "reference_index": 29,
+          "estimated_index": 27,
+          "onset_error_seconds": -0.01093750000000071
+        },
+        {
+          "reference_index": 30,
+          "estimated_index": 30,
+          "onset_error_seconds": -0.005208333333332149
+        },
+        {
+          "reference_index": 31,
+          "estimated_index": 32,
+          "onset_error_seconds": 0.0036780045351498813
+        },
+        {
+          "reference_index": 32,
+          "estimated_index": 31,
+          "onset_error_seconds": -0.005208333333332149
+        },
+        {
+          "reference_index": 33,
+          "estimated_index": 35,
+          "onset_error_seconds": 0.001878004535146971
+        },
+        {
+          "reference_index": 34,
+          "estimated_index": 33,
+          "onset_error_seconds": -0.00729166666666714
+        },
+        {
+          "reference_index": 35,
+          "estimated_index": 34,
+          "onset_error_seconds": -0.006770833333334281
+        },
+        {
+          "reference_index": 36,
+          "estimated_index": 37,
+          "onset_error_seconds": -0.00833333333333286
+        },
+        {
+          "reference_index": 37,
+          "estimated_index": 38,
+          "onset_error_seconds": -0.0078125
+        },
+        {
+          "reference_index": 38,
+          "estimated_index": 36,
+          "onset_error_seconds": -0.00885416666666572
+        },
+        {
+          "reference_index": 39,
+          "estimated_index": 39,
+          "onset_error_seconds": -0.01145833333333357
+        },
+        {
+          "reference_index": 40,
+          "estimated_index": 41,
+          "onset_error_seconds": 0.009887981859410644
+        },
+        {
+          "reference_index": 41,
+          "estimated_index": 40,
+          "onset_error_seconds": -0.009375000000002132
+        },
+        {
+          "reference_index": 42,
+          "estimated_index": 44,
+          "onset_error_seconds": -0.00729166666666714
+        },
+        {
+          "reference_index": 43,
+          "estimated_index": 42,
+          "onset_error_seconds": -0.00833333333333286
+        },
+        {
+          "reference_index": 44,
+          "estimated_index": 43,
+          "onset_error_seconds": -0.0078125
+        }
+      ]
+    },
+    "0.1": {
+      "onset_tolerance_seconds": 0.1,
+      "reference_count": 45,
+      "estimated_count": 45,
+      "matched_count": 45,
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0,
+      "extra_count": 0,
+      "missing_count": 0,
+      "missing_reference_notes": [],
+      "unmatched_estimated_notes": [],
+      "matches": [
+        {
+          "reference_index": 0,
+          "estimated_index": 0,
+          "onset_error_seconds": 0.0
+        },
+        {
+          "reference_index": 1,
+          "estimated_index": 1,
+          "onset_error_seconds": 0.0
+        },
+        {
+          "reference_index": 2,
+          "estimated_index": 2,
+          "onset_error_seconds": 0.0
+        },
+        {
+          "reference_index": 3,
+          "estimated_index": 3,
+          "onset_error_seconds": -0.011979166666666874
+        },
+        {
+          "reference_index": 4,
+          "estimated_index": 5,
+          "onset_error_seconds": -0.0033419501133789
+        },
+        {
+          "reference_index": 5,
+          "estimated_index": 4,
+          "onset_error_seconds": -0.010416666666666519
+        },
+        {
+          "reference_index": 6,
+          "estimated_index": 8,
+          "onset_error_seconds": 0.006468027210884131
+        },
+        {
+          "reference_index": 7,
+          "estimated_index": 6,
+          "onset_error_seconds": -0.004687500000000178
+        },
+        {
+          "reference_index": 8,
+          "estimated_index": 7,
+          "onset_error_seconds": -0.004687500000000178
+        },
+        {
+          "reference_index": 9,
+          "estimated_index": 10,
+          "onset_error_seconds": -0.006250000000000533
+        },
+        {
+          "reference_index": 10,
+          "estimated_index": 11,
+          "onset_error_seconds": -0.005729166666666785
+        },
+        {
+          "reference_index": 11,
+          "estimated_index": 9,
+          "onset_error_seconds": -0.0067708333333333925
+        },
+        {
+          "reference_index": 12,
+          "estimated_index": 12,
+          "onset_error_seconds": -0.009375000000000355
+        },
+        {
+          "reference_index": 13,
+          "estimated_index": 14,
+          "onset_error_seconds": 0.002868027210883639
+        },
+        {
+          "reference_index": 14,
+          "estimated_index": 13,
+          "onset_error_seconds": -0.00833333333333286
+        },
+        {
+          "reference_index": 15,
+          "estimated_index": 15,
+          "onset_error_seconds": -0.008854166666667496
+        },
+        {
+          "reference_index": 16,
+          "estimated_index": 16,
+          "onset_error_seconds": -0.008854166666667496
+        },
+        {
+          "reference_index": 17,
+          "estimated_index": 17,
+          "onset_error_seconds": -0.008854166666667496
+        },
+        {
+          "reference_index": 18,
+          "estimated_index": 20,
+          "onset_error_seconds": -0.006249999999999645
+        },
+        {
+          "reference_index": 19,
+          "estimated_index": 18,
+          "onset_error_seconds": -0.00833333333333286
+        },
+        {
+          "reference_index": 20,
+          "estimated_index": 19,
+          "onset_error_seconds": -0.0078125
+        },
+        {
+          "reference_index": 21,
+          "estimated_index": 21,
+          "onset_error_seconds": -0.009375000000000355
+        },
+        {
+          "reference_index": 22,
+          "estimated_index": 22,
+          "onset_error_seconds": -0.0078125
+        },
+        {
+          "reference_index": 23,
+          "estimated_index": 23,
+          "onset_error_seconds": -0.0078125
+        },
+        {
+          "reference_index": 24,
+          "estimated_index": 24,
+          "onset_error_seconds": -0.009895833333334991
+        },
+        {
+          "reference_index": 25,
+          "estimated_index": 25,
+          "onset_error_seconds": -0.009374999999998579
+        },
+        {
+          "reference_index": 26,
+          "estimated_index": 26,
+          "onset_error_seconds": -0.00885416666666572
+        },
+        {
+          "reference_index": 27,
+          "estimated_index": 29,
+          "onset_error_seconds": 0.005478004535145686
+        },
+        {
+          "reference_index": 28,
+          "estimated_index": 28,
+          "onset_error_seconds": -0.010416666666667851
+        },
+        {
+          "reference_index": 29,
+          "estimated_index": 27,
+          "onset_error_seconds": -0.01093750000000071
+        },
+        {
+          "reference_index": 30,
+          "estimated_index": 30,
+          "onset_error_seconds": -0.005208333333332149
+        },
+        {
+          "reference_index": 31,
+          "estimated_index": 32,
+          "onset_error_seconds": 0.0036780045351498813
+        },
+        {
+          "reference_index": 32,
+          "estimated_index": 31,
+          "onset_error_seconds": -0.005208333333332149
+        },
+        {
+          "reference_index": 33,
+          "estimated_index": 35,
+          "onset_error_seconds": 0.001878004535146971
+        },
+        {
+          "reference_index": 34,
+          "estimated_index": 33,
+          "onset_error_seconds": -0.00729166666666714
+        },
+        {
+          "reference_index": 35,
+          "estimated_index": 34,
+          "onset_error_seconds": -0.006770833333334281
+        },
+        {
+          "reference_index": 36,
+          "estimated_index": 37,
+          "onset_error_seconds": -0.00833333333333286
+        },
+        {
+          "reference_index": 37,
+          "estimated_index": 38,
+          "onset_error_seconds": -0.0078125
+        },
+        {
+          "reference_index": 38,
+          "estimated_index": 36,
+          "onset_error_seconds": -0.00885416666666572
+        },
+        {
+          "reference_index": 39,
+          "estimated_index": 39,
+          "onset_error_seconds": -0.01145833333333357
+        },
+        {
+          "reference_index": 40,
+          "estimated_index": 41,
+          "onset_error_seconds": 0.009887981859410644
+        },
+        {
+          "reference_index": 41,
+          "estimated_index": 40,
+          "onset_error_seconds": -0.009375000000002132
+        },
+        {
+          "reference_index": 42,
+          "estimated_index": 44,
+          "onset_error_seconds": -0.00729166666666714
+        },
+        {
+          "reference_index": 43,
+          "estimated_index": 42,
+          "onset_error_seconds": -0.00833333333333286
+        },
+        {
+          "reference_index": 44,
+          "estimated_index": 43,
+          "onset_error_seconds": -0.0078125
+        }
+      ]
+    }
+  },
+  "limitation": "one synthetic fixture; amplitude growth is not physical attack certainty"
+}

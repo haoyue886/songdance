@@ -1,0 +1,25 @@
+{
+  "status": "inference_complete",
+  "model_version": "basic-pitch-0.4.0/icassp-2022-onnx/o0.5-f0.3",
+  "case_id": "10-device",
+  "source_provenance": {
+    "kind": "synthetic_regression_fixture",
+    "license": "CC0-1.0"
+  },
+  "case_selector_sha256": "90c2749f6af5c7296c0509a0cbf7786e5828a68fc96aff9c34480385f7247ca4",
+  "source_sha256": "2a364af3fd70cbb4b7cf45dfc6d36eccfbdc0d3d43ec6e0eeb60588197ca2381",
+  "source_midi_sha256": "8607a26eb0fab098fa5c2185542594ad0ecd9e33bd618ba68152a5eb31221dc5",
+  "input_sha256": "05fea3c114d740319fc7f44e61ef3936f53e8196dae65575eb012f9521e7ee05",
+  "raw_note_count": 174,
+  "midi_sha256": "f2af178b7feaa8072b5b6f1102a5f11f15106d98e20a69b29cfa76d53957b94e",
+  "inference_including_model_load_seconds": 0.774837208999088,
+  "adapter_sha256": "8e925cf64f78e5b786388d54666b4a94157f9b505c22c8d8fde4356d1e56616b",
+  "transcriber_sha256": "e78aab59db7a5cd3e1633a0a2d409e927a732daba90876eb645ad79d189bda28",
+  "preprocessor_sha256": "da1dfae6e7e0b25268fb9575e1c5138890812dd9010ee2436ed78b467119e168",
+  "artifacts_sha256": {
+    "normalized.wav": "05fea3c114d740319fc7f44e61ef3936f53e8196dae65575eb012f9521e7ee05",
+    "raw-timeline.json": "f9a1b077d45f8fe1c4962f64c0187bcfcb0438d820bb5e72713a2ab8f87a306a",
+    "raw.mid": "f2af178b7feaa8072b5b6f1102a5f11f15106d98e20a69b29cfa76d53957b94e"
+  },
+  "production_eligible": false
+}

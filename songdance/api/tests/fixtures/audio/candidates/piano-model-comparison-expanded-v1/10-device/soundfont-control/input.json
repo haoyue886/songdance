@@ -1,0 +1,34 @@
+{
+  "production_eligible": false,
+  "source_midi_sha256": "8607a26eb0fab098fa5c2185542594ad0ecd9e33bd618ba68152a5eb31221dc5",
+  "soundfont_sha256": "82475b91a76de15cb28a104707d3247ba932e228bada3f47bba63c6b31aaf7a1",
+  "command": [
+    "fluidsynth",
+    "-ni",
+    "-R",
+    "0",
+    "-C",
+    "0",
+    "-g",
+    "0.2",
+    "-r",
+    "22050",
+    "-T",
+    "wav",
+    "-O",
+    "float",
+    "-F",
+    "/Users/lixinyue/Desktop/project/songDance/songdance/api/tests/fixtures/audio/candidates/piano-model-comparison-expanded-v1/10-device/soundfont-control/render.wav",
+    "/Users/lixinyue/Desktop/project/songDance/songdance/api/.venv/lib/python3.11/site-packages/pretty_midi/TimGM6mb.sf2",
+    "/Users/lixinyue/Desktop/project/songDance/songdance/api/tests/fixtures/audio/generated/10-device.mid"
+  ],
+  "script_sha256": "5e74a9992f012591a29c5d56f4d6a6bdb7287d5df84ade946734ee71ac7e7119",
+  "preprocessor_sha256": "da1dfae6e7e0b25268fb9575e1c5138890812dd9010ee2436ed78b467119e168",
+  "limitation": "renderer, envelope, timbre and velocity response all change",
+  "artifacts": {
+    "normalized.wav": "427ff5ee0c02c76fe6777e560bc56cba7a9d6f1f410c0488bd143d649c9ac49e",
+    "render.wav": "e8ccb4250150ab90f71e59c45e891072cf7aea038b626ffb6d4199378c91cd15",
+    "padded.wav": "9c8a75734a16f5d987ff9de7bdee9cbba20dde4bcacfeba6558bd6849977ead2",
+    "device.wav": "eec5e2d136c0f2d4b71d5317699284c9dbb675c1b5bc702173f1425e8ccfd296"
+  }
+}

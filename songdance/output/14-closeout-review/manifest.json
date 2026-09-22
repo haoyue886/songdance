@@ -1,0 +1,18 @@
+{
+  "production_eligible": false,
+  "review_status": "pending",
+  "files": {
+    "original.wav": "d92ff1488016ec87eb9f849b0acf1adad4711e1791bf614f6eceff538826a99b",
+    "index.html": "e76653468e4255daca00f4b810c694ad8efe0c040405e0a24bd70eb0a816a1b7",
+    "before/render.log": "3989df037faae47c17789bd9ac0a695fd5792515d0827c89c361a07fdd22a839",
+    "before/score.musicxml": "eda625eb87ace49f2c8e3a9f0c2ac1319b372e5675d2d5ef923f3cfe118d6566",
+    "before/score.pdf": "61cff36c6d766a1a370268331274be6495e8cb2486409135233bcbda7d01aec1",
+    "before/score.mid": "27473b0efbe8b73db26fb11624f13a38e098c652fcd3a3004c69cdaaf8aba23d",
+    "before/playback.wav": "8d816c33c0793aafc4a48241eff227197a529b52cc3e3daa4a691d81f441741f",
+    "after/render.log": "db8ffaf9369f4f4f2b400c39fd6fa12f3a0c2e0f04f8dd6824de575093b59d66",
+    "after/score.musicxml": "00441b9e25f17be0450ca5f300a336354e77b400a1af5c459f1bdae084741901",
+    "after/score.pdf": "d5bdea6afdc7c22c00cb361f0da59c2a4ad6ceedc47ec5377f09649c3c973bb7",
+    "after/score.mid": "7dba83100944b0fc606394dabbfe5b6229d218c046e49d552a71393fcdad5500",
+    "after/playback.wav": "1d83d78e23576f65975214a94aff17b2dc118b5db899007fe9eb910ea9079d69"
+  }
+}

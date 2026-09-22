@@ -1,0 +1,684 @@
+{
+  "production_eligible": false,
+  "rebuild_sha256": "fe3cb11940828a7a768f4cfcf685efdb7d047a8a86ec8cd93bfbe14a6c0a6123",
+  "script_sha256": "371682867c462eca40c5207c2b96d2d261cd4b2ab0c6578227135f27413749ad",
+  "cases": [
+    {
+      "suite": "structure",
+      "case_id": "01-slow-melody",
+      "files": {
+        "raw.mid": {
+          "old": "071e74acf65e521ad439c03bce51eb1c6f2e451231ba31571aa01b74ae58c267",
+          "new": "071e74acf65e521ad439c03bce51eb1c6f2e451231ba31571aa01b74ae58c267"
+        },
+        "score.mid": {
+          "old": "7467459e1b79bae0982e50b9b85b85738702cf4294345066a225ae4daef83391",
+          "new": "89153edcbc34a61f9654808a49ffe4b81d8c36de542c597a61d78b22b864527d"
+        },
+        "score.musicxml": {
+          "old": "289fec75241becba4e7f1d6c0dac4361c532b6b36d2e6891da542bdc8e6c423a",
+          "new": "a9225e423fdfff38bc5e4747122e10a036e94c90ba726920ef7df4efb7c15e3d"
+        },
+        "timeline.json": {
+          "old": "9b02de80a3064b7a7277b6bc3595a49608311ada87d1734db6546a2ef1da9975",
+          "new": "9bf0eb49026fa059e8540f8bda6f64e81feafd8b80b31462e65360292cbaac84"
+        }
+      },
+      "raw_events_equal": true,
+      "score_events_equal": false,
+      "xml_note_rest_timing_equal": false,
+      "review_status": "pending_no_rating_transfer"
+    },
+    {
+      "suite": "structure",
+      "case_id": "02-fast-scale",
+      "files": {
+        "raw.mid": {
+          "old": "70348b09957db9f882766fe536124590f2c2f63d38996bcd66bbd21a9eeb3e23",
+          "new": "70348b09957db9f882766fe536124590f2c2f63d38996bcd66bbd21a9eeb3e23"
+        },
+        "score.mid": {
+          "old": "e5afe2646982be8d4581172665fa38c9ff833355b1a6a2ae2368e78b4b134da7",
+          "new": "9b689bc6c4ac103d3e9c7afc7a78d095bb1c1e27d545588d057d5aa8f1d5af52"
+        },
+        "score.musicxml": {
+          "old": "01e0ad4f6321eecf05f246e0b998759e59c7fad81f2c03dc83d1c45fedbd03b9",
+          "new": "e1197fa24854abd1342cca94726cd6eabd4f59a32f87cb6a182d2fcfe7fc1282"
+        },
+        "timeline.json": {
+          "old": "b505aff4e4a3cead81b978576ac18a4ff7a2f21e6b5042128fb0341797205c0a",
+          "new": "7b2054d36d1bd4d1b1f720cadc338fbd7348b6243a426585f3647d56e8259711"
+        }
+      },
+      "raw_events_equal": true,
+      "score_events_equal": false,
+      "xml_note_rest_timing_equal": false,
+      "review_status": "pending_no_rating_transfer"
+    },
+    {
+      "suite": "structure",
+      "case_id": "03-block-chords",
+      "files": {
+        "raw.mid": {
+          "old": "6081626f45b925bfdf29989ca9b6e40b342f5f2377d88c1d5a96e78d0301ea62",
+          "new": "6081626f45b925bfdf29989ca9b6e40b342f5f2377d88c1d5a96e78d0301ea62"
+        },
+        "score.mid": {
+          "old": "b2ed3e0ef3885358f47a423f7c7857274a9ca7a10f3ed5ebc7d19937405246b2",
+          "new": "32314454f2f165ee5c2dc64bfeaa4f0f7299ea5d8f65131036e8466b227588ea"
+        },
+        "score.musicxml": {
+          "old": "e154220e86e81ce16293abbf9ccc4217fe821e474864805ce296fc39ff1c5c2f",
+          "new": "5ea9ab64fa729cc285d63fadeb39f2dee1500422aab657f3a95da043ba017a19"
+        },
+        "timeline.json": {
+          "old": "48923445556fb32d114417437a0e4102ce7b78ccb94276c156d56eff7202a8ab",
+          "new": "3d7ec6482fe4deb8e46b2ed0899b42b7372a26e18fbc0f42655b01ade74a292b"
+        }
+      },
+      "raw_events_equal": true,
+      "score_events_equal": false,
+      "xml_note_rest_timing_equal": false,
+      "review_status": "pending_no_rating_transfer"
+    },
+    {
+      "suite": "structure",
+      "case_id": "04-arpeggios",
+      "files": {
+        "raw.mid": {
+          "old": "a501b03d926f950a25e9bf0ef01e504c61180bb133025aa52bf297672868a823",
+          "new": "a501b03d926f950a25e9bf0ef01e504c61180bb133025aa52bf297672868a823"
+        },
+        "score.mid": {
+          "old": "f2e7be2248b15fcd7c4b1b378351fdb1f74a4e54e476e37131c826688f994fa8",
+          "new": "f854dda6be6375195f1589586e11d8ecb2265303d0ba218a1512731e8df1a7fe"
+        },
+        "score.musicxml": {
+          "old": "c1a67d5aca951855662d626be1cdd229d51b22e4fb4e8a3d1db7c3c5e42c445d",
+          "new": "41380aea49754f27d9c573ae47df87affba9f0174fe12b150cd03ff8eb4af501"
+        },
+        "timeline.json": {
+          "old": "c43536e499f8924cce930d1b737730b0522afd2ecbd569915d205c76231ec95a",
+          "new": "828c0d450b6cfd5d65200d60cea74c7fefdb47e0e85dd36b766e921c6c7e9ba3"
+        }
+      },
+      "raw_events_equal": true,
+      "score_events_equal": false,
+      "xml_note_rest_timing_equal": true,
+      "review_status": "pending_no_rating_transfer"
+    },
+    {
+      "suite": "structure",
+      "case_id": "05-two-hand",
+      "files": {
+        "raw.mid": {
+          "old": "2db9a1e570c0cac17dc5bfa5edc8b81bbe549fa409876554d20e43b59146b72d",
+          "new": "2db9a1e570c0cac17dc5bfa5edc8b81bbe549fa409876554d20e43b59146b72d"
+        },
+        "score.mid": {
+          "old": "40ad6bf0dcf7faa26f87499faf753d359e782a721bc325f37ad8ddfd54208f22",
+          "new": "22eda1bbd95e952b5c34fcca79f74e2829ef97df6d2cd9f8166eac21e445e7af"
+        },
+        "score.musicxml": {
+          "old": "9028c36f825ee08af973535063cb92af3f6ad42a826a1d66635895b895408c96",
+          "new": "0480a6ab89c4508d13864a133862f0c52f6993927f66030553a8c2780a732f55"
+        },
+        "timeline.json": {
+          "old": "a80c7066deeeb9104acef3d932b8ac671f977fdd452c5a7982f1c5b3f04bc370",
+          "new": "30e755d12c37ed69f1f26f663bfe8518ea2cb3be8e6718194475bccd0731579b"
+        }
+      },
+      "raw_events_equal": true,
+      "score_events_equal": false,
+      "xml_note_rest_timing_equal": false,
+      "review_status": "pending_no_rating_transfer"
+    },
+    {
+      "suite": "structure",
+      "case_id": "06-sustain",
+      "files": {
+        "raw.mid": {
+          "old": "60a808d3b99bef66518afa9518c94a8f34a34ad6f72630dbeacdce0036966ad9",
+          "new": "60a808d3b99bef66518afa9518c94a8f34a34ad6f72630dbeacdce0036966ad9"
+        },
+        "score.mid": {
+          "old": "18b66e361752d506404cc2a5953bae730a52b914c2c2bc76d0e0a2693ef4e763",
+          "new": "af73ba5fc590385af828eb0a6da770a8b97ddd098c2e4071fa47e9587a764800"
+        },
+        "score.musicxml": {
+          "old": "7ad69aa26c769df74b14e7b6a1e2b5fb6272eb0ff6ccd82d7b9c5a5f997475c0",
+          "new": "78cba6d7ddc3b63d7c87dd4d5d1637f33c38dba1d9de69ad06b66e7b816187e5"
+        },
+        "timeline.json": {
+          "old": "0bf51c80b8f09de1ceef502b469a7bc0d7b6d853042de6ad458f7f8b8ff60754",
+          "new": "d7bcd85d6290d5cee13254a7dc50a807f4afa49b6452378bf829160a8c7004e1"
+        }
+      },
+      "raw_events_equal": true,
+      "score_events_equal": false,
+      "xml_note_rest_timing_equal": true,
+      "review_status": "pending_no_rating_transfer"
+    },
+    {
+      "suite": "structure",
+      "case_id": "07-soft",
+      "files": {
+        "raw.mid": {
+          "old": "76a0992a4946e9fb11bb6afd187d86f5d3be858a1c5479bbab00c9f97ed9431d",
+          "new": "76a0992a4946e9fb11bb6afd187d86f5d3be858a1c5479bbab00c9f97ed9431d"
+        },
+        "score.mid": {
+          "old": "1fe73a123b5b1259b952bbabb9b1a89cdd0e7e2b0156c32759d2fb2f9b7e3349",
+          "new": "5b33e9a7bf7e06cc870a2aa66cdc45aa4a5d9af35f43ed5d89a982fbfb69517c"
+        },
+        "score.musicxml": {
+          "old": "1856f64cd22351279604f512128d60ce7b6dfa366cc5c033b089076fea9a62d3",
+          "new": "eb1b9c5b56d47a664b3a50e2f49254bf1b67f573dfa1258defc59d694b736ec0"
+        },
+        "timeline.json": {
+          "old": "8cfa7a9bdee5512df67f30c4606457067c57172952953c761b7e3a1a38d8a0cf",
+          "new": "233ad16e51abd71f2ecbfdbebd92f03b8596b8e95eab2a506f08dd74b500da47"
+        }
+      },
+      "raw_events_equal": true,
+      "score_events_equal": false,
+      "xml_note_rest_timing_equal": false,
+      "review_status": "pending_no_rating_transfer"
+    },
+    {
+      "suite": "structure",
+      "case_id": "08-dynamics",
+      "files": {
+        "raw.mid": {
+          "old": "8513364f0b09c32405a04eb284ce34d4fb5e667ebda7f15ca09a22c0d372299f",
+          "new": "8513364f0b09c32405a04eb284ce34d4fb5e667ebda7f15ca09a22c0d372299f"
+        },
+        "score.mid": {
+          "old": "e49ffa6759874721badc8487f06e8fe35d0eb23f690f4bb9be8944b98528caf3",
+          "new": "96ec650b9e38eba9f02cb016584b089a8208fab61aedc7cac063b75ae61b59de"
+        },
+        "score.musicxml": {
+          "old": "23fc75db12a75339a1b4bb91c293ec335c569b1a113ccc57ef17ea6a5adf7dde",
+          "new": "13d70633173a81484792dab2de3fd35c2bab66f47f61037fc12f147184a138a8"
+        },
+        "timeline.json": {
+          "old": "b3eb7cd63dbc69c64276575a37688b07bb7ae9cd1dc743ed92c699260c690b6e",
+          "new": "f76b5d2ca0fb17b5ff16ea9c33096a06e4632969d37f098b3435db8f3383b002"
+        }
+      },
+      "raw_events_equal": true,
+      "score_events_equal": false,
+      "xml_note_rest_timing_equal": false,
+      "review_status": "pending_no_rating_transfer"
+    },
+    {
+      "suite": "structure",
+      "case_id": "09-light-noise",
+      "files": {
+        "raw.mid": {
+          "old": "a4c115754637c90ce5062c26a42a37874a03cde10f91fbb0d0d7294caec0f5b1",
+          "new": "a4c115754637c90ce5062c26a42a37874a03cde10f91fbb0d0d7294caec0f5b1"
+        },
+        "score.mid": {
+          "old": "d8441d3099ff836cf410ba18d5f4bb5777a4c22eee005f86eb4a4fb81e0b4276",
+          "new": "df383d01766c72cd446dce37b2d75e994f0911e85ba77de67bfa2b0c342f837b"
+        },
+        "score.musicxml": {
+          "old": "afc2c7393d5f4e8a87e0ae1c7ca39f433e04cd791999b8003cc7d0781c432ef8",
+          "new": "91b0bdd78ad04fd4bdf10f0a6797fe37dfd1a54bd5f0d76843f3e45e957918d5"
+        },
+        "timeline.json": {
+          "old": "93c6dc160bd8db555908dacf25ea83b7580958a5ad328cdc4f5821ad1b435735",
+          "new": "172da74abc3197c00528ab8a61db6f9360f776aa370211927713bbb6521a056f"
+        }
+      },
+      "raw_events_equal": true,
+      "score_events_equal": false,
+      "xml_note_rest_timing_equal": true,
+      "review_status": "pending_no_rating_transfer"
+    },
+    {
+      "suite": "structure",
+      "case_id": "10-device",
+      "files": {
+        "raw.mid": {
+          "old": "f2af178b7feaa8072b5b6f1102a5f11f15106d98e20a69b29cfa76d53957b94e",
+          "new": "f2af178b7feaa8072b5b6f1102a5f11f15106d98e20a69b29cfa76d53957b94e"
+        },
+        "score.mid": {
+          "old": "8bc0ea90b04876d9dadfc9579e446f17d0853738e81d1e49ab5c3bc7fd357727",
+          "new": "0552ec70b8f43ae7b548a311a21ec280e1082c33d4a1ecff4774c93eea5ffe94"
+        },
+        "score.musicxml": {
+          "old": "02d0599ffbe387498c2c264b05583ff2c742579d7a8328c19054fb3ebb84e219",
+          "new": "79e2af6fcc7c36f5c270d82308e8ac12f9fdef1e6aabf70c34a345892e309c49"
+        },
+        "timeline.json": {
+          "old": "afa19d21d975e257b2d422b78f380e9907314ffd1911919be70fd02c52d0768c",
+          "new": "095f5e1e2784be316de401ded06ce9c2f4313d4d8703bbe4e5aaa0f74d2e3d75"
+        }
+      },
+      "raw_events_equal": true,
+      "score_events_equal": false,
+      "xml_note_rest_timing_equal": false,
+      "review_status": "pending_no_rating_transfer"
+    },
+    {
+      "suite": "structure",
+      "case_id": "11-waltz-34",
+      "files": {
+        "raw.mid": {
+          "old": "15a3ffddf6ade2453876051ce56fd2a09e5a6f4fe4582dff3dd2e4db874eed4d",
+          "new": "15a3ffddf6ade2453876051ce56fd2a09e5a6f4fe4582dff3dd2e4db874eed4d"
+        },
+        "score.mid": {
+          "old": "b49fd392ebbe8e4551f700bff5e64355f3fec2aa2a6dbd61e5b20c7cf88d333f",
+          "new": "8df96e63dc92dcf4b096029a69f071f60bec88be8084a70dd18704393fb3787e"
+        },
+        "score.musicxml": {
+          "old": "b537b6de786562f7a2775597facc778d3cbb0056348e3d43e75f72391fdd5b8c",
+          "new": "31a5aeaefaaf3fa1d1bfbfbfbf8b8710b643f30c952a862f50231ea6d26285d0"
+        },
+        "timeline.json": {
+          "old": "c8018430abd5d154a269442e99a8769e64fa559c9b05672f0146b8f4102a54a9",
+          "new": "eccbbaf6872f2d3c0a3a28017cc1b4a5b9f3cfef11fb69edbabc082bd258a064"
+        }
+      },
+      "raw_events_equal": true,
+      "score_events_equal": false,
+      "xml_note_rest_timing_equal": false,
+      "review_status": "pending_no_rating_transfer"
+    },
+    {
+      "suite": "structure",
+      "case_id": "12-compound-68",
+      "files": {
+        "raw.mid": {
+          "old": "bbf17c68a2285e70895dd0a91d8774febe20b9aba8ba4c1f4da4b72dda09488d",
+          "new": "bbf17c68a2285e70895dd0a91d8774febe20b9aba8ba4c1f4da4b72dda09488d"
+        },
+        "score.mid": {
+          "old": "3b64e702ed791ea1d4c32e44e94e2747245cf4a546a2132361a184eee17b402f",
+          "new": "cceb9bd0bc0665b73cb948bc7844179d18cd46c3d4ebab8ce67ee762648800c6"
+        },
+        "score.musicxml": {
+          "old": "525608d0190ec859472d5d4dc9d4fd403842c3d81b26e2977e9390727f7fe328",
+          "new": "ce6c79cedbc24885ed23bf06513790d2f30f32e5e041b0efb12cb8026f466e74"
+        },
+        "timeline.json": {
+          "old": "9eb0437e220fc00eb9de7c2f93564cff43b802b176f4ed8d3f19f09ac9c8b78b",
+          "new": "553351c43ec44b8bf65cdc60edf0144b3a3cce973df0beffde79657c489ad2ab"
+        }
+      },
+      "raw_events_equal": true,
+      "score_events_equal": false,
+      "xml_note_rest_timing_equal": false,
+      "review_status": "pending_no_rating_transfer"
+    },
+    {
+      "suite": "structure",
+      "case_id": "13-key-change",
+      "files": {
+        "raw.mid": {
+          "old": "f456e7e06f0232389677b87f138d030b782dc60f2603364f29141d8b739c8379",
+          "new": "f456e7e06f0232389677b87f138d030b782dc60f2603364f29141d8b739c8379"
+        },
+        "score.mid": {
+          "old": "cfb87aab868495d09d10eae3b93154f10531a1acb96c8f72d231e5167db6fc44",
+          "new": "84af5768149d067ebd46159920d1d57b19586e62fcc079515dbdd3b3536f73c6"
+        },
+        "score.musicxml": {
+          "old": "7d7d1c241dce0c9842e817151edbe3e66baefdfdffa3ab250667d1dc06e61dd2",
+          "new": "eb53be6045762d1148351190559814bbc3d40f2d60959f2ee019d142a6ea7847"
+        },
+        "timeline.json": {
+          "old": "03bb39df9d12cda6598fefc67973d2ecea69fe2d0123d2220d7a4970a733344f",
+          "new": "0ec7bddc30aec4e415fca67a16f3a80d99aafb780d7f2ff1ea4d269d271e8eaa"
+        }
+      },
+      "raw_events_equal": true,
+      "score_events_equal": false,
+      "xml_note_rest_timing_equal": true,
+      "review_status": "pending_no_rating_transfer"
+    },
+    {
+      "suite": "structure",
+      "case_id": "14-hand-crossing",
+      "files": {
+        "raw.mid": {
+          "old": "a7c998985f1a76813c827b7a0fb089783acc4935dbbfdae4f9c72643c92d024b",
+          "new": "a7c998985f1a76813c827b7a0fb089783acc4935dbbfdae4f9c72643c92d024b"
+        },
+        "score.mid": {
+          "old": "27473b0efbe8b73db26fb11624f13a38e098c652fcd3a3004c69cdaaf8aba23d",
+          "new": "7dba83100944b0fc606394dabbfe5b6229d218c046e49d552a71393fcdad5500"
+        },
+        "score.musicxml": {
+          "old": "eda625eb87ace49f2c8e3a9f0c2ac1319b372e5675d2d5ef923f3cfe118d6566",
+          "new": "41cf5de9d6dbaa131adab2b0a77670e9d6abe4191d4095ab90585309ddf75f9d"
+        },
+        "timeline.json": {
+          "old": "8b0f35500bde6884a32111c8dfcfa29ee3870dcfa97a6a8ca43025c0b61b7b98",
+          "new": "6255980406d8f416c11788f649f15fe5dbdc700d22bbc06a41fdd7efec57507d"
+        }
+      },
+      "raw_events_equal": true,
+      "score_events_equal": false,
+      "xml_note_rest_timing_equal": false,
+      "review_status": "pending_no_rating_transfer"
+    },
+    {
+      "suite": "structure",
+      "case_id": "15-repeated-notes",
+      "files": {
+        "raw.mid": {
+          "old": "c6c9950c1704c4ab5051b373359cf7ad8f75251d6a811f58ee161d03a067fad1",
+          "new": "c6c9950c1704c4ab5051b373359cf7ad8f75251d6a811f58ee161d03a067fad1"
+        },
+        "score.mid": {
+          "old": "11a75b43570badfe7ab24a75377af669976a9c0672f40d2e602d9d1182f0eaae",
+          "new": "11a75b43570badfe7ab24a75377af669976a9c0672f40d2e602d9d1182f0eaae"
+        },
+        "score.musicxml": {
+          "old": "82db50bd3d5a58383d0d7a9930a20c28afc66762120c665f7db3fe5e1bec9cdb",
+          "new": "4605bb1ba4872d4a1155f6827573f412b79fd5e7b3ddc0714ce703fd6b0a7fba"
+        },
+        "timeline.json": {
+          "old": "b6aeb0b472e013b7782d889f435cb8c20ceecd1ecfcb4626d0f74bb567edf8e6",
+          "new": "e2e42650c1e8ae793fad65aa2fafd95d5225b76f913aa8c93a68b595cfb929c5"
+        }
+      },
+      "raw_events_equal": true,
+      "score_events_equal": true,
+      "xml_note_rest_timing_equal": true,
+      "review_status": "pending_no_rating_transfer"
+    },
+    {
+      "suite": "structure",
+      "case_id": "16-noisy-polyphony",
+      "files": {
+        "raw.mid": {
+          "old": "8209e585394a670dc9b44b990272404050cdce7a95a21b0ebf99ef2191e4af33",
+          "new": "8209e585394a670dc9b44b990272404050cdce7a95a21b0ebf99ef2191e4af33"
+        },
+        "score.mid": {
+          "old": "4256972ca9f1807c443898395a7a78741b772131e4a1b250e10bab343114b887",
+          "new": "c2160b00998456433e40f1b3912bcec18780ad62718b8f8a0ee616de2800ebcd"
+        },
+        "score.musicxml": {
+          "old": "af1e6a341cb42a7e3cfded79f288d111e402596b026402ea59b1f4052ad6671c",
+          "new": "b46d5319efee95561fed47827ef8523bf2d424d8f1b1ae6957f083b37ca31054"
+        },
+        "timeline.json": {
+          "old": "c3af6680781671113604312a16387c768747ecc157f7840386fbe1622e1d4803",
+          "new": "13996d3d0ea3e088fa23620a324b8ebf6255c46c9b2e0127528dbbda3b1ec2d0"
+        }
+      },
+      "raw_events_equal": true,
+      "score_events_equal": false,
+      "xml_note_rest_timing_equal": false,
+      "review_status": "pending_no_rating_transfer"
+    },
+    {
+      "suite": "human",
+      "case_id": "01-bach-capriccio",
+      "files": {
+        "raw.mid": {
+          "old": "91b62d96639f0bbaddfeaf2121b12dbe60c332b472b1dc1b52cea6f9e4d5b7ca",
+          "new": "91b62d96639f0bbaddfeaf2121b12dbe60c332b472b1dc1b52cea6f9e4d5b7ca"
+        },
+        "score.mid": {
+          "old": "e1f9084217fbcffdbb050ba97f468b59a3b1f83cbde40e0824c983b77baae785",
+          "new": "e1f9084217fbcffdbb050ba97f468b59a3b1f83cbde40e0824c983b77baae785"
+        },
+        "score.musicxml": {
+          "old": "4695be10adf64546b3b7ac6f2f751fdb0575c6b0c90a9c863ea3be33299f30c9",
+          "new": "3d3304325ced22157c02594ee45f7fe1365de3f38222303039f5304a5f4645ba"
+        },
+        "timeline.json": {
+          "old": "420faa8fb980362fec95e0e5d67e9d870115787ee2b6c1435b44e89f56899e74",
+          "new": "6599946bab4937e250f88bfdb6fd086555296ca9eab7ac5afabe2759200fc36d"
+        }
+      },
+      "raw_events_equal": true,
+      "score_events_equal": true,
+      "xml_note_rest_timing_equal": true,
+      "review_status": "pending_no_rating_transfer"
+    },
+    {
+      "suite": "human",
+      "case_id": "02-brahms-intermezzo",
+      "files": {
+        "raw.mid": {
+          "old": "0a3538473602a8c3076afdf247e79bab7ba03b4bdc282d8b19fa3540b2c59524",
+          "new": "0a3538473602a8c3076afdf247e79bab7ba03b4bdc282d8b19fa3540b2c59524"
+        },
+        "score.mid": {
+          "old": "93c0ec0e9edde2280c499f76d97b0e5f18fc18f00c690162609987172c5a1730",
+          "new": "93c0ec0e9edde2280c499f76d97b0e5f18fc18f00c690162609987172c5a1730"
+        },
+        "score.musicxml": {
+          "old": "404dad05ee574f0a8eebc9ba8dba1893f0baffdbaba5ac62cac6dd4b114277b1",
+          "new": "7fcde6fc0173a14f52756b00a538d5e91dfdc09f0ee24baaa1f67f1b084b9045"
+        },
+        "timeline.json": {
+          "old": "5c20289070d36227f7c68e92b22931f7cbd79fd7f418bab13080d1dd090efde5",
+          "new": "f92025ed9e2d60ef2ad640d9f11a82d11a88970dd188c58974811f70bd4a954f"
+        }
+      },
+      "raw_events_equal": true,
+      "score_events_equal": true,
+      "xml_note_rest_timing_equal": true,
+      "review_status": "pending_no_rating_transfer"
+    },
+    {
+      "suite": "human",
+      "case_id": "03-mozart-sonata",
+      "files": {
+        "raw.mid": {
+          "old": "9c394a3587702b9460a757a88a5377136fb8e38f1b688537c627f3f6a43f2859",
+          "new": "9c394a3587702b9460a757a88a5377136fb8e38f1b688537c627f3f6a43f2859"
+        },
+        "score.mid": {
+          "old": "1354a7f7c06701e56563ff4138041ee7c6b77cf3deec5a24a19498ea80bbc0ef",
+          "new": "1354a7f7c06701e56563ff4138041ee7c6b77cf3deec5a24a19498ea80bbc0ef"
+        },
+        "score.musicxml": {
+          "old": "0f703f0fee539de1ab2632c1f38c1726a75b998a1294d60821bdd22ac50d6b12",
+          "new": "9d7576736451ff7ca0b0326e7ab0f323fc5752184e175a2a3330c97a64d5c36e"
+        },
+        "timeline.json": {
+          "old": "9bdb08970476f6402253fbf2460c08c7f1ab58026b524994d8231e02dbef9587",
+          "new": "532531bf3c2244bd12f27e86f1a76600e9441206910cb14728e3c5efe679ae3f"
+        }
+      },
+      "raw_events_equal": true,
+      "score_events_equal": true,
+      "xml_note_rest_timing_equal": true,
+      "review_status": "pending_no_rating_transfer"
+    },
+    {
+      "suite": "human",
+      "case_id": "04-rachmaninoff-g-sharp",
+      "files": {
+        "raw.mid": {
+          "old": "f238e933b0d7975e603f54f079430a6e6648096da220fb6157dd5e17b493b72a",
+          "new": "f238e933b0d7975e603f54f079430a6e6648096da220fb6157dd5e17b493b72a"
+        },
+        "score.mid": {
+          "old": "fba47f0d786a2f7d957478ccecff5e39a4672475f6b86606b2aca7fa9df21ea3",
+          "new": "fba47f0d786a2f7d957478ccecff5e39a4672475f6b86606b2aca7fa9df21ea3"
+        },
+        "score.musicxml": {
+          "old": "d8dc336a0639c9b28789c2eae46e3239733501c5f4e3ca08ba2fdb34b444aed5",
+          "new": "8f5a9d1c564a16a54d41535a7cec8fb159c1a07be8b72e06abdc718f1dc5e849"
+        },
+        "timeline.json": {
+          "old": "87245ca2fa4492587803dd670bdc6ce70befaba3943ffc6c0463d4c013106472",
+          "new": "c96450eb47d290c14cebe924d41a5328554ef941594c183c6bd1c32ec7c97599"
+        }
+      },
+      "raw_events_equal": true,
+      "score_events_equal": true,
+      "xml_note_rest_timing_equal": true,
+      "review_status": "pending_no_rating_transfer"
+    },
+    {
+      "suite": "human",
+      "case_id": "05-chopin-c-minor",
+      "files": {
+        "raw.mid": {
+          "old": "0b62f40606f3c922d41a50670b82c787f1d1e19a32c5e017102fbfaaac4ffcfe",
+          "new": "0b62f40606f3c922d41a50670b82c787f1d1e19a32c5e017102fbfaaac4ffcfe"
+        },
+        "score.mid": {
+          "old": "9bba89681c08d07957d5d4ea9bbdab6538925588e3cfa74d091b2f8878b46828",
+          "new": "9bba89681c08d07957d5d4ea9bbdab6538925588e3cfa74d091b2f8878b46828"
+        },
+        "score.musicxml": {
+          "old": "25d3419b2dcc84538bcde4680ca2ad80eab1a80f06832a3d844b3d2b4c3655d7",
+          "new": "7e775ac32af66bca69a2bb6b26a6a09215ca5640c2909769a27d2b1d860c6a0f"
+        },
+        "timeline.json": {
+          "old": "4ce2b95715bee000e7516e7ae942238c8fec79a18ce8262abdc1ceb3cdc1ef4e",
+          "new": "a7031737984c29d6a2854f07d8f1db71d1fcdc3ba1f80cdbfd6adbf216974e48"
+        }
+      },
+      "raw_events_equal": true,
+      "score_events_equal": true,
+      "xml_note_rest_timing_equal": true,
+      "review_status": "pending_no_rating_transfer"
+    },
+    {
+      "suite": "human",
+      "case_id": "06-scriabin-etude",
+      "files": {
+        "raw.mid": {
+          "old": "b621a36fc7bc9279a3b7d8bf0c51d7b904c10c42944326358c3cc7e90cde4db4",
+          "new": "b621a36fc7bc9279a3b7d8bf0c51d7b904c10c42944326358c3cc7e90cde4db4"
+        },
+        "score.mid": {
+          "old": "ea8379628dcd6a59cfb302c90841584eca908cd0cd486a651d685560d815b2d5",
+          "new": "ea8379628dcd6a59cfb302c90841584eca908cd0cd486a651d685560d815b2d5"
+        },
+        "score.musicxml": {
+          "old": "5cea7567374bc1b0fa8669cbccb806a1b9d79318cc09827ca0aaa6a3c36a7425",
+          "new": "012653f240df27ac5283caf33aa78be471ffd84c0b16616040a5e91dcd7db2a1"
+        },
+        "timeline.json": {
+          "old": "fd3cfe975647ff3ce8dfd566d74a74c8f320c08bf6dd273cf8f3a93a0c58056a",
+          "new": "d172d04dce3c0d50ba95416dbc61fc15fa725b15001a49b38e1bbb9f22837776"
+        }
+      },
+      "raw_events_equal": true,
+      "score_events_equal": true,
+      "xml_note_rest_timing_equal": true,
+      "review_status": "pending_no_rating_transfer"
+    },
+    {
+      "suite": "human",
+      "case_id": "07-chopin-ballade",
+      "files": {
+        "raw.mid": {
+          "old": "cf15a5ea7d447f22f9fb8c27bfcbc7ba6ac00a1b7b9b2434d101882151856d10",
+          "new": "cf15a5ea7d447f22f9fb8c27bfcbc7ba6ac00a1b7b9b2434d101882151856d10"
+        },
+        "score.mid": {
+          "old": "5e5cec3be0ba00cffe69f97344666c68dd8da89289485a91d9d7c06a09d8ad9a",
+          "new": "5e5cec3be0ba00cffe69f97344666c68dd8da89289485a91d9d7c06a09d8ad9a"
+        },
+        "score.musicxml": {
+          "old": "5582f111f6c5f99a4b4a0b41cdb96ace9a9778a13daca5f0e4725bfc267f5f93",
+          "new": "8a56b15dc437dbb4f5a404e715fb33d9b21cb293e3d6ccecfcab1c9c75fc8805"
+        },
+        "timeline.json": {
+          "old": "908b16590370fc559923c933b6341107e06e2678d794dab98b648bbde40ce599",
+          "new": "d9e69adc31f447303c1d1d88a632f417cb7b333ec2498cf499f36ca4b1ad1554"
+        }
+      },
+      "raw_events_equal": true,
+      "score_events_equal": true,
+      "xml_note_rest_timing_equal": true,
+      "review_status": "pending_no_rating_transfer"
+    },
+    {
+      "suite": "human",
+      "case_id": "08-chopin-a-major",
+      "files": {
+        "raw.mid": {
+          "old": "bb47c89319349ff1082a0f5de91b242f496c8adf6352bacecfb7fcd59cbd2955",
+          "new": "bb47c89319349ff1082a0f5de91b242f496c8adf6352bacecfb7fcd59cbd2955"
+        },
+        "score.mid": {
+          "old": "d1b66bf1bfe1489b54e42f51bc9e01352851f9a4568672a2fbe5ac8774ff224a",
+          "new": "d1b66bf1bfe1489b54e42f51bc9e01352851f9a4568672a2fbe5ac8774ff224a"
+        },
+        "score.musicxml": {
+          "old": "962ea0a544ff1023ff7cd8c197284ffc76ec241b53630f11b80f7d681d6767c4",
+          "new": "22cce78100a7a820c1443e7cd48c1800861357c34336a68c38c57a4a4bc81db0"
+        },
+        "timeline.json": {
+          "old": "bc3262e537ee1e425affba37f086ee0a905367b57769c559c9e76862aa3356a7",
+          "new": "d283839c34e52aa8bfef74e290fc3cf96e0610930c9ea42220812a8666bc0052"
+        }
+      },
+      "raw_events_equal": true,
+      "score_events_equal": true,
+      "xml_note_rest_timing_equal": true,
+      "review_status": "pending_no_rating_transfer"
+    },
+    {
+      "suite": "human",
+      "case_id": "09-chopin-waltz",
+      "files": {
+        "raw.mid": {
+          "old": "622002cc5694e847d0e7121103e520956200b39c41c76985fd4b27363f3105d0",
+          "new": "622002cc5694e847d0e7121103e520956200b39c41c76985fd4b27363f3105d0"
+        },
+        "score.mid": {
+          "old": "b5691eb72d357430c9b0e52ec366c3f86b62197f01b79ca94d0463848c5476a7",
+          "new": "b5691eb72d357430c9b0e52ec366c3f86b62197f01b79ca94d0463848c5476a7"
+        },
+        "score.musicxml": {
+          "old": "1ddd5fdb6b5bda1fbdafacc94451fd116ff0fb8d2e18a7643f08ad67639ecc10",
+          "new": "a8cd20a0dfb70d90737ccac2e1c6d7d2acea17b6d68008d6384d384c6380bbcb"
+        },
+        "timeline.json": {
+          "old": "779929123b1bf015f0b377a71844fc3a1a586f0256937a776e6e10905a3c1485",
+          "new": "628e3925a727ad4f27c3d051333a7c6a25ebd3799e6cf5ef9f71d5403b3bb7c9"
+        }
+      },
+      "raw_events_equal": true,
+      "score_events_equal": true,
+      "xml_note_rest_timing_equal": true,
+      "review_status": "pending_no_rating_transfer"
+    },
+    {
+      "suite": "human",
+      "case_id": "10-rachmaninoff-c-sharp",
+      "files": {
+        "raw.mid": {
+          "old": "932c41042115b925c58558856b9f2bfa847a036b87c7c35696d6629020f73a55",
+          "new": "932c41042115b925c58558856b9f2bfa847a036b87c7c35696d6629020f73a55"
+        },
+        "score.mid": {
+          "old": "e76e91558c42e2abed01468a7d9c3452648d735a840642dd8ed92db76425c1df",
+          "new": "e76e91558c42e2abed01468a7d9c3452648d735a840642dd8ed92db76425c1df"
+        },
+        "score.musicxml": {
+          "old": "7f2dc83d3e87afc9eacded76e75c5d29dc311e56f4f38ad32f91e4b74c032fe2",
+          "new": "f7933d9e034c4e26b9f1bb4a6f61e0970dde179102a1ce92f0890e2261e1ae9d"
+        },
+        "timeline.json": {
+          "old": "f0af2ebe427de9eb67e7d965ef9d1476406c5e6d0e3055bc0bbe7ec205aa1daa",
+          "new": "6d989466f90628b1b09446bf5a414744e732f89ab742c01ee4b15197cb654cc4"
+        }
+      },
+      "raw_events_equal": true,
+      "score_events_equal": true,
+      "xml_note_rest_timing_equal": true,
+      "review_status": "pending_no_rating_transfer"
+    }
+  ],
+  "limitation": "semantic comparison is not visual validation; no human rating transfer"
+}

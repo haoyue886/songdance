@@ -1,0 +1,690 @@
+{
+  "production_eligible": false,
+  "added_notes": 0,
+  "limitation": "fundamental energy is not proof of an independent attack; no fusion",
+  "input_sha256": {
+    "audio": "05fea3c114d740319fc7f44e61ef3936f53e8196dae65575eb012f9521e7ee05",
+    "basic": "f2af178b7feaa8072b5b6f1102a5f11f15106d98e20a69b29cfa76d53957b94e",
+    "transkun": "c163486b13e577bf0659a9df80bfd9441d2525c5c7f1e67d9bcb54066a8a7abb"
+  },
+  "script_sha256": "bc78854c99c8283a7cba0e763d0e484ff61df94ccf3cdbbe7fc170ac30c7b131",
+  "window_seconds": 0.2,
+  "events": [
+    {
+      "event": {
+        "pitch": 48,
+        "start_sec": 0.011363636363636364,
+        "end_sec": 0.30227272727272725,
+        "velocity": 42
+      },
+      "before_amplitude": null,
+      "after_amplitude": 0.02065192974523516,
+      "amplitude_ratio": null,
+      "independent_attack_confirmed": false,
+      "status": "boundary_unavailable"
+    },
+    {
+      "event": {
+        "pitch": 36,
+        "start_sec": 0.09318181818181817,
+        "end_sec": 0.6840909090909091,
+        "velocity": 49
+      },
+      "before_amplitude": null,
+      "after_amplitude": 0.003236728951283577,
+      "amplitude_ratio": null,
+      "independent_attack_confirmed": false,
+      "status": "boundary_unavailable"
+    },
+    {
+      "event": {
+        "pitch": 48,
+        "start_sec": 0.5795454545454545,
+        "end_sec": 0.8477272727272727,
+        "velocity": 39
+      },
+      "before_amplitude": 0.010331589600021503,
+      "after_amplitude": 0.004602336819809152,
+      "amplitude_ratio": 0.44546260527030357,
+      "independent_attack_confirmed": false,
+      "status": "measurement_only"
+    },
+    {
+      "event": {
+        "pitch": 48,
+        "start_sec": 1.0568181818181817,
+        "end_sec": 1.393181818181818,
+        "velocity": 47
+      },
+      "before_amplitude": 0.0033058349708407274,
+      "after_amplitude": 0.0013947857582484392,
+      "amplitude_ratio": 0.421916329929114,
+      "independent_attack_confirmed": false,
+      "status": "measurement_only"
+    },
+    {
+      "event": {
+        "pitch": 55,
+        "start_sec": 2.4863636363636363,
+        "end_sec": 2.984090909090909,
+        "velocity": 40
+      },
+      "before_amplitude": 0.04121307948700595,
+      "after_amplitude": 0.018563771693190338,
+      "amplitude_ratio": 0.4504339865950396,
+      "independent_attack_confirmed": false,
+      "status": "measurement_only"
+    },
+    {
+      "event": {
+        "pitch": 55,
+        "start_sec": 2.984090909090909,
+        "end_sec": 3.693181818181818,
+        "velocity": 54
+      },
+      "before_amplitude": 0.011060556105205923,
+      "after_amplitude": 0.04510852241549803,
+      "amplitude_ratio": 4.078323186143108,
+      "independent_attack_confirmed": false,
+      "status": "measurement_only"
+    },
+    {
+      "event": {
+        "pitch": 48,
+        "start_sec": 2.9977272727272726,
+        "end_sec": 3.4272727272727272,
+        "velocity": 48
+      },
+      "before_amplitude": 0.00010874132533181035,
+      "after_amplitude": 0.020778283987338074,
+      "amplitude_ratio": 191.0799222276883,
+      "independent_attack_confirmed": false,
+      "status": "measurement_only"
+    },
+    {
+      "event": {
+        "pitch": 48,
+        "start_sec": 3.995454545454545,
+        "end_sec": 4.402272727272727,
+        "velocity": 43
+      },
+      "before_amplitude": 0.0031656956627336,
+      "after_amplitude": 0.022048608368344574,
+      "amplitude_ratio": 6.96485408496452,
+      "independent_attack_confirmed": false,
+      "status": "measurement_only"
+    },
+    {
+      "event": {
+        "pitch": 55,
+        "start_sec": 3.995454545454545,
+        "end_sec": 4.402272727272727,
+        "velocity": 51
+      },
+      "before_amplitude": 0.006290092393017947,
+      "after_amplitude": 0.03621892606384143,
+      "amplitude_ratio": 5.758091264930342,
+      "independent_attack_confirmed": false,
+      "status": "measurement_only"
+    },
+    {
+      "event": {
+        "pitch": 48,
+        "start_sec": 5.088636363636363,
+        "end_sec": 5.320454545454545,
+        "velocity": 43
+      },
+      "before_amplitude": 0.0024202535055581217,
+      "after_amplitude": 0.001116486526889632,
+      "amplitude_ratio": 0.46130974475426495,
+      "independent_attack_confirmed": false,
+      "status": "measurement_only"
+    },
+    {
+      "event": {
+        "pitch": 55,
+        "start_sec": 6.518181818181818,
+        "end_sec": 6.713636363636363,
+        "velocity": 41
+      },
+      "before_amplitude": 0.037929967607852305,
+      "after_amplitude": 0.01771026842025044,
+      "amplitude_ratio": 0.46692020945949975,
+      "independent_attack_confirmed": false,
+      "status": "measurement_only"
+    },
+    {
+      "event": {
+        "pitch": 55,
+        "start_sec": 6.993181818181818,
+        "end_sec": 7.6886363636363635,
+        "velocity": 51
+      },
+      "before_amplitude": 0.011501383951765741,
+      "after_amplitude": 0.04420509814900511,
+      "amplitude_ratio": 3.843459042354512,
+      "independent_attack_confirmed": false,
+      "status": "measurement_only"
+    },
+    {
+      "event": {
+        "pitch": 48,
+        "start_sec": 7.004545454545454,
+        "end_sec": 7.445454545454545,
+        "velocity": 50
+      },
+      "before_amplitude": 0.0003354292947576238,
+      "after_amplitude": 0.02095228229082658,
+      "amplitude_ratio": 62.464079966439385,
+      "independent_attack_confirmed": false,
+      "status": "measurement_only"
+    },
+    {
+      "event": {
+        "pitch": 48,
+        "start_sec": 7.993181818181818,
+        "end_sec": 8.375,
+        "velocity": 50
+      },
+      "before_amplitude": 0.0035273062658316597,
+      "after_amplitude": 0.022472200772714446,
+      "amplitude_ratio": 6.370924178146466,
+      "independent_attack_confirmed": false,
+      "status": "measurement_only"
+    },
+    {
+      "event": {
+        "pitch": 55,
+        "start_sec": 7.993181818181818,
+        "end_sec": 8.270454545454545,
+        "velocity": 54
+      },
+      "before_amplitude": 0.006135656298604979,
+      "after_amplitude": 0.03711920387113149,
+      "amplitude_ratio": 6.049752799805788,
+      "independent_attack_confirmed": false,
+      "status": "measurement_only"
+    },
+    {
+      "event": {
+        "pitch": 48,
+        "start_sec": 8.561363636363636,
+        "end_sec": 8.84090909090909,
+        "velocity": 39
+      },
+      "before_amplitude": 0.01080797294486477,
+      "after_amplitude": 0.004952264841884041,
+      "amplitude_ratio": 0.4582047778197879,
+      "independent_attack_confirmed": false,
+      "status": "measurement_only"
+    },
+    {
+      "event": {
+        "pitch": 48,
+        "start_sec": 9.049999999999999,
+        "end_sec": 9.409090909090908,
+        "velocity": 49
+      },
+      "before_amplitude": 0.0032342796646368435,
+      "after_amplitude": 0.0017019674067042193,
+      "amplitude_ratio": 0.5262276559795649,
+      "independent_attack_confirmed": false,
+      "status": "measurement_only"
+    },
+    {
+      "event": {
+        "pitch": 55,
+        "start_sec": 10.49090909090909,
+        "end_sec": 10.988636363636363,
+        "velocity": 43
+      },
+      "before_amplitude": 0.040561943506654395,
+      "after_amplitude": 0.018315792968709332,
+      "amplitude_ratio": 0.45155116804756984,
+      "independent_attack_confirmed": false,
+      "status": "measurement_only"
+    },
+    {
+      "event": {
+        "pitch": 55,
+        "start_sec": 10.988636363636363,
+        "end_sec": 11.5,
+        "velocity": 52
+      },
+      "before_amplitude": 0.01143678148073555,
+      "after_amplitude": 0.044216325325184866,
+      "amplitude_ratio": 3.866151102009262,
+      "independent_attack_confirmed": false,
+      "status": "measurement_only"
+    },
+    {
+      "event": {
+        "pitch": 48,
+        "start_sec": 11.0,
+        "end_sec": 11.384090909090908,
+        "velocity": 49
+      },
+      "before_amplitude": 0.000500187944189155,
+      "after_amplitude": 0.02054131589756812,
+      "amplitude_ratio": 41.0671951137632,
+      "independent_attack_confirmed": false,
+      "status": "measurement_only"
+    },
+    {
+      "event": {
+        "pitch": 55,
+        "start_sec": 11.5,
+        "end_sec": 11.709090909090909,
+        "velocity": 53
+      },
+      "before_amplitude": 0.025819376351570045,
+      "after_amplitude": 0.011214518689710287,
+      "amplitude_ratio": 0.4343450646137836,
+      "independent_attack_confirmed": false,
+      "status": "measurement_only"
+    },
+    {
+      "event": {
+        "pitch": 48,
+        "start_sec": 12.0,
+        "end_sec": 12.418181818181818,
+        "velocity": 48
+      },
+      "before_amplitude": 0.0035255528106628046,
+      "after_amplitude": 0.021435617968292433,
+      "amplitude_ratio": 6.080072862179742,
+      "independent_attack_confirmed": false,
+      "status": "measurement_only"
+    },
+    {
+      "event": {
+        "pitch": 55,
+        "start_sec": 12.0,
+        "end_sec": 12.720454545454546,
+        "velocity": 49
+      },
+      "before_amplitude": 0.006446781440971247,
+      "after_amplitude": 0.03600770923044601,
+      "amplitude_ratio": 5.585377689649306,
+      "independent_attack_confirmed": false,
+      "status": "measurement_only"
+    },
+    {
+      "event": {
+        "pitch": 36,
+        "start_sec": 12.11590909090909,
+        "end_sec": 12.570454545454545,
+        "velocity": 47
+      },
+      "before_amplitude": 0.00029775878120001247,
+      "after_amplitude": 0.0022972449081562056,
+      "amplitude_ratio": 7.715120605001017,
+      "independent_attack_confirmed": false,
+      "status": "measurement_only"
+    },
+    {
+      "event": {
+        "pitch": 48,
+        "start_sec": 13.104545454545454,
+        "end_sec": 13.404545454545454,
+        "velocity": 44
+      },
+      "before_amplitude": 0.0021073774617883616,
+      "after_amplitude": 0.000720424890431148,
+      "amplitude_ratio": 0.3418584963985433,
+      "independent_attack_confirmed": false,
+      "status": "measurement_only"
+    },
+    {
+      "event": {
+        "pitch": 55,
+        "start_sec": 14.486363636363636,
+        "end_sec": 14.834090909090909,
+        "velocity": 41
+      },
+      "before_amplitude": 0.04128256145511919,
+      "after_amplitude": 0.01879426380208355,
+      "amplitude_ratio": 0.4552591491328839,
+      "independent_attack_confirmed": false,
+      "status": "measurement_only"
+    },
+    {
+      "event": {
+        "pitch": 48,
+        "start_sec": 14.997727272727271,
+        "end_sec": 15.427272727272726,
+        "velocity": 49
+      },
+      "before_amplitude": 0.00036380613543932896,
+      "after_amplitude": 0.020533630550503695,
+      "amplitude_ratio": 56.44113320328551,
+      "independent_attack_confirmed": false,
+      "status": "measurement_only"
+    },
+    {
+      "event": {
+        "pitch": 55,
+        "start_sec": 14.997727272727271,
+        "end_sec": 15.704545454545453,
+        "velocity": 52
+      },
+      "before_amplitude": 0.010626214645365981,
+      "after_amplitude": 0.04415734272415662,
+      "amplitude_ratio": 4.155510141460707,
+      "independent_attack_confirmed": false,
+      "status": "measurement_only"
+    },
+    {
+      "event": {
+        "pitch": 36,
+        "start_sec": 15.068181818181817,
+        "end_sec": 15.670454545454545,
+        "velocity": 55
+      },
+      "before_amplitude": 0.0006361352089300555,
+      "after_amplitude": 0.0029347814302206543,
+      "amplitude_ratio": 4.613455424290688,
+      "independent_attack_confirmed": false,
+      "status": "measurement_only"
+    },
+    {
+      "event": {
+        "pitch": 48,
+        "start_sec": 15.997727272727271,
+        "end_sec": 16.41590909090909,
+        "velocity": 45
+      },
+      "before_amplitude": 0.003558112921962286,
+      "after_amplitude": 0.021741597604145884,
+      "amplitude_ratio": 6.110429343022501,
+      "independent_attack_confirmed": false,
+      "status": "measurement_only"
+    },
+    {
+      "event": {
+        "pitch": 55,
+        "start_sec": 15.997727272727271,
+        "end_sec": 16.625,
+        "velocity": 49
+      },
+      "before_amplitude": 0.0064460966607381796,
+      "after_amplitude": 0.03607795988455307,
+      "amplitude_ratio": 5.596869203699092,
+      "independent_attack_confirmed": false,
+      "status": "measurement_only"
+    },
+    {
+      "event": {
+        "pitch": 36,
+        "start_sec": 16.079545454545453,
+        "end_sec": 16.39090909090909,
+        "velocity": 51
+      },
+      "before_amplitude": 0.0003216743676035758,
+      "after_amplitude": 0.0026147214256024005,
+      "amplitude_ratio": 8.128473042728489,
+      "independent_attack_confirmed": false,
+      "status": "measurement_only"
+    },
+    {
+      "event": {
+        "pitch": 48,
+        "start_sec": 16.543181818181818,
+        "end_sec": 16.845454545454544,
+        "velocity": 46
+      },
+      "before_amplitude": 0.012233601171287781,
+      "after_amplitude": 0.005290745242920982,
+      "amplitude_ratio": 0.43247651847097507,
+      "independent_attack_confirmed": false,
+      "status": "measurement_only"
+    },
+    {
+      "event": {
+        "pitch": 48,
+        "start_sec": 17.30909090909091,
+        "end_sec": 17.44772727272727,
+        "velocity": 52
+      },
+      "before_amplitude": 0.0014274150625063797,
+      "after_amplitude": 0.0010660360093376392,
+      "amplitude_ratio": 0.7468297325276927,
+      "independent_attack_confirmed": false,
+      "status": "measurement_only"
+    },
+    {
+      "event": {
+        "pitch": 55,
+        "start_sec": 18.518181818181816,
+        "end_sec": 18.98181818181818,
+        "velocity": 40
+      },
+      "before_amplitude": 0.0379082842862752,
+      "after_amplitude": 0.017482368139541706,
+      "amplitude_ratio": 0.4611753992219386,
+      "independent_attack_confirmed": false,
+      "status": "measurement_only"
+    },
+    {
+      "event": {
+        "pitch": 55,
+        "start_sec": 18.993181818181817,
+        "end_sec": 19.702272727272728,
+        "velocity": 56
+      },
+      "before_amplitude": 0.010811547858510436,
+      "after_amplitude": 0.04429208486620143,
+      "amplitude_ratio": 4.096738547139335,
+      "independent_attack_confirmed": false,
+      "status": "measurement_only"
+    },
+    {
+      "event": {
+        "pitch": 48,
+        "start_sec": 19.004545454545454,
+        "end_sec": 19.422727272727272,
+        "velocity": 49
+      },
+      "before_amplitude": 0.0003076874621413863,
+      "after_amplitude": 0.02079518881711981,
+      "amplitude_ratio": 67.58542799369626,
+      "independent_attack_confirmed": false,
+      "status": "measurement_only"
+    },
+    {
+      "event": {
+        "pitch": 48,
+        "start_sec": 20.004545454545454,
+        "end_sec": 20.272727272727273,
+        "velocity": 47
+      },
+      "before_amplitude": 0.0033528490535068467,
+      "after_amplitude": 0.021531357686288922,
+      "amplitude_ratio": 6.421809435103743,
+      "independent_attack_confirmed": false,
+      "status": "measurement_only"
+    },
+    {
+      "event": {
+        "pitch": 55,
+        "start_sec": 20.004545454545454,
+        "end_sec": 20.354545454545452,
+        "velocity": 53
+      },
+      "before_amplitude": 0.005969648065670304,
+      "after_amplitude": 0.034974182547181924,
+      "amplitude_ratio": 5.858667405924344,
+      "independent_attack_confirmed": false,
+      "status": "measurement_only"
+    },
+    {
+      "event": {
+        "pitch": 48,
+        "start_sec": 21.095454545454544,
+        "end_sec": 21.43409090909091,
+        "velocity": 40
+      },
+      "before_amplitude": 0.002315003673890921,
+      "after_amplitude": 0.0015794505830248459,
+      "amplitude_ratio": 0.6822669876675397,
+      "independent_attack_confirmed": false,
+      "status": "measurement_only"
+    },
+    {
+      "event": {
+        "pitch": 48,
+        "start_sec": 23.002272727272725,
+        "end_sec": 23.454545454545453,
+        "velocity": 51
+      },
+      "before_amplitude": 0.0005763575077391484,
+      "after_amplitude": 0.021188671390645463,
+      "amplitude_ratio": 36.76306998023034,
+      "independent_attack_confirmed": false,
+      "status": "measurement_only"
+    },
+    {
+      "event": {
+        "pitch": 55,
+        "start_sec": 23.002272727272725,
+        "end_sec": 23.674999999999997,
+        "velocity": 52
+      },
+      "before_amplitude": 0.01052661396922261,
+      "after_amplitude": 0.0425842634414025,
+      "amplitude_ratio": 4.045390432850398,
+      "independent_attack_confirmed": false,
+      "status": "measurement_only"
+    },
+    {
+      "event": {
+        "pitch": 48,
+        "start_sec": 23.99090909090909,
+        "end_sec": 24.361363636363635,
+        "velocity": 46
+      },
+      "before_amplitude": 0.0032444811032007995,
+      "after_amplitude": 0.02232824435425511,
+      "amplitude_ratio": 6.881915364594812,
+      "independent_attack_confirmed": false,
+      "status": "measurement_only"
+    },
+    {
+      "event": {
+        "pitch": 55,
+        "start_sec": 24.002272727272725,
+        "end_sec": 24.674999999999997,
+        "velocity": 46
+      },
+      "before_amplitude": 0.006609163583823927,
+      "after_amplitude": 0.03577210364812741,
+      "amplitude_ratio": 5.412500870107137,
+      "independent_attack_confirmed": false,
+      "status": "measurement_only"
+    },
+    {
+      "event": {
+        "pitch": 48,
+        "start_sec": 25.081818181818182,
+        "end_sec": 25.40681818181818,
+        "velocity": 50
+      },
+      "before_amplitude": 0.002896205237355272,
+      "after_amplitude": 0.0011281908180978436,
+      "amplitude_ratio": 0.38954104617533036,
+      "independent_attack_confirmed": false,
+      "status": "measurement_only"
+    },
+    {
+      "event": {
+        "pitch": 55,
+        "start_sec": 26.486363636363635,
+        "end_sec": 26.99772727272727,
+        "velocity": 40
+      },
+      "before_amplitude": 0.04124794217170538,
+      "after_amplitude": 0.01880237087579892,
+      "amplitude_ratio": 0.4558377917989003,
+      "independent_attack_confirmed": false,
+      "status": "measurement_only"
+    },
+    {
+      "event": {
+        "pitch": 48,
+        "start_sec": 26.99772727272727,
+        "end_sec": 27.41590909090909,
+        "velocity": 53
+      },
+      "before_amplitude": 0.0004194057703482845,
+      "after_amplitude": 0.020836050411019724,
+      "amplitude_ratio": 49.679932619231664,
+      "independent_attack_confirmed": false,
+      "status": "measurement_only"
+    },
+    {
+      "event": {
+        "pitch": 55,
+        "start_sec": 26.99772727272727,
+        "end_sec": 27.659090909090907,
+        "velocity": 52
+      },
+      "before_amplitude": 0.010997429785729308,
+      "after_amplitude": 0.043240248151156756,
+      "amplitude_ratio": 3.9318503499123936,
+      "independent_attack_confirmed": false,
+      "status": "measurement_only"
+    },
+    {
+      "event": {
+        "pitch": 48,
+        "start_sec": 27.99772727272727,
+        "end_sec": 28.254545454545454,
+        "velocity": 50
+      },
+      "before_amplitude": 0.0033505082632064435,
+      "after_amplitude": 0.02201828994547892,
+      "amplitude_ratio": 6.571626814735079,
+      "independent_attack_confirmed": false,
+      "status": "measurement_only"
+    },
+    {
+      "event": {
+        "pitch": 55,
+        "start_sec": 28.009090909090908,
+        "end_sec": 28.393181818181816,
+        "velocity": 53
+      },
+      "before_amplitude": 0.0063169875134776576,
+      "after_amplitude": 0.034546111022376716,
+      "amplitude_ratio": 5.468763544121402,
+      "independent_attack_confirmed": false,
+      "status": "measurement_only"
+    },
+    {
+      "event": {
+        "pitch": 55,
+        "start_sec": 28.53181818181818,
+        "end_sec": 28.670454545454543,
+        "velocity": 43
+      },
+      "before_amplitude": 0.01967632214427142,
+      "after_amplitude": 0.009669670365980633,
+      "amplitude_ratio": 0.4914368800775031,
+      "independent_attack_confirmed": false,
+      "status": "measurement_only"
+    },
+    {
+      "event": {
+        "pitch": 48,
+        "start_sec": 29.077272727272724,
+        "end_sec": 29.424999999999997,
+        "velocity": 48
+      },
+      "before_amplitude": 0.0025508412067392293,
+      "after_amplitude": 0.0018306035670643515,
+      "amplitude_ratio": 0.7176470108088123,
+      "independent_attack_confirmed": false,
+      "status": "measurement_only"
+    }
+  ]
+}

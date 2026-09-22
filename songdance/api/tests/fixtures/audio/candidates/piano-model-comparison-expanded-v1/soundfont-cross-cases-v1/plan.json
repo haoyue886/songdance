@@ -1,0 +1,14 @@
+{
+  "cases": [
+    "06-sustain",
+    "07-soft",
+    "14-hand-crossing"
+  ],
+  "production_eligible": false,
+  "soundfont_sha256": "82475b91a76de15cb28a104707d3247ba932e228bada3f47bba63c6b31aaf7a1",
+  "script_sha256": "bb276825134832a5f83b9d5f991dbabed82d5e77dd837243cfd00cfeebec8936",
+  "metric_sha256": "d3c1862d40d42698cde1628233450353e6fceed996bb961c24d88a77975004bf",
+  "mapping_sha256": "ed6cd7b595745537fe8b84c9e99320363a1cc3c68699ec57c6a90c093fcf60a7",
+  "preprocessor_sha256": "da1dfae6e7e0b25268fb9575e1c5138890812dd9010ee2436ed78b467119e168",
+  "limitation": "same alternative soundfont across cases; not real performance"
+}

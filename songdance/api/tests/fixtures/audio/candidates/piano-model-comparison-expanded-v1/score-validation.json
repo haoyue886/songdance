@@ -1,0 +1,319 @@
+[
+  {
+    "case_id": "06-sustain",
+    "event_count": 48,
+    "structure": {
+      "part_count": 1,
+      "measure_count": 15,
+      "chord_count": 13,
+      "voice_count": 12,
+      "rest_count": 8,
+      "short_rest_count": 0,
+      "measure_duration_error_count": 0,
+      "partial_final_measure_count": 0,
+      "time_signatures": [
+        "4/4"
+      ],
+      "key_signatures": [
+        0
+      ],
+      "key_signature_status": "detected",
+      "errors": [],
+      "music21_staff_count": 2,
+      "staff_measure_count": 30,
+      "musicxml_score_part_count": 1,
+      "musicxml_part_count": 1,
+      "staff_count": 2,
+      "clefs": {
+        "1": "G2",
+        "2": "F4"
+      },
+      "staff_numbers": [
+        "1",
+        "2"
+      ],
+      "voices_by_staff": {
+        "1": [
+          "1"
+        ],
+        "2": [
+          "1",
+          "2"
+        ]
+      },
+      "maximum_voices_by_staff_measure": {
+        "1": 1,
+        "2": 2
+      },
+      "backup_count": 21,
+      "pedal_mark_count": 0
+    },
+    "parser_validation": {
+      "xmllint": {
+        "status": "passed",
+        "error": null
+      },
+      "osmd": {
+        "status": "failed",
+        "error": "node:internal/modules/run_main:122\n    triggerUncaughtException(\n    ^\n\nbrowserType.launch: Target page, context or browser has been closed\nBrowser logs:\n\n<launching> /Applications/Google Chrome.app/Contents/MacOS/Google Chrome --disable-field-trial-config --disable-background-networking --disable-background-timer-throttling --disable-backgrounding-occluded-windows --disable-back-forward-cache --disable-breakpad --disable-client-side-phishing-detection --disable-component-extensions-with-background-pages --disable-component-update --no-default-browser-check --disable-default-apps --disable-dev-shm-usage --disable-edgeupdater --disable-extensions --disable-features=AvoidUnnecessaryBeforeUnloadCheckSync,BoundaryEventDispatchTracksNodeRemoval,DestroyProfileOnBrowserClose,DialMediaRouteProvider,GlobalMediaControls,HttpsUpgrades,LensOverlay,MediaRouter,PaintHolding,ThirdPartyStoragePartitioning,BlockOriginHeaderModificationOnRedirect,Translate,AutoDeElevate,OptimizationHints,msForceBrowserSignIn,msEdgeUpdateLaunchServicesPreferredVersion --enable-features=CDPScreenshotNewSurface --allow-pre-commit-input --disable-hang-monitor --disable-ipc-flooding-protection --disable-popup-blocking --disable-prompt-on-repost --disable-renderer-backgrounding --disable-updater-scheduler --force-color-profile=srgb --metrics-recording-only --no-first-run --password-store=basic --use-mock-keychain --no-service-autorun --export-tagged-pdf --disable-search-engine-choice-screen --unsafely-disable-devtools-self-xss-warnings --edge-skip-compat-layer-relaunch --disable-infobars --disable-search-engine-choice-screen --disable-sync --enable-unsafe-swiftshader --headless --hide-scrollbars --mute-audio --blink-settings=primaryHoverType=2,availableHoverTypes=2,primaryPointerType=4,availablePointerTypes=4 --no-sandbox --user-data-dir=/var/folders/yj/435qh6d544b93x6v2_p_dt6m0000gn/T/playwright_chromiumdev_profile-6BT5ak --remote-debugging-pipe --no-startup-window\n<launched> pid=53562\nCall log:\n\u001b[2m  - <launching> /Applications/Google Chrome.app/Contents/MacOS/Google Chrome --disable-field-trial-config --disable-background-networking --disable-background-timer-throttling --disable-backgrounding-occluded-windows --disable-back-forward-cache --disable-breakpad --disable-client-side-phishing-detection --disable-component-extensions-with-background-pages --disable-component-update --no-default-browser-check --disable-default-apps --disable-dev-shm-usage --disable-edgeupdater --disable-extensions --disable-features=AvoidUnnecessaryBeforeUnloadCheckSync,BoundaryEventDispatchTracksNodeRemoval,DestroyProfileOnBrowserClose,DialMediaRouteProvider,GlobalMediaControls,HttpsUpgrades,LensOverlay,MediaRouter,PaintHolding,ThirdPartyStoragePartitioning,BlockOriginHeaderModificationOnRedirect,Translate,AutoDeElevate,OptimizationHints,msForceBrowserSignIn,msEdgeUpdateLaunchServicesPreferredVersion --enable-features=CDPScreenshotNewSurface --allow-pre-commit-input --disable-hang-monitor --disable-ipc-flooding-protection --disable-popup-blocking --disable-prompt-on-repost --disable-renderer-backgrounding --disable-updater-scheduler --force-color-profile=srgb --metrics-recording-only --no-first-run --password-store=basic --use-mock-keychain --no-service-autorun --export-tagged-pdf --disable-search-engine-choice-screen --unsafely-disable-devtools-self-xss-warnings --edge-skip-compat-layer-relaunch --disable-infobars --disable-search-engine-choice-screen --disable-sync --enable-unsafe-swiftshader --headless --hide-scrollbars --mute-audio --blink-settings=primaryHoverType=2,availableHoverTypes=2,primaryPointerType=4,availablePointerTypes=4 --no-sandbox --user-data-dir=/var/folders/yj/435qh6d544b93x6v2_p_dt6m0000gn/T/playwright_chromiumdev_profile-6BT5ak --remote-debugging-pipe --no-startup-window\u001b[22m\n\u001b[2m  - <launched> pid=53562\u001b[22m\n\u001b[2m  - [pid=53562] <gracefully close start>\u001b[22m\n\u001b[2m  - [pid=53562] <kill>\u001b[22m\n\u001b[2m  - [pid=53562] <will force kill>\u001b[22m\n\u001b[2m  - [pid=53562] exception while trying to kill process: Error: kill EPERM\u001b[22m\n\u001b[2m  - [pid=53562] <process did exit: exitCode=null, signal=SIGABRT>\u001b[22m\n\u001b[2m  - [pid=53562] starting temporary directories cleanup\u001b[22m\n\u001b[2m  - [pid=53562] finished temporary directories cleanup\u001b[22m\n\u001b[2m  - [pid=53562] <gracefully close end>\u001b[22m\n\n    at /Users/lixinyue/Desktop/project/songDance/songdance/web/scripts/validate-musicxml.mjs:14:32 {\n  log: [\n    '  - <launching> /Applications/Google Chrome.app/Contents/MacOS/Google Chrome --disable-field-trial-config --disable-background-networking --disable-background-timer-throttling --disable-backgrounding-occluded-windows --disable-back-forward-cache --disable-breakpad --disable-client-side-phishing-detection --disable-component-extensions-with-background-pages --disable-component-update --no-default-browser-check --disable-default-apps --disable-dev-shm-usage --disable-edgeupdater --disable-extensions --disable-features=AvoidUnnecessaryBeforeUnloadCheckSync,BoundaryEventDispatchTracksNodeRemoval,DestroyProfileOnBrowserClose,DialMediaRouteProvider,GlobalMediaControls,HttpsUpgrades,LensOverlay,MediaRouter,PaintHolding,ThirdPartyStoragePartitioning,BlockOriginHeaderModificationOnRedirect,Translate,AutoDeElevate,OptimizationHints,msForceBrowserSignIn,msEdgeUpdateLaunchServicesPreferredVersion --enable-features=CDPScreenshotNewSurface --allow-pre-commit-input --disable-hang-monitor --disable-ipc-flooding-protection --disable-popup-blocking --disable-prompt-on-repost --disable-renderer-backgrounding --disable-updater-scheduler --force-color-profile=srgb --metrics-recording-only --no-first-run --password-store=basic --use-mock-keychain --no-service-autorun --export-tagged-pdf --disable-search-engine-choice-screen --unsafely-disable-devtools-self-xss-warnings --edge-skip-compat-layer-relaunch --disable-infobars --disable-search-engine-choice-screen --disable-sync --enable-unsafe-swiftshader --headless --hide-scrollbars --mute-audio --blink-settings=primaryHoverType=2,availableHoverTypes=2,primaryPointerType=4,availablePointerTypes=4 --no-sandbox --user-data-dir=/var/folders/yj/435qh6d544b93x6v2_p_dt6m0000gn/T/playwright_chromiumdev_profile-6BT5ak --remote-debugging-pipe --no-startup-window',\n    '  - <launched> pid=53562',\n    '  - [pid=53562] <gracefully close start>',\n    '  - [pid=53562] <kill>',\n    '  - [pid=53562] <will force kill>',\n    '  - [pid=53562] exception while trying to kill process: Error: kill EPERM',\n    '  - [pid=53562] <process did exit: exitCode=null, signal=SIGABRT>',\n    '  - [pid=53562] starting temporary directories cleanup',\n    '  - [pid=53562] finished temporary directories cleanup',\n    '  - [pid=53562] <gracefully close end>'\n  ]\n}\n\nNode.js v22.15.1"
+      }
+    },
+    "production_eligible": false
+  },
+  {
+    "case_id": "07-soft",
+    "event_count": 40,
+    "structure": {
+      "part_count": 1,
+      "measure_count": 15,
+      "chord_count": 0,
+      "voice_count": 30,
+      "rest_count": 55,
+      "short_rest_count": 0,
+      "measure_duration_error_count": 0,
+      "partial_final_measure_count": 0,
+      "time_signatures": [
+        "4/4"
+      ],
+      "key_signatures": [
+        0
+      ],
+      "key_signature_status": "detected",
+      "errors": [],
+      "music21_staff_count": 2,
+      "staff_measure_count": 30,
+      "musicxml_score_part_count": 1,
+      "musicxml_part_count": 1,
+      "staff_count": 2,
+      "clefs": {
+        "1": "G2",
+        "2": "F4"
+      },
+      "staff_numbers": [
+        "1",
+        "2"
+      ],
+      "voices_by_staff": {
+        "1": [
+          "0",
+          "1"
+        ],
+        "2": [
+          "2"
+        ]
+      },
+      "maximum_voices_by_staff_measure": {
+        "1": 2,
+        "2": 1
+      },
+      "backup_count": 30,
+      "pedal_mark_count": 0
+    },
+    "parser_validation": {
+      "xmllint": {
+        "status": "passed",
+        "error": null
+      },
+      "osmd": {
+        "status": "failed",
+        "error": "node:internal/modules/run_main:122\n    triggerUncaughtException(\n    ^\n\nbrowserType.launch: Target page, context or browser has been closed\nBrowser logs:\n\n<launching> /Applications/Google Chrome.app/Contents/MacOS/Google Chrome --disable-field-trial-config --disable-background-networking --disable-background-timer-throttling --disable-backgrounding-occluded-windows --disable-back-forward-cache --disable-breakpad --disable-client-side-phishing-detection --disable-component-extensions-with-background-pages --disable-component-update --no-default-browser-check --disable-default-apps --disable-dev-shm-usage --disable-edgeupdater --disable-extensions --disable-features=AvoidUnnecessaryBeforeUnloadCheckSync,BoundaryEventDispatchTracksNodeRemoval,DestroyProfileOnBrowserClose,DialMediaRouteProvider,GlobalMediaControls,HttpsUpgrades,LensOverlay,MediaRouter,PaintHolding,ThirdPartyStoragePartitioning,BlockOriginHeaderModificationOnRedirect,Translate,AutoDeElevate,OptimizationHints,msForceBrowserSignIn,msEdgeUpdateLaunchServicesPreferredVersion --enable-features=CDPScreenshotNewSurface --allow-pre-commit-input --disable-hang-monitor --disable-ipc-flooding-protection --disable-popup-blocking --disable-prompt-on-repost --disable-renderer-backgrounding --disable-updater-scheduler --force-color-profile=srgb --metrics-recording-only --no-first-run --password-store=basic --use-mock-keychain --no-service-autorun --export-tagged-pdf --disable-search-engine-choice-screen --unsafely-disable-devtools-self-xss-warnings --edge-skip-compat-layer-relaunch --disable-infobars --disable-search-engine-choice-screen --disable-sync --enable-unsafe-swiftshader --headless --hide-scrollbars --mute-audio --blink-settings=primaryHoverType=2,availableHoverTypes=2,primaryPointerType=4,availablePointerTypes=4 --no-sandbox --user-data-dir=/var/folders/yj/435qh6d544b93x6v2_p_dt6m0000gn/T/playwright_chromiumdev_profile-kpy3AR --remote-debugging-pipe --no-startup-window\n<launched> pid=53602\nCall log:\n\u001b[2m  - <launching> /Applications/Google Chrome.app/Contents/MacOS/Google Chrome --disable-field-trial-config --disable-background-networking --disable-background-timer-throttling --disable-backgrounding-occluded-windows --disable-back-forward-cache --disable-breakpad --disable-client-side-phishing-detection --disable-component-extensions-with-background-pages --disable-component-update --no-default-browser-check --disable-default-apps --disable-dev-shm-usage --disable-edgeupdater --disable-extensions --disable-features=AvoidUnnecessaryBeforeUnloadCheckSync,BoundaryEventDispatchTracksNodeRemoval,DestroyProfileOnBrowserClose,DialMediaRouteProvider,GlobalMediaControls,HttpsUpgrades,LensOverlay,MediaRouter,PaintHolding,ThirdPartyStoragePartitioning,BlockOriginHeaderModificationOnRedirect,Translate,AutoDeElevate,OptimizationHints,msForceBrowserSignIn,msEdgeUpdateLaunchServicesPreferredVersion --enable-features=CDPScreenshotNewSurface --allow-pre-commit-input --disable-hang-monitor --disable-ipc-flooding-protection --disable-popup-blocking --disable-prompt-on-repost --disable-renderer-backgrounding --disable-updater-scheduler --force-color-profile=srgb --metrics-recording-only --no-first-run --password-store=basic --use-mock-keychain --no-service-autorun --export-tagged-pdf --disable-search-engine-choice-screen --unsafely-disable-devtools-self-xss-warnings --edge-skip-compat-layer-relaunch --disable-infobars --disable-search-engine-choice-screen --disable-sync --enable-unsafe-swiftshader --headless --hide-scrollbars --mute-audio --blink-settings=primaryHoverType=2,availableHoverTypes=2,primaryPointerType=4,availablePointerTypes=4 --no-sandbox --user-data-dir=/var/folders/yj/435qh6d544b93x6v2_p_dt6m0000gn/T/playwright_chromiumdev_profile-kpy3AR --remote-debugging-pipe --no-startup-window\u001b[22m\n\u001b[2m  - <launched> pid=53602\u001b[22m\n\u001b[2m  - [pid=53602] <gracefully close start>\u001b[22m\n\u001b[2m  - [pid=53602] <kill>\u001b[22m\n\u001b[2m  - [pid=53602] <will force kill>\u001b[22m\n\u001b[2m  - [pid=53602] exception while trying to kill process: Error: kill EPERM\u001b[22m\n\u001b[2m  - [pid=53602] <process did exit: exitCode=null, signal=SIGABRT>\u001b[22m\n\u001b[2m  - [pid=53602] starting temporary directories cleanup\u001b[22m\n\u001b[2m  - [pid=53602] finished temporary directories cleanup\u001b[22m\n\u001b[2m  - [pid=53602] <gracefully close end>\u001b[22m\n\n    at /Users/lixinyue/Desktop/project/songDance/songdance/web/scripts/validate-musicxml.mjs:14:32 {\n  log: [\n    '  - <launching> /Applications/Google Chrome.app/Contents/MacOS/Google Chrome --disable-field-trial-config --disable-background-networking --disable-background-timer-throttling --disable-backgrounding-occluded-windows --disable-back-forward-cache --disable-breakpad --disable-client-side-phishing-detection --disable-component-extensions-with-background-pages --disable-component-update --no-default-browser-check --disable-default-apps --disable-dev-shm-usage --disable-edgeupdater --disable-extensions --disable-features=AvoidUnnecessaryBeforeUnloadCheckSync,BoundaryEventDispatchTracksNodeRemoval,DestroyProfileOnBrowserClose,DialMediaRouteProvider,GlobalMediaControls,HttpsUpgrades,LensOverlay,MediaRouter,PaintHolding,ThirdPartyStoragePartitioning,BlockOriginHeaderModificationOnRedirect,Translate,AutoDeElevate,OptimizationHints,msForceBrowserSignIn,msEdgeUpdateLaunchServicesPreferredVersion --enable-features=CDPScreenshotNewSurface --allow-pre-commit-input --disable-hang-monitor --disable-ipc-flooding-protection --disable-popup-blocking --disable-prompt-on-repost --disable-renderer-backgrounding --disable-updater-scheduler --force-color-profile=srgb --metrics-recording-only --no-first-run --password-store=basic --use-mock-keychain --no-service-autorun --export-tagged-pdf --disable-search-engine-choice-screen --unsafely-disable-devtools-self-xss-warnings --edge-skip-compat-layer-relaunch --disable-infobars --disable-search-engine-choice-screen --disable-sync --enable-unsafe-swiftshader --headless --hide-scrollbars --mute-audio --blink-settings=primaryHoverType=2,availableHoverTypes=2,primaryPointerType=4,availablePointerTypes=4 --no-sandbox --user-data-dir=/var/folders/yj/435qh6d544b93x6v2_p_dt6m0000gn/T/playwright_chromiumdev_profile-kpy3AR --remote-debugging-pipe --no-startup-window',\n    '  - <launched> pid=53602',\n    '  - [pid=53602] <gracefully close start>',\n    '  - [pid=53602] <kill>',\n    '  - [pid=53602] <will force kill>',\n    '  - [pid=53602] exception while trying to kill process: Error: kill EPERM',\n    '  - [pid=53602] <process did exit: exitCode=null, signal=SIGABRT>',\n    '  - [pid=53602] starting temporary directories cleanup',\n    '  - [pid=53602] finished temporary directories cleanup',\n    '  - [pid=53602] <gracefully close end>'\n  ]\n}\n\nNode.js v22.15.1"
+      }
+    },
+    "production_eligible": false
+  },
+  {
+    "case_id": "10-device",
+    "event_count": 87,
+    "structure": {
+      "part_count": 1,
+      "measure_count": 15,
+      "chord_count": 0,
+      "voice_count": 59,
+      "rest_count": 100,
+      "short_rest_count": 0,
+      "measure_duration_error_count": 0,
+      "partial_final_measure_count": 0,
+      "time_signatures": [
+        "4/4"
+      ],
+      "key_signatures": [
+        0
+      ],
+      "key_signature_status": "detected",
+      "errors": [],
+      "music21_staff_count": 2,
+      "staff_measure_count": 30,
+      "musicxml_score_part_count": 1,
+      "musicxml_part_count": 1,
+      "staff_count": 2,
+      "clefs": {
+        "1": "G2",
+        "2": "F4"
+      },
+      "staff_numbers": [
+        "1",
+        "2"
+      ],
+      "voices_by_staff": {
+        "1": [
+          "0",
+          "1",
+          "2"
+        ],
+        "2": [
+          "0",
+          "1",
+          "3"
+        ]
+      },
+      "maximum_voices_by_staff_measure": {
+        "1": 3,
+        "2": 2
+      },
+      "backup_count": 52,
+      "pedal_mark_count": 0
+    },
+    "parser_validation": {
+      "xmllint": {
+        "status": "passed",
+        "error": null
+      },
+      "osmd": {
+        "status": "failed",
+        "error": "node:internal/modules/run_main:122\n    triggerUncaughtException(\n    ^\n\nbrowserType.launch: Target page, context or browser has been closed\nBrowser logs:\n\n<launching> /Applications/Google Chrome.app/Contents/MacOS/Google Chrome --disable-field-trial-config --disable-background-networking --disable-background-timer-throttling --disable-backgrounding-occluded-windows --disable-back-forward-cache --disable-breakpad --disable-client-side-phishing-detection --disable-component-extensions-with-background-pages --disable-component-update --no-default-browser-check --disable-default-apps --disable-dev-shm-usage --disable-edgeupdater --disable-extensions --disable-features=AvoidUnnecessaryBeforeUnloadCheckSync,BoundaryEventDispatchTracksNodeRemoval,DestroyProfileOnBrowserClose,DialMediaRouteProvider,GlobalMediaControls,HttpsUpgrades,LensOverlay,MediaRouter,PaintHolding,ThirdPartyStoragePartitioning,BlockOriginHeaderModificationOnRedirect,Translate,AutoDeElevate,OptimizationHints,msForceBrowserSignIn,msEdgeUpdateLaunchServicesPreferredVersion --enable-features=CDPScreenshotNewSurface --allow-pre-commit-input --disable-hang-monitor --disable-ipc-flooding-protection --disable-popup-blocking --disable-prompt-on-repost --disable-renderer-backgrounding --disable-updater-scheduler --force-color-profile=srgb --metrics-recording-only --no-first-run --password-store=basic --use-mock-keychain --no-service-autorun --export-tagged-pdf --disable-search-engine-choice-screen --unsafely-disable-devtools-self-xss-warnings --edge-skip-compat-layer-relaunch --disable-infobars --disable-search-engine-choice-screen --disable-sync --enable-unsafe-swiftshader --headless --hide-scrollbars --mute-audio --blink-settings=primaryHoverType=2,availableHoverTypes=2,primaryPointerType=4,availablePointerTypes=4 --no-sandbox --user-data-dir=/var/folders/yj/435qh6d544b93x6v2_p_dt6m0000gn/T/playwright_chromiumdev_profile-Devp7X --remote-debugging-pipe --no-startup-window\n<launched> pid=53614\nCall log:\n\u001b[2m  - <launching> /Applications/Google Chrome.app/Contents/MacOS/Google Chrome --disable-field-trial-config --disable-background-networking --disable-background-timer-throttling --disable-backgrounding-occluded-windows --disable-back-forward-cache --disable-breakpad --disable-client-side-phishing-detection --disable-component-extensions-with-background-pages --disable-component-update --no-default-browser-check --disable-default-apps --disable-dev-shm-usage --disable-edgeupdater --disable-extensions --disable-features=AvoidUnnecessaryBeforeUnloadCheckSync,BoundaryEventDispatchTracksNodeRemoval,DestroyProfileOnBrowserClose,DialMediaRouteProvider,GlobalMediaControls,HttpsUpgrades,LensOverlay,MediaRouter,PaintHolding,ThirdPartyStoragePartitioning,BlockOriginHeaderModificationOnRedirect,Translate,AutoDeElevate,OptimizationHints,msForceBrowserSignIn,msEdgeUpdateLaunchServicesPreferredVersion --enable-features=CDPScreenshotNewSurface --allow-pre-commit-input --disable-hang-monitor --disable-ipc-flooding-protection --disable-popup-blocking --disable-prompt-on-repost --disable-renderer-backgrounding --disable-updater-scheduler --force-color-profile=srgb --metrics-recording-only --no-first-run --password-store=basic --use-mock-keychain --no-service-autorun --export-tagged-pdf --disable-search-engine-choice-screen --unsafely-disable-devtools-self-xss-warnings --edge-skip-compat-layer-relaunch --disable-infobars --disable-search-engine-choice-screen --disable-sync --enable-unsafe-swiftshader --headless --hide-scrollbars --mute-audio --blink-settings=primaryHoverType=2,availableHoverTypes=2,primaryPointerType=4,availablePointerTypes=4 --no-sandbox --user-data-dir=/var/folders/yj/435qh6d544b93x6v2_p_dt6m0000gn/T/playwright_chromiumdev_profile-Devp7X --remote-debugging-pipe --no-startup-window\u001b[22m\n\u001b[2m  - <launched> pid=53614\u001b[22m\n\u001b[2m  - [pid=53614] <gracefully close start>\u001b[22m\n\u001b[2m  - [pid=53614] <kill>\u001b[22m\n\u001b[2m  - [pid=53614] <will force kill>\u001b[22m\n\u001b[2m  - [pid=53614] exception while trying to kill process: Error: kill EPERM\u001b[22m\n\u001b[2m  - [pid=53614] <process did exit: exitCode=null, signal=SIGABRT>\u001b[22m\n\u001b[2m  - [pid=53614] starting temporary directories cleanup\u001b[22m\n\u001b[2m  - [pid=53614] finished temporary directories cleanup\u001b[22m\n\u001b[2m  - [pid=53614] <gracefully close end>\u001b[22m\n\n    at /Users/lixinyue/Desktop/project/songDance/songdance/web/scripts/validate-musicxml.mjs:14:32 {\n  log: [\n    '  - <launching> /Applications/Google Chrome.app/Contents/MacOS/Google Chrome --disable-field-trial-config --disable-background-networking --disable-background-timer-throttling --disable-backgrounding-occluded-windows --disable-back-forward-cache --disable-breakpad --disable-client-side-phishing-detection --disable-component-extensions-with-background-pages --disable-component-update --no-default-browser-check --disable-default-apps --disable-dev-shm-usage --disable-edgeupdater --disable-extensions --disable-features=AvoidUnnecessaryBeforeUnloadCheckSync,BoundaryEventDispatchTracksNodeRemoval,DestroyProfileOnBrowserClose,DialMediaRouteProvider,GlobalMediaControls,HttpsUpgrades,LensOverlay,MediaRouter,PaintHolding,ThirdPartyStoragePartitioning,BlockOriginHeaderModificationOnRedirect,Translate,AutoDeElevate,OptimizationHints,msForceBrowserSignIn,msEdgeUpdateLaunchServicesPreferredVersion --enable-features=CDPScreenshotNewSurface --allow-pre-commit-input --disable-hang-monitor --disable-ipc-flooding-protection --disable-popup-blocking --disable-prompt-on-repost --disable-renderer-backgrounding --disable-updater-scheduler --force-color-profile=srgb --metrics-recording-only --no-first-run --password-store=basic --use-mock-keychain --no-service-autorun --export-tagged-pdf --disable-search-engine-choice-screen --unsafely-disable-devtools-self-xss-warnings --edge-skip-compat-layer-relaunch --disable-infobars --disable-search-engine-choice-screen --disable-sync --enable-unsafe-swiftshader --headless --hide-scrollbars --mute-audio --blink-settings=primaryHoverType=2,availableHoverTypes=2,primaryPointerType=4,availablePointerTypes=4 --no-sandbox --user-data-dir=/var/folders/yj/435qh6d544b93x6v2_p_dt6m0000gn/T/playwright_chromiumdev_profile-Devp7X --remote-debugging-pipe --no-startup-window',\n    '  - <launched> pid=53614',\n    '  - [pid=53614] <gracefully close start>',\n    '  - [pid=53614] <kill>',\n    '  - [pid=53614] <will force kill>',\n    '  - [pid=53614] exception while trying to kill process: Error: kill EPERM',\n    '  - [pid=53614] <process did exit: exitCode=null, signal=SIGABRT>',\n    '  - [pid=53614] starting temporary directories cleanup',\n    '  - [pid=53614] finished temporary directories cleanup',\n    '  - [pid=53614] <gracefully close end>'\n  ]\n}\n\nNode.js v22.15.1"
+      }
+    },
+    "production_eligible": false
+  },
+  {
+    "case_id": "14-hand-crossing",
+    "event_count": 105,
+    "structure": {
+      "part_count": 1,
+      "measure_count": 15,
+      "chord_count": 8,
+      "voice_count": 91,
+      "rest_count": 124,
+      "short_rest_count": 0,
+      "measure_duration_error_count": 0,
+      "partial_final_measure_count": 0,
+      "time_signatures": [
+        "4/4"
+      ],
+      "key_signatures": [
+        0
+      ],
+      "key_signature_status": "detected",
+      "errors": [],
+      "music21_staff_count": 2,
+      "staff_measure_count": 30,
+      "musicxml_score_part_count": 1,
+      "musicxml_part_count": 1,
+      "staff_count": 2,
+      "clefs": {
+        "1": "G2",
+        "2": "F4"
+      },
+      "staff_numbers": [
+        "1",
+        "2"
+      ],
+      "voices_by_staff": {
+        "1": [
+          "0",
+          "1",
+          "2",
+          "3"
+        ],
+        "2": [
+          "0",
+          "1",
+          "2",
+          "3"
+        ]
+      },
+      "maximum_voices_by_staff_measure": {
+        "1": 4,
+        "2": 4
+      },
+      "backup_count": 76,
+      "pedal_mark_count": 0
+    },
+    "parser_validation": {
+      "xmllint": {
+        "status": "passed",
+        "error": null
+      },
+      "osmd": {
+        "status": "failed",
+        "error": "node:internal/modules/run_main:122\n    triggerUncaughtException(\n    ^\n\nbrowserType.launch: Target page, context or browser has been closed\nBrowser logs:\n\n<launching> /Applications/Google Chrome.app/Contents/MacOS/Google Chrome --disable-field-trial-config --disable-background-networking --disable-background-timer-throttling --disable-backgrounding-occluded-windows --disable-back-forward-cache --disable-breakpad --disable-client-side-phishing-detection --disable-component-extensions-with-background-pages --disable-component-update --no-default-browser-check --disable-default-apps --disable-dev-shm-usage --disable-edgeupdater --disable-extensions --disable-features=AvoidUnnecessaryBeforeUnloadCheckSync,BoundaryEventDispatchTracksNodeRemoval,DestroyProfileOnBrowserClose,DialMediaRouteProvider,GlobalMediaControls,HttpsUpgrades,LensOverlay,MediaRouter,PaintHolding,ThirdPartyStoragePartitioning,BlockOriginHeaderModificationOnRedirect,Translate,AutoDeElevate,OptimizationHints,msForceBrowserSignIn,msEdgeUpdateLaunchServicesPreferredVersion --enable-features=CDPScreenshotNewSurface --allow-pre-commit-input --disable-hang-monitor --disable-ipc-flooding-protection --disable-popup-blocking --disable-prompt-on-repost --disable-renderer-backgrounding --disable-updater-scheduler --force-color-profile=srgb --metrics-recording-only --no-first-run --password-store=basic --use-mock-keychain --no-service-autorun --export-tagged-pdf --disable-search-engine-choice-screen --unsafely-disable-devtools-self-xss-warnings --edge-skip-compat-layer-relaunch --disable-infobars --disable-search-engine-choice-screen --disable-sync --enable-unsafe-swiftshader --headless --hide-scrollbars --mute-audio --blink-settings=primaryHoverType=2,availableHoverTypes=2,primaryPointerType=4,availablePointerTypes=4 --no-sandbox --user-data-dir=/var/folders/yj/435qh6d544b93x6v2_p_dt6m0000gn/T/playwright_chromiumdev_profile-pBTwcx --remote-debugging-pipe --no-startup-window\n<launched> pid=53618\nCall log:\n\u001b[2m  - <launching> /Applications/Google Chrome.app/Contents/MacOS/Google Chrome --disable-field-trial-config --disable-background-networking --disable-background-timer-throttling --disable-backgrounding-occluded-windows --disable-back-forward-cache --disable-breakpad --disable-client-side-phishing-detection --disable-component-extensions-with-background-pages --disable-component-update --no-default-browser-check --disable-default-apps --disable-dev-shm-usage --disable-edgeupdater --disable-extensions --disable-features=AvoidUnnecessaryBeforeUnloadCheckSync,BoundaryEventDispatchTracksNodeRemoval,DestroyProfileOnBrowserClose,DialMediaRouteProvider,GlobalMediaControls,HttpsUpgrades,LensOverlay,MediaRouter,PaintHolding,ThirdPartyStoragePartitioning,BlockOriginHeaderModificationOnRedirect,Translate,AutoDeElevate,OptimizationHints,msForceBrowserSignIn,msEdgeUpdateLaunchServicesPreferredVersion --enable-features=CDPScreenshotNewSurface --allow-pre-commit-input --disable-hang-monitor --disable-ipc-flooding-protection --disable-popup-blocking --disable-prompt-on-repost --disable-renderer-backgrounding --disable-updater-scheduler --force-color-profile=srgb --metrics-recording-only --no-first-run --password-store=basic --use-mock-keychain --no-service-autorun --export-tagged-pdf --disable-search-engine-choice-screen --unsafely-disable-devtools-self-xss-warnings --edge-skip-compat-layer-relaunch --disable-infobars --disable-search-engine-choice-screen --disable-sync --enable-unsafe-swiftshader --headless --hide-scrollbars --mute-audio --blink-settings=primaryHoverType=2,availableHoverTypes=2,primaryPointerType=4,availablePointerTypes=4 --no-sandbox --user-data-dir=/var/folders/yj/435qh6d544b93x6v2_p_dt6m0000gn/T/playwright_chromiumdev_profile-pBTwcx --remote-debugging-pipe --no-startup-window\u001b[22m\n\u001b[2m  - <launched> pid=53618\u001b[22m\n\u001b[2m  - [pid=53618] <gracefully close start>\u001b[22m\n\u001b[2m  - [pid=53618] <kill>\u001b[22m\n\u001b[2m  - [pid=53618] <will force kill>\u001b[22m\n\u001b[2m  - [pid=53618] exception while trying to kill process: Error: kill EPERM\u001b[22m\n\u001b[2m  - [pid=53618] <process did exit: exitCode=null, signal=SIGABRT>\u001b[22m\n\u001b[2m  - [pid=53618] starting temporary directories cleanup\u001b[22m\n\u001b[2m  - [pid=53618] finished temporary directories cleanup\u001b[22m\n\u001b[2m  - [pid=53618] <gracefully close end>\u001b[22m\n\n    at /Users/lixinyue/Desktop/project/songDance/songdance/web/scripts/validate-musicxml.mjs:14:32 {\n  log: [\n    '  - <launching> /Applications/Google Chrome.app/Contents/MacOS/Google Chrome --disable-field-trial-config --disable-background-networking --disable-background-timer-throttling --disable-backgrounding-occluded-windows --disable-back-forward-cache --disable-breakpad --disable-client-side-phishing-detection --disable-component-extensions-with-background-pages --disable-component-update --no-default-browser-check --disable-default-apps --disable-dev-shm-usage --disable-edgeupdater --disable-extensions --disable-features=AvoidUnnecessaryBeforeUnloadCheckSync,BoundaryEventDispatchTracksNodeRemoval,DestroyProfileOnBrowserClose,DialMediaRouteProvider,GlobalMediaControls,HttpsUpgrades,LensOverlay,MediaRouter,PaintHolding,ThirdPartyStoragePartitioning,BlockOriginHeaderModificationOnRedirect,Translate,AutoDeElevate,OptimizationHints,msForceBrowserSignIn,msEdgeUpdateLaunchServicesPreferredVersion --enable-features=CDPScreenshotNewSurface --allow-pre-commit-input --disable-hang-monitor --disable-ipc-flooding-protection --disable-popup-blocking --disable-prompt-on-repost --disable-renderer-backgrounding --disable-updater-scheduler --force-color-profile=srgb --metrics-recording-only --no-first-run --password-store=basic --use-mock-keychain --no-service-autorun --export-tagged-pdf --disable-search-engine-choice-screen --unsafely-disable-devtools-self-xss-warnings --edge-skip-compat-layer-relaunch --disable-infobars --disable-search-engine-choice-screen --disable-sync --enable-unsafe-swiftshader --headless --hide-scrollbars --mute-audio --blink-settings=primaryHoverType=2,availableHoverTypes=2,primaryPointerType=4,availablePointerTypes=4 --no-sandbox --user-data-dir=/var/folders/yj/435qh6d544b93x6v2_p_dt6m0000gn/T/playwright_chromiumdev_profile-pBTwcx --remote-debugging-pipe --no-startup-window',\n    '  - <launched> pid=53618',\n    '  - [pid=53618] <gracefully close start>',\n    '  - [pid=53618] <kill>',\n    '  - [pid=53618] <will force kill>',\n    '  - [pid=53618] exception while trying to kill process: Error: kill EPERM',\n    '  - [pid=53618] <process did exit: exitCode=null, signal=SIGABRT>',\n    '  - [pid=53618] starting temporary directories cleanup',\n    '  - [pid=53618] finished temporary directories cleanup',\n    '  - [pid=53618] <gracefully close end>'\n  ]\n}\n\nNode.js v22.15.1"
+      }
+    },
+    "production_eligible": false
+  },
+  {
+    "case_id": "02-brahms-intermezzo",
+    "event_count": 158,
+    "structure": {
+      "part_count": 1,
+      "measure_count": 15,
+      "chord_count": 21,
+      "voice_count": 67,
+      "rest_count": 131,
+      "short_rest_count": 0,
+      "measure_duration_error_count": 0,
+      "partial_final_measure_count": 0,
+      "time_signatures": [
+        "4/4"
+      ],
+      "key_signatures": [
+        0
+      ],
+      "key_signature_status": "detected",
+      "errors": [],
+      "music21_staff_count": 2,
+      "staff_measure_count": 30,
+      "musicxml_score_part_count": 1,
+      "musicxml_part_count": 1,
+      "staff_count": 2,
+      "clefs": {
+        "1": "G2",
+        "2": "F4"
+      },
+      "staff_numbers": [
+        "1",
+        "2"
+      ],
+      "voices_by_staff": {
+        "1": [
+          "0",
+          "1",
+          "2"
+        ],
+        "2": [
+          "0",
+          "1",
+          "2",
+          "3"
+        ]
+      },
+      "maximum_voices_by_staff_measure": {
+        "1": 3,
+        "2": 4
+      },
+      "backup_count": 55,
+      "pedal_mark_count": 0
+    },
+    "parser_validation": {
+      "xmllint": {
+        "status": "passed",
+        "error": null
+      },
+      "osmd": {
+        "status": "failed",
+        "error": "node:internal/modules/run_main:122\n    triggerUncaughtException(\n    ^\n\nbrowserType.launch: Target page, context or browser has been closed\nBrowser logs:\n\n<launching> /Applications/Google Chrome.app/Contents/MacOS/Google Chrome --disable-field-trial-config --disable-background-networking --disable-background-timer-throttling --disable-backgrounding-occluded-windows --disable-back-forward-cache --disable-breakpad --disable-client-side-phishing-detection --disable-component-extensions-with-background-pages --disable-component-update --no-default-browser-check --disable-default-apps --disable-dev-shm-usage --disable-edgeupdater --disable-extensions --disable-features=AvoidUnnecessaryBeforeUnloadCheckSync,BoundaryEventDispatchTracksNodeRemoval,DestroyProfileOnBrowserClose,DialMediaRouteProvider,GlobalMediaControls,HttpsUpgrades,LensOverlay,MediaRouter,PaintHolding,ThirdPartyStoragePartitioning,BlockOriginHeaderModificationOnRedirect,Translate,AutoDeElevate,OptimizationHints,msForceBrowserSignIn,msEdgeUpdateLaunchServicesPreferredVersion --enable-features=CDPScreenshotNewSurface --allow-pre-commit-input --disable-hang-monitor --disable-ipc-flooding-protection --disable-popup-blocking --disable-prompt-on-repost --disable-renderer-backgrounding --disable-updater-scheduler --force-color-profile=srgb --metrics-recording-only --no-first-run --password-store=basic --use-mock-keychain --no-service-autorun --export-tagged-pdf --disable-search-engine-choice-screen --unsafely-disable-devtools-self-xss-warnings --edge-skip-compat-layer-relaunch --disable-infobars --disable-search-engine-choice-screen --disable-sync --enable-unsafe-swiftshader --headless --hide-scrollbars --mute-audio --blink-settings=primaryHoverType=2,availableHoverTypes=2,primaryPointerType=4,availablePointerTypes=4 --no-sandbox --user-data-dir=/var/folders/yj/435qh6d544b93x6v2_p_dt6m0000gn/T/playwright_chromiumdev_profile-PS9Par --remote-debugging-pipe --no-startup-window\n<launched> pid=53627\nCall log:\n\u001b[2m  - <launching> /Applications/Google Chrome.app/Contents/MacOS/Google Chrome --disable-field-trial-config --disable-background-networking --disable-background-timer-throttling --disable-backgrounding-occluded-windows --disable-back-forward-cache --disable-breakpad --disable-client-side-phishing-detection --disable-component-extensions-with-background-pages --disable-component-update --no-default-browser-check --disable-default-apps --disable-dev-shm-usage --disable-edgeupdater --disable-extensions --disable-features=AvoidUnnecessaryBeforeUnloadCheckSync,BoundaryEventDispatchTracksNodeRemoval,DestroyProfileOnBrowserClose,DialMediaRouteProvider,GlobalMediaControls,HttpsUpgrades,LensOverlay,MediaRouter,PaintHolding,ThirdPartyStoragePartitioning,BlockOriginHeaderModificationOnRedirect,Translate,AutoDeElevate,OptimizationHints,msForceBrowserSignIn,msEdgeUpdateLaunchServicesPreferredVersion --enable-features=CDPScreenshotNewSurface --allow-pre-commit-input --disable-hang-monitor --disable-ipc-flooding-protection --disable-popup-blocking --disable-prompt-on-repost --disable-renderer-backgrounding --disable-updater-scheduler --force-color-profile=srgb --metrics-recording-only --no-first-run --password-store=basic --use-mock-keychain --no-service-autorun --export-tagged-pdf --disable-search-engine-choice-screen --unsafely-disable-devtools-self-xss-warnings --edge-skip-compat-layer-relaunch --disable-infobars --disable-search-engine-choice-screen --disable-sync --enable-unsafe-swiftshader --headless --hide-scrollbars --mute-audio --blink-settings=primaryHoverType=2,availableHoverTypes=2,primaryPointerType=4,availablePointerTypes=4 --no-sandbox --user-data-dir=/var/folders/yj/435qh6d544b93x6v2_p_dt6m0000gn/T/playwright_chromiumdev_profile-PS9Par --remote-debugging-pipe --no-startup-window\u001b[22m\n\u001b[2m  - <launched> pid=53627\u001b[22m\n\u001b[2m  - [pid=53627] <gracefully close start>\u001b[22m\n\u001b[2m  - [pid=53627] <kill>\u001b[22m\n\u001b[2m  - [pid=53627] <will force kill>\u001b[22m\n\u001b[2m  - [pid=53627] exception while trying to kill process: Error: kill EPERM\u001b[22m\n\u001b[2m  - [pid=53627] <process did exit: exitCode=null, signal=SIGABRT>\u001b[22m\n\u001b[2m  - [pid=53627] starting temporary directories cleanup\u001b[22m\n\u001b[2m  - [pid=53627] finished temporary directories cleanup\u001b[22m\n\u001b[2m  - [pid=53627] <gracefully close end>\u001b[22m\n\n    at /Users/lixinyue/Desktop/project/songDance/songdance/web/scripts/validate-musicxml.mjs:14:32 {\n  log: [\n    '  - <launching> /Applications/Google Chrome.app/Contents/MacOS/Google Chrome --disable-field-trial-config --disable-background-networking --disable-background-timer-throttling --disable-backgrounding-occluded-windows --disable-back-forward-cache --disable-breakpad --disable-client-side-phishing-detection --disable-component-extensions-with-background-pages --disable-component-update --no-default-browser-check --disable-default-apps --disable-dev-shm-usage --disable-edgeupdater --disable-extensions --disable-features=AvoidUnnecessaryBeforeUnloadCheckSync,BoundaryEventDispatchTracksNodeRemoval,DestroyProfileOnBrowserClose,DialMediaRouteProvider,GlobalMediaControls,HttpsUpgrades,LensOverlay,MediaRouter,PaintHolding,ThirdPartyStoragePartitioning,BlockOriginHeaderModificationOnRedirect,Translate,AutoDeElevate,OptimizationHints,msForceBrowserSignIn,msEdgeUpdateLaunchServicesPreferredVersion --enable-features=CDPScreenshotNewSurface --allow-pre-commit-input --disable-hang-monitor --disable-ipc-flooding-protection --disable-popup-blocking --disable-prompt-on-repost --disable-renderer-backgrounding --disable-updater-scheduler --force-color-profile=srgb --metrics-recording-only --no-first-run --password-store=basic --use-mock-keychain --no-service-autorun --export-tagged-pdf --disable-search-engine-choice-screen --unsafely-disable-devtools-self-xss-warnings --edge-skip-compat-layer-relaunch --disable-infobars --disable-search-engine-choice-screen --disable-sync --enable-unsafe-swiftshader --headless --hide-scrollbars --mute-audio --blink-settings=primaryHoverType=2,availableHoverTypes=2,primaryPointerType=4,availablePointerTypes=4 --no-sandbox --user-data-dir=/var/folders/yj/435qh6d544b93x6v2_p_dt6m0000gn/T/playwright_chromiumdev_profile-PS9Par --remote-debugging-pipe --no-startup-window',\n    '  - <launched> pid=53627',\n    '  - [pid=53627] <gracefully close start>',\n    '  - [pid=53627] <kill>',\n    '  - [pid=53627] <will force kill>',\n    '  - [pid=53627] exception while trying to kill process: Error: kill EPERM',\n    '  - [pid=53627] <process did exit: exitCode=null, signal=SIGABRT>',\n    '  - [pid=53627] starting temporary directories cleanup',\n    '  - [pid=53627] finished temporary directories cleanup',\n    '  - [pid=53627] <gracefully close end>'\n  ]\n}\n\nNode.js v22.15.1"
+      }
+    },
+    "production_eligible": false
+  }
+]

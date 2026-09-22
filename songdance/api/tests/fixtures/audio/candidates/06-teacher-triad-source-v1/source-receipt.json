@@ -1,0 +1,16 @@
+{
+  "production_eligible": false,
+  "status": "source_prepared_not_transcribed",
+  "source_kind": "new_synthetic_teacher_pattern_not_original_audio",
+  "contract_sha256": "52b4c397705acd14f69eb515d646d4348bb60589bd5a75dfd5903bb043dfe5ce",
+  "script_sha256": "f5f2d558124c4a4f26ddabd1218a99116cadcc84d5d855631a48ad234f52c0a4",
+  "generator_sha256": "840775497026b77bfd06bd955182416732477180941308509f7e3a4b7074ee40",
+  "event_count": 45,
+  "onset_clusters": 15,
+  "notes_per_cluster": 3,
+  "artifacts": {
+    "reference.mid": "507b40e81cc89342c8c0f315acc359ec6f8103caaa0289ef9a7978bfb7eef64b",
+    "source.wav": "fe811f1edc1c33e9207b9f96988a933de096fb1f5a63ac3b54ef5349fac70e24"
+  },
+  "timing_scope": "2s interval and 1.6s duration are fixture settings, not new teacher approval"
+}

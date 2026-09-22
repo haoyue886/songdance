@@ -1,0 +1,275 @@
+{
+  "production_eligible": false,
+  "status": "built_not_release_ready",
+  "model_policy": "Transkun research candidate; Basic Pitch production unchanged",
+  "feedback_sha256": "1fa49d6c0f18f038a3f0cacd0a05234b1253dc93a073bdd64a1bb74ad70b9eb0",
+  "builder_sha256": "4029e806d7f8956980b4acb213e973c28894699f9304ffd093c0e07b9ce018c9",
+  "revision_sha256": "1e045a6076aa0ea18d7cdd0bf3ef8623a10dfe42a0c4f12d1a559d6a53e7aebd",
+  "musescore_validation": "not_run_no_headless_platform_plugin",
+  "cases": [
+    {
+      "case_id": "06-sustain",
+      "status": "blocked",
+      "reason": "source and teacher chord reference need reconciliation"
+    },
+    {
+      "case_id": "07-soft",
+      "status": "teacher_passed_reviewed_items_only",
+      "source_sha256": "3db345f7a6e5e0df1f278dc1334ce3d7fbe2c2eb67136c03e1c8ae0384f59dca",
+      "score_sha256": "3db345f7a6e5e0df1f278dc1334ce3d7fbe2c2eb67136c03e1c8ae0384f59dca",
+      "path": "07-soft/score.musicxml",
+      "changes": [],
+      "structure": {
+        "part_count": 1,
+        "measure_count": 15,
+        "chord_count": 0,
+        "voice_count": 0,
+        "rest_count": 0,
+        "short_rest_count": 0,
+        "measure_duration_error_count": 0,
+        "partial_final_measure_count": 0,
+        "time_signatures": [
+          "4/4"
+        ],
+        "key_signatures": [
+          0
+        ],
+        "key_signature_status": "detected",
+        "errors": [],
+        "music21_staff_count": 1,
+        "staff_measure_count": 15,
+        "musicxml_score_part_count": 1,
+        "musicxml_part_count": 1,
+        "staff_count": 1,
+        "clefs": {
+          "1": "G2"
+        },
+        "staff_numbers": [
+          "1"
+        ],
+        "voices_by_staff": {
+          "1": [
+            "1"
+          ]
+        },
+        "maximum_voices_by_staff_measure": {
+          "1": 1
+        },
+        "backup_count": 0,
+        "pedal_mark_count": 0
+      },
+      "teacher_review_applies_to_source_only": true
+    },
+    {
+      "case_id": "10-device",
+      "status": "needs_teacher_review_and_missing_bass_fix",
+      "source_sha256": "6940a929dadb3947c61b0bbe73acd51fb928deda1ab43a4c923a978dc1c258d0",
+      "score_sha256": "d6b4b9a1c9f8704fb26f86908cb624572d85b8685c8026b1dc918e5ba6e62692",
+      "path": "10-device/score.musicxml",
+      "changes": [
+        {
+          "measure": "1",
+          "before": 17640,
+          "after": 20160,
+          "absorbed_rest": 2520
+        },
+        {
+          "measure": "2",
+          "before": 17640,
+          "after": 20160,
+          "absorbed_rest": 2520
+        },
+        {
+          "measure": "2",
+          "before": 17640,
+          "after": 20160,
+          "absorbed_rest": 2520
+        },
+        {
+          "measure": "3",
+          "before": 17640,
+          "after": 20160,
+          "absorbed_rest": 2520
+        },
+        {
+          "measure": "3",
+          "before": 17640,
+          "after": 20160,
+          "absorbed_rest": 2520
+        },
+        {
+          "measure": "4",
+          "before": 17640,
+          "after": 20160,
+          "absorbed_rest": 2520
+        },
+        {
+          "measure": "4",
+          "before": 17640,
+          "after": 20160,
+          "absorbed_rest": 2520
+        },
+        {
+          "measure": "5",
+          "before": 17640,
+          "after": 20160,
+          "absorbed_rest": 2520
+        },
+        {
+          "measure": "5",
+          "before": 17640,
+          "after": 20160,
+          "absorbed_rest": 2520
+        },
+        {
+          "measure": "6",
+          "before": 17640,
+          "after": 20160,
+          "absorbed_rest": 2520
+        },
+        {
+          "measure": "6",
+          "before": 17640,
+          "after": 20160,
+          "absorbed_rest": 2520
+        },
+        {
+          "measure": "7",
+          "before": 17640,
+          "after": 20160,
+          "absorbed_rest": 2520
+        },
+        {
+          "measure": "7",
+          "before": 17640,
+          "after": 20160,
+          "absorbed_rest": 2520
+        },
+        {
+          "measure": "9",
+          "before": 17640,
+          "after": 20160,
+          "absorbed_rest": 2520
+        },
+        {
+          "measure": "10",
+          "before": 17640,
+          "after": 20160,
+          "absorbed_rest": 2520
+        },
+        {
+          "measure": "10",
+          "before": 17640,
+          "after": 20160,
+          "absorbed_rest": 2520
+        },
+        {
+          "measure": "11",
+          "before": 17640,
+          "after": 20160,
+          "absorbed_rest": 2520
+        },
+        {
+          "measure": "11",
+          "before": 17640,
+          "after": 20160,
+          "absorbed_rest": 2520
+        },
+        {
+          "measure": "12",
+          "before": 17640,
+          "after": 20160,
+          "absorbed_rest": 2520
+        },
+        {
+          "measure": "12",
+          "before": 17640,
+          "after": 20160,
+          "absorbed_rest": 2520
+        },
+        {
+          "measure": "13",
+          "before": 17640,
+          "after": 20160,
+          "absorbed_rest": 2520
+        },
+        {
+          "measure": "13",
+          "before": 17640,
+          "after": 20160,
+          "absorbed_rest": 2520
+        },
+        {
+          "measure": "14",
+          "before": 17640,
+          "after": 20160,
+          "absorbed_rest": 2520
+        },
+        {
+          "measure": "14",
+          "before": 17640,
+          "after": 20160,
+          "absorbed_rest": 2520
+        },
+        {
+          "measure": "15",
+          "before": 17640,
+          "after": 20160,
+          "absorbed_rest": 2520
+        },
+        {
+          "measure": "15",
+          "before": 17640,
+          "after": 20160,
+          "absorbed_rest": 2520
+        }
+      ],
+      "structure": {
+        "part_count": 1,
+        "measure_count": 15,
+        "chord_count": 0,
+        "voice_count": 0,
+        "rest_count": 4,
+        "short_rest_count": 0,
+        "measure_duration_error_count": 0,
+        "partial_final_measure_count": 0,
+        "time_signatures": [
+          "4/4"
+        ],
+        "key_signatures": [
+          0
+        ],
+        "key_signature_status": "detected",
+        "errors": [],
+        "music21_staff_count": 2,
+        "staff_measure_count": 30,
+        "musicxml_score_part_count": 1,
+        "musicxml_part_count": 1,
+        "staff_count": 2,
+        "clefs": {
+          "1": "G2",
+          "2": "F4"
+        },
+        "staff_numbers": [
+          "1",
+          "2"
+        ],
+        "voices_by_staff": {
+          "1": [
+            "1"
+          ],
+          "2": [
+            "2"
+          ]
+        },
+        "maximum_voices_by_staff_measure": {
+          "1": 1,
+          "2": 1
+        },
+        "backup_count": 15,
+        "pedal_mark_count": 0
+      },
+      "teacher_review_applies_to_source_only": true
+    }
+  ]
+}

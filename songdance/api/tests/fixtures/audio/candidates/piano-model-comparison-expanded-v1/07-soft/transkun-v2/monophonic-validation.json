@@ -1,0 +1,44 @@
+{
+  "case_id": "07-soft",
+  "event_count": 40,
+  "structure": {
+    "part_count": 1,
+    "measure_count": 15,
+    "chord_count": 0,
+    "voice_count": 0,
+    "rest_count": 0,
+    "short_rest_count": 0,
+    "measure_duration_error_count": 0,
+    "partial_final_measure_count": 0,
+    "time_signatures": [
+      "4/4"
+    ],
+    "key_signatures": [
+      0
+    ],
+    "key_signature_status": "detected",
+    "errors": [],
+    "music21_staff_count": 1,
+    "staff_measure_count": 15,
+    "musicxml_score_part_count": 1,
+    "musicxml_part_count": 1,
+    "staff_count": 1,
+    "clefs": {
+      "1": "G2"
+    },
+    "staff_numbers": [
+      "1"
+    ],
+    "voices_by_staff": {
+      "1": [
+        "1"
+      ]
+    },
+    "maximum_voices_by_staff_measure": {
+      "1": 1
+    },
+    "backup_count": 0,
+    "pedal_mark_count": 0
+  },
+  "production_eligible": false
+}

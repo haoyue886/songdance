@@ -1,0 +1,52 @@
+{
+  "case_id": "06-sustain",
+  "events": 48,
+  "clusters": 15,
+  "structure": {
+    "part_count": 1,
+    "measure_count": 15,
+    "chord_count": 13,
+    "voice_count": 10,
+    "rest_count": 7,
+    "short_rest_count": 0,
+    "measure_duration_error_count": 0,
+    "partial_final_measure_count": 0,
+    "time_signatures": [
+      "4/4"
+    ],
+    "key_signatures": [
+      0
+    ],
+    "key_signature_status": "detected",
+    "errors": [],
+    "music21_staff_count": 2,
+    "staff_measure_count": 30,
+    "musicxml_score_part_count": 1,
+    "musicxml_part_count": 1,
+    "staff_count": 2,
+    "clefs": {
+      "1": "G2",
+      "2": "F4"
+    },
+    "staff_numbers": [
+      "1",
+      "2"
+    ],
+    "voices_by_staff": {
+      "1": [
+        "1"
+      ],
+      "2": [
+        "1",
+        "2"
+      ]
+    },
+    "maximum_voices_by_staff_measure": {
+      "1": 1,
+      "2": 2
+    },
+    "backup_count": 20,
+    "pedal_mark_count": 0
+  },
+  "production_eligible": false
+}

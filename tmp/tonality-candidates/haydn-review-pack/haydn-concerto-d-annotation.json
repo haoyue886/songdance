@@ -1,0 +1,67 @@
+{
+  "schema_version": 1,
+  "status": "pending_human_phrase_annotation",
+  "case_id": "haydn-concerto-d-vivace-chestnut",
+  "kind": "real_public_recording_candidate",
+  "work": "Haydn Keyboard Concerto in D major, Hob. XVIII:11",
+  "movement": "I. Vivace",
+  "audio": {
+    "source_page": "https://commons.wikimedia.org/wiki/File:Haydn-concerto_in_D_dur.2016.ogg",
+    "license": "CC BY-SA 3.0",
+    "path": "haydn-concerto-d-90s.wav",
+    "start_sec": 0,
+    "duration_sec": 90,
+    "sha256": "8deb4180f52e28a98ef0e87772101cfe4ed02f892eeded04e2ecac8883a307b"
+  },
+  "reference_score": {
+    "source_page": "https://imslp.org/wiki/Keyboard_Concerto_in_D_major,_Hob.XVIII:11_(Haydn,_Joseph)",
+    "file_page": "https://imslp.org/wiki/File:PMLP29486-Haydn_Keyboard_Concerto_in_D_major,_Hob.XVIII_11_-_Conductor_Score.pdf",
+    "mirror_url": "https://ks15.imslp.org/files/imglnks/usimg/8/8e/IMSLP772584-PMLP29486-Haydn_Keyboard_Concerto_in_D_major,_Hob.XVIII_11_-_Conductor_Score.pdf",
+    "file_index": 772584,
+    "license": "Public Domain",
+    "path": "haydn-concerto-d-score.pdf",
+    "sha256": "4031d91b99f09c217dd7cad384a5d84d2a9cb5eda1d5fee069d37657f5a50d04",
+    "pages": 44
+  },
+  "excluded_piano_reduction": {
+    "file_page": "https://imslp.org/wiki/File:PMLP29486-haydn_concerto_hob.xviii-11.pdf",
+    "mirror_url": "https://imslp.org/images/c/c6/PMLP29486-haydn_concerto_hob.xviii-11.pdf",
+    "file_index": 1047129,
+    "license_status": "copyright_notice_1951",
+    "reason_excluded": "Piano reduction by E. Mertke, edited by Isidor Philipp; page footer states Copyright 1951 International Music Company."
+  },
+  "known_music_facts": {
+    "work_key": "D major",
+    "movement_key": "D major",
+    "notation_key_signature": "D major (2 sharps)",
+    "opening_meter": "4/4",
+    "opening_tempo_marking": "Vivace"
+  },
+  "score_observation_not_ground_truth": {
+    "opening_measure_range_reviewed": [1, 32],
+    "first_30s_estimate_reaches_measure": 17,
+    "opening_key_signature_visible": "D major (2 sharps)",
+    "cadence_in_estimated_first_17_measures": "not_yet_confirmed",
+    "note": "Pages 3-5 show the opening orchestral exposition and piano reduction; do not infer phrase cadence solely from the printed work key."
+  },
+  "machine_assist": {
+    "status": "not_ground_truth",
+    "analysis_path": "haydn-concerto-d-30s-analysis.json",
+    "estimated_tempo_bpm": 135.999,
+    "estimated_beats_in_first_30s": 64,
+    "estimated_onsets_in_first_30s": 143,
+    "estimated_measure_range_first_30s": [1, 17],
+    "measure_range_basis": "4/4 meter and beat grid only; verify against score attacks and recorded performance"
+  },
+  "human_annotation_required": {
+    "clip_measure_start": null,
+    "clip_measure_end": null,
+    "phrase_boundaries_sec": [],
+    "cadence_type": null,
+    "tonicization_or_modulation": null,
+    "local_tonality": null,
+    "audio_score_alignment_verified": false,
+    "reviewer_id": null,
+    "review_notes": "Confirm the first 90 seconds against the public-domain full score before promotion to the formal tonality manifest."
+  }
+}

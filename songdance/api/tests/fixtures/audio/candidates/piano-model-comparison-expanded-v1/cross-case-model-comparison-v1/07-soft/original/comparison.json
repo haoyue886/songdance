@@ -1,0 +1,1768 @@
+{
+  "production_eligible": false,
+  "case_id": "07-soft",
+  "variant": "original",
+  "basic_pitch_version": "basic-pitch-0.4.0/icassp-2022-onnx/o0.5-f0.3",
+  "input_sha256": "0f41243016a72e80fdd3b1dc8459e2187f760f06f335d5eee3440fcc52f28426",
+  "reference_sha256": "6369b96e5b52aa6539e46e128440c0c4e5176e6821ffc9b1ec2c581bb1b7ee72",
+  "source_reference_count": 40,
+  "distinct_reference_count": 40,
+  "transkun_receipt_sha256": "bf3213c323f43beebedf67dc16101d30dc16846948b32f30409091868e81aa9b",
+  "raw_midi_sha256": "1555f5c12ac4f36137dce57da17b334a63b4d7bc704830e1a9a20a93a162e330",
+  "raw_events_sha256": "fe16d153f72e31f40ff1f5c2d4b39f1653361ce30ed27997661f5c0ce18f4db7",
+  "adapter_sha256": "fbb363d3934eb1d3f2d1934861d1caab8865df6cd28a24ea4cf68b527138cd22",
+  "transcriber_sha256": "e78aab59db7a5cd3e1633a0a2d409e927a732daba90876eb645ad79d189bda28",
+  "mapping_sha256": "ed6cd7b595745537fe8b84c9e99320363a1cc3c68699ec57c6a90c093fcf60a7",
+  "metric_sha256": "d3c1862d40d42698cde1628233450353e6fceed996bb961c24d88a77975004bf",
+  "basic_clipped": [
+    {
+      "before": {
+        "start_sec": 30.240029478458048,
+        "end_sec": 31.01789795918367,
+        "pitch": 71,
+        "velocity": 93,
+        "confidence": 0.7288668751716614,
+        "hand": null,
+        "hand_confidence": null
+      },
+      "after": {
+        "start_sec": 29.240029478458048,
+        "end_sec": 30,
+        "pitch": 71,
+        "velocity": 93,
+        "confidence": 0.7288668751716614,
+        "hand": null,
+        "hand_confidence": null
+      }
+    },
+    {
+      "before": {
+        "start_sec": 0.9984580498866213,
+        "end_sec": 1.7531065759637188,
+        "pitch": 72,
+        "velocity": 98,
+        "confidence": 0.772841215133667,
+        "hand": null,
+        "hand_confidence": null
+      },
+      "after": {
+        "start_sec": 0.0,
+        "end_sec": 0.7531065759637188,
+        "pitch": 72,
+        "velocity": 98,
+        "confidence": 0.772841215133667,
+        "hand": null,
+        "hand_confidence": null
+      }
+    },
+    {
+      "before": {
+        "start_sec": 0.9984580498866213,
+        "end_sec": 1.5905668934240362,
+        "pitch": 100,
+        "velocity": 50,
+        "confidence": 0.39544618129730225,
+        "hand": null,
+        "hand_confidence": null
+      },
+      "after": {
+        "start_sec": 0.0,
+        "end_sec": 0.5905668934240362,
+        "pitch": 100,
+        "velocity": 50,
+        "confidence": 0.39544618129730225,
+        "hand": null,
+        "hand_confidence": null
+      }
+    }
+  ],
+  "basic_rejected": [],
+  "transkun_clipped": [
+    {
+      "before": {
+        "pitch": 72,
+        "start_sec": 0.9901041666666667,
+        "end_sec": 2.4,
+        "velocity": 63
+      },
+      "after": {
+        "pitch": 72,
+        "start_sec": 0.0,
+        "end_sec": 1.4,
+        "velocity": 63
+      }
+    }
+  ],
+  "transkun_rejected": [],
+  "basic": {
+    "0.05": {
+      "onset_tolerance_seconds": 0.05,
+      "reference_count": 40,
+      "estimated_count": 79,
+      "matched_count": 35,
+      "precision": 0.4430379746835443,
+      "recall": 0.875,
+      "f1": 0.5882352941176471,
+      "extra_count": 44,
+      "missing_count": 5,
+      "missing_reference_notes": [
+        {
+          "pitch": 71,
+          "start_sec": 0.75,
+          "end_sec": 1.3704545454545454,
+          "velocity": 38
+        },
+        {
+          "pitch": 71,
+          "start_sec": 6.75,
+          "end_sec": 7.370454545454545,
+          "velocity": 38
+        },
+        {
+          "pitch": 71,
+          "start_sec": 12.75,
+          "end_sec": 13.370454545454544,
+          "velocity": 38
+        },
+        {
+          "pitch": 71,
+          "start_sec": 18.75,
+          "end_sec": 19.370454545454546,
+          "velocity": 38
+        },
+        {
+          "pitch": 71,
+          "start_sec": 24.75,
+          "end_sec": 25.370454545454542,
+          "velocity": 38
+        }
+      ],
+      "unmatched_estimated_notes": [
+        {
+          "start_sec": 29.25163945578231,
+          "end_sec": 29.878578231292515,
+          "pitch": 69,
+          "velocity": 64,
+          "confidence": 0.5020952820777893,
+          "hand": null,
+          "hand_confidence": null
+        },
+        {
+          "start_sec": 28.50731700680272,
+          "end_sec": 29.123929705215417,
+          "pitch": 67,
+          "velocity": 67,
+          "confidence": 0.5273226499557495,
+          "hand": null,
+          "hand_confidence": null
+        },
+        {
+          "start_sec": 27.752668480725625,
+          "end_sec": 28.414437188208616,
+          "pitch": 64,
+          "velocity": 86,
+          "confidence": 0.6781469583511353,
+          "hand": null,
+          "hand_confidence": null
+        },
+        {
+          "start_sec": 26.998019954648527,
+          "end_sec": 27.752668480725625,
+          "pitch": 67,
+          "velocity": 66,
+          "confidence": 0.5172092914581299,
+          "hand": null,
+          "hand_confidence": null
+        },
+        {
+          "start_sec": 24.754726530612245,
+          "end_sec": 25.371339229024944,
+          "pitch": 72,
+          "velocity": 66,
+          "confidence": 0.5160962343215942,
+          "hand": null,
+          "hand_confidence": null
+        },
+        {
+          "start_sec": 23.257039455782312,
+          "end_sec": 23.883978231292517,
+          "pitch": 69,
+          "velocity": 65,
+          "confidence": 0.5078874230384827,
+          "hand": null,
+          "hand_confidence": null
+        },
+        {
+          "start_sec": 22.51271700680272,
+          "end_sec": 23.12932970521542,
+          "pitch": 67,
+          "velocity": 67,
+          "confidence": 0.528296947479248,
+          "hand": null,
+          "hand_confidence": null
+        },
+        {
+          "start_sec": 21.74645850340136,
+          "end_sec": 21.93221814058957,
+          "pitch": 79,
+          "velocity": 43,
+          "confidence": 0.34219977259635925,
+          "hand": null,
+          "hand_confidence": null
+        },
+        {
+          "start_sec": 21.74645850340136,
+          "end_sec": 22.419837188208618,
+          "pitch": 64,
+          "velocity": 86,
+          "confidence": 0.6808403134346008,
+          "hand": null,
+          "hand_confidence": null
+        },
+        {
+          "start_sec": 18.760126530612244,
+          "end_sec": 19.376739229024945,
+          "pitch": 72,
+          "velocity": 66,
+          "confidence": 0.5166566371917725,
+          "hand": null,
+          "hand_confidence": null
+        },
+        {
+          "start_sec": 17.26243945578231,
+          "end_sec": 17.877768253968252,
+          "pitch": 69,
+          "velocity": 65,
+          "confidence": 0.5082412362098694,
+          "hand": null,
+          "hand_confidence": null
+        },
+        {
+          "start_sec": 16.506507029478456,
+          "end_sec": 17.134729705215417,
+          "pitch": 67,
+          "velocity": 67,
+          "confidence": 0.5257651209831238,
+          "hand": null,
+          "hand_confidence": null
+        },
+        {
+          "start_sec": 15.751858503401358,
+          "end_sec": 15.891178231292518,
+          "pitch": 79,
+          "velocity": 46,
+          "confidence": 0.3612045347690582,
+          "hand": null,
+          "hand_confidence": null
+        },
+        {
+          "start_sec": 15.751858503401358,
+          "end_sec": 16.425237188208616,
+          "pitch": 64,
+          "velocity": 86,
+          "confidence": 0.6785514950752258,
+          "hand": null,
+          "hand_confidence": null
+        },
+        {
+          "start_sec": 12.753916553287983,
+          "end_sec": 13.37052925170068,
+          "pitch": 72,
+          "velocity": 66,
+          "confidence": 0.5193137526512146,
+          "hand": null,
+          "hand_confidence": null
+        },
+        {
+          "start_sec": 11.25622947845805,
+          "end_sec": 11.883168253968254,
+          "pitch": 69,
+          "velocity": 64,
+          "confidence": 0.5034900903701782,
+          "hand": null,
+          "hand_confidence": null
+        },
+        {
+          "start_sec": 10.51190702947846,
+          "end_sec": 11.128519727891156,
+          "pitch": 67,
+          "velocity": 67,
+          "confidence": 0.528671383857727,
+          "hand": null,
+          "hand_confidence": null
+        },
+        {
+          "start_sec": 9.745648526077098,
+          "end_sec": 10.419027210884355,
+          "pitch": 64,
+          "velocity": 86,
+          "confidence": 0.6763255596160889,
+          "hand": null,
+          "hand_confidence": null
+        },
+        {
+          "start_sec": 6.747706575963719,
+          "end_sec": 7.375929251700679,
+          "pitch": 72,
+          "velocity": 67,
+          "confidence": 0.5260778665542603,
+          "hand": null,
+          "hand_confidence": null
+        },
+        {
+          "start_sec": 5.250019501133787,
+          "end_sec": 5.888568253968254,
+          "pitch": 69,
+          "velocity": 64,
+          "confidence": 0.5029579401016235,
+          "hand": null,
+          "hand_confidence": null
+        },
+        {
+          "start_sec": 3.7510485260770974,
+          "end_sec": 4.424427210884353,
+          "pitch": 64,
+          "velocity": 86,
+          "confidence": 0.6801876425743103,
+          "hand": null,
+          "hand_confidence": null
+        },
+        {
+          "start_sec": 0.7531065759637188,
+          "end_sec": 1.3813292517006803,
+          "pitch": 72,
+          "velocity": 65,
+          "confidence": 0.5151973962783813,
+          "hand": null,
+          "hand_confidence": null
+        },
+        {
+          "start_sec": 19.376739229024945,
+          "end_sec": 20.096557823129253,
+          "pitch": 71,
+          "velocity": 57,
+          "confidence": 0.44869521260261536,
+          "hand": null,
+          "hand_confidence": null
+        },
+        {
+          "start_sec": 25.371339229024944,
+          "end_sec": 26.102767800453513,
+          "pitch": 71,
+          "velocity": 58,
+          "confidence": 0.45444655418395996,
+          "hand": null,
+          "hand_confidence": null
+        },
+        {
+          "start_sec": 1.3813292517006803,
+          "end_sec": 2.0895378684807255,
+          "pitch": 71,
+          "velocity": 57,
+          "confidence": 0.45114365220069885,
+          "hand": null,
+          "hand_confidence": null
+        },
+        {
+          "start_sec": 7.375929251700679,
+          "end_sec": 8.095747845804988,
+          "pitch": 71,
+          "velocity": 57,
+          "confidence": 0.4495798647403717,
+          "hand": null,
+          "hand_confidence": null
+        },
+        {
+          "start_sec": 13.37052925170068,
+          "end_sec": 14.10195782312925,
+          "pitch": 71,
+          "velocity": 57,
+          "confidence": 0.44727373123168945,
+          "hand": null,
+          "hand_confidence": null
+        },
+        {
+          "start_sec": 17.98225804988662,
+          "end_sec": 18.59758684807256,
+          "pitch": 100,
+          "velocity": 53,
+          "confidence": 0.4144580066204071,
+          "hand": null,
+          "hand_confidence": null
+        },
+        {
+          "start_sec": 23.988468027210885,
+          "end_sec": 24.557356916099774,
+          "pitch": 100,
+          "velocity": 54,
+          "confidence": 0.4213051199913025,
+          "hand": null,
+          "hand_confidence": null
+        },
+        {
+          "start_sec": 5.9930580498866215,
+          "end_sec": 6.573556916099774,
+          "pitch": 100,
+          "velocity": 54,
+          "confidence": 0.42312169075012207,
+          "hand": null,
+          "hand_confidence": null
+        },
+        {
+          "start_sec": 0.0,
+          "end_sec": 0.5905668934240362,
+          "pitch": 100,
+          "velocity": 50,
+          "confidence": 0.39544618129730225,
+          "hand": null,
+          "hand_confidence": null
+        },
+        {
+          "start_sec": 11.98765804988662,
+          "end_sec": 12.5913768707483,
+          "pitch": 100,
+          "velocity": 53,
+          "confidence": 0.4135672450065613,
+          "hand": null,
+          "hand_confidence": null
+        },
+        {
+          "start_sec": 10.51190702947846,
+          "end_sec": 10.732496598639457,
+          "pitch": 97,
+          "velocity": 48,
+          "confidence": 0.3781200647354126,
+          "hand": null,
+          "hand_confidence": null
+        },
+        {
+          "start_sec": 22.51271700680272,
+          "end_sec": 22.756526530612245,
+          "pitch": 97,
+          "velocity": 45,
+          "confidence": 0.3565990924835205,
+          "hand": null,
+          "hand_confidence": null
+        },
+        {
+          "start_sec": 13.509848979591837,
+          "end_sec": 13.67238866213152,
+          "pitch": 97,
+          "velocity": 45,
+          "confidence": 0.35116055607795715,
+          "hand": null,
+          "hand_confidence": null
+        },
+        {
+          "start_sec": 28.518926984126985,
+          "end_sec": 28.785956462585034,
+          "pitch": 97,
+          "velocity": 44,
+          "confidence": 0.3457152247428894,
+          "hand": null,
+          "hand_confidence": null
+        },
+        {
+          "start_sec": 4.517307029478458,
+          "end_sec": 4.71467664399093,
+          "pitch": 97,
+          "velocity": 44,
+          "confidence": 0.34991827607154846,
+          "hand": null,
+          "hand_confidence": null
+        },
+        {
+          "start_sec": 16.506507029478456,
+          "end_sec": 16.738706575963718,
+          "pitch": 97,
+          "velocity": 44,
+          "confidence": 0.34758418798446655,
+          "hand": null,
+          "hand_confidence": null
+        },
+        {
+          "start_sec": 19.5160589569161,
+          "end_sec": 19.678598639455785,
+          "pitch": 97,
+          "velocity": 43,
+          "confidence": 0.3403348922729492,
+          "hand": null,
+          "hand_confidence": null
+        },
+        {
+          "start_sec": 1.5206489795918365,
+          "end_sec": 1.6599687074829932,
+          "pitch": 97,
+          "velocity": 44,
+          "confidence": 0.3442210853099823,
+          "hand": null,
+          "hand_confidence": null
+        },
+        {
+          "start_sec": 6.770926530612245,
+          "end_sec": 6.921856235827665,
+          "pitch": 99,
+          "velocity": 42,
+          "confidence": 0.33235231041908264,
+          "hand": null,
+          "hand_confidence": null
+        },
+        {
+          "start_sec": 7.526858956916099,
+          "end_sec": 7.701008616780046,
+          "pitch": 97,
+          "velocity": 43,
+          "confidence": 0.33490097522735596,
+          "hand": null,
+          "hand_confidence": null
+        },
+        {
+          "start_sec": 25.522268934240362,
+          "end_sec": 25.69641859410431,
+          "pitch": 97,
+          "velocity": 41,
+          "confidence": 0.324014276266098,
+          "hand": null,
+          "hand_confidence": null
+        },
+        {
+          "start_sec": 0.7879365079365079,
+          "end_sec": 0.9272562358276644,
+          "pitch": 99,
+          "velocity": 41,
+          "confidence": 0.3204386234283447,
+          "hand": null,
+          "hand_confidence": null
+        }
+      ],
+      "matches": [
+        {
+          "reference_index": 0,
+          "estimated_index": 56,
+          "onset_error_seconds": 0.0
+        },
+        {
+          "reference_index": 2,
+          "estimated_index": 54,
+          "onset_error_seconds": -0.002570975056689573
+        },
+        {
+          "reference_index": 3,
+          "estimated_index": 53,
+          "onset_error_seconds": -0.00953242630385498
+        },
+        {
+          "reference_index": 4,
+          "estimated_index": 52,
+          "onset_error_seconds": -0.0036000000000004917
+        },
+        {
+          "reference_index": 5,
+          "estimated_index": 50,
+          "onset_error_seconds": 0.001048526077097378
+        },
+        {
+          "reference_index": 6,
+          "estimated_index": 49,
+          "onset_error_seconds": 0.005697052154195248
+        },
+        {
+          "reference_index": 7,
+          "estimated_index": 48,
+          "onset_error_seconds": -0.011590476190476373
+        },
+        {
+          "reference_index": 8,
+          "estimated_index": 46,
+          "onset_error_seconds": 0.004668027210884773
+        },
+        {
+          "reference_index": 10,
+          "estimated_index": 44,
+          "onset_error_seconds": 0.003639002267572522
+        },
+        {
+          "reference_index": 11,
+          "estimated_index": 43,
+          "onset_error_seconds": -0.0033224489795919965
+        },
+        {
+          "reference_index": 12,
+          "estimated_index": 42,
+          "onset_error_seconds": 0.0026099773242638236
+        },
+        {
+          "reference_index": 13,
+          "estimated_index": 40,
+          "onset_error_seconds": -0.004351473922902471
+        },
+        {
+          "reference_index": 14,
+          "estimated_index": 39,
+          "onset_error_seconds": 0.00029705215419539854
+        },
+        {
+          "reference_index": 15,
+          "estimated_index": 37,
+          "onset_error_seconds": -0.016990476190475334
+        },
+        {
+          "reference_index": 16,
+          "estimated_index": 35,
+          "onset_error_seconds": -0.0007319727891150762
+        },
+        {
+          "reference_index": 18,
+          "estimated_index": 33,
+          "onset_error_seconds": -0.0017609977324273274
+        },
+        {
+          "reference_index": 19,
+          "estimated_index": 32,
+          "onset_error_seconds": 0.0028875283446705424
+        },
+        {
+          "reference_index": 20,
+          "estimated_index": 31,
+          "onset_error_seconds": -0.002790022675736026
+        },
+        {
+          "reference_index": 21,
+          "estimated_index": 29,
+          "onset_error_seconds": 0.0018585034013582913
+        },
+        {
+          "reference_index": 22,
+          "estimated_index": 27,
+          "onset_error_seconds": -0.005102947845806227
+        },
+        {
+          "reference_index": 23,
+          "estimated_index": 25,
+          "onset_error_seconds": -0.010780498866214572
+        },
+        {
+          "reference_index": 24,
+          "estimated_index": 23,
+          "onset_error_seconds": -0.006131972789116702
+        },
+        {
+          "reference_index": 26,
+          "estimated_index": 21,
+          "onset_error_seconds": -0.007160997732423624
+        },
+        {
+          "reference_index": 27,
+          "estimated_index": 20,
+          "onset_error_seconds": -0.0025124716553257542
+        },
+        {
+          "reference_index": 28,
+          "estimated_index": 19,
+          "onset_error_seconds": -0.008190022675734099
+        },
+        {
+          "reference_index": 29,
+          "estimated_index": 17,
+          "onset_error_seconds": -0.0035414965986397817
+        },
+        {
+          "reference_index": 30,
+          "estimated_index": 15,
+          "onset_error_seconds": 0.001107029478458088
+        },
+        {
+          "reference_index": 31,
+          "estimated_index": 13,
+          "onset_error_seconds": -0.0045705215419502565
+        },
+        {
+          "reference_index": 32,
+          "estimated_index": 11,
+          "onset_error_seconds": 7.80045351476133e-05
+        },
+        {
+          "reference_index": 34,
+          "estimated_index": 9,
+          "onset_error_seconds": -0.0009510204081628615
+        },
+        {
+          "reference_index": 35,
+          "estimated_index": 8,
+          "onset_error_seconds": 0.0036975056689350083
+        },
+        {
+          "reference_index": 36,
+          "estimated_index": 7,
+          "onset_error_seconds": -0.0019800453514733363
+        },
+        {
+          "reference_index": 37,
+          "estimated_index": 4,
+          "onset_error_seconds": 0.0026684807256245335
+        },
+        {
+          "reference_index": 38,
+          "estimated_index": 3,
+          "onset_error_seconds": -0.004292970521543538
+        },
+        {
+          "reference_index": 39,
+          "estimated_index": 1,
+          "onset_error_seconds": -0.009970521541951882
+        }
+      ]
+    },
+    "0.1": {
+      "onset_tolerance_seconds": 0.1,
+      "reference_count": 40,
+      "estimated_count": 79,
+      "matched_count": 35,
+      "precision": 0.4430379746835443,
+      "recall": 0.875,
+      "f1": 0.5882352941176471,
+      "extra_count": 44,
+      "missing_count": 5,
+      "missing_reference_notes": [
+        {
+          "pitch": 71,
+          "start_sec": 0.75,
+          "end_sec": 1.3704545454545454,
+          "velocity": 38
+        },
+        {
+          "pitch": 71,
+          "start_sec": 6.75,
+          "end_sec": 7.370454545454545,
+          "velocity": 38
+        },
+        {
+          "pitch": 71,
+          "start_sec": 12.75,
+          "end_sec": 13.370454545454544,
+          "velocity": 38
+        },
+        {
+          "pitch": 71,
+          "start_sec": 18.75,
+          "end_sec": 19.370454545454546,
+          "velocity": 38
+        },
+        {
+          "pitch": 71,
+          "start_sec": 24.75,
+          "end_sec": 25.370454545454542,
+          "velocity": 38
+        }
+      ],
+      "unmatched_estimated_notes": [
+        {
+          "start_sec": 29.25163945578231,
+          "end_sec": 29.878578231292515,
+          "pitch": 69,
+          "velocity": 64,
+          "confidence": 0.5020952820777893,
+          "hand": null,
+          "hand_confidence": null
+        },
+        {
+          "start_sec": 28.50731700680272,
+          "end_sec": 29.123929705215417,
+          "pitch": 67,
+          "velocity": 67,
+          "confidence": 0.5273226499557495,
+          "hand": null,
+          "hand_confidence": null
+        },
+        {
+          "start_sec": 27.752668480725625,
+          "end_sec": 28.414437188208616,
+          "pitch": 64,
+          "velocity": 86,
+          "confidence": 0.6781469583511353,
+          "hand": null,
+          "hand_confidence": null
+        },
+        {
+          "start_sec": 26.998019954648527,
+          "end_sec": 27.752668480725625,
+          "pitch": 67,
+          "velocity": 66,
+          "confidence": 0.5172092914581299,
+          "hand": null,
+          "hand_confidence": null
+        },
+        {
+          "start_sec": 24.754726530612245,
+          "end_sec": 25.371339229024944,
+          "pitch": 72,
+          "velocity": 66,
+          "confidence": 0.5160962343215942,
+          "hand": null,
+          "hand_confidence": null
+        },
+        {
+          "start_sec": 23.257039455782312,
+          "end_sec": 23.883978231292517,
+          "pitch": 69,
+          "velocity": 65,
+          "confidence": 0.5078874230384827,
+          "hand": null,
+          "hand_confidence": null
+        },
+        {
+          "start_sec": 22.51271700680272,
+          "end_sec": 23.12932970521542,
+          "pitch": 67,
+          "velocity": 67,
+          "confidence": 0.528296947479248,
+          "hand": null,
+          "hand_confidence": null
+        },
+        {
+          "start_sec": 21.74645850340136,
+          "end_sec": 21.93221814058957,
+          "pitch": 79,
+          "velocity": 43,
+          "confidence": 0.34219977259635925,
+          "hand": null,
+          "hand_confidence": null
+        },
+        {
+          "start_sec": 21.74645850340136,
+          "end_sec": 22.419837188208618,
+          "pitch": 64,
+          "velocity": 86,
+          "confidence": 0.6808403134346008,
+          "hand": null,
+          "hand_confidence": null
+        },
+        {
+          "start_sec": 18.760126530612244,
+          "end_sec": 19.376739229024945,
+          "pitch": 72,
+          "velocity": 66,
+          "confidence": 0.5166566371917725,
+          "hand": null,
+          "hand_confidence": null
+        },
+        {
+          "start_sec": 17.26243945578231,
+          "end_sec": 17.877768253968252,
+          "pitch": 69,
+          "velocity": 65,
+          "confidence": 0.5082412362098694,
+          "hand": null,
+          "hand_confidence": null
+        },
+        {
+          "start_sec": 16.506507029478456,
+          "end_sec": 17.134729705215417,
+          "pitch": 67,
+          "velocity": 67,
+          "confidence": 0.5257651209831238,
+          "hand": null,
+          "hand_confidence": null
+        },
+        {
+          "start_sec": 15.751858503401358,
+          "end_sec": 15.891178231292518,
+          "pitch": 79,
+          "velocity": 46,
+          "confidence": 0.3612045347690582,
+          "hand": null,
+          "hand_confidence": null
+        },
+        {
+          "start_sec": 15.751858503401358,
+          "end_sec": 16.425237188208616,
+          "pitch": 64,
+          "velocity": 86,
+          "confidence": 0.6785514950752258,
+          "hand": null,
+          "hand_confidence": null
+        },
+        {
+          "start_sec": 12.753916553287983,
+          "end_sec": 13.37052925170068,
+          "pitch": 72,
+          "velocity": 66,
+          "confidence": 0.5193137526512146,
+          "hand": null,
+          "hand_confidence": null
+        },
+        {
+          "start_sec": 11.25622947845805,
+          "end_sec": 11.883168253968254,
+          "pitch": 69,
+          "velocity": 64,
+          "confidence": 0.5034900903701782,
+          "hand": null,
+          "hand_confidence": null
+        },
+        {
+          "start_sec": 10.51190702947846,
+          "end_sec": 11.128519727891156,
+          "pitch": 67,
+          "velocity": 67,
+          "confidence": 0.528671383857727,
+          "hand": null,
+          "hand_confidence": null
+        },
+        {
+          "start_sec": 9.745648526077098,
+          "end_sec": 10.419027210884355,
+          "pitch": 64,
+          "velocity": 86,
+          "confidence": 0.6763255596160889,
+          "hand": null,
+          "hand_confidence": null
+        },
+        {
+          "start_sec": 6.747706575963719,
+          "end_sec": 7.375929251700679,
+          "pitch": 72,
+          "velocity": 67,
+          "confidence": 0.5260778665542603,
+          "hand": null,
+          "hand_confidence": null
+        },
+        {
+          "start_sec": 5.250019501133787,
+          "end_sec": 5.888568253968254,
+          "pitch": 69,
+          "velocity": 64,
+          "confidence": 0.5029579401016235,
+          "hand": null,
+          "hand_confidence": null
+        },
+        {
+          "start_sec": 3.7510485260770974,
+          "end_sec": 4.424427210884353,
+          "pitch": 64,
+          "velocity": 86,
+          "confidence": 0.6801876425743103,
+          "hand": null,
+          "hand_confidence": null
+        },
+        {
+          "start_sec": 0.7531065759637188,
+          "end_sec": 1.3813292517006803,
+          "pitch": 72,
+          "velocity": 65,
+          "confidence": 0.5151973962783813,
+          "hand": null,
+          "hand_confidence": null
+        },
+        {
+          "start_sec": 19.376739229024945,
+          "end_sec": 20.096557823129253,
+          "pitch": 71,
+          "velocity": 57,
+          "confidence": 0.44869521260261536,
+          "hand": null,
+          "hand_confidence": null
+        },
+        {
+          "start_sec": 25.371339229024944,
+          "end_sec": 26.102767800453513,
+          "pitch": 71,
+          "velocity": 58,
+          "confidence": 0.45444655418395996,
+          "hand": null,
+          "hand_confidence": null
+        },
+        {
+          "start_sec": 1.3813292517006803,
+          "end_sec": 2.0895378684807255,
+          "pitch": 71,
+          "velocity": 57,
+          "confidence": 0.45114365220069885,
+          "hand": null,
+          "hand_confidence": null
+        },
+        {
+          "start_sec": 7.375929251700679,
+          "end_sec": 8.095747845804988,
+          "pitch": 71,
+          "velocity": 57,
+          "confidence": 0.4495798647403717,
+          "hand": null,
+          "hand_confidence": null
+        },
+        {
+          "start_sec": 13.37052925170068,
+          "end_sec": 14.10195782312925,
+          "pitch": 71,
+          "velocity": 57,
+          "confidence": 0.44727373123168945,
+          "hand": null,
+          "hand_confidence": null
+        },
+        {
+          "start_sec": 17.98225804988662,
+          "end_sec": 18.59758684807256,
+          "pitch": 100,
+          "velocity": 53,
+          "confidence": 0.4144580066204071,
+          "hand": null,
+          "hand_confidence": null
+        },
+        {
+          "start_sec": 23.988468027210885,
+          "end_sec": 24.557356916099774,
+          "pitch": 100,
+          "velocity": 54,
+          "confidence": 0.4213051199913025,
+          "hand": null,
+          "hand_confidence": null
+        },
+        {
+          "start_sec": 5.9930580498866215,
+          "end_sec": 6.573556916099774,
+          "pitch": 100,
+          "velocity": 54,
+          "confidence": 0.42312169075012207,
+          "hand": null,
+          "hand_confidence": null
+        },
+        {
+          "start_sec": 0.0,
+          "end_sec": 0.5905668934240362,
+          "pitch": 100,
+          "velocity": 50,
+          "confidence": 0.39544618129730225,
+          "hand": null,
+          "hand_confidence": null
+        },
+        {
+          "start_sec": 11.98765804988662,
+          "end_sec": 12.5913768707483,
+          "pitch": 100,
+          "velocity": 53,
+          "confidence": 0.4135672450065613,
+          "hand": null,
+          "hand_confidence": null
+        },
+        {
+          "start_sec": 10.51190702947846,
+          "end_sec": 10.732496598639457,
+          "pitch": 97,
+          "velocity": 48,
+          "confidence": 0.3781200647354126,
+          "hand": null,
+          "hand_confidence": null
+        },
+        {
+          "start_sec": 22.51271700680272,
+          "end_sec": 22.756526530612245,
+          "pitch": 97,
+          "velocity": 45,
+          "confidence": 0.3565990924835205,
+          "hand": null,
+          "hand_confidence": null
+        },
+        {
+          "start_sec": 13.509848979591837,
+          "end_sec": 13.67238866213152,
+          "pitch": 97,
+          "velocity": 45,
+          "confidence": 0.35116055607795715,
+          "hand": null,
+          "hand_confidence": null
+        },
+        {
+          "start_sec": 28.518926984126985,
+          "end_sec": 28.785956462585034,
+          "pitch": 97,
+          "velocity": 44,
+          "confidence": 0.3457152247428894,
+          "hand": null,
+          "hand_confidence": null
+        },
+        {
+          "start_sec": 4.517307029478458,
+          "end_sec": 4.71467664399093,
+          "pitch": 97,
+          "velocity": 44,
+          "confidence": 0.34991827607154846,
+          "hand": null,
+          "hand_confidence": null
+        },
+        {
+          "start_sec": 16.506507029478456,
+          "end_sec": 16.738706575963718,
+          "pitch": 97,
+          "velocity": 44,
+          "confidence": 0.34758418798446655,
+          "hand": null,
+          "hand_confidence": null
+        },
+        {
+          "start_sec": 19.5160589569161,
+          "end_sec": 19.678598639455785,
+          "pitch": 97,
+          "velocity": 43,
+          "confidence": 0.3403348922729492,
+          "hand": null,
+          "hand_confidence": null
+        },
+        {
+          "start_sec": 1.5206489795918365,
+          "end_sec": 1.6599687074829932,
+          "pitch": 97,
+          "velocity": 44,
+          "confidence": 0.3442210853099823,
+          "hand": null,
+          "hand_confidence": null
+        },
+        {
+          "start_sec": 6.770926530612245,
+          "end_sec": 6.921856235827665,
+          "pitch": 99,
+          "velocity": 42,
+          "confidence": 0.33235231041908264,
+          "hand": null,
+          "hand_confidence": null
+        },
+        {
+          "start_sec": 7.526858956916099,
+          "end_sec": 7.701008616780046,
+          "pitch": 97,
+          "velocity": 43,
+          "confidence": 0.33490097522735596,
+          "hand": null,
+          "hand_confidence": null
+        },
+        {
+          "start_sec": 25.522268934240362,
+          "end_sec": 25.69641859410431,
+          "pitch": 97,
+          "velocity": 41,
+          "confidence": 0.324014276266098,
+          "hand": null,
+          "hand_confidence": null
+        },
+        {
+          "start_sec": 0.7879365079365079,
+          "end_sec": 0.9272562358276644,
+          "pitch": 99,
+          "velocity": 41,
+          "confidence": 0.3204386234283447,
+          "hand": null,
+          "hand_confidence": null
+        }
+      ],
+      "matches": [
+        {
+          "reference_index": 0,
+          "estimated_index": 56,
+          "onset_error_seconds": 0.0
+        },
+        {
+          "reference_index": 2,
+          "estimated_index": 54,
+          "onset_error_seconds": -0.002570975056689573
+        },
+        {
+          "reference_index": 3,
+          "estimated_index": 53,
+          "onset_error_seconds": -0.00953242630385498
+        },
+        {
+          "reference_index": 4,
+          "estimated_index": 52,
+          "onset_error_seconds": -0.0036000000000004917
+        },
+        {
+          "reference_index": 5,
+          "estimated_index": 50,
+          "onset_error_seconds": 0.001048526077097378
+        },
+        {
+          "reference_index": 6,
+          "estimated_index": 49,
+          "onset_error_seconds": 0.005697052154195248
+        },
+        {
+          "reference_index": 7,
+          "estimated_index": 48,
+          "onset_error_seconds": -0.011590476190476373
+        },
+        {
+          "reference_index": 8,
+          "estimated_index": 46,
+          "onset_error_seconds": 0.004668027210884773
+        },
+        {
+          "reference_index": 10,
+          "estimated_index": 44,
+          "onset_error_seconds": 0.003639002267572522
+        },
+        {
+          "reference_index": 11,
+          "estimated_index": 43,
+          "onset_error_seconds": -0.0033224489795919965
+        },
+        {
+          "reference_index": 12,
+          "estimated_index": 42,
+          "onset_error_seconds": 0.0026099773242638236
+        },
+        {
+          "reference_index": 13,
+          "estimated_index": 40,
+          "onset_error_seconds": -0.004351473922902471
+        },
+        {
+          "reference_index": 14,
+          "estimated_index": 39,
+          "onset_error_seconds": 0.00029705215419539854
+        },
+        {
+          "reference_index": 15,
+          "estimated_index": 37,
+          "onset_error_seconds": -0.016990476190475334
+        },
+        {
+          "reference_index": 16,
+          "estimated_index": 35,
+          "onset_error_seconds": -0.0007319727891150762
+        },
+        {
+          "reference_index": 18,
+          "estimated_index": 33,
+          "onset_error_seconds": -0.0017609977324273274
+        },
+        {
+          "reference_index": 19,
+          "estimated_index": 32,
+          "onset_error_seconds": 0.0028875283446705424
+        },
+        {
+          "reference_index": 20,
+          "estimated_index": 31,
+          "onset_error_seconds": -0.002790022675736026
+        },
+        {
+          "reference_index": 21,
+          "estimated_index": 29,
+          "onset_error_seconds": 0.0018585034013582913
+        },
+        {
+          "reference_index": 22,
+          "estimated_index": 27,
+          "onset_error_seconds": -0.005102947845806227
+        },
+        {
+          "reference_index": 23,
+          "estimated_index": 25,
+          "onset_error_seconds": -0.010780498866214572
+        },
+        {
+          "reference_index": 24,
+          "estimated_index": 23,
+          "onset_error_seconds": -0.006131972789116702
+        },
+        {
+          "reference_index": 26,
+          "estimated_index": 21,
+          "onset_error_seconds": -0.007160997732423624
+        },
+        {
+          "reference_index": 27,
+          "estimated_index": 20,
+          "onset_error_seconds": -0.0025124716553257542
+        },
+        {
+          "reference_index": 28,
+          "estimated_index": 19,
+          "onset_error_seconds": -0.008190022675734099
+        },
+        {
+          "reference_index": 29,
+          "estimated_index": 17,
+          "onset_error_seconds": -0.0035414965986397817
+        },
+        {
+          "reference_index": 30,
+          "estimated_index": 15,
+          "onset_error_seconds": 0.001107029478458088
+        },
+        {
+          "reference_index": 31,
+          "estimated_index": 13,
+          "onset_error_seconds": -0.0045705215419502565
+        },
+        {
+          "reference_index": 32,
+          "estimated_index": 11,
+          "onset_error_seconds": 7.80045351476133e-05
+        },
+        {
+          "reference_index": 34,
+          "estimated_index": 9,
+          "onset_error_seconds": -0.0009510204081628615
+        },
+        {
+          "reference_index": 35,
+          "estimated_index": 8,
+          "onset_error_seconds": 0.0036975056689350083
+        },
+        {
+          "reference_index": 36,
+          "estimated_index": 7,
+          "onset_error_seconds": -0.0019800453514733363
+        },
+        {
+          "reference_index": 37,
+          "estimated_index": 4,
+          "onset_error_seconds": 0.0026684807256245335
+        },
+        {
+          "reference_index": 38,
+          "estimated_index": 3,
+          "onset_error_seconds": -0.004292970521543538
+        },
+        {
+          "reference_index": 39,
+          "estimated_index": 1,
+          "onset_error_seconds": -0.009970521541951882
+        }
+      ]
+    }
+  },
+  "transkun": {
+    "0.05": {
+      "onset_tolerance_seconds": 0.05,
+      "reference_count": 40,
+      "estimated_count": 40,
+      "matched_count": 40,
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0,
+      "extra_count": 0,
+      "missing_count": 0,
+      "missing_reference_notes": [],
+      "unmatched_estimated_notes": [],
+      "matches": [
+        {
+          "reference_index": 0,
+          "estimated_index": 0,
+          "onset_error_seconds": 0.0
+        },
+        {
+          "reference_index": 1,
+          "estimated_index": 1,
+          "onset_error_seconds": -0.005729166666666785
+        },
+        {
+          "reference_index": 2,
+          "estimated_index": 2,
+          "onset_error_seconds": -0.009374999999999911
+        },
+        {
+          "reference_index": 3,
+          "estimated_index": 3,
+          "onset_error_seconds": -0.010937500000000266
+        },
+        {
+          "reference_index": 4,
+          "estimated_index": 4,
+          "onset_error_seconds": -0.010937500000000266
+        },
+        {
+          "reference_index": 5,
+          "estimated_index": 5,
+          "onset_error_seconds": -0.008333333333333748
+        },
+        {
+          "reference_index": 6,
+          "estimated_index": 6,
+          "onset_error_seconds": -0.009375000000000355
+        },
+        {
+          "reference_index": 7,
+          "estimated_index": 7,
+          "onset_error_seconds": -0.008854166666666607
+        },
+        {
+          "reference_index": 8,
+          "estimated_index": 8,
+          "onset_error_seconds": -0.005729166666666785
+        },
+        {
+          "reference_index": 9,
+          "estimated_index": 9,
+          "onset_error_seconds": -0.00729166666666714
+        },
+        {
+          "reference_index": 10,
+          "estimated_index": 10,
+          "onset_error_seconds": -0.00833333333333286
+        },
+        {
+          "reference_index": 11,
+          "estimated_index": 11,
+          "onset_error_seconds": -0.005729166666666785
+        },
+        {
+          "reference_index": 12,
+          "estimated_index": 12,
+          "onset_error_seconds": -0.0078125
+        },
+        {
+          "reference_index": 13,
+          "estimated_index": 13,
+          "onset_error_seconds": -0.00729166666666714
+        },
+        {
+          "reference_index": 14,
+          "estimated_index": 14,
+          "onset_error_seconds": -0.009375000000000355
+        },
+        {
+          "reference_index": 15,
+          "estimated_index": 15,
+          "onset_error_seconds": -0.006249999999999645
+        },
+        {
+          "reference_index": 16,
+          "estimated_index": 16,
+          "onset_error_seconds": -0.006770833333334281
+        },
+        {
+          "reference_index": 17,
+          "estimated_index": 17,
+          "onset_error_seconds": -0.008854166666667496
+        },
+        {
+          "reference_index": 18,
+          "estimated_index": 18,
+          "onset_error_seconds": -0.005729166666666785
+        },
+        {
+          "reference_index": 19,
+          "estimated_index": 19,
+          "onset_error_seconds": -0.0052083333333339255
+        },
+        {
+          "reference_index": 20,
+          "estimated_index": 20,
+          "onset_error_seconds": -0.006770833333334281
+        },
+        {
+          "reference_index": 21,
+          "estimated_index": 21,
+          "onset_error_seconds": -0.0046874999999992895
+        },
+        {
+          "reference_index": 22,
+          "estimated_index": 22,
+          "onset_error_seconds": -0.006250000000001421
+        },
+        {
+          "reference_index": 23,
+          "estimated_index": 23,
+          "onset_error_seconds": -0.006770833333334281
+        },
+        {
+          "reference_index": 24,
+          "estimated_index": 24,
+          "onset_error_seconds": -0.0031250000000007105
+        },
+        {
+          "reference_index": 25,
+          "estimated_index": 25,
+          "onset_error_seconds": -0.00416666666666643
+        },
+        {
+          "reference_index": 26,
+          "estimated_index": 26,
+          "onset_error_seconds": -0.0057291666666685614
+        },
+        {
+          "reference_index": 27,
+          "estimated_index": 27,
+          "onset_error_seconds": -0.00833333333333286
+        },
+        {
+          "reference_index": 28,
+          "estimated_index": 28,
+          "onset_error_seconds": -0.006250000000001421
+        },
+        {
+          "reference_index": 29,
+          "estimated_index": 29,
+          "onset_error_seconds": -0.006250000000001421
+        },
+        {
+          "reference_index": 30,
+          "estimated_index": 30,
+          "onset_error_seconds": -0.00729166666666714
+        },
+        {
+          "reference_index": 31,
+          "estimated_index": 31,
+          "onset_error_seconds": -0.0046874999999992895
+        },
+        {
+          "reference_index": 32,
+          "estimated_index": 32,
+          "onset_error_seconds": -0.005208333333332149
+        },
+        {
+          "reference_index": 33,
+          "estimated_index": 33,
+          "onset_error_seconds": -0.006770833333334281
+        },
+        {
+          "reference_index": 34,
+          "estimated_index": 34,
+          "onset_error_seconds": -0.009375000000002132
+        },
+        {
+          "reference_index": 35,
+          "estimated_index": 35,
+          "onset_error_seconds": -0.00729166666666714
+        },
+        {
+          "reference_index": 36,
+          "estimated_index": 36,
+          "onset_error_seconds": -0.00885416666666572
+        },
+        {
+          "reference_index": 37,
+          "estimated_index": 37,
+          "onset_error_seconds": -0.00885416666666572
+        },
+        {
+          "reference_index": 38,
+          "estimated_index": 38,
+          "onset_error_seconds": -0.006770833333334281
+        },
+        {
+          "reference_index": 39,
+          "estimated_index": 39,
+          "onset_error_seconds": -0.00729166666666714
+        }
+      ]
+    },
+    "0.1": {
+      "onset_tolerance_seconds": 0.1,
+      "reference_count": 40,
+      "estimated_count": 40,
+      "matched_count": 40,
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0,
+      "extra_count": 0,
+      "missing_count": 0,
+      "missing_reference_notes": [],
+      "unmatched_estimated_notes": [],
+      "matches": [
+        {
+          "reference_index": 0,
+          "estimated_index": 0,
+          "onset_error_seconds": 0.0
+        },
+        {
+          "reference_index": 1,
+          "estimated_index": 1,
+          "onset_error_seconds": -0.005729166666666785
+        },
+        {
+          "reference_index": 2,
+          "estimated_index": 2,
+          "onset_error_seconds": -0.009374999999999911
+        },
+        {
+          "reference_index": 3,
+          "estimated_index": 3,
+          "onset_error_seconds": -0.010937500000000266
+        },
+        {
+          "reference_index": 4,
+          "estimated_index": 4,
+          "onset_error_seconds": -0.010937500000000266
+        },
+        {
+          "reference_index": 5,
+          "estimated_index": 5,
+          "onset_error_seconds": -0.008333333333333748
+        },
+        {
+          "reference_index": 6,
+          "estimated_index": 6,
+          "onset_error_seconds": -0.009375000000000355
+        },
+        {
+          "reference_index": 7,
+          "estimated_index": 7,
+          "onset_error_seconds": -0.008854166666666607
+        },
+        {
+          "reference_index": 8,
+          "estimated_index": 8,
+          "onset_error_seconds": -0.005729166666666785
+        },
+        {
+          "reference_index": 9,
+          "estimated_index": 9,
+          "onset_error_seconds": -0.00729166666666714
+        },
+        {
+          "reference_index": 10,
+          "estimated_index": 10,
+          "onset_error_seconds": -0.00833333333333286
+        },
+        {
+          "reference_index": 11,
+          "estimated_index": 11,
+          "onset_error_seconds": -0.005729166666666785
+        },
+        {
+          "reference_index": 12,
+          "estimated_index": 12,
+          "onset_error_seconds": -0.0078125
+        },
+        {
+          "reference_index": 13,
+          "estimated_index": 13,
+          "onset_error_seconds": -0.00729166666666714
+        },
+        {
+          "reference_index": 14,
+          "estimated_index": 14,
+          "onset_error_seconds": -0.009375000000000355
+        },
+        {
+          "reference_index": 15,
+          "estimated_index": 15,
+          "onset_error_seconds": -0.006249999999999645
+        },
+        {
+          "reference_index": 16,
+          "estimated_index": 16,
+          "onset_error_seconds": -0.006770833333334281
+        },
+        {
+          "reference_index": 17,
+          "estimated_index": 17,
+          "onset_error_seconds": -0.008854166666667496
+        },
+        {
+          "reference_index": 18,
+          "estimated_index": 18,
+          "onset_error_seconds": -0.005729166666666785
+        },
+        {
+          "reference_index": 19,
+          "estimated_index": 19,
+          "onset_error_seconds": -0.0052083333333339255
+        },
+        {
+          "reference_index": 20,
+          "estimated_index": 20,
+          "onset_error_seconds": -0.006770833333334281
+        },
+        {
+          "reference_index": 21,
+          "estimated_index": 21,
+          "onset_error_seconds": -0.0046874999999992895
+        },
+        {
+          "reference_index": 22,
+          "estimated_index": 22,
+          "onset_error_seconds": -0.006250000000001421
+        },
+        {
+          "reference_index": 23,
+          "estimated_index": 23,
+          "onset_error_seconds": -0.006770833333334281
+        },
+        {
+          "reference_index": 24,
+          "estimated_index": 24,
+          "onset_error_seconds": -0.0031250000000007105
+        },
+        {
+          "reference_index": 25,
+          "estimated_index": 25,
+          "onset_error_seconds": -0.00416666666666643
+        },
+        {
+          "reference_index": 26,
+          "estimated_index": 26,
+          "onset_error_seconds": -0.0057291666666685614
+        },
+        {
+          "reference_index": 27,
+          "estimated_index": 27,
+          "onset_error_seconds": -0.00833333333333286
+        },
+        {
+          "reference_index": 28,
+          "estimated_index": 28,
+          "onset_error_seconds": -0.006250000000001421
+        },
+        {
+          "reference_index": 29,
+          "estimated_index": 29,
+          "onset_error_seconds": -0.006250000000001421
+        },
+        {
+          "reference_index": 30,
+          "estimated_index": 30,
+          "onset_error_seconds": -0.00729166666666714
+        },
+        {
+          "reference_index": 31,
+          "estimated_index": 31,
+          "onset_error_seconds": -0.0046874999999992895
+        },
+        {
+          "reference_index": 32,
+          "estimated_index": 32,
+          "onset_error_seconds": -0.005208333333332149
+        },
+        {
+          "reference_index": 33,
+          "estimated_index": 33,
+          "onset_error_seconds": -0.006770833333334281
+        },
+        {
+          "reference_index": 34,
+          "estimated_index": 34,
+          "onset_error_seconds": -0.009375000000002132
+        },
+        {
+          "reference_index": 35,
+          "estimated_index": 35,
+          "onset_error_seconds": -0.00729166666666714
+        },
+        {
+          "reference_index": 36,
+          "estimated_index": 36,
+          "onset_error_seconds": -0.00885416666666572
+        },
+        {
+          "reference_index": 37,
+          "estimated_index": 37,
+          "onset_error_seconds": -0.00885416666666572
+        },
+        {
+          "reference_index": 38,
+          "estimated_index": 38,
+          "onset_error_seconds": -0.006770833333334281
+        },
+        {
+          "reference_index": 39,
+          "estimated_index": 39,
+          "onset_error_seconds": -0.00729166666666714
+        }
+      ]
+    }
+  },
+  "limitation": "synthetic sources, onset-only, no score quality or deployment approval"
+}

@@ -1,0 +1,373 @@
+{
+  "production_eligible": false,
+  "score_changed": false,
+  "cases": [
+    {
+      "case_id": "01-bach-capriccio",
+      "suite": "human-review-artifacts",
+      "timeline_sha256": "42cbd7057c86eb547eb122414a2571271d78206f4f6478a49d363eb8a43d8202",
+      "detected_bpm": 117.453835,
+      "metrics": {
+        "beat_count": 58,
+        "current_interval": 0.5108390000000007,
+        "span_average_interval": 0.5198010877192982,
+        "endpoint_difference_seconds": -0.5108389999999616,
+        "median_absolute_interval_deviation": 0.008962087719299294,
+        "suggested_automatic_change": false
+      }
+    },
+    {
+      "case_id": "02-brahms-intermezzo",
+      "suite": "human-review-artifacts",
+      "timeline_sha256": "f87fbc236d75b37a27c6f4535604cc24d4b4351ccfc2cd0dfcc8f17764cc99c2",
+      "detected_bpm": 143.554688,
+      "metrics": {
+        "beat_count": 71,
+        "current_interval": 0.41795899999999975,
+        "span_average_interval": 0.41232004285714285,
+        "endpoint_difference_seconds": 0.39472699999998184,
+        "median_absolute_interval_deviation": 0.017580042857143208,
+        "suggested_automatic_change": false
+      }
+    },
+    {
+      "case_id": "03-mozart-sonata",
+      "suite": "human-review-artifacts",
+      "timeline_sha256": "fe94a11b9551ad4ee7d68b550ca14b86f9413410d7e5e4f50f334646767a5ff9",
+      "detected_bpm": 135.999178,
+      "metrics": {
+        "beat_count": 66,
+        "current_interval": 0.44117900000000176,
+        "span_average_interval": 0.4493954307692308,
+        "endpoint_difference_seconds": -0.5340679999998841,
+        "median_absolute_interval_deviation": 0.015003569230769453,
+        "suggested_automatic_change": false
+      }
+    },
+    {
+      "case_id": "04-rachmaninoff-g-sharp",
+      "suite": "human-review-artifacts",
+      "timeline_sha256": "4849793bc259741f96bdf5017e181bff5b53493f46a6414f28d4f95f42755b16",
+      "detected_bpm": 135.999178,
+      "metrics": {
+        "beat_count": 69,
+        "current_interval": 0.441179,
+        "span_average_interval": 0.43469120588235294,
+        "endpoint_difference_seconds": 0.4411699999999996,
+        "median_absolute_interval_deviation": 0.01673220588235319,
+        "suggested_automatic_change": false
+      }
+    },
+    {
+      "case_id": "05-chopin-c-minor",
+      "suite": "human-review-artifacts",
+      "timeline_sha256": "4bb81455ae872de4875d82ed4442706c9658140b8513842b70cb6bb91f300737",
+      "detected_bpm": 135.999178,
+      "metrics": {
+        "beat_count": 64,
+        "current_interval": 0.441179,
+        "span_average_interval": 0.4356505714285714,
+        "endpoint_difference_seconds": 0.34829100000000324,
+        "median_absolute_interval_deviation": 0.01769157142857164,
+        "suggested_automatic_change": false
+      }
+    },
+    {
+      "case_id": "06-scriabin-etude",
+      "suite": "human-review-artifacts",
+      "timeline_sha256": "f698406fd2f1eefa4ef90b4d66cbedb74fe2f9fe9eab9ef39a5b4f3cdcb9cabe",
+      "detected_bpm": 112.347147,
+      "metrics": {
+        "beat_count": 56,
+        "current_interval": 0.5340589999999992,
+        "span_average_interval": 0.5302593272727273,
+        "endpoint_difference_seconds": 0.2089819999999527,
+        "median_absolute_interval_deviation": 0.01942032727272658,
+        "suggested_automatic_change": false
+      }
+    },
+    {
+      "case_id": "07-chopin-ballade",
+      "suite": "human-review-artifacts",
+      "timeline_sha256": "c9ec8752eec56ecb4ea06a65fd267d0d6ad03c8bc87f3404f18017b7cacdbec5",
+      "detected_bpm": 123.046875,
+      "metrics": {
+        "beat_count": 56,
+        "current_interval": 0.5108389999999998,
+        "span_average_interval": 0.5040841090909091,
+        "endpoint_difference_seconds": 0.3715189999999886,
+        "median_absolute_interval_deviation": 0.029974890909091,
+        "suggested_automatic_change": false
+      }
+    },
+    {
+      "case_id": "08-chopin-a-major",
+      "suite": "human-review-artifacts",
+      "timeline_sha256": "2ca83cd4a212768d0f2eaab23e7f8c52b90de3c5e39c6f6e6f4f0f8b16ca039d",
+      "detected_bpm": 123.046875,
+      "metrics": {
+        "beat_count": 60,
+        "current_interval": 0.48761900000000047,
+        "span_average_interval": 0.495883779661017,
+        "endpoint_difference_seconds": -0.4876219999999769,
+        "median_absolute_interval_deviation": 0.014955220338983721,
+        "suggested_automatic_change": false
+      }
+    },
+    {
+      "case_id": "09-chopin-waltz",
+      "suite": "human-review-artifacts",
+      "timeline_sha256": "4dad101015730c2fd9687288adaeeb7c5bebbdceb27956f45028024de393ada1",
+      "detected_bpm": 129.199219,
+      "metrics": {
+        "beat_count": 65,
+        "current_interval": 0.44117999999999924,
+        "span_average_interval": 0.452789109375,
+        "endpoint_difference_seconds": -0.7429830000000486,
+        "median_absolute_interval_deviation": 0.011610109375001787,
+        "suggested_automatic_change": false
+      }
+    },
+    {
+      "case_id": "10-rachmaninoff-c-sharp",
+      "suite": "human-review-artifacts",
+      "timeline_sha256": "394d30549a704cbe626a4c941f569eb805b030424535b615928e04c38a8672ee",
+      "detected_bpm": 123.046875,
+      "metrics": {
+        "beat_count": 64,
+        "current_interval": 0.46439900000000023,
+        "span_average_interval": 0.4673476507936508,
+        "endpoint_difference_seconds": -0.18576499999998575,
+        "median_absolute_interval_deviation": 0.026167650793651576,
+        "suggested_automatic_change": false
+      }
+    },
+    {
+      "case_id": "01-slow-melody",
+      "suite": "structure-review-artifacts",
+      "timeline_sha256": "f431fcfebdd953216fccd7c8ac44bff13f50da0fb80d510393b1fd9fb94ee3e9",
+      "detected_bpm": 60.09266,
+      "metrics": {
+        "beat_count": 29,
+        "current_interval": 0.9984579999999994,
+        "span_average_interval": 1.000116607142857,
+        "endpoint_difference_seconds": -0.04644100000001572,
+        "median_absolute_interval_deviation": 0.0016586071428577043,
+        "suggested_automatic_change": false
+      }
+    },
+    {
+      "case_id": "02-fast-scale",
+      "suite": "structure-review-artifacts",
+      "timeline_sha256": "082453f2899cd09e2e1bacf54a036c5a15bb7bab8a806c7242d84b85bfdc430c",
+      "detected_bpm": 117.453835,
+      "metrics": {
+        "beat_count": 58,
+        "current_interval": 0.5108389999999989,
+        "span_average_interval": 0.5002474385964912,
+        "endpoint_difference_seconds": 0.6037189999999377,
+        "median_absolute_interval_deviation": 0.010591561403509475,
+        "suggested_automatic_change": false
+      }
+    },
+    {
+      "case_id": "03-block-chords",
+      "suite": "structure-review-artifacts",
+      "timeline_sha256": "1f7d0ce6afea8e969f3f97b8dda7042c3da070bc09220fa9bfd09a33fa6d9beb",
+      "detected_bpm": 39.753606,
+      "metrics": {
+        "beat_count": 19,
+        "current_interval": 1.509297,
+        "span_average_interval": 1.5002670555555557,
+        "endpoint_difference_seconds": 0.16253899999999888,
+        "median_absolute_interval_deviation": 0.009029944444444382,
+        "suggested_automatic_change": false
+      }
+    },
+    {
+      "case_id": "04-arpeggios",
+      "suite": "structure-review-artifacts",
+      "timeline_sha256": "f2d82ec53dbea5042c55d25d9d0e4723009bc57f58dfc61f29464b7189c8dbde",
+      "detected_bpm": 117.453835,
+      "metrics": {
+        "beat_count": 58,
+        "current_interval": 0.5108389999999972,
+        "span_average_interval": 0.5002474385964912,
+        "endpoint_difference_seconds": 0.6037189999998382,
+        "median_absolute_interval_deviation": 0.010591561403509475,
+        "suggested_automatic_change": false
+      }
+    },
+    {
+      "case_id": "05-two-hand",
+      "suite": "structure-review-artifacts",
+      "timeline_sha256": "a637ceb6ab0944f9b2086c8aed968caa6323d9d0889a2358926e766202387fbc",
+      "detected_bpm": 117.453835,
+      "metrics": {
+        "beat_count": 59,
+        "current_interval": 0.5108389999999972,
+        "span_average_interval": 0.5000297068965518,
+        "endpoint_difference_seconds": 0.6269389999998332,
+        "median_absolute_interval_deviation": 0.010809293103448914,
+        "suggested_automatic_change": false
+      }
+    },
+    {
+      "case_id": "06-sustain",
+      "suite": "structure-review-artifacts",
+      "timeline_sha256": "32313dce59eb2fc3d468c8b8beeacd15152215aa8b0e799ddd2d54675a678b6b",
+      "detected_bpm": 30.04633,
+      "metrics": {
+        "beat_count": 14,
+        "current_interval": 1.9969160000000006,
+        "span_average_interval": 2.0004883846153847,
+        "endpoint_difference_seconds": -0.0464409999999944,
+        "median_absolute_interval_deviation": 0.003572384615385893,
+        "suggested_automatic_change": false
+      }
+    },
+    {
+      "case_id": "07-soft",
+      "suite": "structure-review-artifacts",
+      "timeline_sha256": "0b56cad5c9c340ebe5128f5cdedc6ea745909ba5c8b2076e7eb06883d261debc",
+      "detected_bpm": 80.749512,
+      "metrics": {
+        "beat_count": 39,
+        "current_interval": 0.7430389999999996,
+        "span_average_interval": 0.7497601315789474,
+        "endpoint_difference_seconds": -0.2554030000000189,
+        "median_absolute_interval_deviation": 0.006722131578947077,
+        "suggested_automatic_change": false
+      }
+    },
+    {
+      "case_id": "08-dynamics",
+      "suite": "structure-review-artifacts",
+      "timeline_sha256": "b83a57fa25a9d2c71e13442cdfab2634a413f97be543d64473fa137a40e913b0",
+      "detected_bpm": 117.453835,
+      "metrics": {
+        "beat_count": 58,
+        "current_interval": 0.5108389999999972,
+        "span_average_interval": 0.49984007017543863,
+        "endpoint_difference_seconds": 0.6269389999998367,
+        "median_absolute_interval_deviation": 0.010998929824562076,
+        "suggested_automatic_change": false
+      }
+    },
+    {
+      "case_id": "09-light-noise",
+      "suite": "structure-review-artifacts",
+      "timeline_sha256": "602c67d09aeace7d04eb3897aa7ecfa94982225de5c77ba85053d666ef9ba7f3",
+      "detected_bpm": 60.09266,
+      "metrics": {
+        "beat_count": 29,
+        "current_interval": 0.9984579999999994,
+        "span_average_interval": 1.000116607142857,
+        "endpoint_difference_seconds": -0.04644100000001572,
+        "median_absolute_interval_deviation": 0.0016586071428577043,
+        "suggested_automatic_change": false
+      }
+    },
+    {
+      "case_id": "10-device",
+      "suite": "structure-review-artifacts",
+      "timeline_sha256": "378a92f49624c4c0e6a1fee0a8c6fc1f800a74db46580c0b06970ccdfafa3141",
+      "detected_bpm": 117.453835,
+      "metrics": {
+        "beat_count": 57,
+        "current_interval": 0.5108389999999972,
+        "span_average_interval": 0.5000583035714286,
+        "endpoint_difference_seconds": 0.6037189999998418,
+        "median_absolute_interval_deviation": 0.010780696428572156,
+        "suggested_automatic_change": false
+      }
+    },
+    {
+      "case_id": "11-waltz-34",
+      "suite": "structure-review-artifacts",
+      "timeline_sha256": "0cba569c8e5f4527b14ed56389467ebb849556fce3b6923803c5add20fad5bba",
+      "detected_bpm": 117.453835,
+      "metrics": {
+        "beat_count": 59,
+        "current_interval": 0.5108389999999972,
+        "span_average_interval": 0.5000297068965518,
+        "endpoint_difference_seconds": 0.6269389999998332,
+        "median_absolute_interval_deviation": 0.010809293103448914,
+        "suggested_automatic_change": false
+      }
+    },
+    {
+      "case_id": "12-compound-68",
+      "suite": "structure-review-artifacts",
+      "timeline_sha256": "cd8643bb4138fb7e836475f02c704854558d1ebe1a39e3159e32e5a6eaa23bd0",
+      "detected_bpm": 117.453835,
+      "metrics": {
+        "beat_count": 58,
+        "current_interval": 0.5108389999999972,
+        "span_average_interval": 0.49984007017543863,
+        "endpoint_difference_seconds": 0.6269389999998367,
+        "median_absolute_interval_deviation": 0.010998929824562076,
+        "suggested_automatic_change": false
+      }
+    },
+    {
+      "case_id": "13-key-change",
+      "suite": "structure-review-artifacts",
+      "timeline_sha256": "5c7451472d1dca47c70390de2bdecf8b9a53006f60d5c61df4f8d7e21c57b54d",
+      "detected_bpm": 117.453835,
+      "metrics": {
+        "beat_count": 59,
+        "current_interval": 0.5108389999999972,
+        "span_average_interval": 0.4996293620689655,
+        "endpoint_difference_seconds": 0.6501589999998352,
+        "median_absolute_interval_deviation": 0.011209637931035188,
+        "suggested_automatic_change": false
+      }
+    },
+    {
+      "case_id": "14-hand-crossing",
+      "suite": "structure-review-artifacts",
+      "timeline_sha256": "e08c141375cf74eb9fac5663923a599b002b8860004264d7c2bdac5f5b9b9e2e",
+      "detected_bpm": 117.453835,
+      "metrics": {
+        "beat_count": 58,
+        "current_interval": 0.5108389999999972,
+        "span_average_interval": 0.49984007017543863,
+        "endpoint_difference_seconds": 0.6269389999998367,
+        "median_absolute_interval_deviation": 0.010998929824562076,
+        "suggested_automatic_change": false
+      }
+    },
+    {
+      "case_id": "15-repeated-notes",
+      "suite": "structure-review-artifacts",
+      "timeline_sha256": "71a95f6ec070f9861585adffe9b5d2708bbab316e689f8fc3e644696d154b75a",
+      "detected_bpm": 117.453835,
+      "metrics": {
+        "beat_count": 57,
+        "current_interval": 0.5108389999999998,
+        "span_average_interval": 0.49964366071428573,
+        "endpoint_difference_seconds": 0.6269389999999895,
+        "median_absolute_interval_deviation": 0.011609499999999606,
+        "suggested_automatic_change": false
+      }
+    },
+    {
+      "case_id": "16-noisy-polyphony",
+      "suite": "structure-review-artifacts",
+      "timeline_sha256": "d8158b5d960a3fbbd727e42fdc64f87c2870fcdeeab4064b2558a8a26ac2a160",
+      "detected_bpm": 117.453835,
+      "metrics": {
+        "beat_count": 53,
+        "current_interval": 0.5108389999999972,
+        "span_average_interval": 0.4996755576923077,
+        "endpoint_difference_seconds": 0.5804989999998504,
+        "median_absolute_interval_deviation": 0.011163442307693006,
+        "suggested_automatic_change": false
+      }
+    }
+  ],
+  "script_sha256": "fc2c92f1d4878e766b78beab48bf10421367fc4077286a0881dfb0675d71d640",
+  "quantizer_sha256": "4cdb8e715693a17750fcbfc18aa01561f59ccdd858fe554b92387ce4f4eab0e1",
+  "limitation": "grid reconstruction discrepancy, not proof that a global mean fits rubato"
+}

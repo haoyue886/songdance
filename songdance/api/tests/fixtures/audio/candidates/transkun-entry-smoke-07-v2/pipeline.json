@@ -1,0 +1,19 @@
+{
+  "status": "complete",
+  "stage": "complete",
+  "production_eligible": false,
+  "source_sha256": "380160b2a85112599a6923e9cbec855bafc860ac6fce697cd563868d8a68ba12",
+  "runner_sha256": "7938525ee33d215a606cf89d71e7e61af1c8493d86d41a59ca00a0608ef7e1e5",
+  "manifest_sha256": "f9d32e157566df7fcb9f8e7e0a88cfdbe2546842f771f93a4b74293ca2533101",
+  "pipeline_sha256": "de4ac8506a59c07222a403d225f79b4765c975f27245382d54565e3f14709091",
+  "preprocessor_sha256": "da1dfae6e7e0b25268fb9575e1c5138890812dd9010ee2436ed78b467119e168",
+  "input_sha256": "e77fbe5cadd5cdbbc7d0fc896b0509ec7945c6e964674a31306d198aaf347730",
+  "duration_seconds": 30.0,
+  "raw_note_count": 40,
+  "artifacts_sha256": {
+    "normalized.wav": "e77fbe5cadd5cdbbc7d0fc896b0509ec7945c6e964674a31306d198aaf347730",
+    "model/raw.mid": "d5334dfe9ad5652deebe4abed48468f0a84c2eb1571bb1266220719ea5238cb7",
+    "model/inference.json": "81b071c18d253d3467477673b6f93e58349805db0c4e9ec6c6d1062a85b22372",
+    "raw-timeline.json": "77e80c20b4f6ac5d1e36f3ab193a0b562b6f651873163f865dee8ed1af87b259"
+  }
+}

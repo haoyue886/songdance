@@ -1,0 +1,47 @@
+[
+  {
+    "case_id": "06-sustain",
+    "raw_events": 48,
+    "raw_overlap_adjacent_pairs": 39,
+    "musicxml_voices": 12,
+    "musicxml_rests": 8,
+    "voice_to_event_ratio": 0.25,
+    "rest_to_event_ratio": 0.167
+  },
+  {
+    "case_id": "07-soft",
+    "raw_events": 40,
+    "raw_overlap_adjacent_pairs": 39,
+    "musicxml_voices": 30,
+    "musicxml_rests": 55,
+    "voice_to_event_ratio": 0.75,
+    "rest_to_event_ratio": 1.375
+  },
+  {
+    "case_id": "10-device",
+    "raw_events": 87,
+    "raw_overlap_adjacent_pairs": 75,
+    "musicxml_voices": 59,
+    "musicxml_rests": 100,
+    "voice_to_event_ratio": 0.678,
+    "rest_to_event_ratio": 1.149
+  },
+  {
+    "case_id": "14-hand-crossing",
+    "raw_events": 105,
+    "raw_overlap_adjacent_pairs": 104,
+    "musicxml_voices": 91,
+    "musicxml_rests": 124,
+    "voice_to_event_ratio": 0.867,
+    "rest_to_event_ratio": 1.181
+  },
+  {
+    "case_id": "02-brahms-intermezzo",
+    "raw_events": 158,
+    "raw_overlap_adjacent_pairs": 126,
+    "musicxml_voices": 67,
+    "musicxml_rests": 131,
+    "voice_to_event_ratio": 0.424,
+    "rest_to_event_ratio": 0.829
+  }
+]

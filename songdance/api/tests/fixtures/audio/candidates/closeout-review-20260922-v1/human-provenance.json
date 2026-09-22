@@ -1,0 +1,115 @@
+{
+  "schema_version": 1,
+  "cases": [
+    {
+      "id": "01-bach-capriccio",
+      "source_title": "File:J.S.Bach-kapricio c-moll.ogv",
+      "source_page": "https://commons.wikimedia.org/wiki/File:J.S.Bach-kapricio_c-moll.ogv",
+      "license": "Public domain",
+      "license_url": "https://commons.wikimedia.org/wiki/File:J.S.Bach-kapricio_c-moll.ogv",
+      "description": "Й.С.Бах - Капрічіо з партити с-moll #2 Виконує Сергій Колесник. Запис з конкурсу \"Каштановий рояль\"",
+      "start_sec": 20,
+      "duration_seconds": 30,
+      "clip_sha256": "a23b3137ee1a030938569f3e1bea162d1ebee52a7a3462959bfc7442f19a775f"
+    },
+    {
+      "id": "02-brahms-intermezzo",
+      "source_title": "File:Анна Михайловська - Брамс-Інтермеццо-A-dur.ogv",
+      "source_page": "https://commons.wikimedia.org/wiki/File:%D0%90%D0%BD%D0%BD%D0%B0_%D0%9C%D0%B8%D1%85%D0%B0%D0%B9%D0%BB%D0%BE%D0%B2%D1%81%D1%8C%D0%BA%D0%B0_-_%D0%91%D1%80%D0%B0%D0%BC%D1%81-%D0%86%D0%BD%D1%82%D0%B5%D1%80%D0%BC%D0%B5%D1%86%D1%86%D0%BE-A-dur.ogv",
+      "license": "Public domain",
+      "license_url": "https://commons.wikimedia.org/wiki/File:%D0%90%D0%BD%D0%BD%D0%B0_%D0%9C%D0%B8%D1%85%D0%B0%D0%B9%D0%BB%D0%BE%D0%B2%D1%81%D1%8C%D0%BA%D0%B0_-_%D0%91%D1%80%D0%B0%D0%BC%D1%81-%D0%86%D0%BD%D1%82%D0%B5%D1%80%D0%BC%D0%B5%D1%86%D1%86%D0%BE-A-dur.ogv",
+      "description": "J. Brahms Intermezzo A-dur Performed by Anna Mychaylovska",
+      "start_sec": 35,
+      "duration_seconds": 30,
+      "clip_sha256": "2d3be743ce4c6889e3e28ca4f0e8bada7fc4e7c8bbcceace6bef3e2b351fb6bd"
+    },
+    {
+      "id": "03-mozart-sonata",
+      "source_title": "File:Варвара Семенчук - Моцарт-Соната-c-dur-part1.ogv",
+      "source_page": "https://commons.wikimedia.org/wiki/File:%D0%92%D0%B0%D1%80%D0%B2%D0%B0%D1%80%D0%B0_%D0%A1%D0%B5%D0%BC%D0%B5%D0%BD%D1%87%D1%83%D0%BA_-_%D0%9C%D0%BE%D1%86%D0%B0%D1%80%D1%82-%D0%A1%D0%BE%D0%BD%D0%B0%D1%82%D0%B0-c-dur-part1.ogv",
+      "license": "Public domain",
+      "license_url": "https://commons.wikimedia.org/wiki/File:%D0%92%D0%B0%D1%80%D0%B2%D0%B0%D1%80%D0%B0_%D0%A1%D0%B5%D0%BC%D0%B5%D0%BD%D1%87%D1%83%D0%BA_-_%D0%9C%D0%BE%D1%86%D0%B0%D1%80%D1%82-%D0%A1%D0%BE%D0%BD%D0%B0%D1%82%D0%B0-c-dur-part1.ogv",
+      "description": "W.A. Mozart. Sonata C-dur, part I. Performer: Varvara Semenchuk",
+      "start_sec": 25,
+      "duration_seconds": 30,
+      "clip_sha256": "32975b2333e0ca318125335660e21e747e074e0ea28cf83e3ecbd5ce21fc298f"
+    },
+    {
+      "id": "04-rachmaninoff-g-sharp",
+      "source_title": "File:Варвара Семенчук - Рахманінов-прелюдія-gis-moll.ogv",
+      "source_page": "https://commons.wikimedia.org/wiki/File:%D0%92%D0%B0%D1%80%D0%B2%D0%B0%D1%80%D0%B0_%D0%A1%D0%B5%D0%BC%D0%B5%D0%BD%D1%87%D1%83%D0%BA_-_%D0%A0%D0%B0%D1%85%D0%BC%D0%B0%D0%BD%D1%96%D0%BD%D0%BE%D0%B2-%D0%BF%D1%80%D0%B5%D0%BB%D1%8E%D0%B4%D1%96%D1%8F-gis-moll.ogv",
+      "license": "Public domain",
+      "license_url": "https://commons.wikimedia.org/wiki/File:%D0%92%D0%B0%D1%80%D0%B2%D0%B0%D1%80%D0%B0_%D0%A1%D0%B5%D0%BC%D0%B5%D0%BD%D1%87%D1%83%D0%BA_-_%D0%A0%D0%B0%D1%85%D0%BC%D0%B0%D0%BD%D1%96%D0%BD%D0%BE%D0%B2-%D0%BF%D1%80%D0%B5%D0%BB%D1%8E%D0%B4%D1%96%D1%8F-gis-moll.ogv",
+      "description": "S. Rachmaninov. Prelude gis-moll. Performer: Varvara Semenchuk",
+      "start_sec": 30,
+      "duration_seconds": 30,
+      "clip_sha256": "4bab791540557a1c8c9546d543708b22050961ec7ef609a21f4d088f4ef149e8"
+    },
+    {
+      "id": "05-chopin-c-minor",
+      "source_title": "File:Гліб Козирєв - Шопен-Прелюдія-c-moll.ogv",
+      "source_page": "https://commons.wikimedia.org/wiki/File:%D0%93%D0%BB%D1%96%D0%B1_%D0%9A%D0%BE%D0%B7%D0%B8%D1%80%D1%94%D0%B2_-_%D0%A8%D0%BE%D0%BF%D0%B5%D0%BD-%D0%9F%D1%80%D0%B5%D0%BB%D1%8E%D0%B4%D1%96%D1%8F-c-moll.ogv",
+      "license": "Public domain",
+      "license_url": "https://commons.wikimedia.org/wiki/File:%D0%93%D0%BB%D1%96%D0%B1_%D0%9A%D0%BE%D0%B7%D0%B8%D1%80%D1%94%D0%B2_-_%D0%A8%D0%BE%D0%BF%D0%B5%D0%BD-%D0%9F%D1%80%D0%B5%D0%BB%D1%8E%D0%B4%D1%96%D1%8F-c-moll.ogv",
+      "description": "F. Chopin Prelude c-moll Performed by Glib Kozyrev",
+      "start_sec": 12,
+      "duration_seconds": 30,
+      "clip_sha256": "71a4d87974b18f887e477cb8a03b8db44a41299009bec0df265914549268fbbe"
+    },
+    {
+      "id": "06-scriabin-etude",
+      "source_title": "File:Константин Мамонтов - Скрябін-етюд-dis-moll-op8.ogv",
+      "source_page": "https://commons.wikimedia.org/wiki/File:%D0%9A%D0%BE%D0%BD%D1%81%D1%82%D0%B0%D0%BD%D1%82%D0%B8%D0%BD_%D0%9C%D0%B0%D0%BC%D0%BE%D0%BD%D1%82%D0%BE%D0%B2_-_%D0%A1%D0%BA%D1%80%D1%8F%D0%B1%D1%96%D0%BD-%D0%B5%D1%82%D1%8E%D0%B4-dis-moll-op8.ogv",
+      "license": "Public domain",
+      "license_url": "https://commons.wikimedia.org/wiki/File:%D0%9A%D0%BE%D0%BD%D1%81%D1%82%D0%B0%D0%BD%D1%82%D0%B8%D0%BD_%D0%9C%D0%B0%D0%BC%D0%BE%D0%BD%D1%82%D0%BE%D0%B2_-_%D0%A1%D0%BA%D1%80%D1%8F%D0%B1%D1%96%D0%BD-%D0%B5%D1%82%D1%8E%D0%B4-dis-moll-op8.ogv",
+      "description": "Alexander Skriabin Etude dis-moll op. 33. Performed by K. Mamontov",
+      "start_sec": 25,
+      "duration_seconds": 30,
+      "clip_sha256": "28ec127c0f43f19c4328d45ccc844a2afe057622aa833341026719bb6608d7b6"
+    },
+    {
+      "id": "07-chopin-ballade",
+      "source_title": "File:Константин Мамонтов - Шопен-балада №1.ogv",
+      "source_page": "https://commons.wikimedia.org/wiki/File:%D0%9A%D0%BE%D0%BD%D1%81%D1%82%D0%B0%D0%BD%D1%82%D0%B8%D0%BD_%D0%9C%D0%B0%D0%BC%D0%BE%D0%BD%D1%82%D0%BE%D0%B2_-_%D0%A8%D0%BE%D0%BF%D0%B5%D0%BD-%D0%B1%D0%B0%D0%BB%D0%B0%D0%B4%D0%B0_%E2%84%961.ogv",
+      "license": "CC BY-SA 3.0",
+      "license_url": "https://creativecommons.org/licenses/by-sa/3.0",
+      "description": "F. Chopin Ballade #1 Performed by K. Mamontov",
+      "start_sec": 80,
+      "duration_seconds": 30,
+      "clip_sha256": "0c42c842000ef152c0b04e2eceea17ef3a635ac9e5807d2722ad8d40b6787923"
+    },
+    {
+      "id": "08-chopin-a-major",
+      "source_title": "File:Михайло Калошин - Шопен-прелюдія-ля-мажор.ogv",
+      "source_page": "https://commons.wikimedia.org/wiki/File:%D0%9C%D0%B8%D1%85%D0%B0%D0%B9%D0%BB%D0%BE_%D0%9A%D0%B0%D0%BB%D0%BE%D1%88%D0%B8%D0%BD_-_%D0%A8%D0%BE%D0%BF%D0%B5%D0%BD-%D0%BF%D1%80%D0%B5%D0%BB%D1%8E%D0%B4%D1%96%D1%8F-%D0%BB%D1%8F-%D0%BC%D0%B0%D0%B6%D0%BE%D1%80.ogv",
+      "license": "CC BY-SA 3.0",
+      "license_url": "https://creativecommons.org/licenses/by-sa/3.0",
+      "description": "Ф. Шопен. Прелюдія Ля мажор. Виконує Михайло Калошин",
+      "start_sec": 10,
+      "duration_seconds": 30,
+      "clip_sha256": "a6a424988427e28864a1af2cbeb9bac0cfa825e6e5f03f69c1690f728f147637"
+    },
+    {
+      "id": "09-chopin-waltz",
+      "source_title": "File:Олег Дерев’янко - Шопен-вальс-As-dur.ogv",
+      "source_page": "https://commons.wikimedia.org/wiki/File:%D0%9E%D0%BB%D0%B5%D0%B3_%D0%94%D0%B5%D1%80%D0%B5%D0%B2%E2%80%99%D1%8F%D0%BD%D0%BA%D0%BE_-_%D0%A8%D0%BE%D0%BF%D0%B5%D0%BD-%D0%B2%D0%B0%D0%BB%D1%8C%D1%81-As-dur.ogv",
+      "license": "CC BY-SA 3.0",
+      "license_url": "https://creativecommons.org/licenses/by-sa/3.0",
+      "description": "Ф. Шопен. Вальс As-dur. Виконує Олег Дерев'янко",
+      "start_sec": 25,
+      "duration_seconds": 30,
+      "clip_sha256": "3d8d533ba57f65db3e957c30c283763d671e22a031fe88d666b7190c630b0987"
+    },
+    {
+      "id": "10-rachmaninoff-c-sharp",
+      "source_title": "File:Олександр Немеш - Рахманінов-прелюдія-cis-moll.ogv",
+      "source_page": "https://commons.wikimedia.org/wiki/File:%D0%9E%D0%BB%D0%B5%D0%BA%D1%81%D0%B0%D0%BD%D0%B4%D1%80_%D0%9D%D0%B5%D0%BC%D0%B5%D1%88_-_%D0%A0%D0%B0%D1%85%D0%BC%D0%B0%D0%BD%D1%96%D0%BD%D0%BE%D0%B2-%D0%BF%D1%80%D0%B5%D0%BB%D1%8E%D0%B4%D1%96%D1%8F-cis-moll.ogv",
+      "license": "Public domain",
+      "license_url": "https://commons.wikimedia.org/wiki/File:%D0%9E%D0%BB%D0%B5%D0%BA%D1%81%D0%B0%D0%BD%D0%B4%D1%80_%D0%9D%D0%B5%D0%BC%D0%B5%D1%88_-_%D0%A0%D0%B0%D1%85%D0%BC%D0%B0%D0%BD%D1%96%D0%BD%D0%BE%D0%B2-%D0%BF%D1%80%D0%B5%D0%BB%D1%8E%D0%B4%D1%96%D1%8F-cis-moll.ogv",
+      "description": "Sergei Rachmaninov Prelude cis-moll. Performed by O. Nemesh",
+      "start_sec": 35,
+      "duration_seconds": 30,
+      "clip_sha256": "a9be74846304a76b7752d3321a0bfdc9daba2f2237cad34b9cb7d0e163599452"
+    }
+  ]
+}

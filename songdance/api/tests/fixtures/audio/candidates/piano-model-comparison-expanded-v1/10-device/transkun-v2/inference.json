@@ -1,0 +1,32 @@
+{
+  "status": "inference_complete",
+  "model": "Transkun V2 No Pedal Extension",
+  "source_commit": "c5cb8370e17b4a1650b5971ba87ee4b0d208e5b6",
+  "weight_sha256": "50a80010effc2a59ffcd068a95cd2b29bd7f23a27a3515bc3ccd209c89a3d44c",
+  "config_sha256": "d3d989214eb148230ee5df476d994dcde6af595904d3f968f1221d2e3bea5ac6",
+  "manifest_sha256": "f9d32e157566df7fcb9f8e7e0a88cfdbe2546842f771f93a4b74293ca2533101",
+  "adapter_sha256": "7938525ee33d215a606cf89d71e7e61af1c8493d86d41a59ca00a0608ef7e1e5",
+  "input_sha256": "05fea3c114d740319fc7f44e61ef3936f53e8196dae65575eb012f9521e7ee05",
+  "input_rate": 22050,
+  "input_frames": 661500,
+  "model_rate": 44100,
+  "model_frames": 1323000,
+  "device": "cpu",
+  "segment_seconds": 16,
+  "hop_seconds": 8,
+  "load_seconds": 0.122983,
+  "inference_seconds": 13.458192,
+  "midi_sha256": "c163486b13e577bf0659a9df80bfd9441d2525c5c7f1e67d9bcb54066a8a7abb",
+  "raw_note_count": 87,
+  "production_eligible": false,
+  "dependencies": {
+    "torch": "2.5.1",
+    "torchaudio": "2.5.1",
+    "numpy": "1.26.4",
+    "scipy": "1.17.1",
+    "pretty_midi": "0.2.11",
+    "mir_eval": "0.8.2",
+    "soundfile": "0.14.0",
+    "soxr": "1.1.0"
+  }
+}

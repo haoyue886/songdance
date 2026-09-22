@@ -1,0 +1,1137 @@
+{
+  "production_eligible": false,
+  "analysis": {
+    "status": "analyzed_with_defaults",
+    "version": "structure-analysis-v3/9eafa86ad08d",
+    "source": "librosa-0.11.0",
+    "bpm": 119.991063,
+    "bpm_confidence": 1.0,
+    "beat_grid_seconds": [
+      1.036118,
+      1.536156,
+      2.036193,
+      2.53623,
+      3.036267,
+      3.536305,
+      4.036342,
+      4.536379,
+      5.036416,
+      5.536454,
+      6.036491,
+      6.536528,
+      7.036565,
+      7.536603,
+      8.03664,
+      8.536677,
+      9.036714,
+      9.536752,
+      10.036789,
+      10.536826,
+      11.036863,
+      11.5369,
+      12.036938,
+      12.536975,
+      13.037012,
+      13.537049,
+      14.037087,
+      14.537124,
+      15.037161,
+      15.537198,
+      16.037236,
+      16.537273,
+      17.03731,
+      17.537347,
+      18.037385,
+      18.537422,
+      19.037459,
+      19.537496,
+      20.037534,
+      20.537571,
+      21.037608,
+      21.537645,
+      22.037682,
+      22.53772,
+      23.037757,
+      23.537794,
+      24.037831,
+      24.537869,
+      25.037906,
+      25.537943,
+      26.03798,
+      26.538018,
+      27.038055,
+      27.538092,
+      28.038129,
+      28.538167,
+      29.038204
+    ],
+    "downbeat_grid_seconds": [
+      0.036044,
+      2.036193,
+      4.036342,
+      6.036491,
+      8.03664,
+      10.036789,
+      12.036938,
+      14.037087,
+      16.037236,
+      18.037385,
+      20.037534,
+      22.037682,
+      24.037831,
+      26.03798,
+      28.038129
+    ],
+    "downbeat_phase_index": 2,
+    "time_signature": "4/4",
+    "time_signature_confidence": 0.900938,
+    "time_signature_source": "librosa_onset_accent",
+    "time_signature_candidates": [
+      {
+        "value": "4/4",
+        "confidence": 0.900938,
+        "phase": 2
+      },
+      {
+        "value": "3/4",
+        "confidence": 0.08971,
+        "phase": 2
+      },
+      {
+        "value": "6/8",
+        "confidence": 0.009352,
+        "phase": 2
+      }
+    ],
+    "key_signature": "C major",
+    "key_confidence": 1.0,
+    "key_signature_source": "librosa_chroma_krumhansl",
+    "key_candidates": [
+      {
+        "value": "C major",
+        "confidence": 1.0,
+        "leading_tone_supported": false
+      },
+      {
+        "value": "A minor",
+        "confidence": 0.0,
+        "leading_tone_supported": false
+      },
+      {
+        "value": "F major",
+        "confidence": 0.0,
+        "leading_tone_supported": true
+      }
+    ],
+    "duration_seconds": 30.0,
+    "elapsed_seconds": 3.033835,
+    "reason_codes": [
+      "STABLE_BEAT_GRID_CALIBRATED",
+      "KEY_SIGNATURE_LEADING_TONE_ABSENT"
+    ],
+    "tonality_evidence": {
+      "status": "not_analyzed"
+    },
+    "notation_eligible": false,
+    "mode_family": "unknown",
+    "mode_variant": "unknown",
+    "minor_form_evidence": {
+      "status": "not_analyzed"
+    },
+    "tempo_grid_evidence": {
+      "version": "stable-beat-grid-v1",
+      "status": "calibrated",
+      "original_bpm": 117.45383522727273,
+      "original_beats": [
+        1.0448979591836736,
+        1.5325170068027212,
+        2.043356009070295,
+        2.5309750566893423,
+        3.0418140589569163,
+        3.5294331065759637,
+        4.040272108843538,
+        4.527891156462585,
+        5.038730158730159,
+        5.526349206349207,
+        6.03718820861678,
+        6.524807256235827,
+        7.035646258503402,
+        7.546485260770975,
+        8.034104308390022,
+        8.544943310657596,
+        9.032562358276644,
+        9.543401360544218,
+        10.031020408163265,
+        10.541859410430838,
+        11.029478458049887,
+        11.54031746031746,
+        12.027936507936507,
+        12.538775510204081,
+        13.049614512471654,
+        13.537233560090703,
+        14.048072562358277,
+        14.535691609977324,
+        15.046530612244897,
+        15.534149659863946,
+        16.04498866213152,
+        16.532607709750568,
+        17.04344671201814,
+        17.531065759637187,
+        18.04190476190476,
+        18.52952380952381,
+        19.040362811791383,
+        19.52798185941043,
+        20.038820861678005,
+        20.526439909297054,
+        21.037278911564627,
+        21.524897959183672,
+        22.035736961451246,
+        22.54657596371882,
+        23.034195011337868,
+        23.54503401360544,
+        24.03265306122449,
+        24.543492063492064,
+        25.031111111111112,
+        25.541950113378686,
+        26.02956916099773,
+        26.540408163265305,
+        27.028027210884353,
+        27.538866213151927,
+        28.0497052154195,
+        28.53732426303855,
+        29.048163265306123
+      ],
+      "maximum_residual_seconds": 0.012747295559240257,
+      "half_tempo_difference_ratio": 0.00010166710644368372,
+      "reason": "frame_quantized_stable_beats",
+      "calibrated_bpm": 119.99106347388481,
+      "interval_seconds": 0.5000372382986552
+    }
+  },
+  "bass_metrics": {
+    "0.05": {
+      "onset_tolerance_seconds": 0.05,
+      "reference_count": 30,
+      "estimated_count": 78,
+      "matched_count": 29,
+      "precision": 0.3717948717948718,
+      "recall": 0.9666666666666667,
+      "f1": 0.537037037037037,
+      "extra_count": 49,
+      "missing_count": 1,
+      "missing_reference_notes": [
+        {
+          "pitch": 36,
+          "start_sec": 12.0,
+          "end_sec": 12.85,
+          "velocity": 78
+        }
+      ],
+      "unmatched_estimated_notes": [
+        {
+          "pitch": 48,
+          "start_sec": 0.03636363636363636,
+          "end_sec": 0.2863636363636364,
+          "velocity": 42
+        },
+        {
+          "pitch": 48,
+          "start_sec": 0.5363636363636364,
+          "end_sec": 0.7863636363636364,
+          "velocity": 39
+        },
+        {
+          "pitch": 48,
+          "start_sec": 1.0363636363636364,
+          "end_sec": 1.4113636363636364,
+          "velocity": 47
+        },
+        {
+          "pitch": 55,
+          "start_sec": 2.536363636363636,
+          "end_sec": 3.036363636363636,
+          "velocity": 40
+        },
+        {
+          "pitch": 48,
+          "start_sec": 3.036363636363636,
+          "end_sec": 3.411363636363636,
+          "velocity": 48
+        },
+        {
+          "pitch": 55,
+          "start_sec": 3.036363636363636,
+          "end_sec": 3.661363636363636,
+          "velocity": 54
+        },
+        {
+          "pitch": 48,
+          "start_sec": 4.036363636363636,
+          "end_sec": 4.411363636363636,
+          "velocity": 43
+        },
+        {
+          "pitch": 55,
+          "start_sec": 4.036363636363636,
+          "end_sec": 4.411363636363636,
+          "velocity": 51
+        },
+        {
+          "pitch": 48,
+          "start_sec": 5.036363636363636,
+          "end_sec": 5.286363636363636,
+          "velocity": 43
+        },
+        {
+          "pitch": 55,
+          "start_sec": 6.536363636363636,
+          "end_sec": 6.661363636363636,
+          "velocity": 41
+        },
+        {
+          "pitch": 48,
+          "start_sec": 7.036363636363636,
+          "end_sec": 7.411363636363636,
+          "velocity": 50
+        },
+        {
+          "pitch": 55,
+          "start_sec": 7.036363636363636,
+          "end_sec": 7.661363636363636,
+          "velocity": 51
+        },
+        {
+          "pitch": 48,
+          "start_sec": 8.036363636363635,
+          "end_sec": 8.411363636363635,
+          "velocity": 50
+        },
+        {
+          "pitch": 55,
+          "start_sec": 8.036363636363635,
+          "end_sec": 8.286363636363635,
+          "velocity": 54
+        },
+        {
+          "pitch": 48,
+          "start_sec": 8.536363636363635,
+          "end_sec": 8.786363636363635,
+          "velocity": 39
+        },
+        {
+          "pitch": 48,
+          "start_sec": 9.036363636363635,
+          "end_sec": 9.411363636363635,
+          "velocity": 49
+        },
+        {
+          "pitch": 55,
+          "start_sec": 10.536363636363635,
+          "end_sec": 11.036363636363635,
+          "velocity": 43
+        },
+        {
+          "pitch": 48,
+          "start_sec": 11.036363636363635,
+          "end_sec": 11.411363636363635,
+          "velocity": 49
+        },
+        {
+          "pitch": 55,
+          "start_sec": 11.036363636363635,
+          "end_sec": 11.536363636363635,
+          "velocity": 52
+        },
+        {
+          "pitch": 55,
+          "start_sec": 11.536363636363635,
+          "end_sec": 11.661363636363635,
+          "velocity": 53
+        },
+        {
+          "pitch": 48,
+          "start_sec": 12.036363636363635,
+          "end_sec": 12.411363636363635,
+          "velocity": 48
+        },
+        {
+          "pitch": 55,
+          "start_sec": 12.036363636363635,
+          "end_sec": 12.661363636363635,
+          "velocity": 49
+        },
+        {
+          "pitch": 36,
+          "start_sec": 12.161363636363635,
+          "end_sec": 12.536363636363635,
+          "velocity": 47
+        },
+        {
+          "pitch": 48,
+          "start_sec": 13.161363636363635,
+          "end_sec": 13.411363636363635,
+          "velocity": 44
+        },
+        {
+          "pitch": 55,
+          "start_sec": 14.536363636363635,
+          "end_sec": 14.786363636363635,
+          "velocity": 41
+        },
+        {
+          "pitch": 48,
+          "start_sec": 15.036363636363635,
+          "end_sec": 15.411363636363635,
+          "velocity": 49
+        },
+        {
+          "pitch": 55,
+          "start_sec": 15.036363636363635,
+          "end_sec": 15.661363636363635,
+          "velocity": 52
+        },
+        {
+          "pitch": 48,
+          "start_sec": 16.036363636363635,
+          "end_sec": 16.411363636363635,
+          "velocity": 45
+        },
+        {
+          "pitch": 55,
+          "start_sec": 16.036363636363635,
+          "end_sec": 16.661363636363635,
+          "velocity": 49
+        },
+        {
+          "pitch": 48,
+          "start_sec": 16.536363636363635,
+          "end_sec": 16.786363636363635,
+          "velocity": 46
+        },
+        {
+          "pitch": 48,
+          "start_sec": 17.286363636363635,
+          "end_sec": 17.411363636363635,
+          "velocity": 52
+        },
+        {
+          "pitch": 55,
+          "start_sec": 18.536363636363635,
+          "end_sec": 19.036363636363635,
+          "velocity": 40
+        },
+        {
+          "pitch": 48,
+          "start_sec": 19.036363636363635,
+          "end_sec": 19.411363636363635,
+          "velocity": 49
+        },
+        {
+          "pitch": 55,
+          "start_sec": 19.036363636363635,
+          "end_sec": 19.661363636363635,
+          "velocity": 56
+        },
+        {
+          "pitch": 48,
+          "start_sec": 20.038636363636364,
+          "end_sec": 20.288636363636364,
+          "velocity": 47
+        },
+        {
+          "pitch": 55,
+          "start_sec": 20.038636363636364,
+          "end_sec": 20.413636363636364,
+          "velocity": 53
+        },
+        {
+          "pitch": 48,
+          "start_sec": 21.038636363636364,
+          "end_sec": 21.413636363636364,
+          "velocity": 40
+        },
+        {
+          "pitch": 48,
+          "start_sec": 23.038636363636364,
+          "end_sec": 23.413636363636364,
+          "velocity": 51
+        },
+        {
+          "pitch": 55,
+          "start_sec": 23.038636363636364,
+          "end_sec": 23.663636363636364,
+          "velocity": 52
+        },
+        {
+          "pitch": 48,
+          "start_sec": 24.038636363636364,
+          "end_sec": 24.413636363636364,
+          "velocity": 46
+        },
+        {
+          "pitch": 55,
+          "start_sec": 24.038636363636364,
+          "end_sec": 24.663636363636364,
+          "velocity": 46
+        },
+        {
+          "pitch": 48,
+          "start_sec": 25.038636363636364,
+          "end_sec": 25.413636363636364,
+          "velocity": 50
+        },
+        {
+          "pitch": 55,
+          "start_sec": 26.538636363636364,
+          "end_sec": 27.038636363636364,
+          "velocity": 40
+        },
+        {
+          "pitch": 48,
+          "start_sec": 27.038636363636364,
+          "end_sec": 27.413636363636364,
+          "velocity": 53
+        },
+        {
+          "pitch": 55,
+          "start_sec": 27.038636363636364,
+          "end_sec": 27.663636363636364,
+          "velocity": 52
+        },
+        {
+          "pitch": 48,
+          "start_sec": 28.038636363636364,
+          "end_sec": 28.288636363636364,
+          "velocity": 50
+        },
+        {
+          "pitch": 55,
+          "start_sec": 28.038636363636364,
+          "end_sec": 28.413636363636364,
+          "velocity": 53
+        },
+        {
+          "pitch": 55,
+          "start_sec": 28.538636363636364,
+          "end_sec": 28.66363636363636,
+          "velocity": 43
+        },
+        {
+          "pitch": 48,
+          "start_sec": 29.03863636363636,
+          "end_sec": 29.41363636363636,
+          "velocity": 48
+        }
+      ],
+      "matches": [
+        {
+          "reference_index": 0,
+          "estimated_index": 0,
+          "onset_error_seconds": 0.03636363636363636
+        },
+        {
+          "reference_index": 1,
+          "estimated_index": 3,
+          "onset_error_seconds": 0.036363636363636376
+        },
+        {
+          "reference_index": 2,
+          "estimated_index": 5,
+          "onset_error_seconds": 0.036363636363636154
+        },
+        {
+          "reference_index": 3,
+          "estimated_index": 7,
+          "onset_error_seconds": 0.036363636363636154
+        },
+        {
+          "reference_index": 4,
+          "estimated_index": 10,
+          "onset_error_seconds": 0.036363636363636154
+        },
+        {
+          "reference_index": 5,
+          "estimated_index": 13,
+          "onset_error_seconds": 0.036363636363636154
+        },
+        {
+          "reference_index": 6,
+          "estimated_index": 15,
+          "onset_error_seconds": 0.036363636363636154
+        },
+        {
+          "reference_index": 7,
+          "estimated_index": 17,
+          "onset_error_seconds": 0.036363636363636154
+        },
+        {
+          "reference_index": 8,
+          "estimated_index": 20,
+          "onset_error_seconds": 0.036363636363635266
+        },
+        {
+          "reference_index": 9,
+          "estimated_index": 24,
+          "onset_error_seconds": 0.036363636363635266
+        },
+        {
+          "reference_index": 10,
+          "estimated_index": 26,
+          "onset_error_seconds": 0.036363636363635266
+        },
+        {
+          "reference_index": 11,
+          "estimated_index": 28,
+          "onset_error_seconds": 0.036363636363635266
+        },
+        {
+          "reference_index": 13,
+          "estimated_index": 35,
+          "onset_error_seconds": 0.036363636363635266
+        },
+        {
+          "reference_index": 14,
+          "estimated_index": 37,
+          "onset_error_seconds": 0.036363636363635266
+        },
+        {
+          "reference_index": 15,
+          "estimated_index": 39,
+          "onset_error_seconds": 0.036363636363635266
+        },
+        {
+          "reference_index": 16,
+          "estimated_index": 42,
+          "onset_error_seconds": 0.036363636363635266
+        },
+        {
+          "reference_index": 17,
+          "estimated_index": 46,
+          "onset_error_seconds": 0.036363636363635266
+        },
+        {
+          "reference_index": 18,
+          "estimated_index": 48,
+          "onset_error_seconds": 0.036363636363635266
+        },
+        {
+          "reference_index": 19,
+          "estimated_index": 50,
+          "onset_error_seconds": 0.036363636363635266
+        },
+        {
+          "reference_index": 20,
+          "estimated_index": 53,
+          "onset_error_seconds": 0.038636363636364024
+        },
+        {
+          "reference_index": 21,
+          "estimated_index": 56,
+          "onset_error_seconds": 0.038636363636364024
+        },
+        {
+          "reference_index": 22,
+          "estimated_index": 58,
+          "onset_error_seconds": 0.038636363636364024
+        },
+        {
+          "reference_index": 23,
+          "estimated_index": 59,
+          "onset_error_seconds": 0.038636363636364024
+        },
+        {
+          "reference_index": 24,
+          "estimated_index": 62,
+          "onset_error_seconds": 0.038636363636364024
+        },
+        {
+          "reference_index": 25,
+          "estimated_index": 65,
+          "onset_error_seconds": 0.038636363636364024
+        },
+        {
+          "reference_index": 26,
+          "estimated_index": 67,
+          "onset_error_seconds": 0.038636363636364024
+        },
+        {
+          "reference_index": 27,
+          "estimated_index": 69,
+          "onset_error_seconds": 0.038636363636364024
+        },
+        {
+          "reference_index": 28,
+          "estimated_index": 72,
+          "onset_error_seconds": 0.038636363636364024
+        },
+        {
+          "reference_index": 29,
+          "estimated_index": 76,
+          "onset_error_seconds": 0.03863636363636047
+        }
+      ]
+    },
+    "0.1": {
+      "onset_tolerance_seconds": 0.1,
+      "reference_count": 30,
+      "estimated_count": 78,
+      "matched_count": 29,
+      "precision": 0.3717948717948718,
+      "recall": 0.9666666666666667,
+      "f1": 0.537037037037037,
+      "extra_count": 49,
+      "missing_count": 1,
+      "missing_reference_notes": [
+        {
+          "pitch": 36,
+          "start_sec": 12.0,
+          "end_sec": 12.85,
+          "velocity": 78
+        }
+      ],
+      "unmatched_estimated_notes": [
+        {
+          "pitch": 48,
+          "start_sec": 0.03636363636363636,
+          "end_sec": 0.2863636363636364,
+          "velocity": 42
+        },
+        {
+          "pitch": 48,
+          "start_sec": 0.5363636363636364,
+          "end_sec": 0.7863636363636364,
+          "velocity": 39
+        },
+        {
+          "pitch": 48,
+          "start_sec": 1.0363636363636364,
+          "end_sec": 1.4113636363636364,
+          "velocity": 47
+        },
+        {
+          "pitch": 55,
+          "start_sec": 2.536363636363636,
+          "end_sec": 3.036363636363636,
+          "velocity": 40
+        },
+        {
+          "pitch": 48,
+          "start_sec": 3.036363636363636,
+          "end_sec": 3.411363636363636,
+          "velocity": 48
+        },
+        {
+          "pitch": 55,
+          "start_sec": 3.036363636363636,
+          "end_sec": 3.661363636363636,
+          "velocity": 54
+        },
+        {
+          "pitch": 48,
+          "start_sec": 4.036363636363636,
+          "end_sec": 4.411363636363636,
+          "velocity": 43
+        },
+        {
+          "pitch": 55,
+          "start_sec": 4.036363636363636,
+          "end_sec": 4.411363636363636,
+          "velocity": 51
+        },
+        {
+          "pitch": 48,
+          "start_sec": 5.036363636363636,
+          "end_sec": 5.286363636363636,
+          "velocity": 43
+        },
+        {
+          "pitch": 55,
+          "start_sec": 6.536363636363636,
+          "end_sec": 6.661363636363636,
+          "velocity": 41
+        },
+        {
+          "pitch": 48,
+          "start_sec": 7.036363636363636,
+          "end_sec": 7.411363636363636,
+          "velocity": 50
+        },
+        {
+          "pitch": 55,
+          "start_sec": 7.036363636363636,
+          "end_sec": 7.661363636363636,
+          "velocity": 51
+        },
+        {
+          "pitch": 48,
+          "start_sec": 8.036363636363635,
+          "end_sec": 8.411363636363635,
+          "velocity": 50
+        },
+        {
+          "pitch": 55,
+          "start_sec": 8.036363636363635,
+          "end_sec": 8.286363636363635,
+          "velocity": 54
+        },
+        {
+          "pitch": 48,
+          "start_sec": 8.536363636363635,
+          "end_sec": 8.786363636363635,
+          "velocity": 39
+        },
+        {
+          "pitch": 48,
+          "start_sec": 9.036363636363635,
+          "end_sec": 9.411363636363635,
+          "velocity": 49
+        },
+        {
+          "pitch": 55,
+          "start_sec": 10.536363636363635,
+          "end_sec": 11.036363636363635,
+          "velocity": 43
+        },
+        {
+          "pitch": 48,
+          "start_sec": 11.036363636363635,
+          "end_sec": 11.411363636363635,
+          "velocity": 49
+        },
+        {
+          "pitch": 55,
+          "start_sec": 11.036363636363635,
+          "end_sec": 11.536363636363635,
+          "velocity": 52
+        },
+        {
+          "pitch": 55,
+          "start_sec": 11.536363636363635,
+          "end_sec": 11.661363636363635,
+          "velocity": 53
+        },
+        {
+          "pitch": 48,
+          "start_sec": 12.036363636363635,
+          "end_sec": 12.411363636363635,
+          "velocity": 48
+        },
+        {
+          "pitch": 55,
+          "start_sec": 12.036363636363635,
+          "end_sec": 12.661363636363635,
+          "velocity": 49
+        },
+        {
+          "pitch": 36,
+          "start_sec": 12.161363636363635,
+          "end_sec": 12.536363636363635,
+          "velocity": 47
+        },
+        {
+          "pitch": 48,
+          "start_sec": 13.161363636363635,
+          "end_sec": 13.411363636363635,
+          "velocity": 44
+        },
+        {
+          "pitch": 55,
+          "start_sec": 14.536363636363635,
+          "end_sec": 14.786363636363635,
+          "velocity": 41
+        },
+        {
+          "pitch": 48,
+          "start_sec": 15.036363636363635,
+          "end_sec": 15.411363636363635,
+          "velocity": 49
+        },
+        {
+          "pitch": 55,
+          "start_sec": 15.036363636363635,
+          "end_sec": 15.661363636363635,
+          "velocity": 52
+        },
+        {
+          "pitch": 48,
+          "start_sec": 16.036363636363635,
+          "end_sec": 16.411363636363635,
+          "velocity": 45
+        },
+        {
+          "pitch": 55,
+          "start_sec": 16.036363636363635,
+          "end_sec": 16.661363636363635,
+          "velocity": 49
+        },
+        {
+          "pitch": 48,
+          "start_sec": 16.536363636363635,
+          "end_sec": 16.786363636363635,
+          "velocity": 46
+        },
+        {
+          "pitch": 48,
+          "start_sec": 17.286363636363635,
+          "end_sec": 17.411363636363635,
+          "velocity": 52
+        },
+        {
+          "pitch": 55,
+          "start_sec": 18.536363636363635,
+          "end_sec": 19.036363636363635,
+          "velocity": 40
+        },
+        {
+          "pitch": 48,
+          "start_sec": 19.036363636363635,
+          "end_sec": 19.411363636363635,
+          "velocity": 49
+        },
+        {
+          "pitch": 55,
+          "start_sec": 19.036363636363635,
+          "end_sec": 19.661363636363635,
+          "velocity": 56
+        },
+        {
+          "pitch": 48,
+          "start_sec": 20.038636363636364,
+          "end_sec": 20.288636363636364,
+          "velocity": 47
+        },
+        {
+          "pitch": 55,
+          "start_sec": 20.038636363636364,
+          "end_sec": 20.413636363636364,
+          "velocity": 53
+        },
+        {
+          "pitch": 48,
+          "start_sec": 21.038636363636364,
+          "end_sec": 21.413636363636364,
+          "velocity": 40
+        },
+        {
+          "pitch": 48,
+          "start_sec": 23.038636363636364,
+          "end_sec": 23.413636363636364,
+          "velocity": 51
+        },
+        {
+          "pitch": 55,
+          "start_sec": 23.038636363636364,
+          "end_sec": 23.663636363636364,
+          "velocity": 52
+        },
+        {
+          "pitch": 48,
+          "start_sec": 24.038636363636364,
+          "end_sec": 24.413636363636364,
+          "velocity": 46
+        },
+        {
+          "pitch": 55,
+          "start_sec": 24.038636363636364,
+          "end_sec": 24.663636363636364,
+          "velocity": 46
+        },
+        {
+          "pitch": 48,
+          "start_sec": 25.038636363636364,
+          "end_sec": 25.413636363636364,
+          "velocity": 50
+        },
+        {
+          "pitch": 55,
+          "start_sec": 26.538636363636364,
+          "end_sec": 27.038636363636364,
+          "velocity": 40
+        },
+        {
+          "pitch": 48,
+          "start_sec": 27.038636363636364,
+          "end_sec": 27.413636363636364,
+          "velocity": 53
+        },
+        {
+          "pitch": 55,
+          "start_sec": 27.038636363636364,
+          "end_sec": 27.663636363636364,
+          "velocity": 52
+        },
+        {
+          "pitch": 48,
+          "start_sec": 28.038636363636364,
+          "end_sec": 28.288636363636364,
+          "velocity": 50
+        },
+        {
+          "pitch": 55,
+          "start_sec": 28.038636363636364,
+          "end_sec": 28.413636363636364,
+          "velocity": 53
+        },
+        {
+          "pitch": 55,
+          "start_sec": 28.538636363636364,
+          "end_sec": 28.66363636363636,
+          "velocity": 43
+        },
+        {
+          "pitch": 48,
+          "start_sec": 29.03863636363636,
+          "end_sec": 29.41363636363636,
+          "velocity": 48
+        }
+      ],
+      "matches": [
+        {
+          "reference_index": 0,
+          "estimated_index": 0,
+          "onset_error_seconds": 0.03636363636363636
+        },
+        {
+          "reference_index": 1,
+          "estimated_index": 3,
+          "onset_error_seconds": 0.036363636363636376
+        },
+        {
+          "reference_index": 2,
+          "estimated_index": 5,
+          "onset_error_seconds": 0.036363636363636154
+        },
+        {
+          "reference_index": 3,
+          "estimated_index": 7,
+          "onset_error_seconds": 0.036363636363636154
+        },
+        {
+          "reference_index": 4,
+          "estimated_index": 10,
+          "onset_error_seconds": 0.036363636363636154
+        },
+        {
+          "reference_index": 5,
+          "estimated_index": 13,
+          "onset_error_seconds": 0.036363636363636154
+        },
+        {
+          "reference_index": 6,
+          "estimated_index": 15,
+          "onset_error_seconds": 0.036363636363636154
+        },
+        {
+          "reference_index": 7,
+          "estimated_index": 17,
+          "onset_error_seconds": 0.036363636363636154
+        },
+        {
+          "reference_index": 8,
+          "estimated_index": 20,
+          "onset_error_seconds": 0.036363636363635266
+        },
+        {
+          "reference_index": 9,
+          "estimated_index": 24,
+          "onset_error_seconds": 0.036363636363635266
+        },
+        {
+          "reference_index": 10,
+          "estimated_index": 26,
+          "onset_error_seconds": 0.036363636363635266
+        },
+        {
+          "reference_index": 11,
+          "estimated_index": 28,
+          "onset_error_seconds": 0.036363636363635266
+        },
+        {
+          "reference_index": 13,
+          "estimated_index": 35,
+          "onset_error_seconds": 0.036363636363635266
+        },
+        {
+          "reference_index": 14,
+          "estimated_index": 37,
+          "onset_error_seconds": 0.036363636363635266
+        },
+        {
+          "reference_index": 15,
+          "estimated_index": 39,
+          "onset_error_seconds": 0.036363636363635266
+        },
+        {
+          "reference_index": 16,
+          "estimated_index": 42,
+          "onset_error_seconds": 0.036363636363635266
+        },
+        {
+          "reference_index": 17,
+          "estimated_index": 46,
+          "onset_error_seconds": 0.036363636363635266
+        },
+        {
+          "reference_index": 18,
+          "estimated_index": 48,
+          "onset_error_seconds": 0.036363636363635266
+        },
+        {
+          "reference_index": 19,
+          "estimated_index": 50,
+          "onset_error_seconds": 0.036363636363635266
+        },
+        {
+          "reference_index": 20,
+          "estimated_index": 53,
+          "onset_error_seconds": 0.038636363636364024
+        },
+        {
+          "reference_index": 21,
+          "estimated_index": 56,
+          "onset_error_seconds": 0.038636363636364024
+        },
+        {
+          "reference_index": 22,
+          "estimated_index": 58,
+          "onset_error_seconds": 0.038636363636364024
+        },
+        {
+          "reference_index": 23,
+          "estimated_index": 59,
+          "onset_error_seconds": 0.038636363636364024
+        },
+        {
+          "reference_index": 24,
+          "estimated_index": 62,
+          "onset_error_seconds": 0.038636363636364024
+        },
+        {
+          "reference_index": 25,
+          "estimated_index": 65,
+          "onset_error_seconds": 0.038636363636364024
+        },
+        {
+          "reference_index": 26,
+          "estimated_index": 67,
+          "onset_error_seconds": 0.038636363636364024
+        },
+        {
+          "reference_index": 27,
+          "estimated_index": 69,
+          "onset_error_seconds": 0.038636363636364024
+        },
+        {
+          "reference_index": 28,
+          "estimated_index": 72,
+          "onset_error_seconds": 0.038636363636364024
+        },
+        {
+          "reference_index": 29,
+          "estimated_index": 76,
+          "onset_error_seconds": 0.03863636363636047
+        }
+      ]
+    }
+  }
+}

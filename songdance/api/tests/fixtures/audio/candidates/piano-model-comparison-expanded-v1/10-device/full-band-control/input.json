@@ -1,0 +1,14 @@
+{
+  "production_eligible": false,
+  "exact_source_reconstruction": true,
+  "changed_factor": "source device bandpass disabled; same preprocessing then 1s padding",
+  "source_sha256": "2a364af3fd70cbb4b7cf45dfc6d36eccfbdc0d3d43ec6e0eeb60588197ca2381",
+  "generator_sha256": "840775497026b77bfd06bd955182416732477180941308509f7e3a4b7074ee40",
+  "script_sha256": "30fdda25fa80615d6be748aaa008f7ac02f25589b45a6cf67e42252731e2a375",
+  "artifacts": {
+    "full-band.wav": "34ae37174b0917330d771af942a6b635d7855acddda97899b9197ee7ee54a97d",
+    "normalized.wav": "5d6774951c95d96073c3f6605e995e334f3f5a955cc56895d2953ddcfd54a111",
+    "padded.wav": "cd12c7ef553ccc2a381475239662e5af7be2dbcacf1cb105ac3fa9728cb73c0c",
+    "reconstructed.wav": "2a364af3fd70cbb4b7cf45dfc6d36eccfbdc0d3d43ec6e0eeb60588197ca2381"
+  }
+}

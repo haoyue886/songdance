@@ -1,0 +1,369 @@
+{
+  "schema_version": 1,
+  "model": "Transkun V2 No Pedal Extension",
+  "production_eligible": false,
+  "time_basis": "normalized_audio_seconds_without_padding",
+  "confidence_semantics": "not provided by MIDI; unknown, not calibrated",
+  "notes": [
+    {
+      "start_sec": 0.0,
+      "end_sec": 1.4005208333333332,
+      "pitch": 72,
+      "velocity": 66,
+      "confidence": null,
+      "hand": null,
+      "instrument_index": 0
+    },
+    {
+      "start_sec": 0.7390625,
+      "end_sec": 2.1489583333333333,
+      "pitch": 71,
+      "velocity": 69,
+      "confidence": null,
+      "hand": null,
+      "instrument_index": 0
+    },
+    {
+      "start_sec": 1.4921875,
+      "end_sec": 2.896875,
+      "pitch": 69,
+      "velocity": 66,
+      "confidence": null,
+      "hand": null,
+      "instrument_index": 0
+    },
+    {
+      "start_sec": 2.2411458333333334,
+      "end_sec": 3.6515625,
+      "pitch": 67,
+      "velocity": 68,
+      "confidence": null,
+      "hand": null,
+      "instrument_index": 0
+    },
+    {
+      "start_sec": 2.9895833333333335,
+      "end_sec": 4.4015625,
+      "pitch": 64,
+      "velocity": 66,
+      "confidence": null,
+      "hand": null,
+      "instrument_index": 0
+    },
+    {
+      "start_sec": 3.74375,
+      "end_sec": 5.158854166666667,
+      "pitch": 67,
+      "velocity": 67,
+      "confidence": null,
+      "hand": null,
+      "instrument_index": 0
+    },
+    {
+      "start_sec": 4.491666666666666,
+      "end_sec": 5.903125,
+      "pitch": 69,
+      "velocity": 66,
+      "confidence": null,
+      "hand": null,
+      "instrument_index": 0
+    },
+    {
+      "start_sec": 5.241666666666666,
+      "end_sec": 6.6499999999999995,
+      "pitch": 71,
+      "velocity": 69,
+      "confidence": null,
+      "hand": null,
+      "instrument_index": 0
+    },
+    {
+      "start_sec": 5.994791666666667,
+      "end_sec": 7.399479166666667,
+      "pitch": 72,
+      "velocity": 69,
+      "confidence": null,
+      "hand": null,
+      "instrument_index": 0
+    },
+    {
+      "start_sec": 6.744270833333333,
+      "end_sec": 8.156770833333333,
+      "pitch": 71,
+      "velocity": 64,
+      "confidence": null,
+      "hand": null,
+      "instrument_index": 0
+    },
+    {
+      "start_sec": 7.492708333333333,
+      "end_sec": 8.903125,
+      "pitch": 69,
+      "velocity": 63,
+      "confidence": null,
+      "hand": null,
+      "instrument_index": 0
+    },
+    {
+      "start_sec": 8.240104166666667,
+      "end_sec": 9.651041666666666,
+      "pitch": 67,
+      "velocity": 66,
+      "confidence": null,
+      "hand": null,
+      "instrument_index": 0
+    },
+    {
+      "start_sec": 8.9921875,
+      "end_sec": 10.397916666666667,
+      "pitch": 64,
+      "velocity": 63,
+      "confidence": null,
+      "hand": null,
+      "instrument_index": 0
+    },
+    {
+      "start_sec": 9.741666666666667,
+      "end_sec": 11.154166666666667,
+      "pitch": 67,
+      "velocity": 64,
+      "confidence": null,
+      "hand": null,
+      "instrument_index": 0
+    },
+    {
+      "start_sec": 10.496875,
+      "end_sec": 11.900520833333333,
+      "pitch": 69,
+      "velocity": 62,
+      "confidence": null,
+      "hand": null,
+      "instrument_index": 0
+    },
+    {
+      "start_sec": 11.244270833333333,
+      "end_sec": 12.623958333333333,
+      "pitch": 71,
+      "velocity": 66,
+      "confidence": null,
+      "hand": null,
+      "instrument_index": 0
+    },
+    {
+      "start_sec": 11.99375,
+      "end_sec": 13.402604166666666,
+      "pitch": 72,
+      "velocity": 66,
+      "confidence": null,
+      "hand": null,
+      "instrument_index": 0
+    },
+    {
+      "start_sec": 12.742708333333333,
+      "end_sec": 14.152604166666666,
+      "pitch": 71,
+      "velocity": 66,
+      "confidence": null,
+      "hand": null,
+      "instrument_index": 0
+    },
+    {
+      "start_sec": 13.495312499999999,
+      "end_sec": 14.8984375,
+      "pitch": 69,
+      "velocity": 64,
+      "confidence": null,
+      "hand": null,
+      "instrument_index": 0
+    },
+    {
+      "start_sec": 14.243229166666666,
+      "end_sec": 15.658333333333333,
+      "pitch": 67,
+      "velocity": 65,
+      "confidence": null,
+      "hand": null,
+      "instrument_index": 0
+    },
+    {
+      "start_sec": 14.992708333333333,
+      "end_sec": 16.4015625,
+      "pitch": 64,
+      "velocity": 64,
+      "confidence": null,
+      "hand": null,
+      "instrument_index": 0
+    },
+    {
+      "start_sec": 15.740104166666667,
+      "end_sec": 17.152604166666666,
+      "pitch": 67,
+      "velocity": 65,
+      "confidence": null,
+      "hand": null,
+      "instrument_index": 0
+    },
+    {
+      "start_sec": 16.49375,
+      "end_sec": 17.897916666666667,
+      "pitch": 69,
+      "velocity": 64,
+      "confidence": null,
+      "hand": null,
+      "instrument_index": 0
+    },
+    {
+      "start_sec": 17.243229166666666,
+      "end_sec": 18.655729166666667,
+      "pitch": 71,
+      "velocity": 66,
+      "confidence": null,
+      "hand": null,
+      "instrument_index": 0
+    },
+    {
+      "start_sec": 17.997395833333332,
+      "end_sec": 19.399479166666666,
+      "pitch": 72,
+      "velocity": 66,
+      "confidence": null,
+      "hand": null,
+      "instrument_index": 0
+    },
+    {
+      "start_sec": 18.744791666666668,
+      "end_sec": 20.147916666666667,
+      "pitch": 71,
+      "velocity": 67,
+      "confidence": null,
+      "hand": null,
+      "instrument_index": 0
+    },
+    {
+      "start_sec": 19.493229166666666,
+      "end_sec": 20.902604166666666,
+      "pitch": 69,
+      "velocity": 63,
+      "confidence": null,
+      "hand": null,
+      "instrument_index": 0
+    },
+    {
+      "start_sec": 20.242708333333333,
+      "end_sec": 21.653645833333332,
+      "pitch": 67,
+      "velocity": 66,
+      "confidence": null,
+      "hand": null,
+      "instrument_index": 0
+    },
+    {
+      "start_sec": 20.994791666666668,
+      "end_sec": 22.4,
+      "pitch": 64,
+      "velocity": 65,
+      "confidence": null,
+      "hand": null,
+      "instrument_index": 0
+    },
+    {
+      "start_sec": 21.7453125,
+      "end_sec": 23.1546875,
+      "pitch": 67,
+      "velocity": 67,
+      "confidence": null,
+      "hand": null,
+      "instrument_index": 0
+    },
+    {
+      "start_sec": 22.49375,
+      "end_sec": 23.903125,
+      "pitch": 69,
+      "velocity": 64,
+      "confidence": null,
+      "hand": null,
+      "instrument_index": 0
+    },
+    {
+      "start_sec": 23.245833333333334,
+      "end_sec": 24.652083333333334,
+      "pitch": 71,
+      "velocity": 66,
+      "confidence": null,
+      "hand": null,
+      "instrument_index": 0
+    },
+    {
+      "start_sec": 23.99375,
+      "end_sec": 25.396354166666665,
+      "pitch": 72,
+      "velocity": 66,
+      "confidence": null,
+      "hand": null,
+      "instrument_index": 0
+    },
+    {
+      "start_sec": 24.74375,
+      "end_sec": 26.153125,
+      "pitch": 71,
+      "velocity": 66,
+      "confidence": null,
+      "hand": null,
+      "instrument_index": 0
+    },
+    {
+      "start_sec": 25.496875,
+      "end_sec": 26.9015625,
+      "pitch": 69,
+      "velocity": 62,
+      "confidence": null,
+      "hand": null,
+      "instrument_index": 0
+    },
+    {
+      "start_sec": 26.242708333333333,
+      "end_sec": 27.647916666666667,
+      "pitch": 67,
+      "velocity": 64,
+      "confidence": null,
+      "hand": null,
+      "instrument_index": 0
+    },
+    {
+      "start_sec": 26.991666666666667,
+      "end_sec": 28.403125,
+      "pitch": 64,
+      "velocity": 64,
+      "confidence": null,
+      "hand": null,
+      "instrument_index": 0
+    },
+    {
+      "start_sec": 27.741666666666667,
+      "end_sec": 29.153645833333332,
+      "pitch": 67,
+      "velocity": 64,
+      "confidence": null,
+      "hand": null,
+      "instrument_index": 0
+    },
+    {
+      "start_sec": 28.49427083333333,
+      "end_sec": 29.90052083333333,
+      "pitch": 69,
+      "velocity": 62,
+      "confidence": null,
+      "hand": null,
+      "instrument_index": 0
+    },
+    {
+      "start_sec": 29.242708333333333,
+      "end_sec": 29.985416666666666,
+      "pitch": 71,
+      "velocity": 66,
+      "confidence": null,
+      "hand": null,
+      "instrument_index": 0
+    }
+  ]
+}

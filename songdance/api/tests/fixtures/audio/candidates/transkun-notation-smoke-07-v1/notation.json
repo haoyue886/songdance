@@ -1,0 +1,582 @@
+{
+  "status": "complete_candidate_only",
+  "production_eligible": false,
+  "profile": "confirmed-monophonic",
+  "input_pipeline_sha256": "8f54adc20d19d49c8c0d7ff76d79ab2524447cd13a204a9c4a8be3f18faeebe9",
+  "script_sha256": "4282b7534aae6fe5438aaaae66683d63a0c2c133d4e9296843b108e4479836dc",
+  "notation_configuration": {
+    "tempo_bpm": 120,
+    "meter": "4/4",
+    "source": "explicit_operator_configuration"
+  },
+  "confidence_semantics": "raw unknown; score adapter uses numeric zero placeholder",
+  "hand_semantics": "right is assigned by explicit profile; not inferred by model",
+  "changes": [
+    {
+      "raw": {
+        "start_sec": 0.0,
+        "end_sec": 1.4005208333333332,
+        "pitch": 72,
+        "velocity": 66,
+        "confidence": null,
+        "hand": null,
+        "instrument_index": 0
+      },
+      "trimmed_end_sec": 0.7290625,
+      "reason": "confirmed_monophonic_next_attack"
+    },
+    {
+      "raw": {
+        "start_sec": 0.7390625,
+        "end_sec": 2.1489583333333333,
+        "pitch": 71,
+        "velocity": 69,
+        "confidence": null,
+        "hand": null,
+        "instrument_index": 0
+      },
+      "trimmed_end_sec": 1.4821875,
+      "reason": "confirmed_monophonic_next_attack"
+    },
+    {
+      "raw": {
+        "start_sec": 1.4921875,
+        "end_sec": 2.896875,
+        "pitch": 69,
+        "velocity": 66,
+        "confidence": null,
+        "hand": null,
+        "instrument_index": 0
+      },
+      "trimmed_end_sec": 2.2311458333333336,
+      "reason": "confirmed_monophonic_next_attack"
+    },
+    {
+      "raw": {
+        "start_sec": 2.2411458333333334,
+        "end_sec": 3.6515625,
+        "pitch": 67,
+        "velocity": 68,
+        "confidence": null,
+        "hand": null,
+        "instrument_index": 0
+      },
+      "trimmed_end_sec": 2.9795833333333337,
+      "reason": "confirmed_monophonic_next_attack"
+    },
+    {
+      "raw": {
+        "start_sec": 2.9895833333333335,
+        "end_sec": 4.4015625,
+        "pitch": 64,
+        "velocity": 66,
+        "confidence": null,
+        "hand": null,
+        "instrument_index": 0
+      },
+      "trimmed_end_sec": 3.73375,
+      "reason": "confirmed_monophonic_next_attack"
+    },
+    {
+      "raw": {
+        "start_sec": 3.74375,
+        "end_sec": 5.158854166666667,
+        "pitch": 67,
+        "velocity": 67,
+        "confidence": null,
+        "hand": null,
+        "instrument_index": 0
+      },
+      "trimmed_end_sec": 4.4816666666666665,
+      "reason": "confirmed_monophonic_next_attack"
+    },
+    {
+      "raw": {
+        "start_sec": 4.491666666666666,
+        "end_sec": 5.903125,
+        "pitch": 69,
+        "velocity": 66,
+        "confidence": null,
+        "hand": null,
+        "instrument_index": 0
+      },
+      "trimmed_end_sec": 5.2316666666666665,
+      "reason": "confirmed_monophonic_next_attack"
+    },
+    {
+      "raw": {
+        "start_sec": 5.241666666666666,
+        "end_sec": 6.6499999999999995,
+        "pitch": 71,
+        "velocity": 69,
+        "confidence": null,
+        "hand": null,
+        "instrument_index": 0
+      },
+      "trimmed_end_sec": 5.984791666666667,
+      "reason": "confirmed_monophonic_next_attack"
+    },
+    {
+      "raw": {
+        "start_sec": 5.994791666666667,
+        "end_sec": 7.399479166666667,
+        "pitch": 72,
+        "velocity": 69,
+        "confidence": null,
+        "hand": null,
+        "instrument_index": 0
+      },
+      "trimmed_end_sec": 6.734270833333333,
+      "reason": "confirmed_monophonic_next_attack"
+    },
+    {
+      "raw": {
+        "start_sec": 6.744270833333333,
+        "end_sec": 8.156770833333333,
+        "pitch": 71,
+        "velocity": 64,
+        "confidence": null,
+        "hand": null,
+        "instrument_index": 0
+      },
+      "trimmed_end_sec": 7.482708333333333,
+      "reason": "confirmed_monophonic_next_attack"
+    },
+    {
+      "raw": {
+        "start_sec": 7.492708333333333,
+        "end_sec": 8.903125,
+        "pitch": 69,
+        "velocity": 63,
+        "confidence": null,
+        "hand": null,
+        "instrument_index": 0
+      },
+      "trimmed_end_sec": 8.230104166666667,
+      "reason": "confirmed_monophonic_next_attack"
+    },
+    {
+      "raw": {
+        "start_sec": 8.240104166666667,
+        "end_sec": 9.651041666666666,
+        "pitch": 67,
+        "velocity": 66,
+        "confidence": null,
+        "hand": null,
+        "instrument_index": 0
+      },
+      "trimmed_end_sec": 8.9821875,
+      "reason": "confirmed_monophonic_next_attack"
+    },
+    {
+      "raw": {
+        "start_sec": 8.9921875,
+        "end_sec": 10.397916666666667,
+        "pitch": 64,
+        "velocity": 63,
+        "confidence": null,
+        "hand": null,
+        "instrument_index": 0
+      },
+      "trimmed_end_sec": 9.731666666666667,
+      "reason": "confirmed_monophonic_next_attack"
+    },
+    {
+      "raw": {
+        "start_sec": 9.741666666666667,
+        "end_sec": 11.154166666666667,
+        "pitch": 67,
+        "velocity": 64,
+        "confidence": null,
+        "hand": null,
+        "instrument_index": 0
+      },
+      "trimmed_end_sec": 10.486875,
+      "reason": "confirmed_monophonic_next_attack"
+    },
+    {
+      "raw": {
+        "start_sec": 10.496875,
+        "end_sec": 11.900520833333333,
+        "pitch": 69,
+        "velocity": 62,
+        "confidence": null,
+        "hand": null,
+        "instrument_index": 0
+      },
+      "trimmed_end_sec": 11.234270833333333,
+      "reason": "confirmed_monophonic_next_attack"
+    },
+    {
+      "raw": {
+        "start_sec": 11.244270833333333,
+        "end_sec": 12.623958333333333,
+        "pitch": 71,
+        "velocity": 66,
+        "confidence": null,
+        "hand": null,
+        "instrument_index": 0
+      },
+      "trimmed_end_sec": 11.98375,
+      "reason": "confirmed_monophonic_next_attack"
+    },
+    {
+      "raw": {
+        "start_sec": 11.99375,
+        "end_sec": 13.402604166666666,
+        "pitch": 72,
+        "velocity": 66,
+        "confidence": null,
+        "hand": null,
+        "instrument_index": 0
+      },
+      "trimmed_end_sec": 12.732708333333333,
+      "reason": "confirmed_monophonic_next_attack"
+    },
+    {
+      "raw": {
+        "start_sec": 12.742708333333333,
+        "end_sec": 14.152604166666666,
+        "pitch": 71,
+        "velocity": 66,
+        "confidence": null,
+        "hand": null,
+        "instrument_index": 0
+      },
+      "trimmed_end_sec": 13.4853125,
+      "reason": "confirmed_monophonic_next_attack"
+    },
+    {
+      "raw": {
+        "start_sec": 13.495312499999999,
+        "end_sec": 14.8984375,
+        "pitch": 69,
+        "velocity": 64,
+        "confidence": null,
+        "hand": null,
+        "instrument_index": 0
+      },
+      "trimmed_end_sec": 14.233229166666666,
+      "reason": "confirmed_monophonic_next_attack"
+    },
+    {
+      "raw": {
+        "start_sec": 14.243229166666666,
+        "end_sec": 15.658333333333333,
+        "pitch": 67,
+        "velocity": 65,
+        "confidence": null,
+        "hand": null,
+        "instrument_index": 0
+      },
+      "trimmed_end_sec": 14.982708333333333,
+      "reason": "confirmed_monophonic_next_attack"
+    },
+    {
+      "raw": {
+        "start_sec": 14.992708333333333,
+        "end_sec": 16.4015625,
+        "pitch": 64,
+        "velocity": 64,
+        "confidence": null,
+        "hand": null,
+        "instrument_index": 0
+      },
+      "trimmed_end_sec": 15.730104166666667,
+      "reason": "confirmed_monophonic_next_attack"
+    },
+    {
+      "raw": {
+        "start_sec": 15.740104166666667,
+        "end_sec": 17.152604166666666,
+        "pitch": 67,
+        "velocity": 65,
+        "confidence": null,
+        "hand": null,
+        "instrument_index": 0
+      },
+      "trimmed_end_sec": 16.483749999999997,
+      "reason": "confirmed_monophonic_next_attack"
+    },
+    {
+      "raw": {
+        "start_sec": 16.49375,
+        "end_sec": 17.897916666666667,
+        "pitch": 69,
+        "velocity": 64,
+        "confidence": null,
+        "hand": null,
+        "instrument_index": 0
+      },
+      "trimmed_end_sec": 17.233229166666664,
+      "reason": "confirmed_monophonic_next_attack"
+    },
+    {
+      "raw": {
+        "start_sec": 17.243229166666666,
+        "end_sec": 18.655729166666667,
+        "pitch": 71,
+        "velocity": 66,
+        "confidence": null,
+        "hand": null,
+        "instrument_index": 0
+      },
+      "trimmed_end_sec": 17.98739583333333,
+      "reason": "confirmed_monophonic_next_attack"
+    },
+    {
+      "raw": {
+        "start_sec": 17.997395833333332,
+        "end_sec": 19.399479166666666,
+        "pitch": 72,
+        "velocity": 66,
+        "confidence": null,
+        "hand": null,
+        "instrument_index": 0
+      },
+      "trimmed_end_sec": 18.734791666666666,
+      "reason": "confirmed_monophonic_next_attack"
+    },
+    {
+      "raw": {
+        "start_sec": 18.744791666666668,
+        "end_sec": 20.147916666666667,
+        "pitch": 71,
+        "velocity": 67,
+        "confidence": null,
+        "hand": null,
+        "instrument_index": 0
+      },
+      "trimmed_end_sec": 19.483229166666664,
+      "reason": "confirmed_monophonic_next_attack"
+    },
+    {
+      "raw": {
+        "start_sec": 19.493229166666666,
+        "end_sec": 20.902604166666666,
+        "pitch": 69,
+        "velocity": 63,
+        "confidence": null,
+        "hand": null,
+        "instrument_index": 0
+      },
+      "trimmed_end_sec": 20.23270833333333,
+      "reason": "confirmed_monophonic_next_attack"
+    },
+    {
+      "raw": {
+        "start_sec": 20.242708333333333,
+        "end_sec": 21.653645833333332,
+        "pitch": 67,
+        "velocity": 66,
+        "confidence": null,
+        "hand": null,
+        "instrument_index": 0
+      },
+      "trimmed_end_sec": 20.984791666666666,
+      "reason": "confirmed_monophonic_next_attack"
+    },
+    {
+      "raw": {
+        "start_sec": 20.994791666666668,
+        "end_sec": 22.4,
+        "pitch": 64,
+        "velocity": 65,
+        "confidence": null,
+        "hand": null,
+        "instrument_index": 0
+      },
+      "trimmed_end_sec": 21.7353125,
+      "reason": "confirmed_monophonic_next_attack"
+    },
+    {
+      "raw": {
+        "start_sec": 21.7453125,
+        "end_sec": 23.1546875,
+        "pitch": 67,
+        "velocity": 67,
+        "confidence": null,
+        "hand": null,
+        "instrument_index": 0
+      },
+      "trimmed_end_sec": 22.483749999999997,
+      "reason": "confirmed_monophonic_next_attack"
+    },
+    {
+      "raw": {
+        "start_sec": 22.49375,
+        "end_sec": 23.903125,
+        "pitch": 69,
+        "velocity": 64,
+        "confidence": null,
+        "hand": null,
+        "instrument_index": 0
+      },
+      "trimmed_end_sec": 23.235833333333332,
+      "reason": "confirmed_monophonic_next_attack"
+    },
+    {
+      "raw": {
+        "start_sec": 23.245833333333334,
+        "end_sec": 24.652083333333334,
+        "pitch": 71,
+        "velocity": 66,
+        "confidence": null,
+        "hand": null,
+        "instrument_index": 0
+      },
+      "trimmed_end_sec": 23.983749999999997,
+      "reason": "confirmed_monophonic_next_attack"
+    },
+    {
+      "raw": {
+        "start_sec": 23.99375,
+        "end_sec": 25.396354166666665,
+        "pitch": 72,
+        "velocity": 66,
+        "confidence": null,
+        "hand": null,
+        "instrument_index": 0
+      },
+      "trimmed_end_sec": 24.733749999999997,
+      "reason": "confirmed_monophonic_next_attack"
+    },
+    {
+      "raw": {
+        "start_sec": 24.74375,
+        "end_sec": 26.153125,
+        "pitch": 71,
+        "velocity": 66,
+        "confidence": null,
+        "hand": null,
+        "instrument_index": 0
+      },
+      "trimmed_end_sec": 25.486874999999998,
+      "reason": "confirmed_monophonic_next_attack"
+    },
+    {
+      "raw": {
+        "start_sec": 25.496875,
+        "end_sec": 26.9015625,
+        "pitch": 69,
+        "velocity": 62,
+        "confidence": null,
+        "hand": null,
+        "instrument_index": 0
+      },
+      "trimmed_end_sec": 26.23270833333333,
+      "reason": "confirmed_monophonic_next_attack"
+    },
+    {
+      "raw": {
+        "start_sec": 26.242708333333333,
+        "end_sec": 27.647916666666667,
+        "pitch": 67,
+        "velocity": 64,
+        "confidence": null,
+        "hand": null,
+        "instrument_index": 0
+      },
+      "trimmed_end_sec": 26.981666666666666,
+      "reason": "confirmed_monophonic_next_attack"
+    },
+    {
+      "raw": {
+        "start_sec": 26.991666666666667,
+        "end_sec": 28.403125,
+        "pitch": 64,
+        "velocity": 64,
+        "confidence": null,
+        "hand": null,
+        "instrument_index": 0
+      },
+      "trimmed_end_sec": 27.731666666666666,
+      "reason": "confirmed_monophonic_next_attack"
+    },
+    {
+      "raw": {
+        "start_sec": 27.741666666666667,
+        "end_sec": 29.153645833333332,
+        "pitch": 67,
+        "velocity": 64,
+        "confidence": null,
+        "hand": null,
+        "instrument_index": 0
+      },
+      "trimmed_end_sec": 28.48427083333333,
+      "reason": "confirmed_monophonic_next_attack"
+    },
+    {
+      "raw": {
+        "start_sec": 28.49427083333333,
+        "end_sec": 29.90052083333333,
+        "pitch": 69,
+        "velocity": 62,
+        "confidence": null,
+        "hand": null,
+        "instrument_index": 0
+      },
+      "trimmed_end_sec": 29.23270833333333,
+      "reason": "confirmed_monophonic_next_attack"
+    },
+    {
+      "raw": {
+        "start_sec": 29.242708333333333,
+        "end_sec": 29.985416666666666,
+        "pitch": 71,
+        "velocity": 66,
+        "confidence": null,
+        "hand": null,
+        "instrument_index": 0
+      },
+      "trimmed_end_sec": 29.985416666666666,
+      "reason": "unchanged"
+    }
+  ],
+  "structure": {
+    "part_count": 1,
+    "measure_count": 15,
+    "chord_count": 0,
+    "voice_count": 0,
+    "rest_count": 0,
+    "short_rest_count": 0,
+    "measure_duration_error_count": 0,
+    "partial_final_measure_count": 0,
+    "time_signatures": [
+      "4/4"
+    ],
+    "key_signatures": [
+      0
+    ],
+    "key_signature_status": "detected",
+    "errors": [],
+    "music21_staff_count": 1,
+    "staff_measure_count": 15,
+    "musicxml_score_part_count": 1,
+    "musicxml_part_count": 1,
+    "staff_count": 1,
+    "clefs": {
+      "1": "G2"
+    },
+    "staff_numbers": [
+      "1"
+    ],
+    "voices_by_staff": {
+      "1": [
+        "1"
+      ]
+    },
+    "maximum_voices_by_staff_measure": {
+      "1": 1
+    },
+    "backup_count": 0,
+    "pedal_mark_count": 0
+  },
+  "artifacts_sha256": {
+    "score.musicxml": "421c4254ec2d96456fd79ed6b6cf4994ffeffe56c4112250451d3ffbbb555d42",
+    "score.mid": "7883dd5c019b12c9e25726ffde8456f097b1408129573d8536a886ce396378da",
+    "timeline.json": "b1726c0fc8f6f3c3e1141ec0284d362471ce007b0b1f2b53eaa9b4283c5fef15"
+  },
+  "musescore_validation": "not_run",
+  "teacher_review": "not_inferred_from_other_versions"
+}

@@ -35,6 +35,8 @@ def quantize_events(
     events: list[NoteEvent],
     analysis: StructureAnalysis,
     decision: QuantizationDecision | None = None,
+    *,
+    cap_melody_durations: bool = True,
 ) -> list[NoteEvent]:
     divisions = decision.divisions_per_quarter if decision else GRID_DIVISIONS
     grid = _subdivision_grid(events, analysis, divisions)
@@ -51,10 +53,10 @@ def quantize_events(
                 end_sec=round(end, 6),
             )
         )
-    return _cap_high_register_melody_durations(
-        sorted(quantized, key=lambda item: (item.start_sec, item.pitch, item.end_sec)),
-        analysis,
-    )
+    ordered = sorted(quantized, key=lambda item: (item.start_sec, item.pitch, item.end_sec))
+    if cap_melody_durations:
+        return _cap_high_register_melody_durations(ordered, analysis)
+    return ordered
 
 
 def _cap_high_register_melody_durations(

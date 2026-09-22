@@ -1,0 +1,526 @@
+{
+  "purpose": "review handoff only; does not grant approval",
+  "production_eligible": false,
+  "cases": [
+    {
+      "suite": "structure",
+      "case_id": "01-slow-melody",
+      "rating": "pending",
+      "notes": "",
+      "files": {
+        "audio": {
+          "path": "/Users/lixinyue/Desktop/project/songDance/songdance/api/tests/fixtures/audio/candidates/closeout-review-20260922-final/generated/01-slow-melody.wav",
+          "sha256": "b6336244cb4f7210e4fdf8a706e60ee89bbdc311457b53b4ff02ab9813d03d63"
+        },
+        "musicxml": {
+          "path": "/Users/lixinyue/Desktop/project/songDance/songdance/api/tests/fixtures/audio/candidates/closeout-review-20260922-final/structure-review-artifacts/01-slow-melody/score.musicxml",
+          "sha256": "a9225e423fdfff38bc5e4747122e10a036e94c90ba726920ef7df4efb7c15e3d"
+        },
+        "midi": {
+          "path": "/Users/lixinyue/Desktop/project/songDance/songdance/api/tests/fixtures/audio/candidates/closeout-review-20260922-final/structure-review-artifacts/01-slow-melody/score.mid",
+          "sha256": "89153edcbc34a61f9654808a49ffe4b81d8c36de542c597a61d78b22b864527d"
+        }
+      }
+    },
+    {
+      "suite": "structure",
+      "case_id": "02-fast-scale",
+      "rating": "pending",
+      "notes": "",
+      "files": {
+        "audio": {
+          "path": "/Users/lixinyue/Desktop/project/songDance/songdance/api/tests/fixtures/audio/candidates/closeout-review-20260922-final/generated/02-fast-scale.wav",
+          "sha256": "29177dac463b21336d59fac7283bff22aee2600f84051ef40e757d2661afb1c6"
+        },
+        "musicxml": {
+          "path": "/Users/lixinyue/Desktop/project/songDance/songdance/api/tests/fixtures/audio/candidates/closeout-review-20260922-final/structure-review-artifacts/02-fast-scale/score.musicxml",
+          "sha256": "e1197fa24854abd1342cca94726cd6eabd4f59a32f87cb6a182d2fcfe7fc1282"
+        },
+        "midi": {
+          "path": "/Users/lixinyue/Desktop/project/songDance/songdance/api/tests/fixtures/audio/candidates/closeout-review-20260922-final/structure-review-artifacts/02-fast-scale/score.mid",
+          "sha256": "9b689bc6c4ac103d3e9c7afc7a78d095bb1c1e27d545588d057d5aa8f1d5af52"
+        }
+      }
+    },
+    {
+      "suite": "structure",
+      "case_id": "03-block-chords",
+      "rating": "pending",
+      "notes": "",
+      "files": {
+        "audio": {
+          "path": "/Users/lixinyue/Desktop/project/songDance/songdance/api/tests/fixtures/audio/candidates/closeout-review-20260922-final/generated/03-block-chords.wav",
+          "sha256": "307862b82ba06514517fd3106440a05e95b98dc0c54d94bc4871ae466d098ac2"
+        },
+        "musicxml": {
+          "path": "/Users/lixinyue/Desktop/project/songDance/songdance/api/tests/fixtures/audio/candidates/closeout-review-20260922-final/structure-review-artifacts/03-block-chords/score.musicxml",
+          "sha256": "5ea9ab64fa729cc285d63fadeb39f2dee1500422aab657f3a95da043ba017a19"
+        },
+        "midi": {
+          "path": "/Users/lixinyue/Desktop/project/songDance/songdance/api/tests/fixtures/audio/candidates/closeout-review-20260922-final/structure-review-artifacts/03-block-chords/score.mid",
+          "sha256": "32314454f2f165ee5c2dc64bfeaa4f0f7299ea5d8f65131036e8466b227588ea"
+        }
+      }
+    },
+    {
+      "suite": "structure",
+      "case_id": "04-arpeggios",
+      "rating": "pending",
+      "notes": "",
+      "files": {
+        "audio": {
+          "path": "/Users/lixinyue/Desktop/project/songDance/songdance/api/tests/fixtures/audio/candidates/closeout-review-20260922-final/generated/04-arpeggios.wav",
+          "sha256": "065beb1700bf920654acae896c71d4cac6dfae78bcac695024da2fea928bf89b"
+        },
+        "musicxml": {
+          "path": "/Users/lixinyue/Desktop/project/songDance/songdance/api/tests/fixtures/audio/candidates/closeout-review-20260922-final/structure-review-artifacts/04-arpeggios/score.musicxml",
+          "sha256": "41380aea49754f27d9c573ae47df87affba9f0174fe12b150cd03ff8eb4af501"
+        },
+        "midi": {
+          "path": "/Users/lixinyue/Desktop/project/songDance/songdance/api/tests/fixtures/audio/candidates/closeout-review-20260922-final/structure-review-artifacts/04-arpeggios/score.mid",
+          "sha256": "f854dda6be6375195f1589586e11d8ecb2265303d0ba218a1512731e8df1a7fe"
+        }
+      }
+    },
+    {
+      "suite": "structure",
+      "case_id": "05-two-hand",
+      "rating": "pending",
+      "notes": "",
+      "files": {
+        "audio": {
+          "path": "/Users/lixinyue/Desktop/project/songDance/songdance/api/tests/fixtures/audio/candidates/closeout-review-20260922-final/generated/05-two-hand.wav",
+          "sha256": "351f511ed7035f1ca01cbd46cc1e7f403ef1ea437c2049c6ddacc4eabb1ccbaf"
+        },
+        "musicxml": {
+          "path": "/Users/lixinyue/Desktop/project/songDance/songdance/api/tests/fixtures/audio/candidates/closeout-review-20260922-final/structure-review-artifacts/05-two-hand/score.musicxml",
+          "sha256": "0480a6ab89c4508d13864a133862f0c52f6993927f66030553a8c2780a732f55"
+        },
+        "midi": {
+          "path": "/Users/lixinyue/Desktop/project/songDance/songdance/api/tests/fixtures/audio/candidates/closeout-review-20260922-final/structure-review-artifacts/05-two-hand/score.mid",
+          "sha256": "22eda1bbd95e952b5c34fcca79f74e2829ef97df6d2cd9f8166eac21e445e7af"
+        }
+      }
+    },
+    {
+      "suite": "structure",
+      "case_id": "06-sustain",
+      "rating": "pending",
+      "notes": "",
+      "files": {
+        "audio": {
+          "path": "/Users/lixinyue/Desktop/project/songDance/songdance/api/tests/fixtures/audio/candidates/closeout-review-20260922-final/generated/06-sustain.wav",
+          "sha256": "86c77c01274b6d825e6229dfb8d8844bd12f28aeb48ead783f1b74066c728696"
+        },
+        "musicxml": {
+          "path": "/Users/lixinyue/Desktop/project/songDance/songdance/api/tests/fixtures/audio/candidates/closeout-review-20260922-final/structure-review-artifacts/06-sustain/score.musicxml",
+          "sha256": "78cba6d7ddc3b63d7c87dd4d5d1637f33c38dba1d9de69ad06b66e7b816187e5"
+        },
+        "midi": {
+          "path": "/Users/lixinyue/Desktop/project/songDance/songdance/api/tests/fixtures/audio/candidates/closeout-review-20260922-final/structure-review-artifacts/06-sustain/score.mid",
+          "sha256": "af73ba5fc590385af828eb0a6da770a8b97ddd098c2e4071fa47e9587a764800"
+        }
+      }
+    },
+    {
+      "suite": "structure",
+      "case_id": "07-soft",
+      "rating": "pending",
+      "notes": "",
+      "files": {
+        "audio": {
+          "path": "/Users/lixinyue/Desktop/project/songDance/songdance/api/tests/fixtures/audio/candidates/closeout-review-20260922-final/generated/07-soft.wav",
+          "sha256": "380160b2a85112599a6923e9cbec855bafc860ac6fce697cd563868d8a68ba12"
+        },
+        "musicxml": {
+          "path": "/Users/lixinyue/Desktop/project/songDance/songdance/api/tests/fixtures/audio/candidates/closeout-review-20260922-final/structure-review-artifacts/07-soft/score.musicxml",
+          "sha256": "eb1b9c5b56d47a664b3a50e2f49254bf1b67f573dfa1258defc59d694b736ec0"
+        },
+        "midi": {
+          "path": "/Users/lixinyue/Desktop/project/songDance/songdance/api/tests/fixtures/audio/candidates/closeout-review-20260922-final/structure-review-artifacts/07-soft/score.mid",
+          "sha256": "5b33e9a7bf7e06cc870a2aa66cdc45aa4a5d9af35f43ed5d89a982fbfb69517c"
+        }
+      }
+    },
+    {
+      "suite": "structure",
+      "case_id": "08-dynamics",
+      "rating": "pending",
+      "notes": "",
+      "files": {
+        "audio": {
+          "path": "/Users/lixinyue/Desktop/project/songDance/songdance/api/tests/fixtures/audio/candidates/closeout-review-20260922-final/generated/08-dynamics.wav",
+          "sha256": "43c254d5e088051960cd80e6a78bd40dca7f2288d544a419c1fc99204a0650c2"
+        },
+        "musicxml": {
+          "path": "/Users/lixinyue/Desktop/project/songDance/songdance/api/tests/fixtures/audio/candidates/closeout-review-20260922-final/structure-review-artifacts/08-dynamics/score.musicxml",
+          "sha256": "13d70633173a81484792dab2de3fd35c2bab66f47f61037fc12f147184a138a8"
+        },
+        "midi": {
+          "path": "/Users/lixinyue/Desktop/project/songDance/songdance/api/tests/fixtures/audio/candidates/closeout-review-20260922-final/structure-review-artifacts/08-dynamics/score.mid",
+          "sha256": "96ec650b9e38eba9f02cb016584b089a8208fab61aedc7cac063b75ae61b59de"
+        }
+      }
+    },
+    {
+      "suite": "structure",
+      "case_id": "09-light-noise",
+      "rating": "pending",
+      "notes": "",
+      "files": {
+        "audio": {
+          "path": "/Users/lixinyue/Desktop/project/songDance/songdance/api/tests/fixtures/audio/candidates/closeout-review-20260922-final/generated/09-light-noise.wav",
+          "sha256": "f2090c29f2b386f540142dbf65fca9066d11e2d04250081db745b4ea3aadd7df"
+        },
+        "musicxml": {
+          "path": "/Users/lixinyue/Desktop/project/songDance/songdance/api/tests/fixtures/audio/candidates/closeout-review-20260922-final/structure-review-artifacts/09-light-noise/score.musicxml",
+          "sha256": "91b0bdd78ad04fd4bdf10f0a6797fe37dfd1a54bd5f0d76843f3e45e957918d5"
+        },
+        "midi": {
+          "path": "/Users/lixinyue/Desktop/project/songDance/songdance/api/tests/fixtures/audio/candidates/closeout-review-20260922-final/structure-review-artifacts/09-light-noise/score.mid",
+          "sha256": "df383d01766c72cd446dce37b2d75e994f0911e85ba77de67bfa2b0c342f837b"
+        }
+      }
+    },
+    {
+      "suite": "structure",
+      "case_id": "10-device",
+      "rating": "pending",
+      "notes": "",
+      "files": {
+        "audio": {
+          "path": "/Users/lixinyue/Desktop/project/songDance/songdance/api/tests/fixtures/audio/candidates/closeout-review-20260922-final/generated/10-device.wav",
+          "sha256": "2a364af3fd70cbb4b7cf45dfc6d36eccfbdc0d3d43ec6e0eeb60588197ca2381"
+        },
+        "musicxml": {
+          "path": "/Users/lixinyue/Desktop/project/songDance/songdance/api/tests/fixtures/audio/candidates/closeout-review-20260922-final/structure-review-artifacts/10-device/score.musicxml",
+          "sha256": "79e2af6fcc7c36f5c270d82308e8ac12f9fdef1e6aabf70c34a345892e309c49"
+        },
+        "midi": {
+          "path": "/Users/lixinyue/Desktop/project/songDance/songdance/api/tests/fixtures/audio/candidates/closeout-review-20260922-final/structure-review-artifacts/10-device/score.mid",
+          "sha256": "0552ec70b8f43ae7b548a311a21ec280e1082c33d4a1ecff4774c93eea5ffe94"
+        }
+      }
+    },
+    {
+      "suite": "structure",
+      "case_id": "11-waltz-34",
+      "rating": "pending",
+      "notes": "",
+      "files": {
+        "audio": {
+          "path": "/Users/lixinyue/Desktop/project/songDance/songdance/api/tests/fixtures/audio/candidates/closeout-review-20260922-final/generated/11-waltz-34.wav",
+          "sha256": "567e11314011126fca8f875ad161a1a209382133bb31baad5452238de4e8e201"
+        },
+        "musicxml": {
+          "path": "/Users/lixinyue/Desktop/project/songDance/songdance/api/tests/fixtures/audio/candidates/closeout-review-20260922-final/structure-review-artifacts/11-waltz-34/score.musicxml",
+          "sha256": "31a5aeaefaaf3fa1d1bfbfbfbf8b8710b643f30c952a862f50231ea6d26285d0"
+        },
+        "midi": {
+          "path": "/Users/lixinyue/Desktop/project/songDance/songdance/api/tests/fixtures/audio/candidates/closeout-review-20260922-final/structure-review-artifacts/11-waltz-34/score.mid",
+          "sha256": "8df96e63dc92dcf4b096029a69f071f60bec88be8084a70dd18704393fb3787e"
+        }
+      }
+    },
+    {
+      "suite": "structure",
+      "case_id": "12-compound-68",
+      "rating": "pending",
+      "notes": "",
+      "files": {
+        "audio": {
+          "path": "/Users/lixinyue/Desktop/project/songDance/songdance/api/tests/fixtures/audio/candidates/closeout-review-20260922-final/generated/12-compound-68.wav",
+          "sha256": "7c1420ad2846ad6ed6bee7843ac5f83d823d6cea197772000b9d136ad4a5df9b"
+        },
+        "musicxml": {
+          "path": "/Users/lixinyue/Desktop/project/songDance/songdance/api/tests/fixtures/audio/candidates/closeout-review-20260922-final/structure-review-artifacts/12-compound-68/score.musicxml",
+          "sha256": "ce6c79cedbc24885ed23bf06513790d2f30f32e5e041b0efb12cb8026f466e74"
+        },
+        "midi": {
+          "path": "/Users/lixinyue/Desktop/project/songDance/songdance/api/tests/fixtures/audio/candidates/closeout-review-20260922-final/structure-review-artifacts/12-compound-68/score.mid",
+          "sha256": "cceb9bd0bc0665b73cb948bc7844179d18cd46c3d4ebab8ce67ee762648800c6"
+        }
+      }
+    },
+    {
+      "suite": "structure",
+      "case_id": "13-key-change",
+      "rating": "pending",
+      "notes": "",
+      "files": {
+        "audio": {
+          "path": "/Users/lixinyue/Desktop/project/songDance/songdance/api/tests/fixtures/audio/candidates/closeout-review-20260922-final/generated/13-key-change.wav",
+          "sha256": "51b57482d07e6f64a683e1707a789e2886a0f0095a7332b8730340957569e313"
+        },
+        "musicxml": {
+          "path": "/Users/lixinyue/Desktop/project/songDance/songdance/api/tests/fixtures/audio/candidates/closeout-review-20260922-final/structure-review-artifacts/13-key-change/score.musicxml",
+          "sha256": "eb53be6045762d1148351190559814bbc3d40f2d60959f2ee019d142a6ea7847"
+        },
+        "midi": {
+          "path": "/Users/lixinyue/Desktop/project/songDance/songdance/api/tests/fixtures/audio/candidates/closeout-review-20260922-final/structure-review-artifacts/13-key-change/score.mid",
+          "sha256": "84af5768149d067ebd46159920d1d57b19586e62fcc079515dbdd3b3536f73c6"
+        }
+      }
+    },
+    {
+      "suite": "structure",
+      "case_id": "14-hand-crossing",
+      "rating": "pending",
+      "notes": "",
+      "files": {
+        "audio": {
+          "path": "/Users/lixinyue/Desktop/project/songDance/songdance/api/tests/fixtures/audio/candidates/closeout-review-20260922-final/generated/14-hand-crossing.wav",
+          "sha256": "d92ff1488016ec87eb9f849b0acf1adad4711e1791bf614f6eceff538826a99b"
+        },
+        "musicxml": {
+          "path": "/Users/lixinyue/Desktop/project/songDance/songdance/api/tests/fixtures/audio/candidates/closeout-review-20260922-final/structure-review-artifacts/14-hand-crossing/score.musicxml",
+          "sha256": "41cf5de9d6dbaa131adab2b0a77670e9d6abe4191d4095ab90585309ddf75f9d"
+        },
+        "midi": {
+          "path": "/Users/lixinyue/Desktop/project/songDance/songdance/api/tests/fixtures/audio/candidates/closeout-review-20260922-final/structure-review-artifacts/14-hand-crossing/score.mid",
+          "sha256": "7dba83100944b0fc606394dabbfe5b6229d218c046e49d552a71393fcdad5500"
+        }
+      }
+    },
+    {
+      "suite": "structure",
+      "case_id": "15-repeated-notes",
+      "rating": "pending",
+      "notes": "",
+      "files": {
+        "audio": {
+          "path": "/Users/lixinyue/Desktop/project/songDance/songdance/api/tests/fixtures/audio/candidates/closeout-review-20260922-final/generated/15-repeated-notes.wav",
+          "sha256": "a2bfabed577c4a3de7178782a3ababe6ba163642056b9ee20adc774cb388d1f9"
+        },
+        "musicxml": {
+          "path": "/Users/lixinyue/Desktop/project/songDance/songdance/api/tests/fixtures/audio/candidates/closeout-review-20260922-final/structure-review-artifacts/15-repeated-notes/score.musicxml",
+          "sha256": "4605bb1ba4872d4a1155f6827573f412b79fd5e7b3ddc0714ce703fd6b0a7fba"
+        },
+        "midi": {
+          "path": "/Users/lixinyue/Desktop/project/songDance/songdance/api/tests/fixtures/audio/candidates/closeout-review-20260922-final/structure-review-artifacts/15-repeated-notes/score.mid",
+          "sha256": "11a75b43570badfe7ab24a75377af669976a9c0672f40d2e602d9d1182f0eaae"
+        }
+      }
+    },
+    {
+      "suite": "structure",
+      "case_id": "16-noisy-polyphony",
+      "rating": "pending",
+      "notes": "",
+      "files": {
+        "audio": {
+          "path": "/Users/lixinyue/Desktop/project/songDance/songdance/api/tests/fixtures/audio/candidates/closeout-review-20260922-final/generated/16-noisy-polyphony.wav",
+          "sha256": "9c9db1aab7a3c06ddf62a71a142ebc07c05d0ea7f682c6f9f81a35533cb88142"
+        },
+        "musicxml": {
+          "path": "/Users/lixinyue/Desktop/project/songDance/songdance/api/tests/fixtures/audio/candidates/closeout-review-20260922-final/structure-review-artifacts/16-noisy-polyphony/score.musicxml",
+          "sha256": "b46d5319efee95561fed47827ef8523bf2d424d8f1b1ae6957f083b37ca31054"
+        },
+        "midi": {
+          "path": "/Users/lixinyue/Desktop/project/songDance/songdance/api/tests/fixtures/audio/candidates/closeout-review-20260922-final/structure-review-artifacts/16-noisy-polyphony/score.mid",
+          "sha256": "c2160b00998456433e40f1b3912bcec18780ad62718b8f8a0ee616de2800ebcd"
+        }
+      }
+    },
+    {
+      "suite": "human",
+      "case_id": "01-bach-capriccio",
+      "rating": "pending",
+      "notes": "",
+      "files": {
+        "audio": {
+          "path": "/Users/lixinyue/Desktop/project/songDance/songdance/api/tests/fixtures/audio/candidates/closeout-review-20260922-final/human-generated/01-bach-capriccio.wav",
+          "sha256": "a23b3137ee1a030938569f3e1bea162d1ebee52a7a3462959bfc7442f19a775f"
+        },
+        "musicxml": {
+          "path": "/Users/lixinyue/Desktop/project/songDance/songdance/api/tests/fixtures/audio/candidates/closeout-review-20260922-final/human-review-artifacts/01-bach-capriccio/score.musicxml",
+          "sha256": "3d3304325ced22157c02594ee45f7fe1365de3f38222303039f5304a5f4645ba"
+        },
+        "midi": {
+          "path": "/Users/lixinyue/Desktop/project/songDance/songdance/api/tests/fixtures/audio/candidates/closeout-review-20260922-final/human-review-artifacts/01-bach-capriccio/score.mid",
+          "sha256": "e1f9084217fbcffdbb050ba97f468b59a3b1f83cbde40e0824c983b77baae785"
+        }
+      }
+    },
+    {
+      "suite": "human",
+      "case_id": "02-brahms-intermezzo",
+      "rating": "pending",
+      "notes": "",
+      "files": {
+        "audio": {
+          "path": "/Users/lixinyue/Desktop/project/songDance/songdance/api/tests/fixtures/audio/candidates/closeout-review-20260922-final/human-generated/02-brahms-intermezzo.wav",
+          "sha256": "2d3be743ce4c6889e3e28ca4f0e8bada7fc4e7c8bbcceace6bef3e2b351fb6bd"
+        },
+        "musicxml": {
+          "path": "/Users/lixinyue/Desktop/project/songDance/songdance/api/tests/fixtures/audio/candidates/closeout-review-20260922-final/human-review-artifacts/02-brahms-intermezzo/score.musicxml",
+          "sha256": "7fcde6fc0173a14f52756b00a538d5e91dfdc09f0ee24baaa1f67f1b084b9045"
+        },
+        "midi": {
+          "path": "/Users/lixinyue/Desktop/project/songDance/songdance/api/tests/fixtures/audio/candidates/closeout-review-20260922-final/human-review-artifacts/02-brahms-intermezzo/score.mid",
+          "sha256": "93c0ec0e9edde2280c499f76d97b0e5f18fc18f00c690162609987172c5a1730"
+        }
+      }
+    },
+    {
+      "suite": "human",
+      "case_id": "03-mozart-sonata",
+      "rating": "pending",
+      "notes": "",
+      "files": {
+        "audio": {
+          "path": "/Users/lixinyue/Desktop/project/songDance/songdance/api/tests/fixtures/audio/candidates/closeout-review-20260922-final/human-generated/03-mozart-sonata.wav",
+          "sha256": "32975b2333e0ca318125335660e21e747e074e0ea28cf83e3ecbd5ce21fc298f"
+        },
+        "musicxml": {
+          "path": "/Users/lixinyue/Desktop/project/songDance/songdance/api/tests/fixtures/audio/candidates/closeout-review-20260922-final/human-review-artifacts/03-mozart-sonata/score.musicxml",
+          "sha256": "9d7576736451ff7ca0b0326e7ab0f323fc5752184e175a2a3330c97a64d5c36e"
+        },
+        "midi": {
+          "path": "/Users/lixinyue/Desktop/project/songDance/songdance/api/tests/fixtures/audio/candidates/closeout-review-20260922-final/human-review-artifacts/03-mozart-sonata/score.mid",
+          "sha256": "1354a7f7c06701e56563ff4138041ee7c6b77cf3deec5a24a19498ea80bbc0ef"
+        }
+      }
+    },
+    {
+      "suite": "human",
+      "case_id": "04-rachmaninoff-g-sharp",
+      "rating": "pending",
+      "notes": "",
+      "files": {
+        "audio": {
+          "path": "/Users/lixinyue/Desktop/project/songDance/songdance/api/tests/fixtures/audio/candidates/closeout-review-20260922-final/human-generated/04-rachmaninoff-g-sharp.wav",
+          "sha256": "4bab791540557a1c8c9546d543708b22050961ec7ef609a21f4d088f4ef149e8"
+        },
+        "musicxml": {
+          "path": "/Users/lixinyue/Desktop/project/songDance/songdance/api/tests/fixtures/audio/candidates/closeout-review-20260922-final/human-review-artifacts/04-rachmaninoff-g-sharp/score.musicxml",
+          "sha256": "8f5a9d1c564a16a54d41535a7cec8fb159c1a07be8b72e06abdc718f1dc5e849"
+        },
+        "midi": {
+          "path": "/Users/lixinyue/Desktop/project/songDance/songdance/api/tests/fixtures/audio/candidates/closeout-review-20260922-final/human-review-artifacts/04-rachmaninoff-g-sharp/score.mid",
+          "sha256": "fba47f0d786a2f7d957478ccecff5e39a4672475f6b86606b2aca7fa9df21ea3"
+        }
+      }
+    },
+    {
+      "suite": "human",
+      "case_id": "05-chopin-c-minor",
+      "rating": "pending",
+      "notes": "",
+      "files": {
+        "audio": {
+          "path": "/Users/lixinyue/Desktop/project/songDance/songdance/api/tests/fixtures/audio/candidates/closeout-review-20260922-final/human-generated/05-chopin-c-minor.wav",
+          "sha256": "71a4d87974b18f887e477cb8a03b8db44a41299009bec0df265914549268fbbe"
+        },
+        "musicxml": {
+          "path": "/Users/lixinyue/Desktop/project/songDance/songdance/api/tests/fixtures/audio/candidates/closeout-review-20260922-final/human-review-artifacts/05-chopin-c-minor/score.musicxml",
+          "sha256": "7e775ac32af66bca69a2bb6b26a6a09215ca5640c2909769a27d2b1d860c6a0f"
+        },
+        "midi": {
+          "path": "/Users/lixinyue/Desktop/project/songDance/songdance/api/tests/fixtures/audio/candidates/closeout-review-20260922-final/human-review-artifacts/05-chopin-c-minor/score.mid",
+          "sha256": "9bba89681c08d07957d5d4ea9bbdab6538925588e3cfa74d091b2f8878b46828"
+        }
+      }
+    },
+    {
+      "suite": "human",
+      "case_id": "06-scriabin-etude",
+      "rating": "pending",
+      "notes": "",
+      "files": {
+        "audio": {
+          "path": "/Users/lixinyue/Desktop/project/songDance/songdance/api/tests/fixtures/audio/candidates/closeout-review-20260922-final/human-generated/06-scriabin-etude.wav",
+          "sha256": "28ec127c0f43f19c4328d45ccc844a2afe057622aa833341026719bb6608d7b6"
+        },
+        "musicxml": {
+          "path": "/Users/lixinyue/Desktop/project/songDance/songdance/api/tests/fixtures/audio/candidates/closeout-review-20260922-final/human-review-artifacts/06-scriabin-etude/score.musicxml",
+          "sha256": "012653f240df27ac5283caf33aa78be471ffd84c0b16616040a5e91dcd7db2a1"
+        },
+        "midi": {
+          "path": "/Users/lixinyue/Desktop/project/songDance/songdance/api/tests/fixtures/audio/candidates/closeout-review-20260922-final/human-review-artifacts/06-scriabin-etude/score.mid",
+          "sha256": "ea8379628dcd6a59cfb302c90841584eca908cd0cd486a651d685560d815b2d5"
+        }
+      }
+    },
+    {
+      "suite": "human",
+      "case_id": "07-chopin-ballade",
+      "rating": "pending",
+      "notes": "",
+      "files": {
+        "audio": {
+          "path": "/Users/lixinyue/Desktop/project/songDance/songdance/api/tests/fixtures/audio/candidates/closeout-review-20260922-final/human-generated/07-chopin-ballade.wav",
+          "sha256": "0c42c842000ef152c0b04e2eceea17ef3a635ac9e5807d2722ad8d40b6787923"
+        },
+        "musicxml": {
+          "path": "/Users/lixinyue/Desktop/project/songDance/songdance/api/tests/fixtures/audio/candidates/closeout-review-20260922-final/human-review-artifacts/07-chopin-ballade/score.musicxml",
+          "sha256": "8a56b15dc437dbb4f5a404e715fb33d9b21cb293e3d6ccecfcab1c9c75fc8805"
+        },
+        "midi": {
+          "path": "/Users/lixinyue/Desktop/project/songDance/songdance/api/tests/fixtures/audio/candidates/closeout-review-20260922-final/human-review-artifacts/07-chopin-ballade/score.mid",
+          "sha256": "5e5cec3be0ba00cffe69f97344666c68dd8da89289485a91d9d7c06a09d8ad9a"
+        }
+      }
+    },
+    {
+      "suite": "human",
+      "case_id": "08-chopin-a-major",
+      "rating": "pending",
+      "notes": "",
+      "files": {
+        "audio": {
+          "path": "/Users/lixinyue/Desktop/project/songDance/songdance/api/tests/fixtures/audio/candidates/closeout-review-20260922-final/human-generated/08-chopin-a-major.wav",
+          "sha256": "a6a424988427e28864a1af2cbeb9bac0cfa825e6e5f03f69c1690f728f147637"
+        },
+        "musicxml": {
+          "path": "/Users/lixinyue/Desktop/project/songDance/songdance/api/tests/fixtures/audio/candidates/closeout-review-20260922-final/human-review-artifacts/08-chopin-a-major/score.musicxml",
+          "sha256": "22cce78100a7a820c1443e7cd48c1800861357c34336a68c38c57a4a4bc81db0"
+        },
+        "midi": {
+          "path": "/Users/lixinyue/Desktop/project/songDance/songdance/api/tests/fixtures/audio/candidates/closeout-review-20260922-final/human-review-artifacts/08-chopin-a-major/score.mid",
+          "sha256": "d1b66bf1bfe1489b54e42f51bc9e01352851f9a4568672a2fbe5ac8774ff224a"
+        }
+      }
+    },
+    {
+      "suite": "human",
+      "case_id": "09-chopin-waltz",
+      "rating": "pending",
+      "notes": "",
+      "files": {
+        "audio": {
+          "path": "/Users/lixinyue/Desktop/project/songDance/songdance/api/tests/fixtures/audio/candidates/closeout-review-20260922-final/human-generated/09-chopin-waltz.wav",
+          "sha256": "3d8d533ba57f65db3e957c30c283763d671e22a031fe88d666b7190c630b0987"
+        },
+        "musicxml": {
+          "path": "/Users/lixinyue/Desktop/project/songDance/songdance/api/tests/fixtures/audio/candidates/closeout-review-20260922-final/human-review-artifacts/09-chopin-waltz/score.musicxml",
+          "sha256": "a8cd20a0dfb70d90737ccac2e1c6d7d2acea17b6d68008d6384d384c6380bbcb"
+        },
+        "midi": {
+          "path": "/Users/lixinyue/Desktop/project/songDance/songdance/api/tests/fixtures/audio/candidates/closeout-review-20260922-final/human-review-artifacts/09-chopin-waltz/score.mid",
+          "sha256": "b5691eb72d357430c9b0e52ec366c3f86b62197f01b79ca94d0463848c5476a7"
+        }
+      }
+    },
+    {
+      "suite": "human",
+      "case_id": "10-rachmaninoff-c-sharp",
+      "rating": "pending",
+      "notes": "",
+      "files": {
+        "audio": {
+          "path": "/Users/lixinyue/Desktop/project/songDance/songdance/api/tests/fixtures/audio/candidates/closeout-review-20260922-final/human-generated/10-rachmaninoff-c-sharp.wav",
+          "sha256": "a9be74846304a76b7752d3321a0bfdc9daba2f2237cad34b9cb7d0e163599452"
+        },
+        "musicxml": {
+          "path": "/Users/lixinyue/Desktop/project/songDance/songdance/api/tests/fixtures/audio/candidates/closeout-review-20260922-final/human-review-artifacts/10-rachmaninoff-c-sharp/score.musicxml",
+          "sha256": "f7933d9e034c4e26b9f1bb4a6f61e0970dde179102a1ce92f0890e2261e1ae9d"
+        },
+        "midi": {
+          "path": "/Users/lixinyue/Desktop/project/songDance/songdance/api/tests/fixtures/audio/candidates/closeout-review-20260922-final/human-review-artifacts/10-rachmaninoff-c-sharp/score.mid",
+          "sha256": "e76e91558c42e2abed01468a7d9c3452648d735a840642dd8ed92db76425c1df"
+        }
+      }
+    }
+  ]
+}

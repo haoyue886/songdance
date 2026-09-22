@@ -1,0 +1,22 @@
+{
+  "schema_version": 1,
+  "status": "technical_candidate_rejected_pending_pitch_alignment",
+  "case": {
+    "id": "11-waltz-34-68-reference",
+    "pattern": "waltz_68_reference",
+    "description": "11-waltz-34 teacher-confirmed 6/8 reference",
+    "time_signature": "6/8",
+    "bass_scale_degrees": ["do", "fa", "sol", "re"],
+    "bass_note_value": "dotted_quarter",
+    "bass_notes_per_measure": 2,
+    "treble_note_value": "eighth",
+    "treble_notes_per_measure": 6,
+    "reference_pdf": "/Users/lixinyue/Desktop/11-waltz-34 - 完整乐谱.pdf",
+    "requires_reference_pitch_review": true
+  },
+  "duration_seconds": 30,
+  "sample_rate": 22050,
+  "noise": 0.0,
+  "bandwidth": "full",
+  "synthesis_seed": 1108
+}

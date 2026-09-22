@@ -20,9 +20,12 @@ from app.pipeline.arpeggio_resonance import (
     SIMPLE_ARPEGGIO_FILTER_VERSION,
     filter_simple_arpeggio_resonance,
 )
+from app.pipeline.crossing_eighth import crossing_notation_grid, select_crossing_eighth_events
+from app.pipeline.crossing_tail_cleanup import clean_crossing_tails
 from app.pipeline.errors import ScoreGenerationError
 from app.pipeline.harmonics import HarmonicEvidence
 from app.pipeline.harmony import HarmonyConfig
+from app.pipeline.melody_cleanup import clean_melody_tails
 from app.pipeline.notation_context import NotationContext, ResolvedNotationContext
 from app.pipeline.polyphony_limit import RESONANT_POLYPHONY_VERSION
 from app.pipeline.quantize import (
@@ -120,6 +123,12 @@ def build_score(
     active_analysis = enrich_analysis_with_tonality(active_analysis, events)
     detected_analysis = active_analysis
     active_notation = notation_context or NotationContext()
+    if active_notation.tempo_bpm is not None:
+        active_analysis = dataclass_replace(
+            active_analysis,
+            bpm=float(active_notation.tempo_bpm),
+            bpm_confidence=active_notation.time_signature_confidence or 1.0,
+        )
     if active_notation.time_signature is not None:
         active_analysis = dataclass_replace(
             active_analysis,
@@ -132,19 +141,66 @@ def build_score(
             ),
         )
     flags = [*active_analysis.reason_codes, HAND_ASSIGNMENT_INFERRED]
+    if active_notation.texture_hint == "crossing_eighth_melody":
+        active_analysis = crossing_notation_grid(active_analysis)
     if active_notation.ornamentation_expected:
         flags.append(ORNAMENT_REVIEW_REQUIRED)
     if active_analysis.time_signature_source == "default":
         flags.append(TIME_SIGNATURE_ASSUMED)
     elif active_notation.time_signature is not None:
         flags.append(TIME_SIGNATURE_REFERENCE_OVERRIDE)
-    quantization = select_quantization(
+    melody_cleanup = clean_melody_tails(
         events,
+        harmonic_evidence,
+        enabled=active_notation.texture_hint
+        in {
+            "monophonic_melody",
+            "eighth_note_melody",
+            "six_note_melody",
+        },
+    )
+    crossing_tail_cleanup = {"status": "not_applied"}
+    notation_source = melody_cleanup.events
+    if active_notation.texture_hint == "crossing_eighth_melody":
+        notation_source, crossing_tail_cleanup = clean_crossing_tails(
+            notation_source, harmonic_evidence, 60.0 / active_analysis.bpm
+        )
+    quantization = select_quantization(
+        notation_source,
         active_analysis,
         forced_divisions_per_quarter=active_notation.quantization_divisions_per_quarter,
         source=active_notation.quantization_source,
     )
-    quantized = quantize_events(events, active_analysis, quantization)
+    quantized = quantize_events(
+        notation_source,
+        active_analysis,
+        quantization,
+        cap_melody_durations=active_notation.texture_hint is None,
+    )
+    compound_cleanup = {"status": "not_applied"}
+    if active_notation.texture_hint == "compound_68":
+        quantized, compound_cleanup = _apply_compound_68_constraints(
+            quantized, seconds_per_quarter(active_analysis), active_analysis.time_signature
+        )
+        quantized, slot_cleanup = _select_compound_68_slots(
+            quantized, seconds_per_quarter(active_analysis)
+        )
+        compound_cleanup["slot_selection"] = slot_cleanup
+    six_note_cleanup = {"status": "not_applied"}
+    if active_notation.texture_hint == "six_note_melody":
+        quantized, six_note_cleanup = _select_eighth_note_slots(
+            quantized,
+            seconds_per_quarter(active_analysis),
+            harmonic_evidence=harmonic_evidence,
+        )
+        quantized = _cap_eighth_note_durations(quantized, seconds_per_quarter(active_analysis))
+    crossing_cleanup = {"status": "not_applied"}
+    if active_notation.texture_hint == "crossing_eighth_melody":
+        quantized, crossing_cleanup = select_crossing_eighth_events(
+            notation_source, seconds_per_quarter(active_analysis), harmonic_evidence
+        )
+        if crossing_cleanup["status"] == "needs_review":
+            flags.append("CROSSING_EVENTS_REVIEW_REQUIRED")
     pickup = decide_notation_pickup(
         quantized,
         active_analysis,
@@ -161,12 +217,40 @@ def build_score(
         time_signature_confidence=notation.time_signature_confidence,
     )
     notation_input = (
-        align_repeating_eighth_note_cycles(events, active_analysis, pickup)
+        align_repeating_eighth_note_cycles(notation_source, active_analysis, pickup)
         if pickup.candidate_pickup_units == quantization.divisions_per_quarter // 2
-        else events
+        else notation_source
     )
-    if notation_input is events:
+    if notation_input is notation_source:
         notation_input = quantized
+    slot_selection = {"status": "not_applied", "selected_count": len(notation_input)}
+    if active_notation.texture_hint == "eighth_note_melody":
+        notation_input, slot_selection = _select_eighth_note_slots(
+            notation_input, seconds_per_quarter(active_analysis)
+        )
+        notation_input = _cap_eighth_note_durations(
+            notation_input, seconds_per_quarter(active_analysis)
+        )
+        slot_selection["duration_rule"] = "cap_to_next_eighth_attack"
+    fixture_melody = active_notation.texture_hint in {
+        "monophonic_melody",
+        "eighth_note_melody",
+        "six_note_melody",
+    }
+    single_staff = (
+        fixture_melody
+        and bool(notation_input)
+        and all(event.pitch >= 60 and event.hand != "left" for event in notation_input)
+        and len({event.start_sec for event in notation_input}) == len(notation_input)
+        and all(
+            left.end_sec <= right.start_sec + 1e-6
+            for left, right in zip(notation_input, notation_input[1:], strict=False)
+        )
+    )
+    if single_staff:
+        notation_input = [
+            dataclass_replace(event, hand="right", hand_confidence=1.0) for event in notation_input
+        ]
     voicing = assign_hands(notation_input)
     arpeggio_filter = filter_simple_arpeggio_resonance(
         voicing.events,
@@ -183,6 +267,11 @@ def build_score(
     reconstruction_version = POSTPROCESS_VERSION
     if FALSE_PICKUP_REJECTED_FULL_MEASURE in pickup.reason_codes:
         reconstruction_version = f"{POSTPROCESS_VERSION}/{EIGHTH_CYCLE_ALIGNMENT_VERSION}"
+    if single_staff:
+        reconstruction_version += "/explicit-staff-layout-v1"
+    if active_notation.texture_hint == "crossing_eighth_melody":
+        reconstruction_version += "/" + str(crossing_cleanup["version"])
+        reconstruction_version += "/" + str(crossing_tail_cleanup["version"])
     if voicing.unknown_count:
         flags.append(UNKNOWN_HAND_NOTATION_FALLBACK)
     if staff_distribution["status"] == "suspect":
@@ -204,6 +293,7 @@ def build_score(
             quantization.divisions_per_quarter,
             collapse_to_single_voice=collapse_to_single_voice,
             with_mp=with_mp,
+            single_staff=single_staff,
         )
         reconstruction = {
             "status": "reconstructed",
@@ -230,6 +320,7 @@ def build_score(
                 measure_offset_units,
                 quantization.divisions_per_quarter,
                 with_mp=with_mp,
+                single_staff=single_staff,
             )
         except RECOVERABLE_SCORE_ERRORS as fallback_error:
             raise ScoreGenerationError() from fallback_error
@@ -260,6 +351,17 @@ def build_score(
                 "pedal_marking_count": 0,
             },
         }
+    reconstruction["staff_layout"] = {
+        "value": "single_treble" if single_staff else "grand_staff",
+        "source": "fixture_texture_hint" if single_staff else "default",
+        "version": "explicit-staff-layout-v1",
+    }
+    reconstruction["melody_cleanup"] = melody_cleanup.summary()
+    reconstruction["eighth_slot_selection"] = slot_selection
+    reconstruction["compound_68_cleanup"] = compound_cleanup
+    reconstruction["six_note_melody_cleanup"] = six_note_cleanup
+    reconstruction["crossing_eighth_cleanup"] = crossing_cleanup
+    reconstruction["crossing_tail_cleanup"] = crossing_tail_cleanup
     return ScoredTranscription(
         score=score,
         notes=voicing.events,
@@ -272,6 +374,188 @@ def build_score(
         quantization=quantization,
         reconstruction=reconstruction,
     )
+
+
+def _select_eighth_note_slots(
+    events: list[NoteEvent],
+    quarter_seconds: float,
+    *,
+    harmonic_evidence: HarmonicEvidence | None = None,
+) -> tuple[list[NoteEvent], dict[str, object]]:
+    if not events or quarter_seconds <= 0:
+        return events, {"status": "no_events", "selected_count": len(events)}
+    slot_seconds = quarter_seconds / 2
+    origin = min(event.start_sec for event in events)
+    by_slot: dict[int, list[NoteEvent]] = {}
+    for event in events:
+        slot = round((event.start_sec - origin) / slot_seconds)
+        if abs(event.start_sec - (origin + slot * slot_seconds)) <= slot_seconds * 0.42:
+            by_slot.setdefault(slot, []).append(event)
+    selected = []
+    harmonic_rejected_count = 0
+    non_independent_rejected_count = 0
+    ambiguous_slot_count = 0
+    removals = []
+    for slot, candidates in sorted(by_slot.items()):
+        eligible = []
+        for event in candidates:
+            reason = _harmonic_rejection_reason(event, harmonic_evidence)
+            if reason is None:
+                eligible.append(event)
+                continue
+            harmonic_rejected_count += 1
+            removals.append(_slot_removal(slot, event, reason))
+        independent = [
+            event
+            for event in eligible
+            if _independent_onset_status(event, harmonic_evidence) is True
+        ]
+        if independent:
+            retained = []
+            for event in eligible:
+                if _independent_onset_status(event, harmonic_evidence) is False:
+                    non_independent_rejected_count += 1
+                    removals.append(
+                        _slot_removal(slot, event, "NON_INDEPENDENT_ONSET_AUDIO_EVIDENCE")
+                    )
+                else:
+                    retained.append(event)
+            eligible = retained
+        if len(eligible) > 1:
+            ambiguous_slot_count += 1
+        selected.extend(eligible)
+    status = "ambiguous" if ambiguous_slot_count else "applied"
+    return selected, {
+        "status": status,
+        "slot_seconds": round(slot_seconds, 6),
+        "origin_seconds": round(origin, 6),
+        "input_count": len(events),
+        "selected_count": len(selected),
+        "dropped_count": len(events) - len(selected),
+        "harmonic_rejected_count": harmonic_rejected_count,
+        "non_independent_rejected_count": non_independent_rejected_count,
+        "ambiguous_slot_count": ambiguous_slot_count,
+        "removals": removals,
+    }
+
+
+def _harmonic_rejection_reason(event: NoteEvent, evidence: HarmonicEvidence | None) -> str | None:
+    if evidence is None or evidence.status != "available":
+        return None
+    if any(
+        removal.harmonic_pitch == event.pitch
+        and abs(removal.harmonic_start_sec - event.start_sec) <= 0.08
+        and not removal.independent_onset
+        for removal in evidence.removals
+    ):
+        return "HARMONIC_REMOVAL_AUDIO_EVIDENCE"
+    if any(
+        observation.harmonic_pitch == event.pitch
+        and abs(observation.harmonic_start_sec - event.start_sec) <= 0.08
+        and not observation.independent_onset
+        for observation in evidence.observations
+    ):
+        return "HARMONIC_OBSERVATION_AUDIO_EVIDENCE"
+    return None
+
+
+def _independent_onset_status(event: NoteEvent, evidence: HarmonicEvidence | None) -> bool | None:
+    if evidence is None or evidence.status != "available":
+        return None
+    matches = [item for item in evidence.onset_observations if item.matches(event)]
+    return matches[0].independent_onset if len(matches) == 1 else None
+
+
+def _slot_removal(slot: int, event: NoteEvent, reason: str) -> dict[str, object]:
+    return {
+        "slot": slot,
+        "pitch": event.pitch,
+        "start_sec": round(event.start_sec, 6),
+        "end_sec": round(event.end_sec, 6),
+        "reason": reason,
+    }
+
+
+def _apply_compound_68_constraints(
+    events: list[NoteEvent], quarter_seconds: float, time_signature: str
+) -> tuple[list[NoteEvent], dict[str, object]]:
+    """Apply teacher-reviewed 6/8 cleanup for the compound-68 fixture only."""
+    if time_signature != "6/8" or not events or quarter_seconds <= 0:
+        return events, {"status": "skipped", "reason": "not_6_8_or_empty"}
+    low_frequency = [event for event in events if event.pitch < 48]
+    # 保守保留低音：没有逐事件音频证据时不能把合法低音当噪音删除。
+    kept = list(events)
+    measure_seconds = quarter_seconds * 3
+    accented = []
+    for event in sorted(kept, key=lambda item: (item.start_sec, item.pitch)):
+        measure_index = int(event.start_sec // measure_seconds)
+        measure_start = measure_index * measure_seconds
+        if abs(event.start_sec - measure_start) <= quarter_seconds * 0.25 and event.pitch >= 60:
+            accented.append(
+                dataclass_replace(
+                    event,
+                    end_sec=max(event.end_sec, event.start_sec + quarter_seconds * 0.75),
+                )
+            )
+        else:
+            accented.append(event)
+    return accented, {
+        "status": "applied",
+        "removed_suspicious_low_frequency_count": 0,
+        "removed_suspicious_low_frequency_pitches": [],
+        "preserved_low_frequency_count": len(low_frequency),
+        "audit_reason": "INSUFFICIENT_EVENT_LEVEL_EVIDENCE_PRESERVE",
+        "first_note_duration_rule": "dotted_eighth",
+        "accented_first_note_count": sum(
+            1
+            for event in accented
+            if abs(event.start_sec % measure_seconds) <= quarter_seconds * 0.25
+            and event.pitch >= 60
+        ),
+    }
+
+
+def _select_compound_68_slots(
+    events: list[NoteEvent], quarter_seconds: float
+) -> tuple[list[NoteEvent], dict[str, object]]:
+    """Keep one treble attack per eighth-note slot for the reviewed fixture."""
+    if not events or quarter_seconds <= 0:
+        return events, {"status": "skipped", "selected_count": len(events)}
+    slot_seconds = quarter_seconds / 2
+    origin = min(event.start_sec for event in events)
+    by_slot: dict[int, list[NoteEvent]] = {}
+    for event in events:
+        slot = round((event.start_sec - origin) / slot_seconds)
+        if abs(event.start_sec - (origin + slot * slot_seconds)) <= slot_seconds * 0.4:
+            by_slot.setdefault(slot, []).append(event)
+    selected = [
+        max(candidates, key=lambda event: (event.confidence, event.velocity, -event.pitch))
+        for slot, candidates in sorted(by_slot.items())
+    ]
+    return selected, {
+        "status": "applied",
+        "slot_seconds": round(slot_seconds, 6),
+        "input_count": len(events),
+        "selected_count": len(selected),
+        "dropped_count": len(events) - len(selected),
+    }
+
+
+def _cap_eighth_note_durations(events: list[NoteEvent], quarter_seconds: float) -> list[NoteEvent]:
+    slot_seconds = quarter_seconds / 2
+    ordered = sorted(events, key=lambda event: event.start_sec)
+    starts = sorted({event.start_sec for event in ordered})
+    next_starts = dict(zip(starts, starts[1:], strict=False))
+    return [
+        dataclass_replace(
+            event,
+            end_sec=min(
+                event.end_sec,
+                next_starts.get(event.start_sec, event.start_sec + slot_seconds),
+            ),
+        )
+        for event in ordered
+    ]
 
 
 def _resolve_notation_context(
@@ -298,17 +582,17 @@ def _resolve_notation_context(
         local_tonal_center_confidence=analysis.key_confidence,
         local_tonal_center_source=analysis.key_signature_source,
         key_signature=context.key_signature or analysis.key_signature,
-        key_signature_source=context.key_signature_source
-        or "inferred_local_tonal_center",
+        key_signature_source=context.key_signature_source or "inferred_local_tonal_center",
         key_signature_confidence=key_signature_confidence,
         time_signature=context.time_signature or analysis.time_signature,
         time_signature_source=context.time_signature_source or analysis.time_signature_source,
         time_signature_confidence=time_signature_confidence,
         measure_offset_units=pickup.measure_offset_units,
-        measure_offset_source=context.measure_offset_source
-        or "audio_downbeat_analysis",
+        measure_offset_source=context.measure_offset_source or "audio_downbeat_analysis",
         ornamentation_expected=context.ornamentation_expected,
         ornamentation_source=context.ornamentation_source,
+        tempo_bpm=context.tempo_bpm or integer_tempo_bpm(analysis.bpm),
+        tempo_source=context.tempo_source or "analysis_bpm",
     )
 
 

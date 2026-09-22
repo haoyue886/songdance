@@ -1,0 +1,25 @@
+{
+  "case_id": "11-waltz-34-68-reference",
+  "time_signature": "6/8",
+  "measures": 6,
+  "status": "teacher_sequence_recorded_pending_octave_check",
+  "teacher_sequence": "空-do-mi-空-fa-la / 空-sol-si-空-re-升fa",
+  "bass_cycle": ["do", "fa", "sol", "re"],
+  "unit": "eighth_note_slot",
+  "treble": [
+    {"measure": 1, "slots": [null, null, null, null, null, null]},
+    {"measure": 2, "slots": [null, null, null, null, null, null]},
+    {"measure": 3, "slots": [null, null, null, null, null, null]},
+    {"measure": 4, "slots": [null, null, null, null, null, null]},
+    {"measure": 5, "slots": [null, null, null, null, null, null]},
+    {"measure": 6, "slots": [null, null, null, null, null, null]}
+  ],
+  "bass": [
+    {"measure": 1, "slots": [null, null]},
+    {"measure": 2, "slots": [null, null]},
+    {"measure": 3, "slots": [null, null]},
+    {"measure": 4, "slots": [null, null]},
+    {"measure": 5, "slots": [null, null]},
+    {"measure": 6, "slots": [null, null]}
+  ]
+}

@@ -101,16 +101,51 @@ def test_reference_score_can_hold_k545_at_sixteenth_resolution() -> None:
     assert scored.quantization.reason_codes == (REFERENCE_QUANTIZATION_CONTEXT,)
 
 
-def test_short_value_truth_manifest_covers_each_supported_resolution() -> None:
-    manifest = json.loads(
-        (FIXTURE_ROOT / "short-value-manifest.json").read_text(encoding="utf-8")
+def test_expert_eighth_notation_overrides_tempo_without_changing_absolute_spacing():
+    analysis = replace(_analysis(), bpm=117.453835)
+    events = [
+        NoteEvent(index * 0.5, index * 0.5 + 0.42, 60 + index % 8, 88, 0.95) for index in range(16)
+    ]
+    scored = build_score(
+        events,
+        analysis=analysis,
+        notation_context=NotationContext(
+            texture_hint="eighth_note_melody",
+            time_signature="4/4",
+            time_signature_source="expert_review",
+            time_signature_confidence=1.0,
+            quantization_divisions_per_quarter=4,
+            quantization_source="expert_review",
+            tempo_bpm=60,
+            tempo_source="expert_review",
+        ),
     )
+    assert scored.tempo_bpm == 60
+    assert scored.analysis.bpm == 60
+    assert scored.detected_analysis.bpm == 117.453835
+    assert [round(e.start_sec, 3) for e in scored.notation_notes[:8]] == [
+        0.0,
+        0.5,
+        1.0,
+        1.5,
+        2.0,
+        2.5,
+        3.0,
+        3.5,
+    ]
+    assert scored.notation.summary()["notation_tempo_bpm"] == 60
+    assert scored.reconstruction["eighth_slot_selection"]["selected_count"] == 16
+
+
+def test_short_value_truth_manifest_covers_each_supported_resolution() -> None:
+    manifest = json.loads((FIXTURE_ROOT / "short-value-manifest.json").read_text(encoding="utf-8"))
 
     assert manifest["suite_type"] == "synthetic_short_value_truth"
-    assert {
-        (case["divisions_per_quarter"], case["note_value"])
-        for case in manifest["cases"]
-    } == {(4, 16), (8, 32), (16, 64)}
+    assert {(case["divisions_per_quarter"], case["note_value"]) for case in manifest["cases"]} == {
+        (4, 16),
+        (8, 32),
+        (16, 64),
+    }
 
 
 @pytest.mark.parametrize(

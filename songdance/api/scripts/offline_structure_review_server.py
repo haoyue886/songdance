@@ -86,7 +86,14 @@ class ReviewHandler(BaseHTTPRequestHandler):
 def run(root: Path = PACKAGE_ROOT, port: int = 8766, *, open_browser: bool = True) -> None:
     verify_integrity(root)
     ReviewHandler.package_root = root
-    server = ThreadingHTTPServer(("127.0.0.1", port), ReviewHandler)
+    try:
+        server = ThreadingHTTPServer(("127.0.0.1", port), ReviewHandler)
+    except OSError as error:
+        if getattr(error, "errno", None) != 48 or port == 0:
+            raise
+        server = ThreadingHTTPServer(("127.0.0.1", 0), ReviewHandler)
+        port = server.server_address[1]
+        print(f"端口 8766 已被占用，已切换到空闲端口 {port}")
     url = f"http://127.0.0.1:{port}"
     print(f"SongDance 离线结构评审：{url}")
     if open_browser:

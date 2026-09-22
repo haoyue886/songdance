@@ -10,6 +10,7 @@ from app.pipeline.score_validation import (
     raise_for_structure_errors,
     score_structure_summary,
 )
+from app.pipeline.single_staff_io import read_single_piano_layout
 from app.pipeline.voicing import notation_hand
 
 if TYPE_CHECKING:
@@ -90,6 +91,19 @@ def read_musicxml_piano_layout(source: Path) -> dict[str, object]:
     measures = parts[0].findall("./measure") if len(parts) == 1 else []
     first_measure = measures[0] if measures else None
     staves = first_measure.find("./attributes/staves") if first_measure is not None else None
+    if first_measure is not None and (staves is None or staves.text == "1"):
+        single = read_single_piano_layout(root)
+        entries = [
+            (pedal.get("number", "1"), pedal.get("type"), direction.findtext("staff", "1"))
+            for direction in parts[0].findall("./measure/direction")
+            if (pedal := direction.find("./direction-type/pedal")) is not None
+        ]
+        errors = _pedal_mark_errors(entries)
+        if any(entry[2] != "1" for entry in entries):
+            errors.append("INVALID_PIANO_PEDAL_STAFF")
+        if errors:
+            raise ValueError(", ".join(errors))
+        return {**single, "pedal_mark_count": sum(entry[1] == "start" for entry in entries)}
     clefs = {
         item.get("number"): (item.findtext("./sign"), item.findtext("./line"))
         for item in (

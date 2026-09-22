@@ -1,0 +1,59 @@
+{
+  "schema_version": 1,
+  "production_eligible": false,
+  "confirmation_source": "user_message",
+  "confirmation_text": "都没问题进行下一步",
+  "scope": "acceptance of current score candidates; not model deployment approval",
+  "cases": [
+    {
+      "case_id": "06-sustain",
+      "status": "user_accepted_candidate",
+      "source_kind": "new_synthetic_teacher_pattern_not_original_audio",
+      "files": {
+        "score.musicxml": {
+          "path": "songdance/api/tests/fixtures/audio/candidates/06-teacher-triad-score-v2/score.musicxml",
+          "sha256": "3aeb4ee2528a2839905139ba5c91923ef51ab042737e606f17460e7aa2ce0616"
+        },
+        "source.wav": {
+          "path": "songdance/api/tests/fixtures/audio/candidates/06-teacher-triad-source-v1/source.wav",
+          "sha256": "fe811f1edc1c33e9207b9f96988a933de096fb1f5a63ac3b54ef5349fac70e24"
+        }
+      },
+      "known_limitations": []
+    },
+    {
+      "case_id": "07-soft",
+      "status": "user_accepted_candidate",
+      "source_kind": "original_fixture",
+      "files": {
+        "score.musicxml": {
+          "path": "teacher-transkun-candidates-2026-09-16/07-soft/candidate.musicxml",
+          "sha256": "3db345f7a6e5e0df1f278dc1334ce3d7fbe2c2eb67136c03e1c8ae0384f59dca"
+        },
+        "source.wav": {
+          "path": "songdance/api/tests/fixtures/audio/generated/07-soft.wav",
+          "sha256": "380160b2a85112599a6923e9cbec855bafc860ac6fce697cd563868d8a68ba12"
+        }
+      },
+      "known_limitations": []
+    },
+    {
+      "case_id": "10-device",
+      "status": "user_accepted_candidate",
+      "source_kind": "original_fixture",
+      "files": {
+        "score.musicxml": {
+          "path": "songdance/api/tests/fixtures/audio/candidates/piano-model-comparison-expanded-v1/10-device/bass-rhythm-v2/score.musicxml",
+          "sha256": "d6b4b9a1c9f8704fb26f86908cb624572d85b8685c8026b1dc918e5ba6e62692"
+        },
+        "source.wav": {
+          "path": "songdance/api/tests/fixtures/audio/generated/10-device.wav",
+          "sha256": "2a364af3fd70cbb4b7cf45dfc6d36eccfbdc0d3d43ec6e0eeb60588197ca2381"
+        }
+      },
+      "known_limitations": [
+        "model still misses C2 at 0/15/16 seconds; score acceptance does not erase this finding"
+      ]
+    }
+  ]
+}

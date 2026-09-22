@@ -17,13 +17,13 @@
     {"id": "05-two-hand", "pattern": "two_hand", "description": "Independent bass and melody", "noise": 0.0, "bandwidth": "full"},
     {"id": "06-sustain", "pattern": "sustain", "description": "Overlapping sustained harmony", "noise": 0.0, "bandwidth": "full"},
     {"id": "07-soft", "pattern": "soft", "description": "Low-velocity melody", "noise": 0.0, "bandwidth": "full"},
-    {"id": "08-dynamics", "pattern": "dynamics", "description": "Wide velocity changes", "noise": 0.0, "bandwidth": "full"},
-    {"id": "09-light-noise", "pattern": "slow_melody", "description": "Melody with light background noise", "noise": 0.006, "bandwidth": "full"},
+    {"id": "08-dynamics", "pattern": "dynamics", "description": "Wide velocity changes", "noise": 0.0, "bandwidth": "full", "texture_hint": "eighth_note_melody"},
+    {"id": "09-light-noise", "pattern": "slow_melody", "description": "Melody with light background noise", "noise": 0.006, "bandwidth": "full", "texture_hint": "monophonic_melody"},
     {"id": "10-device", "pattern": "two_hand", "description": "Narrow-band device recording with noise", "noise": 0.01, "bandwidth": "device"},
     {"id": "11-waltz-34", "pattern": "waltz_34", "description": "Three-four waltz accompaniment", "noise": 0.0, "bandwidth": "full"},
-    {"id": "12-compound-68", "pattern": "compound_68", "description": "Six-eight compound rhythm", "noise": 0.0, "bandwidth": "full"},
-    {"id": "13-key-change", "pattern": "key_change", "description": "Mid-clip key change", "noise": 0.0, "bandwidth": "full"},
-    {"id": "14-hand-crossing", "pattern": "hand_crossing", "description": "Crossing-hand polyphonic motion", "noise": 0.0, "bandwidth": "full"},
+    {"id": "12-compound-68", "pattern": "compound_68", "description": "Six-eight compound rhythm", "noise": 0.0, "bandwidth": "full", "texture_hint": "compound_68"},
+    {"id": "13-key-change", "pattern": "key_change", "description": "Six-note cycle with key change", "noise": 0.0, "bandwidth": "full", "texture_hint": "six_note_melody"},
+    {"id": "14-hand-crossing", "pattern": "hand_crossing", "description": "Crossing-hand polyphonic motion", "noise": 0.0, "bandwidth": "full", "texture_hint": "crossing_eighth_melody"},
     {"id": "15-repeated-notes", "pattern": "repeated_notes", "description": "Rapid repeated notes", "noise": 0.0, "bandwidth": "full"},
     {"id": "16-noisy-polyphony", "pattern": "noisy_polyphony", "description": "Polyphony with background noise", "noise": 0.008, "bandwidth": "full"}
   ]

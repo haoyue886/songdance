@@ -46,10 +46,16 @@ def build_reconstructed_score(
     *,
     collapse_to_single_voice: bool,
     with_mp: bool,
+    single_staff: bool = False,
 ) -> tuple[stream.Score, dict[str, object], dict[str, object]]:
     score = stream.Score(id="songdance-score")
     score.metadata = _score_metadata(title)
-    right = _new_staff("right-hand", clef.TrebleClef(), analysis, with_tempo=True)
+    if single_staff and any(notation_hand(event) != "right" for event in events):
+        raise ValueError("SINGLE_STAFF_REQUIRES_TREBLE_EVENTS")
+    right = _new_staff(
+        "right-hand", clef.TrebleClef(), analysis, with_tempo=True,
+        single_staff=single_staff,
+    )
     left = _new_staff("left-hand", clef.BassClef(), analysis)
     right_compression = populate_part(
         right,
@@ -72,8 +78,9 @@ def build_reconstructed_score(
         collapse_to_single_voice=collapse_to_single_voice,
     )
     score.insert(0, right)
-    score.insert(0, left)
-    _insert_piano_staff_group(score, right, left)
+    if not single_staff:
+        score.insert(0, left)
+        _insert_piano_staff_group(score, right, left)
     if collapse_to_single_voice:
         single_voice_applied = bool(
             right_compression["single_voice_applied"] and left_compression["single_voice_applied"]
@@ -113,7 +120,10 @@ def build_basic_score(
     divisions_per_quarter: int,
     *,
     with_mp: bool = False,
+    single_staff: bool = False,
 ) -> tuple[stream.Score, dict[str, object]]:
+    if single_staff and any(notation_hand(event) != "right" for event in events):
+        raise ValueError("SINGLE_STAFF_REQUIRES_TREBLE_EVENTS")
     score = stream.Score(id="songdance-score-fallback")
     score.metadata = _score_metadata(title)
     staffs = []
@@ -121,11 +131,14 @@ def build_basic_score(
         ("right", "right-hand", clef.TrebleClef()),
         ("left", "left-hand", clef.BassClef()),
     ):
+        if single_staff and hand == "left":
+            continue
         part = _new_staff(
             part_id,
             staff_clef,
             analysis,
             with_tempo=hand == "right",
+            single_staff=single_staff,
         )
         candidates = group_harmony(
             [event for event in events if notation_hand(event) == hand],
@@ -151,7 +164,8 @@ def build_basic_score(
         part.insert(0, voice)
         score.insert(0, part)
         staffs.append(part)
-    _insert_piano_staff_group(score, *staffs)
+    if not single_staff:
+        _insert_piano_staff_group(score, *staffs)
     return _finalize_score(
         score, measure_offset_units, divisions_per_quarter, with_mp=with_mp
     )
@@ -231,8 +245,9 @@ def _new_staff(
     analysis: StructureAnalysis,
     *,
     with_tempo: bool = False,
-) -> stream.PartStaff:
-    part = stream.PartStaff(id=part_id)
+    single_staff: bool = False,
+) -> stream.Part:
+    part = stream.Part(id=part_id) if single_staff else stream.PartStaff(id=part_id)
     part.partName = "Piano"
     part.insert(0, instrument.Piano())
     part.insert(0, staff_clef)

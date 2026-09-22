@@ -3,6 +3,7 @@ from dataclasses import asdict
 from pathlib import Path
 
 from app.pipeline.quality import _event_sort_key, pipeline_postprocess_version
+from app.pipeline.quantize import integer_tempo_bpm
 from app.pipeline.score import ScoredTranscription
 from app.pipeline.transcribe import MODEL_VERSION, NoteEvent
 
@@ -32,6 +33,7 @@ def write_timeline(
     if (
         detected_analysis.time_signature != scored.analysis.time_signature
         or detected_analysis.time_signature_source != scored.analysis.time_signature_source
+        or round(detected_analysis.bpm) != round(scored.analysis.bpm)
     ):
         analysis_override = {
             "detected_time_signature": detected_analysis.time_signature,
@@ -40,6 +42,9 @@ def write_timeline(
             "notation_time_signature": scored.analysis.time_signature,
             "notation_time_signature_source": scored.analysis.time_signature_source,
             "notation_time_signature_confidence": scored.analysis.time_signature_confidence,
+            "detected_tempo_bpm": integer_tempo_bpm(detected_analysis.bpm),
+            "notation_tempo_bpm": scored.tempo_bpm,
+            "notation_tempo_source": scored.notation.tempo_source,
         }
     timeline = {
         "schema_version": 1,

@@ -59,6 +59,7 @@ class CleanupResult:
     reason_counts: dict[str, int]
     config: CleanupConfig
     harmonic_evidence: HarmonicEvidence
+    preserve_simultaneous_unisons: bool = False
 
     def summary(self) -> dict[str, object]:
         removed = sum(
@@ -72,7 +73,11 @@ class CleanupResult:
         )
         return {
             "status": "applied",
-            "version": self.config.version,
+            "version": self.config.version + (
+                "/preserve-unisons-v1" if self.preserve_simultaneous_unisons else ""
+            ),
+            **({"simultaneous_unison_policy": "preserve"}
+               if self.preserve_simultaneous_unisons else {}),
             "config": self.config.as_dict(),
             "source_note_count": self.source_note_count,
             "output_note_count": len(self.events),
@@ -91,6 +96,7 @@ def clean_note_events(
     config: CleanupConfig | None = None,
     *,
     harmonic_evidence: HarmonicEvidence | None = None,
+    preserve_simultaneous_unisons: bool = False,
 ) -> CleanupResult:
     active_config = config or CleanupConfig()
     active_harmonics = harmonic_evidence or HarmonicEvidence.unavailable()
@@ -111,7 +117,7 @@ def clean_note_events(
         else:
             filtered.append(event)
 
-    deduplicated = _deduplicate(filtered, counts)
+    deduplicated = filtered if preserve_simultaneous_unisons else _deduplicate(filtered, counts)
     without_harmonics = _remove_harmonic_candidates(
         deduplicated, active_harmonics, counts
     )
@@ -125,6 +131,7 @@ def clean_note_events(
         reason_counts={reason: counts[reason] for reason in CLEANUP_REASON_CODES},
         config=active_config,
         harmonic_evidence=active_harmonics,
+        preserve_simultaneous_unisons=preserve_simultaneous_unisons,
     )
 
 

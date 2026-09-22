@@ -294,6 +294,30 @@ def test_strong_aligned_bass_octave_is_preserved(tmp_path: Path) -> None:
     assert result.events == [lower, upper]
 
 
+def test_candidate_velocity_scan_is_blocked_by_real_bass_octave_regression(
+    tmp_path: Path,
+) -> None:
+    audio_path = tmp_path / "candidate-scan-real-octave.wav"
+    _write_tones(
+        audio_path,
+        [(261.63, 0.8, 0.1, 1.0), (523.25, 0.46, 0.1, 0.8)],
+    )
+    lower = NoteEvent(0.1, 1.0, 60, 100, 0.9)
+    upper = NoteEvent(0.1, 0.8, 72, 58, 0.9)
+    config = HarmonicEvidenceConfig(
+        bass_priority_enabled=True,
+        bass_priority_source="triad_candidate_parameter_scan",
+        bass_maximum_velocity_ratio=0.60,
+    )
+
+    evidence = extract_harmonic_evidence(audio_path, [lower, upper], config)
+    result = clean_note_events([lower, upper], harmonic_evidence=evidence)
+
+    assert len(evidence.removals) == 1
+    assert evidence.removals[0].matches(upper)
+    assert result.events == [lower]
+
+
 def test_bass_priority_requires_a_named_evidence_source() -> None:
     with pytest.raises(ValueError, match="requires an evidence source"):
         HarmonicEvidenceConfig(bass_priority_enabled=True)

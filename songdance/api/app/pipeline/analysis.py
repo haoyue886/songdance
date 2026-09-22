@@ -18,9 +18,10 @@ from app.pipeline.analysis_features import (
     rank_meter_candidates as _rank_meter_candidates,
 )
 from app.pipeline.errors import StructureAnalysisError
+from app.pipeline.stable_beat_grid import calibrate
 from app.pipeline.transcribe import NoteEvent
 
-ANALYSIS_ALGORITHM_VERSION = "structure-analysis-v2"
+ANALYSIS_ALGORITHM_VERSION = "structure-analysis-v3"
 DEFAULT_BPM = 120.0
 DEFAULT_TIME_SIGNATURE = "4/4"
 TEMPO_DEFAULTED = "TEMPO_DEFAULTED"
@@ -80,6 +81,8 @@ class StructureAnalysis:
     minor_form_evidence: dict[str, object] = field(
         default_factory=lambda: {"status": "not_analyzed"}
     )
+
+    tempo_grid_evidence: dict[str, object] = field(default_factory=dict)
 
     def summary(self) -> dict[str, object]:
         return asdict(self)
@@ -185,6 +188,11 @@ def _analyze_audio_core(source: Path, active: AnalysisConfig) -> StructureAnalys
         tempo_confidence = 0.0
         beat_times = np.asarray([], dtype=float)
         reasons.append(TEMPO_DEFAULTED)
+    bpm, beat_times, tempo_grid_evidence = calibrate(
+        bpm, beat_times, active.hop_length / sample_rate
+    )
+    if tempo_grid_evidence["status"] == "calibrated":
+        reasons.append("STABLE_BEAT_GRID_CALIBRATED")
     selected_meter = meter_candidates[0]
     meter_confidence = float(selected_meter["confidence"])
     if meter_confidence < active.min_meter_confidence:
@@ -213,6 +221,7 @@ def _analyze_audio_core(source: Path, active: AnalysisConfig) -> StructureAnalys
     downbeats = _downbeats(beat_times, time_signature, downbeat_phase)
     elapsed = time.perf_counter() - started
     return StructureAnalysis(
+        tempo_grid_evidence=tempo_grid_evidence,
         status="analyzed" if not reasons else "analyzed_with_defaults",
         version=active.version,
         source="librosa-0.11.0",

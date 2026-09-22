@@ -104,6 +104,9 @@ class NoteOnsetEvidence:
     independent_onset: bool
     pre_onset_energy: float | None = None
     onset_energy: float | None = None
+    decay_fit_error: float | None = None
+    transient_fit_error: float | None = None
+    transient_reference_sec: float | None = None
 
     def summary(self) -> dict[str, object]:
         return asdict(self)
@@ -152,6 +155,9 @@ def extract_harmonic_evidence(
     audio_path: Path,
     events: list[NoteEvent],
     config: HarmonicEvidenceConfig | None = None,
+    *,
+    include_decay_evidence: bool = False,
+    include_transient_evidence: bool = False,
 ) -> HarmonicEvidence:
     active = config or HarmonicEvidenceConfig()
     try:
@@ -172,6 +178,22 @@ def extract_harmonic_evidence(
             events, audio, spectrum, frequencies, sample_rate, active
         )
         onset_observations = _measure_onsets(events, spectrum, frequencies, sample_rate, active)
+        if include_decay_evidence:
+            from app.pipeline.onset_decay import decay_fit_error
+
+            onset_observations = tuple(
+                replace(o, decay_fit_error=decay_fit_error(audio, sample_rate, e))
+                if not o.independent_onset else o
+                for e, o in zip(
+                    sorted(events, key=_event_sort_key), onset_observations, strict=True
+                )
+            )
+        if include_transient_evidence:
+            from app.pipeline.crossing_attack_evidence import measure_transients
+
+            onset_observations = measure_transients(
+                audio, sample_rate, events, onset_observations
+            )
     except Exception:
         logger.warning("Harmonic evidence extraction failed for %s", audio_path, exc_info=True)
         return HarmonicEvidence.unavailable()

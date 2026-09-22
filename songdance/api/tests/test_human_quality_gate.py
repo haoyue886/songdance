@@ -65,6 +65,10 @@ def test_human_review_requires_experience_and_complete_ratings(
     )
     monkeypatch.setattr(human_review_server, "REVIEW_PATH", review_path)
     initial_review = json.loads(review_path.read_text(encoding="utf-8"))
+    # Only this temporary unit-test copy represents a freshly bound review.
+    initial_review["suite_fingerprint"] = compute_suite_fingerprint(
+        human_review_server.FIXTURE_ROOT
+    )
     for index, result in enumerate(initial_review["results"], start=1):
         result["raw_midi_note_count"] = index
     initial_review["results"][0].pop("raw_midi_note_count")
@@ -101,6 +105,8 @@ def test_human_review_recovers_each_invalid_note_count(
 ) -> None:
     review_path = tmp_path / "human-review.json"
     review = json.loads(human_review_server.REVIEW_PATH.read_text(encoding="utf-8"))
+    # Do not rewrite the historical repository review or its quality gate.
+    review["suite_fingerprint"] = compute_suite_fingerprint(human_review_server.FIXTURE_ROOT)
     review["results"][0]["raw_midi_note_count"] = invalid_count
     review_path.write_text(json.dumps(review), encoding="utf-8")
     monkeypatch.setattr(human_review_server, "REVIEW_PATH", review_path)
@@ -198,3 +204,22 @@ def test_validator_rejects_artifact_changed_after_human_review(tmp_path: Path) -
     (artifacts / "case-1" / "score.mid").write_bytes(b"changed")
     with pytest.raises(ValueError, match="fingerprint is stale"):
         validate(review_path, fixture_root)
+
+
+def test_save_review_rejects_stale_fingerprint_without_writing(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    review_path = tmp_path / "stale-review.json"
+    review = json.loads(human_review_server.REVIEW_PATH.read_text(encoding="utf-8"))
+    review["suite_fingerprint"] = "intentionally-stale"
+    review_path.write_text(json.dumps(review), encoding="utf-8")
+    before = review_path.read_bytes()
+    monkeypatch.setattr(human_review_server, "REVIEW_PATH", review_path)
+    manifest = json.loads(human_review_server.MANIFEST_PATH.read_text(encoding="utf-8"))
+    results = [
+        {"id": case["id"], "rating": "direct_use", "notes": "test only"}
+        for case in manifest["cases"]
+    ]
+    with pytest.raises(ValueError, match="回归产物已变化"):
+        human_review_server.save_review({"midi_daw_experience": True, "results": results})
+    assert review_path.read_bytes() == before

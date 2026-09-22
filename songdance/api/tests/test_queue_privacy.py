@@ -1,3 +1,8 @@
+from functools import partial
+
+from rq import Worker
+
+from app import worker as worker_module
 from app.services.queue import queue_job_id
 from app.settings import Settings
 from app.worker import create_worker
@@ -20,7 +25,9 @@ def test_rq_job_id_is_deterministic_and_does_not_expose_task_token() -> None:
     assert len(first) == len("transcription-") + 64
 
 
-def test_worker_disables_rq_argument_descriptions() -> None:
+def test_worker_disables_rq_argument_descriptions(monkeypatch) -> None:
+    # Keep the real constructor/configuration check without touching a live Redis.
+    monkeypatch.setattr(worker_module, "Worker", partial(Worker, prepare_for_work=False))
     worker = create_worker(Settings(environment="test"))
 
     assert worker.log_job_description is False

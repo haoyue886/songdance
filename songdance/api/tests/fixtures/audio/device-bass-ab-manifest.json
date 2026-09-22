@@ -1,0 +1,23 @@
+{
+  "schema_version": 1,
+  "status": "isolated_experiment",
+  "experiment_id": "10-device-bass-ab-v1",
+  "pattern": "two_hand",
+  "duration_seconds": 30,
+  "sample_rate": 22050,
+  "noise": 0.01,
+  "noise_injection_stage": "before_bandwidth_filter",
+  "synthesis_seed": 1009,
+  "mixing_version": "paired-stems-v1",
+  "device_band_hz": [180, 5500],
+  "bass_pitch_max": 47,
+  "treble_pitch_min": 60,
+  "treble_velocity": 88,
+  "variants": [
+    {"id": "full-standard", "bandwidth": "full", "bass_velocity": 78},
+    {"id": "device-standard", "bandwidth": "180-5500", "bass_velocity": 78},
+    {"id": "full-weak", "bandwidth": "full", "bass_velocity": 38},
+    {"id": "device-weak", "bandwidth": "180-5500", "bass_velocity": 38}
+  ],
+  "production_change": false
+}

@@ -1,0 +1,19 @@
+{
+  "schema_version": 1,
+  "status": "expert_feedback_recorded_pending_candidate",
+  "case_id": "12-compound-68",
+  "time_signature": "6/8",
+  "treble_pattern": ["do", "mi", "sol", "la", "sol", "mi"],
+  "treble_note_value": "eighth",
+  "first_note_value": "dotted_eighth_or_tie",
+  "bass": {
+    "status": "suspicious_noise_layer",
+    "pitch_pattern": null,
+    "action": "retain_as_suspect_until_pitch_contour_or_harmonic_relation_is_confirmed"
+  },
+  "acceptance": {
+    "first_note_longer_than_other_five": true,
+    "reject_unrelated_low_frequency_events": true,
+    "preserve_suspicious_events_in_audit": true
+  }
+}

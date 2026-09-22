@@ -1,6 +1,6 @@
 from fractions import Fraction
 
-from music21 import chord, key, layout, meter, note, stream
+from music21 import chord, clef, instrument, key, layout, meter, note, stream
 
 MIN_REST_QUARTER_LENGTH = Fraction(1, 4)
 
@@ -110,6 +110,18 @@ def raise_for_piano_staff_layout(score: stream.Score, *, max_voices: int | None 
 
 
 def _piano_staff_layout_errors(score: stream.Score) -> list[str]:
+    if len(score.parts) == 1 and not isinstance(score.parts[0], stream.PartStaff):
+        part = score.parts[0]
+        valid = (
+            bool(list(part.recurse().getElementsByClass(instrument.Piano)))
+            and not list(score.getElementsByClass(layout.StaffGroup))
+            and bool(list(part.recurse().getElementsByClass(clef.TrebleClef)))
+            and all(
+                isinstance(item, clef.TrebleClef)
+                for item in part.recurse().getElementsByClass(clef.Clef)
+            )
+        )
+        return [] if valid else ["INVALID_SINGLE_PIANO_STAFF"]
     errors = []
     if len(score.parts) != 2:
         errors.append("EXPECTED_TWO_PIANO_STAVES")

@@ -1,0 +1,27 @@
+{
+  "schema_version": 1,
+  "status": "confirmed_by_expert_review",
+  "suite_type": "synthetic_three_note_sustain_truth",
+  "authorization": {
+    "source": "Procedurally synthesized by the SongDance regression generator",
+    "license": "CC0-1.0",
+    "third_party_audio": false
+  },
+  "duration_seconds": 30,
+  "sample_rate": 22050,
+  "case": {
+    "id": "06-sustain-triad-v2",
+    "pattern": "sustain_triad_v2",
+    "description": "Three-note C-major triad cycle from expert review",
+    "key_signature": "C major",
+    "chords_scale_degrees": ["5-1-3", "6-1-4", "5-7-2"],
+    "chords_midi": [[55, 60, 64], [57, 60, 65], [55, 59, 62]],
+    "onset_interval_seconds": 2.0,
+    "note_duration_seconds": 1.6,
+    "synthesis_seed": 9006,
+    "noise": 0.0,
+    "bandwidth": "full",
+    "requires_teacher_confirmation": false,
+    "confirmed_by": "piano_teacher_review_2026-09-06"
+  }
+}

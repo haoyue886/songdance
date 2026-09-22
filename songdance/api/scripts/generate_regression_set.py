@@ -47,9 +47,11 @@ def build_pattern(name: str) -> list[SynthNote]:
         "arpeggios": arpeggios,
         "two_hand": two_hand,
         "sustain": sustained_chords,
+        "sustain_triad_v2": sustained_triad_v2,
         "soft": soft_melody,
         "dynamics": dynamic_melody,
         "waltz_34": waltz_34,
+        "waltz_68_reference": waltz_68_reference,
         "compound_68": compound_68,
         "key_change": key_change,
         "hand_crossing": hand_crossing,
@@ -104,6 +106,18 @@ def sustained_chords() -> list[SynthNote]:
     return notes
 
 
+def sustained_triad_v2() -> list[SynthNote]:
+    """Versioned three-note C-major triad truth from the piano-teacher review."""
+    chords = ([55, 60, 64], [57, 60, 65], [55, 59, 62])  # 5-1-3, 6-1-4, 5-7-2
+    notes: list[SynthNote] = []
+    for index, start in enumerate(np.arange(0, 29, 2.0)):
+        notes.extend(
+            SynthNote(float(start), min(30.0, float(start + 1.6)), pitch, 76)
+            for pitch in chords[index % len(chords)]
+        )
+    return notes
+
+
 def soft_melody() -> list[SynthNote]:
     return sequence([72, 71, 69, 67, 64, 67, 69, 71], step=0.75, length=0.62, velocity=38)
 
@@ -136,6 +150,26 @@ def waltz_34() -> list[SynthNote]:
     return notes
 
 
+def waltz_68_reference() -> list[SynthNote]:
+    """6/8 expert reference: two dotted-quarter bass beats plus six eighths."""
+    bass = [48, 53, 55, 50]
+    treble = [60, 64, 67, 69, 71, 66]
+    notes: list[SynthNote] = []
+    eighth = 0.25
+    for measure, start in enumerate(np.arange(0, 28.0, 1.5)):
+        notes.extend(
+            [
+                SynthNote(float(start), float(start + 0.75), bass[(measure * 2) % 4], 78),
+                SynthNote(float(start + 0.75), float(start + 1.5), bass[(measure * 2 + 1) % 4], 78),
+            ]
+        )
+        notes.extend(
+            SynthNote(float(start + index * eighth), float(start + (index + 1) * eighth), pitch, 84)
+            for index, pitch in enumerate(treble)
+        )
+    return notes
+
+
 def compound_68() -> list[SynthNote]:
     pattern = [60, 64, 67, 69, 67, 64]
     notes = sequence(pattern, step=0.25, length=0.21, velocity=84)
@@ -147,11 +181,16 @@ def compound_68() -> list[SynthNote]:
 
 
 def key_change() -> list[SynthNote]:
-    first = sequence([60, 64, 67, 72, 67, 64], step=0.5, length=0.42, velocity=86)
+    first = [
+        note
+        for note in sequence(
+            [60, 64, 67, 72, 67, 64], step=0.5, length=0.42, velocity=86
+        )
+        if note.start < 15.0
+    ]
     second = [
         SynthNote(note.start + 15.0, min(30.0, note.end + 15.0), note.pitch + 2, note.velocity)
         for note in first
-        if note.start < 15.0
     ]
     return [*first, *second]
 

@@ -1,0 +1,30 @@
+{
+  "source": "user_relayed_teacher_review",
+  "scope": "specific_delivered_candidates_not_production_model_approval",
+  "cases": [
+    {
+      "case_id": "07-soft",
+      "candidate_path": "teacher-transkun-candidates-2026-09-16/07-soft/candidate.musicxml",
+      "candidate_sha256": "3db345f7a6e5e0df1f278dc1334ce3d7fbe2c2eb67136c03e1c8ae0384f59dca",
+      "status": "passed_reviewed_items",
+      "teacher_findings": {
+        "single_treble_staff": true,
+        "note_durations_correct": true,
+        "pedal_or_extension_required": false,
+        "cycle_measure_alignment": true
+      }
+    },
+    {
+      "case_id": "10-device",
+      "candidate_path": "teacher-transkun-candidates-2026-09-16/10-device/candidate.musicxml",
+      "candidate_sha256": "6940a929dadb3947c61b0bbe73acd51fb928deda1ab43a4c923a978dc1c258d0",
+      "status": "requires_revision",
+      "teacher_findings": {
+        "bass_cycle_complete": false,
+        "bass_one_note_per_beat_correct": false,
+        "hands_aligned": true,
+        "treble_durations_correct": true
+      }
+    }
+  ]
+}

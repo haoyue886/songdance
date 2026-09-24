@@ -1,0 +1,58 @@
+<!doctype html><html lang="zh-CN"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>真人重复音听辨</title>
+<style>body{font:16px system-ui,sans-serif;max-width:980px;margin:32px auto;padding:0 16px;color:#20252b}section{border:1px solid #d8dde3;border-radius:8px;padding:16px;margin:16px 0}button{margin:6px 6px 6px 0;padding:8px 10px;border:1px solid #b9c2cc;border-radius:5px;background:#fff;color:#165b46;cursor:pointer}label{display:block;margin:12px 0}input,select,textarea{font:inherit;max-width:100%;box-sizing:border-box;padding:8px}textarea{width:100%;min-height:80px}audio{width:100%}.hint{color:#59636e}#status{min-height:24px}button:disabled{opacity:.5}input[type=file]{width:100%}</style>
+<h1>真人重复音听辨</h1><p>候选由模型检索，不代表真实击键。请听辨标记位置是否再次击键；不能确认时选“无法判断”。</p>
+<p class="hint">本页只收集草稿，不会提交评级或删除音符。缓存可能被浏览器清理，请定期下载备份。</p>
+<label>复核人姓名或代号 <input id="reviewer" autocomplete="off"></label>
+<p id="progress"></p><section><h2 id="title"></h2><p id="position"></p><audio id="audio" controls preload="metadata"></audio>
+<button id="replay">从候选前 0.3 秒播放</button><p id="clock" class="hint"></p>
+<label>判断 <select id="judgment"><option value="pending">待确认</option><option value="restrike">确有再次击键</option><option value="no_restrike">没有再次击键</option><option value="uncertain">无法判断</option></select></label>
+<div id="confirmed"><label>确认音高（MIDI 21–108；中央 C 为 60） <input id="pitch" type="number" min="21" max="108" step="1"></label>
+<label>确认起音（原 30 秒片段的秒数） <input id="onset" type="number" step="any" min="0"></label>
+<button id="capture">填入当前播放的原片时间</button></div>
+<label>听辨依据或疑问 <textarea id="notes"></textarea></label>
+<button id="previous">上一条</button><button id="next">下一条</button></section>
+<button id="download">下载标注草稿</button><label>恢复已下载的草稿（将替换本页草稿） <input id="import" type="file" accept=".json,application/json"></label>
+<p id="status" role="status"></p>
+<script type="application/json" id="data">__DATA__</script><script>
+'use strict';
+const data=JSON.parse(document.getElementById('data').textContent), items=data.manifest.candidates;
+const $=id=>document.getElementById(id), key='repeat-annotations:'+data.initial.manifest_sha256;
+let state=structuredClone(data.initial), index=0;
+function check(s){
+ if(!s||s.manifest_sha256!==data.initial.manifest_sha256||!Array.isArray(s.labels)||s.labels.length!==items.length)throw Error('草稿不属于这批候选');
+ if(s.reviewer!==null&&typeof s.reviewer!=='string')throw Error('复核人字段无效');
+ const ids=new Set();
+ for(const r of s.labels){
+  const item=items.find(x=>x.id===r.id);if(!item||ids.has(r.id))throw Error('候选缺失或重复');ids.add(r.id);
+  if(!['pending','restrike','no_restrike','uncertain'].includes(r.judgment)||typeof r.notes!=='string')throw Error('标注字段无效');
+  if(r.confirmed_pitch!==null&&(!Number.isInteger(r.confirmed_pitch)||r.confirmed_pitch<21||r.confirmed_pitch>108))throw Error('确认音高无效');
+  if(r.confirmed_onset_sec!==null&&(typeof r.confirmed_onset_sec!=='number'||!Number.isFinite(r.confirmed_onset_sec)||r.confirmed_onset_sec<item.start_sample/data.manifest.sample_rate||r.confirmed_onset_sec>=item.stop_sample/data.manifest.sample_rate))throw Error('确认起音超出片段');
+  if(r.judgment!=='restrike'&&(r.confirmed_pitch!==null||r.confirmed_onset_sec!==null))throw Error('非重击标注不能含确认音符');
+ }
+}
+try{const saved=localStorage.getItem(key);if(saved){const parsed=JSON.parse(saved);check(parsed);state=parsed;}}catch(e){$('status').textContent='未恢复缓存：'+e.message;}
+function row(){return state.labels.find(r=>r.id===items[index].id);}
+function progress(){const n=state.labels.filter(r=>['restrike','no_restrike'].includes(r.judgment)&&r.notes.trim()&&(r.judgment!=='restrike'||(r.confirmed_pitch!==null&&r.confirmed_onset_sec!==null))).length;$('progress').textContent=`已填写 ${n} / ${items.length}（仅字段进度，未验证音乐真值）`;}
+function save(){const backup=structuredClone(state);state.reviewer=$('reviewer').value;const r=row();r.judgment=$('judgment').value;r.notes=$('notes').value;
+ r.confirmed_pitch=r.judgment==='restrike'&&$('pitch').value!==''?Number($('pitch').value):null;
+ r.confirmed_onset_sec=r.judgment==='restrike'&&$('onset').value!==''?Number($('onset').value):null;
+ $('confirmed').hidden=r.judgment!=='restrike';progress();
+ try{check(state);}catch(e){state=backup;progress();$('status').textContent='未保存：'+e.message+'；请修正当前输入后再切换。';return false;}
+ try{localStorage.setItem(key,JSON.stringify(state));$('status').textContent='草稿已缓存；请定期下载备份。';}
+ catch(e){$('status').textContent='浏览器缓存不可用，草稿仅在当前页面内存中。请立即下载备份，勿刷新或关闭。';}
+ return true;
+}
+function render(){const item=items[index],r=row();$('title').textContent=`${index+1} / ${items.length} · ${item.id}`;
+ $('position').textContent=`模型提示 MIDI ${item.model_event.pitch}（未确认）；候选在短片 ${item.candidate_local_sec.toFixed(3)} 秒，原片 ${item.model_event.start_sec.toFixed(3)} 秒。`;
+ $('audio').src=item.clip_file;$('clock').textContent='';$('reviewer').value=state.reviewer||'';$('judgment').value=r.judgment;$('pitch').value=r.confirmed_pitch??'';$('onset').value=r.confirmed_onset_sec??'';$('notes').value=r.notes;$('confirmed').hidden=r.judgment!=='restrike';$('previous').disabled=index===0;$('next').disabled=index===items.length-1;progress();}
+for(const id of ['reviewer','judgment','pitch','onset','notes'])$(id).addEventListener('input',save);
+$('previous').onclick=()=>{if(!save())return;index--;render();};$('next').onclick=()=>{if(!save())return;index++;render();};
+$('replay').onclick=async()=>{try{$('audio').currentTime=Math.max(0,items[index].candidate_local_sec-.3);await $('audio').play();}catch(e){$('status').textContent='播放失败：请保留同目录 WAV 文件。';}};
+$('audio').onerror=()=>{$('status').textContent='音频无法加载，请检查同目录 WAV 文件。';};
+$('audio').ontimeupdate=()=>{$('clock').textContent=`短片 ${$('audio').currentTime.toFixed(3)} 秒 / 原片 ${($('audio').currentTime+items[index].start_sample/data.manifest.sample_rate).toFixed(3)} 秒`;};
+$('capture').onclick=()=>{$('onset').value=($('audio').currentTime+items[index].start_sample/data.manifest.sample_rate).toFixed(6);save();};
+$('download').onclick=()=>{if(!save())return;try{check(state);const url=URL.createObjectURL(new Blob([JSON.stringify(state,null,2)],{type:'application/json'}));const a=document.createElement('a');a.href=url;a.download='labels-draft.json';a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);$('status').textContent='已下载草稿；待确认或无法判断项仍需处理。';}catch(e){$('status').textContent='无法导出：'+e.message;}};
+$('import').onchange=async e=>{try{if(!e.target.files.length)return;const parsed=JSON.parse(await e.target.files[0].text());check(parsed);if(!confirm('用此文件替换当前草稿？请先下载现有草稿备份。'))return;state=parsed;index=0;render();save();}catch(error){$('status').textContent='导入失败：'+error.message;}finally{e.target.value='';}};
+if(items.length)render();else{$('status').textContent='没有可标注候选。';document.querySelector('section').hidden=true;$('download').disabled=true;}
+</script></html>

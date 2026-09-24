@@ -1,0 +1,43 @@
+const {chromium}=require('../../web/node_modules/@playwright/test');
+const {pathToFileURL}=require('node:url');
+const fs=require('node:fs/promises');
+const path=require('node:path');
+(async()=>{
+ const browser=await chromium.launch({headless:true,channel:"chrome"});
+ try{
+ const context=await browser.newContext({acceptDownloads:true,viewport:{width:375,height:812}});
+ const page=await context.newPage();const errors=[];page.on('pageerror',e=>errors.push(e.message));
+ await page.goto(pathToFileURL(path.resolve(process.argv[2])).href);
+ await page.locator('#reviewer').fill('Browser test only');
+ await page.locator('#judgment').selectOption('restrike');
+ await page.locator('#pitch').fill('200');await page.locator('#next').click();
+ if(!(await page.locator('#title').textContent()).startsWith('1 /'))throw Error('invalid edit navigated');
+ await page.locator('#pitch').fill('60');
+ await page.locator('#judgment').selectOption('no_restrike');
+ await page.locator('#notes').fill('Test fixture only');
+ await page.locator('#replay').click();
+ await page.waitForFunction(()=>document.querySelector('audio').currentTime>0.1&&!document.querySelector('audio').paused);
+ await page.locator('#next').click();await page.locator('#previous').click();
+ if(await page.locator('#notes').inputValue()!=='Test fixture only')throw Error('navigation lost data');
+ await page.reload();if(await page.locator('#notes').inputValue()!=='Test fixture only')throw Error('reload lost data');
+ const downloaded=page.waitForEvent('download');await page.locator('#download').click();const download=await downloaded;
+ const state=JSON.parse(await fs.readFile(await download.path(),'utf8'));if(state.labels[0].judgment!=='no_restrike')throw Error('wrong export');
+ await page.locator('#import').setInputFiles({name:'wrong.json',mimeType:'application/json',buffer:Buffer.from('{}')});
+ await page.waitForFunction(()=>document.querySelector('#status').textContent.includes('导入失败'));
+ page.on('dialog',d=>d.accept());
+ await page.locator('#import').setInputFiles({name:'valid.json',mimeType:'application/json',buffer:Buffer.from(JSON.stringify(state))});
+ await page.waitForFunction(()=>document.querySelector('#status').textContent.includes('已缓存'));
+ if(await page.evaluate(()=>document.documentElement.scrollWidth>innerWidth))throw Error('mobile overflow');
+ await page.screenshot({path:'/tmp/repeat-annotation-mobile.png',fullPage:true});
+ await page.evaluate(()=>{Storage.prototype.setItem=function(){throw new Error('QuotaExceededError')}});
+ await page.locator('#notes').fill('Cache failure retained');
+ const backupDownload=page.waitForEvent('download');await page.locator('#download').click();
+ const backup=JSON.parse(await fs.readFile(await (await backupDownload).path(),'utf8'));
+ if(backup.labels[0].notes!=='Cache failure retained')throw Error('quota lost draft');
+ await page.locator('#next').click();await page.locator('#previous').click();
+ if(await page.locator('#notes').inputValue()!=='Cache failure retained')throw Error('quota navigation lost data');
+ if(errors.length)throw Error(errors.join(';'));
+ console.log('PASS: file playback, navigation, cache, draft download/import, invalid import, mobile layout');
+ await context.close();
+ }finally{await browser.close();}
+})().catch(e=>{console.error(e);process.exit(1)});

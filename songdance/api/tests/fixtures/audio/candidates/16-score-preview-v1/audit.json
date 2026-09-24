@@ -1,0 +1,16 @@
+{
+  "production_eligible": false,
+  "status": "failed",
+  "source_sha256": "bfd120feec800636d2ca55b36c87c7fcf798bb2072880d87a0355818931cf8dc",
+  "source_audit_sha256": "bdaf60a0ab769be4be704163cf5cb2b4ca49aa10f6927f50348c8e59ed91aa9f",
+  "builder_sha256": "3b44d991fadc2ef04ce2301ee09f346c9307bb81f8b42d82dd991b237e6fb24e",
+  "configuration": "operator 2/4, 60 BPM, zero bar origin, sixteenth grid",
+  "confidence_semantics": "zero internal placeholder, not inferred certainty",
+  "unresolved": [
+    "four_note_source_vs_teacher_triad",
+    "extra_model_events",
+    "note_durations_and_hands",
+    "audio_verified_downbeat_alignment"
+  ],
+  "error": "'2/4'"
+}

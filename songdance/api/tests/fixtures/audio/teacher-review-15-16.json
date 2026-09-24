@@ -1,0 +1,205 @@
+{
+  "schema_version": 1,
+  "source": "user_relayed_piano_teacher_feedback",
+  "received_date": "2026-09-22",
+  "production_eligible": false,
+  "verbatim": {
+    "path": "songdance/docs/reviews/2026-09-22-teacher-15-16-verbatim.md",
+    "sha256": "06a3d0363bca3217a3b676b80ddf3bdc06cf94fb253c0b2f43ff42065a79a5e5"
+  },
+  "local_audio_provenance_note": "29 copies per case across local archives/snapshots have one WAV hash; score export variants differ",
+  "cases": [
+    {
+      "case_id": "15-repeated-notes",
+      "status": "requires_revision",
+      "formal_rating": null,
+      "teacher": {
+        "tempo_assessment": "accepted_in_reviewed_score",
+        "exact_bpm": null,
+        "meter": "4/4",
+        "note_value": "eighth",
+        "melody_degrees": [
+          1,
+          1,
+          2,
+          2,
+          3,
+          3,
+          5,
+          5
+        ],
+        "hand_by_phrase_slot": [
+          "left",
+          "left",
+          "left",
+          "left",
+          "right",
+          "right",
+          "right",
+          "right"
+        ],
+        "first_cycle_sets_bar_origin": true,
+        "findings": [
+          "HARMONIC_EXTRA_NOTES",
+          "HAND_DISTRIBUTION_INCORRECT",
+          "UNEQUAL_DURATIONS",
+          "CYCLE_BARLINE_DRIFT"
+        ]
+      },
+      "implementation_limits": [
+        "preserve_independent_repeated_attacks",
+        "pitch_templates_for_evaluation_only",
+        "harmonic_relation_alone_cannot_authorize_deletion",
+        "do_not_double_tempo_for_eighth_notation",
+        "do_not_invent_notes_to_complete_final_cycle"
+      ],
+      "reviewed_export_identity": "not_provided; listed files are local baselines, not claimed exact reviewed export",
+      "local_bindings": {
+        "source_wav": {
+          "path": "generated/15-repeated-notes.wav",
+          "sha256": "a2bfabed577c4a3de7178782a3ababe6ba163642056b9ee20adc774cb388d1f9"
+        },
+        "source_midi": {
+          "path": "generated/15-repeated-notes.mid",
+          "sha256": "08e86428dc8a186e452643ec02f478fa9469f5a742818347501ed059c8d1e1e5"
+        },
+        "original/score.musicxml": {
+          "path": "structure-review-artifacts/15-repeated-notes/score.musicxml",
+          "sha256": "82db50bd3d5a58383d0d7a9930a20c28afc66762120c665f7db3fe5e1bec9cdb"
+        },
+        "original/score.mid": {
+          "path": "structure-review-artifacts/15-repeated-notes/score.mid",
+          "sha256": "11a75b43570badfe7ab24a75377af669976a9c0672f40d2e602d9d1182f0eaae"
+        },
+        "original/raw.mid": {
+          "path": "structure-review-artifacts/15-repeated-notes/raw.mid",
+          "sha256": "c6c9950c1704c4ab5051b373359cf7ad8f75251d6a811f58ee161d03a067fad1"
+        },
+        "original/timeline.json": {
+          "path": "structure-review-artifacts/15-repeated-notes/timeline.json",
+          "sha256": "b6aeb0b472e013b7782d889f435cb8c20ceecd1ecfcb4626d0f74bb567edf8e6"
+        },
+        "frozen_final/score.musicxml": {
+          "path": "candidates/closeout-review-20260922-final/structure-review-artifacts/15-repeated-notes/score.musicxml",
+          "sha256": "4605bb1ba4872d4a1155f6827573f412b79fd5e7b3ddc0714ce703fd6b0a7fba"
+        },
+        "frozen_final/score.mid": {
+          "path": "candidates/closeout-review-20260922-final/structure-review-artifacts/15-repeated-notes/score.mid",
+          "sha256": "11a75b43570badfe7ab24a75377af669976a9c0672f40d2e602d9d1182f0eaae"
+        },
+        "frozen_final/raw.mid": {
+          "path": "candidates/closeout-review-20260922-final/structure-review-artifacts/15-repeated-notes/raw.mid",
+          "sha256": "c6c9950c1704c4ab5051b373359cf7ad8f75251d6a811f58ee161d03a067fad1"
+        },
+        "frozen_final/timeline.json": {
+          "path": "candidates/closeout-review-20260922-final/structure-review-artifacts/15-repeated-notes/timeline.json",
+          "sha256": "e2e42650c1e8ae793fad65aa2fafd95d5225b76f913aa8c93a68b595cfb929c5"
+        }
+      }
+    },
+    {
+      "case_id": "16-noisy-polyphony",
+      "status": "requires_source_reconciliation",
+      "formal_rating": null,
+      "teacher": {
+        "meter": "2/4",
+        "exact_bpm": null,
+        "right_note_value": "eighth",
+        "left_duration_quarters": 2,
+        "right_groups_degrees": [
+          [
+            1,
+            2,
+            3,
+            5
+          ],
+          [
+            3,
+            2,
+            1,
+            2
+          ],
+          [
+            3,
+            5,
+            3,
+            2
+          ]
+        ],
+        "left_groups_degrees": [
+          [
+            5,
+            1,
+            3
+          ],
+          [
+            6,
+            1,
+            4
+          ],
+          [
+            5,
+            7,
+            2
+          ]
+        ],
+        "left_chord_on_measure_beat": 1,
+        "findings": [
+          "INCOMPLETE_LEFT_HAND_TRIADS",
+          "HARMONY_MISMATCH",
+          "CHORD_DOWNBEAT_MISALIGNMENT"
+        ]
+      },
+      "implementation_limits": [
+        "three_bar_phrases_are_valid",
+        "do_not_delete_source_bass_without_evidence",
+        "melody_inferred_chord_is_suggestion_not_detected_note",
+        "do_not_replace_reviewed_audio_silently",
+        "pedal_resonance_and_notated_key_duration_are_separate"
+      ],
+      "reviewed_export_identity": "not_provided; listed files are local baselines, not claimed exact reviewed export",
+      "local_bindings": {
+        "source_wav": {
+          "path": "generated/16-noisy-polyphony.wav",
+          "sha256": "9c9db1aab7a3c06ddf62a71a142ebc07c05d0ea7f682c6f9f81a35533cb88142"
+        },
+        "source_midi": {
+          "path": "generated/16-noisy-polyphony.mid",
+          "sha256": "ad417ec85d9ac7c290ca178598fa90058dd474fc9997dade4456c62397ca9607"
+        },
+        "original/score.musicxml": {
+          "path": "structure-review-artifacts/16-noisy-polyphony/score.musicxml",
+          "sha256": "af1e6a341cb42a7e3cfded79f288d111e402596b026402ea59b1f4052ad6671c"
+        },
+        "original/score.mid": {
+          "path": "structure-review-artifacts/16-noisy-polyphony/score.mid",
+          "sha256": "4256972ca9f1807c443898395a7a78741b772131e4a1b250e10bab343114b887"
+        },
+        "original/raw.mid": {
+          "path": "structure-review-artifacts/16-noisy-polyphony/raw.mid",
+          "sha256": "8209e585394a670dc9b44b990272404050cdce7a95a21b0ebf99ef2191e4af33"
+        },
+        "original/timeline.json": {
+          "path": "structure-review-artifacts/16-noisy-polyphony/timeline.json",
+          "sha256": "c3af6680781671113604312a16387c768747ecc157f7840386fbe1622e1d4803"
+        },
+        "frozen_final/score.musicxml": {
+          "path": "candidates/closeout-review-20260922-final/structure-review-artifacts/16-noisy-polyphony/score.musicxml",
+          "sha256": "b46d5319efee95561fed47827ef8523bf2d424d8f1b1ae6957f083b37ca31054"
+        },
+        "frozen_final/score.mid": {
+          "path": "candidates/closeout-review-20260922-final/structure-review-artifacts/16-noisy-polyphony/score.mid",
+          "sha256": "c2160b00998456433e40f1b3912bcec18780ad62718b8f8a0ee616de2800ebcd"
+        },
+        "frozen_final/raw.mid": {
+          "path": "candidates/closeout-review-20260922-final/structure-review-artifacts/16-noisy-polyphony/raw.mid",
+          "sha256": "8209e585394a670dc9b44b990272404050cdce7a95a21b0ebf99ef2191e4af33"
+        },
+        "frozen_final/timeline.json": {
+          "path": "candidates/closeout-review-20260922-final/structure-review-artifacts/16-noisy-polyphony/timeline.json",
+          "sha256": "13996d3d0ea3e088fa23620a324b8ebf6255c46c9b2e0127528dbbda3b1ec2d0"
+        }
+      }
+    }
+  ]
+}

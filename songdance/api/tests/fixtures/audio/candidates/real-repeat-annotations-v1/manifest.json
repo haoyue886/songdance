@@ -1,0 +1,2667 @@
+{
+  "schema_version": 1,
+  "case_id": "02-brahms-intermezzo",
+  "production_eligible": false,
+  "selection": "same-pitch model predecessor 0.1 to 1.2 seconds; biased candidate set",
+  "source_sha256": "2d3be743ce4c6889e3e28ca4f0e8bada7fc4e7c8bbcceace6bef3e2b351fb6bd",
+  "sample_rate": 22050,
+  "source_provenance": {
+    "kind": "real_piano_without_note_reference",
+    "provenance_sha256": "be306eff480b6e1143418a9e7caeced1139b27ec7143307c81185d2ceab03a2c",
+    "record": {
+      "id": "02-brahms-intermezzo",
+      "source_title": "File:\u0410\u043d\u043d\u0430 \u041c\u0438\u0445\u0430\u0439\u043b\u043e\u0432\u0441\u044c\u043a\u0430 - \u0411\u0440\u0430\u043c\u0441-\u0406\u043d\u0442\u0435\u0440\u043c\u0435\u0446\u0446\u043e-A-dur.ogv",
+      "source_page": "https://commons.wikimedia.org/wiki/File:%D0%90%D0%BD%D0%BD%D0%B0_%D0%9C%D0%B8%D1%85%D0%B0%D0%B9%D0%BB%D0%BE%D0%B2%D1%81%D1%8C%D0%BA%D0%B0_-_%D0%91%D1%80%D0%B0%D0%BC%D1%81-%D0%86%D0%BD%D1%82%D0%B5%D1%80%D0%BC%D0%B5%D1%86%D1%86%D0%BE-A-dur.ogv",
+      "license": "Public domain",
+      "license_url": "https://commons.wikimedia.org/wiki/File:%D0%90%D0%BD%D0%BD%D0%B0_%D0%9C%D0%B8%D1%85%D0%B0%D0%B9%D0%BB%D0%BE%D0%B2%D1%81%D1%8C%D0%BA%D0%B0_-_%D0%91%D1%80%D0%B0%D0%BC%D1%81-%D0%86%D0%BD%D1%82%D0%B5%D1%80%D0%BC%D0%B5%D1%86%D1%86%D0%BE-A-dur.ogv",
+      "description": "J. Brahms Intermezzo A-dur Performed by Anna Mychaylovska",
+      "start_sec": 35,
+      "duration_seconds": 30,
+      "clip_sha256": "2d3be743ce4c6889e3e28ca4f0e8bada7fc4e7c8bbcceace6bef3e2b351fb6bd"
+    }
+  },
+  "raw_sha256": "0a3538473602a8c3076afdf247e79bab7ba03b4bdc282d8b19fa3540b2c59524",
+  "code_sha256": "0c0b3bebc2411fdc709e408ec67541cd0ac2945a85206552c4c9e492241beb58",
+  "candidates": [
+    {
+      "id": "event-0006",
+      "input_index": 6,
+      "previous_input_index": 2,
+      "model_event": {
+        "pitch": 73,
+        "start_sec": 0.8136363636363636,
+        "end_sec": 1.0227272727272727,
+        "velocity": 56
+      },
+      "previous_model_event": {
+        "pitch": 73,
+        "start_sec": 0.65,
+        "end_sec": 0.8136363636363636,
+        "velocity": 76
+      },
+      "clip_file": "event-0006.wav",
+      "clip_sha256": "25a7bd37a2d329c6f1e79708124448fdb96df6b22598e0d3b5be85c9bfa89b75",
+      "start_sample": 7717,
+      "stop_sample": 28965,
+      "candidate_local_sec": 0.46365903937332503
+    },
+    {
+      "id": "event-0011",
+      "input_index": 11,
+      "previous_input_index": 9,
+      "model_event": {
+        "pitch": 69,
+        "start_sec": 1.7522727272727272,
+        "end_sec": 2.475,
+        "velocity": 53
+      },
+      "previous_model_event": {
+        "pitch": 69,
+        "start_sec": 1.6136363636363635,
+        "end_sec": 1.7522727272727272,
+        "velocity": 72
+      },
+      "clip_file": "event-0011.wav",
+      "clip_sha256": "8a72fb75bd9d0b0e211e623fc8ea0f1f9cefa0e2d8e9ba5a4ecc9039ffea2995",
+      "start_sample": 28965,
+      "stop_sample": 49662,
+      "candidate_local_sec": 0.4386672850958564
+    },
+    {
+      "id": "event-0013",
+      "input_index": 13,
+      "previous_input_index": 8,
+      "model_event": {
+        "pitch": 74,
+        "start_sec": 1.9863636363636363,
+        "end_sec": 2.4977272727272726,
+        "velocity": 50
+      },
+      "previous_model_event": {
+        "pitch": 74,
+        "start_sec": 1.5431818181818182,
+        "end_sec": 1.9863636363636363,
+        "velocity": 74
+      },
+      "clip_file": "event-0013.wav",
+      "clip_sha256": "077c0af89feda4e42a9c06366ff9cb49784decacb077fb6dc248cbf29f80cfa0",
+      "start_sample": 27412,
+      "stop_sample": 54824,
+      "candidate_local_sec": 0.7431890331890332
+    },
+    {
+      "id": "event-0017",
+      "input_index": 17,
+      "previous_input_index": 12,
+      "model_event": {
+        "pitch": 62,
+        "start_sec": 2.9045454545454543,
+        "end_sec": 3.1363636363636362,
+        "velocity": 48
+      },
+      "previous_model_event": {
+        "pitch": 62,
+        "start_sec": 1.9863636363636363,
+        "end_sec": 2.6136363636363633,
+        "velocity": 62
+      },
+      "clip_file": "event-0017.wav",
+      "clip_sha256": "ae19dcdb3983a47b64457a4245b6c9cd0a427f85cc0366b44ede619d6757dbf9",
+      "start_sample": 37184,
+      "stop_sample": 75070,
+      "candidate_local_sec": 1.218196248196248
+    },
+    {
+      "id": "event-0023",
+      "input_index": 23,
+      "previous_input_index": 21,
+      "model_event": {
+        "pitch": 69,
+        "start_sec": 3.4136363636363636,
+        "end_sec": 4.2295454545454545,
+        "velocity": 51
+      },
+      "previous_model_event": {
+        "pitch": 69,
+        "start_sec": 3.2636363636363637,
+        "end_sec": 3.4136363636363636,
+        "velocity": 80
+      },
+      "clip_file": "event-0023.wav",
+      "clip_sha256": "fd4756ae91a5190e155f9499965996debf166dc4f2b115639da3cac1dfdfdc41",
+      "start_sample": 65348,
+      "stop_sample": 86295,
+      "candidate_local_sec": 0.4500082457225312
+    },
+    {
+      "id": "event-0026",
+      "input_index": 26,
+      "previous_input_index": 18,
+      "model_event": {
+        "pitch": 73,
+        "start_sec": 4.125,
+        "end_sec": 4.3568181818181815,
+        "velocity": 67
+      },
+      "previous_model_event": {
+        "pitch": 73,
+        "start_sec": 3.2045454545454546,
+        "end_sec": 3.6590909090909087,
+        "velocity": 68
+      },
+      "clip_file": "event-0026.wav",
+      "clip_sha256": "d65608607df43fc754b168571fd0d5900ba8bccbc607eb67ed712832e3174490",
+      "start_sample": 64045,
+      "stop_sample": 101981,
+      "candidate_local_sec": 1.2204648526077095
+    },
+    {
+      "id": "event-0027",
+      "input_index": 27,
+      "previous_input_index": 23,
+      "model_event": {
+        "pitch": 69,
+        "start_sec": 4.2295454545454545,
+        "end_sec": 4.413636363636363,
+        "velocity": 46
+      },
+      "previous_model_event": {
+        "pitch": 69,
+        "start_sec": 3.4136363636363636,
+        "end_sec": 4.2295454545454545,
+        "velocity": 51
+      },
+      "clip_file": "event-0027.wav",
+      "clip_sha256": "c5bde64d2dd4b39aa9ca41dbaafec4ebc51372ca8f4d02d14c0a6e64cecc0771",
+      "start_sample": 68655,
+      "stop_sample": 104286,
+      "candidate_local_sec": 1.1159400123685836
+    },
+    {
+      "id": "event-0030",
+      "input_index": 30,
+      "previous_input_index": 26,
+      "model_event": {
+        "pitch": 73,
+        "start_sec": 4.3568181818181815,
+        "end_sec": 4.554545454545455,
+        "velocity": 51
+      },
+      "previous_model_event": {
+        "pitch": 73,
+        "start_sec": 4.125,
+        "end_sec": 4.3568181818181815,
+        "velocity": 67
+      },
+      "clip_file": "event-0030.wav",
+      "clip_sha256": "ffdc60333df91b37aa3676d458d51fe8de48cfc20e0b06512cf7b41bba72eb5e",
+      "start_sample": 84341,
+      "stop_sample": 107092,
+      "candidate_local_sec": 0.5318295196866623
+    },
+    {
+      "id": "event-0035",
+      "input_index": 35,
+      "previous_input_index": 28,
+      "model_event": {
+        "pitch": 39,
+        "start_sec": 4.9363636363636365,
+        "end_sec": 5.425,
+        "velocity": 56
+      },
+      "previous_model_event": {
+        "pitch": 39,
+        "start_sec": 4.24090909090909,
+        "end_sec": 4.6,
+        "velocity": 61
+      },
+      "clip_file": "event-0035.wav",
+      "clip_sha256": "f95740088cc339471b7ff063a52c0e61c66b7fb2dbadbb2d0fb798c1df659102",
+      "start_sample": 86897,
+      "stop_sample": 119871,
+      "candidate_local_sec": 0.9954566068851785
+    },
+    {
+      "id": "event-0036",
+      "input_index": 36,
+      "previous_input_index": 32,
+      "model_event": {
+        "pitch": 54,
+        "start_sec": 4.9363636363636365,
+        "end_sec": 5.075,
+        "velocity": 64
+      },
+      "previous_model_event": {
+        "pitch": 54,
+        "start_sec": 4.588636363636364,
+        "end_sec": 4.738636363636363,
+        "velocity": 39
+      },
+      "clip_file": "event-0036.wav",
+      "clip_sha256": "93527b451ade7cd05876db8fbfa52214806632244d237d350f936ec4c481f165",
+      "start_sample": 94564,
+      "stop_sample": 119871,
+      "candidate_local_sec": 0.6477468563182853
+    },
+    {
+      "id": "event-0038",
+      "input_index": 38,
+      "previous_input_index": 29,
+      "model_event": {
+        "pitch": 51,
+        "start_sec": 5.088636363636363,
+        "end_sec": 5.261363636363636,
+        "velocity": 58
+      },
+      "previous_model_event": {
+        "pitch": 51,
+        "start_sec": 4.252272727272727,
+        "end_sec": 4.506818181818182,
+        "velocity": 49
+      },
+      "clip_file": "event-0038.wav",
+      "clip_sha256": "d93dcb6d4e971603b1a03eb05fd51a9bebd36f3aba43db14bef19e20a384c840",
+      "start_sample": 87147,
+      "stop_sample": 123229,
+      "candidate_local_sec": 1.1363914656771792
+    },
+    {
+      "id": "event-0039",
+      "input_index": 39,
+      "previous_input_index": 36,
+      "model_event": {
+        "pitch": 54,
+        "start_sec": 5.088636363636363,
+        "end_sec": 5.284090909090909,
+        "velocity": 62
+      },
+      "previous_model_event": {
+        "pitch": 54,
+        "start_sec": 4.9363636363636365,
+        "end_sec": 5.075,
+        "velocity": 64
+      },
+      "clip_file": "event-0039.wav",
+      "clip_sha256": "5c22267be959e9382bdbec7589e100333ad2c764a15a517acc16ae8c1cf1cfa2",
+      "start_sample": 102231,
+      "stop_sample": 123229,
+      "candidate_local_sec": 0.45230983302411776
+    },
+    {
+      "id": "event-0040",
+      "input_index": 40,
+      "previous_input_index": 39,
+      "model_event": {
+        "pitch": 54,
+        "start_sec": 5.284090909090909,
+        "end_sec": 5.86590909090909,
+        "velocity": 59
+      },
+      "previous_model_event": {
+        "pitch": 54,
+        "start_sec": 5.088636363636363,
+        "end_sec": 5.284090909090909,
+        "velocity": 62
+      },
+      "clip_file": "event-0040.wav",
+      "clip_sha256": "2eacdbae3daa22b163c623caa4fa8911b5462308b5ce191f9d74e0bba058289e",
+      "start_sample": 105589,
+      "stop_sample": 127539,
+      "candidate_local_sec": 0.495474129045558
+    },
+    {
+      "id": "event-0041",
+      "input_index": 41,
+      "previous_input_index": 31,
+      "model_event": {
+        "pitch": 47,
+        "start_sec": 5.425,
+        "end_sec": 5.970454545454545,
+        "velocity": 57
+      },
+      "previous_model_event": {
+        "pitch": 47,
+        "start_sec": 4.588636363636364,
+        "end_sec": 5.425,
+        "velocity": 68
+      },
+      "clip_file": "event-0041.wav",
+      "clip_sha256": "b3534d57abeae1e7630cb229969981fea15e7f7a80a53e2cd43241173c466dfc",
+      "start_sample": 94564,
+      "stop_sample": 130646,
+      "candidate_local_sec": 1.1363832199546486
+    },
+    {
+      "id": "event-0042",
+      "input_index": 42,
+      "previous_input_index": 33,
+      "model_event": {
+        "pitch": 59,
+        "start_sec": 5.425,
+        "end_sec": 5.888636363636364,
+        "velocity": 68
+      },
+      "previous_model_event": {
+        "pitch": 59,
+        "start_sec": 4.588636363636364,
+        "end_sec": 4.820454545454545,
+        "velocity": 53
+      },
+      "clip_file": "event-0042.wav",
+      "clip_sha256": "b3534d57abeae1e7630cb229969981fea15e7f7a80a53e2cd43241173c466dfc",
+      "start_sample": 94564,
+      "stop_sample": 130646,
+      "candidate_local_sec": 1.1363832199546486
+    },
+    {
+      "id": "event-0043",
+      "input_index": 43,
+      "previous_input_index": 38,
+      "model_event": {
+        "pitch": 51,
+        "start_sec": 5.4818181818181815,
+        "end_sec": 5.806818181818182,
+        "velocity": 47
+      },
+      "previous_model_event": {
+        "pitch": 51,
+        "start_sec": 5.088636363636363,
+        "end_sec": 5.261363636363636,
+        "velocity": 58
+      },
+      "clip_file": "event-0043.wav",
+      "clip_sha256": "914a3eb4f9d5d2959d1ec9a2afd9f84b18c53da241c63bbd12ed22e090c5ae14",
+      "start_sample": 105589,
+      "stop_sample": 131899,
+      "candidate_local_sec": 0.6932014017728303
+    },
+    {
+      "id": "event-0044",
+      "input_index": 44,
+      "previous_input_index": 35,
+      "model_event": {
+        "pitch": 39,
+        "start_sec": 5.634090909090909,
+        "end_sec": 5.843181818181818,
+        "velocity": 49
+      },
+      "previous_model_event": {
+        "pitch": 39,
+        "start_sec": 4.9363636363636365,
+        "end_sec": 5.425,
+        "velocity": 56
+      },
+      "clip_file": "event-0044.wav",
+      "clip_sha256": "f1b2d461534e6bb9d2b22221d7a37f7aff5754abe8cb731fa0ecf627c8d96226",
+      "start_sample": 102231,
+      "stop_sample": 135256,
+      "candidate_local_sec": 0.9977643784786636
+    },
+    {
+      "id": "event-0046",
+      "input_index": 46,
+      "previous_input_index": 40,
+      "model_event": {
+        "pitch": 54,
+        "start_sec": 5.922727272727273,
+        "end_sec": 6.168181818181818,
+        "velocity": 37
+      },
+      "previous_model_event": {
+        "pitch": 54,
+        "start_sec": 5.284090909090909,
+        "end_sec": 5.86590909090909,
+        "velocity": 59
+      },
+      "clip_file": "event-0046.wav",
+      "clip_sha256": "a70c59867e5eec6b0c57ab67421eb632debc03c518015f4b499c7f81963cb4e8",
+      "start_sample": 109899,
+      "stop_sample": 141621,
+      "candidate_local_sec": 0.9386456400742116
+    },
+    {
+      "id": "event-0048",
+      "input_index": 48,
+      "previous_input_index": 41,
+      "model_event": {
+        "pitch": 47,
+        "start_sec": 5.970454545454545,
+        "end_sec": 6.261363636363636,
+        "velocity": 56
+      },
+      "previous_model_event": {
+        "pitch": 47,
+        "start_sec": 5.425,
+        "end_sec": 5.970454545454545,
+        "velocity": 57
+      },
+      "clip_file": "event-0048.wav",
+      "clip_sha256": "23251c99cda38aa46274ac8d2f0b4a2c6b14cb2a577d40fe902d05a2f876fd11",
+      "start_sample": 113006,
+      "stop_sample": 142673,
+      "candidate_local_sec": 0.8454658833230253
+    },
+    {
+      "id": "event-0050",
+      "input_index": 50,
+      "previous_input_index": 48,
+      "model_event": {
+        "pitch": 47,
+        "start_sec": 6.3999999999999995,
+        "end_sec": 6.75,
+        "velocity": 61
+      },
+      "previous_model_event": {
+        "pitch": 47,
+        "start_sec": 5.970454545454545,
+        "end_sec": 6.261363636363636,
+        "velocity": 56
+      },
+      "clip_file": "event-0050.wav",
+      "clip_sha256": "c368abfa659d19d139e033e761a02fa4a91eac7f68d5141edf17951a4f31eefc",
+      "start_sample": 125033,
+      "stop_sample": 152145,
+      "candidate_local_sec": 0.7295691609977322
+    },
+    {
+      "id": "event-0051",
+      "input_index": 51,
+      "previous_input_index": 46,
+      "model_event": {
+        "pitch": 54,
+        "start_sec": 6.3999999999999995,
+        "end_sec": 6.702272727272727,
+        "velocity": 45
+      },
+      "previous_model_event": {
+        "pitch": 54,
+        "start_sec": 5.922727272727273,
+        "end_sec": 6.168181818181818,
+        "velocity": 37
+      },
+      "clip_file": "event-0051.wav",
+      "clip_sha256": "e911c3dd712aa3bc84ecc8daebab99a285b8bd7d0e237db3ddc08c3a1b2c67f1",
+      "start_sample": 123981,
+      "stop_sample": 152145,
+      "candidate_local_sec": 0.7772789115646255
+    },
+    {
+      "id": "event-0056",
+      "input_index": 56,
+      "previous_input_index": 50,
+      "model_event": {
+        "pitch": 47,
+        "start_sec": 6.75,
+        "end_sec": 7.493181818181818,
+        "velocity": 57
+      },
+      "previous_model_event": {
+        "pitch": 47,
+        "start_sec": 6.3999999999999995,
+        "end_sec": 6.75,
+        "velocity": 61
+      },
+      "clip_file": "event-0056.wav",
+      "clip_sha256": "6704b4d2714a8596d612a25be001e2e137cebd84c3962d998173a0fb1b2efbe2",
+      "start_sample": 134505,
+      "stop_sample": 159862,
+      "candidate_local_sec": 0.6500000000000004
+    },
+    {
+      "id": "event-0057",
+      "input_index": 57,
+      "previous_input_index": 52,
+      "model_event": {
+        "pitch": 66,
+        "start_sec": 6.75,
+        "end_sec": 7.259090909090909,
+        "velocity": 60
+      },
+      "previous_model_event": {
+        "pitch": 66,
+        "start_sec": 6.413636363636363,
+        "end_sec": 6.75,
+        "velocity": 66
+      },
+      "clip_file": "event-0057.wav",
+      "clip_sha256": "622b28b94d0b0f4e32d75959f0f76abc365bd4c61fc1629d7e61b947e696438b",
+      "start_sample": 134805,
+      "stop_sample": 159862,
+      "candidate_local_sec": 0.6363945578231291
+    },
+    {
+      "id": "event-0059",
+      "input_index": 59,
+      "previous_input_index": 54,
+      "model_event": {
+        "pitch": 75,
+        "start_sec": 6.761363636363636,
+        "end_sec": 7.086363636363636,
+        "velocity": 51
+      },
+      "previous_model_event": {
+        "pitch": 75,
+        "start_sec": 6.436363636363636,
+        "end_sec": 6.761363636363636,
+        "velocity": 57
+      },
+      "clip_file": "event-0059.wav",
+      "clip_sha256": "79836d45ec562047ac3277a8a61862f114ec1e0e7bbe5e4b67ecdee410e47447",
+      "start_sample": 135306,
+      "stop_sample": 160113,
+      "candidate_local_sec": 0.6250371057513906
+    },
+    {
+      "id": "event-0060",
+      "input_index": 60,
+      "previous_input_index": 55,
+      "model_event": {
+        "pitch": 71,
+        "start_sec": 6.829545454545454,
+        "end_sec": 7.456818181818181,
+        "velocity": 58
+      },
+      "previous_model_event": {
+        "pitch": 71,
+        "start_sec": 6.4818181818181815,
+        "end_sec": 6.829545454545454,
+        "velocity": 72
+      },
+      "clip_file": "event-0060.wav",
+      "clip_sha256": "21a5f3fe2dd1d8bffe931c0e22d9adcdb1747e3d85c2462fceef337971d48173",
+      "start_sample": 136309,
+      "stop_sample": 161616,
+      "candidate_local_sec": 0.6477313955885382
+    },
+    {
+      "id": "event-0061",
+      "input_index": 61,
+      "previous_input_index": 58,
+      "model_event": {
+        "pitch": 44,
+        "start_sec": 7.086363636363636,
+        "end_sec": 7.247727272727272,
+        "velocity": 46
+      },
+      "previous_model_event": {
+        "pitch": 44,
+        "start_sec": 6.761363636363636,
+        "end_sec": 7.086363636363636,
+        "velocity": 46
+      },
+      "clip_file": "event-0061.wav",
+      "clip_sha256": "13de8807b7404b2e49714a995d57c480228ca30b4549c51d24a982535ee40ac5",
+      "start_sample": 142473,
+      "stop_sample": 167279,
+      "candidate_local_sec": 0.6250030921459491
+    },
+    {
+      "id": "event-0063",
+      "input_index": 63,
+      "previous_input_index": 51,
+      "model_event": {
+        "pitch": 54,
+        "start_sec": 7.247727272727272,
+        "end_sec": 7.597727272727273,
+        "velocity": 43
+      },
+      "previous_model_event": {
+        "pitch": 54,
+        "start_sec": 6.3999999999999995,
+        "end_sec": 6.702272727272727,
+        "velocity": 45
+      },
+      "clip_file": "event-0063.wav",
+      "clip_sha256": "ab2f117b961adb046f3313fb28c34944f5ecfc1a1370e14c29b0885a9f525eca",
+      "start_sample": 134505,
+      "stop_sample": 170837,
+      "candidate_local_sec": 1.1477272727272725
+    },
+    {
+      "id": "event-0066",
+      "input_index": 66,
+      "previous_input_index": 64,
+      "model_event": {
+        "pitch": 73,
+        "start_sec": 7.561363636363636,
+        "end_sec": 7.725,
+        "velocity": 57
+      },
+      "previous_model_event": {
+        "pitch": 73,
+        "start_sec": 7.2727272727272725,
+        "end_sec": 7.561363636363636,
+        "velocity": 51
+      },
+      "clip_file": "event-0066.wav",
+      "clip_sha256": "c1a748ac0ac64df3cecd3d8d689dde31e78f52a4634db46459cfc58b6737f0c9",
+      "start_sample": 153748,
+      "stop_sample": 177753,
+      "candidate_local_sec": 0.588665223665223
+    },
+    {
+      "id": "event-0067",
+      "input_index": 67,
+      "previous_input_index": 63,
+      "model_event": {
+        "pitch": 54,
+        "start_sec": 7.597727272727273,
+        "end_sec": 8.422727272727272,
+        "velocity": 65
+      },
+      "previous_model_event": {
+        "pitch": 54,
+        "start_sec": 7.247727272727272,
+        "end_sec": 7.597727272727273,
+        "velocity": 43
+      },
+      "clip_file": "event-0067.wav",
+      "clip_sha256": "3e64af22a0a3e62976fcbd89d1d2d9fbdb433e24ea96ca2fc0b17ba10954f477",
+      "start_sample": 153197,
+      "stop_sample": 178554,
+      "candidate_local_sec": 0.650017522160379
+    },
+    {
+      "id": "event-0070",
+      "input_index": 70,
+      "previous_input_index": 65,
+      "model_event": {
+        "pitch": 76,
+        "start_sec": 7.631818181818182,
+        "end_sec": 7.993181818181818,
+        "velocity": 70
+      },
+      "previous_model_event": {
+        "pitch": 76,
+        "start_sec": 7.352272727272727,
+        "end_sec": 7.620454545454545,
+        "velocity": 61
+      },
+      "clip_file": "event-0070.wav",
+      "clip_sha256": "52024fb10003dac51bcdb0750de1ab930de204aa7677145b1a90dbe402120fad",
+      "start_sample": 155502,
+      "stop_sample": 179306,
+      "candidate_local_sec": 0.5795732838589984
+    },
+    {
+      "id": "event-0074",
+      "input_index": 74,
+      "previous_input_index": 67,
+      "model_event": {
+        "pitch": 54,
+        "start_sec": 8.445454545454545,
+        "end_sec": 8.584090909090909,
+        "velocity": 44
+      },
+      "previous_model_event": {
+        "pitch": 54,
+        "start_sec": 7.597727272727273,
+        "end_sec": 8.422727272727272,
+        "velocity": 65
+      },
+      "clip_file": "event-0074.wav",
+      "clip_sha256": "03590a11d27db273fc03371da92abd46c8b8c545380e872e567bf5f96c68414c",
+      "start_sample": 160914,
+      "stop_sample": 197247,
+      "candidate_local_sec": 1.147767470624613
+    },
+    {
+      "id": "event-0076",
+      "input_index": 76,
+      "previous_input_index": 71,
+      "model_event": {
+        "pitch": 57,
+        "start_sec": 8.49090909090909,
+        "end_sec": 9.352272727272727,
+        "velocity": 62
+      },
+      "previous_model_event": {
+        "pitch": 57,
+        "start_sec": 7.959090909090909,
+        "end_sec": 8.213636363636363,
+        "velocity": 52
+      },
+      "clip_file": "event-0076.wav",
+      "clip_sha256": "fa7d3417c9afb22eaea831947fd5d6b264dddb0218d5df410a09e8a16e8ccb97",
+      "start_sample": 168882,
+      "stop_sample": 198249,
+      "candidate_local_sec": 0.8318614718614716
+    },
+    {
+      "id": "event-0078",
+      "input_index": 78,
+      "previous_input_index": 74,
+      "model_event": {
+        "pitch": 54,
+        "start_sec": 8.584090909090909,
+        "end_sec": 8.934090909090909,
+        "velocity": 69
+      },
+      "previous_model_event": {
+        "pitch": 54,
+        "start_sec": 8.445454545454545,
+        "end_sec": 8.584090909090909,
+        "velocity": 44
+      },
+      "clip_file": "event-0078.wav",
+      "clip_sha256": "33e4695557205f7ee502fe7f8a5880e957b3d30a2faceddf4b8ac8b5b75fa831",
+      "start_sample": 179607,
+      "stop_sample": 200304,
+      "candidate_local_sec": 0.43864873222016065
+    },
+    {
+      "id": "event-0081",
+      "input_index": 81,
+      "previous_input_index": 78,
+      "model_event": {
+        "pitch": 54,
+        "start_sec": 8.934090909090909,
+        "end_sec": 9.31590909090909,
+        "velocity": 67
+      },
+      "previous_model_event": {
+        "pitch": 54,
+        "start_sec": 8.584090909090909,
+        "end_sec": 8.934090909090909,
+        "velocity": 69
+      },
+      "clip_file": "event-0081.wav",
+      "clip_sha256": "b0b09227795044e1e6c3209227e3f5612d9af1c4c40e4e2df65904fbe5589c4e",
+      "start_sample": 182664,
+      "stop_sample": 208021,
+      "candidate_local_sec": 0.6500092764378476
+    },
+    {
+      "id": "event-0082",
+      "input_index": 82,
+      "previous_input_index": 80,
+      "model_event": {
+        "pitch": 69,
+        "start_sec": 9.025,
+        "end_sec": 9.409090909090908,
+        "velocity": 50
+      },
+      "previous_model_event": {
+        "pitch": 69,
+        "start_sec": 8.818181818181818,
+        "end_sec": 9.025,
+        "velocity": 54
+      },
+      "clip_file": "event-0082.wav",
+      "clip_sha256": "ff15142b9113cca38288f0621fac7976a9a93b347e1e48917181c413f91a8c09",
+      "start_sample": 187825,
+      "stop_sample": 210026,
+      "candidate_local_sec": 0.5068594104308399
+    },
+    {
+      "id": "event-0083",
+      "input_index": 83,
+      "previous_input_index": 75,
+      "model_event": {
+        "pitch": 59,
+        "start_sec": 9.270454545454545,
+        "end_sec": 9.420454545454545,
+        "velocity": 50
+      },
+      "previous_model_event": {
+        "pitch": 59,
+        "start_sec": 8.456818181818182,
+        "end_sec": 8.688636363636363,
+        "velocity": 50
+      },
+      "clip_file": "event-0083.wav",
+      "clip_sha256": "4054659e67abea3ae40afb385f1942d368874858a86f5b577caba41785638b0b",
+      "start_sample": 179857,
+      "stop_sample": 215438,
+      "candidate_local_sec": 1.1136745001030715
+    },
+    {
+      "id": "event-0084",
+      "input_index": 84,
+      "previous_input_index": 73,
+      "model_event": {
+        "pitch": 63,
+        "start_sec": 9.304545454545455,
+        "end_sec": 10.165909090909091,
+        "velocity": 59
+      },
+      "previous_model_event": {
+        "pitch": 63,
+        "start_sec": 8.434090909090909,
+        "end_sec": 9.304545454545455,
+        "velocity": 72
+      },
+      "clip_file": "event-0084.wav",
+      "clip_sha256": "7fe56de758fc9c710dcc6b16980b62f366e65cf6e2309314f186af56dea3b882",
+      "start_sample": 179356,
+      "stop_sample": 216190,
+      "candidate_local_sec": 1.170486497629355
+    },
+    {
+      "id": "event-0085",
+      "input_index": 85,
+      "previous_input_index": 76,
+      "model_event": {
+        "pitch": 57,
+        "start_sec": 9.352272727272727,
+        "end_sec": 10.2,
+        "velocity": 52
+      },
+      "previous_model_event": {
+        "pitch": 57,
+        "start_sec": 8.49090909090909,
+        "end_sec": 9.352272727272727,
+        "velocity": 62
+      },
+      "clip_file": "event-0085.wav",
+      "clip_sha256": "9878c7603e8d3d046e13da4bc586d3debdf880d1b48f169ed5476e62f768ec0a",
+      "start_sample": 180609,
+      "stop_sample": 217242,
+      "candidate_local_sec": 1.1613883735312296
+    },
+    {
+      "id": "event-0086",
+      "input_index": 86,
+      "previous_input_index": 82,
+      "model_event": {
+        "pitch": 69,
+        "start_sec": 9.409090909090908,
+        "end_sec": 10.259090909090908,
+        "velocity": 53
+      },
+      "previous_model_event": {
+        "pitch": 69,
+        "start_sec": 9.025,
+        "end_sec": 9.409090909090908,
+        "velocity": 50
+      },
+      "clip_file": "event-0086.wav",
+      "clip_sha256": "5a2c59d4aee90f5064f86da1c1e50427a2c1f370ee2271af23206fc8f97e03a2",
+      "start_sample": 192386,
+      "stop_sample": 218495,
+      "candidate_local_sec": 0.6841022469593891
+    },
+    {
+      "id": "event-0089",
+      "input_index": 89,
+      "previous_input_index": 83,
+      "model_event": {
+        "pitch": 59,
+        "start_sec": 9.745454545454544,
+        "end_sec": 10.674999999999999,
+        "velocity": 46
+      },
+      "previous_model_event": {
+        "pitch": 59,
+        "start_sec": 9.270454545454545,
+        "end_sec": 9.420454545454545,
+        "velocity": 50
+      },
+      "clip_file": "event-0089.wav",
+      "clip_sha256": "d25c17f7a0352c558d7ed0536c79ed269a061c8a48cf39058833d4bbb5c1712a",
+      "start_sample": 197798,
+      "stop_sample": 225912,
+      "candidate_local_sec": 0.7750237064522771
+    },
+    {
+      "id": "event-0094",
+      "input_index": 94,
+      "previous_input_index": 87,
+      "model_event": {
+        "pitch": 52,
+        "start_sec": 10.338636363636363,
+        "end_sec": 11.070454545454545,
+        "velocity": 53
+      },
+      "previous_model_event": {
+        "pitch": 52,
+        "start_sec": 9.454545454545453,
+        "end_sec": 9.7,
+        "velocity": 40
+      },
+      "clip_file": "event-0094.wav",
+      "clip_sha256": "78b4b166ebd3c653b9a116b0a69716d784998b893cd289a851c7587657f9d6f3",
+      "start_sample": 201857,
+      "stop_sample": 238991,
+      "candidate_local_sec": 1.1841238919810344
+    },
+    {
+      "id": "event-0095",
+      "input_index": 95,
+      "previous_input_index": 89,
+      "model_event": {
+        "pitch": 59,
+        "start_sec": 10.674999999999999,
+        "end_sec": 11.152272727272727,
+        "velocity": 56
+      },
+      "previous_model_event": {
+        "pitch": 59,
+        "start_sec": 9.745454545454544,
+        "end_sec": 10.674999999999999,
+        "velocity": 46
+      },
+      "clip_file": "event-0095.wav",
+      "clip_sha256": "c59db0738c7d7082ce552eb41e0ba1bd7dd1050f5457151f02683d94b1bf2a18",
+      "start_sample": 208272,
+      "stop_sample": 246408,
+      "candidate_local_sec": 1.2295578231292499
+    },
+    {
+      "id": "event-0096",
+      "input_index": 96,
+      "previous_input_index": 88,
+      "model_event": {
+        "pitch": 47,
+        "start_sec": 10.768181818181818,
+        "end_sec": 11.279545454545454,
+        "velocity": 66
+      },
+      "previous_model_event": {
+        "pitch": 47,
+        "start_sec": 9.745454545454544,
+        "end_sec": 10.768181818181818,
+        "velocity": 54
+      },
+      "clip_file": "event-0096.wav",
+      "clip_sha256": "bbb2f333573bb5b2b415f1ab3d475d29ff21c33bef53272c2ff3a0eff87c47fe",
+      "start_sample": 208272,
+      "stop_sample": 248463,
+      "candidate_local_sec": 1.3227396413110686
+    },
+    {
+      "id": "event-0097",
+      "input_index": 97,
+      "previous_input_index": 94,
+      "model_event": {
+        "pitch": 52,
+        "start_sec": 11.279545454545454,
+        "end_sec": 11.768181818181818,
+        "velocity": 39
+      },
+      "previous_model_event": {
+        "pitch": 52,
+        "start_sec": 10.338636363636363,
+        "end_sec": 11.070454545454545,
+        "velocity": 53
+      },
+      "clip_file": "event-0097.wav",
+      "clip_sha256": "5ba852a07bc2a137786ca75bd4deb9a7570c2f9e036f06e82603e01644f9b5ee",
+      "start_sample": 221351,
+      "stop_sample": 259738,
+      "candidate_local_sec": 1.240951350237065
+    },
+    {
+      "id": "event-0099",
+      "input_index": 99,
+      "previous_input_index": 90,
+      "model_event": {
+        "pitch": 64,
+        "start_sec": 11.302272727272726,
+        "end_sec": 11.743181818181817,
+        "velocity": 61
+      },
+      "previous_model_event": {
+        "pitch": 64,
+        "start_sec": 10.259090909090908,
+        "end_sec": 11.302272727272726,
+        "velocity": 55
+      },
+      "clip_file": "event-0099.wav",
+      "clip_sha256": "f89ad319728a58cdcd889085c6195964f4f70b03d40652b5e6bde5268c46ed09",
+      "start_sample": 219597,
+      "stop_sample": 260240,
+      "candidate_local_sec": 1.3432251082251074
+    },
+    {
+      "id": "event-0105",
+      "input_index": 105,
+      "previous_input_index": 100,
+      "model_event": {
+        "pitch": 48,
+        "start_sec": 12.129545454545454,
+        "end_sec": 12.929545454545455,
+        "velocity": 60
+      },
+      "previous_model_event": {
+        "pitch": 48,
+        "start_sec": 11.372727272727273,
+        "end_sec": 11.534090909090908,
+        "velocity": 42
+      },
+      "clip_file": "event-0105.wav",
+      "clip_sha256": "b39251c6b6c84de82608660e006b0654d43309d34316c37bd189fd90879b0ceb",
+      "start_sample": 244153,
+      "stop_sample": 278481,
+      "candidate_local_sec": 1.0568470418470408
+    },
+    {
+      "id": "event-0106",
+      "input_index": 106,
+      "previous_input_index": 98,
+      "model_event": {
+        "pitch": 60,
+        "start_sec": 12.129545454545454,
+        "end_sec": 12.454545454545453,
+        "velocity": 56
+      },
+      "previous_model_event": {
+        "pitch": 60,
+        "start_sec": 11.290909090909091,
+        "end_sec": 11.906818181818181,
+        "velocity": 62
+      },
+      "clip_file": "event-0106.wav",
+      "clip_sha256": "82112ffef9074cb906ecaa24aee3321569529cf251fb1f66f49a3d40fb420bab",
+      "start_sample": 242349,
+      "stop_sample": 278481,
+      "candidate_local_sec": 1.138661100803958
+    },
+    {
+      "id": "event-0107",
+      "input_index": 107,
+      "previous_input_index": 104,
+      "model_event": {
+        "pitch": 66,
+        "start_sec": 12.209090909090909,
+        "end_sec": 12.511363636363635,
+        "velocity": 73
+      },
+      "previous_model_event": {
+        "pitch": 66,
+        "start_sec": 12.059090909090909,
+        "end_sec": 12.209090909090909,
+        "velocity": 83
+      },
+      "clip_file": "event-0107.wav",
+      "clip_sha256": "9b451b532d0197681c901ec702a39071a936f298241022205aa99d812395be30",
+      "start_sample": 259287,
+      "stop_sample": 280235,
+      "candidate_local_sec": 0.4500432900432898
+    },
+    {
+      "id": "event-0108",
+      "input_index": 108,
+      "previous_input_index": 106,
+      "model_event": {
+        "pitch": 60,
+        "start_sec": 12.454545454545453,
+        "end_sec": 12.836363636363636,
+        "velocity": 66
+      },
+      "previous_model_event": {
+        "pitch": 60,
+        "start_sec": 12.129545454545454,
+        "end_sec": 12.454545454545453,
+        "velocity": 56
+      },
+      "clip_file": "event-0108.wav",
+      "clip_sha256": "a18018ab0fecdd4db94b6e43d5219175d65b313970dd65516af876676bfd7d59",
+      "start_sample": 260841,
+      "stop_sample": 285647,
+      "candidate_local_sec": 0.6250216450216435
+    },
+    {
+      "id": "event-0110",
+      "input_index": 110,
+      "previous_input_index": 109,
+      "model_event": {
+        "pitch": 52,
+        "start_sec": 12.649999999999999,
+        "end_sec": 12.847727272727273,
+        "velocity": 70
+      },
+      "previous_model_event": {
+        "pitch": 52,
+        "start_sec": 12.5,
+        "end_sec": 12.649999999999999,
+        "velocity": 73
+      },
+      "clip_file": "event-0110.wav",
+      "clip_sha256": "ad8f8226d8281a80fa01c48a9858181d0d5c9da142c53bd35852075c4d82fd13",
+      "start_sample": 269010,
+      "stop_sample": 289957,
+      "candidate_local_sec": 0.4499999999999993
+    },
+    {
+      "id": "event-0111",
+      "input_index": 111,
+      "previous_input_index": 110,
+      "model_event": {
+        "pitch": 52,
+        "start_sec": 12.847727272727273,
+        "end_sec": 13.672727272727272,
+        "velocity": 57
+      },
+      "previous_model_event": {
+        "pitch": 52,
+        "start_sec": 12.649999999999999,
+        "end_sec": 12.847727272727273,
+        "velocity": 70
+      },
+      "clip_file": "event-0111.wav",
+      "clip_sha256": "0b1b886089fc9b040473a6d0d7b49e849855c49ddcbd7b9097f878582aff5268",
+      "start_sample": 272317,
+      "stop_sample": 294317,
+      "candidate_local_sec": 0.49774994846423404
+    },
+    {
+      "id": "event-0114",
+      "input_index": 114,
+      "previous_input_index": 108,
+      "model_event": {
+        "pitch": 60,
+        "start_sec": 12.870454545454544,
+        "end_sec": 13.138636363636364,
+        "velocity": 52
+      },
+      "previous_model_event": {
+        "pitch": 60,
+        "start_sec": 12.454545454545453,
+        "end_sec": 12.836363636363636,
+        "velocity": 66
+      },
+      "clip_file": "event-0114.wav",
+      "clip_sha256": "9a697f0d63600131e63e4e404ef4bae48c876548601f7a64598830408d4f988f",
+      "start_sample": 268007,
+      "stop_sample": 294818,
+      "candidate_local_sec": 0.7159420737992157
+    },
+    {
+      "id": "event-0115",
+      "input_index": 115,
+      "previous_input_index": 105,
+      "model_event": {
+        "pitch": 48,
+        "start_sec": 12.929545454545455,
+        "end_sec": 13.661363636363635,
+        "velocity": 63
+      },
+      "previous_model_event": {
+        "pitch": 48,
+        "start_sec": 12.129545454545454,
+        "end_sec": 12.929545454545455,
+        "velocity": 60
+      },
+      "clip_file": "event-0115.wav",
+      "clip_sha256": "12ee0a235349ddff8a215ad74dd23c0dd5bc37e5f33d5db9a85ef5134c15058a",
+      "start_sample": 260841,
+      "stop_sample": 296121,
+      "candidate_local_sec": 1.100021645021645
+    },
+    {
+      "id": "event-0116",
+      "input_index": 116,
+      "previous_input_index": 114,
+      "model_event": {
+        "pitch": 60,
+        "start_sec": 13.254545454545454,
+        "end_sec": 13.59090909090909,
+        "velocity": 41
+      },
+      "previous_model_event": {
+        "pitch": 60,
+        "start_sec": 12.870454545454544,
+        "end_sec": 13.138636363636364,
+        "velocity": 52
+      },
+      "clip_file": "event-0116.wav",
+      "clip_sha256": "45ed8a30ba6dd017c08b1781a16bcdd2e4b60477ed1a808dec63806bc19e34a7",
+      "start_sample": 277178,
+      "stop_sample": 303287,
+      "candidate_local_sec": 0.6841146155431872
+    },
+    {
+      "id": "event-0119",
+      "input_index": 119,
+      "previous_input_index": 113,
+      "model_event": {
+        "pitch": 64,
+        "start_sec": 13.718181818181817,
+        "end_sec": 13.870454545454544,
+        "velocity": 50
+      },
+      "previous_model_event": {
+        "pitch": 64,
+        "start_sec": 12.85909090909091,
+        "end_sec": 13.718181818181817,
+        "velocity": 50
+      },
+      "clip_file": "event-0119.wav",
+      "clip_sha256": "b54590088e9e38d09dde17a43a3f00604c2ca48143dfcd2d665221dc93a74bd0",
+      "start_sample": 276927,
+      "stop_sample": 313510,
+      "candidate_local_sec": 1.159134199134197
+    },
+    {
+      "id": "event-0121",
+      "input_index": 121,
+      "previous_input_index": 111,
+      "model_event": {
+        "pitch": 52,
+        "start_sec": 13.822727272727272,
+        "end_sec": 14.359090909090908,
+        "velocity": 44
+      },
+      "previous_model_event": {
+        "pitch": 52,
+        "start_sec": 12.847727272727273,
+        "end_sec": 13.672727272727272,
+        "velocity": 57
+      },
+      "clip_file": "event-0121.wav",
+      "clip_sha256": "1d823733747a05f92fde999fb9e3dd32d0500166040c7c008680b35d392663c6",
+      "start_sample": 276677,
+      "stop_sample": 315816,
+      "candidate_local_sec": 1.275017522160379
+    },
+    {
+      "id": "event-0122",
+      "input_index": 122,
+      "previous_input_index": 118,
+      "model_event": {
+        "pitch": 61,
+        "start_sec": 13.870454545454544,
+        "end_sec": 14.0,
+        "velocity": 56
+      },
+      "previous_model_event": {
+        "pitch": 61,
+        "start_sec": 13.684090909090909,
+        "end_sec": 13.870454545454544,
+        "velocity": 63
+      },
+      "clip_file": "event-0122.wav",
+      "clip_sha256": "863f34a6fcdd1d1621c4c843af61e9e4fbc694da767610bf0818dbf0a165f9dd",
+      "start_sample": 295119,
+      "stop_sample": 316868,
+      "candidate_local_sec": 0.48637291280148354
+    },
+    {
+      "id": "event-0123",
+      "input_index": 123,
+      "previous_input_index": 119,
+      "model_event": {
+        "pitch": 64,
+        "start_sec": 13.870454545454544,
+        "end_sec": 14.184090909090909,
+        "velocity": 51
+      },
+      "previous_model_event": {
+        "pitch": 64,
+        "start_sec": 13.718181818181817,
+        "end_sec": 13.870454545454544,
+        "velocity": 50
+      },
+      "clip_file": "event-0123.wav",
+      "clip_sha256": "cde71978830402bca29fad00b2dcfac04a38be4790d5b6276eca3939543fae54",
+      "start_sample": 295870,
+      "stop_sample": 316868,
+      "candidate_local_sec": 0.4523139558853835
+    },
+    {
+      "id": "event-0124",
+      "input_index": 124,
+      "previous_input_index": 117,
+      "model_event": {
+        "pitch": 43,
+        "start_sec": 14.056818181818182,
+        "end_sec": 14.975,
+        "velocity": 54
+      },
+      "previous_model_event": {
+        "pitch": 43,
+        "start_sec": 13.299999999999999,
+        "end_sec": 13.684090909090909,
+        "velocity": 64
+      },
+      "clip_file": "event-0124.wav",
+      "clip_sha256": "77872368f3387cde92e11df8ee90539b67992f23242f4adf903fdb657e37418d",
+      "start_sample": 286649,
+      "stop_sample": 320977,
+      "candidate_local_sec": 1.0568635332921037
+    },
+    {
+      "id": "event-0128",
+      "input_index": 128,
+      "previous_input_index": 126,
+      "model_event": {
+        "pitch": 66,
+        "start_sec": 14.59090909090909,
+        "end_sec": 15.147727272727272,
+        "velocity": 66
+      },
+      "previous_model_event": {
+        "pitch": 66,
+        "start_sec": 14.452272727272726,
+        "end_sec": 14.59090909090909,
+        "velocity": 88
+      },
+      "clip_file": "event-0128.wav",
+      "clip_sha256": "301839eaf3bd64f52fde2cd2588d6e906cdd43914f58c877e3c6541260d07e0f",
+      "start_sample": 312057,
+      "stop_sample": 332754,
+      "candidate_local_sec": 0.438664192949906
+    },
+    {
+      "id": "event-0129",
+      "input_index": 129,
+      "previous_input_index": 121,
+      "model_event": {
+        "pitch": 52,
+        "start_sec": 14.881818181818181,
+        "end_sec": 15.20681818181818,
+        "velocity": 63
+      },
+      "previous_model_event": {
+        "pitch": 52,
+        "start_sec": 13.822727272727272,
+        "end_sec": 14.359090909090908,
+        "velocity": 44
+      },
+      "clip_file": "event-0129.wav",
+      "clip_sha256": "db11a77fe6422a2f51fe0cc8dce76521e405df72506e8aa20fd1796965442d89",
+      "start_sample": 298176,
+      "stop_sample": 339169,
+      "candidate_local_sec": 1.3590970933828075
+    },
+    {
+      "id": "event-0130",
+      "input_index": 130,
+      "previous_input_index": 129,
+      "model_event": {
+        "pitch": 52,
+        "start_sec": 15.20681818181818,
+        "end_sec": 15.809090909090909,
+        "velocity": 48
+      },
+      "previous_model_event": {
+        "pitch": 52,
+        "start_sec": 14.881818181818181,
+        "end_sec": 15.20681818181818,
+        "velocity": 63
+      },
+      "clip_file": "event-0130.wav",
+      "clip_sha256": "f25141d1e0e8e0d414009f71926dcfe9882864dabcd3cad6d0268c907d552c17",
+      "start_sample": 321529,
+      "stop_sample": 346335,
+      "candidate_local_sec": 0.6250041228612648
+    },
+    {
+      "id": "event-0133",
+      "input_index": 133,
+      "previous_input_index": 127,
+      "model_event": {
+        "pitch": 49,
+        "start_sec": 15.229545454545454,
+        "end_sec": 16.009090909090908,
+        "velocity": 63
+      },
+      "previous_model_event": {
+        "pitch": 49,
+        "start_sec": 14.463636363636363,
+        "end_sec": 15.229545454545454,
+        "velocity": 56
+      },
+      "clip_file": "event-0133.wav",
+      "clip_sha256": "e0010cf9b2edf52f2697a04466291d008e53a0d2e7b9166e7fd4b868d8b9b361",
+      "start_sample": 312308,
+      "stop_sample": 346836,
+      "candidate_local_sec": 1.065917336631621
+    },
+    {
+      "id": "event-0134",
+      "input_index": 134,
+      "previous_input_index": 125,
+      "model_event": {
+        "pitch": 54,
+        "start_sec": 15.345454545454544,
+        "end_sec": 15.543181818181818,
+        "velocity": 45
+      },
+      "previous_model_event": {
+        "pitch": 54,
+        "start_sec": 14.452272727272726,
+        "end_sec": 15.195454545454545,
+        "velocity": 50
+      },
+      "clip_file": "event-0134.wav",
+      "clip_sha256": "541bc270fb924bba0d1836e9fd7bf90cc48e1c54b5b30998bd0c4d1f19501db0",
+      "start_sample": 312057,
+      "stop_sample": 349392,
+      "candidate_local_sec": 1.19320964749536
+    },
+    {
+      "id": "event-0136",
+      "input_index": 136,
+      "previous_input_index": 134,
+      "model_event": {
+        "pitch": 54,
+        "start_sec": 15.693181818181817,
+        "end_sec": 15.938636363636363,
+        "velocity": 45
+      },
+      "previous_model_event": {
+        "pitch": 54,
+        "start_sec": 15.345454545454544,
+        "end_sec": 15.543181818181818,
+        "velocity": 45
+      },
+      "clip_file": "event-0136.wav",
+      "clip_sha256": "19cd21cb5320ed8e5358fcd3ce6dd007a4dc1f39d5bf37dea375659cacc77aa1",
+      "start_sample": 331752,
+      "stop_sample": 357059,
+      "candidate_local_sec": 0.6477396413110679
+    },
+    {
+      "id": "event-0137",
+      "input_index": 137,
+      "previous_input_index": 131,
+      "model_event": {
+        "pitch": 64,
+        "start_sec": 16.03181818181818,
+        "end_sec": 16.53181818181818,
+        "velocity": 66
+      },
+      "previous_model_event": {
+        "pitch": 64,
+        "start_sec": 15.20681818181818,
+        "end_sec": 15.822727272727272,
+        "velocity": 64
+      },
+      "clip_file": "event-0137.wav",
+      "clip_sha256": "1719b88ff047c2ff89f57e9fae499af01fa21072edf7bf6e9eb87c00acca6589",
+      "start_sample": 328695,
+      "stop_sample": 364526,
+      "candidate_local_sec": 1.1250154607297453
+    },
+    {
+      "id": "event-0139",
+      "input_index": 139,
+      "previous_input_index": 130,
+      "model_event": {
+        "pitch": 52,
+        "start_sec": 16.195454545454545,
+        "end_sec": 16.41590909090909,
+        "velocity": 50
+      },
+      "previous_model_event": {
+        "pitch": 52,
+        "start_sec": 15.20681818181818,
+        "end_sec": 15.809090909090909,
+        "velocity": 48
+      },
+      "clip_file": "event-0139.wav",
+      "clip_sha256": "66504e4bcec438e55a9fe0d36e93e40f9be2b210bf3a4b151811b9f29d71c2a5",
+      "start_sample": 328695,
+      "stop_sample": 368134,
+      "candidate_local_sec": 1.2886518243661094
+    },
+    {
+      "id": "event-0140",
+      "input_index": 140,
+      "previous_input_index": 139,
+      "model_event": {
+        "pitch": 52,
+        "start_sec": 16.427272727272726,
+        "end_sec": 17.111363636363635,
+        "velocity": 63
+      },
+      "previous_model_event": {
+        "pitch": 52,
+        "start_sec": 16.195454545454545,
+        "end_sec": 16.41590909090909,
+        "velocity": 50
+      },
+      "clip_file": "event-0140.wav",
+      "clip_sha256": "997bd164ee4588e0aef0b81631e87fe06d53a478d414fb4f2d5849d98e40e03f",
+      "start_sample": 350494,
+      "stop_sample": 373246,
+      "candidate_local_sec": 0.5318532261389386
+    },
+    {
+      "id": "event-0145",
+      "input_index": 145,
+      "previous_input_index": 140,
+      "model_event": {
+        "pitch": 52,
+        "start_sec": 17.111363636363635,
+        "end_sec": 17.436363636363634,
+        "velocity": 73
+      },
+      "previous_model_event": {
+        "pitch": 52,
+        "start_sec": 16.427272727272726,
+        "end_sec": 17.111363636363635,
+        "velocity": 63
+      },
+      "clip_file": "event-0145.wav",
+      "clip_sha256": "b38eff1a5fb1657103051ac8f6fccb3accf8c433e420d89d7ee6b06f12ca3114",
+      "start_sample": 355606,
+      "stop_sample": 388330,
+      "candidate_local_sec": 0.9841074005359687
+    },
+    {
+      "id": "event-0146",
+      "input_index": 146,
+      "previous_input_index": 137,
+      "model_event": {
+        "pitch": 64,
+        "start_sec": 17.111363636363635,
+        "end_sec": 17.44772727272727,
+        "velocity": 41
+      },
+      "previous_model_event": {
+        "pitch": 64,
+        "start_sec": 16.03181818181818,
+        "end_sec": 16.53181818181818,
+        "velocity": 66
+      },
+      "clip_file": "event-0146.wav",
+      "clip_sha256": "70529f3f3927f47a5f9acc3e08e1a68975880f9bcb0cc2e0f1eaa1a80e615535",
+      "start_sample": 346886,
+      "stop_sample": 388330,
+      "candidate_local_sec": 1.3795722531436798
+    },
+    {
+      "id": "event-0147",
+      "input_index": 147,
+      "previous_input_index": 145,
+      "model_event": {
+        "pitch": 52,
+        "start_sec": 17.436363636363634,
+        "end_sec": 17.86590909090909,
+        "velocity": 56
+      },
+      "previous_model_event": {
+        "pitch": 52,
+        "start_sec": 17.111363636363635,
+        "end_sec": 17.436363636363634,
+        "velocity": 73
+      },
+      "clip_file": "event-0147.wav",
+      "clip_sha256": "676d07b4dbd9a19b9def9e875b824f945572c09ba08bf554c369ec0df072c2af",
+      "start_sample": 370690,
+      "stop_sample": 395496,
+      "candidate_local_sec": 0.6250257678829065
+    },
+    {
+      "id": "event-0151",
+      "input_index": 151,
+      "previous_input_index": 146,
+      "model_event": {
+        "pitch": 64,
+        "start_sec": 17.44772727272727,
+        "end_sec": 18.145454545454545,
+        "velocity": 60
+      },
+      "previous_model_event": {
+        "pitch": 64,
+        "start_sec": 17.111363636363635,
+        "end_sec": 17.44772727272727,
+        "velocity": 41
+      },
+      "clip_file": "event-0151.wav",
+      "clip_sha256": "19df8ed18dceaae2252140c4812cdab2a27426b47e559e59b575617b048b89b3",
+      "start_sample": 370690,
+      "stop_sample": 395747,
+      "candidate_local_sec": 0.6363894042465432
+    },
+    {
+      "id": "event-0153",
+      "input_index": 153,
+      "previous_input_index": 147,
+      "model_event": {
+        "pitch": 52,
+        "start_sec": 17.86590909090909,
+        "end_sec": 18.15681818181818,
+        "velocity": 73
+      },
+      "previous_model_event": {
+        "pitch": 52,
+        "start_sec": 17.436363636363634,
+        "end_sec": 17.86590909090909,
+        "velocity": 56
+      },
+      "clip_file": "event-0153.wav",
+      "clip_sha256": "091633297ce13e8d5fb47e655414af84c3a1bbbb8ca55254834a5286554f69a2",
+      "start_sample": 377856,
+      "stop_sample": 404968,
+      "candidate_local_sec": 0.7295825602968442
+    },
+    {
+      "id": "event-0154",
+      "input_index": 154,
+      "previous_input_index": 149,
+      "model_event": {
+        "pitch": 74,
+        "start_sec": 18.134090909090908,
+        "end_sec": 18.36590909090909,
+        "velocity": 47
+      },
+      "previous_model_event": {
+        "pitch": 74,
+        "start_sec": 17.436363636363634,
+        "end_sec": 17.831818181818182,
+        "velocity": 55
+      },
+      "clip_file": "event-0154.wav",
+      "clip_sha256": "f6146407b557bb2e0aabfdb0759f56d79ca8f2891527cfe3f4ce08f288eb0e35",
+      "start_sample": 377856,
+      "stop_sample": 410881,
+      "candidate_local_sec": 0.9977643784786636
+    },
+    {
+      "id": "event-0155",
+      "input_index": 155,
+      "previous_input_index": 151,
+      "model_event": {
+        "pitch": 64,
+        "start_sec": 18.145454545454545,
+        "end_sec": 18.518181818181816,
+        "velocity": 78
+      },
+      "previous_model_event": {
+        "pitch": 64,
+        "start_sec": 17.44772727272727,
+        "end_sec": 18.145454545454545,
+        "velocity": 60
+      },
+      "clip_file": "event-0155.wav",
+      "clip_sha256": "957e8ee4dde691d725a3257296da165bc97810a83c147b41f1148121e041cf4f",
+      "start_sample": 378107,
+      "stop_sample": 411132,
+      "candidate_local_sec": 0.9977447948876517
+    },
+    {
+      "id": "event-0157",
+      "input_index": 157,
+      "previous_input_index": 153,
+      "model_event": {
+        "pitch": 52,
+        "start_sec": 18.15681818181818,
+        "end_sec": 18.518181818181816,
+        "velocity": 64
+      },
+      "previous_model_event": {
+        "pitch": 52,
+        "start_sec": 17.86590909090909,
+        "end_sec": 18.15681818181818,
+        "velocity": 73
+      },
+      "clip_file": "event-0157.wav",
+      "clip_sha256": "bb04874bc7e8e96387af72f95630e4a3f585a6f6b1c576dc1fac5ffd4ea4aef1",
+      "start_sample": 387328,
+      "stop_sample": 411382,
+      "candidate_local_sec": 0.5909224902082038
+    },
+    {
+      "id": "event-0160",
+      "input_index": 160,
+      "previous_input_index": 150,
+      "model_event": {
+        "pitch": 62,
+        "start_sec": 18.227272727272727,
+        "end_sec": 19.063636363636363,
+        "velocity": 58
+      },
+      "previous_model_event": {
+        "pitch": 62,
+        "start_sec": 17.44772727272727,
+        "end_sec": 18.227272727272727,
+        "velocity": 59
+      },
+      "clip_file": "event-0160.wav",
+      "clip_sha256": "a24b40c08c6f744934939a0c5708fdb3ddfc320ecf57c6d605efb511015d5ef9",
+      "start_sample": 378107,
+      "stop_sample": 412936,
+      "candidate_local_sec": 1.0795629767058337
+    },
+    {
+      "id": "event-0162",
+      "input_index": 162,
+      "previous_input_index": 157,
+      "model_event": {
+        "pitch": 52,
+        "start_sec": 18.518181818181816,
+        "end_sec": 19.029545454545453,
+        "velocity": 70
+      },
+      "previous_model_event": {
+        "pitch": 52,
+        "start_sec": 18.15681818181818,
+        "end_sec": 18.518181818181816,
+        "velocity": 64
+      },
+      "clip_file": "event-0162.wav",
+      "clip_sha256": "48ab8999c2e86e3aa3969d07ba350615c75f3faba3ea0fe850610e2fd8286a71",
+      "start_sample": 393742,
+      "stop_sample": 419350,
+      "candidate_local_sec": 0.6614017728303416
+    },
+    {
+      "id": "event-0163",
+      "input_index": 163,
+      "previous_input_index": 155,
+      "model_event": {
+        "pitch": 64,
+        "start_sec": 18.518181818181816,
+        "end_sec": 18.86590909090909,
+        "velocity": 56
+      },
+      "previous_model_event": {
+        "pitch": 64,
+        "start_sec": 18.145454545454545,
+        "end_sec": 18.518181818181816,
+        "velocity": 78
+      },
+      "clip_file": "event-0163.wav",
+      "clip_sha256": "c49e46d1d26f1ebd52a57997782c3bb1bd81a6d8c714d2eb3ade730764c28f14",
+      "start_sample": 393492,
+      "stop_sample": 419350,
+      "candidate_local_sec": 0.6727396413110682
+    },
+    {
+      "id": "event-0164",
+      "input_index": 164,
+      "previous_input_index": 162,
+      "model_event": {
+        "pitch": 52,
+        "start_sec": 19.029545454545453,
+        "end_sec": 19.422727272727272,
+        "velocity": 61
+      },
+      "previous_model_event": {
+        "pitch": 52,
+        "start_sec": 18.518181818181816,
+        "end_sec": 19.029545454545453,
+        "velocity": 70
+      },
+      "clip_file": "event-0164.wav",
+      "clip_sha256": "cd0330e20beeb5d8e5333167af6b0cc5ae53040383e834348e9f89f9b86d97f9",
+      "start_sample": 401710,
+      "stop_sample": 430626,
+      "candidate_local_sec": 0.8114048649762928
+    },
+    {
+      "id": "event-0166",
+      "input_index": 166,
+      "previous_input_index": 154,
+      "model_event": {
+        "pitch": 74,
+        "start_sec": 19.029545454545453,
+        "end_sec": 19.43409090909091,
+        "velocity": 58
+      },
+      "previous_model_event": {
+        "pitch": 74,
+        "start_sec": 18.134090909090908,
+        "end_sec": 18.36590909090909,
+        "velocity": 47
+      },
+      "clip_file": "event-0166.wav",
+      "clip_sha256": "a712591f5cd3893a63d534ae9134df6b9ce6a30f511320ed2affb69fe5c61ed0",
+      "start_sample": 393241,
+      "stop_sample": 430626,
+      "candidate_local_sec": 1.1954864976293536
+    },
+    {
+      "id": "event-0167",
+      "input_index": 167,
+      "previous_input_index": 160,
+      "model_event": {
+        "pitch": 62,
+        "start_sec": 19.063636363636363,
+        "end_sec": 19.829545454545453,
+        "velocity": 59
+      },
+      "previous_model_event": {
+        "pitch": 62,
+        "start_sec": 18.227272727272727,
+        "end_sec": 19.063636363636363,
+        "velocity": 58
+      },
+      "clip_file": "event-0167.wav",
+      "clip_sha256": "b6e11c4fc2d896565f43191af3b9b8d9243e8c1751bbd66e2e3c73c262580b1e",
+      "start_sample": 395296,
+      "stop_sample": 431378,
+      "candidate_local_sec": 1.1363801278086996
+    },
+    {
+      "id": "event-0169",
+      "input_index": 169,
+      "previous_input_index": 164,
+      "model_event": {
+        "pitch": 52,
+        "start_sec": 19.422727272727272,
+        "end_sec": 19.888636363636362,
+        "velocity": 57
+      },
+      "previous_model_event": {
+        "pitch": 52,
+        "start_sec": 19.029545454545453,
+        "end_sec": 19.422727272727272,
+        "velocity": 61
+      },
+      "clip_file": "event-0169.wav",
+      "clip_sha256": "0459d0193db35d8e53a97213bbd2e7fde17fc6e8a976a4340927a00491459690",
+      "start_sample": 412986,
+      "stop_sample": 439296,
+      "candidate_local_sec": 0.6932034632034636
+    },
+    {
+      "id": "event-0172",
+      "input_index": 172,
+      "previous_input_index": 169,
+      "model_event": {
+        "pitch": 52,
+        "start_sec": 20.063636363636363,
+        "end_sec": 20.30681818181818,
+        "velocity": 42
+      },
+      "previous_model_event": {
+        "pitch": 52,
+        "start_sec": 19.422727272727272,
+        "end_sec": 19.888636363636362,
+        "velocity": 57
+      },
+      "clip_file": "event-0172.wav",
+      "clip_sha256": "9f8a1b5cac1d507310094d42e01c9935ee751a6d86378ed34a2c4b039cb6bde6",
+      "start_sample": 421656,
+      "stop_sample": 453428,
+      "candidate_local_sec": 0.9409152752009895
+    },
+    {
+      "id": "event-0173",
+      "input_index": 173,
+      "previous_input_index": 172,
+      "model_event": {
+        "pitch": 52,
+        "start_sec": 20.318181818181817,
+        "end_sec": 20.459090909090907,
+        "velocity": 60
+      },
+      "previous_model_event": {
+        "pitch": 52,
+        "start_sec": 20.063636363636363,
+        "end_sec": 20.30681818181818,
+        "velocity": 42
+      },
+      "clip_file": "event-0173.wav",
+      "clip_sha256": "ffd5f562cd886d555cf561b559ab227a6b244baf2e611d98fa7658f6338ae45c",
+      "start_sample": 435788,
+      "stop_sample": 459040,
+      "candidate_local_sec": 0.5545537002679843
+    },
+    {
+      "id": "event-0174",
+      "input_index": 174,
+      "previous_input_index": 173,
+      "model_event": {
+        "pitch": 52,
+        "start_sec": 20.459090909090907,
+        "end_sec": 20.852272727272727,
+        "velocity": 68
+      },
+      "previous_model_event": {
+        "pitch": 52,
+        "start_sec": 20.318181818181817,
+        "end_sec": 20.459090909090907,
+        "velocity": 60
+      },
+      "clip_file": "event-0174.wav",
+      "clip_sha256": "786d10dd7ca0f25a8fd011916b2e1ce5a27e7770c91e63d475b6149eeb80b44b",
+      "start_sample": 441400,
+      "stop_sample": 462147,
+      "candidate_local_sec": 0.4409503195217468
+    },
+    {
+      "id": "event-0181",
+      "input_index": 181,
+      "previous_input_index": 179,
+      "model_event": {
+        "pitch": 53,
+        "start_sec": 21.81590909090909,
+        "end_sec": 22.31590909090909,
+        "velocity": 65
+      },
+      "previous_model_event": {
+        "pitch": 53,
+        "start_sec": 21.618181818181817,
+        "end_sec": 21.81590909090909,
+        "velocity": 58
+      },
+      "clip_file": "event-0181.wav",
+      "clip_sha256": "8f664710096fb542039a2412ea8431b082c19f65ddaf03d2ac8ba6d765fe4af7",
+      "start_sample": 470065,
+      "stop_sample": 492065,
+      "candidate_local_sec": 0.4977685013399302
+    },
+    {
+      "id": "event-0183",
+      "input_index": 183,
+      "previous_input_index": 181,
+      "model_event": {
+        "pitch": 53,
+        "start_sec": 22.31590909090909,
+        "end_sec": 23.025,
+        "velocity": 64
+      },
+      "previous_model_event": {
+        "pitch": 53,
+        "start_sec": 21.81590909090909,
+        "end_sec": 22.31590909090909,
+        "velocity": 65
+      },
+      "clip_file": "event-0183.wav",
+      "clip_sha256": "028301767c8366930a66864734f115e0109e1aaf263f86cd374b5113cacaf774",
+      "start_sample": 474425,
+      "stop_sample": 503090,
+      "candidate_local_sec": 0.8000360750360755
+    },
+    {
+      "id": "event-0187",
+      "input_index": 187,
+      "previous_input_index": 185,
+      "model_event": {
+        "pitch": 60,
+        "start_sec": 23.070454545454545,
+        "end_sec": 23.37272727272727,
+        "velocity": 65
+      },
+      "previous_model_event": {
+        "pitch": 60,
+        "start_sec": 22.711363636363636,
+        "end_sec": 23.070454545454545,
+        "velocity": 46
+      },
+      "clip_file": "event-0187.wav",
+      "clip_sha256": "9551dbbd5fcf709dda52080136b14eb890c0ca3af0947ce9fb7c7a1240f8fab9",
+      "start_sample": 494170,
+      "stop_sample": 519728,
+      "candidate_local_sec": 0.6591166769738201
+    },
+    {
+      "id": "event-0189",
+      "input_index": 189,
+      "previous_input_index": 184,
+      "model_event": {
+        "pitch": 69,
+        "start_sec": 23.152272727272727,
+        "end_sec": 23.37272727272727,
+        "velocity": 62
+      },
+      "previous_model_event": {
+        "pitch": 69,
+        "start_sec": 22.375,
+        "end_sec": 22.584090909090907,
+        "velocity": 35
+      },
+      "clip_file": "event-0189.wav",
+      "clip_sha256": "dc9dbb7b330bc138f308477c3e217cbb81f58c6a2b009bbb71741bc0d5b34d01",
+      "start_sample": 486753,
+      "stop_sample": 521532,
+      "candidate_local_sec": 1.0773067408781678
+    },
+    {
+      "id": "event-0190",
+      "input_index": 190,
+      "previous_input_index": 187,
+      "model_event": {
+        "pitch": 60,
+        "start_sec": 23.37272727272727,
+        "end_sec": 23.525,
+        "velocity": 50
+      },
+      "previous_model_event": {
+        "pitch": 60,
+        "start_sec": 23.070454545454545,
+        "end_sec": 23.37272727272727,
+        "velocity": 65
+      },
+      "clip_file": "event-0190.wav",
+      "clip_sha256": "dfba82deb3e117a9a264ebe9379b0cb748d5fec8c40e7d5c868ce667d1b4efca",
+      "start_sample": 502088,
+      "stop_sample": 526393,
+      "candidate_local_sec": 0.6022964337250052
+    },
+    {
+      "id": "event-0191",
+      "input_index": 191,
+      "previous_input_index": 186,
+      "model_event": {
+        "pitch": 48,
+        "start_sec": 23.384090909090908,
+        "end_sec": 24.83863636363636,
+        "velocity": 68
+      },
+      "previous_model_event": {
+        "pitch": 48,
+        "start_sec": 22.73409090909091,
+        "end_sec": 23.047727272727272,
+        "velocity": 68
+      },
+      "clip_file": "event-0191.wav",
+      "clip_sha256": "8b709382b7be44cd34ab8a81326351465add945b201911a88ffe2dc198b80de2",
+      "start_sample": 494671,
+      "stop_sample": 526644,
+      "candidate_local_sec": 0.9500319521748075
+    },
+    {
+      "id": "event-0194",
+      "input_index": 194,
+      "previous_input_index": 190,
+      "model_event": {
+        "pitch": 60,
+        "start_sec": 23.75681818181818,
+        "end_sec": 24.25681818181818,
+        "velocity": 43
+      },
+      "previous_model_event": {
+        "pitch": 60,
+        "start_sec": 23.37272727272727,
+        "end_sec": 23.525,
+        "velocity": 50
+      },
+      "clip_file": "event-0194.wav",
+      "clip_sha256": "47cc101f6f8f19cda0eed74a130e66faf38113326e6156ad82c302be69893fe9",
+      "start_sample": 508753,
+      "stop_sample": 534862,
+      "candidate_local_sec": 0.6841197691197678
+    },
+    {
+      "id": "event-0195",
+      "input_index": 195,
+      "previous_input_index": 192,
+      "model_event": {
+        "pitch": 51,
+        "start_sec": 23.909090909090907,
+        "end_sec": 24.570454545454545,
+        "velocity": 80
+      },
+      "previous_model_event": {
+        "pitch": 51,
+        "start_sec": 23.73409090909091,
+        "end_sec": 23.909090909090907,
+        "velocity": 91
+      },
+      "clip_file": "event-0195.wav",
+      "clip_sha256": "87e1b5bc0f6f2d4a0dd7875153ca976eb510363ce578c1a6679bded34ba51f5c",
+      "start_sample": 516721,
+      "stop_sample": 538220,
+      "candidate_local_sec": 0.4750319521748061
+    },
+    {
+      "id": "event-0198",
+      "input_index": 198,
+      "previous_input_index": 195,
+      "model_event": {
+        "pitch": 51,
+        "start_sec": 24.570454545454545,
+        "end_sec": 25.163636363636364,
+        "velocity": 76
+      },
+      "previous_model_event": {
+        "pitch": 51,
+        "start_sec": 23.909090909090907,
+        "end_sec": 24.570454545454545,
+        "velocity": 80
+      },
+      "clip_file": "event-0198.wav",
+      "clip_sha256": "52830e8a3a0cc3ff838e9bc3ed9a6bc9e057f7231ab5bd20c5864531988f1935",
+      "start_sample": 520580,
+      "stop_sample": 552803,
+      "candidate_local_sec": 0.9613842506699655
+    },
+    {
+      "id": "event-0200",
+      "input_index": 200,
+      "previous_input_index": 197,
+      "model_event": {
+        "pitch": 69,
+        "start_sec": 24.73409090909091,
+        "end_sec": 24.895454545454545,
+        "velocity": 58
+      },
+      "previous_model_event": {
+        "pitch": 69,
+        "start_sec": 24.547727272727272,
+        "end_sec": 24.720454545454544,
+        "velocity": 48
+      },
+      "clip_file": "event-0200.wav",
+      "clip_sha256": "fefbabbd12b41afa4ccebdb77a671dcf8cc030e81ff74cd3275f8b9f8e2e3162",
+      "start_sample": 534662,
+      "stop_sample": 556411,
+      "candidate_local_sec": 0.486381158524015
+    },
+    {
+      "id": "event-0201",
+      "input_index": 201,
+      "previous_input_index": 194,
+      "model_event": {
+        "pitch": 60,
+        "start_sec": 24.825,
+        "end_sec": 24.96590909090909,
+        "velocity": 47
+      },
+      "previous_model_event": {
+        "pitch": 60,
+        "start_sec": 23.75681818181818,
+        "end_sec": 24.25681818181818,
+        "velocity": 43
+      },
+      "clip_file": "event-0201.wav",
+      "clip_sha256": "c1e3e1c5c751b9b30b605396e27f8794e20ae092d5688b81586e2ad3f8bcd054",
+      "start_sample": 517222,
+      "stop_sample": 558416,
+      "candidate_local_sec": 1.3682199546485236
+    },
+    {
+      "id": "event-0203",
+      "input_index": 203,
+      "previous_input_index": 200,
+      "model_event": {
+        "pitch": 69,
+        "start_sec": 24.895454545454545,
+        "end_sec": 25.23181818181818,
+        "velocity": 59
+      },
+      "previous_model_event": {
+        "pitch": 69,
+        "start_sec": 24.73409090909091,
+        "end_sec": 24.895454545454545,
+        "velocity": 58
+      },
+      "clip_file": "event-0203.wav",
+      "clip_sha256": "0b7f5c57ce5c12035afe772e6cac5509f4c11a195e89d20baa2bf618f1e2169c",
+      "start_sample": 538771,
+      "stop_sample": 559969,
+      "candidate_local_sec": 0.4613955885384442
+    },
+    {
+      "id": "event-0206",
+      "input_index": 206,
+      "previous_input_index": 203,
+      "model_event": {
+        "pitch": 69,
+        "start_sec": 25.23181818181818,
+        "end_sec": 25.545454545454543,
+        "velocity": 60
+      },
+      "previous_model_event": {
+        "pitch": 69,
+        "start_sec": 24.895454545454545,
+        "end_sec": 25.23181818181818,
+        "velocity": 59
+      },
+      "clip_file": "event-0206.wav",
+      "clip_sha256": "63d54547255eae4a1eb33c0a0c4c8f0ebdb244f305248a3ac2bd499863d3c8ea",
+      "start_sample": 542329,
+      "stop_sample": 567386,
+      "candidate_local_sec": 0.636398680684394
+    },
+    {
+      "id": "event-0207",
+      "input_index": 207,
+      "previous_input_index": 198,
+      "model_event": {
+        "pitch": 51,
+        "start_sec": 25.254545454545454,
+        "end_sec": 25.452272727272724,
+        "velocity": 36
+      },
+      "previous_model_event": {
+        "pitch": 51,
+        "start_sec": 24.570454545454545,
+        "end_sec": 25.163636363636364,
+        "velocity": 76
+      },
+      "clip_file": "event-0207.wav",
+      "clip_sha256": "65fdc91bb7fce10bd8fdfeb85871a7446bcbbea13de468ad1ee13d2facc2b5f4",
+      "start_sample": 535163,
+      "stop_sample": 567887,
+      "candidate_local_sec": 0.9841146155431879
+    },
+    {
+      "id": "event-0208",
+      "input_index": 208,
+      "previous_input_index": 201,
+      "model_event": {
+        "pitch": 60,
+        "start_sec": 25.279545454545453,
+        "end_sec": 25.627272727272725,
+        "velocity": 60
+      },
+      "previous_model_event": {
+        "pitch": 60,
+        "start_sec": 24.825,
+        "end_sec": 24.96590909090909,
+        "velocity": 47
+      },
+      "clip_file": "event-0208.wav",
+      "clip_sha256": "291b25da4e94b282222ff444381c7aab3b888a0126b9327410c3ceff21ef8f65",
+      "start_sample": 540776,
+      "stop_sample": 568438,
+      "candidate_local_sec": 0.7545567924139327
+    },
+    {
+      "id": "event-0209",
+      "input_index": 209,
+      "previous_input_index": 208,
+      "model_event": {
+        "pitch": 60,
+        "start_sec": 25.627272727272725,
+        "end_sec": 25.813636363636363,
+        "velocity": 49
+      },
+      "previous_model_event": {
+        "pitch": 60,
+        "start_sec": 25.279545454545453,
+        "end_sec": 25.627272727272725,
+        "velocity": 60
+      },
+      "clip_file": "event-0209.wav",
+      "clip_sha256": "162174dc013a3fe5bd171dc2ee64dacd75e4ee29b74b767a22a1616757ac4f51",
+      "start_sample": 550798,
+      "stop_sample": 576106,
+      "candidate_local_sec": 0.6477715934858779
+    },
+    {
+      "id": "event-0210",
+      "input_index": 210,
+      "previous_input_index": 202,
+      "model_event": {
+        "pitch": 48,
+        "start_sec": 25.638636363636362,
+        "end_sec": 26.568181818181817,
+        "velocity": 65
+      },
+      "previous_model_event": {
+        "pitch": 48,
+        "start_sec": 24.83863636363636,
+        "end_sec": 25.127272727272725,
+        "velocity": 59
+      },
+      "clip_file": "event-0210.wav",
+      "clip_sha256": "4860bac69bd0b194adaeb43aefd5814f3612af751b9fce6736f80903f95d6a64",
+      "start_sample": 541076,
+      "stop_sample": 576356,
+      "candidate_local_sec": 1.1000422593279708
+    },
+    {
+      "id": "event-0212",
+      "input_index": 212,
+      "previous_input_index": 205,
+      "model_event": {
+        "pitch": 54,
+        "start_sec": 25.929545454545455,
+        "end_sec": 26.220454545454544,
+        "velocity": 43
+      },
+      "previous_model_event": {
+        "pitch": 54,
+        "start_sec": 25.174999999999997,
+        "end_sec": 25.55681818181818,
+        "velocity": 58
+      },
+      "clip_file": "event-0212.wav",
+      "clip_sha256": "6b45fe10da04dcb490cd0ac04017ef73bdecb73c025473202159997620e4a91f",
+      "start_sample": 548493,
+      "stop_sample": 582771,
+      "candidate_local_sec": 1.054579468150898
+    },
+    {
+      "id": "event-0214",
+      "input_index": 214,
+      "previous_input_index": 207,
+      "model_event": {
+        "pitch": 51,
+        "start_sec": 26.347727272727273,
+        "end_sec": 26.893181818181816,
+        "velocity": 58
+      },
+      "previous_model_event": {
+        "pitch": 51,
+        "start_sec": 25.254545454545454,
+        "end_sec": 25.452272727272724,
+        "velocity": 36
+      },
+      "clip_file": "event-0214.wav",
+      "clip_sha256": "a462e8e22b3e7fb168416d1afa5a8e22f547a46b926503122f95ba6f7cc8b75b",
+      "start_sample": 550247,
+      "stop_sample": 591992,
+      "candidate_local_sec": 1.3932148010719452
+    },
+    {
+      "id": "event-0215",
+      "input_index": 215,
+      "previous_input_index": 210,
+      "model_event": {
+        "pitch": 48,
+        "start_sec": 26.59090909090909,
+        "end_sec": 27.613636363636363,
+        "velocity": 54
+      },
+      "previous_model_event": {
+        "pitch": 48,
+        "start_sec": 25.638636363636362,
+        "end_sec": 26.568181818181817,
+        "velocity": 65
+      },
+      "clip_file": "event-0215.wav",
+      "clip_sha256": "0423900c2fdb8de292926251b062292530416765478e5aee1e7fe0f7f99a8714",
+      "start_sample": 558716,
+      "stop_sample": 597354,
+      "candidate_local_sec": 1.2523149866006982
+    },
+    {
+      "id": "event-0216",
+      "input_index": 216,
+      "previous_input_index": 213,
+      "model_event": {
+        "pitch": 57,
+        "start_sec": 26.61590909090909,
+        "end_sec": 27.695454545454545,
+        "velocity": 73
+      },
+      "previous_model_event": {
+        "pitch": 57,
+        "start_sec": 25.929545454545455,
+        "end_sec": 26.61590909090909,
+        "velocity": 61
+      },
+      "clip_file": "event-0216.wav",
+      "clip_sha256": "5db62ccb8b077365c049bae30f22a82a04b499dfd585492858f93f747b98d6f7",
+      "start_sample": 565131,
+      "stop_sample": 597905,
+      "candidate_local_sec": 0.986385281385278
+    },
+    {
+      "id": "event-0217",
+      "input_index": 217,
+      "previous_input_index": 209,
+      "model_event": {
+        "pitch": 60,
+        "start_sec": 26.65,
+        "end_sec": 27.068181818181817,
+        "velocity": 54
+      },
+      "previous_model_event": {
+        "pitch": 60,
+        "start_sec": 25.627272727272725,
+        "end_sec": 25.813636363636363,
+        "velocity": 49
+      },
+      "clip_file": "event-0217.wav",
+      "clip_sha256": "d7e2a77b8590a759efd2fa245e7c651657e375ca5dad6be568609abe4748ddf0",
+      "start_sample": 558466,
+      "stop_sample": 598657,
+      "candidate_local_sec": 1.3227437641723334
+    },
+    {
+      "id": "event-0219",
+      "input_index": 219,
+      "previous_input_index": 218,
+      "model_event": {
+        "pitch": 72,
+        "start_sec": 26.94090909090909,
+        "end_sec": 27.138636363636362,
+        "velocity": 56
+      },
+      "previous_model_event": {
+        "pitch": 72,
+        "start_sec": 26.65,
+        "end_sec": 26.94090909090909,
+        "velocity": 64
+      },
+      "clip_file": "event-0219.wav",
+      "clip_sha256": "66b96294ca24e665a6010626298350df12178aa04572cfe20b3bdeff30257c23",
+      "start_sample": 581017,
+      "stop_sample": 605072,
+      "candidate_local_sec": 0.5909317666460545
+    },
+    {
+      "id": "event-0220",
+      "input_index": 220,
+      "previous_input_index": 217,
+      "model_event": {
+        "pitch": 60,
+        "start_sec": 27.068181818181817,
+        "end_sec": 27.752272727272725,
+        "velocity": 70
+      },
+      "previous_model_event": {
+        "pitch": 60,
+        "start_sec": 26.65,
+        "end_sec": 27.068181818181817,
+        "velocity": 54
+      },
+      "clip_file": "event-0220.wav",
+      "clip_sha256": "7e45ec0e254160439aa37b3a544af55603a4d615b27370cfd664a09d9f8c7371",
+      "start_sample": 581017,
+      "stop_sample": 607878,
+      "candidate_local_sec": 0.7182044939187797
+    },
+    {
+      "id": "event-0224",
+      "input_index": 224,
+      "previous_input_index": 222,
+      "model_event": {
+        "pitch": 54,
+        "start_sec": 27.64772727272727,
+        "end_sec": 27.986363636363635,
+        "velocity": 47
+      },
+      "previous_model_event": {
+        "pitch": 54,
+        "start_sec": 27.277272727272727,
+        "end_sec": 27.64772727272727,
+        "velocity": 48
+      },
+      "clip_file": "event-0224.wav",
+      "clip_sha256": "f13acea9530e8ac1cc232c45e10f2879993204e3e9044f1f8b327233e9070172",
+      "start_sample": 594848,
+      "stop_sample": 620657,
+      "candidate_local_sec": 0.6704937126365671
+    },
+    {
+      "id": "event-0225",
+      "input_index": 225,
+      "previous_input_index": 216,
+      "model_event": {
+        "pitch": 57,
+        "start_sec": 27.695454545454545,
+        "end_sec": 28.079545454545453,
+        "velocity": 60
+      },
+      "previous_model_event": {
+        "pitch": 57,
+        "start_sec": 26.61590909090909,
+        "end_sec": 27.695454545454545,
+        "velocity": 73
+      },
+      "clip_file": "event-0225.wav",
+      "clip_sha256": "e74cf3e237083a3d1f724a00abbd03f8a586380cb17a712b652903dc41648bee",
+      "start_sample": 580265,
+      "stop_sample": 621709,
+      "candidate_local_sec": 1.3795815295815288
+    },
+    {
+      "id": "event-0227",
+      "input_index": 227,
+      "previous_input_index": 220,
+      "model_event": {
+        "pitch": 60,
+        "start_sec": 27.752272727272725,
+        "end_sec": 28.45,
+        "velocity": 70
+      },
+      "previous_model_event": {
+        "pitch": 60,
+        "start_sec": 27.068181818181817,
+        "end_sec": 27.752272727272725,
+        "velocity": 70
+      },
+      "clip_file": "event-0227.wav",
+      "clip_sha256": "74b97ca847048de2e358081d5a8ef3e03c194a5e8f7eaeb253a241cb7711f3d5",
+      "start_sample": 590238,
+      "stop_sample": 622962,
+      "candidate_local_sec": 0.9841094619666038
+    },
+    {
+      "id": "event-0230",
+      "input_index": 230,
+      "previous_input_index": 225,
+      "model_event": {
+        "pitch": 57,
+        "start_sec": 28.079545454545453,
+        "end_sec": 28.74090909090909,
+        "velocity": 55
+      },
+      "previous_model_event": {
+        "pitch": 57,
+        "start_sec": 27.695454545454545,
+        "end_sec": 28.079545454545453,
+        "velocity": 60
+      },
+      "clip_file": "event-0230.wav",
+      "clip_sha256": "0d1b7560eb1fe771853a33704aba27ebed6ba3eddd561aa1eaac075b032717f3",
+      "start_sample": 604069,
+      "stop_sample": 630178,
+      "candidate_local_sec": 0.6841259534116659
+    },
+    {
+      "id": "event-0231",
+      "input_index": 231,
+      "previous_input_index": 228,
+      "model_event": {
+        "pitch": 48,
+        "start_sec": 28.136363636363637,
+        "end_sec": 28.277272727272727,
+        "velocity": 48
+      },
+      "previous_model_event": {
+        "pitch": 48,
+        "start_sec": 27.825,
+        "end_sec": 27.99772727272727,
+        "velocity": 49
+      },
+      "clip_file": "event-0231.wav",
+      "clip_sha256": "c160eadba2e7b745aec72d7e055788eb6cbd7bac079f74a314a5adb788c28e64",
+      "start_sample": 606926,
+      "stop_sample": 631431,
+      "candidate_local_sec": 0.6113749742321168
+    },
+    {
+      "id": "event-0232",
+      "input_index": 232,
+      "previous_input_index": 227,
+      "model_event": {
+        "pitch": 60,
+        "start_sec": 28.45,
+        "end_sec": 28.68409090909091,
+        "velocity": 82
+      },
+      "previous_model_event": {
+        "pitch": 60,
+        "start_sec": 27.752272727272725,
+        "end_sec": 28.45,
+        "velocity": 70
+      },
+      "clip_file": "event-0232.wav",
+      "clip_sha256": "59f5993cd56f2407378e0eed72f30ece8636cb386d02a83dfe7d78f360fafdb0",
+      "start_sample": 605322,
+      "stop_sample": 638347,
+      "candidate_local_sec": 0.9977551020408164
+    },
+    {
+      "id": "event-0233",
+      "input_index": 233,
+      "previous_input_index": 229,
+      "model_event": {
+        "pitch": 68,
+        "start_sec": 28.474999999999998,
+        "end_sec": 28.972727272727273,
+        "velocity": 65
+      },
+      "previous_model_event": {
+        "pitch": 68,
+        "start_sec": 27.986363636363635,
+        "end_sec": 28.474999999999998,
+        "velocity": 89
+      },
+      "clip_file": "event-0233.wav",
+      "clip_sha256": "82d85b0abaee6a6b7941a0b95df6df84bbdbf1fffa6f7f89f7203a80446c99f7",
+      "start_sample": 610484,
+      "stop_sample": 638898,
+      "candidate_local_sec": 0.7886507936507918
+    },
+    {
+      "id": "event-0234",
+      "input_index": 234,
+      "previous_input_index": 232,
+      "model_event": {
+        "pitch": 60,
+        "start_sec": 28.68409090909091,
+        "end_sec": 28.85681818181818,
+        "velocity": 53
+      },
+      "previous_model_event": {
+        "pitch": 60,
+        "start_sec": 28.45,
+        "end_sec": 28.68409090909091,
+        "velocity": 82
+      },
+      "clip_file": "event-0234.wav",
+      "clip_sha256": "964f1abd55929b7b1800c561702667b604233af6f9980dfd8be66f7ee5cfc422",
+      "start_sample": 620707,
+      "stop_sample": 643509,
+      "candidate_local_sec": 0.5341135848278711
+    },
+    {
+      "id": "event-0235",
+      "input_index": 235,
+      "previous_input_index": 230,
+      "model_event": {
+        "pitch": 57,
+        "start_sec": 28.74090909090909,
+        "end_sec": 29.252272727272725,
+        "velocity": 72
+      },
+      "previous_model_event": {
+        "pitch": 57,
+        "start_sec": 28.079545454545453,
+        "end_sec": 28.74090909090909,
+        "velocity": 55
+      },
+      "clip_file": "event-0235.wav",
+      "clip_sha256": "1e18c44aa9635fb1020a3e4bcf93dc2d7c86bf28d4473e5d54ce65ad190a1542",
+      "start_sample": 612538,
+      "stop_sample": 644762,
+      "candidate_local_sec": 0.9614079571222405
+    },
+    {
+      "id": "event-0240",
+      "input_index": 240,
+      "previous_input_index": 234,
+      "model_event": {
+        "pitch": 60,
+        "start_sec": 29.438636363636363,
+        "end_sec": 29.75,
+        "velocity": 57
+      },
+      "previous_model_event": {
+        "pitch": 60,
+        "start_sec": 28.68409090909091,
+        "end_sec": 28.85681818181818,
+        "velocity": 53
+      },
+      "clip_file": "event-0240.wav",
+      "clip_sha256": "27cae5673001830967c7f25a2e7f199815f9e190d9d1e2e2dba49ee000c91449",
+      "start_sample": 625869,
+      "stop_sample": 660146,
+      "candidate_local_sec": 1.0545547309833019
+    }
+  ]
+}

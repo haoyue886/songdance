@@ -1,0 +1,7673 @@
+{
+  "case_id": "02-brahms-intermezzo",
+  "production_eligible": false,
+  "actual_applied_deletions": 0,
+  "reference_note_labels": null,
+  "accuracy": null,
+  "false_deletion_rate": null,
+  "limitation": "coverage only; no per-note truth; zero selection is not proof of safety",
+  "source_provenance": {
+    "kind": "real_piano_without_note_reference",
+    "provenance_sha256": "be306eff480b6e1143418a9e7caeced1139b27ec7143307c81185d2ceab03a2c",
+    "record": {
+      "id": "02-brahms-intermezzo",
+      "source_title": "File:\u0410\u043d\u043d\u0430 \u041c\u0438\u0445\u0430\u0439\u043b\u043e\u0432\u0441\u044c\u043a\u0430 - \u0411\u0440\u0430\u043c\u0441-\u0406\u043d\u0442\u0435\u0440\u043c\u0435\u0446\u0446\u043e-A-dur.ogv",
+      "source_page": "https://commons.wikimedia.org/wiki/File:%D0%90%D0%BD%D0%BD%D0%B0_%D0%9C%D0%B8%D1%85%D0%B0%D0%B9%D0%BB%D0%BE%D0%B2%D1%81%D1%8C%D0%BA%D0%B0_-_%D0%91%D1%80%D0%B0%D0%BC%D1%81-%D0%86%D0%BD%D1%82%D0%B5%D1%80%D0%BC%D0%B5%D1%86%D1%86%D0%BE-A-dur.ogv",
+      "license": "Public domain",
+      "license_url": "https://commons.wikimedia.org/wiki/File:%D0%90%D0%BD%D0%BD%D0%B0_%D0%9C%D0%B8%D1%85%D0%B0%D0%B9%D0%BB%D0%BE%D0%B2%D1%81%D1%8C%D0%BA%D0%B0_-_%D0%91%D1%80%D0%B0%D0%BC%D1%81-%D0%86%D0%BD%D1%82%D0%B5%D1%80%D0%BC%D0%B5%D1%86%D1%86%D0%BE-A-dur.ogv",
+      "description": "J. Brahms Intermezzo A-dur Performed by Anna Mychaylovska",
+      "start_sec": 35,
+      "duration_seconds": 30,
+      "clip_sha256": "2d3be743ce4c6889e3e28ca4f0e8bada7fc4e7c8bbcceace6bef3e2b351fb6bd"
+    }
+  },
+  "input_hashes": {
+    "inference.json": "351a853e308f1a591e86c8d49befb7ab06b4b6e591e4aca75208b85b1d1068df",
+    "normalized.wav": "583e9a3ea99dda9e5e4809e14077c60adb793949e3f33296df2d75cd05ac44fe",
+    "raw.mid": "0a3538473602a8c3076afdf247e79bab7ba03b4bdc282d8b19fa3540b2c59524"
+  },
+  "code_hashes": {
+    "scripts/run_real_partial_probe.py": "18775ee9499f199d6a9d8ce820882a0fff7d2382b9b989cc893db5871b24f697",
+    "scripts/polyphony_partial_probe.py": "3ab0be11ce3523cde38802b9f079f8b6157f9c68437355d337c3a397fd90ef91",
+    "app/pipeline/crossing_attack_evidence.py": "4b47d148e076286075605de9dd1ede179cd4be6cffb6448a37851caa65dd8da0",
+    "scripts/piano_comparison_cases.py": "90c2749f6af5c7296c0509a0cbf7786e5828a68fc96aff9c34480385f7247ca4",
+    "scripts/compare_piano_model_outputs.py": "d3c1862d40d42698cde1628233450353e6fceed996bb961c24d88a77975004bf"
+  },
+  "thresholds": {
+    "max_error": 0.01,
+    "min_tracks": 2
+  },
+  "event_count": 242,
+  "events": [
+    {
+      "input_index": 0,
+      "event": {
+        "pitch": 68,
+        "start_sec": 0.011363636363636364,
+        "end_sec": 0.5795454545454545,
+        "velocity": 48
+      },
+      "measurement": {
+        "status": "boundary",
+        "tracks": [],
+        "continuous_hypothesis": false
+      }
+    },
+    {
+      "input_index": 1,
+      "event": {
+        "pitch": 54,
+        "start_sec": 0.1159090909090909,
+        "end_sec": 0.6386363636363636,
+        "velocity": 69
+      },
+      "measurement": {
+        "status": "boundary",
+        "tracks": [],
+        "continuous_hypothesis": false
+      }
+    },
+    {
+      "input_index": 2,
+      "event": {
+        "pitch": 73,
+        "start_sec": 0.65,
+        "end_sec": 0.8136363636363636,
+        "velocity": 76
+      },
+      "measurement": {
+        "status": "unavailable",
+        "tracks": [
+          {
+            "partial": 1,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 2,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 3,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 4,
+            "status": "nondecaying"
+          }
+        ],
+        "continuous_hypothesis": false
+      }
+    },
+    {
+      "input_index": 3,
+      "event": {
+        "pitch": 64,
+        "start_sec": 0.6613636363636364,
+        "end_sec": 1.034090909090909,
+        "velocity": 52
+      },
+      "measurement": {
+        "status": "measured",
+        "tracks": [
+          {
+            "partial": 1,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 2,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 3,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 4,
+            "status": "measured",
+            "error": 1.0842218869360165
+          }
+        ],
+        "continuous_hypothesis": false
+      }
+    },
+    {
+      "input_index": 4,
+      "event": {
+        "pitch": 52,
+        "start_sec": 0.7090909090909091,
+        "end_sec": 1.5318181818181817,
+        "velocity": 67
+      },
+      "measurement": {
+        "status": "measured",
+        "tracks": [
+          {
+            "partial": 1,
+            "status": "measured",
+            "error": 1.774442396910631
+          },
+          {
+            "partial": 2,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 3,
+            "status": "measured",
+            "error": 2.555746050363581
+          },
+          {
+            "partial": 4,
+            "status": "frequency_collision"
+          }
+        ],
+        "continuous_hypothesis": false
+      }
+    },
+    {
+      "input_index": 5,
+      "event": {
+        "pitch": 55,
+        "start_sec": 0.7431818181818182,
+        "end_sec": 1.4386363636363635,
+        "velocity": 63
+      },
+      "measurement": {
+        "status": "unavailable",
+        "tracks": [
+          {
+            "partial": 1,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 2,
+            "status": "nondecaying"
+          },
+          {
+            "partial": 3,
+            "status": "nondecaying"
+          },
+          {
+            "partial": 4,
+            "status": "nondecaying"
+          }
+        ],
+        "continuous_hypothesis": false
+      }
+    },
+    {
+      "input_index": 6,
+      "event": {
+        "pitch": 73,
+        "start_sec": 0.8136363636363636,
+        "end_sec": 1.0227272727272727,
+        "velocity": 56
+      },
+      "measurement": {
+        "status": "measured",
+        "tracks": [
+          {
+            "partial": 1,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 2,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 3,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 4,
+            "status": "measured",
+            "error": 2.4767939337151237
+          }
+        ],
+        "continuous_hypothesis": false
+      }
+    },
+    {
+      "input_index": 7,
+      "event": {
+        "pitch": 71,
+        "start_sec": 1.0681818181818181,
+        "end_sec": 1.5568181818181817,
+        "velocity": 74
+      },
+      "measurement": {
+        "status": "unavailable",
+        "tracks": [
+          {
+            "partial": 1,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 2,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 3,
+            "status": "nondecaying"
+          },
+          {
+            "partial": 4,
+            "status": "frequency_collision"
+          }
+        ],
+        "continuous_hypothesis": false
+      }
+    },
+    {
+      "input_index": 8,
+      "event": {
+        "pitch": 74,
+        "start_sec": 1.5431818181818182,
+        "end_sec": 1.9863636363636363,
+        "velocity": 74
+      },
+      "measurement": {
+        "status": "unavailable",
+        "tracks": [
+          {
+            "partial": 1,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 2,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 3,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 4,
+            "status": "ill_conditioned"
+          }
+        ],
+        "continuous_hypothesis": false
+      }
+    },
+    {
+      "input_index": 9,
+      "event": {
+        "pitch": 69,
+        "start_sec": 1.6136363636363635,
+        "end_sec": 1.7522727272727272,
+        "velocity": 72
+      },
+      "measurement": {
+        "status": "unavailable",
+        "tracks": [
+          {
+            "partial": 1,
+            "status": "ill_conditioned"
+          },
+          {
+            "partial": 2,
+            "status": "ill_conditioned"
+          },
+          {
+            "partial": 3,
+            "status": "ill_conditioned"
+          },
+          {
+            "partial": 4,
+            "status": "frequency_collision"
+          }
+        ],
+        "continuous_hypothesis": false
+      }
+    },
+    {
+      "input_index": 10,
+      "event": {
+        "pitch": 42,
+        "start_sec": 1.6477272727272727,
+        "end_sec": 2.8,
+        "velocity": 63
+      },
+      "measurement": {
+        "status": "unavailable",
+        "tracks": [
+          {
+            "partial": 1,
+            "status": "ill_conditioned"
+          },
+          {
+            "partial": 2,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 3,
+            "status": "ill_conditioned"
+          },
+          {
+            "partial": 4,
+            "status": "ill_conditioned"
+          }
+        ],
+        "continuous_hypothesis": false
+      }
+    },
+    {
+      "input_index": 11,
+      "event": {
+        "pitch": 69,
+        "start_sec": 1.7522727272727272,
+        "end_sec": 2.475,
+        "velocity": 53
+      },
+      "measurement": {
+        "status": "measured",
+        "tracks": [
+          {
+            "partial": 1,
+            "status": "measured",
+            "error": 2.5789045227301575
+          },
+          {
+            "partial": 2,
+            "status": "nondecaying"
+          },
+          {
+            "partial": 3,
+            "status": "nondecaying"
+          },
+          {
+            "partial": 4,
+            "status": "frequency_collision"
+          }
+        ],
+        "continuous_hypothesis": false
+      }
+    },
+    {
+      "input_index": 12,
+      "event": {
+        "pitch": 62,
+        "start_sec": 1.9863636363636363,
+        "end_sec": 2.6136363636363633,
+        "velocity": 62
+      },
+      "measurement": {
+        "status": "measured",
+        "tracks": [
+          {
+            "partial": 1,
+            "status": "measured",
+            "error": 2.958097126580221
+          },
+          {
+            "partial": 2,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 3,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 4,
+            "status": "frequency_collision"
+          }
+        ],
+        "continuous_hypothesis": false
+      }
+    },
+    {
+      "input_index": 13,
+      "event": {
+        "pitch": 74,
+        "start_sec": 1.9863636363636363,
+        "end_sec": 2.4977272727272726,
+        "velocity": 50
+      },
+      "measurement": {
+        "status": "measured",
+        "tracks": [
+          {
+            "partial": 1,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 2,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 3,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 4,
+            "status": "measured",
+            "error": 3.974664879983248
+          }
+        ],
+        "continuous_hypothesis": false
+      }
+    },
+    {
+      "input_index": 14,
+      "event": {
+        "pitch": 57,
+        "start_sec": 2.381818181818182,
+        "end_sec": 3.1704545454545454,
+        "velocity": 69
+      },
+      "measurement": {
+        "status": "measured",
+        "tracks": [
+          {
+            "partial": 1,
+            "status": "nondecaying"
+          },
+          {
+            "partial": 2,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 3,
+            "status": "measured",
+            "error": 3.90434189687223
+          },
+          {
+            "partial": 4,
+            "status": "frequency_collision"
+          }
+        ],
+        "continuous_hypothesis": false
+      }
+    },
+    {
+      "input_index": 15,
+      "event": {
+        "pitch": 54,
+        "start_sec": 2.590909090909091,
+        "end_sec": 2.868181818181818,
+        "velocity": 42
+      },
+      "measurement": {
+        "status": "measured",
+        "tracks": [
+          {
+            "partial": 1,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 2,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 3,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 4,
+            "status": "measured",
+            "error": 0.4096961182335777
+          }
+        ],
+        "continuous_hypothesis": false
+      }
+    },
+    {
+      "input_index": 16,
+      "event": {
+        "pitch": 66,
+        "start_sec": 2.7886363636363636,
+        "end_sec": 3.0318181818181817,
+        "velocity": 48
+      },
+      "measurement": {
+        "status": "unavailable",
+        "tracks": [
+          {
+            "partial": 1,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 2,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 3,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 4,
+            "status": "frequency_collision"
+          }
+        ],
+        "continuous_hypothesis": false
+      }
+    },
+    {
+      "input_index": 17,
+      "event": {
+        "pitch": 62,
+        "start_sec": 2.9045454545454543,
+        "end_sec": 3.1363636363636362,
+        "velocity": 48
+      },
+      "measurement": {
+        "status": "measured",
+        "tracks": [
+          {
+            "partial": 1,
+            "status": "nondecaying"
+          },
+          {
+            "partial": 2,
+            "status": "measured",
+            "error": 0.3197829001542285
+          },
+          {
+            "partial": 3,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 4,
+            "status": "measured",
+            "error": 3.6780519225269943
+          }
+        ],
+        "continuous_hypothesis": false
+      }
+    },
+    {
+      "input_index": 18,
+      "event": {
+        "pitch": 73,
+        "start_sec": 3.2045454545454546,
+        "end_sec": 3.6590909090909087,
+        "velocity": 68
+      },
+      "measurement": {
+        "status": "unavailable",
+        "tracks": [
+          {
+            "partial": 1,
+            "status": "nondecaying"
+          },
+          {
+            "partial": 2,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 3,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 4,
+            "status": "frequency_collision"
+          }
+        ],
+        "continuous_hypothesis": false
+      }
+    },
+    {
+      "input_index": 19,
+      "event": {
+        "pitch": 76,
+        "start_sec": 3.218181818181818,
+        "end_sec": 3.4499999999999997,
+        "velocity": 46
+      },
+      "measurement": {
+        "status": "unavailable",
+        "tracks": [
+          {
+            "partial": 1,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 2,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 3,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 4,
+            "status": "frequency_collision"
+          }
+        ],
+        "continuous_hypothesis": false
+      }
+    },
+    {
+      "input_index": 20,
+      "event": {
+        "pitch": 64,
+        "start_sec": 3.2295454545454545,
+        "end_sec": 3.8318181818181816,
+        "velocity": 63
+      },
+      "measurement": {
+        "status": "unavailable",
+        "tracks": [
+          {
+            "partial": 1,
+            "status": "nondecaying"
+          },
+          {
+            "partial": 2,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 3,
+            "status": "nondecaying"
+          },
+          {
+            "partial": 4,
+            "status": "frequency_collision"
+          }
+        ],
+        "continuous_hypothesis": false
+      }
+    },
+    {
+      "input_index": 21,
+      "event": {
+        "pitch": 69,
+        "start_sec": 3.2636363636363637,
+        "end_sec": 3.4136363636363636,
+        "velocity": 80
+      },
+      "measurement": {
+        "status": "unavailable",
+        "tracks": [
+          {
+            "partial": 1,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 2,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 3,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 4,
+            "status": "frequency_collision"
+          }
+        ],
+        "continuous_hypothesis": false
+      }
+    },
+    {
+      "input_index": 22,
+      "event": {
+        "pitch": 52,
+        "start_sec": 3.3909090909090907,
+        "end_sec": 4.031818181818181,
+        "velocity": 58
+      },
+      "measurement": {
+        "status": "measured",
+        "tracks": [
+          {
+            "partial": 1,
+            "status": "measured",
+            "error": 4.55746457632579
+          },
+          {
+            "partial": 2,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 3,
+            "status": "measured",
+            "error": 2.990728206403334
+          },
+          {
+            "partial": 4,
+            "status": "frequency_collision"
+          }
+        ],
+        "continuous_hypothesis": false
+      }
+    },
+    {
+      "input_index": 23,
+      "event": {
+        "pitch": 69,
+        "start_sec": 3.4136363636363636,
+        "end_sec": 4.2295454545454545,
+        "velocity": 51
+      },
+      "measurement": {
+        "status": "unavailable",
+        "tracks": [
+          {
+            "partial": 1,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 2,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 3,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 4,
+            "status": "nondecaying"
+          }
+        ],
+        "continuous_hypothesis": false
+      }
+    },
+    {
+      "input_index": 24,
+      "event": {
+        "pitch": 71,
+        "start_sec": 3.6704545454545454,
+        "end_sec": 4.054545454545455,
+        "velocity": 57
+      },
+      "measurement": {
+        "status": "measured",
+        "tracks": [
+          {
+            "partial": 1,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 2,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 3,
+            "status": "measured",
+            "error": 2.6382266740140876
+          },
+          {
+            "partial": 4,
+            "status": "frequency_collision"
+          }
+        ],
+        "continuous_hypothesis": false
+      }
+    },
+    {
+      "input_index": 25,
+      "event": {
+        "pitch": 81,
+        "start_sec": 4.111363636363636,
+        "end_sec": 4.368181818181818,
+        "velocity": 59
+      },
+      "measurement": {
+        "status": "unavailable",
+        "tracks": [
+          {
+            "partial": 1,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 2,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 3,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 4,
+            "status": "nondecaying"
+          }
+        ],
+        "continuous_hypothesis": false
+      }
+    },
+    {
+      "input_index": 26,
+      "event": {
+        "pitch": 73,
+        "start_sec": 4.125,
+        "end_sec": 4.3568181818181815,
+        "velocity": 67
+      },
+      "measurement": {
+        "status": "measured",
+        "tracks": [
+          {
+            "partial": 1,
+            "status": "nondecaying"
+          },
+          {
+            "partial": 2,
+            "status": "measured",
+            "error": 2.8679406647918526
+          },
+          {
+            "partial": 3,
+            "status": "measured",
+            "error": 3.8092603553798874
+          },
+          {
+            "partial": 4,
+            "status": "nondecaying"
+          }
+        ],
+        "continuous_hypothesis": false
+      }
+    },
+    {
+      "input_index": 27,
+      "event": {
+        "pitch": 69,
+        "start_sec": 4.2295454545454545,
+        "end_sec": 4.413636363636363,
+        "velocity": 46
+      },
+      "measurement": {
+        "status": "unavailable",
+        "tracks": [
+          {
+            "partial": 1,
+            "status": "nondecaying"
+          },
+          {
+            "partial": 2,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 3,
+            "status": "nondecaying"
+          },
+          {
+            "partial": 4,
+            "status": "frequency_collision"
+          }
+        ],
+        "continuous_hypothesis": false
+      }
+    },
+    {
+      "input_index": 28,
+      "event": {
+        "pitch": 39,
+        "start_sec": 4.24090909090909,
+        "end_sec": 4.6,
+        "velocity": 61
+      },
+      "measurement": {
+        "status": "measured",
+        "tracks": [
+          {
+            "partial": 1,
+            "status": "measured",
+            "error": 0.9855848820745186
+          },
+          {
+            "partial": 2,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 3,
+            "status": "measured",
+            "error": 2.81007167098885
+          },
+          {
+            "partial": 4,
+            "status": "frequency_collision"
+          }
+        ],
+        "continuous_hypothesis": false
+      }
+    },
+    {
+      "input_index": 29,
+      "event": {
+        "pitch": 51,
+        "start_sec": 4.252272727272727,
+        "end_sec": 4.506818181818182,
+        "velocity": 49
+      },
+      "measurement": {
+        "status": "unavailable",
+        "tracks": [
+          {
+            "partial": 1,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 2,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 3,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 4,
+            "status": "nondecaying"
+          }
+        ],
+        "continuous_hypothesis": false
+      }
+    },
+    {
+      "input_index": 30,
+      "event": {
+        "pitch": 73,
+        "start_sec": 4.3568181818181815,
+        "end_sec": 4.554545454545455,
+        "velocity": 51
+      },
+      "measurement": {
+        "status": "measured",
+        "tracks": [
+          {
+            "partial": 1,
+            "status": "measured",
+            "error": 1.3766997424425182
+          },
+          {
+            "partial": 2,
+            "status": "measured",
+            "error": 1.0942068312038593
+          },
+          {
+            "partial": 3,
+            "status": "measured",
+            "error": 2.82908237479429
+          },
+          {
+            "partial": 4,
+            "status": "nondecaying"
+          }
+        ],
+        "continuous_hypothesis": false
+      }
+    },
+    {
+      "input_index": 31,
+      "event": {
+        "pitch": 47,
+        "start_sec": 4.588636363636364,
+        "end_sec": 5.425,
+        "velocity": 68
+      },
+      "measurement": {
+        "status": "measured",
+        "tracks": [
+          {
+            "partial": 1,
+            "status": "measured",
+            "error": 2.831359104220991
+          },
+          {
+            "partial": 2,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 3,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 4,
+            "status": "frequency_collision"
+          }
+        ],
+        "continuous_hypothesis": false
+      }
+    },
+    {
+      "input_index": 32,
+      "event": {
+        "pitch": 54,
+        "start_sec": 4.588636363636364,
+        "end_sec": 4.738636363636363,
+        "velocity": 39
+      },
+      "measurement": {
+        "status": "unavailable",
+        "tracks": [
+          {
+            "partial": 1,
+            "status": "nondecaying"
+          },
+          {
+            "partial": 2,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 3,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 4,
+            "status": "frequency_collision"
+          }
+        ],
+        "continuous_hypothesis": false
+      }
+    },
+    {
+      "input_index": 33,
+      "event": {
+        "pitch": 59,
+        "start_sec": 4.588636363636364,
+        "end_sec": 4.820454545454545,
+        "velocity": 53
+      },
+      "measurement": {
+        "status": "unavailable",
+        "tracks": [
+          {
+            "partial": 1,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 2,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 3,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 4,
+            "status": "nondecaying"
+          }
+        ],
+        "continuous_hypothesis": false
+      }
+    },
+    {
+      "input_index": 34,
+      "event": {
+        "pitch": 35,
+        "start_sec": 4.7749999999999995,
+        "end_sec": 4.947727272727272,
+        "velocity": 46
+      },
+      "measurement": {
+        "status": "measured",
+        "tracks": [
+          {
+            "partial": 1,
+            "status": "measured",
+            "error": 2.978875261035571
+          },
+          {
+            "partial": 2,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 3,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 4,
+            "status": "frequency_collision"
+          }
+        ],
+        "continuous_hypothesis": false
+      }
+    },
+    {
+      "input_index": 35,
+      "event": {
+        "pitch": 39,
+        "start_sec": 4.9363636363636365,
+        "end_sec": 5.425,
+        "velocity": 56
+      },
+      "measurement": {
+        "status": "measured",
+        "tracks": [
+          {
+            "partial": 1,
+            "status": "measured",
+            "error": 9.321932951061516
+          },
+          {
+            "partial": 2,
+            "status": "measured",
+            "error": 1.9471494501580122
+          },
+          {
+            "partial": 3,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 4,
+            "status": "frequency_collision"
+          }
+        ],
+        "continuous_hypothesis": false
+      }
+    },
+    {
+      "input_index": 36,
+      "event": {
+        "pitch": 54,
+        "start_sec": 4.9363636363636365,
+        "end_sec": 5.075,
+        "velocity": 64
+      },
+      "measurement": {
+        "status": "unavailable",
+        "tracks": [
+          {
+            "partial": 1,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 2,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 3,
+            "status": "nondecaying"
+          },
+          {
+            "partial": 4,
+            "status": "frequency_collision"
+          }
+        ],
+        "continuous_hypothesis": false
+      }
+    },
+    {
+      "input_index": 37,
+      "event": {
+        "pitch": 66,
+        "start_sec": 4.9840909090909085,
+        "end_sec": 5.168181818181818,
+        "velocity": 33
+      },
+      "measurement": {
+        "status": "unavailable",
+        "tracks": [
+          {
+            "partial": 1,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 2,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 3,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 4,
+            "status": "frequency_collision"
+          }
+        ],
+        "continuous_hypothesis": false
+      }
+    },
+    {
+      "input_index": 38,
+      "event": {
+        "pitch": 51,
+        "start_sec": 5.088636363636363,
+        "end_sec": 5.261363636363636,
+        "velocity": 58
+      },
+      "measurement": {
+        "status": "unavailable",
+        "tracks": [
+          {
+            "partial": 1,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 2,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 3,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 4,
+            "status": "frequency_collision"
+          }
+        ],
+        "continuous_hypothesis": false
+      }
+    },
+    {
+      "input_index": 39,
+      "event": {
+        "pitch": 54,
+        "start_sec": 5.088636363636363,
+        "end_sec": 5.284090909090909,
+        "velocity": 62
+      },
+      "measurement": {
+        "status": "unavailable",
+        "tracks": [
+          {
+            "partial": 1,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 2,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 3,
+            "status": "nondecaying"
+          },
+          {
+            "partial": 4,
+            "status": "frequency_collision"
+          }
+        ],
+        "continuous_hypothesis": false
+      }
+    },
+    {
+      "input_index": 40,
+      "event": {
+        "pitch": 54,
+        "start_sec": 5.284090909090909,
+        "end_sec": 5.86590909090909,
+        "velocity": 59
+      },
+      "measurement": {
+        "status": "measured",
+        "tracks": [
+          {
+            "partial": 1,
+            "status": "measured",
+            "error": 2.142474392242239
+          },
+          {
+            "partial": 2,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 3,
+            "status": "nondecaying"
+          },
+          {
+            "partial": 4,
+            "status": "frequency_collision"
+          }
+        ],
+        "continuous_hypothesis": false
+      }
+    },
+    {
+      "input_index": 41,
+      "event": {
+        "pitch": 47,
+        "start_sec": 5.425,
+        "end_sec": 5.970454545454545,
+        "velocity": 57
+      },
+      "measurement": {
+        "status": "unavailable",
+        "tracks": [
+          {
+            "partial": 1,
+            "status": "nondecaying"
+          },
+          {
+            "partial": 2,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 3,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 4,
+            "status": "frequency_collision"
+          }
+        ],
+        "continuous_hypothesis": false
+      }
+    },
+    {
+      "input_index": 42,
+      "event": {
+        "pitch": 59,
+        "start_sec": 5.425,
+        "end_sec": 5.888636363636364,
+        "velocity": 68
+      },
+      "measurement": {
+        "status": "unavailable",
+        "tracks": [
+          {
+            "partial": 1,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 2,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 3,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 4,
+            "status": "nondecaying"
+          }
+        ],
+        "continuous_hypothesis": false
+      }
+    },
+    {
+      "input_index": 43,
+      "event": {
+        "pitch": 51,
+        "start_sec": 5.4818181818181815,
+        "end_sec": 5.806818181818182,
+        "velocity": 47
+      },
+      "measurement": {
+        "status": "unavailable",
+        "tracks": [
+          {
+            "partial": 1,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 2,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 3,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 4,
+            "status": "frequency_collision"
+          }
+        ],
+        "continuous_hypothesis": false
+      }
+    },
+    {
+      "input_index": 44,
+      "event": {
+        "pitch": 39,
+        "start_sec": 5.634090909090909,
+        "end_sec": 5.843181818181818,
+        "velocity": 49
+      },
+      "measurement": {
+        "status": "measured",
+        "tracks": [
+          {
+            "partial": 1,
+            "status": "measured",
+            "error": 2.7397021404769446
+          },
+          {
+            "partial": 2,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 3,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 4,
+            "status": "frequency_collision"
+          }
+        ],
+        "continuous_hypothesis": false
+      }
+    },
+    {
+      "input_index": 45,
+      "event": {
+        "pitch": 68,
+        "start_sec": 5.8999999999999995,
+        "end_sec": 6.413636363636363,
+        "velocity": 85
+      },
+      "measurement": {
+        "status": "unavailable",
+        "tracks": [
+          {
+            "partial": 1,
+            "status": "nondecaying"
+          },
+          {
+            "partial": 2,
+            "status": "nondecaying"
+          },
+          {
+            "partial": 3,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 4,
+            "status": "frequency_collision"
+          }
+        ],
+        "continuous_hypothesis": false
+      }
+    },
+    {
+      "input_index": 46,
+      "event": {
+        "pitch": 54,
+        "start_sec": 5.922727272727273,
+        "end_sec": 6.168181818181818,
+        "velocity": 37
+      },
+      "measurement": {
+        "status": "unavailable",
+        "tracks": [
+          {
+            "partial": 1,
+            "status": "nondecaying"
+          },
+          {
+            "partial": 2,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 3,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 4,
+            "status": "frequency_collision"
+          }
+        ],
+        "continuous_hypothesis": false
+      }
+    },
+    {
+      "input_index": 47,
+      "event": {
+        "pitch": 73,
+        "start_sec": 5.922727272727273,
+        "end_sec": 6.134090909090909,
+        "velocity": 49
+      },
+      "measurement": {
+        "status": "measured",
+        "tracks": [
+          {
+            "partial": 1,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 2,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 3,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 4,
+            "status": "measured",
+            "error": 3.638977139294311
+          }
+        ],
+        "continuous_hypothesis": false
+      }
+    },
+    {
+      "input_index": 48,
+      "event": {
+        "pitch": 47,
+        "start_sec": 5.970454545454545,
+        "end_sec": 6.261363636363636,
+        "velocity": 56
+      },
+      "measurement": {
+        "status": "unavailable",
+        "tracks": [
+          {
+            "partial": 1,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 2,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 3,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 4,
+            "status": "frequency_collision"
+          }
+        ],
+        "continuous_hypothesis": false
+      }
+    },
+    {
+      "input_index": 49,
+      "event": {
+        "pitch": 45,
+        "start_sec": 6.086363636363636,
+        "end_sec": 6.3545454545454545,
+        "velocity": 46
+      },
+      "measurement": {
+        "status": "unavailable",
+        "tracks": [
+          {
+            "partial": 1,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 2,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 3,
+            "status": "ill_conditioned"
+          },
+          {
+            "partial": 4,
+            "status": "ill_conditioned"
+          }
+        ],
+        "continuous_hypothesis": false
+      }
+    },
+    {
+      "input_index": 50,
+      "event": {
+        "pitch": 47,
+        "start_sec": 6.3999999999999995,
+        "end_sec": 6.75,
+        "velocity": 61
+      },
+      "measurement": {
+        "status": "unavailable",
+        "tracks": [
+          {
+            "partial": 1,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 2,
+            "status": "nondecaying"
+          },
+          {
+            "partial": 3,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 4,
+            "status": "frequency_collision"
+          }
+        ],
+        "continuous_hypothesis": false
+      }
+    },
+    {
+      "input_index": 51,
+      "event": {
+        "pitch": 54,
+        "start_sec": 6.3999999999999995,
+        "end_sec": 6.702272727272727,
+        "velocity": 45
+      },
+      "measurement": {
+        "status": "unavailable",
+        "tracks": [
+          {
+            "partial": 1,
+            "status": "nondecaying"
+          },
+          {
+            "partial": 2,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 3,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 4,
+            "status": "frequency_collision"
+          }
+        ],
+        "continuous_hypothesis": false
+      }
+    },
+    {
+      "input_index": 52,
+      "event": {
+        "pitch": 66,
+        "start_sec": 6.413636363636363,
+        "end_sec": 6.75,
+        "velocity": 66
+      },
+      "measurement": {
+        "status": "unavailable",
+        "tracks": [
+          {
+            "partial": 1,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 2,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 3,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 4,
+            "status": "frequency_collision"
+          }
+        ],
+        "continuous_hypothesis": false
+      }
+    },
+    {
+      "input_index": 53,
+      "event": {
+        "pitch": 57,
+        "start_sec": 6.436363636363636,
+        "end_sec": 6.738636363636363,
+        "velocity": 53
+      },
+      "measurement": {
+        "status": "unavailable",
+        "tracks": [
+          {
+            "partial": 1,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 2,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 3,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 4,
+            "status": "nondecaying"
+          }
+        ],
+        "continuous_hypothesis": false
+      }
+    },
+    {
+      "input_index": 54,
+      "event": {
+        "pitch": 75,
+        "start_sec": 6.436363636363636,
+        "end_sec": 6.761363636363636,
+        "velocity": 57
+      },
+      "measurement": {
+        "status": "unavailable",
+        "tracks": [
+          {
+            "partial": 1,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 2,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 3,
+            "status": "nondecaying"
+          },
+          {
+            "partial": 4,
+            "status": "frequency_collision"
+          }
+        ],
+        "continuous_hypothesis": false
+      }
+    },
+    {
+      "input_index": 55,
+      "event": {
+        "pitch": 71,
+        "start_sec": 6.4818181818181815,
+        "end_sec": 6.829545454545454,
+        "velocity": 72
+      },
+      "measurement": {
+        "status": "unavailable",
+        "tracks": [
+          {
+            "partial": 1,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 2,
+            "status": "nondecaying"
+          },
+          {
+            "partial": 3,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 4,
+            "status": "nondecaying"
+          }
+        ],
+        "continuous_hypothesis": false
+      }
+    },
+    {
+      "input_index": 56,
+      "event": {
+        "pitch": 47,
+        "start_sec": 6.75,
+        "end_sec": 7.493181818181818,
+        "velocity": 57
+      },
+      "measurement": {
+        "status": "unavailable",
+        "tracks": [
+          {
+            "partial": 1,
+            "status": "ill_conditioned"
+          },
+          {
+            "partial": 2,
+            "status": "ill_conditioned"
+          },
+          {
+            "partial": 3,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 4,
+            "status": "frequency_collision"
+          }
+        ],
+        "continuous_hypothesis": false
+      }
+    },
+    {
+      "input_index": 57,
+      "event": {
+        "pitch": 66,
+        "start_sec": 6.75,
+        "end_sec": 7.259090909090909,
+        "velocity": 60
+      },
+      "measurement": {
+        "status": "unavailable",
+        "tracks": [
+          {
+            "partial": 1,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 2,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 3,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 4,
+            "status": "frequency_collision"
+          }
+        ],
+        "continuous_hypothesis": false
+      }
+    },
+    {
+      "input_index": 58,
+      "event": {
+        "pitch": 44,
+        "start_sec": 6.761363636363636,
+        "end_sec": 7.086363636363636,
+        "velocity": 46
+      },
+      "measurement": {
+        "status": "unavailable",
+        "tracks": [
+          {
+            "partial": 1,
+            "status": "ill_conditioned"
+          },
+          {
+            "partial": 2,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 3,
+            "status": "ill_conditioned"
+          },
+          {
+            "partial": 4,
+            "status": "ill_conditioned"
+          }
+        ],
+        "continuous_hypothesis": false
+      }
+    },
+    {
+      "input_index": 59,
+      "event": {
+        "pitch": 75,
+        "start_sec": 6.761363636363636,
+        "end_sec": 7.086363636363636,
+        "velocity": 51
+      },
+      "measurement": {
+        "status": "unavailable",
+        "tracks": [
+          {
+            "partial": 1,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 2,
+            "status": "ill_conditioned"
+          },
+          {
+            "partial": 3,
+            "status": "ill_conditioned"
+          },
+          {
+            "partial": 4,
+            "status": "ill_conditioned"
+          }
+        ],
+        "continuous_hypothesis": false
+      }
+    },
+    {
+      "input_index": 60,
+      "event": {
+        "pitch": 71,
+        "start_sec": 6.829545454545454,
+        "end_sec": 7.456818181818181,
+        "velocity": 58
+      },
+      "measurement": {
+        "status": "unavailable",
+        "tracks": [
+          {
+            "partial": 1,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 2,
+            "status": "ill_conditioned"
+          },
+          {
+            "partial": 3,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 4,
+            "status": "ill_conditioned"
+          }
+        ],
+        "continuous_hypothesis": false
+      }
+    },
+    {
+      "input_index": 61,
+      "event": {
+        "pitch": 44,
+        "start_sec": 7.086363636363636,
+        "end_sec": 7.247727272727272,
+        "velocity": 46
+      },
+      "measurement": {
+        "status": "measured",
+        "tracks": [
+          {
+            "partial": 1,
+            "status": "nondecaying"
+          },
+          {
+            "partial": 2,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 3,
+            "status": "measured",
+            "error": 0.17864767607014276
+          },
+          {
+            "partial": 4,
+            "status": "frequency_collision"
+          }
+        ],
+        "continuous_hypothesis": false
+      }
+    },
+    {
+      "input_index": 62,
+      "event": {
+        "pitch": 56,
+        "start_sec": 7.1090909090909085,
+        "end_sec": 7.572727272727272,
+        "velocity": 76
+      },
+      "measurement": {
+        "status": "measured",
+        "tracks": [
+          {
+            "partial": 1,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 2,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 3,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 4,
+            "status": "measured",
+            "error": 0.922587898145391
+          }
+        ],
+        "continuous_hypothesis": false
+      }
+    },
+    {
+      "input_index": 63,
+      "event": {
+        "pitch": 54,
+        "start_sec": 7.247727272727272,
+        "end_sec": 7.597727272727273,
+        "velocity": 43
+      },
+      "measurement": {
+        "status": "unavailable",
+        "tracks": [
+          {
+            "partial": 1,
+            "status": "nondecaying"
+          },
+          {
+            "partial": 2,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 3,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 4,
+            "status": "frequency_collision"
+          }
+        ],
+        "continuous_hypothesis": false
+      }
+    },
+    {
+      "input_index": 64,
+      "event": {
+        "pitch": 73,
+        "start_sec": 7.2727272727272725,
+        "end_sec": 7.561363636363636,
+        "velocity": 51
+      },
+      "measurement": {
+        "status": "unavailable",
+        "tracks": [
+          {
+            "partial": 1,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 2,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 3,
+            "status": "nondecaying"
+          },
+          {
+            "partial": 4,
+            "status": "frequency_collision"
+          }
+        ],
+        "continuous_hypothesis": false
+      }
+    },
+    {
+      "input_index": 65,
+      "event": {
+        "pitch": 76,
+        "start_sec": 7.352272727272727,
+        "end_sec": 7.620454545454545,
+        "velocity": 61
+      },
+      "measurement": {
+        "status": "measured",
+        "tracks": [
+          {
+            "partial": 1,
+            "status": "nondecaying"
+          },
+          {
+            "partial": 2,
+            "status": "measured",
+            "error": 3.2901534806654302
+          },
+          {
+            "partial": 3,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 4,
+            "status": "measured",
+            "error": 2.183253360528063
+          }
+        ],
+        "continuous_hypothesis": false
+      }
+    },
+    {
+      "input_index": 66,
+      "event": {
+        "pitch": 73,
+        "start_sec": 7.561363636363636,
+        "end_sec": 7.725,
+        "velocity": 57
+      },
+      "measurement": {
+        "status": "unavailable",
+        "tracks": [
+          {
+            "partial": 1,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 2,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 3,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 4,
+            "status": "ill_conditioned"
+          }
+        ],
+        "continuous_hypothesis": false
+      }
+    },
+    {
+      "input_index": 67,
+      "event": {
+        "pitch": 54,
+        "start_sec": 7.597727272727273,
+        "end_sec": 8.422727272727272,
+        "velocity": 65
+      },
+      "measurement": {
+        "status": "unavailable",
+        "tracks": [
+          {
+            "partial": 1,
+            "status": "ill_conditioned"
+          },
+          {
+            "partial": 2,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 3,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 4,
+            "status": "frequency_collision"
+          }
+        ],
+        "continuous_hypothesis": false
+      }
+    },
+    {
+      "input_index": 68,
+      "event": {
+        "pitch": 45,
+        "start_sec": 7.631818181818182,
+        "end_sec": 8.445454545454545,
+        "velocity": 68
+      },
+      "measurement": {
+        "status": "unavailable",
+        "tracks": [
+          {
+            "partial": 1,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 2,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 3,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 4,
+            "status": "ill_conditioned"
+          }
+        ],
+        "continuous_hypothesis": false
+      }
+    },
+    {
+      "input_index": 69,
+      "event": {
+        "pitch": 64,
+        "start_sec": 7.631818181818182,
+        "end_sec": 8.143181818181818,
+        "velocity": 52
+      },
+      "measurement": {
+        "status": "unavailable",
+        "tracks": [
+          {
+            "partial": 1,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 2,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 3,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 4,
+            "status": "frequency_collision"
+          }
+        ],
+        "continuous_hypothesis": false
+      }
+    },
+    {
+      "input_index": 70,
+      "event": {
+        "pitch": 76,
+        "start_sec": 7.631818181818182,
+        "end_sec": 7.993181818181818,
+        "velocity": 70
+      },
+      "measurement": {
+        "status": "unavailable",
+        "tracks": [
+          {
+            "partial": 1,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 2,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 3,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 4,
+            "status": "ill_conditioned"
+          }
+        ],
+        "continuous_hypothesis": false
+      }
+    },
+    {
+      "input_index": 71,
+      "event": {
+        "pitch": 57,
+        "start_sec": 7.959090909090909,
+        "end_sec": 8.213636363636363,
+        "velocity": 52
+      },
+      "measurement": {
+        "status": "unavailable",
+        "tracks": [
+          {
+            "partial": 1,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 2,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 3,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 4,
+            "status": "nondecaying"
+          }
+        ],
+        "continuous_hypothesis": false
+      }
+    },
+    {
+      "input_index": 72,
+      "event": {
+        "pitch": 75,
+        "start_sec": 7.993181818181818,
+        "end_sec": 8.165909090909091,
+        "velocity": 39
+      },
+      "measurement": {
+        "status": "measured",
+        "tracks": [
+          {
+            "partial": 1,
+            "status": "measured",
+            "error": 7.955812276921659
+          },
+          {
+            "partial": 2,
+            "status": "nondecaying"
+          },
+          {
+            "partial": 3,
+            "status": "nondecaying"
+          },
+          {
+            "partial": 4,
+            "status": "nondecaying"
+          }
+        ],
+        "continuous_hypothesis": false
+      }
+    },
+    {
+      "input_index": 73,
+      "event": {
+        "pitch": 63,
+        "start_sec": 8.434090909090909,
+        "end_sec": 9.304545454545455,
+        "velocity": 72
+      },
+      "measurement": {
+        "status": "unavailable",
+        "tracks": [
+          {
+            "partial": 1,
+            "status": "nondecaying"
+          },
+          {
+            "partial": 2,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 3,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 4,
+            "status": "frequency_collision"
+          }
+        ],
+        "continuous_hypothesis": false
+      }
+    },
+    {
+      "input_index": 74,
+      "event": {
+        "pitch": 54,
+        "start_sec": 8.445454545454545,
+        "end_sec": 8.584090909090909,
+        "velocity": 44
+      },
+      "measurement": {
+        "status": "measured",
+        "tracks": [
+          {
+            "partial": 1,
+            "status": "measured",
+            "error": 0.3918386193419785
+          },
+          {
+            "partial": 2,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 3,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 4,
+            "status": "frequency_collision"
+          }
+        ],
+        "continuous_hypothesis": false
+      }
+    },
+    {
+      "input_index": 75,
+      "event": {
+        "pitch": 59,
+        "start_sec": 8.456818181818182,
+        "end_sec": 8.688636363636363,
+        "velocity": 50
+      },
+      "measurement": {
+        "status": "measured",
+        "tracks": [
+          {
+            "partial": 1,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 2,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 3,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 4,
+            "status": "measured",
+            "error": 1.9217924263716368
+          }
+        ],
+        "continuous_hypothesis": false
+      }
+    },
+    {
+      "input_index": 76,
+      "event": {
+        "pitch": 57,
+        "start_sec": 8.49090909090909,
+        "end_sec": 9.352272727272727,
+        "velocity": 62
+      },
+      "measurement": {
+        "status": "measured",
+        "tracks": [
+          {
+            "partial": 1,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 2,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 3,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 4,
+            "status": "measured",
+            "error": 2.5878242989835907
+          }
+        ],
+        "continuous_hypothesis": false
+      }
+    },
+    {
+      "input_index": 77,
+      "event": {
+        "pitch": 47,
+        "start_sec": 8.504545454545454,
+        "end_sec": 9.2,
+        "velocity": 51
+      },
+      "measurement": {
+        "status": "unavailable",
+        "tracks": [
+          {
+            "partial": 1,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 2,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 3,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 4,
+            "status": "frequency_collision"
+          }
+        ],
+        "continuous_hypothesis": false
+      }
+    },
+    {
+      "input_index": 78,
+      "event": {
+        "pitch": 54,
+        "start_sec": 8.584090909090909,
+        "end_sec": 8.934090909090909,
+        "velocity": 69
+      },
+      "measurement": {
+        "status": "unavailable",
+        "tracks": [
+          {
+            "partial": 1,
+            "status": "nondecaying"
+          },
+          {
+            "partial": 2,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 3,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 4,
+            "status": "frequency_collision"
+          }
+        ],
+        "continuous_hypothesis": false
+      }
+    },
+    {
+      "input_index": 79,
+      "event": {
+        "pitch": 66,
+        "start_sec": 8.793181818181818,
+        "end_sec": 9.025,
+        "velocity": 44
+      },
+      "measurement": {
+        "status": "unavailable",
+        "tracks": [
+          {
+            "partial": 1,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 2,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 3,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 4,
+            "status": "frequency_collision"
+          }
+        ],
+        "continuous_hypothesis": false
+      }
+    },
+    {
+      "input_index": 80,
+      "event": {
+        "pitch": 69,
+        "start_sec": 8.818181818181818,
+        "end_sec": 9.025,
+        "velocity": 54
+      },
+      "measurement": {
+        "status": "unavailable",
+        "tracks": [
+          {
+            "partial": 1,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 2,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 3,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 4,
+            "status": "nondecaying"
+          }
+        ],
+        "continuous_hypothesis": false
+      }
+    },
+    {
+      "input_index": 81,
+      "event": {
+        "pitch": 54,
+        "start_sec": 8.934090909090909,
+        "end_sec": 9.31590909090909,
+        "velocity": 67
+      },
+      "measurement": {
+        "status": "unavailable",
+        "tracks": [
+          {
+            "partial": 1,
+            "status": "nondecaying"
+          },
+          {
+            "partial": 2,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 3,
+            "status": "nondecaying"
+          },
+          {
+            "partial": 4,
+            "status": "frequency_collision"
+          }
+        ],
+        "continuous_hypothesis": false
+      }
+    },
+    {
+      "input_index": 82,
+      "event": {
+        "pitch": 69,
+        "start_sec": 9.025,
+        "end_sec": 9.409090909090908,
+        "velocity": 50
+      },
+      "measurement": {
+        "status": "unavailable",
+        "tracks": [
+          {
+            "partial": 1,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 2,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 3,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 4,
+            "status": "nondecaying"
+          }
+        ],
+        "continuous_hypothesis": false
+      }
+    },
+    {
+      "input_index": 83,
+      "event": {
+        "pitch": 59,
+        "start_sec": 9.270454545454545,
+        "end_sec": 9.420454545454545,
+        "velocity": 50
+      },
+      "measurement": {
+        "status": "measured",
+        "tracks": [
+          {
+            "partial": 1,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 2,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 3,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 4,
+            "status": "measured",
+            "error": 0.6675914602848474
+          }
+        ],
+        "continuous_hypothesis": false
+      }
+    },
+    {
+      "input_index": 84,
+      "event": {
+        "pitch": 63,
+        "start_sec": 9.304545454545455,
+        "end_sec": 10.165909090909091,
+        "velocity": 59
+      },
+      "measurement": {
+        "status": "measured",
+        "tracks": [
+          {
+            "partial": 1,
+            "status": "measured",
+            "error": 1.4630284634847763
+          },
+          {
+            "partial": 2,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 3,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 4,
+            "status": "frequency_collision"
+          }
+        ],
+        "continuous_hypothesis": false
+      }
+    },
+    {
+      "input_index": 85,
+      "event": {
+        "pitch": 57,
+        "start_sec": 9.352272727272727,
+        "end_sec": 10.2,
+        "velocity": 52
+      },
+      "measurement": {
+        "status": "measured",
+        "tracks": [
+          {
+            "partial": 1,
+            "status": "measured",
+            "error": 2.707388650688679
+          },
+          {
+            "partial": 2,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 3,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 4,
+            "status": "frequency_collision"
+          }
+        ],
+        "continuous_hypothesis": false
+      }
+    },
+    {
+      "input_index": 86,
+      "event": {
+        "pitch": 69,
+        "start_sec": 9.409090909090908,
+        "end_sec": 10.259090909090908,
+        "velocity": 53
+      },
+      "measurement": {
+        "status": "unavailable",
+        "tracks": [
+          {
+            "partial": 1,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 2,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 3,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 4,
+            "status": "nondecaying"
+          }
+        ],
+        "continuous_hypothesis": false
+      }
+    },
+    {
+      "input_index": 87,
+      "event": {
+        "pitch": 52,
+        "start_sec": 9.454545454545453,
+        "end_sec": 9.7,
+        "velocity": 40
+      },
+      "measurement": {
+        "status": "unavailable",
+        "tracks": [
+          {
+            "partial": 1,
+            "status": "nondecaying"
+          },
+          {
+            "partial": 2,
+            "status": "nondecaying"
+          },
+          {
+            "partial": 3,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 4,
+            "status": "frequency_collision"
+          }
+        ],
+        "continuous_hypothesis": false
+      }
+    },
+    {
+      "input_index": 88,
+      "event": {
+        "pitch": 47,
+        "start_sec": 9.745454545454544,
+        "end_sec": 10.768181818181818,
+        "velocity": 54
+      },
+      "measurement": {
+        "status": "measured",
+        "tracks": [
+          {
+            "partial": 1,
+            "status": "measured",
+            "error": 3.3858034318226937
+          },
+          {
+            "partial": 2,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 3,
+            "status": "nondecaying"
+          },
+          {
+            "partial": 4,
+            "status": "frequency_collision"
+          }
+        ],
+        "continuous_hypothesis": false
+      }
+    },
+    {
+      "input_index": 89,
+      "event": {
+        "pitch": 59,
+        "start_sec": 9.745454545454544,
+        "end_sec": 10.674999999999999,
+        "velocity": 46
+      },
+      "measurement": {
+        "status": "unavailable",
+        "tracks": [
+          {
+            "partial": 1,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 2,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 3,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 4,
+            "status": "frequency_collision"
+          }
+        ],
+        "continuous_hypothesis": false
+      }
+    },
+    {
+      "input_index": 90,
+      "event": {
+        "pitch": 64,
+        "start_sec": 10.259090909090908,
+        "end_sec": 11.302272727272726,
+        "velocity": 55
+      },
+      "measurement": {
+        "status": "unavailable",
+        "tracks": [
+          {
+            "partial": 1,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 2,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 3,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 4,
+            "status": "frequency_collision"
+          }
+        ],
+        "continuous_hypothesis": false
+      }
+    },
+    {
+      "input_index": 91,
+      "event": {
+        "pitch": 68,
+        "start_sec": 10.259090909090908,
+        "end_sec": 10.85,
+        "velocity": 68
+      },
+      "measurement": {
+        "status": "unavailable",
+        "tracks": [
+          {
+            "partial": 1,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 2,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 3,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 4,
+            "status": "frequency_collision"
+          }
+        ],
+        "continuous_hypothesis": false
+      }
+    },
+    {
+      "input_index": 92,
+      "event": {
+        "pitch": 76,
+        "start_sec": 10.259090909090908,
+        "end_sec": 10.443181818181818,
+        "velocity": 48
+      },
+      "measurement": {
+        "status": "unavailable",
+        "tracks": [
+          {
+            "partial": 1,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 2,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 3,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 4,
+            "status": "frequency_collision"
+          }
+        ],
+        "continuous_hypothesis": false
+      }
+    },
+    {
+      "input_index": 93,
+      "event": {
+        "pitch": 56,
+        "start_sec": 10.281818181818181,
+        "end_sec": 10.652272727272727,
+        "velocity": 56
+      },
+      "measurement": {
+        "status": "unavailable",
+        "tracks": [
+          {
+            "partial": 1,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 2,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 3,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 4,
+            "status": "frequency_collision"
+          }
+        ],
+        "continuous_hypothesis": false
+      }
+    },
+    {
+      "input_index": 94,
+      "event": {
+        "pitch": 52,
+        "start_sec": 10.338636363636363,
+        "end_sec": 11.070454545454545,
+        "velocity": 53
+      },
+      "measurement": {
+        "status": "measured",
+        "tracks": [
+          {
+            "partial": 1,
+            "status": "measured",
+            "error": 4.112563074250396
+          },
+          {
+            "partial": 2,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 3,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 4,
+            "status": "frequency_collision"
+          }
+        ],
+        "continuous_hypothesis": false
+      }
+    },
+    {
+      "input_index": 95,
+      "event": {
+        "pitch": 59,
+        "start_sec": 10.674999999999999,
+        "end_sec": 11.152272727272727,
+        "velocity": 56
+      },
+      "measurement": {
+        "status": "unavailable",
+        "tracks": [
+          {
+            "partial": 1,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 2,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 3,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 4,
+            "status": "frequency_collision"
+          }
+        ],
+        "continuous_hypothesis": false
+      }
+    },
+    {
+      "input_index": 96,
+      "event": {
+        "pitch": 47,
+        "start_sec": 10.768181818181818,
+        "end_sec": 11.279545454545454,
+        "velocity": 66
+      },
+      "measurement": {
+        "status": "measured",
+        "tracks": [
+          {
+            "partial": 1,
+            "status": "measured",
+            "error": 1.6616251823180566
+          },
+          {
+            "partial": 2,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 3,
+            "status": "measured",
+            "error": 2.637190622651094
+          },
+          {
+            "partial": 4,
+            "status": "frequency_collision"
+          }
+        ],
+        "continuous_hypothesis": false
+      }
+    },
+    {
+      "input_index": 97,
+      "event": {
+        "pitch": 52,
+        "start_sec": 11.279545454545454,
+        "end_sec": 11.768181818181818,
+        "velocity": 39
+      },
+      "measurement": {
+        "status": "measured",
+        "tracks": [
+          {
+            "partial": 1,
+            "status": "measured",
+            "error": 2.631776986473902
+          },
+          {
+            "partial": 2,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 3,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 4,
+            "status": "frequency_collision"
+          }
+        ],
+        "continuous_hypothesis": false
+      }
+    },
+    {
+      "input_index": 98,
+      "event": {
+        "pitch": 60,
+        "start_sec": 11.290909090909091,
+        "end_sec": 11.906818181818181,
+        "velocity": 62
+      },
+      "measurement": {
+        "status": "measured",
+        "tracks": [
+          {
+            "partial": 1,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 2,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 3,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 4,
+            "status": "measured",
+            "error": 1.8208681518495702
+          }
+        ],
+        "continuous_hypothesis": false
+      }
+    },
+    {
+      "input_index": 99,
+      "event": {
+        "pitch": 64,
+        "start_sec": 11.302272727272726,
+        "end_sec": 11.743181818181817,
+        "velocity": 61
+      },
+      "measurement": {
+        "status": "unavailable",
+        "tracks": [
+          {
+            "partial": 1,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 2,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 3,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 4,
+            "status": "frequency_collision"
+          }
+        ],
+        "continuous_hypothesis": false
+      }
+    },
+    {
+      "input_index": 100,
+      "event": {
+        "pitch": 48,
+        "start_sec": 11.372727272727273,
+        "end_sec": 11.534090909090908,
+        "velocity": 42
+      },
+      "measurement": {
+        "status": "unavailable",
+        "tracks": [
+          {
+            "partial": 1,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 2,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 3,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 4,
+            "status": "frequency_collision"
+          }
+        ],
+        "continuous_hypothesis": false
+      }
+    },
+    {
+      "input_index": 101,
+      "event": {
+        "pitch": 55,
+        "start_sec": 11.395454545454545,
+        "end_sec": 11.779545454545454,
+        "velocity": 43
+      },
+      "measurement": {
+        "status": "measured",
+        "tracks": [
+          {
+            "partial": 1,
+            "status": "measured",
+            "error": 4.229848946911666
+          },
+          {
+            "partial": 2,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 3,
+            "status": "nondecaying"
+          },
+          {
+            "partial": 4,
+            "status": "frequency_collision"
+          }
+        ],
+        "continuous_hypothesis": false
+      }
+    },
+    {
+      "input_index": 102,
+      "event": {
+        "pitch": 43,
+        "start_sec": 11.743181818181817,
+        "end_sec": 12.081818181818182,
+        "velocity": 57
+      },
+      "measurement": {
+        "status": "measured",
+        "tracks": [
+          {
+            "partial": 1,
+            "status": "measured",
+            "error": 1.519629943277008
+          },
+          {
+            "partial": 2,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 3,
+            "status": "measured",
+            "error": 2.914452778611882
+          },
+          {
+            "partial": 4,
+            "status": "frequency_collision"
+          }
+        ],
+        "continuous_hypothesis": false
+      }
+    },
+    {
+      "input_index": 103,
+      "event": {
+        "pitch": 54,
+        "start_sec": 12.059090909090909,
+        "end_sec": 12.406818181818181,
+        "velocity": 50
+      },
+      "measurement": {
+        "status": "measured",
+        "tracks": [
+          {
+            "partial": 1,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 2,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 3,
+            "status": "measured",
+            "error": 2.4711859849127924
+          },
+          {
+            "partial": 4,
+            "status": "frequency_collision"
+          }
+        ],
+        "continuous_hypothesis": false
+      }
+    },
+    {
+      "input_index": 104,
+      "event": {
+        "pitch": 66,
+        "start_sec": 12.059090909090909,
+        "end_sec": 12.209090909090909,
+        "velocity": 83
+      },
+      "measurement": {
+        "status": "unavailable",
+        "tracks": [
+          {
+            "partial": 1,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 2,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 3,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 4,
+            "status": "nondecaying"
+          }
+        ],
+        "continuous_hypothesis": false
+      }
+    },
+    {
+      "input_index": 105,
+      "event": {
+        "pitch": 48,
+        "start_sec": 12.129545454545454,
+        "end_sec": 12.929545454545455,
+        "velocity": 60
+      },
+      "measurement": {
+        "status": "measured",
+        "tracks": [
+          {
+            "partial": 1,
+            "status": "measured",
+            "error": 5.099125767692287
+          },
+          {
+            "partial": 2,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 3,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 4,
+            "status": "frequency_collision"
+          }
+        ],
+        "continuous_hypothesis": false
+      }
+    },
+    {
+      "input_index": 106,
+      "event": {
+        "pitch": 60,
+        "start_sec": 12.129545454545454,
+        "end_sec": 12.454545454545453,
+        "velocity": 56
+      },
+      "measurement": {
+        "status": "measured",
+        "tracks": [
+          {
+            "partial": 1,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 2,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 3,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 4,
+            "status": "measured",
+            "error": 2.6142436419489603
+          }
+        ],
+        "continuous_hypothesis": false
+      }
+    },
+    {
+      "input_index": 107,
+      "event": {
+        "pitch": 66,
+        "start_sec": 12.209090909090909,
+        "end_sec": 12.511363636363635,
+        "velocity": 73
+      },
+      "measurement": {
+        "status": "unavailable",
+        "tracks": [
+          {
+            "partial": 1,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 2,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 3,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 4,
+            "status": "nondecaying"
+          }
+        ],
+        "continuous_hypothesis": false
+      }
+    },
+    {
+      "input_index": 108,
+      "event": {
+        "pitch": 60,
+        "start_sec": 12.454545454545453,
+        "end_sec": 12.836363636363636,
+        "velocity": 66
+      },
+      "measurement": {
+        "status": "measured",
+        "tracks": [
+          {
+            "partial": 1,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 2,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 3,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 4,
+            "status": "measured",
+            "error": 0.1295635967275235
+          }
+        ],
+        "continuous_hypothesis": false
+      }
+    },
+    {
+      "input_index": 109,
+      "event": {
+        "pitch": 52,
+        "start_sec": 12.5,
+        "end_sec": 12.649999999999999,
+        "velocity": 73
+      },
+      "measurement": {
+        "status": "measured",
+        "tracks": [
+          {
+            "partial": 1,
+            "status": "nondecaying"
+          },
+          {
+            "partial": 2,
+            "status": "measured",
+            "error": 1.2480483582772557
+          },
+          {
+            "partial": 3,
+            "status": "nondecaying"
+          },
+          {
+            "partial": 4,
+            "status": "frequency_collision"
+          }
+        ],
+        "continuous_hypothesis": false
+      }
+    },
+    {
+      "input_index": 110,
+      "event": {
+        "pitch": 52,
+        "start_sec": 12.649999999999999,
+        "end_sec": 12.847727272727273,
+        "velocity": 70
+      },
+      "measurement": {
+        "status": "measured",
+        "tracks": [
+          {
+            "partial": 1,
+            "status": "measured",
+            "error": 1.5526569149873901
+          },
+          {
+            "partial": 2,
+            "status": "nondecaying"
+          },
+          {
+            "partial": 3,
+            "status": "measured",
+            "error": 1.8506169705638387
+          },
+          {
+            "partial": 4,
+            "status": "frequency_collision"
+          }
+        ],
+        "continuous_hypothesis": false
+      }
+    },
+    {
+      "input_index": 111,
+      "event": {
+        "pitch": 52,
+        "start_sec": 12.847727272727273,
+        "end_sec": 13.672727272727272,
+        "velocity": 57
+      },
+      "measurement": {
+        "status": "measured",
+        "tracks": [
+          {
+            "partial": 1,
+            "status": "measured",
+            "error": 1.644801880904386
+          },
+          {
+            "partial": 2,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 3,
+            "status": "measured",
+            "error": 1.2869159632968374
+          },
+          {
+            "partial": 4,
+            "status": "frequency_collision"
+          }
+        ],
+        "continuous_hypothesis": false
+      }
+    },
+    {
+      "input_index": 112,
+      "event": {
+        "pitch": 76,
+        "start_sec": 12.847727272727273,
+        "end_sec": 13.056818181818182,
+        "velocity": 45
+      },
+      "measurement": {
+        "status": "measured",
+        "tracks": [
+          {
+            "partial": 1,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 2,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 3,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 4,
+            "status": "measured",
+            "error": 2.5425337266774446
+          }
+        ],
+        "continuous_hypothesis": false
+      }
+    },
+    {
+      "input_index": 113,
+      "event": {
+        "pitch": 64,
+        "start_sec": 12.85909090909091,
+        "end_sec": 13.718181818181817,
+        "velocity": 50
+      },
+      "measurement": {
+        "status": "unavailable",
+        "tracks": [
+          {
+            "partial": 1,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 2,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 3,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 4,
+            "status": "frequency_collision"
+          }
+        ],
+        "continuous_hypothesis": false
+      }
+    },
+    {
+      "input_index": 114,
+      "event": {
+        "pitch": 60,
+        "start_sec": 12.870454545454544,
+        "end_sec": 13.138636363636364,
+        "velocity": 52
+      },
+      "measurement": {
+        "status": "measured",
+        "tracks": [
+          {
+            "partial": 1,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 2,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 3,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 4,
+            "status": "measured",
+            "error": 2.9177489958483025
+          }
+        ],
+        "continuous_hypothesis": false
+      }
+    },
+    {
+      "input_index": 115,
+      "event": {
+        "pitch": 48,
+        "start_sec": 12.929545454545455,
+        "end_sec": 13.661363636363635,
+        "velocity": 63
+      },
+      "measurement": {
+        "status": "measured",
+        "tracks": [
+          {
+            "partial": 1,
+            "status": "measured",
+            "error": 1.6085725410634348
+          },
+          {
+            "partial": 2,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 3,
+            "status": "nondecaying"
+          },
+          {
+            "partial": 4,
+            "status": "frequency_collision"
+          }
+        ],
+        "continuous_hypothesis": false
+      }
+    },
+    {
+      "input_index": 116,
+      "event": {
+        "pitch": 60,
+        "start_sec": 13.254545454545454,
+        "end_sec": 13.59090909090909,
+        "velocity": 41
+      },
+      "measurement": {
+        "status": "measured",
+        "tracks": [
+          {
+            "partial": 1,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 2,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 3,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 4,
+            "status": "measured",
+            "error": 0.2827606073443314
+          }
+        ],
+        "continuous_hypothesis": false
+      }
+    },
+    {
+      "input_index": 117,
+      "event": {
+        "pitch": 43,
+        "start_sec": 13.299999999999999,
+        "end_sec": 13.684090909090909,
+        "velocity": 64
+      },
+      "measurement": {
+        "status": "measured",
+        "tracks": [
+          {
+            "partial": 1,
+            "status": "measured",
+            "error": 2.1352935183480706
+          },
+          {
+            "partial": 2,
+            "status": "nondecaying"
+          },
+          {
+            "partial": 3,
+            "status": "measured",
+            "error": 3.677064835010017
+          },
+          {
+            "partial": 4,
+            "status": "frequency_collision"
+          }
+        ],
+        "continuous_hypothesis": false
+      }
+    },
+    {
+      "input_index": 118,
+      "event": {
+        "pitch": 61,
+        "start_sec": 13.684090909090909,
+        "end_sec": 13.870454545454544,
+        "velocity": 63
+      },
+      "measurement": {
+        "status": "measured",
+        "tracks": [
+          {
+            "partial": 1,
+            "status": "nondecaying"
+          },
+          {
+            "partial": 2,
+            "status": "nondecaying"
+          },
+          {
+            "partial": 3,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 4,
+            "status": "measured",
+            "error": 1.9722299267092285
+          }
+        ],
+        "continuous_hypothesis": false
+      }
+    },
+    {
+      "input_index": 119,
+      "event": {
+        "pitch": 64,
+        "start_sec": 13.718181818181817,
+        "end_sec": 13.870454545454544,
+        "velocity": 50
+      },
+      "measurement": {
+        "status": "unavailable",
+        "tracks": [
+          {
+            "partial": 1,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 2,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 3,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 4,
+            "status": "frequency_collision"
+          }
+        ],
+        "continuous_hypothesis": false
+      }
+    },
+    {
+      "input_index": 120,
+      "event": {
+        "pitch": 55,
+        "start_sec": 13.743181818181817,
+        "end_sec": 14.161363636363635,
+        "velocity": 44
+      },
+      "measurement": {
+        "status": "unavailable",
+        "tracks": [
+          {
+            "partial": 1,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 2,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 3,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 4,
+            "status": "frequency_collision"
+          }
+        ],
+        "continuous_hypothesis": false
+      }
+    },
+    {
+      "input_index": 121,
+      "event": {
+        "pitch": 52,
+        "start_sec": 13.822727272727272,
+        "end_sec": 14.359090909090908,
+        "velocity": 44
+      },
+      "measurement": {
+        "status": "measured",
+        "tracks": [
+          {
+            "partial": 1,
+            "status": "measured",
+            "error": 2.881098410633924
+          },
+          {
+            "partial": 2,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 3,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 4,
+            "status": "frequency_collision"
+          }
+        ],
+        "continuous_hypothesis": false
+      }
+    },
+    {
+      "input_index": 122,
+      "event": {
+        "pitch": 61,
+        "start_sec": 13.870454545454544,
+        "end_sec": 14.0,
+        "velocity": 56
+      },
+      "measurement": {
+        "status": "measured",
+        "tracks": [
+          {
+            "partial": 1,
+            "status": "nondecaying"
+          },
+          {
+            "partial": 2,
+            "status": "measured",
+            "error": 0.876026655167391
+          },
+          {
+            "partial": 3,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 4,
+            "status": "measured",
+            "error": 1.7081211601112853
+          }
+        ],
+        "continuous_hypothesis": false
+      }
+    },
+    {
+      "input_index": 123,
+      "event": {
+        "pitch": 64,
+        "start_sec": 13.870454545454544,
+        "end_sec": 14.184090909090909,
+        "velocity": 51
+      },
+      "measurement": {
+        "status": "measured",
+        "tracks": [
+          {
+            "partial": 1,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 2,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 3,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 4,
+            "status": "measured",
+            "error": 2.8318346151385105
+          }
+        ],
+        "continuous_hypothesis": false
+      }
+    },
+    {
+      "input_index": 124,
+      "event": {
+        "pitch": 43,
+        "start_sec": 14.056818181818182,
+        "end_sec": 14.975,
+        "velocity": 54
+      },
+      "measurement": {
+        "status": "measured",
+        "tracks": [
+          {
+            "partial": 1,
+            "status": "nondecaying"
+          },
+          {
+            "partial": 2,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 3,
+            "status": "measured",
+            "error": 2.2042421458815444
+          },
+          {
+            "partial": 4,
+            "status": "frequency_collision"
+          }
+        ],
+        "continuous_hypothesis": false
+      }
+    },
+    {
+      "input_index": 125,
+      "event": {
+        "pitch": 54,
+        "start_sec": 14.452272727272726,
+        "end_sec": 15.195454545454545,
+        "velocity": 50
+      },
+      "measurement": {
+        "status": "unavailable",
+        "tracks": [
+          {
+            "partial": 1,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 2,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 3,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 4,
+            "status": "frequency_collision"
+          }
+        ],
+        "continuous_hypothesis": false
+      }
+    },
+    {
+      "input_index": 126,
+      "event": {
+        "pitch": 66,
+        "start_sec": 14.452272727272726,
+        "end_sec": 14.59090909090909,
+        "velocity": 88
+      },
+      "measurement": {
+        "status": "unavailable",
+        "tracks": [
+          {
+            "partial": 1,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 2,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 3,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 4,
+            "status": "ill_conditioned"
+          }
+        ],
+        "continuous_hypothesis": false
+      }
+    },
+    {
+      "input_index": 127,
+      "event": {
+        "pitch": 49,
+        "start_sec": 14.463636363636363,
+        "end_sec": 15.229545454545454,
+        "velocity": 56
+      },
+      "measurement": {
+        "status": "unavailable",
+        "tracks": [
+          {
+            "partial": 1,
+            "status": "ill_conditioned"
+          },
+          {
+            "partial": 2,
+            "status": "ill_conditioned"
+          },
+          {
+            "partial": 3,
+            "status": "ill_conditioned"
+          },
+          {
+            "partial": 4,
+            "status": "frequency_collision"
+          }
+        ],
+        "continuous_hypothesis": false
+      }
+    },
+    {
+      "input_index": 128,
+      "event": {
+        "pitch": 66,
+        "start_sec": 14.59090909090909,
+        "end_sec": 15.147727272727272,
+        "velocity": 66
+      },
+      "measurement": {
+        "status": "unavailable",
+        "tracks": [
+          {
+            "partial": 1,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 2,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 3,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 4,
+            "status": "ill_conditioned"
+          }
+        ],
+        "continuous_hypothesis": false
+      }
+    },
+    {
+      "input_index": 129,
+      "event": {
+        "pitch": 52,
+        "start_sec": 14.881818181818181,
+        "end_sec": 15.20681818181818,
+        "velocity": 63
+      },
+      "measurement": {
+        "status": "unavailable",
+        "tracks": [
+          {
+            "partial": 1,
+            "status": "ill_conditioned"
+          },
+          {
+            "partial": 2,
+            "status": "ill_conditioned"
+          },
+          {
+            "partial": 3,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 4,
+            "status": "ill_conditioned"
+          }
+        ],
+        "continuous_hypothesis": false
+      }
+    },
+    {
+      "input_index": 130,
+      "event": {
+        "pitch": 52,
+        "start_sec": 15.20681818181818,
+        "end_sec": 15.809090909090909,
+        "velocity": 48
+      },
+      "measurement": {
+        "status": "unavailable",
+        "tracks": [
+          {
+            "partial": 1,
+            "status": "ill_conditioned"
+          },
+          {
+            "partial": 2,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 3,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 4,
+            "status": "frequency_collision"
+          }
+        ],
+        "continuous_hypothesis": false
+      }
+    },
+    {
+      "input_index": 131,
+      "event": {
+        "pitch": 64,
+        "start_sec": 15.20681818181818,
+        "end_sec": 15.822727272727272,
+        "velocity": 64
+      },
+      "measurement": {
+        "status": "unavailable",
+        "tracks": [
+          {
+            "partial": 1,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 2,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 3,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 4,
+            "status": "frequency_collision"
+          }
+        ],
+        "continuous_hypothesis": false
+      }
+    },
+    {
+      "input_index": 132,
+      "event": {
+        "pitch": 76,
+        "start_sec": 15.20681818181818,
+        "end_sec": 15.438636363636363,
+        "velocity": 57
+      },
+      "measurement": {
+        "status": "unavailable",
+        "tracks": [
+          {
+            "partial": 1,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 2,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 3,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 4,
+            "status": "ill_conditioned"
+          }
+        ],
+        "continuous_hypothesis": false
+      }
+    },
+    {
+      "input_index": 133,
+      "event": {
+        "pitch": 49,
+        "start_sec": 15.229545454545454,
+        "end_sec": 16.009090909090908,
+        "velocity": 63
+      },
+      "measurement": {
+        "status": "measured",
+        "tracks": [
+          {
+            "partial": 1,
+            "status": "measured",
+            "error": 1.386618053583625
+          },
+          {
+            "partial": 2,
+            "status": "nondecaying"
+          },
+          {
+            "partial": 3,
+            "status": "measured",
+            "error": 2.5486131748820537
+          },
+          {
+            "partial": 4,
+            "status": "frequency_collision"
+          }
+        ],
+        "continuous_hypothesis": false
+      }
+    },
+    {
+      "input_index": 134,
+      "event": {
+        "pitch": 54,
+        "start_sec": 15.345454545454544,
+        "end_sec": 15.543181818181818,
+        "velocity": 45
+      },
+      "measurement": {
+        "status": "measured",
+        "tracks": [
+          {
+            "partial": 1,
+            "status": "measured",
+            "error": 0.951882800715492
+          },
+          {
+            "partial": 2,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 3,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 4,
+            "status": "frequency_collision"
+          }
+        ],
+        "continuous_hypothesis": false
+      }
+    },
+    {
+      "input_index": 135,
+      "event": {
+        "pitch": 43,
+        "start_sec": 15.577272727272726,
+        "end_sec": 15.997727272727271,
+        "velocity": 59
+      },
+      "measurement": {
+        "status": "unavailable",
+        "tracks": [
+          {
+            "partial": 1,
+            "status": "ill_conditioned"
+          },
+          {
+            "partial": 2,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 3,
+            "status": "ill_conditioned"
+          },
+          {
+            "partial": 4,
+            "status": "ill_conditioned"
+          }
+        ],
+        "continuous_hypothesis": false
+      }
+    },
+    {
+      "input_index": 136,
+      "event": {
+        "pitch": 54,
+        "start_sec": 15.693181818181817,
+        "end_sec": 15.938636363636363,
+        "velocity": 45
+      },
+      "measurement": {
+        "status": "unavailable",
+        "tracks": [
+          {
+            "partial": 1,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 2,
+            "status": "ill_conditioned"
+          },
+          {
+            "partial": 3,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 4,
+            "status": "ill_conditioned"
+          }
+        ],
+        "continuous_hypothesis": false
+      }
+    },
+    {
+      "input_index": 137,
+      "event": {
+        "pitch": 64,
+        "start_sec": 16.03181818181818,
+        "end_sec": 16.53181818181818,
+        "velocity": 66
+      },
+      "measurement": {
+        "status": "unavailable",
+        "tracks": [
+          {
+            "partial": 1,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 2,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 3,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 4,
+            "status": "ill_conditioned"
+          }
+        ],
+        "continuous_hypothesis": false
+      }
+    },
+    {
+      "input_index": 138,
+      "event": {
+        "pitch": 47,
+        "start_sec": 16.09090909090909,
+        "end_sec": 16.311363636363634,
+        "velocity": 44
+      },
+      "measurement": {
+        "status": "unavailable",
+        "tracks": [
+          {
+            "partial": 1,
+            "status": "ill_conditioned"
+          },
+          {
+            "partial": 2,
+            "status": "ill_conditioned"
+          },
+          {
+            "partial": 3,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 4,
+            "status": "frequency_collision"
+          }
+        ],
+        "continuous_hypothesis": false
+      }
+    },
+    {
+      "input_index": 139,
+      "event": {
+        "pitch": 52,
+        "start_sec": 16.195454545454545,
+        "end_sec": 16.41590909090909,
+        "velocity": 50
+      },
+      "measurement": {
+        "status": "unavailable",
+        "tracks": [
+          {
+            "partial": 1,
+            "status": "ill_conditioned"
+          },
+          {
+            "partial": 2,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 3,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 4,
+            "status": "frequency_collision"
+          }
+        ],
+        "continuous_hypothesis": false
+      }
+    },
+    {
+      "input_index": 140,
+      "event": {
+        "pitch": 52,
+        "start_sec": 16.427272727272726,
+        "end_sec": 17.111363636363635,
+        "velocity": 63
+      },
+      "measurement": {
+        "status": "unavailable",
+        "tracks": [
+          {
+            "partial": 1,
+            "status": "nondecaying"
+          },
+          {
+            "partial": 2,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 3,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 4,
+            "status": "frequency_collision"
+          }
+        ],
+        "continuous_hypothesis": false
+      }
+    },
+    {
+      "input_index": 141,
+      "event": {
+        "pitch": 68,
+        "start_sec": 16.763636363636362,
+        "end_sec": 16.925,
+        "velocity": 45
+      },
+      "measurement": {
+        "status": "unavailable",
+        "tracks": [
+          {
+            "partial": 1,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 2,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 3,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 4,
+            "status": "frequency_collision"
+          }
+        ],
+        "continuous_hypothesis": false
+      }
+    },
+    {
+      "input_index": 142,
+      "event": {
+        "pitch": 56,
+        "start_sec": 16.775,
+        "end_sec": 17.413636363636364,
+        "velocity": 70
+      },
+      "measurement": {
+        "status": "unavailable",
+        "tracks": [
+          {
+            "partial": 1,
+            "status": "nondecaying"
+          },
+          {
+            "partial": 2,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 3,
+            "status": "nondecaying"
+          },
+          {
+            "partial": 4,
+            "status": "frequency_collision"
+          }
+        ],
+        "continuous_hypothesis": false
+      }
+    },
+    {
+      "input_index": 143,
+      "event": {
+        "pitch": 71,
+        "start_sec": 16.80909090909091,
+        "end_sec": 17.413636363636364,
+        "velocity": 69
+      },
+      "measurement": {
+        "status": "measured",
+        "tracks": [
+          {
+            "partial": 1,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 2,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 3,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 4,
+            "status": "measured",
+            "error": 5.746756625548571
+          }
+        ],
+        "continuous_hypothesis": false
+      }
+    },
+    {
+      "input_index": 144,
+      "event": {
+        "pitch": 59,
+        "start_sec": 16.820454545454545,
+        "end_sec": 17.34318181818182,
+        "velocity": 45
+      },
+      "measurement": {
+        "status": "measured",
+        "tracks": [
+          {
+            "partial": 1,
+            "status": "measured",
+            "error": 1.5234915330411691
+          },
+          {
+            "partial": 2,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 3,
+            "status": "nondecaying"
+          },
+          {
+            "partial": 4,
+            "status": "frequency_collision"
+          }
+        ],
+        "continuous_hypothesis": false
+      }
+    },
+    {
+      "input_index": 145,
+      "event": {
+        "pitch": 52,
+        "start_sec": 17.111363636363635,
+        "end_sec": 17.436363636363634,
+        "velocity": 73
+      },
+      "measurement": {
+        "status": "measured",
+        "tracks": [
+          {
+            "partial": 1,
+            "status": "measured",
+            "error": 0.9657946066456753
+          },
+          {
+            "partial": 2,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 3,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 4,
+            "status": "frequency_collision"
+          }
+        ],
+        "continuous_hypothesis": false
+      }
+    },
+    {
+      "input_index": 146,
+      "event": {
+        "pitch": 64,
+        "start_sec": 17.111363636363635,
+        "end_sec": 17.44772727272727,
+        "velocity": 41
+      },
+      "measurement": {
+        "status": "unavailable",
+        "tracks": [
+          {
+            "partial": 1,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 2,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 3,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 4,
+            "status": "nondecaying"
+          }
+        ],
+        "continuous_hypothesis": false
+      }
+    },
+    {
+      "input_index": 147,
+      "event": {
+        "pitch": 52,
+        "start_sec": 17.436363636363634,
+        "end_sec": 17.86590909090909,
+        "velocity": 56
+      },
+      "measurement": {
+        "status": "measured",
+        "tracks": [
+          {
+            "partial": 1,
+            "status": "measured",
+            "error": 1.9653738641699543
+          },
+          {
+            "partial": 2,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 3,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 4,
+            "status": "frequency_collision"
+          }
+        ],
+        "continuous_hypothesis": false
+      }
+    },
+    {
+      "input_index": 148,
+      "event": {
+        "pitch": 69,
+        "start_sec": 17.436363636363634,
+        "end_sec": 18.099999999999998,
+        "velocity": 59
+      },
+      "measurement": {
+        "status": "unavailable",
+        "tracks": [
+          {
+            "partial": 1,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 2,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 3,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 4,
+            "status": "frequency_collision"
+          }
+        ],
+        "continuous_hypothesis": false
+      }
+    },
+    {
+      "input_index": 149,
+      "event": {
+        "pitch": 74,
+        "start_sec": 17.436363636363634,
+        "end_sec": 17.831818181818182,
+        "velocity": 55
+      },
+      "measurement": {
+        "status": "measured",
+        "tracks": [
+          {
+            "partial": 1,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 2,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 3,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 4,
+            "status": "measured",
+            "error": 2.554927135827855
+          }
+        ],
+        "continuous_hypothesis": false
+      }
+    },
+    {
+      "input_index": 150,
+      "event": {
+        "pitch": 62,
+        "start_sec": 17.44772727272727,
+        "end_sec": 18.227272727272727,
+        "velocity": 59
+      },
+      "measurement": {
+        "status": "unavailable",
+        "tracks": [
+          {
+            "partial": 1,
+            "status": "nondecaying"
+          },
+          {
+            "partial": 2,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 3,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 4,
+            "status": "frequency_collision"
+          }
+        ],
+        "continuous_hypothesis": false
+      }
+    },
+    {
+      "input_index": 151,
+      "event": {
+        "pitch": 64,
+        "start_sec": 17.44772727272727,
+        "end_sec": 18.145454545454545,
+        "velocity": 60
+      },
+      "measurement": {
+        "status": "unavailable",
+        "tracks": [
+          {
+            "partial": 1,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 2,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 3,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 4,
+            "status": "frequency_collision"
+          }
+        ],
+        "continuous_hypothesis": false
+      }
+    },
+    {
+      "input_index": 152,
+      "event": {
+        "pitch": 57,
+        "start_sec": 17.495454545454546,
+        "end_sec": 18.099999999999998,
+        "velocity": 64
+      },
+      "measurement": {
+        "status": "unavailable",
+        "tracks": [
+          {
+            "partial": 1,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 2,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 3,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 4,
+            "status": "frequency_collision"
+          }
+        ],
+        "continuous_hypothesis": false
+      }
+    },
+    {
+      "input_index": 153,
+      "event": {
+        "pitch": 52,
+        "start_sec": 17.86590909090909,
+        "end_sec": 18.15681818181818,
+        "velocity": 73
+      },
+      "measurement": {
+        "status": "unavailable",
+        "tracks": [
+          {
+            "partial": 1,
+            "status": "nondecaying"
+          },
+          {
+            "partial": 2,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 3,
+            "status": "nondecaying"
+          },
+          {
+            "partial": 4,
+            "status": "frequency_collision"
+          }
+        ],
+        "continuous_hypothesis": false
+      }
+    },
+    {
+      "input_index": 154,
+      "event": {
+        "pitch": 74,
+        "start_sec": 18.134090909090908,
+        "end_sec": 18.36590909090909,
+        "velocity": 47
+      },
+      "measurement": {
+        "status": "unavailable",
+        "tracks": [
+          {
+            "partial": 1,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 2,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 3,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 4,
+            "status": "nondecaying"
+          }
+        ],
+        "continuous_hypothesis": false
+      }
+    },
+    {
+      "input_index": 155,
+      "event": {
+        "pitch": 64,
+        "start_sec": 18.145454545454545,
+        "end_sec": 18.518181818181816,
+        "velocity": 78
+      },
+      "measurement": {
+        "status": "unavailable",
+        "tracks": [
+          {
+            "partial": 1,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 2,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 3,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 4,
+            "status": "frequency_collision"
+          }
+        ],
+        "continuous_hypothesis": false
+      }
+    },
+    {
+      "input_index": 156,
+      "event": {
+        "pitch": 76,
+        "start_sec": 18.145454545454545,
+        "end_sec": 18.50681818181818,
+        "velocity": 52
+      },
+      "measurement": {
+        "status": "unavailable",
+        "tracks": [
+          {
+            "partial": 1,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 2,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 3,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 4,
+            "status": "frequency_collision"
+          }
+        ],
+        "continuous_hypothesis": false
+      }
+    },
+    {
+      "input_index": 157,
+      "event": {
+        "pitch": 52,
+        "start_sec": 18.15681818181818,
+        "end_sec": 18.518181818181816,
+        "velocity": 64
+      },
+      "measurement": {
+        "status": "unavailable",
+        "tracks": [
+          {
+            "partial": 1,
+            "status": "nondecaying"
+          },
+          {
+            "partial": 2,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 3,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 4,
+            "status": "frequency_collision"
+          }
+        ],
+        "continuous_hypothesis": false
+      }
+    },
+    {
+      "input_index": 158,
+      "event": {
+        "pitch": 59,
+        "start_sec": 18.15681818181818,
+        "end_sec": 18.936363636363634,
+        "velocity": 64
+      },
+      "measurement": {
+        "status": "measured",
+        "tracks": [
+          {
+            "partial": 1,
+            "status": "nondecaying"
+          },
+          {
+            "partial": 2,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 3,
+            "status": "measured",
+            "error": 4.599655200225329
+          },
+          {
+            "partial": 4,
+            "status": "frequency_collision"
+          }
+        ],
+        "continuous_hypothesis": false
+      }
+    },
+    {
+      "input_index": 159,
+      "event": {
+        "pitch": 68,
+        "start_sec": 18.21590909090909,
+        "end_sec": 18.970454545454544,
+        "velocity": 79
+      },
+      "measurement": {
+        "status": "unavailable",
+        "tracks": [
+          {
+            "partial": 1,
+            "status": "nondecaying"
+          },
+          {
+            "partial": 2,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 3,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 4,
+            "status": "frequency_collision"
+          }
+        ],
+        "continuous_hypothesis": false
+      }
+    },
+    {
+      "input_index": 160,
+      "event": {
+        "pitch": 62,
+        "start_sec": 18.227272727272727,
+        "end_sec": 19.063636363636363,
+        "velocity": 58
+      },
+      "measurement": {
+        "status": "measured",
+        "tracks": [
+          {
+            "partial": 1,
+            "status": "measured",
+            "error": 2.59419355020816
+          },
+          {
+            "partial": 2,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 3,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 4,
+            "status": "frequency_collision"
+          }
+        ],
+        "continuous_hypothesis": false
+      }
+    },
+    {
+      "input_index": 161,
+      "event": {
+        "pitch": 80,
+        "start_sec": 18.436363636363634,
+        "end_sec": 18.679545454545455,
+        "velocity": 41
+      },
+      "measurement": {
+        "status": "measured",
+        "tracks": [
+          {
+            "partial": 1,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 2,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 3,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 4,
+            "status": "measured",
+            "error": 3.095678435635494
+          }
+        ],
+        "continuous_hypothesis": false
+      }
+    },
+    {
+      "input_index": 162,
+      "event": {
+        "pitch": 52,
+        "start_sec": 18.518181818181816,
+        "end_sec": 19.029545454545453,
+        "velocity": 70
+      },
+      "measurement": {
+        "status": "unavailable",
+        "tracks": [
+          {
+            "partial": 1,
+            "status": "nondecaying"
+          },
+          {
+            "partial": 2,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 3,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 4,
+            "status": "frequency_collision"
+          }
+        ],
+        "continuous_hypothesis": false
+      }
+    },
+    {
+      "input_index": 163,
+      "event": {
+        "pitch": 64,
+        "start_sec": 18.518181818181816,
+        "end_sec": 18.86590909090909,
+        "velocity": 56
+      },
+      "measurement": {
+        "status": "unavailable",
+        "tracks": [
+          {
+            "partial": 1,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 2,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 3,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 4,
+            "status": "frequency_collision"
+          }
+        ],
+        "continuous_hypothesis": false
+      }
+    },
+    {
+      "input_index": 164,
+      "event": {
+        "pitch": 52,
+        "start_sec": 19.029545454545453,
+        "end_sec": 19.422727272727272,
+        "velocity": 61
+      },
+      "measurement": {
+        "status": "measured",
+        "tracks": [
+          {
+            "partial": 1,
+            "status": "measured",
+            "error": 0.67905647099581
+          },
+          {
+            "partial": 2,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 3,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 4,
+            "status": "frequency_collision"
+          }
+        ],
+        "continuous_hypothesis": false
+      }
+    },
+    {
+      "input_index": 165,
+      "event": {
+        "pitch": 71,
+        "start_sec": 19.029545454545453,
+        "end_sec": 19.60909090909091,
+        "velocity": 59
+      },
+      "measurement": {
+        "status": "unavailable",
+        "tracks": [
+          {
+            "partial": 1,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 2,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 3,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 4,
+            "status": "frequency_collision"
+          }
+        ],
+        "continuous_hypothesis": false
+      }
+    },
+    {
+      "input_index": 166,
+      "event": {
+        "pitch": 74,
+        "start_sec": 19.029545454545453,
+        "end_sec": 19.43409090909091,
+        "velocity": 58
+      },
+      "measurement": {
+        "status": "unavailable",
+        "tracks": [
+          {
+            "partial": 1,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 2,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 3,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 4,
+            "status": "nondecaying"
+          }
+        ],
+        "continuous_hypothesis": false
+      }
+    },
+    {
+      "input_index": 167,
+      "event": {
+        "pitch": 62,
+        "start_sec": 19.063636363636363,
+        "end_sec": 19.829545454545453,
+        "velocity": 59
+      },
+      "measurement": {
+        "status": "measured",
+        "tracks": [
+          {
+            "partial": 1,
+            "status": "measured",
+            "error": 3.037363161648338
+          },
+          {
+            "partial": 2,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 3,
+            "status": "nondecaying"
+          },
+          {
+            "partial": 4,
+            "status": "frequency_collision"
+          }
+        ],
+        "continuous_hypothesis": false
+      }
+    },
+    {
+      "input_index": 168,
+      "event": {
+        "pitch": 45,
+        "start_sec": 19.19090909090909,
+        "end_sec": 19.71363636363636,
+        "velocity": 61
+      },
+      "measurement": {
+        "status": "unavailable",
+        "tracks": [
+          {
+            "partial": 1,
+            "status": "nondecaying"
+          },
+          {
+            "partial": 2,
+            "status": "nondecaying"
+          },
+          {
+            "partial": 3,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 4,
+            "status": "nondecaying"
+          }
+        ],
+        "continuous_hypothesis": false
+      }
+    },
+    {
+      "input_index": 169,
+      "event": {
+        "pitch": 52,
+        "start_sec": 19.422727272727272,
+        "end_sec": 19.888636363636362,
+        "velocity": 57
+      },
+      "measurement": {
+        "status": "unavailable",
+        "tracks": [
+          {
+            "partial": 1,
+            "status": "nondecaying"
+          },
+          {
+            "partial": 2,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 3,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 4,
+            "status": "frequency_collision"
+          }
+        ],
+        "continuous_hypothesis": false
+      }
+    },
+    {
+      "input_index": 170,
+      "event": {
+        "pitch": 64,
+        "start_sec": 19.9,
+        "end_sec": 20.30681818181818,
+        "velocity": 59
+      },
+      "measurement": {
+        "status": "measured",
+        "tracks": [
+          {
+            "partial": 1,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 2,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 3,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 4,
+            "status": "measured",
+            "error": 3.328411053997235
+          }
+        ],
+        "continuous_hypothesis": false
+      }
+    },
+    {
+      "input_index": 171,
+      "event": {
+        "pitch": 56,
+        "start_sec": 19.959090909090907,
+        "end_sec": 20.36590909090909,
+        "velocity": 58
+      },
+      "measurement": {
+        "status": "measured",
+        "tracks": [
+          {
+            "partial": 1,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 2,
+            "status": "measured",
+            "error": 3.404754969860941
+          },
+          {
+            "partial": 3,
+            "status": "nondecaying"
+          },
+          {
+            "partial": 4,
+            "status": "frequency_collision"
+          }
+        ],
+        "continuous_hypothesis": false
+      }
+    },
+    {
+      "input_index": 172,
+      "event": {
+        "pitch": 52,
+        "start_sec": 20.063636363636363,
+        "end_sec": 20.30681818181818,
+        "velocity": 42
+      },
+      "measurement": {
+        "status": "measured",
+        "tracks": [
+          {
+            "partial": 1,
+            "status": "measured",
+            "error": 1.9306865101030062
+          },
+          {
+            "partial": 2,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 3,
+            "status": "nondecaying"
+          },
+          {
+            "partial": 4,
+            "status": "frequency_collision"
+          }
+        ],
+        "continuous_hypothesis": false
+      }
+    },
+    {
+      "input_index": 173,
+      "event": {
+        "pitch": 52,
+        "start_sec": 20.318181818181817,
+        "end_sec": 20.459090909090907,
+        "velocity": 60
+      },
+      "measurement": {
+        "status": "unavailable",
+        "tracks": [
+          {
+            "partial": 1,
+            "status": "nondecaying"
+          },
+          {
+            "partial": 2,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 3,
+            "status": "nondecaying"
+          },
+          {
+            "partial": 4,
+            "status": "frequency_collision"
+          }
+        ],
+        "continuous_hypothesis": false
+      }
+    },
+    {
+      "input_index": 174,
+      "event": {
+        "pitch": 52,
+        "start_sec": 20.459090909090907,
+        "end_sec": 20.852272727272727,
+        "velocity": 68
+      },
+      "measurement": {
+        "status": "unavailable",
+        "tracks": [
+          {
+            "partial": 1,
+            "status": "nondecaying"
+          },
+          {
+            "partial": 2,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 3,
+            "status": "nondecaying"
+          },
+          {
+            "partial": 4,
+            "status": "frequency_collision"
+          }
+        ],
+        "continuous_hypothesis": false
+      }
+    },
+    {
+      "input_index": 175,
+      "event": {
+        "pitch": 65,
+        "start_sec": 20.863636363636363,
+        "end_sec": 21.66590909090909,
+        "velocity": 65
+      },
+      "measurement": {
+        "status": "measured",
+        "tracks": [
+          {
+            "partial": 1,
+            "status": "measured",
+            "error": 2.7101561156554794
+          },
+          {
+            "partial": 2,
+            "status": "nondecaying"
+          },
+          {
+            "partial": 3,
+            "status": "nondecaying"
+          },
+          {
+            "partial": 4,
+            "status": "nondecaying"
+          }
+        ],
+        "continuous_hypothesis": false
+      }
+    },
+    {
+      "input_index": 176,
+      "event": {
+        "pitch": 45,
+        "start_sec": 20.956818181818182,
+        "end_sec": 21.259090909090908,
+        "velocity": 60
+      },
+      "measurement": {
+        "status": "measured",
+        "tracks": [
+          {
+            "partial": 1,
+            "status": "measured",
+            "error": 3.286634026767242
+          },
+          {
+            "partial": 2,
+            "status": "measured",
+            "error": 5.24183542564911
+          },
+          {
+            "partial": 3,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 4,
+            "status": "nondecaying"
+          }
+        ],
+        "continuous_hypothesis": false
+      }
+    },
+    {
+      "input_index": 177,
+      "event": {
+        "pitch": 48,
+        "start_sec": 21.24772727272727,
+        "end_sec": 22.73409090909091,
+        "velocity": 58
+      },
+      "measurement": {
+        "status": "measured",
+        "tracks": [
+          {
+            "partial": 1,
+            "status": "measured",
+            "error": 2.404534148393668
+          },
+          {
+            "partial": 2,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 3,
+            "status": "measured",
+            "error": 7.721848515656391
+          },
+          {
+            "partial": 4,
+            "status": "frequency_collision"
+          }
+        ],
+        "continuous_hypothesis": false
+      }
+    },
+    {
+      "input_index": 178,
+      "event": {
+        "pitch": 60,
+        "start_sec": 21.28181818181818,
+        "end_sec": 21.445454545454545,
+        "velocity": 48
+      },
+      "measurement": {
+        "status": "unavailable",
+        "tracks": [
+          {
+            "partial": 1,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 2,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 3,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 4,
+            "status": "frequency_collision"
+          }
+        ],
+        "continuous_hypothesis": false
+      }
+    },
+    {
+      "input_index": 179,
+      "event": {
+        "pitch": 53,
+        "start_sec": 21.618181818181817,
+        "end_sec": 21.81590909090909,
+        "velocity": 58
+      },
+      "measurement": {
+        "status": "unavailable",
+        "tracks": [
+          {
+            "partial": 1,
+            "status": "nondecaying"
+          },
+          {
+            "partial": 2,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 3,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 4,
+            "status": "frequency_collision"
+          }
+        ],
+        "continuous_hypothesis": false
+      }
+    },
+    {
+      "input_index": 180,
+      "event": {
+        "pitch": 71,
+        "start_sec": 21.7,
+        "end_sec": 22.24772727272727,
+        "velocity": 66
+      },
+      "measurement": {
+        "status": "unavailable",
+        "tracks": [
+          {
+            "partial": 1,
+            "status": "nondecaying"
+          },
+          {
+            "partial": 2,
+            "status": "nondecaying"
+          },
+          {
+            "partial": 3,
+            "status": "nondecaying"
+          },
+          {
+            "partial": 4,
+            "status": "nondecaying"
+          }
+        ],
+        "continuous_hypothesis": false
+      }
+    },
+    {
+      "input_index": 181,
+      "event": {
+        "pitch": 53,
+        "start_sec": 21.81590909090909,
+        "end_sec": 22.31590909090909,
+        "velocity": 65
+      },
+      "measurement": {
+        "status": "unavailable",
+        "tracks": [
+          {
+            "partial": 1,
+            "status": "nondecaying"
+          },
+          {
+            "partial": 2,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 3,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 4,
+            "status": "frequency_collision"
+          }
+        ],
+        "continuous_hypothesis": false
+      }
+    },
+    {
+      "input_index": 182,
+      "event": {
+        "pitch": 57,
+        "start_sec": 21.979545454545452,
+        "end_sec": 22.804545454545455,
+        "velocity": 59
+      },
+      "measurement": {
+        "status": "measured",
+        "tracks": [
+          {
+            "partial": 1,
+            "status": "measured",
+            "error": 4.300728830342281
+          },
+          {
+            "partial": 2,
+            "status": "nondecaying"
+          },
+          {
+            "partial": 3,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 4,
+            "status": "frequency_collision"
+          }
+        ],
+        "continuous_hypothesis": false
+      }
+    },
+    {
+      "input_index": 183,
+      "event": {
+        "pitch": 53,
+        "start_sec": 22.31590909090909,
+        "end_sec": 23.025,
+        "velocity": 64
+      },
+      "measurement": {
+        "status": "measured",
+        "tracks": [
+          {
+            "partial": 1,
+            "status": "nondecaying"
+          },
+          {
+            "partial": 2,
+            "status": "measured",
+            "error": 1.3627759453014021
+          },
+          {
+            "partial": 3,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 4,
+            "status": "nondecaying"
+          }
+        ],
+        "continuous_hypothesis": false
+      }
+    },
+    {
+      "input_index": 184,
+      "event": {
+        "pitch": 69,
+        "start_sec": 22.375,
+        "end_sec": 22.584090909090907,
+        "velocity": 35
+      },
+      "measurement": {
+        "status": "unavailable",
+        "tracks": [
+          {
+            "partial": 1,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 2,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 3,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 4,
+            "status": "nondecaying"
+          }
+        ],
+        "continuous_hypothesis": false
+      }
+    },
+    {
+      "input_index": 185,
+      "event": {
+        "pitch": 60,
+        "start_sec": 22.711363636363636,
+        "end_sec": 23.070454545454545,
+        "velocity": 46
+      },
+      "measurement": {
+        "status": "unavailable",
+        "tracks": [
+          {
+            "partial": 1,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 2,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 3,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 4,
+            "status": "frequency_collision"
+          }
+        ],
+        "continuous_hypothesis": false
+      }
+    },
+    {
+      "input_index": 186,
+      "event": {
+        "pitch": 48,
+        "start_sec": 22.73409090909091,
+        "end_sec": 23.047727272727272,
+        "velocity": 68
+      },
+      "measurement": {
+        "status": "unavailable",
+        "tracks": [
+          {
+            "partial": 1,
+            "status": "nondecaying"
+          },
+          {
+            "partial": 2,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 3,
+            "status": "nondecaying"
+          },
+          {
+            "partial": 4,
+            "status": "frequency_collision"
+          }
+        ],
+        "continuous_hypothesis": false
+      }
+    },
+    {
+      "input_index": 187,
+      "event": {
+        "pitch": 60,
+        "start_sec": 23.070454545454545,
+        "end_sec": 23.37272727272727,
+        "velocity": 65
+      },
+      "measurement": {
+        "status": "unavailable",
+        "tracks": [
+          {
+            "partial": 1,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 2,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 3,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 4,
+            "status": "frequency_collision"
+          }
+        ],
+        "continuous_hypothesis": false
+      }
+    },
+    {
+      "input_index": 188,
+      "event": {
+        "pitch": 63,
+        "start_sec": 23.118181818181817,
+        "end_sec": 23.674999999999997,
+        "velocity": 66
+      },
+      "measurement": {
+        "status": "unavailable",
+        "tracks": [
+          {
+            "partial": 1,
+            "status": "nondecaying"
+          },
+          {
+            "partial": 2,
+            "status": "nondecaying"
+          },
+          {
+            "partial": 3,
+            "status": "nondecaying"
+          },
+          {
+            "partial": 4,
+            "status": "nondecaying"
+          }
+        ],
+        "continuous_hypothesis": false
+      }
+    },
+    {
+      "input_index": 189,
+      "event": {
+        "pitch": 69,
+        "start_sec": 23.152272727272727,
+        "end_sec": 23.37272727272727,
+        "velocity": 62
+      },
+      "measurement": {
+        "status": "unavailable",
+        "tracks": [
+          {
+            "partial": 1,
+            "status": "nondecaying"
+          },
+          {
+            "partial": 2,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 3,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 4,
+            "status": "nondecaying"
+          }
+        ],
+        "continuous_hypothesis": false
+      }
+    },
+    {
+      "input_index": 190,
+      "event": {
+        "pitch": 60,
+        "start_sec": 23.37272727272727,
+        "end_sec": 23.525,
+        "velocity": 50
+      },
+      "measurement": {
+        "status": "measured",
+        "tracks": [
+          {
+            "partial": 1,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 2,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 3,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 4,
+            "status": "measured",
+            "error": 1.3558929096412586
+          }
+        ],
+        "continuous_hypothesis": false
+      }
+    },
+    {
+      "input_index": 191,
+      "event": {
+        "pitch": 48,
+        "start_sec": 23.384090909090908,
+        "end_sec": 24.83863636363636,
+        "velocity": 68
+      },
+      "measurement": {
+        "status": "measured",
+        "tracks": [
+          {
+            "partial": 1,
+            "status": "nondecaying"
+          },
+          {
+            "partial": 2,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 3,
+            "status": "measured",
+            "error": 3.2830245899800636
+          },
+          {
+            "partial": 4,
+            "status": "frequency_collision"
+          }
+        ],
+        "continuous_hypothesis": false
+      }
+    },
+    {
+      "input_index": 192,
+      "event": {
+        "pitch": 51,
+        "start_sec": 23.73409090909091,
+        "end_sec": 23.909090909090907,
+        "velocity": 91
+      },
+      "measurement": {
+        "status": "measured",
+        "tracks": [
+          {
+            "partial": 1,
+            "status": "measured",
+            "error": 5.569027821519119
+          },
+          {
+            "partial": 2,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 3,
+            "status": "nondecaying"
+          },
+          {
+            "partial": 4,
+            "status": "frequency_collision"
+          }
+        ],
+        "continuous_hypothesis": false
+      }
+    },
+    {
+      "input_index": 193,
+      "event": {
+        "pitch": 72,
+        "start_sec": 23.73409090909091,
+        "end_sec": 24.013636363636362,
+        "velocity": 60
+      },
+      "measurement": {
+        "status": "unavailable",
+        "tracks": [
+          {
+            "partial": 1,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 2,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 3,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 4,
+            "status": "nondecaying"
+          }
+        ],
+        "continuous_hypothesis": false
+      }
+    },
+    {
+      "input_index": 194,
+      "event": {
+        "pitch": 60,
+        "start_sec": 23.75681818181818,
+        "end_sec": 24.25681818181818,
+        "velocity": 43
+      },
+      "measurement": {
+        "status": "unavailable",
+        "tracks": [
+          {
+            "partial": 1,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 2,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 3,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 4,
+            "status": "frequency_collision"
+          }
+        ],
+        "continuous_hypothesis": false
+      }
+    },
+    {
+      "input_index": 195,
+      "event": {
+        "pitch": 51,
+        "start_sec": 23.909090909090907,
+        "end_sec": 24.570454545454545,
+        "velocity": 80
+      },
+      "measurement": {
+        "status": "unavailable",
+        "tracks": [
+          {
+            "partial": 1,
+            "status": "nondecaying"
+          },
+          {
+            "partial": 2,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 3,
+            "status": "nondecaying"
+          },
+          {
+            "partial": 4,
+            "status": "frequency_collision"
+          }
+        ],
+        "continuous_hypothesis": false
+      }
+    },
+    {
+      "input_index": 196,
+      "event": {
+        "pitch": 57,
+        "start_sec": 24.070454545454545,
+        "end_sec": 25.15,
+        "velocity": 67
+      },
+      "measurement": {
+        "status": "measured",
+        "tracks": [
+          {
+            "partial": 1,
+            "status": "measured",
+            "error": 3.1584661258694493
+          },
+          {
+            "partial": 2,
+            "status": "measured",
+            "error": 4.761196303869301
+          },
+          {
+            "partial": 3,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 4,
+            "status": "nondecaying"
+          }
+        ],
+        "continuous_hypothesis": false
+      }
+    },
+    {
+      "input_index": 197,
+      "event": {
+        "pitch": 69,
+        "start_sec": 24.547727272727272,
+        "end_sec": 24.720454545454544,
+        "velocity": 48
+      },
+      "measurement": {
+        "status": "unavailable",
+        "tracks": [
+          {
+            "partial": 1,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 2,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 3,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 4,
+            "status": "nondecaying"
+          }
+        ],
+        "continuous_hypothesis": false
+      }
+    },
+    {
+      "input_index": 198,
+      "event": {
+        "pitch": 51,
+        "start_sec": 24.570454545454545,
+        "end_sec": 25.163636363636364,
+        "velocity": 76
+      },
+      "measurement": {
+        "status": "measured",
+        "tracks": [
+          {
+            "partial": 1,
+            "status": "measured",
+            "error": 3.3593839714850704
+          },
+          {
+            "partial": 2,
+            "status": "measured",
+            "error": 1.3394241092809955
+          },
+          {
+            "partial": 3,
+            "status": "nondecaying"
+          },
+          {
+            "partial": 4,
+            "status": "nondecaying"
+          }
+        ],
+        "continuous_hypothesis": false
+      }
+    },
+    {
+      "input_index": 199,
+      "event": {
+        "pitch": 63,
+        "start_sec": 24.69772727272727,
+        "end_sec": 25.070454545454545,
+        "velocity": 54
+      },
+      "measurement": {
+        "status": "measured",
+        "tracks": [
+          {
+            "partial": 1,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 2,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 3,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 4,
+            "status": "measured",
+            "error": 0.07135018364033474
+          }
+        ],
+        "continuous_hypothesis": false
+      }
+    },
+    {
+      "input_index": 200,
+      "event": {
+        "pitch": 69,
+        "start_sec": 24.73409090909091,
+        "end_sec": 24.895454545454545,
+        "velocity": 58
+      },
+      "measurement": {
+        "status": "measured",
+        "tracks": [
+          {
+            "partial": 1,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 2,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 3,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 4,
+            "status": "measured",
+            "error": 1.1059190273892305
+          }
+        ],
+        "continuous_hypothesis": false
+      }
+    },
+    {
+      "input_index": 201,
+      "event": {
+        "pitch": 60,
+        "start_sec": 24.825,
+        "end_sec": 24.96590909090909,
+        "velocity": 47
+      },
+      "measurement": {
+        "status": "unavailable",
+        "tracks": [
+          {
+            "partial": 1,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 2,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 3,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 4,
+            "status": "nondecaying"
+          }
+        ],
+        "continuous_hypothesis": false
+      }
+    },
+    {
+      "input_index": 202,
+      "event": {
+        "pitch": 48,
+        "start_sec": 24.83863636363636,
+        "end_sec": 25.127272727272725,
+        "velocity": 59
+      },
+      "measurement": {
+        "status": "measured",
+        "tracks": [
+          {
+            "partial": 1,
+            "status": "measured",
+            "error": 1.7568759191033765
+          },
+          {
+            "partial": 2,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 3,
+            "status": "nondecaying"
+          },
+          {
+            "partial": 4,
+            "status": "frequency_collision"
+          }
+        ],
+        "continuous_hypothesis": false
+      }
+    },
+    {
+      "input_index": 203,
+      "event": {
+        "pitch": 69,
+        "start_sec": 24.895454545454545,
+        "end_sec": 25.23181818181818,
+        "velocity": 59
+      },
+      "measurement": {
+        "status": "measured",
+        "tracks": [
+          {
+            "partial": 1,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 2,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 3,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 4,
+            "status": "measured",
+            "error": 1.345793416169208
+          }
+        ],
+        "continuous_hypothesis": false
+      }
+    },
+    {
+      "input_index": 204,
+      "event": {
+        "pitch": 66,
+        "start_sec": 25.163636363636364,
+        "end_sec": 25.534090909090907,
+        "velocity": 58
+      },
+      "measurement": {
+        "status": "measured",
+        "tracks": [
+          {
+            "partial": 1,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 2,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 3,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 4,
+            "status": "measured",
+            "error": 6.450953020783468
+          }
+        ],
+        "continuous_hypothesis": false
+      }
+    },
+    {
+      "input_index": 205,
+      "event": {
+        "pitch": 54,
+        "start_sec": 25.174999999999997,
+        "end_sec": 25.55681818181818,
+        "velocity": 58
+      },
+      "measurement": {
+        "status": "measured",
+        "tracks": [
+          {
+            "partial": 1,
+            "status": "nondecaying"
+          },
+          {
+            "partial": 2,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 3,
+            "status": "measured",
+            "error": 3.4237163461048445
+          },
+          {
+            "partial": 4,
+            "status": "frequency_collision"
+          }
+        ],
+        "continuous_hypothesis": false
+      }
+    },
+    {
+      "input_index": 206,
+      "event": {
+        "pitch": 69,
+        "start_sec": 25.23181818181818,
+        "end_sec": 25.545454545454543,
+        "velocity": 60
+      },
+      "measurement": {
+        "status": "measured",
+        "tracks": [
+          {
+            "partial": 1,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 2,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 3,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 4,
+            "status": "measured",
+            "error": 2.716754969520021
+          }
+        ],
+        "continuous_hypothesis": false
+      }
+    },
+    {
+      "input_index": 207,
+      "event": {
+        "pitch": 51,
+        "start_sec": 25.254545454545454,
+        "end_sec": 25.452272727272724,
+        "velocity": 36
+      },
+      "measurement": {
+        "status": "measured",
+        "tracks": [
+          {
+            "partial": 1,
+            "status": "measured",
+            "error": 2.5568503051152427
+          },
+          {
+            "partial": 2,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 3,
+            "status": "measured",
+            "error": 2.3444091653984707
+          },
+          {
+            "partial": 4,
+            "status": "frequency_collision"
+          }
+        ],
+        "continuous_hypothesis": false
+      }
+    },
+    {
+      "input_index": 208,
+      "event": {
+        "pitch": 60,
+        "start_sec": 25.279545454545453,
+        "end_sec": 25.627272727272725,
+        "velocity": 60
+      },
+      "measurement": {
+        "status": "measured",
+        "tracks": [
+          {
+            "partial": 1,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 2,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 3,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 4,
+            "status": "measured",
+            "error": 2.56800504874234
+          }
+        ],
+        "continuous_hypothesis": false
+      }
+    },
+    {
+      "input_index": 209,
+      "event": {
+        "pitch": 60,
+        "start_sec": 25.627272727272725,
+        "end_sec": 25.813636363636363,
+        "velocity": 49
+      },
+      "measurement": {
+        "status": "measured",
+        "tracks": [
+          {
+            "partial": 1,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 2,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 3,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 4,
+            "status": "measured",
+            "error": 3.43979318372559
+          }
+        ],
+        "continuous_hypothesis": false
+      }
+    },
+    {
+      "input_index": 210,
+      "event": {
+        "pitch": 48,
+        "start_sec": 25.638636363636362,
+        "end_sec": 26.568181818181817,
+        "velocity": 65
+      },
+      "measurement": {
+        "status": "measured",
+        "tracks": [
+          {
+            "partial": 1,
+            "status": "measured",
+            "error": 4.0807374192987735
+          },
+          {
+            "partial": 2,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 3,
+            "status": "nondecaying"
+          },
+          {
+            "partial": 4,
+            "status": "frequency_collision"
+          }
+        ],
+        "continuous_hypothesis": false
+      }
+    },
+    {
+      "input_index": 211,
+      "event": {
+        "pitch": 78,
+        "start_sec": 25.918181818181818,
+        "end_sec": 26.220454545454544,
+        "velocity": 74
+      },
+      "measurement": {
+        "status": "measured",
+        "tracks": [
+          {
+            "partial": 1,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 2,
+            "status": "measured",
+            "error": 4.724487898419092
+          },
+          {
+            "partial": 3,
+            "status": "nondecaying"
+          },
+          {
+            "partial": 4,
+            "status": "measured",
+            "error": 4.265787063452497
+          }
+        ],
+        "continuous_hypothesis": false
+      }
+    },
+    {
+      "input_index": 212,
+      "event": {
+        "pitch": 54,
+        "start_sec": 25.929545454545455,
+        "end_sec": 26.220454545454544,
+        "velocity": 43
+      },
+      "measurement": {
+        "status": "measured",
+        "tracks": [
+          {
+            "partial": 1,
+            "status": "measured",
+            "error": 0.9634259503041653
+          },
+          {
+            "partial": 2,
+            "status": "nondecaying"
+          },
+          {
+            "partial": 3,
+            "status": "measured",
+            "error": 1.5882908409131709
+          },
+          {
+            "partial": 4,
+            "status": "frequency_collision"
+          }
+        ],
+        "continuous_hypothesis": false
+      }
+    },
+    {
+      "input_index": 213,
+      "event": {
+        "pitch": 57,
+        "start_sec": 25.929545454545455,
+        "end_sec": 26.61590909090909,
+        "velocity": 61
+      },
+      "measurement": {
+        "status": "measured",
+        "tracks": [
+          {
+            "partial": 1,
+            "status": "measured",
+            "error": 2.6201098947070176
+          },
+          {
+            "partial": 2,
+            "status": "measured",
+            "error": 1.3969345956300945
+          },
+          {
+            "partial": 3,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 4,
+            "status": "measured",
+            "error": 2.575406593601051
+          }
+        ],
+        "continuous_hypothesis": false
+      }
+    },
+    {
+      "input_index": 214,
+      "event": {
+        "pitch": 51,
+        "start_sec": 26.347727272727273,
+        "end_sec": 26.893181818181816,
+        "velocity": 58
+      },
+      "measurement": {
+        "status": "measured",
+        "tracks": [
+          {
+            "partial": 1,
+            "status": "measured",
+            "error": 4.811783062410977
+          },
+          {
+            "partial": 2,
+            "status": "nondecaying"
+          },
+          {
+            "partial": 3,
+            "status": "measured",
+            "error": 5.489538612466616
+          },
+          {
+            "partial": 4,
+            "status": "measured",
+            "error": 5.171725347097267
+          }
+        ],
+        "continuous_hypothesis": false
+      }
+    },
+    {
+      "input_index": 215,
+      "event": {
+        "pitch": 48,
+        "start_sec": 26.59090909090909,
+        "end_sec": 27.613636363636363,
+        "velocity": 54
+      },
+      "measurement": {
+        "status": "measured",
+        "tracks": [
+          {
+            "partial": 1,
+            "status": "measured",
+            "error": 0.4763742533959767
+          },
+          {
+            "partial": 2,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 3,
+            "status": "measured",
+            "error": 2.9789955578095944
+          },
+          {
+            "partial": 4,
+            "status": "frequency_collision"
+          }
+        ],
+        "continuous_hypothesis": false
+      }
+    },
+    {
+      "input_index": 216,
+      "event": {
+        "pitch": 57,
+        "start_sec": 26.61590909090909,
+        "end_sec": 27.695454545454545,
+        "velocity": 73
+      },
+      "measurement": {
+        "status": "measured",
+        "tracks": [
+          {
+            "partial": 1,
+            "status": "nondecaying"
+          },
+          {
+            "partial": 2,
+            "status": "measured",
+            "error": 2.249730187141987
+          },
+          {
+            "partial": 3,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 4,
+            "status": "measured",
+            "error": 1.4886098480750736
+          }
+        ],
+        "continuous_hypothesis": false
+      }
+    },
+    {
+      "input_index": 217,
+      "event": {
+        "pitch": 60,
+        "start_sec": 26.65,
+        "end_sec": 27.068181818181817,
+        "velocity": 54
+      },
+      "measurement": {
+        "status": "unavailable",
+        "tracks": [
+          {
+            "partial": 1,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 2,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 3,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 4,
+            "status": "frequency_collision"
+          }
+        ],
+        "continuous_hypothesis": false
+      }
+    },
+    {
+      "input_index": 218,
+      "event": {
+        "pitch": 72,
+        "start_sec": 26.65,
+        "end_sec": 26.94090909090909,
+        "velocity": 64
+      },
+      "measurement": {
+        "status": "measured",
+        "tracks": [
+          {
+            "partial": 1,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 2,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 3,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 4,
+            "status": "measured",
+            "error": 9.761665218886218
+          }
+        ],
+        "continuous_hypothesis": false
+      }
+    },
+    {
+      "input_index": 219,
+      "event": {
+        "pitch": 72,
+        "start_sec": 26.94090909090909,
+        "end_sec": 27.138636363636362,
+        "velocity": 56
+      },
+      "measurement": {
+        "status": "measured",
+        "tracks": [
+          {
+            "partial": 1,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 2,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 3,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 4,
+            "status": "measured",
+            "error": 3.047749300983306
+          }
+        ],
+        "continuous_hypothesis": false
+      }
+    },
+    {
+      "input_index": 220,
+      "event": {
+        "pitch": 60,
+        "start_sec": 27.068181818181817,
+        "end_sec": 27.752272727272725,
+        "velocity": 70
+      },
+      "measurement": {
+        "status": "unavailable",
+        "tracks": [
+          {
+            "partial": 1,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 2,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 3,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 4,
+            "status": "frequency_collision"
+          }
+        ],
+        "continuous_hypothesis": false
+      }
+    },
+    {
+      "input_index": 221,
+      "event": {
+        "pitch": 63,
+        "start_sec": 27.26590909090909,
+        "end_sec": 27.568181818181817,
+        "velocity": 46
+      },
+      "measurement": {
+        "status": "measured",
+        "tracks": [
+          {
+            "partial": 1,
+            "status": "nondecaying"
+          },
+          {
+            "partial": 2,
+            "status": "measured",
+            "error": 1.1888555639683673
+          },
+          {
+            "partial": 3,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 4,
+            "status": "measured",
+            "error": 0.5869403890530274
+          }
+        ],
+        "continuous_hypothesis": false
+      }
+    },
+    {
+      "input_index": 222,
+      "event": {
+        "pitch": 54,
+        "start_sec": 27.277272727272727,
+        "end_sec": 27.64772727272727,
+        "velocity": 48
+      },
+      "measurement": {
+        "status": "measured",
+        "tracks": [
+          {
+            "partial": 1,
+            "status": "measured",
+            "error": 0.4060943970880695
+          },
+          {
+            "partial": 2,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 3,
+            "status": "nondecaying"
+          },
+          {
+            "partial": 4,
+            "status": "frequency_collision"
+          }
+        ],
+        "continuous_hypothesis": false
+      }
+    },
+    {
+      "input_index": 223,
+      "event": {
+        "pitch": 66,
+        "start_sec": 27.288636363636364,
+        "end_sec": 27.68409090909091,
+        "velocity": 73
+      },
+      "measurement": {
+        "status": "unavailable",
+        "tracks": [
+          {
+            "partial": 1,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 2,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 3,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 4,
+            "status": "nondecaying"
+          }
+        ],
+        "continuous_hypothesis": false
+      }
+    },
+    {
+      "input_index": 224,
+      "event": {
+        "pitch": 54,
+        "start_sec": 27.64772727272727,
+        "end_sec": 27.986363636363635,
+        "velocity": 47
+      },
+      "measurement": {
+        "status": "measured",
+        "tracks": [
+          {
+            "partial": 1,
+            "status": "measured",
+            "error": 0.5852356268201635
+          },
+          {
+            "partial": 2,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 3,
+            "status": "nondecaying"
+          },
+          {
+            "partial": 4,
+            "status": "frequency_collision"
+          }
+        ],
+        "continuous_hypothesis": false
+      }
+    },
+    {
+      "input_index": 225,
+      "event": {
+        "pitch": 57,
+        "start_sec": 27.695454545454545,
+        "end_sec": 28.079545454545453,
+        "velocity": 60
+      },
+      "measurement": {
+        "status": "unavailable",
+        "tracks": [
+          {
+            "partial": 1,
+            "status": "nondecaying"
+          },
+          {
+            "partial": 2,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 3,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 4,
+            "status": "frequency_collision"
+          }
+        ],
+        "continuous_hypothesis": false
+      }
+    },
+    {
+      "input_index": 226,
+      "event": {
+        "pitch": 69,
+        "start_sec": 27.695454545454545,
+        "end_sec": 27.986363636363635,
+        "velocity": 76
+      },
+      "measurement": {
+        "status": "unavailable",
+        "tracks": [
+          {
+            "partial": 1,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 2,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 3,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 4,
+            "status": "nondecaying"
+          }
+        ],
+        "continuous_hypothesis": false
+      }
+    },
+    {
+      "input_index": 227,
+      "event": {
+        "pitch": 60,
+        "start_sec": 27.752272727272725,
+        "end_sec": 28.45,
+        "velocity": 70
+      },
+      "measurement": {
+        "status": "unavailable",
+        "tracks": [
+          {
+            "partial": 1,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 2,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 3,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 4,
+            "status": "nondecaying"
+          }
+        ],
+        "continuous_hypothesis": false
+      }
+    },
+    {
+      "input_index": 228,
+      "event": {
+        "pitch": 48,
+        "start_sec": 27.825,
+        "end_sec": 27.99772727272727,
+        "velocity": 49
+      },
+      "measurement": {
+        "status": "measured",
+        "tracks": [
+          {
+            "partial": 1,
+            "status": "measured",
+            "error": 0.6071854299597441
+          },
+          {
+            "partial": 2,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 3,
+            "status": "measured",
+            "error": 5.747627547361932
+          },
+          {
+            "partial": 4,
+            "status": "frequency_collision"
+          }
+        ],
+        "continuous_hypothesis": false
+      }
+    },
+    {
+      "input_index": 229,
+      "event": {
+        "pitch": 68,
+        "start_sec": 27.986363636363635,
+        "end_sec": 28.474999999999998,
+        "velocity": 89
+      },
+      "measurement": {
+        "status": "measured",
+        "tracks": [
+          {
+            "partial": 1,
+            "status": "measured",
+            "error": 5.482138743880771
+          },
+          {
+            "partial": 2,
+            "status": "measured",
+            "error": 5.9240249212641825
+          },
+          {
+            "partial": 3,
+            "status": "nondecaying"
+          },
+          {
+            "partial": 4,
+            "status": "nondecaying"
+          }
+        ],
+        "continuous_hypothesis": false
+      }
+    },
+    {
+      "input_index": 230,
+      "event": {
+        "pitch": 57,
+        "start_sec": 28.079545454545453,
+        "end_sec": 28.74090909090909,
+        "velocity": 55
+      },
+      "measurement": {
+        "status": "measured",
+        "tracks": [
+          {
+            "partial": 1,
+            "status": "measured",
+            "error": 3.1284682597701865
+          },
+          {
+            "partial": 2,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 3,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 4,
+            "status": "frequency_collision"
+          }
+        ],
+        "continuous_hypothesis": false
+      }
+    },
+    {
+      "input_index": 231,
+      "event": {
+        "pitch": 48,
+        "start_sec": 28.136363636363637,
+        "end_sec": 28.277272727272727,
+        "velocity": 48
+      },
+      "measurement": {
+        "status": "unavailable",
+        "tracks": [
+          {
+            "partial": 1,
+            "status": "nondecaying"
+          },
+          {
+            "partial": 2,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 3,
+            "status": "nondecaying"
+          },
+          {
+            "partial": 4,
+            "status": "frequency_collision"
+          }
+        ],
+        "continuous_hypothesis": false
+      }
+    },
+    {
+      "input_index": 232,
+      "event": {
+        "pitch": 60,
+        "start_sec": 28.45,
+        "end_sec": 28.68409090909091,
+        "velocity": 82
+      },
+      "measurement": {
+        "status": "measured",
+        "tracks": [
+          {
+            "partial": 1,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 2,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 3,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 4,
+            "status": "measured",
+            "error": 2.2699227104094057
+          }
+        ],
+        "continuous_hypothesis": false
+      }
+    },
+    {
+      "input_index": 233,
+      "event": {
+        "pitch": 68,
+        "start_sec": 28.474999999999998,
+        "end_sec": 28.972727272727273,
+        "velocity": 65
+      },
+      "measurement": {
+        "status": "measured",
+        "tracks": [
+          {
+            "partial": 1,
+            "status": "measured",
+            "error": 1.0949060393084773
+          },
+          {
+            "partial": 2,
+            "status": "measured",
+            "error": 0.29561040690854723
+          },
+          {
+            "partial": 3,
+            "status": "measured",
+            "error": 0.3091272474012583
+          },
+          {
+            "partial": 4,
+            "status": "measured",
+            "error": 1.2885145942303318
+          }
+        ],
+        "continuous_hypothesis": false
+      }
+    },
+    {
+      "input_index": 234,
+      "event": {
+        "pitch": 60,
+        "start_sec": 28.68409090909091,
+        "end_sec": 28.85681818181818,
+        "velocity": 53
+      },
+      "measurement": {
+        "status": "measured",
+        "tracks": [
+          {
+            "partial": 1,
+            "status": "measured",
+            "error": 0.4160942346131269
+          },
+          {
+            "partial": 2,
+            "status": "measured",
+            "error": 0.30365815175579103
+          },
+          {
+            "partial": 3,
+            "status": "nondecaying"
+          },
+          {
+            "partial": 4,
+            "status": "measured",
+            "error": 0.3923140551661195
+          }
+        ],
+        "continuous_hypothesis": false
+      }
+    },
+    {
+      "input_index": 235,
+      "event": {
+        "pitch": 57,
+        "start_sec": 28.74090909090909,
+        "end_sec": 29.252272727272725,
+        "velocity": 72
+      },
+      "measurement": {
+        "status": "measured",
+        "tracks": [
+          {
+            "partial": 1,
+            "status": "measured",
+            "error": 2.290729622655022
+          },
+          {
+            "partial": 2,
+            "status": "measured",
+            "error": 1.9773354255269457
+          },
+          {
+            "partial": 3,
+            "status": "nondecaying"
+          },
+          {
+            "partial": 4,
+            "status": "nondecaying"
+          }
+        ],
+        "continuous_hypothesis": false
+      }
+    },
+    {
+      "input_index": 236,
+      "event": {
+        "pitch": 69,
+        "start_sec": 29.099999999999998,
+        "end_sec": 29.252272727272725,
+        "velocity": 45
+      },
+      "measurement": {
+        "status": "measured",
+        "tracks": [
+          {
+            "partial": 1,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 2,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 3,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 4,
+            "status": "measured",
+            "error": 0.6468626639075916
+          }
+        ],
+        "continuous_hypothesis": false
+      }
+    },
+    {
+      "input_index": 237,
+      "event": {
+        "pitch": 52,
+        "start_sec": 29.125,
+        "end_sec": 29.438636363636363,
+        "velocity": 74
+      },
+      "measurement": {
+        "status": "unavailable",
+        "tracks": [
+          {
+            "partial": 1,
+            "status": "nondecaying"
+          },
+          {
+            "partial": 2,
+            "status": "nondecaying"
+          },
+          {
+            "partial": 3,
+            "status": "nondecaying"
+          },
+          {
+            "partial": 4,
+            "status": "frequency_collision"
+          }
+        ],
+        "continuous_hypothesis": false
+      }
+    },
+    {
+      "input_index": 238,
+      "event": {
+        "pitch": 54,
+        "start_sec": 29.402272727272727,
+        "end_sec": 29.797727272727272,
+        "velocity": 54
+      },
+      "measurement": {
+        "status": "measured",
+        "tracks": [
+          {
+            "partial": 1,
+            "status": "measured",
+            "error": 0.5269985478812305
+          },
+          {
+            "partial": 2,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 3,
+            "status": "nondecaying"
+          },
+          {
+            "partial": 4,
+            "status": "frequency_collision"
+          }
+        ],
+        "continuous_hypothesis": false
+      }
+    },
+    {
+      "input_index": 239,
+      "event": {
+        "pitch": 66,
+        "start_sec": 29.402272727272727,
+        "end_sec": 29.775,
+        "velocity": 70
+      },
+      "measurement": {
+        "status": "measured",
+        "tracks": [
+          {
+            "partial": 1,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 2,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 3,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 4,
+            "status": "measured",
+            "error": 4.558030882035363
+          }
+        ],
+        "continuous_hypothesis": false
+      }
+    },
+    {
+      "input_index": 240,
+      "event": {
+        "pitch": 60,
+        "start_sec": 29.438636363636363,
+        "end_sec": 29.75,
+        "velocity": 57
+      },
+      "measurement": {
+        "status": "measured",
+        "tracks": [
+          {
+            "partial": 1,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 2,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 3,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 4,
+            "status": "measured",
+            "error": 4.707248759441441
+          }
+        ],
+        "continuous_hypothesis": false
+      }
+    },
+    {
+      "input_index": 241,
+      "event": {
+        "pitch": 48,
+        "start_sec": 29.495454545454542,
+        "end_sec": 29.797727272727272,
+        "velocity": 73
+      },
+      "measurement": {
+        "status": "unavailable",
+        "tracks": [
+          {
+            "partial": 1,
+            "status": "nondecaying"
+          },
+          {
+            "partial": 2,
+            "status": "frequency_collision"
+          },
+          {
+            "partial": 3,
+            "status": "nondecaying"
+          },
+          {
+            "partial": 4,
+            "status": "frequency_collision"
+          }
+        ],
+        "continuous_hypothesis": false
+      }
+    }
+  ],
+  "event_status_counts": {
+    "boundary": 2,
+    "unavailable": 128,
+    "measured": 112
+  },
+  "track_status_counts": {
+    "frequency_collision": 617,
+    "nondecaying": 151,
+    "measured": 150,
+    "ill_conditioned": 42
+  },
+  "continuous_hypothesis_indices": []
+}

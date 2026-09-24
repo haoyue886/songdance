@@ -319,7 +319,7 @@ def _complete_eighth_note_measure_evidence(
 
 
 def _measure_units(analysis: StructureAnalysis, divisions_per_quarter: int) -> int:
-    measure_quarters = {"3/4": 3, "4/4": 4, "6/8": 3}[analysis.time_signature]
+    measure_quarters = {"2/4": 2, "3/4": 3, "4/4": 4, "6/8": 3}[analysis.time_signature]
     return measure_quarters * divisions_per_quarter
 
 

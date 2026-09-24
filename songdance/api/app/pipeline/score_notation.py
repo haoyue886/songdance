@@ -3,7 +3,7 @@ from fractions import Fraction
 
 from music21 import chord, expressions, note, pitch, stream
 
-from app.pipeline.harmony import NotationGroup, group_harmony
+from app.pipeline.harmony import HarmonyConfig, NotationGroup, group_harmony
 from app.pipeline.polyphony_limit import limit_resonant_polyphony
 from app.pipeline.quantize import GRID_DIVISIONS
 from app.pipeline.simple_arpeggio import SIMPLE_ARPEGGIO_PATTERN
@@ -28,6 +28,7 @@ def populate_part(
         [event for event in events if notation_hand(event) == hand],
         seconds_per_quarter,
         measure_offset_units,
+        config=HarmonyConfig(duration_tolerance_units=0),
         divisions_per_quarter=divisions_per_quarter,
     )
     compression = compress_notation_durations(

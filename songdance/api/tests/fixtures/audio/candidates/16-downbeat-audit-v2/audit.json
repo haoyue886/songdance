@@ -1,0 +1,1270 @@
+{
+  "production_eligible": false,
+  "case_id": "16-noisy-polyphony",
+  "script_sha256": "83babbdddce70fc71d8502f8bb5fb5a8b2254759a19c7df46eb131082e759c51",
+  "feedback_sha256": "b4da915be5481c0081242cf0a8382bf8023fd59a4922ce598f5e3dc10ea28fc4",
+  "inputs": {
+    "source_wav": "9c9db1aab7a3c06ddf62a71a142ebc07c05d0ea7f682c6f9f81a35533cb88142",
+    "source_midi": "ad417ec85d9ac7c290ca178598fa90058dd474fc9997dade4456c62397ca9607",
+    "original/score.musicxml": "af1e6a341cb42a7e3cfded79f288d111e402596b026402ea59b1f4052ad6671c",
+    "original/score.mid": "4256972ca9f1807c443898395a7a78741b772131e4a1b250e10bab343114b887",
+    "original/raw.mid": "8209e585394a670dc9b44b990272404050cdce7a95a21b0ebf99ef2191e4af33",
+    "original/timeline.json": "c3af6680781671113604312a16387c768747ecc157f7840386fbe1622e1d4803",
+    "frozen_final/score.musicxml": "b46d5319efee95561fed47827ef8523bf2d424d8f1b1ae6957f083b37ca31054",
+    "frozen_final/score.mid": "c2160b00998456433e40f1b3912bcec18780ad62718b8f8a0ee616de2800ebcd",
+    "frozen_final/raw.mid": "8209e585394a670dc9b44b990272404050cdce7a95a21b0ebf99ef2191e4af33",
+    "frozen_final/timeline.json": "13996d3d0ea3e088fa23620a324b8ebf6255c46c9b2e0127528dbbda3b1ec2d0"
+  },
+  "raw": {
+    "candidate_count": 15,
+    "candidates": [
+      {
+        "input_indices": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "center_seconds": 0.011363636363636364,
+        "pitches": [
+          48,
+          55,
+          60,
+          64
+        ],
+        "nearest_measure_index": 0,
+        "hypothesized_downbeat_seconds": 0.0,
+        "event_timing_errors_seconds": [
+          0.011363636363636364,
+          0.011363636363636364,
+          0.011363636363636364,
+          0.011363636363636364
+        ],
+        "near_hypothesized_downbeat": true
+      },
+      {
+        "input_indices": [
+          10,
+          11,
+          12,
+          13,
+          14
+        ],
+        "center_seconds": 1.9977272727272726,
+        "pitches": [
+          41,
+          53,
+          57,
+          60,
+          65
+        ],
+        "nearest_measure_index": 1,
+        "hypothesized_downbeat_seconds": 2.0,
+        "event_timing_errors_seconds": [
+          -0.002272727272727426,
+          -0.002272727272727426,
+          -0.002272727272727426,
+          -0.002272727272727426,
+          -0.002272727272727426
+        ],
+        "near_hypothesized_downbeat": true
+      },
+      {
+        "input_indices": [
+          21,
+          22,
+          23,
+          24,
+          25
+        ],
+        "center_seconds": 3.995454545454545,
+        "pitches": [
+          43,
+          55,
+          59,
+          62,
+          67
+        ],
+        "nearest_measure_index": 2,
+        "hypothesized_downbeat_seconds": 4.0,
+        "event_timing_errors_seconds": [
+          -0.015909090909091095,
+          -0.004545454545454852,
+          -0.004545454545454852,
+          -0.004545454545454852,
+          -0.004545454545454852
+        ],
+        "near_hypothesized_downbeat": true
+      },
+      {
+        "input_indices": [
+          32,
+          33,
+          34,
+          35,
+          36
+        ],
+        "center_seconds": 5.995454545454545,
+        "pitches": [
+          48,
+          55,
+          60,
+          64,
+          67
+        ],
+        "nearest_measure_index": 3,
+        "hypothesized_downbeat_seconds": 6.0,
+        "event_timing_errors_seconds": [
+          -0.004545454545454852,
+          -0.004545454545454852,
+          -0.004545454545454852,
+          -0.004545454545454852,
+          -0.004545454545454852
+        ],
+        "near_hypothesized_downbeat": true
+      },
+      {
+        "input_indices": [
+          42,
+          43,
+          44,
+          45,
+          46
+        ],
+        "center_seconds": 7.993181818181818,
+        "pitches": [
+          41,
+          53,
+          57,
+          60,
+          65
+        ],
+        "nearest_measure_index": 4,
+        "hypothesized_downbeat_seconds": 8.0,
+        "event_timing_errors_seconds": [
+          -0.006818181818181834,
+          -0.006818181818181834,
+          -0.006818181818181834,
+          -0.006818181818181834,
+          -0.006818181818181834
+        ],
+        "near_hypothesized_downbeat": true
+      },
+      {
+        "input_indices": [
+          52,
+          53,
+          54,
+          55,
+          56
+        ],
+        "center_seconds": 10.002272727272727,
+        "pitches": [
+          43,
+          55,
+          59,
+          62,
+          67
+        ],
+        "nearest_measure_index": 5,
+        "hypothesized_downbeat_seconds": 10.0,
+        "event_timing_errors_seconds": [
+          -0.009090909090909705,
+          0.002272727272726982,
+          0.002272727272726982,
+          0.002272727272726982,
+          0.002272727272726982
+        ],
+        "near_hypothesized_downbeat": true
+      },
+      {
+        "input_indices": [
+          62,
+          63,
+          64,
+          65,
+          66
+        ],
+        "center_seconds": 12.0,
+        "pitches": [
+          48,
+          55,
+          60,
+          64,
+          67
+        ],
+        "nearest_measure_index": 6,
+        "hypothesized_downbeat_seconds": 12.0,
+        "event_timing_errors_seconds": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "near_hypothesized_downbeat": true
+      },
+      {
+        "input_indices": [
+          72,
+          74,
+          75,
+          76,
+          77
+        ],
+        "center_seconds": 14.0,
+        "pitches": [
+          41,
+          53,
+          57,
+          60,
+          65
+        ],
+        "nearest_measure_index": 7,
+        "hypothesized_downbeat_seconds": 14.0,
+        "event_timing_errors_seconds": [
+          -0.013636363636363669,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "near_hypothesized_downbeat": true
+      },
+      {
+        "input_indices": [
+          82,
+          83,
+          84,
+          85,
+          86
+        ],
+        "center_seconds": 15.997727272727271,
+        "pitches": [
+          43,
+          55,
+          59,
+          62,
+          67
+        ],
+        "nearest_measure_index": 8,
+        "hypothesized_downbeat_seconds": 16.0,
+        "event_timing_errors_seconds": [
+          -0.013636363636363669,
+          -0.0022727272727287584,
+          -0.0022727272727287584,
+          -0.0022727272727287584,
+          -0.0022727272727287584
+        ],
+        "near_hypothesized_downbeat": true
+      },
+      {
+        "input_indices": [
+          92,
+          93,
+          94,
+          95,
+          96
+        ],
+        "center_seconds": 17.995454545454546,
+        "pitches": [
+          48,
+          55,
+          60,
+          64,
+          67
+        ],
+        "nearest_measure_index": 9,
+        "hypothesized_downbeat_seconds": 18.0,
+        "event_timing_errors_seconds": [
+          -0.004545454545453964,
+          -0.004545454545453964,
+          -0.004545454545453964,
+          -0.004545454545453964,
+          -0.004545454545453964
+        ],
+        "near_hypothesized_downbeat": true
+      },
+      {
+        "input_indices": [
+          101,
+          103,
+          104,
+          105,
+          106
+        ],
+        "center_seconds": 20.004545454545454,
+        "pitches": [
+          41,
+          53,
+          57,
+          60,
+          65
+        ],
+        "nearest_measure_index": 10,
+        "hypothesized_downbeat_seconds": 20.0,
+        "event_timing_errors_seconds": [
+          -0.0068181818181827225,
+          0.004545454545453964,
+          0.004545454545453964,
+          0.004545454545453964,
+          0.004545454545453964
+        ],
+        "near_hypothesized_downbeat": true
+      },
+      {
+        "input_indices": [
+          111,
+          113,
+          114,
+          115,
+          116
+        ],
+        "center_seconds": 22.004545454545454,
+        "pitches": [
+          43,
+          55,
+          59,
+          62,
+          67
+        ],
+        "nearest_measure_index": 11,
+        "hypothesized_downbeat_seconds": 22.0,
+        "event_timing_errors_seconds": [
+          -0.009090909090911481,
+          0.004545454545453964,
+          0.004545454545453964,
+          0.004545454545453964,
+          0.004545454545453964
+        ],
+        "near_hypothesized_downbeat": true
+      },
+      {
+        "input_indices": [
+          120,
+          121,
+          122,
+          124,
+          125
+        ],
+        "center_seconds": 23.99090909090909,
+        "pitches": [
+          48,
+          60,
+          67,
+          55,
+          64
+        ],
+        "nearest_measure_index": 12,
+        "hypothesized_downbeat_seconds": 24.0,
+        "event_timing_errors_seconds": [
+          -0.009090909090911481,
+          -0.009090909090911481,
+          -0.009090909090911481,
+          0.0022727272727252057,
+          0.0022727272727252057
+        ],
+        "near_hypothesized_downbeat": true
+      },
+      {
+        "input_indices": [
+          130,
+          132,
+          133,
+          134,
+          135
+        ],
+        "center_seconds": 26.0,
+        "pitches": [
+          41,
+          53,
+          57,
+          60,
+          65
+        ],
+        "nearest_measure_index": 13,
+        "hypothesized_downbeat_seconds": 26.0,
+        "event_timing_errors_seconds": [
+          -0.011363636363636687,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "near_hypothesized_downbeat": true
+      },
+      {
+        "input_indices": [
+          139,
+          140,
+          141,
+          143,
+          144
+        ],
+        "center_seconds": 27.99772727272727,
+        "pitches": [
+          43,
+          55,
+          62,
+          59,
+          67
+        ],
+        "nearest_measure_index": 14,
+        "hypothesized_downbeat_seconds": 28.0,
+        "event_timing_errors_seconds": [
+          -0.0022727272727287584,
+          -0.0022727272727287584,
+          -0.0022727272727287584,
+          0.009090909090907928,
+          0.009090909090907928
+        ],
+        "near_hypothesized_downbeat": true
+      }
+    ],
+    "median_chord_interval_seconds": 1.997727272727274,
+    "all_adjacent_intervals_near_measure": true,
+    "all_candidates_near_hypothesized_downbeat": true,
+    "configuration": {
+      "bass_inspection_ceiling": 72,
+      "cluster_window_seconds": 0.08,
+      "origin_seconds": 0.0,
+      "measure_seconds": 2.0,
+      "source": "case_specific_register_and_teacher_meter_hypothesis"
+    },
+    "audio_downbeat_detection_verified": false,
+    "actual_note_changes": 0
+  },
+  "old_score_on_teacher_grid": {
+    "candidate_count": 15,
+    "candidates": [
+      {
+        "input_indices": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "center_seconds": 0.04662,
+        "pitches": [
+          48,
+          55,
+          60,
+          64
+        ],
+        "nearest_measure_index": 0,
+        "hypothesized_downbeat_seconds": 0.0,
+        "event_timing_errors_seconds": [
+          0.04662,
+          0.04662,
+          0.04662,
+          0.04662
+        ],
+        "near_hypothesized_downbeat": true
+      },
+      {
+        "input_indices": [
+          10,
+          11,
+          12,
+          13,
+          14
+        ],
+        "center_seconds": 1.9627020000000002,
+        "pitches": [
+          41,
+          53,
+          57,
+          60,
+          65
+        ],
+        "nearest_measure_index": 1,
+        "hypothesized_downbeat_seconds": 2.0,
+        "event_timing_errors_seconds": [
+          -0.03729799999999983,
+          -0.03729799999999983,
+          -0.03729799999999983,
+          -0.03729799999999983,
+          -0.03729799999999983
+        ],
+        "near_hypothesized_downbeat": true
+      },
+      {
+        "input_indices": [
+          21,
+          22,
+          23,
+          24,
+          25
+        ],
+        "center_seconds": 4.004658,
+        "pitches": [
+          43,
+          55,
+          59,
+          62,
+          67
+        ],
+        "nearest_measure_index": 2,
+        "hypothesized_downbeat_seconds": 4.0,
+        "event_timing_errors_seconds": [
+          0.004658000000000051,
+          0.004658000000000051,
+          0.004658000000000051,
+          0.004658000000000051,
+          0.004658000000000051
+        ],
+        "near_hypothesized_downbeat": true
+      },
+      {
+        "input_indices": [
+          32,
+          33,
+          34,
+          35,
+          36
+        ],
+        "center_seconds": 6.048945000000001,
+        "pitches": [
+          48,
+          55,
+          60,
+          64,
+          67
+        ],
+        "nearest_measure_index": 3,
+        "hypothesized_downbeat_seconds": 6.0,
+        "event_timing_errors_seconds": [
+          0.04894500000000068,
+          0.04894500000000068,
+          0.04894500000000068,
+          0.04894500000000068,
+          0.04894500000000068
+        ],
+        "near_hypothesized_downbeat": true
+      },
+      {
+        "input_indices": [
+          42,
+          43,
+          44,
+          45,
+          46
+        ],
+        "center_seconds": 7.965027000000001,
+        "pitches": [
+          41,
+          53,
+          57,
+          60,
+          65
+        ],
+        "nearest_measure_index": 4,
+        "hypothesized_downbeat_seconds": 8.0,
+        "event_timing_errors_seconds": [
+          -0.03497299999999903,
+          -0.03497299999999903,
+          -0.03497299999999903,
+          -0.03497299999999903,
+          -0.03497299999999903
+        ],
+        "near_hypothesized_downbeat": true
+      },
+      {
+        "input_indices": [
+          52,
+          53,
+          54,
+          55,
+          56
+        ],
+        "center_seconds": 10.006983,
+        "pitches": [
+          43,
+          55,
+          59,
+          62,
+          67
+        ],
+        "nearest_measure_index": 5,
+        "hypothesized_downbeat_seconds": 10.0,
+        "event_timing_errors_seconds": [
+          0.0069829999999999615,
+          0.0069829999999999615,
+          0.0069829999999999615,
+          0.0069829999999999615,
+          0.0069829999999999615
+        ],
+        "near_hypothesized_downbeat": true
+      },
+      {
+        "input_indices": [
+          61,
+          62,
+          63,
+          64,
+          65
+        ],
+        "center_seconds": 12.05127,
+        "pitches": [
+          48,
+          55,
+          60,
+          64,
+          67
+        ],
+        "nearest_measure_index": 6,
+        "hypothesized_downbeat_seconds": 12.0,
+        "event_timing_errors_seconds": [
+          0.05127000000000059,
+          0.05127000000000059,
+          0.05127000000000059,
+          0.05127000000000059,
+          0.05127000000000059
+        ],
+        "near_hypothesized_downbeat": true
+      },
+      {
+        "input_indices": [
+          72,
+          73,
+          74,
+          75,
+          76
+        ],
+        "center_seconds": 13.967352000000002,
+        "pitches": [
+          41,
+          53,
+          57,
+          60,
+          65
+        ],
+        "nearest_measure_index": 7,
+        "hypothesized_downbeat_seconds": 14.0,
+        "event_timing_errors_seconds": [
+          -0.032647999999998234,
+          -0.032647999999998234,
+          -0.032647999999998234,
+          -0.032647999999998234,
+          -0.032647999999998234
+        ],
+        "near_hypothesized_downbeat": true
+      },
+      {
+        "input_indices": [
+          82,
+          83,
+          84,
+          85,
+          86
+        ],
+        "center_seconds": 16.009308,
+        "pitches": [
+          43,
+          55,
+          59,
+          62,
+          67
+        ],
+        "nearest_measure_index": 8,
+        "hypothesized_downbeat_seconds": 16.0,
+        "event_timing_errors_seconds": [
+          0.00930800000000076,
+          0.00930800000000076,
+          0.00930800000000076,
+          0.00930800000000076,
+          0.00930800000000076
+        ],
+        "near_hypothesized_downbeat": true
+      },
+      {
+        "input_indices": [
+          92,
+          93,
+          94,
+          95,
+          96
+        ],
+        "center_seconds": 18.053595,
+        "pitches": [
+          48,
+          55,
+          60,
+          64,
+          67
+        ],
+        "nearest_measure_index": 9,
+        "hypothesized_downbeat_seconds": 18.0,
+        "event_timing_errors_seconds": [
+          0.05359500000000139,
+          0.05359500000000139,
+          0.05359500000000139,
+          0.05359500000000139,
+          0.05359500000000139
+        ],
+        "near_hypothesized_downbeat": true
+      },
+      {
+        "input_indices": [
+          101,
+          102,
+          103,
+          104,
+          105
+        ],
+        "center_seconds": 19.969677,
+        "pitches": [
+          41,
+          53,
+          57,
+          60,
+          65
+        ],
+        "nearest_measure_index": 10,
+        "hypothesized_downbeat_seconds": 20.0,
+        "event_timing_errors_seconds": [
+          -0.03032299999999921,
+          -0.03032299999999921,
+          -0.03032299999999921,
+          -0.03032299999999921,
+          -0.03032299999999921
+        ],
+        "near_hypothesized_downbeat": true
+      },
+      {
+        "input_indices": [
+          111,
+          112,
+          113,
+          114,
+          115
+        ],
+        "center_seconds": 22.011633000000003,
+        "pitches": [
+          43,
+          55,
+          59,
+          62,
+          67
+        ],
+        "nearest_measure_index": 11,
+        "hypothesized_downbeat_seconds": 22.0,
+        "event_timing_errors_seconds": [
+          0.011633000000003335,
+          0.011633000000003335,
+          0.011633000000003335,
+          0.011633000000003335,
+          0.011633000000003335
+        ],
+        "near_hypothesized_downbeat": true
+      },
+      {
+        "input_indices": [
+          120,
+          121,
+          122
+        ],
+        "center_seconds": 23.927715000000003,
+        "pitches": [
+          48,
+          60,
+          67
+        ],
+        "nearest_measure_index": 12,
+        "hypothesized_downbeat_seconds": 24.0,
+        "event_timing_errors_seconds": [
+          -0.07228499999999727,
+          -0.07228499999999727,
+          -0.07228499999999727
+        ],
+        "near_hypothesized_downbeat": true
+      },
+      {
+        "input_indices": [
+          130,
+          131,
+          132,
+          133,
+          134
+        ],
+        "center_seconds": 25.972002000000003,
+        "pitches": [
+          41,
+          53,
+          57,
+          60,
+          65
+        ],
+        "nearest_measure_index": 13,
+        "hypothesized_downbeat_seconds": 26.0,
+        "event_timing_errors_seconds": [
+          -0.027997999999996637,
+          -0.027997999999996637,
+          -0.027997999999996637,
+          -0.027997999999996637,
+          -0.027997999999996637
+        ],
+        "near_hypothesized_downbeat": true
+      },
+      {
+        "input_indices": [
+          139,
+          140,
+          141,
+          142,
+          143
+        ],
+        "center_seconds": 28.013958000000002,
+        "pitches": [
+          43,
+          55,
+          59,
+          62,
+          67
+        ],
+        "nearest_measure_index": 14,
+        "hypothesized_downbeat_seconds": 28.0,
+        "event_timing_errors_seconds": [
+          0.013958000000002357,
+          0.013958000000002357,
+          0.013958000000002357,
+          0.013958000000002357,
+          0.013958000000002357
+        ],
+        "near_hypothesized_downbeat": true
+      }
+    ],
+    "median_chord_interval_seconds": 2.041955999999999,
+    "all_adjacent_intervals_near_measure": false,
+    "all_candidates_near_hypothesized_downbeat": true,
+    "configuration": {
+      "bass_inspection_ceiling": 72,
+      "cluster_window_seconds": 0.08,
+      "origin_seconds": 0.0,
+      "measure_seconds": 2.0,
+      "source": "case_specific_register_and_teacher_meter_hypothesis"
+    },
+    "audio_downbeat_detection_verified": false,
+    "actual_note_changes": 0
+  },
+  "latest_score_on_teacher_grid": {
+    "candidate_count": 15,
+    "candidates": [
+      {
+        "input_indices": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "center_seconds": 0.038636363636363635,
+        "pitches": [
+          48,
+          55,
+          60,
+          64
+        ],
+        "nearest_measure_index": 0,
+        "hypothesized_downbeat_seconds": 0.0,
+        "event_timing_errors_seconds": [
+          0.038636363636363635,
+          0.038636363636363635,
+          0.038636363636363635,
+          0.038636363636363635
+        ],
+        "near_hypothesized_downbeat": true
+      },
+      {
+        "input_indices": [
+          10,
+          11,
+          12,
+          13,
+          14
+        ],
+        "center_seconds": 2.0386363636363636,
+        "pitches": [
+          41,
+          53,
+          57,
+          60,
+          65
+        ],
+        "nearest_measure_index": 1,
+        "hypothesized_downbeat_seconds": 2.0,
+        "event_timing_errors_seconds": [
+          0.03863636363636358,
+          0.03863636363636358,
+          0.03863636363636358,
+          0.03863636363636358,
+          0.03863636363636358
+        ],
+        "near_hypothesized_downbeat": true
+      },
+      {
+        "input_indices": [
+          21,
+          22,
+          23,
+          24,
+          25
+        ],
+        "center_seconds": 4.038636363636363,
+        "pitches": [
+          43,
+          55,
+          59,
+          62,
+          67
+        ],
+        "nearest_measure_index": 2,
+        "hypothesized_downbeat_seconds": 4.0,
+        "event_timing_errors_seconds": [
+          0.038636363636363136,
+          0.038636363636363136,
+          0.038636363636363136,
+          0.038636363636363136,
+          0.038636363636363136
+        ],
+        "near_hypothesized_downbeat": true
+      },
+      {
+        "input_indices": [
+          32,
+          33,
+          34,
+          35,
+          36
+        ],
+        "center_seconds": 6.038636363636363,
+        "pitches": [
+          48,
+          55,
+          60,
+          64,
+          67
+        ],
+        "nearest_measure_index": 3,
+        "hypothesized_downbeat_seconds": 6.0,
+        "event_timing_errors_seconds": [
+          0.038636363636363136,
+          0.038636363636363136,
+          0.038636363636363136,
+          0.038636363636363136,
+          0.038636363636363136
+        ],
+        "near_hypothesized_downbeat": true
+      },
+      {
+        "input_indices": [
+          42,
+          43,
+          44,
+          45,
+          46
+        ],
+        "center_seconds": 8.038636363636364,
+        "pitches": [
+          41,
+          53,
+          57,
+          60,
+          65
+        ],
+        "nearest_measure_index": 4,
+        "hypothesized_downbeat_seconds": 8.0,
+        "event_timing_errors_seconds": [
+          0.038636363636364024,
+          0.038636363636364024,
+          0.038636363636364024,
+          0.038636363636364024,
+          0.038636363636364024
+        ],
+        "near_hypothesized_downbeat": true
+      },
+      {
+        "input_indices": [
+          52,
+          53,
+          54,
+          55,
+          56
+        ],
+        "center_seconds": 10.038636363636364,
+        "pitches": [
+          43,
+          55,
+          59,
+          62,
+          67
+        ],
+        "nearest_measure_index": 5,
+        "hypothesized_downbeat_seconds": 10.0,
+        "event_timing_errors_seconds": [
+          0.038636363636364024,
+          0.038636363636364024,
+          0.038636363636364024,
+          0.038636363636364024,
+          0.038636363636364024
+        ],
+        "near_hypothesized_downbeat": true
+      },
+      {
+        "input_indices": [
+          61,
+          62,
+          63,
+          64,
+          65
+        ],
+        "center_seconds": 12.038636363636362,
+        "pitches": [
+          48,
+          55,
+          60,
+          64,
+          67
+        ],
+        "nearest_measure_index": 6,
+        "hypothesized_downbeat_seconds": 12.0,
+        "event_timing_errors_seconds": [
+          0.03863636363636225,
+          0.03863636363636225,
+          0.03863636363636225,
+          0.03863636363636225,
+          0.03863636363636225
+        ],
+        "near_hypothesized_downbeat": true
+      },
+      {
+        "input_indices": [
+          72,
+          73,
+          74,
+          75,
+          76
+        ],
+        "center_seconds": 14.038636363636362,
+        "pitches": [
+          41,
+          53,
+          57,
+          60,
+          65
+        ],
+        "nearest_measure_index": 7,
+        "hypothesized_downbeat_seconds": 14.0,
+        "event_timing_errors_seconds": [
+          0.03863636363636225,
+          0.03863636363636225,
+          0.03863636363636225,
+          0.03863636363636225,
+          0.03863636363636225
+        ],
+        "near_hypothesized_downbeat": true
+      },
+      {
+        "input_indices": [
+          82,
+          83,
+          84,
+          85,
+          86
+        ],
+        "center_seconds": 16.038636363636364,
+        "pitches": [
+          43,
+          55,
+          59,
+          62,
+          67
+        ],
+        "nearest_measure_index": 8,
+        "hypothesized_downbeat_seconds": 16.0,
+        "event_timing_errors_seconds": [
+          0.038636363636364024,
+          0.038636363636364024,
+          0.038636363636364024,
+          0.038636363636364024,
+          0.038636363636364024
+        ],
+        "near_hypothesized_downbeat": true
+      },
+      {
+        "input_indices": [
+          91,
+          92,
+          93,
+          94,
+          95
+        ],
+        "center_seconds": 18.038636363636364,
+        "pitches": [
+          48,
+          55,
+          60,
+          64,
+          67
+        ],
+        "nearest_measure_index": 9,
+        "hypothesized_downbeat_seconds": 18.0,
+        "event_timing_errors_seconds": [
+          0.038636363636364024,
+          0.038636363636364024,
+          0.038636363636364024,
+          0.038636363636364024,
+          0.038636363636364024
+        ],
+        "near_hypothesized_downbeat": true
+      },
+      {
+        "input_indices": [
+          101,
+          102,
+          103,
+          104,
+          105
+        ],
+        "center_seconds": 20.038636363636364,
+        "pitches": [
+          41,
+          53,
+          57,
+          60,
+          65
+        ],
+        "nearest_measure_index": 10,
+        "hypothesized_downbeat_seconds": 20.0,
+        "event_timing_errors_seconds": [
+          0.038636363636364024,
+          0.038636363636364024,
+          0.038636363636364024,
+          0.038636363636364024,
+          0.038636363636364024
+        ],
+        "near_hypothesized_downbeat": true
+      },
+      {
+        "input_indices": [
+          111,
+          112,
+          113,
+          114,
+          115
+        ],
+        "center_seconds": 22.036363636363635,
+        "pitches": [
+          43,
+          55,
+          59,
+          62,
+          67
+        ],
+        "nearest_measure_index": 11,
+        "hypothesized_downbeat_seconds": 22.0,
+        "event_timing_errors_seconds": [
+          0.036363636363635266,
+          0.036363636363635266,
+          0.036363636363635266,
+          0.036363636363635266,
+          0.036363636363635266
+        ],
+        "near_hypothesized_downbeat": true
+      },
+      {
+        "input_indices": [
+          120,
+          121,
+          122,
+          123,
+          124
+        ],
+        "center_seconds": 24.036363636363635,
+        "pitches": [
+          48,
+          55,
+          60,
+          64,
+          67
+        ],
+        "nearest_measure_index": 12,
+        "hypothesized_downbeat_seconds": 24.0,
+        "event_timing_errors_seconds": [
+          0.036363636363635266,
+          0.036363636363635266,
+          0.036363636363635266,
+          0.036363636363635266,
+          0.036363636363635266
+        ],
+        "near_hypothesized_downbeat": true
+      },
+      {
+        "input_indices": [
+          130,
+          131,
+          132,
+          133,
+          134
+        ],
+        "center_seconds": 26.036363636363635,
+        "pitches": [
+          41,
+          53,
+          57,
+          60,
+          65
+        ],
+        "nearest_measure_index": 13,
+        "hypothesized_downbeat_seconds": 26.0,
+        "event_timing_errors_seconds": [
+          0.036363636363635266,
+          0.036363636363635266,
+          0.036363636363635266,
+          0.036363636363635266,
+          0.036363636363635266
+        ],
+        "near_hypothesized_downbeat": true
+      },
+      {
+        "input_indices": [
+          139,
+          140,
+          141,
+          142,
+          143
+        ],
+        "center_seconds": 28.036363636363635,
+        "pitches": [
+          43,
+          55,
+          59,
+          62,
+          67
+        ],
+        "nearest_measure_index": 14,
+        "hypothesized_downbeat_seconds": 28.0,
+        "event_timing_errors_seconds": [
+          0.036363636363635266,
+          0.036363636363635266,
+          0.036363636363635266,
+          0.036363636363635266,
+          0.036363636363635266
+        ],
+        "near_hypothesized_downbeat": true
+      }
+    ],
+    "median_chord_interval_seconds": 2.0,
+    "all_adjacent_intervals_near_measure": true,
+    "all_candidates_near_hypothesized_downbeat": true,
+    "configuration": {
+      "bass_inspection_ceiling": 72,
+      "cluster_window_seconds": 0.08,
+      "origin_seconds": 0.0,
+      "measure_seconds": 2.0,
+      "source": "case_specific_register_and_teacher_meter_hypothesis"
+    },
+    "audio_downbeat_detection_verified": false,
+    "actual_note_changes": 0
+  },
+  "limitation": "comparison against proposed 2/4 at 60 BPM; not automatic meter proof"
+}

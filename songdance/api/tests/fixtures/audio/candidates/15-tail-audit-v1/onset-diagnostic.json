@@ -1,0 +1,3094 @@
+{
+  "production_eligible": false,
+  "actual_note_changes": 0,
+  "reference_labels_evaluation_only": true,
+  "events": [
+    {
+      "raw_index": 0,
+      "event": {
+        "pitch": 60,
+        "start_sec": 0.011363636363636364,
+        "end_sec": 0.24318181818181817,
+        "velocity": 97
+      },
+      "reference_matched": true,
+      "independent_onset": false,
+      "decay_fit_error": null,
+      "transient_fit_error": null
+    },
+    {
+      "raw_index": 1,
+      "event": {
+        "pitch": 88,
+        "start_sec": 0.03409090909090909,
+        "end_sec": 0.2318181818181818,
+        "velocity": 37
+      },
+      "reference_matched": false,
+      "independent_onset": false,
+      "decay_fit_error": null,
+      "transient_fit_error": null
+    },
+    {
+      "raw_index": 2,
+      "event": {
+        "pitch": 72,
+        "start_sec": 0.24318181818181817,
+        "end_sec": 0.475,
+        "velocity": 50
+      },
+      "reference_matched": false,
+      "independent_onset": true,
+      "decay_fit_error": null,
+      "transient_fit_error": null
+    },
+    {
+      "raw_index": 3,
+      "event": {
+        "pitch": 88,
+        "start_sec": 0.24318181818181817,
+        "end_sec": 0.4295454545454545,
+        "velocity": 49
+      },
+      "reference_matched": false,
+      "independent_onset": true,
+      "decay_fit_error": null,
+      "transient_fit_error": null
+    },
+    {
+      "raw_index": 4,
+      "event": {
+        "pitch": 60,
+        "start_sec": 0.2545454545454545,
+        "end_sec": 0.5,
+        "velocity": 96
+      },
+      "reference_matched": true,
+      "independent_onset": false,
+      "decay_fit_error": null,
+      "transient_fit_error": null
+    },
+    {
+      "raw_index": 5,
+      "event": {
+        "pitch": 62,
+        "start_sec": 0.4886363636363636,
+        "end_sec": 0.7545454545454545,
+        "velocity": 91
+      },
+      "reference_matched": true,
+      "independent_onset": true,
+      "decay_fit_error": null,
+      "transient_fit_error": null
+    },
+    {
+      "raw_index": 6,
+      "event": {
+        "pitch": 60,
+        "start_sec": 0.5,
+        "end_sec": 0.7545454545454545,
+        "velocity": 81
+      },
+      "reference_matched": false,
+      "independent_onset": false,
+      "decay_fit_error": 0.013217,
+      "transient_fit_error": 0.248117
+    },
+    {
+      "raw_index": 7,
+      "event": {
+        "pitch": 74,
+        "start_sec": 0.7431818181818182,
+        "end_sec": 0.9522727272727273,
+        "velocity": 43
+      },
+      "reference_matched": false,
+      "independent_onset": true,
+      "decay_fit_error": null,
+      "transient_fit_error": null
+    },
+    {
+      "raw_index": 8,
+      "event": {
+        "pitch": 60,
+        "start_sec": 0.7545454545454545,
+        "end_sec": 1.15,
+        "velocity": 63
+      },
+      "reference_matched": false,
+      "independent_onset": false,
+      "decay_fit_error": 0.019076,
+      "transient_fit_error": 0.204112
+    },
+    {
+      "raw_index": 9,
+      "event": {
+        "pitch": 62,
+        "start_sec": 0.7545454545454545,
+        "end_sec": 1.684090909090909,
+        "velocity": 72
+      },
+      "reference_matched": true,
+      "independent_onset": false,
+      "decay_fit_error": 2.327436,
+      "transient_fit_error": 2.324525
+    },
+    {
+      "raw_index": 10,
+      "event": {
+        "pitch": 64,
+        "start_sec": 0.9977272727272727,
+        "end_sec": 1.2545454545454544,
+        "velocity": 86
+      },
+      "reference_matched": true,
+      "independent_onset": true,
+      "decay_fit_error": null,
+      "transient_fit_error": null
+    },
+    {
+      "raw_index": 11,
+      "event": {
+        "pitch": 76,
+        "start_sec": 0.9977272727272727,
+        "end_sec": 1.2431818181818182,
+        "velocity": 37
+      },
+      "reference_matched": false,
+      "independent_onset": true,
+      "decay_fit_error": null,
+      "transient_fit_error": null
+    },
+    {
+      "raw_index": 12,
+      "event": {
+        "pitch": 76,
+        "start_sec": 1.2431818181818182,
+        "end_sec": 1.4749999999999999,
+        "velocity": 45
+      },
+      "reference_matched": false,
+      "independent_onset": true,
+      "decay_fit_error": null,
+      "transient_fit_error": null
+    },
+    {
+      "raw_index": 13,
+      "event": {
+        "pitch": 64,
+        "start_sec": 1.2545454545454544,
+        "end_sec": 1.4977272727272726,
+        "velocity": 92
+      },
+      "reference_matched": true,
+      "independent_onset": false,
+      "decay_fit_error": 2.111812,
+      "transient_fit_error": 2.109297
+    },
+    {
+      "raw_index": 14,
+      "event": {
+        "pitch": 64,
+        "start_sec": 1.4977272727272726,
+        "end_sec": 2.1954545454545453,
+        "velocity": 83
+      },
+      "reference_matched": false,
+      "independent_onset": false,
+      "decay_fit_error": 0.022311,
+      "transient_fit_error": 0.014881
+    },
+    {
+      "raw_index": 15,
+      "event": {
+        "pitch": 67,
+        "start_sec": 1.4977272727272726,
+        "end_sec": 1.7522727272727272,
+        "velocity": 91
+      },
+      "reference_matched": true,
+      "independent_onset": true,
+      "decay_fit_error": null,
+      "transient_fit_error": null
+    },
+    {
+      "raw_index": 16,
+      "event": {
+        "pitch": 79,
+        "start_sec": 1.4977272727272726,
+        "end_sec": 1.7522727272727272,
+        "velocity": 46
+      },
+      "reference_matched": false,
+      "independent_onset": true,
+      "decay_fit_error": null,
+      "transient_fit_error": null
+    },
+    {
+      "raw_index": 17,
+      "event": {
+        "pitch": 67,
+        "start_sec": 1.7522727272727272,
+        "end_sec": 2.6704545454545454,
+        "velocity": 83
+      },
+      "reference_matched": true,
+      "independent_onset": true,
+      "decay_fit_error": null,
+      "transient_fit_error": null
+    },
+    {
+      "raw_index": 18,
+      "event": {
+        "pitch": 79,
+        "start_sec": 1.7522727272727272,
+        "end_sec": 1.9977272727272726,
+        "velocity": 56
+      },
+      "reference_matched": false,
+      "independent_onset": true,
+      "decay_fit_error": null,
+      "transient_fit_error": null
+    },
+    {
+      "raw_index": 19,
+      "event": {
+        "pitch": 60,
+        "start_sec": 1.9977272727272726,
+        "end_sec": 2.2545454545454544,
+        "velocity": 98
+      },
+      "reference_matched": true,
+      "independent_onset": true,
+      "decay_fit_error": null,
+      "transient_fit_error": null
+    },
+    {
+      "raw_index": 20,
+      "event": {
+        "pitch": 79,
+        "start_sec": 1.9977272727272726,
+        "end_sec": 2.2409090909090907,
+        "velocity": 53
+      },
+      "reference_matched": false,
+      "independent_onset": false,
+      "decay_fit_error": 0.555296,
+      "transient_fit_error": null
+    },
+    {
+      "raw_index": 21,
+      "event": {
+        "pitch": 79,
+        "start_sec": 2.2409090909090907,
+        "end_sec": 2.4386363636363635,
+        "velocity": 48
+      },
+      "reference_matched": false,
+      "independent_onset": false,
+      "decay_fit_error": 0.952912,
+      "transient_fit_error": null
+    },
+    {
+      "raw_index": 22,
+      "event": {
+        "pitch": 60,
+        "start_sec": 2.2545454545454544,
+        "end_sec": 3.1477272727272725,
+        "velocity": 72
+      },
+      "reference_matched": true,
+      "independent_onset": false,
+      "decay_fit_error": 2.101251,
+      "transient_fit_error": null
+    },
+    {
+      "raw_index": 23,
+      "event": {
+        "pitch": 62,
+        "start_sec": 2.4977272727272726,
+        "end_sec": 2.752272727272727,
+        "velocity": 95
+      },
+      "reference_matched": true,
+      "independent_onset": true,
+      "decay_fit_error": null,
+      "transient_fit_error": null
+    },
+    {
+      "raw_index": 24,
+      "event": {
+        "pitch": 74,
+        "start_sec": 2.7409090909090907,
+        "end_sec": 2.9386363636363635,
+        "velocity": 39
+      },
+      "reference_matched": false,
+      "independent_onset": true,
+      "decay_fit_error": null,
+      "transient_fit_error": null
+    },
+    {
+      "raw_index": 25,
+      "event": {
+        "pitch": 62,
+        "start_sec": 2.752272727272727,
+        "end_sec": 3.6818181818181817,
+        "velocity": 71
+      },
+      "reference_matched": true,
+      "independent_onset": false,
+      "decay_fit_error": 2.327051,
+      "transient_fit_error": 2.324345
+    },
+    {
+      "raw_index": 26,
+      "event": {
+        "pitch": 64,
+        "start_sec": 2.9977272727272726,
+        "end_sec": 3.252272727272727,
+        "velocity": 85
+      },
+      "reference_matched": true,
+      "independent_onset": true,
+      "decay_fit_error": null,
+      "transient_fit_error": null
+    },
+    {
+      "raw_index": 27,
+      "event": {
+        "pitch": 76,
+        "start_sec": 3.2409090909090907,
+        "end_sec": 3.484090909090909,
+        "velocity": 43
+      },
+      "reference_matched": false,
+      "independent_onset": true,
+      "decay_fit_error": null,
+      "transient_fit_error": null
+    },
+    {
+      "raw_index": 28,
+      "event": {
+        "pitch": 64,
+        "start_sec": 3.252272727272727,
+        "end_sec": 4.193181818181818,
+        "velocity": 85
+      },
+      "reference_matched": true,
+      "independent_onset": false,
+      "decay_fit_error": 2.111235,
+      "transient_fit_error": 2.109863
+    },
+    {
+      "raw_index": 29,
+      "event": {
+        "pitch": 79,
+        "start_sec": 3.495454545454545,
+        "end_sec": 3.752272727272727,
+        "velocity": 44
+      },
+      "reference_matched": false,
+      "independent_onset": true,
+      "decay_fit_error": null,
+      "transient_fit_error": null
+    },
+    {
+      "raw_index": 30,
+      "event": {
+        "pitch": 67,
+        "start_sec": 3.506818181818182,
+        "end_sec": 3.752272727272727,
+        "velocity": 91
+      },
+      "reference_matched": true,
+      "independent_onset": true,
+      "decay_fit_error": null,
+      "transient_fit_error": null
+    },
+    {
+      "raw_index": 31,
+      "event": {
+        "pitch": 67,
+        "start_sec": 3.752272727272727,
+        "end_sec": 4.670454545454545,
+        "velocity": 83
+      },
+      "reference_matched": true,
+      "independent_onset": true,
+      "decay_fit_error": null,
+      "transient_fit_error": null
+    },
+    {
+      "raw_index": 32,
+      "event": {
+        "pitch": 79,
+        "start_sec": 3.752272727272727,
+        "end_sec": 3.995454545454545,
+        "velocity": 56
+      },
+      "reference_matched": false,
+      "independent_onset": true,
+      "decay_fit_error": null,
+      "transient_fit_error": null
+    },
+    {
+      "raw_index": 33,
+      "event": {
+        "pitch": 60,
+        "start_sec": 3.995454545454545,
+        "end_sec": 4.252272727272727,
+        "velocity": 98
+      },
+      "reference_matched": true,
+      "independent_onset": true,
+      "decay_fit_error": null,
+      "transient_fit_error": null
+    },
+    {
+      "raw_index": 34,
+      "event": {
+        "pitch": 79,
+        "start_sec": 3.995454545454545,
+        "end_sec": 4.24090909090909,
+        "velocity": 54
+      },
+      "reference_matched": false,
+      "independent_onset": false,
+      "decay_fit_error": 0.554141,
+      "transient_fit_error": null
+    },
+    {
+      "raw_index": 35,
+      "event": {
+        "pitch": 79,
+        "start_sec": 4.24090909090909,
+        "end_sec": 4.425,
+        "velocity": 48
+      },
+      "reference_matched": false,
+      "independent_onset": false,
+      "decay_fit_error": 0.952932,
+      "transient_fit_error": null
+    },
+    {
+      "raw_index": 36,
+      "event": {
+        "pitch": 60,
+        "start_sec": 4.252272727272727,
+        "end_sec": 5.156818181818181,
+        "velocity": 71
+      },
+      "reference_matched": true,
+      "independent_onset": false,
+      "decay_fit_error": 2.100925,
+      "transient_fit_error": null
+    },
+    {
+      "raw_index": 37,
+      "event": {
+        "pitch": 62,
+        "start_sec": 4.495454545454545,
+        "end_sec": 4.75,
+        "velocity": 95
+      },
+      "reference_matched": true,
+      "independent_onset": true,
+      "decay_fit_error": null,
+      "transient_fit_error": null
+    },
+    {
+      "raw_index": 38,
+      "event": {
+        "pitch": 74,
+        "start_sec": 4.738636363636363,
+        "end_sec": 4.959090909090909,
+        "velocity": 42
+      },
+      "reference_matched": false,
+      "independent_onset": true,
+      "decay_fit_error": null,
+      "transient_fit_error": null
+    },
+    {
+      "raw_index": 39,
+      "event": {
+        "pitch": 62,
+        "start_sec": 4.75,
+        "end_sec": 5.006818181818182,
+        "velocity": 89
+      },
+      "reference_matched": true,
+      "independent_onset": false,
+      "decay_fit_error": 2.326306,
+      "transient_fit_error": 2.323569
+    },
+    {
+      "raw_index": 40,
+      "event": {
+        "pitch": 62,
+        "start_sec": 5.006818181818182,
+        "end_sec": 5.679545454545455,
+        "velocity": 64
+      },
+      "reference_matched": false,
+      "independent_onset": false,
+      "decay_fit_error": 0.01597,
+      "transient_fit_error": 0.021675
+    },
+    {
+      "raw_index": 41,
+      "event": {
+        "pitch": 64,
+        "start_sec": 5.006818181818182,
+        "end_sec": 5.25,
+        "velocity": 85
+      },
+      "reference_matched": true,
+      "independent_onset": true,
+      "decay_fit_error": null,
+      "transient_fit_error": null
+    },
+    {
+      "raw_index": 42,
+      "event": {
+        "pitch": 64,
+        "start_sec": 5.25,
+        "end_sec": 5.506818181818182,
+        "velocity": 91
+      },
+      "reference_matched": true,
+      "independent_onset": false,
+      "decay_fit_error": 2.110761,
+      "transient_fit_error": 2.10989
+    },
+    {
+      "raw_index": 43,
+      "event": {
+        "pitch": 76,
+        "start_sec": 5.25,
+        "end_sec": 5.493181818181818,
+        "velocity": 43
+      },
+      "reference_matched": false,
+      "independent_onset": true,
+      "decay_fit_error": null,
+      "transient_fit_error": null
+    },
+    {
+      "raw_index": 44,
+      "event": {
+        "pitch": 79,
+        "start_sec": 5.493181818181818,
+        "end_sec": 5.75,
+        "velocity": 44
+      },
+      "reference_matched": false,
+      "independent_onset": true,
+      "decay_fit_error": null,
+      "transient_fit_error": null
+    },
+    {
+      "raw_index": 45,
+      "event": {
+        "pitch": 64,
+        "start_sec": 5.506818181818182,
+        "end_sec": 6.1909090909090905,
+        "velocity": 82
+      },
+      "reference_matched": false,
+      "independent_onset": false,
+      "decay_fit_error": 0.012448,
+      "transient_fit_error": 0.013267
+    },
+    {
+      "raw_index": 46,
+      "event": {
+        "pitch": 67,
+        "start_sec": 5.506818181818182,
+        "end_sec": 5.75,
+        "velocity": 91
+      },
+      "reference_matched": true,
+      "independent_onset": true,
+      "decay_fit_error": null,
+      "transient_fit_error": null
+    },
+    {
+      "raw_index": 47,
+      "event": {
+        "pitch": 67,
+        "start_sec": 5.75,
+        "end_sec": 6.679545454545454,
+        "velocity": 83
+      },
+      "reference_matched": true,
+      "independent_onset": true,
+      "decay_fit_error": null,
+      "transient_fit_error": null
+    },
+    {
+      "raw_index": 48,
+      "event": {
+        "pitch": 79,
+        "start_sec": 5.75,
+        "end_sec": 5.995454545454545,
+        "velocity": 57
+      },
+      "reference_matched": false,
+      "independent_onset": true,
+      "decay_fit_error": null,
+      "transient_fit_error": null
+    },
+    {
+      "raw_index": 49,
+      "event": {
+        "pitch": 60,
+        "start_sec": 5.995454545454545,
+        "end_sec": 6.25,
+        "velocity": 98
+      },
+      "reference_matched": true,
+      "independent_onset": true,
+      "decay_fit_error": null,
+      "transient_fit_error": null
+    },
+    {
+      "raw_index": 50,
+      "event": {
+        "pitch": 79,
+        "start_sec": 5.995454545454545,
+        "end_sec": 6.238636363636363,
+        "velocity": 54
+      },
+      "reference_matched": false,
+      "independent_onset": false,
+      "decay_fit_error": 0.553798,
+      "transient_fit_error": null
+    },
+    {
+      "raw_index": 51,
+      "event": {
+        "pitch": 79,
+        "start_sec": 6.238636363636363,
+        "end_sec": 6.447727272727272,
+        "velocity": 48
+      },
+      "reference_matched": false,
+      "independent_onset": false,
+      "decay_fit_error": 0.951096,
+      "transient_fit_error": null
+    },
+    {
+      "raw_index": 52,
+      "event": {
+        "pitch": 60,
+        "start_sec": 6.25,
+        "end_sec": 7.154545454545454,
+        "velocity": 72
+      },
+      "reference_matched": true,
+      "independent_onset": false,
+      "decay_fit_error": 2.100659,
+      "transient_fit_error": null
+    },
+    {
+      "raw_index": 53,
+      "event": {
+        "pitch": 62,
+        "start_sec": 6.493181818181818,
+        "end_sec": 6.75,
+        "velocity": 97
+      },
+      "reference_matched": true,
+      "independent_onset": true,
+      "decay_fit_error": null,
+      "transient_fit_error": null
+    },
+    {
+      "raw_index": 54,
+      "event": {
+        "pitch": 62,
+        "start_sec": 6.75,
+        "end_sec": 7.004545454545454,
+        "velocity": 89
+      },
+      "reference_matched": true,
+      "independent_onset": false,
+      "decay_fit_error": 2.326325,
+      "transient_fit_error": 2.322821
+    },
+    {
+      "raw_index": 55,
+      "event": {
+        "pitch": 74,
+        "start_sec": 6.75,
+        "end_sec": 6.959090909090909,
+        "velocity": 42
+      },
+      "reference_matched": false,
+      "independent_onset": true,
+      "decay_fit_error": null,
+      "transient_fit_error": null
+    },
+    {
+      "raw_index": 56,
+      "event": {
+        "pitch": 62,
+        "start_sec": 7.004545454545454,
+        "end_sec": 7.677272727272727,
+        "velocity": 64
+      },
+      "reference_matched": false,
+      "independent_onset": false,
+      "decay_fit_error": 0.015097,
+      "transient_fit_error": 0.028221
+    },
+    {
+      "raw_index": 57,
+      "event": {
+        "pitch": 64,
+        "start_sec": 7.004545454545454,
+        "end_sec": 7.247727272727272,
+        "velocity": 85
+      },
+      "reference_matched": true,
+      "independent_onset": true,
+      "decay_fit_error": null,
+      "transient_fit_error": null
+    },
+    {
+      "raw_index": 58,
+      "event": {
+        "pitch": 64,
+        "start_sec": 7.247727272727272,
+        "end_sec": 7.504545454545454,
+        "velocity": 91
+      },
+      "reference_matched": true,
+      "independent_onset": false,
+      "decay_fit_error": 2.11042,
+      "transient_fit_error": 2.11153
+    },
+    {
+      "raw_index": 59,
+      "event": {
+        "pitch": 76,
+        "start_sec": 7.247727272727272,
+        "end_sec": 7.4795454545454545,
+        "velocity": 43
+      },
+      "reference_matched": false,
+      "independent_onset": true,
+      "decay_fit_error": null,
+      "transient_fit_error": null
+    },
+    {
+      "raw_index": 60,
+      "event": {
+        "pitch": 79,
+        "start_sec": 7.493181818181818,
+        "end_sec": 7.747727272727272,
+        "velocity": 43
+      },
+      "reference_matched": false,
+      "independent_onset": true,
+      "decay_fit_error": null,
+      "transient_fit_error": null
+    },
+    {
+      "raw_index": 61,
+      "event": {
+        "pitch": 64,
+        "start_sec": 7.504545454545454,
+        "end_sec": 8.190909090909091,
+        "velocity": 82
+      },
+      "reference_matched": false,
+      "independent_onset": false,
+      "decay_fit_error": 0.012999,
+      "transient_fit_error": 0.014565
+    },
+    {
+      "raw_index": 62,
+      "event": {
+        "pitch": 67,
+        "start_sec": 7.504545454545454,
+        "end_sec": 7.747727272727272,
+        "velocity": 91
+      },
+      "reference_matched": true,
+      "independent_onset": true,
+      "decay_fit_error": null,
+      "transient_fit_error": null
+    },
+    {
+      "raw_index": 63,
+      "event": {
+        "pitch": 67,
+        "start_sec": 7.747727272727272,
+        "end_sec": 8.677272727272728,
+        "velocity": 83
+      },
+      "reference_matched": true,
+      "independent_onset": true,
+      "decay_fit_error": null,
+      "transient_fit_error": null
+    },
+    {
+      "raw_index": 64,
+      "event": {
+        "pitch": 79,
+        "start_sec": 7.747727272727272,
+        "end_sec": 7.993181818181818,
+        "velocity": 54
+      },
+      "reference_matched": false,
+      "independent_onset": true,
+      "decay_fit_error": null,
+      "transient_fit_error": null
+    },
+    {
+      "raw_index": 65,
+      "event": {
+        "pitch": 60,
+        "start_sec": 7.993181818181818,
+        "end_sec": 8.247727272727273,
+        "velocity": 97
+      },
+      "reference_matched": true,
+      "independent_onset": true,
+      "decay_fit_error": null,
+      "transient_fit_error": null
+    },
+    {
+      "raw_index": 66,
+      "event": {
+        "pitch": 79,
+        "start_sec": 7.993181818181818,
+        "end_sec": 8.247727272727273,
+        "velocity": 52
+      },
+      "reference_matched": false,
+      "independent_onset": false,
+      "decay_fit_error": 0.550664,
+      "transient_fit_error": null
+    },
+    {
+      "raw_index": 67,
+      "event": {
+        "pitch": 60,
+        "start_sec": 8.247727272727273,
+        "end_sec": 8.504545454545454,
+        "velocity": 95
+      },
+      "reference_matched": true,
+      "independent_onset": false,
+      "decay_fit_error": 2.100413,
+      "transient_fit_error": null
+    },
+    {
+      "raw_index": 68,
+      "event": {
+        "pitch": 79,
+        "start_sec": 8.247727272727273,
+        "end_sec": 8.456818181818182,
+        "velocity": 49
+      },
+      "reference_matched": false,
+      "independent_onset": false,
+      "decay_fit_error": 0.955425,
+      "transient_fit_error": null
+    },
+    {
+      "raw_index": 69,
+      "event": {
+        "pitch": 60,
+        "start_sec": 8.504545454545454,
+        "end_sec": 9.154545454545454,
+        "velocity": 62
+      },
+      "reference_matched": false,
+      "independent_onset": false,
+      "decay_fit_error": 0.009184,
+      "transient_fit_error": 0.004576
+    },
+    {
+      "raw_index": 70,
+      "event": {
+        "pitch": 62,
+        "start_sec": 8.504545454545454,
+        "end_sec": 8.747727272727273,
+        "velocity": 96
+      },
+      "reference_matched": true,
+      "independent_onset": true,
+      "decay_fit_error": null,
+      "transient_fit_error": null
+    },
+    {
+      "raw_index": 71,
+      "event": {
+        "pitch": 62,
+        "start_sec": 8.747727272727273,
+        "end_sec": 9.002272727272727,
+        "velocity": 89
+      },
+      "reference_matched": true,
+      "independent_onset": false,
+      "decay_fit_error": 2.325701,
+      "transient_fit_error": 2.323651
+    },
+    {
+      "raw_index": 72,
+      "event": {
+        "pitch": 74,
+        "start_sec": 8.747727272727273,
+        "end_sec": 8.956818181818182,
+        "velocity": 42
+      },
+      "reference_matched": false,
+      "independent_onset": true,
+      "decay_fit_error": null,
+      "transient_fit_error": null
+    },
+    {
+      "raw_index": 73,
+      "event": {
+        "pitch": 62,
+        "start_sec": 9.002272727272727,
+        "end_sec": 9.677272727272726,
+        "velocity": 64
+      },
+      "reference_matched": false,
+      "independent_onset": false,
+      "decay_fit_error": 0.016978,
+      "transient_fit_error": 0.030901
+    },
+    {
+      "raw_index": 74,
+      "event": {
+        "pitch": 64,
+        "start_sec": 9.002272727272727,
+        "end_sec": 9.247727272727273,
+        "velocity": 85
+      },
+      "reference_matched": true,
+      "independent_onset": true,
+      "decay_fit_error": null,
+      "transient_fit_error": null
+    },
+    {
+      "raw_index": 75,
+      "event": {
+        "pitch": 64,
+        "start_sec": 9.247727272727273,
+        "end_sec": 9.502272727272727,
+        "velocity": 90
+      },
+      "reference_matched": true,
+      "independent_onset": false,
+      "decay_fit_error": 2.110418,
+      "transient_fit_error": 2.111526
+    },
+    {
+      "raw_index": 76,
+      "event": {
+        "pitch": 76,
+        "start_sec": 9.247727272727273,
+        "end_sec": 9.479545454545454,
+        "velocity": 43
+      },
+      "reference_matched": false,
+      "independent_onset": true,
+      "decay_fit_error": null,
+      "transient_fit_error": null
+    },
+    {
+      "raw_index": 77,
+      "event": {
+        "pitch": 79,
+        "start_sec": 9.49090909090909,
+        "end_sec": 9.745454545454544,
+        "velocity": 46
+      },
+      "reference_matched": false,
+      "independent_onset": true,
+      "decay_fit_error": null,
+      "transient_fit_error": null
+    },
+    {
+      "raw_index": 78,
+      "event": {
+        "pitch": 64,
+        "start_sec": 9.502272727272727,
+        "end_sec": 10.2,
+        "velocity": 82
+      },
+      "reference_matched": false,
+      "independent_onset": false,
+      "decay_fit_error": 0.014452,
+      "transient_fit_error": 0.030858
+    },
+    {
+      "raw_index": 79,
+      "event": {
+        "pitch": 67,
+        "start_sec": 9.502272727272727,
+        "end_sec": 9.745454545454544,
+        "velocity": 91
+      },
+      "reference_matched": true,
+      "independent_onset": true,
+      "decay_fit_error": null,
+      "transient_fit_error": null
+    },
+    {
+      "raw_index": 80,
+      "event": {
+        "pitch": 67,
+        "start_sec": 9.745454545454544,
+        "end_sec": 10.674999999999999,
+        "velocity": 83
+      },
+      "reference_matched": true,
+      "independent_onset": true,
+      "decay_fit_error": null,
+      "transient_fit_error": null
+    },
+    {
+      "raw_index": 81,
+      "event": {
+        "pitch": 79,
+        "start_sec": 9.745454545454544,
+        "end_sec": 9.99090909090909,
+        "velocity": 55
+      },
+      "reference_matched": false,
+      "independent_onset": true,
+      "decay_fit_error": null,
+      "transient_fit_error": null
+    },
+    {
+      "raw_index": 82,
+      "event": {
+        "pitch": 79,
+        "start_sec": 9.99090909090909,
+        "end_sec": 10.245454545454544,
+        "velocity": 56
+      },
+      "reference_matched": false,
+      "independent_onset": false,
+      "decay_fit_error": 0.546665,
+      "transient_fit_error": null
+    },
+    {
+      "raw_index": 83,
+      "event": {
+        "pitch": 60,
+        "start_sec": 10.002272727272727,
+        "end_sec": 10.245454545454544,
+        "velocity": 98
+      },
+      "reference_matched": true,
+      "independent_onset": true,
+      "decay_fit_error": null,
+      "transient_fit_error": null
+    },
+    {
+      "raw_index": 84,
+      "event": {
+        "pitch": 60,
+        "start_sec": 10.245454545454544,
+        "end_sec": 10.502272727272727,
+        "velocity": 95
+      },
+      "reference_matched": true,
+      "independent_onset": false,
+      "decay_fit_error": 2.100193,
+      "transient_fit_error": null
+    },
+    {
+      "raw_index": 85,
+      "event": {
+        "pitch": 79,
+        "start_sec": 10.245454545454544,
+        "end_sec": 10.454545454545453,
+        "velocity": 48
+      },
+      "reference_matched": false,
+      "independent_onset": false,
+      "decay_fit_error": 0.955134,
+      "transient_fit_error": null
+    },
+    {
+      "raw_index": 86,
+      "event": {
+        "pitch": 60,
+        "start_sec": 10.502272727272727,
+        "end_sec": 11.152272727272727,
+        "velocity": 62
+      },
+      "reference_matched": false,
+      "independent_onset": false,
+      "decay_fit_error": 0.01147,
+      "transient_fit_error": 0.003769
+    },
+    {
+      "raw_index": 87,
+      "event": {
+        "pitch": 62,
+        "start_sec": 10.502272727272727,
+        "end_sec": 10.745454545454544,
+        "velocity": 96
+      },
+      "reference_matched": true,
+      "independent_onset": true,
+      "decay_fit_error": null,
+      "transient_fit_error": null
+    },
+    {
+      "raw_index": 88,
+      "event": {
+        "pitch": 62,
+        "start_sec": 10.745454545454544,
+        "end_sec": 11.0,
+        "velocity": 89
+      },
+      "reference_matched": true,
+      "independent_onset": false,
+      "decay_fit_error": 2.325161,
+      "transient_fit_error": 2.331767
+    },
+    {
+      "raw_index": 89,
+      "event": {
+        "pitch": 74,
+        "start_sec": 10.745454545454544,
+        "end_sec": 10.954545454545453,
+        "velocity": 42
+      },
+      "reference_matched": false,
+      "independent_onset": true,
+      "decay_fit_error": null,
+      "transient_fit_error": null
+    },
+    {
+      "raw_index": 90,
+      "event": {
+        "pitch": 62,
+        "start_sec": 11.0,
+        "end_sec": 11.686363636363636,
+        "velocity": 64
+      },
+      "reference_matched": false,
+      "independent_onset": false,
+      "decay_fit_error": 0.020218,
+      "transient_fit_error": 0.031019
+    },
+    {
+      "raw_index": 91,
+      "event": {
+        "pitch": 64,
+        "start_sec": 11.0,
+        "end_sec": 11.245454545454544,
+        "velocity": 85
+      },
+      "reference_matched": true,
+      "independent_onset": true,
+      "decay_fit_error": null,
+      "transient_fit_error": null
+    },
+    {
+      "raw_index": 92,
+      "event": {
+        "pitch": 64,
+        "start_sec": 11.245454545454544,
+        "end_sec": 12.197727272727272,
+        "velocity": 84
+      },
+      "reference_matched": true,
+      "independent_onset": false,
+      "decay_fit_error": 2.110118,
+      "transient_fit_error": 2.109885
+    },
+    {
+      "raw_index": 93,
+      "event": {
+        "pitch": 76,
+        "start_sec": 11.245454545454544,
+        "end_sec": 11.5,
+        "velocity": 43
+      },
+      "reference_matched": false,
+      "independent_onset": true,
+      "decay_fit_error": null,
+      "transient_fit_error": null
+    },
+    {
+      "raw_index": 94,
+      "event": {
+        "pitch": 67,
+        "start_sec": 11.5,
+        "end_sec": 11.756818181818181,
+        "velocity": 90
+      },
+      "reference_matched": true,
+      "independent_onset": true,
+      "decay_fit_error": null,
+      "transient_fit_error": null
+    },
+    {
+      "raw_index": 95,
+      "event": {
+        "pitch": 79,
+        "start_sec": 11.5,
+        "end_sec": 11.756818181818181,
+        "velocity": 47
+      },
+      "reference_matched": false,
+      "independent_onset": true,
+      "decay_fit_error": null,
+      "transient_fit_error": null
+    },
+    {
+      "raw_index": 96,
+      "event": {
+        "pitch": 67,
+        "start_sec": 11.756818181818181,
+        "end_sec": 12.674999999999999,
+        "velocity": 83
+      },
+      "reference_matched": true,
+      "independent_onset": true,
+      "decay_fit_error": null,
+      "transient_fit_error": null
+    },
+    {
+      "raw_index": 97,
+      "event": {
+        "pitch": 79,
+        "start_sec": 11.756818181818181,
+        "end_sec": 11.988636363636363,
+        "velocity": 56
+      },
+      "reference_matched": false,
+      "independent_onset": true,
+      "decay_fit_error": null,
+      "transient_fit_error": null
+    },
+    {
+      "raw_index": 98,
+      "event": {
+        "pitch": 79,
+        "start_sec": 11.988636363636363,
+        "end_sec": 12.245454545454544,
+        "velocity": 54
+      },
+      "reference_matched": false,
+      "independent_onset": false,
+      "decay_fit_error": 0.541616,
+      "transient_fit_error": null
+    },
+    {
+      "raw_index": 99,
+      "event": {
+        "pitch": 60,
+        "start_sec": 12.0,
+        "end_sec": 12.245454545454544,
+        "velocity": 98
+      },
+      "reference_matched": true,
+      "independent_onset": true,
+      "decay_fit_error": null,
+      "transient_fit_error": null
+    },
+    {
+      "raw_index": 100,
+      "event": {
+        "pitch": 60,
+        "start_sec": 12.245454545454544,
+        "end_sec": 12.5,
+        "velocity": 96
+      },
+      "reference_matched": true,
+      "independent_onset": false,
+      "decay_fit_error": 2.100209,
+      "transient_fit_error": null
+    },
+    {
+      "raw_index": 101,
+      "event": {
+        "pitch": 79,
+        "start_sec": 12.245454545454544,
+        "end_sec": 12.454545454545453,
+        "velocity": 49
+      },
+      "reference_matched": false,
+      "independent_onset": false,
+      "decay_fit_error": 0.955131,
+      "transient_fit_error": null
+    },
+    {
+      "raw_index": 102,
+      "event": {
+        "pitch": 60,
+        "start_sec": 12.5,
+        "end_sec": 13.161363636363635,
+        "velocity": 62
+      },
+      "reference_matched": false,
+      "independent_onset": false,
+      "decay_fit_error": 0.014878,
+      "transient_fit_error": 0.00332
+    },
+    {
+      "raw_index": 103,
+      "event": {
+        "pitch": 62,
+        "start_sec": 12.5,
+        "end_sec": 12.743181818181817,
+        "velocity": 96
+      },
+      "reference_matched": true,
+      "independent_onset": true,
+      "decay_fit_error": null,
+      "transient_fit_error": null
+    },
+    {
+      "raw_index": 104,
+      "event": {
+        "pitch": 62,
+        "start_sec": 12.743181818181817,
+        "end_sec": 13.0,
+        "velocity": 89
+      },
+      "reference_matched": true,
+      "independent_onset": false,
+      "decay_fit_error": 2.324678,
+      "transient_fit_error": 2.321151
+    },
+    {
+      "raw_index": 105,
+      "event": {
+        "pitch": 74,
+        "start_sec": 12.743181818181817,
+        "end_sec": 12.952272727272726,
+        "velocity": 40
+      },
+      "reference_matched": false,
+      "independent_onset": true,
+      "decay_fit_error": null,
+      "transient_fit_error": null
+    },
+    {
+      "raw_index": 106,
+      "event": {
+        "pitch": 62,
+        "start_sec": 13.0,
+        "end_sec": 13.684090909090909,
+        "velocity": 65
+      },
+      "reference_matched": false,
+      "independent_onset": false,
+      "decay_fit_error": 0.020086,
+      "transient_fit_error": 0.030971
+    },
+    {
+      "raw_index": 107,
+      "event": {
+        "pitch": 64,
+        "start_sec": 13.0,
+        "end_sec": 13.254545454545454,
+        "velocity": 85
+      },
+      "reference_matched": true,
+      "independent_onset": true,
+      "decay_fit_error": null,
+      "transient_fit_error": null
+    },
+    {
+      "raw_index": 108,
+      "event": {
+        "pitch": 64,
+        "start_sec": 13.254545454545454,
+        "end_sec": 14.195454545454545,
+        "velocity": 84
+      },
+      "reference_matched": true,
+      "independent_onset": false,
+      "decay_fit_error": 2.11181,
+      "transient_fit_error": 2.109298
+    },
+    {
+      "raw_index": 109,
+      "event": {
+        "pitch": 76,
+        "start_sec": 13.254545454545454,
+        "end_sec": 13.486363636363636,
+        "velocity": 42
+      },
+      "reference_matched": false,
+      "independent_onset": true,
+      "decay_fit_error": null,
+      "transient_fit_error": null
+    },
+    {
+      "raw_index": 110,
+      "event": {
+        "pitch": 67,
+        "start_sec": 13.497727272727271,
+        "end_sec": 13.754545454545454,
+        "velocity": 90
+      },
+      "reference_matched": true,
+      "independent_onset": true,
+      "decay_fit_error": null,
+      "transient_fit_error": null
+    },
+    {
+      "raw_index": 111,
+      "event": {
+        "pitch": 79,
+        "start_sec": 13.497727272727271,
+        "end_sec": 13.754545454545454,
+        "velocity": 47
+      },
+      "reference_matched": false,
+      "independent_onset": true,
+      "decay_fit_error": null,
+      "transient_fit_error": null
+    },
+    {
+      "raw_index": 112,
+      "event": {
+        "pitch": 67,
+        "start_sec": 13.754545454545454,
+        "end_sec": 14.672727272727272,
+        "velocity": 83
+      },
+      "reference_matched": true,
+      "independent_onset": true,
+      "decay_fit_error": null,
+      "transient_fit_error": null
+    },
+    {
+      "raw_index": 113,
+      "event": {
+        "pitch": 79,
+        "start_sec": 13.754545454545454,
+        "end_sec": 13.986363636363636,
+        "velocity": 56
+      },
+      "reference_matched": false,
+      "independent_onset": true,
+      "decay_fit_error": null,
+      "transient_fit_error": null
+    },
+    {
+      "raw_index": 114,
+      "event": {
+        "pitch": 79,
+        "start_sec": 13.986363636363636,
+        "end_sec": 14.243181818181817,
+        "velocity": 53
+      },
+      "reference_matched": false,
+      "independent_onset": false,
+      "decay_fit_error": 0.535232,
+      "transient_fit_error": null
+    },
+    {
+      "raw_index": 115,
+      "event": {
+        "pitch": 60,
+        "start_sec": 14.0,
+        "end_sec": 14.243181818181817,
+        "velocity": 98
+      },
+      "reference_matched": true,
+      "independent_onset": true,
+      "decay_fit_error": null,
+      "transient_fit_error": null
+    },
+    {
+      "raw_index": 116,
+      "event": {
+        "pitch": 60,
+        "start_sec": 14.243181818181817,
+        "end_sec": 14.497727272727271,
+        "velocity": 95
+      },
+      "reference_matched": true,
+      "independent_onset": false,
+      "decay_fit_error": 2.100006,
+      "transient_fit_error": null
+    },
+    {
+      "raw_index": 117,
+      "event": {
+        "pitch": 79,
+        "start_sec": 14.243181818181817,
+        "end_sec": 14.463636363636363,
+        "velocity": 47
+      },
+      "reference_matched": false,
+      "independent_onset": false,
+      "decay_fit_error": 0.954213,
+      "transient_fit_error": null
+    },
+    {
+      "raw_index": 118,
+      "event": {
+        "pitch": 60,
+        "start_sec": 14.497727272727271,
+        "end_sec": 15.159090909090908,
+        "velocity": 63
+      },
+      "reference_matched": false,
+      "independent_onset": false,
+      "decay_fit_error": 0.01963,
+      "transient_fit_error": 0.016838
+    },
+    {
+      "raw_index": 119,
+      "event": {
+        "pitch": 62,
+        "start_sec": 14.497727272727271,
+        "end_sec": 14.743181818181817,
+        "velocity": 96
+      },
+      "reference_matched": true,
+      "independent_onset": true,
+      "decay_fit_error": null,
+      "transient_fit_error": null
+    },
+    {
+      "raw_index": 120,
+      "event": {
+        "pitch": 62,
+        "start_sec": 14.743181818181817,
+        "end_sec": 15.009090909090908,
+        "velocity": 90
+      },
+      "reference_matched": true,
+      "independent_onset": false,
+      "decay_fit_error": 2.324685,
+      "transient_fit_error": 2.321152
+    },
+    {
+      "raw_index": 121,
+      "event": {
+        "pitch": 74,
+        "start_sec": 14.743181818181817,
+        "end_sec": 14.963636363636363,
+        "velocity": 40
+      },
+      "reference_matched": false,
+      "independent_onset": true,
+      "decay_fit_error": null,
+      "transient_fit_error": null
+    },
+    {
+      "raw_index": 122,
+      "event": {
+        "pitch": 64,
+        "start_sec": 14.997727272727271,
+        "end_sec": 15.252272727272727,
+        "velocity": 85
+      },
+      "reference_matched": true,
+      "independent_onset": true,
+      "decay_fit_error": null,
+      "transient_fit_error": null
+    },
+    {
+      "raw_index": 123,
+      "event": {
+        "pitch": 62,
+        "start_sec": 15.009090909090908,
+        "end_sec": 15.681818181818182,
+        "velocity": 65
+      },
+      "reference_matched": false,
+      "independent_onset": false,
+      "decay_fit_error": 0.01894,
+      "transient_fit_error": 0.033694
+    },
+    {
+      "raw_index": 124,
+      "event": {
+        "pitch": 64,
+        "start_sec": 15.252272727272727,
+        "end_sec": 16.195454545454545,
+        "velocity": 84
+      },
+      "reference_matched": true,
+      "independent_onset": false,
+      "decay_fit_error": 2.111224,
+      "transient_fit_error": 2.109432
+    },
+    {
+      "raw_index": 125,
+      "event": {
+        "pitch": 76,
+        "start_sec": 15.252272727272727,
+        "end_sec": 15.484090909090908,
+        "velocity": 44
+      },
+      "reference_matched": false,
+      "independent_onset": true,
+      "decay_fit_error": null,
+      "transient_fit_error": null
+    },
+    {
+      "raw_index": 126,
+      "event": {
+        "pitch": 67,
+        "start_sec": 15.497727272727271,
+        "end_sec": 15.752272727272727,
+        "velocity": 90
+      },
+      "reference_matched": true,
+      "independent_onset": true,
+      "decay_fit_error": null,
+      "transient_fit_error": null
+    },
+    {
+      "raw_index": 127,
+      "event": {
+        "pitch": 79,
+        "start_sec": 15.497727272727271,
+        "end_sec": 15.752272727272727,
+        "velocity": 47
+      },
+      "reference_matched": false,
+      "independent_onset": true,
+      "decay_fit_error": null,
+      "transient_fit_error": null
+    },
+    {
+      "raw_index": 128,
+      "event": {
+        "pitch": 67,
+        "start_sec": 15.752272727272727,
+        "end_sec": 16.68181818181818,
+        "velocity": 83
+      },
+      "reference_matched": true,
+      "independent_onset": true,
+      "decay_fit_error": null,
+      "transient_fit_error": null
+    },
+    {
+      "raw_index": 129,
+      "event": {
+        "pitch": 79,
+        "start_sec": 15.752272727272727,
+        "end_sec": 15.986363636363636,
+        "velocity": 56
+      },
+      "reference_matched": false,
+      "independent_onset": true,
+      "decay_fit_error": null,
+      "transient_fit_error": null
+    },
+    {
+      "raw_index": 130,
+      "event": {
+        "pitch": 79,
+        "start_sec": 15.986363636363636,
+        "end_sec": 16.24090909090909,
+        "velocity": 52
+      },
+      "reference_matched": false,
+      "independent_onset": false,
+      "decay_fit_error": 0.535189,
+      "transient_fit_error": null
+    },
+    {
+      "raw_index": 131,
+      "event": {
+        "pitch": 60,
+        "start_sec": 15.997727272727271,
+        "end_sec": 16.24090909090909,
+        "velocity": 98
+      },
+      "reference_matched": true,
+      "independent_onset": true,
+      "decay_fit_error": null,
+      "transient_fit_error": null
+    },
+    {
+      "raw_index": 132,
+      "event": {
+        "pitch": 60,
+        "start_sec": 16.24090909090909,
+        "end_sec": 17.159090909090907,
+        "velocity": 72
+      },
+      "reference_matched": true,
+      "independent_onset": false,
+      "decay_fit_error": 2.099842,
+      "transient_fit_error": null
+    },
+    {
+      "raw_index": 133,
+      "event": {
+        "pitch": 79,
+        "start_sec": 16.24090909090909,
+        "end_sec": 16.438636363636363,
+        "velocity": 49
+      },
+      "reference_matched": false,
+      "independent_onset": false,
+      "decay_fit_error": 0.952902,
+      "transient_fit_error": null
+    },
+    {
+      "raw_index": 134,
+      "event": {
+        "pitch": 62,
+        "start_sec": 16.495454545454546,
+        "end_sec": 16.752272727272725,
+        "velocity": 95
+      },
+      "reference_matched": true,
+      "independent_onset": true,
+      "decay_fit_error": null,
+      "transient_fit_error": null
+    },
+    {
+      "raw_index": 135,
+      "event": {
+        "pitch": 62,
+        "start_sec": 16.752272727272725,
+        "end_sec": 17.006818181818183,
+        "velocity": 90
+      },
+      "reference_matched": true,
+      "independent_onset": false,
+      "decay_fit_error": 2.327046,
+      "transient_fit_error": 2.324337
+    },
+    {
+      "raw_index": 136,
+      "event": {
+        "pitch": 74,
+        "start_sec": 16.752272727272725,
+        "end_sec": 16.961363636363636,
+        "velocity": 41
+      },
+      "reference_matched": false,
+      "independent_onset": true,
+      "decay_fit_error": null,
+      "transient_fit_error": null
+    },
+    {
+      "raw_index": 137,
+      "event": {
+        "pitch": 64,
+        "start_sec": 16.995454545454546,
+        "end_sec": 17.25,
+        "velocity": 85
+      },
+      "reference_matched": true,
+      "independent_onset": true,
+      "decay_fit_error": null,
+      "transient_fit_error": null
+    },
+    {
+      "raw_index": 138,
+      "event": {
+        "pitch": 76,
+        "start_sec": 16.995454545454546,
+        "end_sec": 17.25,
+        "velocity": 38
+      },
+      "reference_matched": false,
+      "independent_onset": true,
+      "decay_fit_error": null,
+      "transient_fit_error": null
+    },
+    {
+      "raw_index": 139,
+      "event": {
+        "pitch": 62,
+        "start_sec": 17.006818181818183,
+        "end_sec": 17.679545454545455,
+        "velocity": 65
+      },
+      "reference_matched": false,
+      "independent_onset": false,
+      "decay_fit_error": 0.015991,
+      "transient_fit_error": 0.075971
+    },
+    {
+      "raw_index": 140,
+      "event": {
+        "pitch": 64,
+        "start_sec": 17.25,
+        "end_sec": 18.204545454545453,
+        "velocity": 84
+      },
+      "reference_matched": true,
+      "independent_onset": false,
+      "decay_fit_error": 2.110768,
+      "transient_fit_error": 2.109785
+    },
+    {
+      "raw_index": 141,
+      "event": {
+        "pitch": 76,
+        "start_sec": 17.25,
+        "end_sec": 17.48409090909091,
+        "velocity": 43
+      },
+      "reference_matched": false,
+      "independent_onset": true,
+      "decay_fit_error": null,
+      "transient_fit_error": null
+    },
+    {
+      "raw_index": 142,
+      "event": {
+        "pitch": 67,
+        "start_sec": 17.495454545454546,
+        "end_sec": 17.75,
+        "velocity": 90
+      },
+      "reference_matched": true,
+      "independent_onset": true,
+      "decay_fit_error": null,
+      "transient_fit_error": null
+    },
+    {
+      "raw_index": 143,
+      "event": {
+        "pitch": 79,
+        "start_sec": 17.495454545454546,
+        "end_sec": 17.75,
+        "velocity": 46
+      },
+      "reference_matched": false,
+      "independent_onset": true,
+      "decay_fit_error": null,
+      "transient_fit_error": null
+    },
+    {
+      "raw_index": 144,
+      "event": {
+        "pitch": 67,
+        "start_sec": 17.75,
+        "end_sec": 18.679545454545455,
+        "velocity": 83
+      },
+      "reference_matched": true,
+      "independent_onset": true,
+      "decay_fit_error": null,
+      "transient_fit_error": null
+    },
+    {
+      "raw_index": 145,
+      "event": {
+        "pitch": 79,
+        "start_sec": 17.75,
+        "end_sec": 17.98409090909091,
+        "velocity": 56
+      },
+      "reference_matched": false,
+      "independent_onset": true,
+      "decay_fit_error": null,
+      "transient_fit_error": null
+    },
+    {
+      "raw_index": 146,
+      "event": {
+        "pitch": 79,
+        "start_sec": 17.98409090909091,
+        "end_sec": 18.25,
+        "velocity": 54
+      },
+      "reference_matched": false,
+      "independent_onset": false,
+      "decay_fit_error": 0.527227,
+      "transient_fit_error": null
+    },
+    {
+      "raw_index": 147,
+      "event": {
+        "pitch": 60,
+        "start_sec": 17.995454545454546,
+        "end_sec": 18.25,
+        "velocity": 98
+      },
+      "reference_matched": true,
+      "independent_onset": true,
+      "decay_fit_error": null,
+      "transient_fit_error": null
+    },
+    {
+      "raw_index": 148,
+      "event": {
+        "pitch": 60,
+        "start_sec": 18.25,
+        "end_sec": 19.15681818181818,
+        "velocity": 72
+      },
+      "reference_matched": true,
+      "independent_onset": false,
+      "decay_fit_error": 2.100657,
+      "transient_fit_error": null
+    },
+    {
+      "raw_index": 149,
+      "event": {
+        "pitch": 79,
+        "start_sec": 18.25,
+        "end_sec": 18.44772727272727,
+        "velocity": 48
+      },
+      "reference_matched": false,
+      "independent_onset": false,
+      "decay_fit_error": 0.955329,
+      "transient_fit_error": null
+    },
+    {
+      "raw_index": 150,
+      "event": {
+        "pitch": 62,
+        "start_sec": 18.495454545454546,
+        "end_sec": 18.75,
+        "velocity": 95
+      },
+      "reference_matched": true,
+      "independent_onset": true,
+      "decay_fit_error": null,
+      "transient_fit_error": null
+    },
+    {
+      "raw_index": 151,
+      "event": {
+        "pitch": 62,
+        "start_sec": 18.75,
+        "end_sec": 19.004545454545454,
+        "velocity": 90
+      },
+      "reference_matched": true,
+      "independent_onset": false,
+      "decay_fit_error": 2.326325,
+      "transient_fit_error": 2.322808
+    },
+    {
+      "raw_index": 152,
+      "event": {
+        "pitch": 74,
+        "start_sec": 18.75,
+        "end_sec": 18.959090909090907,
+        "velocity": 41
+      },
+      "reference_matched": false,
+      "independent_onset": true,
+      "decay_fit_error": null,
+      "transient_fit_error": null
+    },
+    {
+      "raw_index": 153,
+      "event": {
+        "pitch": 64,
+        "start_sec": 18.993181818181817,
+        "end_sec": 19.25,
+        "velocity": 85
+      },
+      "reference_matched": true,
+      "independent_onset": true,
+      "decay_fit_error": null,
+      "transient_fit_error": null
+    },
+    {
+      "raw_index": 154,
+      "event": {
+        "pitch": 62,
+        "start_sec": 19.004545454545454,
+        "end_sec": 19.679545454545455,
+        "velocity": 65
+      },
+      "reference_matched": false,
+      "independent_onset": false,
+      "decay_fit_error": 0.014111,
+      "transient_fit_error": 0.115743
+    },
+    {
+      "raw_index": 155,
+      "event": {
+        "pitch": 64,
+        "start_sec": 19.25,
+        "end_sec": 20.202272727272728,
+        "velocity": 84
+      },
+      "reference_matched": true,
+      "independent_onset": false,
+      "decay_fit_error": 2.11077,
+      "transient_fit_error": 2.109777
+    },
+    {
+      "raw_index": 156,
+      "event": {
+        "pitch": 76,
+        "start_sec": 19.25,
+        "end_sec": 19.48181818181818,
+        "velocity": 41
+      },
+      "reference_matched": false,
+      "independent_onset": true,
+      "decay_fit_error": null,
+      "transient_fit_error": null
+    },
+    {
+      "raw_index": 157,
+      "event": {
+        "pitch": 67,
+        "start_sec": 19.493181818181817,
+        "end_sec": 19.759090909090908,
+        "velocity": 90
+      },
+      "reference_matched": true,
+      "independent_onset": true,
+      "decay_fit_error": null,
+      "transient_fit_error": null
+    },
+    {
+      "raw_index": 158,
+      "event": {
+        "pitch": 79,
+        "start_sec": 19.493181818181817,
+        "end_sec": 19.74772727272727,
+        "velocity": 45
+      },
+      "reference_matched": false,
+      "independent_onset": true,
+      "decay_fit_error": null,
+      "transient_fit_error": null
+    },
+    {
+      "raw_index": 159,
+      "event": {
+        "pitch": 79,
+        "start_sec": 19.74772727272727,
+        "end_sec": 19.993181818181817,
+        "velocity": 56
+      },
+      "reference_matched": false,
+      "independent_onset": true,
+      "decay_fit_error": null,
+      "transient_fit_error": null
+    },
+    {
+      "raw_index": 160,
+      "event": {
+        "pitch": 67,
+        "start_sec": 19.759090909090908,
+        "end_sec": 20.679545454545455,
+        "velocity": 83
+      },
+      "reference_matched": true,
+      "independent_onset": true,
+      "decay_fit_error": null,
+      "transient_fit_error": null
+    },
+    {
+      "raw_index": 161,
+      "event": {
+        "pitch": 60,
+        "start_sec": 19.993181818181817,
+        "end_sec": 20.25,
+        "velocity": 98
+      },
+      "reference_matched": true,
+      "independent_onset": true,
+      "decay_fit_error": null,
+      "transient_fit_error": null
+    },
+    {
+      "raw_index": 162,
+      "event": {
+        "pitch": 79,
+        "start_sec": 19.993181818181817,
+        "end_sec": 20.25,
+        "velocity": 55
+      },
+      "reference_matched": false,
+      "independent_onset": false,
+      "decay_fit_error": 0.550331,
+      "transient_fit_error": null
+    },
+    {
+      "raw_index": 163,
+      "event": {
+        "pitch": 60,
+        "start_sec": 20.25,
+        "end_sec": 21.154545454545453,
+        "velocity": 72
+      },
+      "reference_matched": true,
+      "independent_onset": false,
+      "decay_fit_error": 2.100638,
+      "transient_fit_error": null
+    },
+    {
+      "raw_index": 164,
+      "event": {
+        "pitch": 79,
+        "start_sec": 20.25,
+        "end_sec": 20.43409090909091,
+        "velocity": 47
+      },
+      "reference_matched": false,
+      "independent_onset": false,
+      "decay_fit_error": 0.955312,
+      "transient_fit_error": null
+    },
+    {
+      "raw_index": 165,
+      "event": {
+        "pitch": 62,
+        "start_sec": 20.493181818181817,
+        "end_sec": 20.74772727272727,
+        "velocity": 95
+      },
+      "reference_matched": true,
+      "independent_onset": true,
+      "decay_fit_error": null,
+      "transient_fit_error": null
+    },
+    {
+      "raw_index": 166,
+      "event": {
+        "pitch": 62,
+        "start_sec": 20.74772727272727,
+        "end_sec": 21.004545454545454,
+        "velocity": 90
+      },
+      "reference_matched": true,
+      "independent_onset": false,
+      "decay_fit_error": 2.325694,
+      "transient_fit_error": 2.323637
+    },
+    {
+      "raw_index": 167,
+      "event": {
+        "pitch": 74,
+        "start_sec": 20.74772727272727,
+        "end_sec": 20.956818181818182,
+        "velocity": 41
+      },
+      "reference_matched": false,
+      "independent_onset": true,
+      "decay_fit_error": null,
+      "transient_fit_error": null
+    },
+    {
+      "raw_index": 168,
+      "event": {
+        "pitch": 64,
+        "start_sec": 20.993181818181817,
+        "end_sec": 21.24772727272727,
+        "velocity": 85
+      },
+      "reference_matched": true,
+      "independent_onset": true,
+      "decay_fit_error": null,
+      "transient_fit_error": null
+    },
+    {
+      "raw_index": 169,
+      "event": {
+        "pitch": 62,
+        "start_sec": 21.004545454545454,
+        "end_sec": 21.677272727272726,
+        "velocity": 65
+      },
+      "reference_matched": false,
+      "independent_onset": false,
+      "decay_fit_error": 0.014098,
+      "transient_fit_error": 0.11573
+    },
+    {
+      "raw_index": 170,
+      "event": {
+        "pitch": 64,
+        "start_sec": 21.24772727272727,
+        "end_sec": 21.502272727272725,
+        "velocity": 91
+      },
+      "reference_matched": true,
+      "independent_onset": false,
+      "decay_fit_error": 2.110421,
+      "transient_fit_error": 2.111536
+    },
+    {
+      "raw_index": 171,
+      "event": {
+        "pitch": 76,
+        "start_sec": 21.24772727272727,
+        "end_sec": 21.49090909090909,
+        "velocity": 43
+      },
+      "reference_matched": false,
+      "independent_onset": true,
+      "decay_fit_error": null,
+      "transient_fit_error": null
+    },
+    {
+      "raw_index": 172,
+      "event": {
+        "pitch": 64,
+        "start_sec": 21.502272727272725,
+        "end_sec": 22.2,
+        "velocity": 82
+      },
+      "reference_matched": false,
+      "independent_onset": false,
+      "decay_fit_error": 0.015254,
+      "transient_fit_error": 0.014643
+    },
+    {
+      "raw_index": 173,
+      "event": {
+        "pitch": 67,
+        "start_sec": 21.502272727272725,
+        "end_sec": 21.759090909090908,
+        "velocity": 91
+      },
+      "reference_matched": true,
+      "independent_onset": true,
+      "decay_fit_error": null,
+      "transient_fit_error": null
+    },
+    {
+      "raw_index": 174,
+      "event": {
+        "pitch": 79,
+        "start_sec": 21.502272727272725,
+        "end_sec": 21.74772727272727,
+        "velocity": 44
+      },
+      "reference_matched": false,
+      "independent_onset": true,
+      "decay_fit_error": null,
+      "transient_fit_error": null
+    },
+    {
+      "raw_index": 175,
+      "event": {
+        "pitch": 79,
+        "start_sec": 21.74772727272727,
+        "end_sec": 21.99090909090909,
+        "velocity": 55
+      },
+      "reference_matched": false,
+      "independent_onset": true,
+      "decay_fit_error": null,
+      "transient_fit_error": null
+    },
+    {
+      "raw_index": 176,
+      "event": {
+        "pitch": 67,
+        "start_sec": 21.759090909090908,
+        "end_sec": 22.66590909090909,
+        "velocity": 83
+      },
+      "reference_matched": true,
+      "independent_onset": true,
+      "decay_fit_error": null,
+      "transient_fit_error": null
+    },
+    {
+      "raw_index": 177,
+      "event": {
+        "pitch": 60,
+        "start_sec": 21.99090909090909,
+        "end_sec": 22.24772727272727,
+        "velocity": 98
+      },
+      "reference_matched": true,
+      "independent_onset": true,
+      "decay_fit_error": null,
+      "transient_fit_error": null
+    },
+    {
+      "raw_index": 178,
+      "event": {
+        "pitch": 79,
+        "start_sec": 21.99090909090909,
+        "end_sec": 22.24772727272727,
+        "velocity": 56
+      },
+      "reference_matched": false,
+      "independent_onset": false,
+      "decay_fit_error": 0.546421,
+      "transient_fit_error": null
+    },
+    {
+      "raw_index": 179,
+      "event": {
+        "pitch": 60,
+        "start_sec": 22.24772727272727,
+        "end_sec": 23.152272727272727,
+        "velocity": 72
+      },
+      "reference_matched": true,
+      "independent_onset": false,
+      "decay_fit_error": 2.100412,
+      "transient_fit_error": null
+    },
+    {
+      "raw_index": 180,
+      "event": {
+        "pitch": 79,
+        "start_sec": 22.24772727272727,
+        "end_sec": 22.43409090909091,
+        "velocity": 47
+      },
+      "reference_matched": false,
+      "independent_onset": false,
+      "decay_fit_error": 0.955424,
+      "transient_fit_error": null
+    },
+    {
+      "raw_index": 181,
+      "event": {
+        "pitch": 62,
+        "start_sec": 22.49090909090909,
+        "end_sec": 22.745454545454546,
+        "velocity": 95
+      },
+      "reference_matched": true,
+      "independent_onset": true,
+      "decay_fit_error": null,
+      "transient_fit_error": null
+    },
+    {
+      "raw_index": 182,
+      "event": {
+        "pitch": 62,
+        "start_sec": 22.745454545454546,
+        "end_sec": 23.674999999999997,
+        "velocity": 72
+      },
+      "reference_matched": true,
+      "independent_onset": false,
+      "decay_fit_error": 2.325159,
+      "transient_fit_error": 2.331775
+    },
+    {
+      "raw_index": 183,
+      "event": {
+        "pitch": 74,
+        "start_sec": 22.745454545454546,
+        "end_sec": 22.954545454545453,
+        "velocity": 40
+      },
+      "reference_matched": false,
+      "independent_onset": true,
+      "decay_fit_error": null,
+      "transient_fit_error": null
+    },
+    {
+      "raw_index": 184,
+      "event": {
+        "pitch": 64,
+        "start_sec": 23.002272727272725,
+        "end_sec": 23.25681818181818,
+        "velocity": 85
+      },
+      "reference_matched": true,
+      "independent_onset": true,
+      "decay_fit_error": null,
+      "transient_fit_error": null
+    },
+    {
+      "raw_index": 185,
+      "event": {
+        "pitch": 76,
+        "start_sec": 23.245454545454546,
+        "end_sec": 23.488636363636363,
+        "velocity": 46
+      },
+      "reference_matched": false,
+      "independent_onset": true,
+      "decay_fit_error": null,
+      "transient_fit_error": null
+    },
+    {
+      "raw_index": 186,
+      "event": {
+        "pitch": 64,
+        "start_sec": 23.25681818181818,
+        "end_sec": 23.5,
+        "velocity": 91
+      },
+      "reference_matched": true,
+      "independent_onset": false,
+      "decay_fit_error": 2.1125,
+      "transient_fit_error": 2.110838
+    },
+    {
+      "raw_index": 187,
+      "event": {
+        "pitch": 64,
+        "start_sec": 23.5,
+        "end_sec": 24.2,
+        "velocity": 82
+      },
+      "reference_matched": false,
+      "independent_onset": false,
+      "decay_fit_error": 0.017641,
+      "transient_fit_error": 0.013131
+    },
+    {
+      "raw_index": 188,
+      "event": {
+        "pitch": 67,
+        "start_sec": 23.5,
+        "end_sec": 23.75681818181818,
+        "velocity": 91
+      },
+      "reference_matched": true,
+      "independent_onset": true,
+      "decay_fit_error": null,
+      "transient_fit_error": null
+    },
+    {
+      "raw_index": 189,
+      "event": {
+        "pitch": 79,
+        "start_sec": 23.5,
+        "end_sec": 23.75681818181818,
+        "velocity": 46
+      },
+      "reference_matched": false,
+      "independent_onset": true,
+      "decay_fit_error": null,
+      "transient_fit_error": null
+    },
+    {
+      "raw_index": 190,
+      "event": {
+        "pitch": 67,
+        "start_sec": 23.75681818181818,
+        "end_sec": 24.686363636363634,
+        "velocity": 82
+      },
+      "reference_matched": true,
+      "independent_onset": true,
+      "decay_fit_error": null,
+      "transient_fit_error": null
+    },
+    {
+      "raw_index": 191,
+      "event": {
+        "pitch": 79,
+        "start_sec": 23.75681818181818,
+        "end_sec": 23.99090909090909,
+        "velocity": 56
+      },
+      "reference_matched": false,
+      "independent_onset": true,
+      "decay_fit_error": null,
+      "transient_fit_error": null
+    },
+    {
+      "raw_index": 192,
+      "event": {
+        "pitch": 60,
+        "start_sec": 23.99090909090909,
+        "end_sec": 24.245454545454546,
+        "velocity": 98
+      },
+      "reference_matched": true,
+      "independent_onset": true,
+      "decay_fit_error": null,
+      "transient_fit_error": null
+    },
+    {
+      "raw_index": 193,
+      "event": {
+        "pitch": 79,
+        "start_sec": 23.99090909090909,
+        "end_sec": 24.245454545454546,
+        "velocity": 54
+      },
+      "reference_matched": false,
+      "independent_onset": false,
+      "decay_fit_error": 0.546398,
+      "transient_fit_error": null
+    },
+    {
+      "raw_index": 194,
+      "event": {
+        "pitch": 60,
+        "start_sec": 24.245454545454546,
+        "end_sec": 25.15,
+        "velocity": 72
+      },
+      "reference_matched": true,
+      "independent_onset": false,
+      "decay_fit_error": 2.100197,
+      "transient_fit_error": null
+    },
+    {
+      "raw_index": 195,
+      "event": {
+        "pitch": 79,
+        "start_sec": 24.245454545454546,
+        "end_sec": 24.443181818181817,
+        "velocity": 47
+      },
+      "reference_matched": false,
+      "independent_onset": false,
+      "decay_fit_error": 0.955138,
+      "transient_fit_error": null
+    },
+    {
+      "raw_index": 196,
+      "event": {
+        "pitch": 62,
+        "start_sec": 24.488636363636363,
+        "end_sec": 24.75681818181818,
+        "velocity": 95
+      },
+      "reference_matched": true,
+      "independent_onset": true,
+      "decay_fit_error": null,
+      "transient_fit_error": null
+    },
+    {
+      "raw_index": 197,
+      "event": {
+        "pitch": 74,
+        "start_sec": 24.745454545454542,
+        "end_sec": 24.954545454545453,
+        "velocity": 42
+      },
+      "reference_matched": false,
+      "independent_onset": true,
+      "decay_fit_error": null,
+      "transient_fit_error": null
+    },
+    {
+      "raw_index": 198,
+      "event": {
+        "pitch": 62,
+        "start_sec": 24.75681818181818,
+        "end_sec": 25.672727272727272,
+        "velocity": 72
+      },
+      "reference_matched": true,
+      "independent_onset": false,
+      "decay_fit_error": 2.328998,
+      "transient_fit_error": 2.331774
+    },
+    {
+      "raw_index": 199,
+      "event": {
+        "pitch": 64,
+        "start_sec": 25.0,
+        "end_sec": 25.254545454545454,
+        "velocity": 85
+      },
+      "reference_matched": true,
+      "independent_onset": true,
+      "decay_fit_error": null,
+      "transient_fit_error": null
+    },
+    {
+      "raw_index": 200,
+      "event": {
+        "pitch": 76,
+        "start_sec": 25.0,
+        "end_sec": 25.243181818181817,
+        "velocity": 38
+      },
+      "reference_matched": false,
+      "independent_onset": true,
+      "decay_fit_error": null,
+      "transient_fit_error": null
+    },
+    {
+      "raw_index": 201,
+      "event": {
+        "pitch": 76,
+        "start_sec": 25.243181818181817,
+        "end_sec": 25.488636363636363,
+        "velocity": 44
+      },
+      "reference_matched": false,
+      "independent_onset": true,
+      "decay_fit_error": null,
+      "transient_fit_error": null
+    },
+    {
+      "raw_index": 202,
+      "event": {
+        "pitch": 64,
+        "start_sec": 25.254545454545454,
+        "end_sec": 25.5,
+        "velocity": 91
+      },
+      "reference_matched": true,
+      "independent_onset": false,
+      "decay_fit_error": 2.111818,
+      "transient_fit_error": 2.109298
+    },
+    {
+      "raw_index": 203,
+      "event": {
+        "pitch": 64,
+        "start_sec": 25.5,
+        "end_sec": 26.19772727272727,
+        "velocity": 82
+      },
+      "reference_matched": false,
+      "independent_onset": false,
+      "decay_fit_error": 0.017717,
+      "transient_fit_error": 0.013111
+    },
+    {
+      "raw_index": 204,
+      "event": {
+        "pitch": 67,
+        "start_sec": 25.5,
+        "end_sec": 25.754545454545454,
+        "velocity": 91
+      },
+      "reference_matched": true,
+      "independent_onset": true,
+      "decay_fit_error": null,
+      "transient_fit_error": null
+    },
+    {
+      "raw_index": 205,
+      "event": {
+        "pitch": 79,
+        "start_sec": 25.5,
+        "end_sec": 25.743181818181817,
+        "velocity": 45
+      },
+      "reference_matched": false,
+      "independent_onset": true,
+      "decay_fit_error": null,
+      "transient_fit_error": null
+    },
+    {
+      "raw_index": 206,
+      "event": {
+        "pitch": 79,
+        "start_sec": 25.743181818181817,
+        "end_sec": 25.988636363636363,
+        "velocity": 56
+      },
+      "reference_matched": false,
+      "independent_onset": true,
+      "decay_fit_error": null,
+      "transient_fit_error": null
+    },
+    {
+      "raw_index": 207,
+      "event": {
+        "pitch": 67,
+        "start_sec": 25.754545454545454,
+        "end_sec": 26.68409090909091,
+        "velocity": 82
+      },
+      "reference_matched": true,
+      "independent_onset": true,
+      "decay_fit_error": null,
+      "transient_fit_error": null
+    },
+    {
+      "raw_index": 208,
+      "event": {
+        "pitch": 60,
+        "start_sec": 25.988636363636363,
+        "end_sec": 26.254545454545454,
+        "velocity": 97
+      },
+      "reference_matched": true,
+      "independent_onset": true,
+      "decay_fit_error": null,
+      "transient_fit_error": null
+    },
+    {
+      "raw_index": 209,
+      "event": {
+        "pitch": 79,
+        "start_sec": 25.988636363636363,
+        "end_sec": 26.243181818181817,
+        "velocity": 55
+      },
+      "reference_matched": false,
+      "independent_onset": false,
+      "decay_fit_error": 0.541409,
+      "transient_fit_error": null
+    },
+    {
+      "raw_index": 210,
+      "event": {
+        "pitch": 79,
+        "start_sec": 26.243181818181817,
+        "end_sec": 26.452272727272724,
+        "velocity": 46
+      },
+      "reference_matched": false,
+      "independent_onset": false,
+      "decay_fit_error": 0.954214,
+      "transient_fit_error": null
+    },
+    {
+      "raw_index": 211,
+      "event": {
+        "pitch": 60,
+        "start_sec": 26.254545454545454,
+        "end_sec": 27.15,
+        "velocity": 72
+      },
+      "reference_matched": true,
+      "independent_onset": false,
+      "decay_fit_error": 2.101243,
+      "transient_fit_error": null
+    },
+    {
+      "raw_index": 212,
+      "event": {
+        "pitch": 62,
+        "start_sec": 26.5,
+        "end_sec": 26.754545454545454,
+        "velocity": 95
+      },
+      "reference_matched": true,
+      "independent_onset": true,
+      "decay_fit_error": null,
+      "transient_fit_error": null
+    },
+    {
+      "raw_index": 213,
+      "event": {
+        "pitch": 74,
+        "start_sec": 26.743181818181817,
+        "end_sec": 26.952272727272724,
+        "velocity": 41
+      },
+      "reference_matched": false,
+      "independent_onset": true,
+      "decay_fit_error": null,
+      "transient_fit_error": null
+    },
+    {
+      "raw_index": 214,
+      "event": {
+        "pitch": 62,
+        "start_sec": 26.754545454545454,
+        "end_sec": 27.672727272727272,
+        "velocity": 72
+      },
+      "reference_matched": true,
+      "independent_onset": false,
+      "decay_fit_error": 2.327928,
+      "transient_fit_error": 2.324847
+    },
+    {
+      "raw_index": 215,
+      "event": {
+        "pitch": 64,
+        "start_sec": 26.99772727272727,
+        "end_sec": 27.254545454545454,
+        "velocity": 85
+      },
+      "reference_matched": true,
+      "independent_onset": true,
+      "decay_fit_error": null,
+      "transient_fit_error": null
+    },
+    {
+      "raw_index": 216,
+      "event": {
+        "pitch": 76,
+        "start_sec": 26.99772727272727,
+        "end_sec": 27.243181818181817,
+        "velocity": 36
+      },
+      "reference_matched": false,
+      "independent_onset": true,
+      "decay_fit_error": null,
+      "transient_fit_error": null
+    },
+    {
+      "raw_index": 217,
+      "event": {
+        "pitch": 76,
+        "start_sec": 27.243181818181817,
+        "end_sec": 27.474999999999998,
+        "velocity": 42
+      },
+      "reference_matched": false,
+      "independent_onset": true,
+      "decay_fit_error": null,
+      "transient_fit_error": null
+    },
+    {
+      "raw_index": 218,
+      "event": {
+        "pitch": 64,
+        "start_sec": 27.254545454545454,
+        "end_sec": 27.49772727272727,
+        "velocity": 91
+      },
+      "reference_matched": true,
+      "independent_onset": false,
+      "decay_fit_error": 2.111792,
+      "transient_fit_error": 2.109284
+    },
+    {
+      "raw_index": 219,
+      "event": {
+        "pitch": 64,
+        "start_sec": 27.49772727272727,
+        "end_sec": 28.195454545454545,
+        "velocity": 82
+      },
+      "reference_matched": false,
+      "independent_onset": false,
+      "decay_fit_error": 0.022062,
+      "transient_fit_error": 0.014891
+    },
+    {
+      "raw_index": 220,
+      "event": {
+        "pitch": 67,
+        "start_sec": 27.49772727272727,
+        "end_sec": 27.752272727272725,
+        "velocity": 91
+      },
+      "reference_matched": true,
+      "independent_onset": true,
+      "decay_fit_error": null,
+      "transient_fit_error": null
+    },
+    {
+      "raw_index": 221,
+      "event": {
+        "pitch": 79,
+        "start_sec": 27.49772727272727,
+        "end_sec": 27.74090909090909,
+        "velocity": 46
+      },
+      "reference_matched": false,
+      "independent_onset": true,
+      "decay_fit_error": null,
+      "transient_fit_error": null
+    },
+    {
+      "raw_index": 222,
+      "event": {
+        "pitch": 79,
+        "start_sec": 27.74090909090909,
+        "end_sec": 27.99772727272727,
+        "velocity": 56
+      },
+      "reference_matched": false,
+      "independent_onset": true,
+      "decay_fit_error": null,
+      "transient_fit_error": null
+    },
+    {
+      "raw_index": 223,
+      "event": {
+        "pitch": 67,
+        "start_sec": 27.752272727272725,
+        "end_sec": 28.68409090909091,
+        "velocity": 83
+      },
+      "reference_matched": true,
+      "independent_onset": true,
+      "decay_fit_error": null,
+      "transient_fit_error": null
+    },
+    {
+      "raw_index": 224,
+      "event": {
+        "pitch": 60,
+        "start_sec": 27.99772727272727,
+        "end_sec": 28.254545454545454,
+        "velocity": 98
+      },
+      "reference_matched": true,
+      "independent_onset": true,
+      "decay_fit_error": null,
+      "transient_fit_error": null
+    },
+    {
+      "raw_index": 225,
+      "event": {
+        "pitch": 79,
+        "start_sec": 27.99772727272727,
+        "end_sec": 28.24090909090909,
+        "velocity": 53
+      },
+      "reference_matched": false,
+      "independent_onset": false,
+      "decay_fit_error": 0.555305,
+      "transient_fit_error": null
+    },
+    {
+      "raw_index": 226,
+      "event": {
+        "pitch": 79,
+        "start_sec": 28.24090909090909,
+        "end_sec": 28.45,
+        "velocity": 47
+      },
+      "reference_matched": false,
+      "independent_onset": false,
+      "decay_fit_error": 0.952906,
+      "transient_fit_error": null
+    },
+    {
+      "raw_index": 227,
+      "event": {
+        "pitch": 60,
+        "start_sec": 28.254545454545454,
+        "end_sec": 29.14772727272727,
+        "velocity": 72
+      },
+      "reference_matched": true,
+      "independent_onset": false,
+      "decay_fit_error": 2.101254,
+      "transient_fit_error": null
+    },
+    {
+      "raw_index": 228,
+      "event": {
+        "pitch": 62,
+        "start_sec": 28.49772727272727,
+        "end_sec": 28.752272727272725,
+        "velocity": 95
+      },
+      "reference_matched": true,
+      "independent_onset": true,
+      "decay_fit_error": null,
+      "transient_fit_error": null
+    },
+    {
+      "raw_index": 229,
+      "event": {
+        "pitch": 74,
+        "start_sec": 28.74090909090909,
+        "end_sec": 28.95,
+        "velocity": 42
+      },
+      "reference_matched": false,
+      "independent_onset": true,
+      "decay_fit_error": null,
+      "transient_fit_error": null
+    },
+    {
+      "raw_index": 230,
+      "event": {
+        "pitch": 62,
+        "start_sec": 28.752272727272725,
+        "end_sec": 29.461363636363636,
+        "velocity": 78
+      },
+      "reference_matched": true,
+      "independent_onset": false,
+      "decay_fit_error": 2.327079,
+      "transient_fit_error": 2.324358
+    },
+    {
+      "raw_index": 231,
+      "event": {
+        "pitch": 64,
+        "start_sec": 28.995454545454542,
+        "end_sec": 29.252272727272725,
+        "velocity": 85
+      },
+      "reference_matched": true,
+      "independent_onset": true,
+      "decay_fit_error": null,
+      "transient_fit_error": null
+    },
+    {
+      "raw_index": 232,
+      "event": {
+        "pitch": 76,
+        "start_sec": 28.995454545454542,
+        "end_sec": 29.24090909090909,
+        "velocity": 36
+      },
+      "reference_matched": false,
+      "independent_onset": true,
+      "decay_fit_error": null,
+      "transient_fit_error": null
+    },
+    {
+      "raw_index": 233,
+      "event": {
+        "pitch": 76,
+        "start_sec": 29.24090909090909,
+        "end_sec": 29.48409090909091,
+        "velocity": 42
+      },
+      "reference_matched": false,
+      "independent_onset": true,
+      "decay_fit_error": null,
+      "transient_fit_error": null
+    },
+    {
+      "raw_index": 234,
+      "event": {
+        "pitch": 64,
+        "start_sec": 29.252272727272725,
+        "end_sec": 29.797727272727272,
+        "velocity": 95
+      },
+      "reference_matched": true,
+      "independent_onset": false,
+      "decay_fit_error": 2.111228,
+      "transient_fit_error": 2.10985
+    },
+    {
+      "raw_index": 235,
+      "event": {
+        "pitch": 62,
+        "start_sec": 29.461363636363636,
+        "end_sec": 29.71590909090909,
+        "velocity": 76
+      },
+      "reference_matched": false,
+      "independent_onset": false,
+      "decay_fit_error": null,
+      "transient_fit_error": null
+    },
+    {
+      "raw_index": 236,
+      "event": {
+        "pitch": 76,
+        "start_sec": 29.529545454545453,
+        "end_sec": 29.797727272727272,
+        "velocity": 50
+      },
+      "reference_matched": false,
+      "independent_onset": false,
+      "decay_fit_error": 0.005077,
+      "transient_fit_error": null
+    }
+  ],
+  "input_sha256": {
+    "candidates/15-tail-audit-v1/audit.json": "0de8384f9eb606b1c3675ae1af86070e5c16ba470164f2366190a0ef314ea224",
+    "structure-review-artifacts/15-repeated-notes/raw.mid": "c6c9950c1704c4ab5051b373359cf7ad8f75251d6a811f58ee161d03a067fad1",
+    "generated/15-repeated-notes.mid": "08e86428dc8a186e452643ec02f478fa9469f5a742818347501ed059c8d1e1e5"
+  },
+  "limitation": "reference labels diagnose this fixture only; independent_onset is not a reliable played-note classifier"
+}

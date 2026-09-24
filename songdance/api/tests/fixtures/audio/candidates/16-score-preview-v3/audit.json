@@ -1,0 +1,252 @@
+{
+  "production_eligible": false,
+  "status": "failed",
+  "source_sha256": "bfd120feec800636d2ca55b36c87c7fcf798bb2072880d87a0355818931cf8dc",
+  "source_audit_sha256": "bdaf60a0ab769be4be704163cf5cb2b4ca49aa10f6927f50348c8e59ed91aa9f",
+  "builder_sha256": "274e8b90a6e92fae9aea92fa197436246ca80bcbfef35c88316250c9e5311c63",
+  "configuration": "operator 2/4, 60 BPM, zero bar origin, sixteenth grid",
+  "confidence_semantics": "zero internal placeholder, not inferred certainty",
+  "unresolved": [
+    "four_note_source_vs_teacher_triad",
+    "extra_model_events",
+    "note_durations_and_hands",
+    "audio_verified_downbeat_alignment"
+  ],
+  "field_semantics": {
+    "note_confidence": "unknown; numeric zero required by existing score API",
+    "meter": "explicit hypothesis, not model probability",
+    "key": "display default, not inferred",
+    "hand_confidence": "existing uncalibrated layout heuristic, not actual hand certainty"
+  },
+  "export_consistency": {
+    "status": "failed",
+    "checks": {
+      "xml_matches_events": false,
+      "midi_matches_events": true
+    },
+    "expected_events": 149,
+    "xml_tied_events": 153,
+    "midi_events": 149,
+    "xml_only": [
+      [
+        72,
+        0.0,
+        0.75
+      ],
+      [
+        76,
+        2.0,
+        1.0
+      ],
+      [
+        67,
+        6.0,
+        0.5
+      ],
+      [
+        67,
+        10.0,
+        1.0
+      ],
+      [
+        67,
+        12.0,
+        0.5
+      ],
+      [
+        67,
+        16.0,
+        1.0
+      ],
+      [
+        67,
+        18.0,
+        0.5
+      ],
+      [
+        67,
+        24.0,
+        0.5
+      ],
+      [
+        57,
+        2.0,
+        1.0
+      ],
+      [
+        57,
+        3.0,
+        0.25
+      ],
+      [
+        60,
+        3.0,
+        0.25
+      ],
+      [
+        62,
+        4.0,
+        1.0
+      ],
+      [
+        57,
+        8.0,
+        1.0
+      ],
+      [
+        57,
+        9.0,
+        0.25
+      ],
+      [
+        60,
+        9.0,
+        0.25
+      ],
+      [
+        62,
+        10.0,
+        1.0
+      ],
+      [
+        57,
+        14.0,
+        1.5
+      ],
+      [
+        62,
+        16.0,
+        1.0
+      ],
+      [
+        55,
+        18.0,
+        1.75
+      ],
+      [
+        53,
+        20.0,
+        0.75
+      ],
+      [
+        62,
+        22.0,
+        1.0
+      ],
+      [
+        57,
+        26.0,
+        1.5
+      ],
+      [
+        62,
+        28.0,
+        1.0
+      ]
+    ],
+    "missing_or_changed_xml": [
+      [
+        72,
+        0.0,
+        0.5
+      ],
+      [
+        57,
+        2.0,
+        1.25
+      ],
+      [
+        76,
+        2.0,
+        0.75
+      ],
+      [
+        62,
+        4.0,
+        0.75
+      ],
+      [
+        67,
+        6.0,
+        0.25
+      ],
+      [
+        57,
+        8.0,
+        1.25
+      ],
+      [
+        62,
+        10.0,
+        0.75
+      ],
+      [
+        67,
+        10.0,
+        0.75
+      ],
+      [
+        67,
+        12.0,
+        0.25
+      ],
+      [
+        57,
+        14.0,
+        1.25
+      ],
+      [
+        62,
+        16.0,
+        0.75
+      ],
+      [
+        67,
+        16.0,
+        0.75
+      ],
+      [
+        55,
+        18.0,
+        1.5
+      ],
+      [
+        67,
+        18.0,
+        0.25
+      ],
+      [
+        53,
+        20.0,
+        0.5
+      ],
+      [
+        62,
+        22.0,
+        0.75
+      ],
+      [
+        67,
+        24.0,
+        0.25
+      ],
+      [
+        57,
+        26.0,
+        1.25
+      ],
+      [
+        62,
+        28.0,
+        0.75
+      ]
+    ],
+    "reader": "music21 stripTies; disagreement blocks export acceptance"
+  },
+  "artifacts": {
+    "score.musicxml": "c4ba154760d38621543b95af0f51f4f8db6b8f6e0a526ad337d726049958b9be",
+    "score.mid": "5c164f26b3905d4b7093d49910432d85b46842bb29531206013eb9cd7f71003d",
+    "timeline.json": "c29578fd442943f1512bd8c0e1353f1d3d1151db7877b179df201a9403edbc75"
+  },
+  "error": "MusicXML/MIDI event mismatch; preview must not be accepted"
+}

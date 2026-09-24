@@ -294,7 +294,7 @@ def _scalar_tempo(tempo: np.ndarray | float) -> float:
 def _downbeats(
     beat_times: np.ndarray, time_signature: str, phase: int
 ) -> tuple[float, ...]:
-    group_size = {"3/4": 3, "4/4": 4, "6/8": 3}[time_signature]
+    group_size = {"2/4": 2, "3/4": 3, "4/4": 4, "6/8": 3}[time_signature]
     selected = [float(value) for value in beat_times[phase::group_size]]
     if len(selected) >= 2:
         measure_interval = float(np.median(np.diff(selected)))

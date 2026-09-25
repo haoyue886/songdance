@@ -1,48 +1,17 @@
 ---
 name: skill-builder
-description: 当用户说要创建新技能，或 EVOLUTION.md 提议自动生成新 Skill 时使用。按照框架模块化规范创建结构一致的新 Skill。
+description: 为重复任务创建或更新项目级技能，验证触发范围、引用和实际行为；不为一次性问题自动扩充规则。
 ---
 
-[任务]
-    根据用户需求或 EVOLUTION 提议，创建符合框架规范的新 Skill，结构和现有 Skill 一致、即插即用。
+# 项目技能
 
-[依赖检测]
-    无必需依赖。可选：来自进化提议时读对应 proposal 了解背景。
+技能写到 `.agents/skills/<name>/SKILL.md`，保留清晰的 name 和 description。只加入会改变执行决策的项目知识、边界、工具用法与验收标准。可用系统 skill-creator 时参考其当前规范。
 
-[文件结构]
-    skill-builder/
-    ├── SKILL.md               # 本文件
-    └── templates/
-        └── skill-template.md  # 新 Skill 骨架模板
+- 先判断现有技能、示例或确定性脚本能否覆盖，再决定新建。避免重叠的自动触发描述。
+- 用户明确指定的行为优先。不要从一次反馈推导所有任务都适用的强制规则，也不要默认改变全局模型、权限或配置。
+- 正文尽量自足；长流程按场景放进 references 并说明何时读取，不要求每次加载全部资料。
+- [最小模板](templates/skill-template.md) 可按需裁剪，不强制标题样式、段数、文件树或初始化口号。
+- 修改技能时检查引用者和相邻技能的冲突。无需把 description 再复制成 AGENTS 路由清单。
+- 验证 frontmatter、引用文件和新增脚本；用代表性任务检查误触发与遗漏。复杂技能可独立试跑，不只检查文字格式。
 
-[第一性原则]
-    模板优先：先读 templates/skill-template.md 骨架按结构填，不从零写。
-    参照现有：创建前读 1-2 个交互模式最接近的已有 Skill 保持一致，不发明新格式。
-    最小必要：只建需要的 Section，不为"看起来完整"加空内容。
-    联网优先：涉及不熟的领域先 WebSearch 了解最佳实践再设计维度和策略。
-
-[创建规范]
-    三层模块化：
-    - Section 是原子能力。维度清单定义查什么收什么，策略定义怎么做，工作流程定义什么顺序。改一个 Section 不影响其他
-    - Skill 是多个 Section 的组合，解决一个领域问题
-    - AGENTS.md 编排 Skill 的顺序和触发，改工作流不改 Skill 内容
-    Section 分类：
-    - 必须有：[任务]、[依赖检测]、[文件结构]、[第一性原则]、[初始化]
-    - 推荐有：[输出风格]、[XX维度清单]、[XX策略]
-    - 按需有：[信息充足度判断]、[回退策略]、[Phase 完成度判断]、多模式工作流程
-    交互模式定参照：对话采集型参照 product-spec-builder、design-brief-builder；自主分析型参照 dev-planner、code-review；执行操作型参照 dev-builder、release-builder；诊断修复型参照 bug-fixer。
-
-[写作规范]
-    遵循 Agent-Guideline.md：
-    - 格式：[标题] 段、四空格缩进、中文、嵌套 [name] 块，frontmatter 只有 name 和 description
-    - 不用括号写补充逻辑，直接写成正文或短句
-    - 不点具体模型或产品名，直接讲本质
-    - 人称用"你"，写直接的指令，不写外部观察
-    - 讲规则、需求、标准，不写分步执行剧本，剩下交给你自己
-    - 言简意赅，删含糊、绕、废话
-
-[工作流程]
-    了解新 Skill 解决什么、何时触发、输入输出 → 按交互模式找参照 Skill → 读模板定 Section → 逐个填，第一性原则最后一条是联网优先 → 在 .agents/skills/[skill-name]/ 建 SKILL.md，有模板建 templates/ → 自检格式和写作规范 → 在 AGENTS.md 补 [Skill 调用规则]、[可用技能] 和工作流程。
-
-[初始化]
-    收集新 Skill 需求。
+交付文件、触发示例、验证结果和未验证事项。普通小修不额外生成框架说明文档。

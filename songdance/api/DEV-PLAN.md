@@ -2,3 +2,6 @@
 - 2026-09-16 07-soft单旋律专项验证完成：Transkun 40个独立起音经“截断到下一独立起音+monophonic_melody上下文”生成单Piano/单高音谱表/单voice/0休止符/0小节时值错误；10-device含27个同时起音簇和27个低音事件，单旋律保护测试拒绝触发。新增2项回归通过。该规则仍为研究候选，未接生产默认链。
 - 10下一步先做双模型低音差异审计：列出Basic Pitch独有的低音起音及原始时间，参考MIDI仅事后评价；记录旧0.9秒在120 BPM/四分之一拍量化下成为1.75拍双附点四分音符及补休止的事实。暂不直接融合，也不修改已获确认的右手。
 - 10低音后续采用边界敏感性实验：在同一规范化WAV前加4秒零值、后加1秒零值，Transkun固定配置重新推理，统一减4秒映射回原音频，记录裁切事件；仅比较全段模型输出，不用参考挑选或拼接单音。此实验检验开头和16秒分段附近的漏音是否随上下文变化；不是独立击键证明。补测无重击纯衰减对照，不改老师认可的XML。
+- 2026-09-28 机器辅助预标注：基于真人02 evidence逐事件生成独立real-repeat-ai-prelabels-v1，不覆盖正式labels；120条全部ai_suggestion=uncertain、judgment=pending（没有达到安全no_restrike条件）。明确人工复核必需、不可授权删音；脚本Ruff/定向测试通过，未改曲谱。
+- 2026-09-28 16 deferred: 29 extra events are recorded as a known Basic Pitch quality limitation and do not block delivery. No automatic deletion or score rewrite. Teacher feedback has been received and package usability accepted; this deferral does not mark musical quality as passed.
+- 2026-09-28 评审包交付确认：用户确认启动脚本、音频/PDF/MusicXML/MIDI 下载与播放、评级备注均正确，并接受16-noisy-polyphony的29个额外音暂缓处理。review-final-20260928评审包可作为当前交付包；不代表needs_redo曲目已完成修复后二次评审。

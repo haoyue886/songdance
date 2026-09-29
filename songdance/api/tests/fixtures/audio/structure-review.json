@@ -11,7 +11,7 @@
     {
       "id": "01-slow-melody",
       "raw_midi_note_count": 54,
-      "rating": "pending",
+      "rating": "minor_edits",
       "notes": "",
       "parser_validation": {
         "music21": {
@@ -26,12 +26,14 @@
           "measure_count": 8,
           "svg_count": 1
         }
-      }
+      },
+      "review_status": "teacher_feedback_recorded",
+      "review_source": "teacher_manual_review"
     },
     {
       "id": "02-fast-scale",
       "raw_midi_note_count": 204,
-      "rating": "pending",
+      "rating": "minor_edits",
       "notes": "",
       "parser_validation": {
         "music21": {
@@ -46,12 +48,14 @@
           "measure_count": 15,
           "svg_count": 1
         }
-      }
+      },
+      "review_status": "teacher_feedback_recorded",
+      "review_source": "teacher_manual_review"
     },
     {
       "id": "03-block-chords",
       "raw_midi_note_count": 128,
-      "rating": "pending",
+      "rating": "minor_edits",
       "notes": "",
       "parser_validation": {
         "music21": {
@@ -66,12 +70,14 @@
           "measure_count": 5,
           "svg_count": 1
         }
-      }
+      },
+      "review_status": "teacher_feedback_recorded",
+      "review_source": "teacher_manual_review"
     },
     {
       "id": "04-arpeggios",
       "raw_midi_note_count": 326,
-      "rating": "pending",
+      "rating": "minor_edits",
       "notes": "",
       "parser_validation": {
         "music21": {
@@ -86,12 +92,14 @@
           "measure_count": 15,
           "svg_count": 1
         }
-      }
+      },
+      "review_status": "teacher_feedback_recorded",
+      "review_source": "teacher_manual_review"
     },
     {
       "id": "05-two-hand",
       "raw_midi_note_count": 229,
-      "rating": "pending",
+      "rating": "minor_edits",
       "notes": "",
       "parser_validation": {
         "music21": {
@@ -106,13 +114,15 @@
           "measure_count": 15,
           "svg_count": 1
         }
-      }
+      },
+      "review_status": "teacher_feedback_recorded",
+      "review_source": "teacher_manual_review"
     },
     {
       "id": "06-sustain",
       "raw_midi_note_count": 111,
-      "rating": "pending",
-      "notes": "",
+      "rating": "needs_redo",
+      "notes": "三和弦泛音被误识别为高八度音，延音残留拉长时值并生成冗余声部和休止符；需恢复为三个基频音、均匀时值、单声部。",
       "parser_validation": {
         "music21": {
           "status": "passed"
@@ -126,13 +136,15 @@
           "measure_count": 6,
           "svg_count": 1
         }
-      }
+      },
+      "review_status": "teacher_feedback_recorded",
+      "review_source": "teacher_manual_review"
     },
     {
       "id": "07-soft",
       "raw_midi_note_count": 77,
-      "rating": "needs_redo",
-      "notes": "Phase 36 baseline retained until the regenerated full suite is reviewed.",
+      "rating": "direct_use",
+      "notes": "人工复评确认单行高音谱、音符时值、小节线和弱音尾音处理均符合要求。",
       "parser_validation": {
         "music21": {
           "status": "passed"
@@ -146,13 +158,15 @@
           "measure_count": 10,
           "svg_count": 1
         }
-      }
+      },
+      "review_status": "teacher_feedback_recorded",
+      "review_source": "teacher_manual_review"
     },
     {
       "id": "08-dynamics",
       "raw_midi_note_count": 111,
-      "rating": "pending",
-      "notes": "",
+      "rating": "needs_redo",
+      "notes": "八个音循环应为4/4中均匀八分音符；当前拍号、BPM、时值和多余低音谱表/休止符均需修正。",
       "parser_validation": {
         "music21": {
           "status": "passed"
@@ -166,13 +180,15 @@
           "measure_count": 8,
           "svg_count": 1
         }
-      }
+      },
+      "review_status": "teacher_feedback_recorded",
+      "review_source": "teacher_manual_review"
     },
     {
       "id": "09-light-noise",
       "raw_midi_note_count": 36,
-      "rating": "pending",
-      "notes": "",
+      "rating": "minor_edits",
+      "notes": "五声调式、BPM和一拍一音框架基本正确；需统一右手声部并清理局部泛音粘连。",
       "parser_validation": {
         "music21": {
           "status": "passed"
@@ -186,13 +202,15 @@
           "measure_count": 8,
           "svg_count": 1
         }
-      }
+      },
+      "review_status": "teacher_feedback_recorded",
+      "review_source": "teacher_manual_review"
     },
     {
       "id": "10-device",
       "raw_midi_note_count": 174,
-      "rating": "pending",
-      "notes": "",
+      "rating": "needs_redo",
+      "notes": "低音1-4-5-1不完整且一拍一音不正确；虽左右手对齐、高音时值正确，仍需补齐低音并处理泛音杂音。",
       "parser_validation": {
         "music21": {
           "status": "passed"
@@ -206,13 +224,15 @@
           "measure_count": 15,
           "svg_count": 1
         }
-      }
+      },
+      "review_status": "teacher_feedback_recorded",
+      "review_source": "teacher_manual_review"
     },
     {
       "id": "11-waltz-34",
       "raw_midi_note_count": 129,
-      "rating": "pending",
-      "notes": "",
+      "rating": "needs_redo",
+      "notes": "应按6/8组织三拍子律动；当前仍按4/4分配，左手持续时值和右手八分音符小节划分需重做。",
       "parser_validation": {
         "music21": {
           "status": "passed"
@@ -226,13 +246,15 @@
           "measure_count": 20,
           "svg_count": 1
         }
-      }
+      },
+      "review_status": "teacher_feedback_recorded",
+      "review_source": "teacher_manual_review"
     },
     {
       "id": "12-compound-68",
       "raw_midi_note_count": 310,
-      "rating": "pending",
-      "notes": "",
+      "rating": "needs_redo",
+      "notes": "6/8首音延长未标注，低频无规律噪音进入低音谱表；需保留延长特征并移除可疑噪音。",
       "parser_validation": {
         "music21": {
           "status": "passed"
@@ -246,13 +268,15 @@
           "measure_count": 20,
           "svg_count": 1
         }
-      }
+      },
+      "review_status": "teacher_feedback_recorded",
+      "review_source": "teacher_manual_review"
     },
     {
       "id": "13-key-change",
       "raw_midi_note_count": 156,
-      "rating": "pending",
-      "notes": "",
+      "rating": "needs_redo",
+      "notes": "六音循环不能使用4/4；还存在泛音叠加和不应出现的和弦音，需改为3/4或6/8并重做音符分离。",
       "parser_validation": {
         "music21": {
           "status": "passed"
@@ -266,13 +290,15 @@
           "measure_count": 11,
           "svg_count": 1
         }
-      }
+      },
+      "review_status": "teacher_feedback_recorded",
+      "review_source": "teacher_manual_review"
     },
     {
       "id": "14-hand-crossing",
       "raw_midi_note_count": 285,
-      "rating": "pending",
-      "notes": "",
+      "rating": "needs_redo",
+      "notes": "全段应统一八分音符、约60 BPM；当前后半段时值翻倍，左右手镜像结构需重新对齐。",
       "parser_validation": {
         "music21": {
           "status": "passed"
@@ -286,13 +312,15 @@
           "measure_count": 15,
           "svg_count": 1
         }
-      }
+      },
+      "review_status": "teacher_feedback_recorded",
+      "review_source": "teacher_manual_review"
     },
     {
       "id": "15-repeated-notes",
       "raw_midi_note_count": 237,
-      "rating": "pending",
-      "notes": "",
+      "rating": "needs_redo",
+      "notes": "泛音造成左右手分配混乱，且时值累积导致循环起点错位；需恢复清晰分手并按八分网格重排。",
       "parser_validation": {
         "music21": {
           "status": "passed"
@@ -306,13 +334,15 @@
           "measure_count": 15,
           "svg_count": 1
         }
-      }
+      },
+      "review_status": "teacher_feedback_recorded",
+      "review_source": "teacher_manual_review"
     },
     {
       "id": "16-noisy-polyphony",
       "raw_midi_note_count": 149,
-      "rating": "pending",
-      "notes": "",
+      "rating": "needs_redo",
+      "notes": "2/4和弦落点候选已保留，但29个额外事件暂作为已知模型限制；本次不自动删除，仍不作为音乐质量通过。",
       "parser_validation": {
         "music21": {
           "status": "passed"
@@ -326,7 +356,9 @@
           "measure_count": 15,
           "svg_count": 1
         }
-      }
+      },
+      "review_status": "teacher_feedback_recorded",
+      "review_source": "teacher_manual_review"
     }
   ]
 }

@@ -10,14 +10,15 @@ from fastapi import APIRouter, Depends, HTTPException, Request, status
 from sqlalchemy.orm import Session
 
 from app.database import get_session
-from app.models import JobStage, JobStatus, SourceAsset, TranscriptionJob
+from app.models import JobStage, JobStatus, SourceAsset, TranscriptionJob, User
 from app.observability import log_event
 from app.pipeline.errors import PipelineError
 from app.pipeline.youtube import download_youtube_clip, parse_youtube_video_id
 from app.schemas import JobResponse, YoutubeConfigResponse, YoutubeJobRequest
 from app.services.analytics import hash_job_id, record_event
 from app.services.audio_validation import MAX_AUDIO_BYTES, AudioValidationError, validate_audio_file
-from app.services.job_access import get_available_job
+from app.services.auth import optional_user
+from app.services.job_access import get_available_job, new_guest_secret
 from app.services.lifecycle import remove_failed_upload_intent
 from app.services.quota import QuotaExceeded, client_quota_key
 from app.settings import Settings
@@ -36,6 +37,7 @@ def create_youtube_job(
     payload: YoutubeJobRequest,
     request: Request,
     session: Annotated[Session, Depends(get_session)],
+    user: Annotated[User | None, Depends(optional_user)],
 ) -> JobResponse:
     settings = request.app.state.settings
     if not settings.youtube_enabled:
@@ -51,6 +53,9 @@ def create_youtube_job(
         raise _pipeline_http_error(error) from error
 
     job_id = secrets.token_urlsafe(24)
+    guest_token, guest_hash = (
+        new_guest_secret() if settings.auth_enabled and user is None else (None, None)
+    )
     reserved = _reserve_quota(request, job_id)
     settings.temp_path.mkdir(parents=True, exist_ok=True)
     workdir = Path(tempfile.mkdtemp(prefix="youtube-", dir=settings.temp_path))
@@ -74,6 +79,8 @@ def create_youtube_job(
         now = datetime.now(UTC)
         job = TranscriptionJob(
             id=job_id,
+            owner_user_id=user.id if user else None,
+            guest_secret_hash=guest_hash,
             status=JobStatus.QUEUED,
             stage=JobStage.UPLOAD,
             source_type="youtube",
@@ -105,7 +112,9 @@ def create_youtube_job(
             session.commit()
         _record_submission(session, settings, current_job.id, clip_seconds)
         reserved = False
-        return JobResponse.model_validate(get_available_job(session, current_job.id))
+        return JobResponse.model_validate(get_available_job(session, current_job.id)).model_copy(
+            update={"guest_access_token": guest_token}
+        )
     except (PipelineError, AudioValidationError) as error:
         raise _pipeline_http_error(error) from error
     except Exception:

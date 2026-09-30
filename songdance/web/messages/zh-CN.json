@@ -1,4 +1,33 @@
 {
+  "auth": {
+    "signIn": "登录",
+    "account": "账户",
+    "title": "登录 SongDance",
+    "subtitle": "使用 Google 或邮箱一次性验证码，无需设置密码。",
+    "email": "邮箱地址",
+    "code": "六位验证码",
+    "sendCode": "发送验证码",
+    "verify": "验证并登录",
+    "google": "使用 Google 登录",
+    "signOut": "退出登录",
+    "working": "请稍候…",
+    "loading": "正在检查登录状态…",
+    "sent": "如果该邮箱可接收验证码，请查收邮件；60 秒后可重新请求。",
+    "unavailable": "当前环境尚未开放登录。",
+    "invalid": "验证码或登录请求无效、已过期，请重试。",
+    "expired": "登录已过期，请重新登录。",
+    "rateLimited": "尝试过于频繁，请稍后重试。",
+    "error": "登录服务暂不可用，请稍后重试。",
+    "accountTitle": "我的账户",
+    "accountBody": "你已登录。本次版本尚未启用收费与每月用量。",
+    "upload": "转录音频",
+    "fileHint": "登录返回后，可能需要重新选择本地音频文件。",
+    "claim": "将此临时任务认领到我的账户",
+    "claimed": "此任务已归属你的账户。",
+    "claimError": "无法认领此任务，可能已过期或已属于其他账户。",
+    "back": "返回任务",
+    "resend": "重新发送验证码"
+  },
   "common": {
     "brandHome": "返回 SongDance 首页",
     "navLabel": "主导航",
@@ -346,6 +375,8 @@
     "guide": "查看转录示例"
   },
   "errors": {
+    "authRequired": "请重新登录后访问此任务。",
+    "accountUnavailable": "此账户当前不可用，请联系支持。",
     "network": "无法连接转录服务，请检查网络后重试。",
     "service": "转录服务暂时不可用，请稍后重试。",
     "invalidDownload": "下载地址无效，请刷新后重试。",

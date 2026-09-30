@@ -30,6 +30,8 @@ def test_alembic_upgrade_and_downgrade(tmp_path: Path) -> None:
         "transcription_jobs",
         "transcription_quality_reports",
         "transcription_results",
+        "users",
+        "auth_identities",
     }
     source_asset_columns = {
         column["name"] for column in inspect(engine).get_columns("source_assets")

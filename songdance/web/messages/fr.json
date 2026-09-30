@@ -1,4 +1,33 @@
 {
+  "auth": {
+    "signIn": "Sign in",
+    "account": "Account",
+    "title": "Sign in to SongDance",
+    "subtitle": "Use Google or a one-time email code. No password required.",
+    "email": "Email address",
+    "code": "Six-digit code",
+    "sendCode": "Send code",
+    "verify": "Verify and sign in",
+    "google": "Continue with Google",
+    "signOut": "Sign out",
+    "working": "Please wait…",
+    "loading": "Checking your session…",
+    "sent": "If this address can receive a code, check your inbox. You can request another after 60 seconds.",
+    "unavailable": "Sign-in is not available in this environment yet.",
+    "invalid": "The code or sign-in request is invalid or expired. Please try again.",
+    "expired": "Your session has expired. Please sign in again.",
+    "rateLimited": "Too many attempts. Please wait before trying again.",
+    "error": "Sign-in is temporarily unavailable. Please try again.",
+    "accountTitle": "Your account",
+    "accountBody": "Your sign-in is active. Billing and monthly usage are not enabled in this release.",
+    "upload": "Transcribe audio",
+    "fileHint": "After signing in, you may need to select your local audio file again.",
+    "claim": "Save this temporary task to my account",
+    "claimed": "This task now belongs to your account.",
+    "claimError": "This task could not be claimed. It may have expired or belong to another account.",
+    "back": "Back to the task",
+    "resend": "Send another code"
+  },
   "common": {
     "brandHome": "Return to the SongDance home page",
     "navLabel": "Primary navigation",
@@ -346,6 +375,8 @@
     "guide": "Open transcription example"
   },
   "errors": {
+    "authRequired": "Please sign in again to access this task.",
+    "accountUnavailable": "This account is currently unavailable. Please contact support.",
     "network": "Unable to connect to the transcription service. Check your network and try again.",
     "service": "The transcription service is temporarily unavailable. Try again later.",
     "invalidDownload": "The download address is invalid. Refresh and try again.",

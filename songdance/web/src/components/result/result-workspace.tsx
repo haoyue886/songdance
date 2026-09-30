@@ -3,6 +3,8 @@
 import { BarChart3, Check, Copy, Music2 } from "lucide-react";
 import { useLocale, useTranslations } from "next-intl";
 import { useCallback, useEffect, useMemo, useState } from "react";
+import { Link } from "@/i18n/navigation";
+import { authEnabled } from "@/lib/auth/client";
 import { useResultPlayback } from "@/hooks/use-result-playback";
 import { trackEvent } from "@/lib/analytics/events";
 import { fetchArtifact, type TranscriptionJob } from "@/lib/api/jobs";
@@ -49,6 +51,7 @@ export function ResultWorkspace({
   shareable?: boolean;
 }) {
   const t = useTranslations("result");
+  const authT = useTranslations("auth");
   const errors = useTranslations("errors");
   const locale = useLocale();
   const {
@@ -171,7 +174,12 @@ export function ResultWorkspace({
         </div>
         <div className="flex flex-wrap items-center justify-end gap-3 text-sm text-[#61716c]">
           <p>{expiresLabel ?? t("savedUntil", { date: formatDate(job.expires_at, locale) })}</p>
-          {shareable && (
+          {authEnabled && job.access_type === "guest" && <Link
+            href={`/account?return_to=${encodeURIComponent(`${locale === "en" ? "" : `/${locale}`}/jobs/${job.id}`)}`}
+            className="inline-flex min-h-9 items-center rounded-md border border-[#cad8d2] bg-white px-3 font-bold text-[#075e55]">
+            {authT("claim")}
+          </Link>}
+          {shareable && (!job.access_type || job.access_type === "legacy") && (
             <button type="button" onClick={() => void copyShareLink()}
               className="inline-flex h-9 items-center gap-2 rounded-md border border-[#cad8d2] bg-white px-3 font-bold text-[#075e55]">
               {shareState === "copied" ? <Check size={15} /> : <Copy size={15} />}

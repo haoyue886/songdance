@@ -9,8 +9,11 @@ from app.models.job import (
     TranscriptionQualityReport,
     TranscriptionResult,
 )
+from app.models.user import AuthIdentity, User
 
 __all__ = [
+    "AuthIdentity",
+    "User",
     "AnalyticsEvent",
     "Artifact",
     "Base",

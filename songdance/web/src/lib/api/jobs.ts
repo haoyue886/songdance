@@ -1,3 +1,5 @@
+import { accessSession, guestToken, rememberGuest, forgetGuest } from "@/lib/auth/client";
+
 export type JobStatus = "queued" | "running" | "succeeded" | "failed";
 
 export type JobStage =
@@ -33,6 +35,8 @@ export type QualityReportEnvelope = {
 };
 
 export type TranscriptionJob = {
+  access_type?: "legacy" | "guest" | "owned";
+  guest_access_token?: string | null;
   id: string;
   status: JobStatus;
   stage: JobStage;
@@ -106,10 +110,16 @@ function formatRetryAfter(seconds: number): string {
   return `${Math.ceil(seconds / 3600)} hours`;
 }
 
-async function request<T>(path: string, init?: RequestInit): Promise<T> {
+async function request<T>(path: string, init?: RequestInit, contextJobId?: string): Promise<T> {
+  const access = await accessSession();
+  const headers = new Headers(init?.headers);
+  if (access) headers.set("Authorization", `Bearer ${access.access_token}`);
+  const jobId = contextJobId ?? path.match(/^\/jobs\/([^/]+)/)?.[1];
+  const capability = jobId ? guestToken(decodeURIComponent(jobId)) : null;
+  if (capability) headers.set("X-Job-Access", capability);
   let response: Response;
   try {
-    response = await fetch(`${API_URL}${path}`, { cache: "no-store", ...init });
+    response = await fetch(`${API_URL}${path}`, { cache: "no-store", ...init, headers });
   } catch {
     throw new JobsApiError("Network error", 0, "NETWORK_ERROR");
   }
@@ -120,7 +130,19 @@ async function request<T>(path: string, init?: RequestInit): Promise<T> {
 
   const responseBody = await response.text();
   if (!responseBody) return undefined as T;
-  return JSON.parse(responseBody) as T;
+  const result = JSON.parse(responseBody);
+  if (typeof result.id === "string" && typeof result.guest_access_token === "string") rememberGuest(result.id, result.guest_access_token);
+  return result as T;
+}
+
+export async function claimJob(jobId: string): Promise<TranscriptionJob> {
+  const result = await request<TranscriptionJob>(`${jobPath(jobId)}/claim`, { method: "POST" });
+  forgetGuest(jobId);
+  return result;
+}
+
+export function getAccount(): Promise<{ id: string; email: string | null }> {
+  return request("/me");
 }
 
 export function createJob(input: CreateJobInput): Promise<TranscriptionJob> {
@@ -209,5 +231,5 @@ export function sendAnalyticsEvent(
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ event_name: eventName, job_id: jobId, properties }),
     keepalive: true,
-  });
+  }, jobId);
 }

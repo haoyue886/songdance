@@ -8,7 +8,7 @@ from fastapi import APIRouter, Depends, File, Form, HTTPException, Request, Uplo
 from sqlalchemy.orm import Session
 
 from app.database import get_session
-from app.models import JobStage, JobStatus, SourceAsset, TranscriptionJob
+from app.models import JobStage, JobStatus, SourceAsset, TranscriptionJob, User
 from app.observability import log_event
 from app.schemas import JobResponse
 from app.services.analytics import hash_job_id, record_event
@@ -20,7 +20,8 @@ from app.services.audio_validation import (
     validate_audio_file,
     validate_clip,
 )
-from app.services.job_access import get_available_job
+from app.services.auth import optional_user
+from app.services.job_access import get_accessible_job, get_available_job, new_guest_secret
 from app.services.lifecycle import delete_job_objects, remove_failed_upload_intent
 from app.services.queue import JobQueue
 from app.services.quota import JobQuota, QuotaExceeded, client_quota_key
@@ -116,6 +117,7 @@ async def create_job(
     end_sec: Annotated[float, Form()],
     rights_confirmed: Annotated[bool, Form()],
     session: Annotated[Session, Depends(get_session)],
+    user: Annotated[User | None, Depends(optional_user)],
 ) -> JobResponse:
     if not rights_confirmed:
         raise HTTPException(status_code=422, detail="Content rights confirmation is required")
@@ -139,6 +141,9 @@ async def create_job(
     storage = _storage(request)
     storage_key: str | None = None
     job_id = secrets.token_urlsafe(24)
+    guest_token, guest_hash = (
+        new_guest_secret() if settings.auth_enabled and user is None else (None, None)
+    )
     reserved = False
     intent_committed = False
     try:
@@ -154,6 +159,8 @@ async def create_job(
         now = datetime.now(UTC)
         job = TranscriptionJob(
             id=job_id,
+            owner_user_id=user.id if user else None,
+            guest_secret_hash=guest_hash,
             status=JobStatus.QUEUED,
             stage=JobStage.UPLOAD,
             source_type="upload",
@@ -198,7 +205,9 @@ async def create_job(
             session.rollback()
             log_event("analytics_write_failed", event_name="transcription_submitted")
         reserved = False
-        return JobResponse.model_validate(get_available_job(session, job.id))
+        return JobResponse.model_validate(get_available_job(session, job.id)).model_copy(
+            update={"guest_access_token": guest_token}
+        )
     except AudioValidationError as error:
         raise HTTPException(
             status_code=422, detail={"code": error.code, "message": error.message}
@@ -219,8 +228,13 @@ async def create_job(
 
 
 @router.get("/{job_id}", response_model=JobResponse)
-def get_job(job_id: str, session: Annotated[Session, Depends(get_session)]) -> JobResponse:
-    return JobResponse.model_validate(get_available_job(session, job_id))
+def get_job(
+    job_id: str,
+    request: Request,
+    session: Annotated[Session, Depends(get_session)],
+    user: Annotated[User | None, Depends(optional_user)],
+) -> JobResponse:
+    return JobResponse.model_validate(get_accessible_job(session, job_id, request, user))
 
 
 @router.post("/{job_id}/retry", response_model=JobResponse)
@@ -228,8 +242,9 @@ def retry_job(
     job_id: str,
     request: Request,
     session: Annotated[Session, Depends(get_session)],
+    user: Annotated[User | None, Depends(optional_user)],
 ) -> JobResponse:
-    job = get_available_job(session, job_id, for_update=True)
+    job = get_accessible_job(session, job_id, request, user, for_update=True)
     if job.status != JobStatus.FAILED:
         raise HTTPException(status_code=409, detail="Only failed tasks can be retried")
     if job.error_code == "DELETE_FAILED":
@@ -260,8 +275,9 @@ def delete_job(
     job_id: str,
     request: Request,
     session: Annotated[Session, Depends(get_session)],
+    user: Annotated[User | None, Depends(optional_user)],
 ) -> None:
-    job = get_available_job(session, job_id, for_update=True)
+    job = get_accessible_job(session, job_id, request, user, for_update=True)
     storage = _storage(request)
     previous_status = job.status
     job.error_code = "DELETE_REQUESTED"

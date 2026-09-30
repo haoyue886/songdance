@@ -49,6 +49,8 @@ class RequestObservabilityMiddleware(BaseHTTPMiddleware):
             response = await call_next(request)
             status_code = response.status_code
             response.headers["X-Request-ID"] = request_id
+            if request.url.path.startswith(("/auth/", "/jobs/")) or request.url.path == "/me":
+                response.headers["Cache-Control"] = "private, no-store"
             return response
         finally:
             route = request.scope.get("route")

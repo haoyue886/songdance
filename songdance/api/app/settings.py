@@ -17,8 +17,7 @@ class Settings(BaseSettings):
     app_name: str = "SongDance API"
     environment: Literal["development", "test", "production"] = "development"
     cors_origins: str = (
-        "http://localhost:3000,http://localhost:3001,"
-        "http://127.0.0.1:3000,http://127.0.0.1:3001"
+        "http://localhost:3000,http://localhost:3001,http://127.0.0.1:3000,http://127.0.0.1:3001"
     )
     redis_url: RedisDsn = RedisDsn("redis://localhost:6379/0")
     queue_name: str = "songdance"
@@ -67,8 +66,17 @@ class Settings(BaseSettings):
     analysis_timeout_seconds: float = 15.0
     youtube_enabled: bool = False
     youtube_download_timeout_seconds: int = 120
+    auth_enabled: bool = False
+    supabase_url: str = ""
+    supabase_publishable_key: SecretStr = SecretStr("")
+    auth_session_database_url: SecretStr = SecretStr("")
+    auth_bridge_secret: SecretStr = SecretStr("")
+    auth_session_max_age_seconds: int = 0
+    auth_session_idle_seconds: int = 0
 
-    model_config = SettingsConfigDict(env_file=".env", env_prefix="SONGDANCE_")
+    model_config = SettingsConfigDict(
+        env_file=".env", env_prefix="SONGDANCE_", hide_input_in_errors=True
+    )
 
     @field_validator("database_url", mode="before")
     @classmethod
@@ -126,6 +134,31 @@ class Settings(BaseSettings):
 
     @model_validator(mode="after")
     def validate_service_configuration(self) -> "Settings":
+        if self.auth_enabled:
+            from app.services.auth_config import check
+
+            publishable_key = self.supabase_publishable_key.get_secret_value()
+            session_dsn = self.auth_session_database_url.get_secret_value()
+            report = check(
+                {
+                    "SONGDANCE_ENVIRONMENT": self.environment,
+                    "SONGDANCE_AUTH_ENABLED": "true",
+                    "SONGDANCE_AUTH_BRIDGE_SECRET": self.auth_bridge_secret.get_secret_value(),
+                    "NEXT_PUBLIC_SITE_URL": self.cors_origins.split(",")[0],
+                    "SONGDANCE_AUTH_API_URL": self.supabase_url,
+                    "SONGDANCE_SUPABASE_URL": self.supabase_url,
+                    "SONGDANCE_SUPABASE_PUBLISHABLE_KEY": publishable_key,
+                    "SONGDANCE_AUTH_SESSION_DATABASE_URL": session_dsn,
+                }
+            )
+            if not report["configuration_format_valid"]:
+                raise ValueError("Auth configuration is incomplete or invalid")
+            if len(self.auth_bridge_secret.get_secret_value()) < 32:
+                raise ValueError("Auth requires a 32+ character server-only bridge secret")
+            if self.environment == "production" and self.quota_backend != "redis":
+                raise ValueError("Auth production coordination requires Redis")
+        if self.auth_session_max_age_seconds < 0 or self.auth_session_idle_seconds < 0:
+            raise ValueError("Auth session limits must be nonnegative")
         if self.storage_backend == "s3":
             required = [self.s3_endpoint_url, self.s3_access_key, self.s3_secret_key]
             if not all(required):

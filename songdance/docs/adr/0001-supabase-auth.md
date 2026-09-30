@@ -1,6 +1,6 @@
 # ADR 0001 — Supabase Auth 与服务端会话边界
 
-日期：2026-09-30。决策状态：采用，作为 Phase 38.1 的实施合同；尚未接入真实项目或实现登录。
+日期：2026-09-30。决策状态：采用；Phase 38.1 已有本地实现与隔离验证，尚未接入真实 Supabase 项目、Google 或 SMTP。配置步骤见 `../auth-setup.md`。
 
 ## 决策与范围
 
@@ -12,19 +12,19 @@ Supabase 是此前讨论的候选，已核对官方的 Google、邮箱 OTP、JWT
 
 1. Next.js 的 `/api/auth/*` 处理发码、验证、OAuth 开始/回调、刷新、登出；这些路径排除 locale rewrite，使用站内 allowlist 返回路径。API 别名不接受浏览器指定任意上游 URL。
 2. 在 Next.js 服务端使用官方 Supabase JS/SSR 客户端。refresh token 与会话 Cookie 设为 HttpOnly、Secure（HTTPS）、SameSite=Lax、Path=/；不交给浏览器 Supabase Auth 客户端，也不写 localStorage。公开页面保持原缓存策略，认证/账号/回跳响应使用 `Cache-Control: private, no-store`，不得缓存 Set-Cookie。
-3. HttpOnly Cookie 的刷新由 BFF 明确承担，不能直接复制依赖 browser client 刷新的 SSR 示例。刷新按会话串行化，保留完整 Cookie 分片，避免跨请求覆盖新 refresh token；失败提示重新登录，不悄悄使用游客身份。
+3. HttpOnly Cookie 的读取/更新由 BFF 承担。SDK 的 refresh-token 请求委托 FastAPI `/auth/bridge/refresh`，由现有 API 私网 Redis 做跨实例锁及 10 秒加密结果缓存；Next.js 不直连私网 Redis。桥接仅接受独立服务端 secret，不作为浏览器接口。BFF 保留完整 Cookie 分片，失败提示重新登录，不悄悄使用游客身份。
 4. `POST /api/auth/access-token` 在校验本站 Origin/CSRF 及服务端用户后，向同源浏览器返回短期 access JWT 与过期时间；refresh token 永不出现在该 JSON。浏览器只在内存保存 access JWT，过期通过 BFF 刷新。此端点不因 `getSession()` 返回了 user 就授权，必须先验证身份。
 5. 浏览器继续直传音频到 FastAPI，并携带 `Authorization: Bearer`；音频上传不经过 Next.js BFF。如此保持现有大文件传输路径；BFF 仅承担小体积认证请求。FastAPI CORS 须定向允许 Authorization，不能用 `*` 或把第三方 Cookie 当认证前提。
 6. 所有登录态任务请求统一进入 FastAPI 鉴权依赖；以有效 JWT、供应商会话状态、本地用户状态及 owner 决定访问。有效游客凭证是另一条明确分支，伪造/过期登录凭证不能回退游客。
 
-这是本项目的服务端刷新 + 浏览器短期访问凭证方案，不代表 Supabase 默认 SSR Cookie 已满足 HttpOnly。SDK 的确切安装版本在 38.1 安装时核对兼容性并锁入项目锁文件；本批未新增运行依赖。
+这是本项目的服务端刷新 + 浏览器短期访问凭证方案，不代表 Supabase 默认 SSR Cookie 已满足 HttpOnly。本批核验并锁定 `@supabase/ssr 0.12.7`、`@supabase/supabase-js 2.117.2`、`PyJWT 2.15.1` 和 `cryptography 50.0.1`；Python 3.11 本地验证通过，容器/真实供应商联调尚未执行。
 
 ## JWT 与撤销
 
 - 新项目选非对称签名；FastAPI 使用成熟 JWT 库及项目固定 JWKS URL，验证算法白名单、签名、issuer、audience=`authenticated`、exp、sub 和 session_id。JWKS 缓存须有界、支持轮换，不能按未验证 JWT 的 jku/issuer 请求任意 URL，不手写密码算法。
 - 官方明确说明：签名/有效期正确不代表用户尚未退出。登出后旧 JWT 可能继续存在；需要核查 `session_id` 对应的 `auth.sessions` 行。不能将本地验签或 `getUser()` 成功直接视为已经完成会话撤销检查。
 - 使用只给 API 的独立、最小权限 Supabase PostgreSQL 凭据检查会话行，按已经验签的 session_id 与 user_id 参数化查询；只读所需会话字段，不给浏览器或 Worker，也不让它访问业务账本。账号暂停/删除仍检查本地业务状态。
-- 38.1 须提供最小权限角色/查询及撤销集成测试。会话查询失败返回可恢复 503，不能放行或降级游客。供应商若启用时长/空闲会话限制，还须检查实际到期语义，不能仅以延迟清理的行存在为有效；启用前纳入该集成测试。
+- 最小权限角色模板位于 `../../infra/supabase-session-reader.sql`；本地隔离 PostgreSQL 已验证会话查询、撤销、过期及密码列/写权限拒绝。会话查询失败返回 503，不能放行或降级游客。供应商时长/空闲限制须与 API 配置匹配，并在真实项目验证后开启；不能仅凭延迟清理的行存在视为有效。
 - 登出调用供应商撤销并清 Cookie；先响应登出成功后再“稍后撤销”不满足合同。删除账号沿用先核验停止续费的业务流程。
 - JWT 在接收请求时验证；RQ 的长转录按已接收任务、归属和预占记录运行，不把用户 token 存进队列或要求它整个推理期间有效。再次查询/下载须重新鉴权。
 
@@ -35,7 +35,7 @@ Supabase 是此前讨论的候选，已核对官方的 Google、邮箱 OTP、JWT
 - 使用自有 SMTP 配置；默认 SMTP 仅适合项目团队测试地址，不作为公众发码方案。发送凭据、Google Client Secret 存在供应商后台，应用模板不收集这些秘密。
 - 应用侧按邮箱摘要、可信客户端 IP 和全局配额限流，统一错误响应避免邮箱枚举；还需启用供应商侧保护，不能假设经过 BFF 就无法绕过。服务器聚合 IP 的供应商限额须实测，调整只按官方支持的配置执行，不转发未经验证的 X-Forwarded-For。
 
-## 接口合同（拟实现）
+## 接口合同（已本地实现，真实供应商待验）
 
 | 路径 | 行为与权限 |
 |---|---|
@@ -48,13 +48,17 @@ Supabase 是此前讨论的候选，已核对官方的 Google、邮箱 OTP、JWT
 | GET /me（FastAPI） | 完整鉴权；返回内部用户，不接受浏览器指定 user_id |
 | 既有 jobs/downloads/events | 统一鉴权和 owner/capability 校验，不能只补登录页 |
 
+新游客任务的随机访问凭证只在创建响应发出，API 仅存摘要；浏览器放在当前页内存/sessionStorage，通过 `X-Job-Access` 访问和认领。旧无独立凭证的匿名任务兼容读取，但不能仅凭 job_id 认领。认领以原子条件更新写入 owner，过期时间不变；私有/新游客任务不再展示旧的裸 URL 分享按钮。签名文件 URL 保留既有短期有效合同，签发入口检查所有权，删除后立即失效。
+
+OTP 预算和挑战同样走 server-only bridge，在 Redis 中按邮箱摘要、IP 与全局限制协调；验证码有效期由供应商配置为 600 秒，应用挑战 600 秒且最多尝试 5 次。账户相关的供应商 4xx 不向浏览器暴露区别，提示只承诺“如果该邮箱可接收”；基础设施失败和限流分别展示错误。只有 Vercel 环境采用平台提供的客户端 IP，缺少可信地址时保守共用限流桶，不接受浏览器 JSON 指定 IP。
+
 关键失败路径：供应商拒绝/超时、验证码重用与暴力尝试、并发刷新、开放重定向、不同 issuer、伪造 JWT、已撤销 session、跨用户访问、登录态丢失不能匿名降级、大文件直传与 token 过期后恢复。
 
 ## 配置交付与完成边界
 
-变量模板：`../../infra/env.auth.example`，独立于当前可运行的生产配置，防止尚未实现的开关被误启用。离线格式检查：在 api/ 执行 `python -m scripts.check_auth_config --env-file ../infra/env.auth.example`；未填模板预期退出 2。只输出字段名/错误代码，不打印凭据。
+变量模板：`../../infra/env.auth.example`。认证运行/构建开关默认关闭；配置真实测试环境后才显式打开，不因代码合入就改变生产行为。离线格式检查：在 api/ 执行 `python -m scripts.check_auth_config --env-file ../infra/env.auth.example`；未填模板预期退出 2，只输出字段名/错误代码，不打印凭据。
 
-38.0 交付选型、接口和密钥归属模板。38.1 才安装锁定 SDK/JWT 依赖、实现会话、迁移所有权及 UI。真实登录仍需项目 URL/publishable key、只读会话连接、SMTP、Google 配置和真实回跳环境；离线检查通过不等于这些已验证。
+38.0 的选型与模板保留；38.1 已实现 SDK/BFF、JWT/会话门禁、迁移 006、用户归属、游客认领与登录/账户 UI。真实项目 URL/key、Google/SMTP、生产 TLS Cookie 和供应商会话策略仍需实际联调。38.2 的月度用量/收费未实现；仅开启 AUTH 时仍沿用原免费运行限流，不宣称已执行商业化的 Free 月额度。删除账号与停止续费依赖后续收费闭环，BA-13 尚未完成。
 
 ## 官方核验
 

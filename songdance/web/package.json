@@ -10,9 +10,12 @@
     "lint": "eslint",
     "typecheck": "tsc --noEmit",
     "test": "vitest run",
-    "test:e2e": "playwright test"
+    "test:e2e": "playwright test",
+    "test:auth:ui": "node scripts/auth-ui-smoke.mjs"
   },
   "dependencies": {
+    "@supabase/ssr": "0.12.7",
+    "@supabase/supabase-js": "2.117.2",
     "@tonejs/midi": "2.0.28",
     "jspdf": "4.2.1",
     "lucide-react": "1.27.0",

@@ -48,6 +48,8 @@ class JobResponse(BaseModel):
     result: TranscriptionResultResponse | None
     quality_report: QualityReportResponse | None
     artifacts: list[ArtifactResponse]
+    access_type: str = "legacy"
+    guest_access_token: str | None = None
 
 
 class DownloadUrlResponse(BaseModel):

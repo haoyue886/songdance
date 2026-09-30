@@ -31,6 +31,21 @@ def test_valid_shape_is_not_a_production_or_provider_readiness_claim() -> None:
     assert result["database_permissions_verified"] is False
 
 
+@pytest.mark.parametrize("secret", ["", "short", "a" * 129, "密" * 40])
+def test_enabled_auth_requires_transport_safe_bridge_secret(secret: str) -> None:
+    values = {
+        **valid_values(),
+        "SONGDANCE_AUTH_ENABLED": "true",
+        "SONGDANCE_AUTH_BRIDGE_SECRET": secret,
+    }
+    report = check(values)
+    assert report["configuration_format_valid"] is False
+    assert {
+        "field": "SONGDANCE_AUTH_BRIDGE_SECRET",
+        "code": "EXPECTED_SERVER_BRIDGE_SECRET",
+    } in report["errors"]
+
+
 @pytest.mark.parametrize(
     "field,value,code",
     [

@@ -47,7 +47,7 @@
 | Phase 35 | 计划中（P1） | 中国五声、日本都节与布鲁斯调式家族研究门禁 |
 | Phase 36 | 已完成 | `07-soft` 三项专业缺陷修复；人工复评 `minor_edits`，自动门禁通过 |
 | Phase 37 | 开发中 | `14-hand-crossing` 60 BPM 均匀八分音符与交汇同音保留；不生成最终评审包 |
-| Phase 38 | 38.0 已完成，登录/计费未实现 | Supabase Auth ADR、配置模板与离线检查已交付；Free 每 UTC 自然月 1 次成功转录，Live 依赖 Phase 39 实际售卖档位验收 |
+| Phase 38 | 38.1 本地实现与验证完成，真实联调待验 | Google/OTP BFF、JWT/session、006 迁移、任务归属/认领已实现且默认关闭；用量/Creem 未实现，不代表 Live 准入 |
 | Phase 39 | 39.0 准备中 | 已实跑 30/90/180/300/600 秒临时 WAV 限制探测；真实长音频集、性能成本与人工质量未验证，不代表 5/10 分钟可用 |
 
 ## 功能依赖图
@@ -1840,12 +1840,12 @@ Phase 9 基线
 
 ## Phase 38：登录、Creem 月付与用量账本（2026-09-30 更新）
 
-状态：38.0 选型、接口及配置准备完成；登录、用户迁移和支付运行路径未实现。本段保留此前部署准备记录和历史评审结论；长音频链路另见 Phase 39。
+状态：38.0 已完成，38.1 本地实现与隔离验证完成；真实 Supabase/Google/SMTP 和生产 TLS Cookie 尚未联调，计费/用量运行路径未实现。本段保留此前部署准备记录和历史评审结论；长音频链路另见 Phase 39。
 
 需求事实来源：`Product-Spec.md` §1.8 / SCOPE-025–028 与 `Billing-Auth-Spec.md` v0.2；不在此重复维护价格。新方案替代早期一次性 credits 和所有真实上传前登录；游客试用和 Free 月额度按子规范实施。
 
 - [x] 38.0 身份 ADR：选定 Supabase Auth；交付 `songdance/docs/adr/0001-supabase-auth.md`、`songdance/infra/env.auth.example` 及 `scripts/check_auth_config.py`。官方核验覆盖 OTP/Google、JWT 与 session_id 撤销、BFF/HttpOnly 限制和 SMTP；区域及实际邮件成本作为真实项目配置项保留，未冒充实测。模板只有空值，离线检查不验证账户权限或宣称生产可用。
-- [ ] 38.1 账号：迁移 users/identities 与 nullable job owner；登录/登出/账号页、匿名认领、跨用户访问拒绝。BA-02/11/13。
+- [ ] 38.1 账号：迁移 006、Google/OTP 登录/登出/账号页、JWT 与 session 撤销查询、原子认领和跨用户门禁已本地实现。SQLite 路由、隔离 PostgreSQL 最小权限/迁移/认领竞争、Redis 跨实例刷新、真实 SDK + 本地协议替身浏览器流程已验证。仍待真实 Supabase/SMTP/Google、生产 TLS/会话策略联调才签收 BA-02/11；BA-13 的删除账号与停止续费依赖 38.3，不能提前勾选。
 - [ ] 38.2 用量：paid_periods/usage_ledger；Free 每 UTC 自然月 1 次成功转录、最长 90 秒、失败不扣、未用不结转，覆盖新月/旧月补偿/并发及跨设备；游客同失败任务重试不占第二次 IP 新建名额。实现并发预占、可靠入队、完整 MIDI 成功消费、失败释放、格式重试免费、迟到 Worker fencing、跨周期与清理隔离；到期前已预占任务可继续完成/下载且只消费原周期。BA-01/03–06/12。
 - [ ] 38.3 Creem Test：客户、checkout 幂等、原始体验签、持久 inbox、paid 授予与交易去重、Portal、取消/退款/争议和每日对账。BA-07–10/14。
 - [ ] 38.4 商业 UI：pricing/login/account/return/refund/contact；八语言参数一致，Free 每月 1 次与失败/不结转说明、实际已验证 Pro 上限、MIDI 主要交付/格式部分失败、24 小时临时保存、付款确认中；退款不营销 7 天无条件，超 180 秒的故障/质量申请保留人工渠道，投诉不偷偷延长音频保留。BA-15/17。
@@ -1856,6 +1856,8 @@ Phase 9 基线
 验收证据须逐项记录实际命令、样例事件（脱敏）、测试数、浏览器实测和未通过项；需求 checkbox 不因文档写完而勾选。
 
 2026-09-30 准备批次：认证与长音频探测工具加部署合同共 38 项测试通过、专项 Ruff/编译通过；空认证模板按设计退出 2 并仅报告缺失字段。独立审查发现的 DSN 查询参数覆盖 P2 已修复并复审关闭，无遗留 P1/P2。实际命令、边界及下一步见 `songdance/docs/reviews/2026-09-30-auth-long-audio-preparation.md`。下一交付为 38.1 的认证/所有权实现，真实项目/邮件/Google 尚未接入。
+
+2026-09-30 38.1 实现批次：已交付认证运行代码与 `songdance/docs/auth-setup.md`，Supabase/SSR/JWT 依赖已锁定。开关默认关闭，原运行限流不冒充 Free 月账本。独立审查确认的游客 /events 缺 capability 问题已修并补双端回归；实际验证与剩余限制见 `songdance/docs/reviews/2026-09-30-auth-implementation.md`。全量回归剩余 8 项历史质量/指纹断言在 f3fb52a 临时基线中逐项同样失败，不重写旧评级或放宽门槛。下一开发项为 38.2 用量账本；真实认证环境接入按设置文档单独验证。
 
 ## Phase 39：Pro 完整钢琴曲与长音频准入（2026-09-30）
 

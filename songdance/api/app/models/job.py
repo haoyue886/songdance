@@ -27,6 +27,10 @@ class TranscriptionJob(TimestampMixin, Base):
     __tablename__ = "transcription_jobs"
 
     id: Mapped[str] = mapped_column(String(64), primary_key=True)
+    owner_user_id: Mapped[str | None] = mapped_column(
+        ForeignKey("users.id", ondelete="RESTRICT"), index=True
+    )
+    guest_secret_hash: Mapped[str | None] = mapped_column(String(64))
     status: Mapped[str] = mapped_column(String(24), default=JobStatus.QUEUED, nullable=False)
     stage: Mapped[str] = mapped_column(String(24), default=JobStage.QUEUED, nullable=False)
     source_type: Mapped[str] = mapped_column(String(24), default="upload", nullable=False)
@@ -51,6 +55,10 @@ class TranscriptionJob(TimestampMixin, Base):
     artifacts: Mapped[list["Artifact"]] = relationship(
         back_populates="job", cascade="all, delete-orphan"
     )
+
+    @property
+    def access_type(self) -> str:
+        return "owned" if self.owner_user_id else "guest" if self.guest_secret_hash else "legacy"
 
 
 class SourceAsset(TimestampMixin, Base):

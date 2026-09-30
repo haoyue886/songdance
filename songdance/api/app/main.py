@@ -7,10 +7,14 @@ from app.middleware.request_size import RequestSizeLimitMiddleware
 from app.middleware.trusted_proxy import TrustedProxyOnlyMiddleware
 from app.models import Base
 from app.observability import RequestObservabilityMiddleware, configure_logging
+from app.routes.account import router as account_router
 from app.routes.analytics import router as analytics_router
+from app.routes.auth_bridge import router as auth_bridge_router
 from app.routes.downloads import router as downloads_router
 from app.routes.jobs import router as jobs_router
 from app.routes.youtube import router as youtube_router
+from app.services.auth import SupabaseVerifier
+from app.services.auth_coordination import AuthCoordinator
 from app.services.queue import JobQueue, create_job_queue
 from app.services.quota import JobQuota, create_job_quota
 from app.services.storage import ObjectStorage, create_storage
@@ -40,6 +44,12 @@ def create_app(
     app.state.storage = storage or create_storage(resolved_settings)
     app.state.job_queue = job_queue or create_job_queue(resolved_settings)
     app.state.job_quota = job_quota or create_job_quota(resolved_settings)
+    app.state.auth_verifier = (
+        SupabaseVerifier(resolved_settings) if resolved_settings.auth_enabled else None
+    )
+    app.state.auth_coordinator = (
+        AuthCoordinator(resolved_settings) if resolved_settings.auth_enabled else None
+    )
 
     configure_logging()
     app.add_middleware(RequestSizeLimitMiddleware, max_bytes=resolved_settings.max_request_bytes)
@@ -50,7 +60,7 @@ def create_app(
         allow_origins=resolved_settings.cors_origin_list,
         allow_credentials=False,
         allow_methods=["GET", "POST", "DELETE"],
-        allow_headers=["Content-Type", "X-Request-ID"],
+        allow_headers=["Content-Type", "X-Request-ID", "Authorization", "X-Job-Access"],
         expose_headers=["X-Request-ID", "Retry-After"],
     )
     app.add_middleware(
@@ -63,6 +73,8 @@ def create_app(
         networks=resolved_settings.trusted_proxy_networks,
     )
     app.include_router(jobs_router)
+    app.include_router(account_router)
+    app.include_router(auth_bridge_router)
     app.include_router(downloads_router)
     app.include_router(analytics_router)
     app.include_router(youtube_router)

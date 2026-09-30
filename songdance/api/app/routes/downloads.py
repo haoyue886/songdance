@@ -8,11 +8,13 @@ from sqlalchemy.orm import Session
 from starlette.background import BackgroundTask
 
 from app.database import get_session
+from app.models import User
 from app.observability import log_event
 from app.schemas import DownloadUrlResponse
 from app.services.analytics import record_event
+from app.services.auth import optional_user
 from app.services.downloads import create_download_ticket, verify_download_ticket
-from app.services.job_access import get_available_job
+from app.services.job_access import get_accessible_job, get_available_job
 from app.services.storage import ObjectStorage
 from app.settings import Settings
 
@@ -32,8 +34,9 @@ def get_download_url(
     file_type: str,
     request: Request,
     session: Annotated[Session, Depends(get_session)],
+    user: Annotated[User | None, Depends(optional_user)],
 ) -> DownloadUrlResponse:
-    job = get_available_job(session, job_id)
+    job = get_accessible_job(session, job_id, request, user)
     if file_type != "source":
         if file_type not in ARTIFACT_FILENAMES:
             raise HTTPException(status_code=404, detail="Artifact unavailable")

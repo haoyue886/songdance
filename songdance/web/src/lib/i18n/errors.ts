@@ -1,6 +1,13 @@
 type Translate = (key: string, values?: Record<string, string | number>) => string;
 
 const ERROR_KEYS: Record<string, string> = {
+  AUTH_REQUIRED: "authRequired",
+  AUTH_INVALID: "authRequired",
+  AUTH_EXPIRED: "authRequired",
+  AUTH_REVOKED: "authRequired",
+  AUTH_UNAVAILABLE: "service",
+  AUTH_DISABLED: "service",
+  ACCOUNT_UNAVAILABLE: "accountUnavailable",
   NETWORK_ERROR: "network",
   INVALID_DOWNLOAD_URL: "invalidDownload",
   NO_NOTES_DETECTED: "noNotes",

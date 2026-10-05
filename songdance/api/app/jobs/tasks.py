@@ -15,6 +15,7 @@ from app.services.quota import create_job_quota
 from app.services.storage import create_storage
 from app.services.transcription import run_transcription_job
 from app.services.transcription_persistence import DELETE_ERROR_CODES, locked_job
+from app.services.usage import settle_job_in_factory
 from app.settings import Settings, get_settings
 
 
@@ -36,7 +37,18 @@ def verify_source_job(job_id: str, attempt: int = 1) -> None:
                 delete_known_job_objects(job_id, storage)
             if job is None or job.attempt_count != attempt:
                 return
+            reservation_id = job.usage_reservation_id
+            success = job.status == JobStatus.SUCCEEDED
         record_terminal_event(factory, settings, job_id)
+        _settle_usage(
+            factory,
+            job_id,
+            settings,
+            attempt=attempt,
+            reservation_id=reservation_id,
+            success=success,
+            reason="worker_success" if success else "worker_failure",
+        )
         _complete_quota(settings, job_id)
     finally:
         engine.dispose()
@@ -76,9 +88,19 @@ def mark_job_failed(
             job = session.get(TranscriptionJob, job_id)
             if job is None or job.attempt_count != attempt:
                 return
+            reservation_id = job.usage_reservation_id
             code, message = failure_details(_exception_type)
             _fail_job(session, job_id, code, message)
         record_terminal_event(factory, settings, job_id)
+        _settle_usage(
+            factory,
+            job_id,
+            settings,
+            attempt=attempt,
+            reservation_id=reservation_id,
+            success=False,
+            reason="worker_failure",
+        )
         _complete_quota(settings, job_id)
     finally:
         engine.dispose()
@@ -95,3 +117,26 @@ def _complete_quota(settings: Settings, job_id: str) -> None:
         create_job_quota(settings).complete(job_id)
     except Exception:
         log_event("quota_release_failed", job_id_hash=hash_job_id(job_id, settings))
+
+
+def _settle_usage(
+    factory,
+    job_id: str,
+    settings: Settings,
+    *,
+    attempt: int,
+    reservation_id: str | None,
+    success: bool,
+    reason: str,
+) -> None:
+    try:
+        settle_job_in_factory(
+            factory,
+            job_id,
+            success=success,
+            expected_attempt=attempt,
+            reservation_id=reservation_id,
+            reason=reason,
+        )
+    except Exception:
+        log_event("usage_settlement_failed", job_id_hash=hash_job_id(job_id, settings))

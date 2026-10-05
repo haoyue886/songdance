@@ -31,6 +31,7 @@ class TranscriptionJob(TimestampMixin, Base):
         ForeignKey("users.id", ondelete="RESTRICT"), index=True
     )
     guest_secret_hash: Mapped[str | None] = mapped_column(String(64))
+    usage_reservation_id: Mapped[str | None] = mapped_column(String(64), index=True)
     status: Mapped[str] = mapped_column(String(24), default=JobStatus.QUEUED, nullable=False)
     stage: Mapped[str] = mapped_column(String(24), default=JobStage.QUEUED, nullable=False)
     source_type: Mapped[str] = mapped_column(String(24), default="upload", nullable=False)

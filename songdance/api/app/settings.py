@@ -73,6 +73,8 @@ class Settings(BaseSettings):
     auth_bridge_secret: SecretStr = SecretStr("")
     auth_session_max_age_seconds: int = 0
     auth_session_idle_seconds: int = 0
+    usage_enabled: bool = False
+    free_monthly_job_limit: int = 1
 
     model_config = SettingsConfigDict(
         env_file=".env", env_prefix="SONGDANCE_", hide_input_in_errors=True
@@ -134,6 +136,10 @@ class Settings(BaseSettings):
 
     @model_validator(mode="after")
     def validate_service_configuration(self) -> "Settings":
+        if self.usage_enabled and not self.auth_enabled:
+            raise ValueError("Usage ledger requires authentication")
+        if self.free_monthly_job_limit <= 0:
+            raise ValueError("Free monthly job limit must be positive")
         if self.auth_enabled:
             from app.services.auth_config import check
 

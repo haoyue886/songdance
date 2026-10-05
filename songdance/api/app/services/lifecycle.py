@@ -23,6 +23,9 @@ def remove_failed_upload_intent(
     except Exception:
         job = session.get(TranscriptionJob, job_id)
         if job is not None:
+            from app.services.usage import release_job_reservation
+
+            release_job_reservation(session, job, reason="upload_cleanup_failed")
             job.status = JobStatus.FAILED
             job.error_code = "DELETE_FAILED"
             job.error_message = "上传失败后的临时文件将由清理任务重试删除"
@@ -30,6 +33,9 @@ def remove_failed_upload_intent(
         return
     job = session.get(TranscriptionJob, job_id)
     if job is not None:
+        from app.services.usage import release_job_reservation
+
+        release_job_reservation(session, job, reason="upload_failed")
         session.delete(job)
         session.commit()
 

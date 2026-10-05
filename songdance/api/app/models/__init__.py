@@ -10,10 +10,13 @@ from app.models.job import (
     TranscriptionResult,
 )
 from app.models.user import AuthIdentity, User
+from app.models.usage import UsageLedger, UsagePeriod
 
 __all__ = [
     "AuthIdentity",
     "User",
+    "UsageLedger",
+    "UsagePeriod",
     "AnalyticsEvent",
     "Artifact",
     "Base",

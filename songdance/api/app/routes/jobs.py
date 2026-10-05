@@ -27,6 +27,12 @@ from app.services.queue import JobQueue
 from app.services.quota import JobQuota, QuotaExceeded, client_quota_key
 from app.services.storage import ObjectStorage
 from app.services.temp_cleanup import cleanup_job_temp_files
+from app.services.usage import (
+    UsageExceeded,
+    release_job_reservation,
+    reserve_free,
+    usage_http_error,
+)
 from app.settings import Settings
 
 router = APIRouter(prefix="/jobs", tags=["jobs"])
@@ -169,6 +175,17 @@ async def create_job(
             attempt_count=1,
             expires_at=now + timedelta(hours=24),
         )
+        if settings.usage_enabled:
+            if user is None and end_sec - start_sec > 30:
+                raise HTTPException(
+                    status_code=422,
+                    detail={"code": "GUEST_CLIP_LIMIT", "message": "游客体验最多 30 秒"},
+                )
+            if user is not None:
+                try:
+                    job.usage_reservation_id = reserve_free(session, user, job_id, settings)
+                except UsageExceeded as error:
+                    raise usage_http_error(error) from error
         job.source_asset = SourceAsset(
             id=secrets.token_urlsafe(24),
             storage_key=storage_key,
@@ -251,6 +268,13 @@ def retry_job(
         raise HTTPException(status_code=409, detail="Task deletion must be retried")
     if job.attempt_count >= 3:
         raise HTTPException(status_code=409, detail="Retry limit reached")
+    if request.app.state.settings.usage_enabled and user is not None:
+        try:
+            job.usage_reservation_id = reserve_free(
+                session, user, job_id, request.app.state.settings
+            )
+        except UsageExceeded as error:
+            raise usage_http_error(error) from error
     _reserve_quota(request, job_id)
     job.attempt_count += 1
     job.status = JobStatus.QUEUED
@@ -264,6 +288,7 @@ def retry_job(
         job.status = JobStatus.FAILED
         job.error_code = "QUEUE_UNAVAILABLE"
         job.error_message = "任务队列暂时不可用"
+        release_job_reservation(session, job, reason="queue_unavailable")
         session.commit()
         _cancel_quota(request, job_id)
         raise HTTPException(status_code=503, detail="Task queue is unavailable") from error
@@ -293,6 +318,7 @@ def delete_job(
         job.status = JobStatus.FAILED
         job.error_code = "DELETE_FAILED"
         job.error_message = "部分文件删除失败，请重试删除"
+        release_job_reservation(session, job, reason="delete_failed")
         session.commit()
         raise HTTPException(status_code=503, detail="Task deletion is incomplete") from error
     try:
@@ -305,6 +331,7 @@ def delete_job(
         )
     except Exception:
         log_event("analytics_write_failed", event_name="job_deleted")
+    release_job_reservation(session, job, reason="user_delete")
     session.delete(job)
     session.commit()
     _complete_quota(request, job_id)

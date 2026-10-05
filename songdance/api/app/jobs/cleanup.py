@@ -15,6 +15,7 @@ from app.services.quota import JobQuota, create_job_quota
 from app.services.storage import ObjectStorage, create_storage
 from app.services.temp_cleanup import cleanup_job_temp_files, cleanup_stale_temp_files
 from app.services.transcription_persistence import locked_job
+from app.services.usage import release_job_reservation
 from app.settings import Settings, get_settings
 
 
@@ -79,6 +80,7 @@ def cleanup_expired_jobs(
                 if job_temp.failed:
                     raise OSError("job temporary files could not be removed")
             except Exception:
+                release_job_reservation(session, job, reason="cleanup_failed")
                 job.status = JobStatus.FAILED
                 job.error_code = "DELETE_FAILED"
                 job.error_message = "部分过期文件删除失败，将自动重试"
@@ -88,6 +90,7 @@ def cleanup_expired_jobs(
                 if stale_upload:
                     _release_quota(job_quota, settings, job.id)
                 continue
+            release_job_reservation(session, job, reason="expired_cleanup")
             session.delete(job)
             session.commit()
             _release_quota(job_quota, settings, job.id)

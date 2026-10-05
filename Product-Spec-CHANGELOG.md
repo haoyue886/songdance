@@ -1,5 +1,12 @@
 # 变更记录
 
+## [v1.46] - 2026-10-06
+
+### 38.2 本地实现状态
+
+- 新增 Free 每 UTC 自然月 1 次成功转录的本地用量账本实现：提交时预占，Worker 成功消费，失败、上传/入队异常、删除失败、删除成功清理和过期清理释放；reservation/consume/release 终态不可变且重复结算幂等，任务清理不删除用量历史；Worker 结算绑定 attempt 与 reservation，迟到重试不会结算新预占。
+- 账本由 `SONGDANCE_USAGE_ENABLED=false` 默认关闭；本批只覆盖登录 Free 路径，未实现 Pro paid_periods/Creem、游客成功体验账本、可靠 outbox 和完整跨月/并发验收。真实供应商、生产数据库和商业化开关仍未验证，不开放收费。
+
 ## [v1.45] - 2026-09-30
 
 ### 实现与验证状态

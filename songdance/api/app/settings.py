@@ -75,6 +75,9 @@ class Settings(BaseSettings):
     auth_session_idle_seconds: int = 0
     usage_enabled: bool = False
     free_monthly_job_limit: int = 1
+    paid_usage_enabled: bool = False
+    paid_ip_hourly_job_limit: int = 60
+    billing_environment: Literal["test", "live"] = "test"
 
     model_config = SettingsConfigDict(
         env_file=".env", env_prefix="SONGDANCE_", hide_input_in_errors=True
@@ -138,6 +141,11 @@ class Settings(BaseSettings):
     def validate_service_configuration(self) -> "Settings":
         if self.usage_enabled and not self.auth_enabled:
             raise ValueError("Usage ledger requires authentication")
+        if self.paid_usage_enabled and not self.usage_enabled:
+            raise ValueError("Paid usage requires the usage ledger")
+        if self.environment == "production" and self.paid_usage_enabled:
+            if self.billing_environment != "live":
+                raise ValueError("Production must not authorize test payment periods")
         if self.free_monthly_job_limit <= 0:
             raise ValueError("Free monthly job limit must be positive")
         if self.auth_enabled:
@@ -174,6 +182,7 @@ class Settings(BaseSettings):
         positive_fields = {
             "max_request_bytes": self.max_request_bytes,
             "hourly_job_limit": self.hourly_job_limit,
+            "paid_ip_hourly_job_limit": self.paid_ip_hourly_job_limit,
             "client_active_job_limit": self.client_active_job_limit,
             "global_active_job_limit": self.global_active_job_limit,
             "daily_job_limit": self.daily_job_limit,

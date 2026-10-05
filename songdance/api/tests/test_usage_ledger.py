@@ -191,6 +191,7 @@ def test_authenticated_usage_enabled_endpoint_blocks_second_success(protected_cl
         job = session.get(TranscriptionJob, job_id)
         assert job is not None
         assert settle_job(session, job, success=True) is True
+        session.commit()
     second = create_job(client, "alice")
     assert second.status_code == 429
     assert second.json()["detail"]["code"] == "FREE_MONTHLY_LIMIT"
@@ -209,6 +210,7 @@ def test_retry_queue_failure_releases_new_free_reservation(protected_client) -> 
         job.error_code = "WORKER_FAILED"
         job.error_message = "worker failed"
         assert settle_job(session, job, success=False) is True
+        session.commit()
     client.app.state.job_quota.complete(job_id)
     client.app.state.job_queue.error = RuntimeError("redis offline")
 
@@ -250,4 +252,4 @@ def test_delete_failure_releases_free_reservation(protected_client) -> None:
         releases = session.scalars(
             select(UsageLedger).where(UsageLedger.event_type == "release")
         ).all()
-        assert len(releases) == 1 and releases[0].details == '{"source":"delete_failed"}'
+        assert len(releases) == 1 and releases[0].details == '{"source":"user_delete"}'

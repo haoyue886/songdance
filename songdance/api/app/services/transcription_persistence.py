@@ -17,6 +17,7 @@ from app.pipeline.quality import QUALITY_REPORT_VERSION
 from app.pipeline.score import ScoredTranscription
 from app.pipeline.transcribe import MODEL_VERSION
 from app.services.storage import ObjectStorage
+from app.services.usage import settle_job
 
 CRITICAL_ARTIFACTS = {"raw_midi", "raw_timeline", "midi", "timeline"}
 DELETE_ERROR_CODES = {"DELETE_REQUESTED", "DELETE_FAILED"}
@@ -69,7 +70,7 @@ def persist_artifact_outcomes(
     with factory() as session:
         job = locked_job(session, job_id)
         if not _is_active_attempt(job, expected_attempt):
-            discard_outcomes(storage, outcomes)
+            _discard_unpublished_outcomes(storage, outcomes, job)
             return False
         _apply_artifact_outcomes(job, outcomes)
         session.commit()
@@ -92,7 +93,7 @@ def persist_result(
     with factory() as session:
         job = locked_job(session, job_id)
         if not _is_active_attempt(job, expected_attempt):
-            discard_outcomes(storage, outcomes)
+            _discard_unpublished_outcomes(storage, outcomes, job)
             return False
         _apply_artifact_outcomes(job, outcomes)
         job.result = TranscriptionResult(
@@ -119,6 +120,16 @@ def persist_result(
         job.stage = JobStage.SCORE if critical_failed else JobStage.COMPLETED
         job.error_code = critical_failures[0].error_code if critical_failed else None
         job.error_message = "关键转录产物处理失败" if critical_failed else None
+        midi_usable = bool(scored.notes) and any(
+            item.type == "midi"
+            and item.status == "succeeded"
+            and item.storage_key
+            and item.size_bytes > 0
+            for item in outcomes
+        )
+        settle_job(
+            session, job, success=not critical_failed and midi_usable, reason="result_committed"
+        )
         session.commit()
         return True
 
@@ -158,6 +169,7 @@ def mark_failed(
         job.status = JobStatus.FAILED
         job.error_code = code
         job.error_message = message
+        settle_job(session, job, success=False, reason=code)
         session.commit()
 
 
@@ -165,6 +177,7 @@ def _is_active_attempt(job: TranscriptionJob | None, expected_attempt: int | Non
     return (
         job is not None
         and job.error_code not in DELETE_ERROR_CODES
+        and (not job.usage_reservation_id or job.status in {JobStatus.QUEUED, JobStatus.RUNNING})
         and (expected_attempt is None or job.attempt_count == expected_attempt)
     )
 
@@ -187,3 +200,10 @@ def discard_outcomes(storage: ObjectStorage, outcomes: list[ArtifactOutcome]) ->
     for outcome in outcomes:
         if outcome.storage_key is not None:
             storage.delete(outcome.storage_key)
+
+
+def _discard_unpublished_outcomes(
+    storage: ObjectStorage, outcomes: list[ArtifactOutcome], job: TranscriptionJob | None
+) -> None:
+    published = {item.storage_key for item in job.artifacts} if job is not None else set()
+    discard_outcomes(storage, [item for item in outcomes if item.storage_key not in published])

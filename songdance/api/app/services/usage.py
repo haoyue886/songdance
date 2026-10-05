@@ -3,7 +3,7 @@ import secrets
 from datetime import UTC, datetime, time
 
 from fastapi import HTTPException
-from sqlalchemy import select
+from sqlalchemy import select, update
 from sqlalchemy.exc import IntegrityError
 from sqlalchemy.orm import Session, sessionmaker
 
@@ -70,22 +70,45 @@ def _period(
 
 
 def reserve_free(session: Session, user: User, job_id: str, settings: Settings) -> str:
-    current = _period(session, user.id, settings)
-    if current.consumed_units + current.reserved_units >= current.limit_units:
+    return reserve_period(session, _period(session, user.id, settings), job_id, 1)
+
+
+def reserve_period(
+    session: Session,
+    current: UsagePeriod,
+    job_id: str,
+    units: int,
+    *,
+    details: dict[str, object] | None = None,
+) -> str:
+    """Reserve atomically, including on SQLite; the caller owns commit/rollback."""
+    if isinstance(units, bool) or not isinstance(units, int) or units <= 0:
+        raise ValueError("Reservation units must be positive integers")
+    result = session.execute(
+        update(UsagePeriod)
+        .where(
+            UsagePeriod.id == current.id,
+            UsagePeriod.reserved_units + UsagePeriod.consumed_units + units
+            <= UsagePeriod.limit_units,
+        )
+        .values(reserved_units=UsagePeriod.reserved_units + units)
+        .execution_options(synchronize_session=False)
+    )
+    if result.rowcount != 1:
         period_end = _as_utc(current.period_end)
         raise UsageExceeded(max(1, int((period_end - datetime.now(UTC)).total_seconds())))
     reservation_id = secrets.token_urlsafe(24)
-    current.reserved_units += 1
+    session.expire(current, ["reserved_units", "consumed_units"])
     session.add(
         UsageLedger(
             id=secrets.token_urlsafe(24),
             period_id=current.id,
-            user_id=user.id,
+            user_id=current.user_id,
             job_id=job_id,
             reservation_id=reservation_id,
             event_type="reservation",
-            units=1,
-            details="{}",
+            units=units,
+            details=json.dumps(details or {}, separators=(",", ":")),
         )
     )
     return reservation_id
@@ -99,22 +122,38 @@ def _settle(session: Session, reservation_id: str, success: bool, reason: str) -
     )
     if reservation is None:
         return False
+    # Serialize both terminal types on the same period before checking either one.
+    session.execute(
+        update(UsagePeriod)
+        .where(UsagePeriod.id == reservation.period_id)
+        .values(reserved_units=UsagePeriod.reserved_units)
+        .execution_options(synchronize_session=False)
+    )
     terminal_type = "consume" if success else "release"
     existing = session.scalar(
         select(UsageLedger).where(
-            UsageLedger.reservation_id == reservation_id, UsageLedger.event_type == terminal_type
+            UsageLedger.reservation_id == reservation_id,
+            UsageLedger.event_type.in_(["consume", "release"]),
         )
     )
     if existing is not None:
         return False
-    period = session.scalar(
-        select(UsagePeriod).where(UsagePeriod.id == reservation.period_id).with_for_update()
+    result = session.execute(
+        update(UsagePeriod)
+        .where(
+            UsagePeriod.id == reservation.period_id, UsagePeriod.reserved_units >= reservation.units
+        )
+        .values(
+            reserved_units=UsagePeriod.reserved_units - reservation.units,
+            consumed_units=UsagePeriod.consumed_units + (reservation.units if success else 0),
+        )
+        .execution_options(synchronize_session=False)
     )
-    if period is None or period.reserved_units < reservation.units:
-        return False
-    period.reserved_units -= reservation.units
-    if success:
-        period.consumed_units += reservation.units
+    if result.rowcount != 1:
+        raise RuntimeError("Usage reservation counters are inconsistent")
+    period = session.get(UsagePeriod, reservation.period_id)
+    if period is not None:
+        session.expire(period, ["reserved_units", "consumed_units"])
     session.add(
         UsageLedger(
             id=secrets.token_urlsafe(24),
@@ -135,10 +174,7 @@ def settle_job(
 ) -> bool:
     if not job.usage_reservation_id:
         return False
-    changed = _settle(session, job.usage_reservation_id, success, reason)
-    if changed:
-        session.commit()
-    return changed
+    return _settle(session, job.usage_reservation_id, success, reason)
 
 
 def settle_job_in_factory(
@@ -158,9 +194,20 @@ def settle_job_in_factory(
             return False
         if expected_attempt is not None and job.attempt_count != expected_attempt:
             return False
+        if expected_attempt is not None:
+            if job.usage_reservation_id != reservation_id:
+                return False
+            if success and (
+                job.status != "succeeded" or job.error_code in {"DELETE_REQUESTED", "DELETE_FAILED"}
+            ):
+                return False
+            if not success and job.status != "failed":
+                return False
         if reservation_id is not None and job.usage_reservation_id != reservation_id:
             return False
-        return settle_job(session, job, success=success, reason=reason)
+        changed = settle_job(session, job, success=success, reason=reason)
+        session.commit()
+        return changed
 
 
 def release_job_reservation(

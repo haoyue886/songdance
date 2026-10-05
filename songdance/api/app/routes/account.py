@@ -8,9 +8,21 @@ from app.database import get_session
 from app.models import TranscriptionJob, User
 from app.schemas import JobResponse
 from app.services.auth import required_user
+from app.services.entitlements import usage_summary
 from app.services.job_access import get_available_job, has_guest_access
 
 router = APIRouter(tags=["account"])
+
+
+@router.get("/billing/me")
+def billing_me(
+    request: Request,
+    response: Response,
+    user: Annotated[User, Depends(required_user)],
+    session: Annotated[Session, Depends(get_session)],
+) -> dict[str, object]:
+    response.headers["Cache-Control"] = "private, no-store"
+    return usage_summary(session, user, request.app.state.settings)
 
 
 @router.get("/me")

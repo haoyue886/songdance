@@ -9,10 +9,12 @@ from app.models.job import (
     TranscriptionQualityReport,
     TranscriptionResult,
 )
-from app.models.user import AuthIdentity, User
+from app.models.paid_period import PaidPeriod
 from app.models.usage import UsageLedger, UsagePeriod
+from app.models.user import AuthIdentity, User
 
 __all__ = [
+    "PaidPeriod",
     "AuthIdentity",
     "User",
     "UsageLedger",

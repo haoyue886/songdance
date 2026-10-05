@@ -1,8 +1,11 @@
+import math
 from collections.abc import Callable
 from pathlib import Path
 
+import pretty_midi
 from sqlalchemy.orm import Session, sessionmaker
 
+from app.models import JobStatus
 from app.pipeline.artifacts import ARTIFACT_TYPES, write_timeline
 from app.pipeline.score import ScoredTranscription, write_musicxml, write_quantized_midi
 from app.services.storage import ObjectStorage
@@ -72,10 +75,26 @@ def write_and_store_artifact(
             job is None
             or job.error_code in DELETE_ERROR_CODES
             or job.attempt_count != attempt
-        ):
-            return ArtifactOutcome(
-                artifact_type, "failed", None, mime_type, 0, "JOB_UNAVAILABLE"
+            or (
+                job.usage_reservation_id and job.status not in {JobStatus.QUEUED, JobStatus.RUNNING}
             )
+        ):
+            return ArtifactOutcome(artifact_type, "failed", None, mime_type, 0, "JOB_UNAVAILABLE")
+        if job.usage_reservation_id and artifact_type == "midi":
+            try:
+                midi = pretty_midi.PrettyMIDI(str(path))
+                notes = [note for instrument in midi.instruments for note in instrument.notes]
+                if not notes or any(
+                    not math.isfinite(note.start)
+                    or not math.isfinite(note.end)
+                    or not 0 <= note.start < note.end
+                    for note in notes
+                ):
+                    raise ValueError("No valid MIDI timeline")
+            except Exception:
+                return ArtifactOutcome(
+                    artifact_type, "failed", None, mime_type, 0, "MIDI_VALIDATION_FAILED"
+                )
         try:
             storage.put_file(storage_key, path, mime_type)
             session.commit()
@@ -88,9 +107,7 @@ def write_and_store_artifact(
                 0,
                 f"{artifact_type.upper()}_STORAGE_FAILED",
             )
-    return ArtifactOutcome(
-        artifact_type, "succeeded", storage_key, mime_type, size_bytes, None
-    )
+    return ArtifactOutcome(artifact_type, "succeeded", storage_key, mime_type, size_bytes, None)
 
 
 def blocked_score_artifacts(error_code: str) -> list[ArtifactOutcome]:

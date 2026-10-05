@@ -21,8 +21,10 @@ from app.services.audio_validation import (
     validate_clip,
 )
 from app.services.auth import optional_user
+from app.services.entitlements import lock_usage_user, reserve_job
 from app.services.job_access import get_accessible_job, get_available_job, new_guest_secret
 from app.services.lifecycle import delete_job_objects, remove_failed_upload_intent
+from app.services.paid_periods import current_paid_period
 from app.services.queue import JobQueue
 from app.services.quota import JobQuota, QuotaExceeded, client_quota_key
 from app.services.storage import ObjectStorage
@@ -30,7 +32,6 @@ from app.services.temp_cleanup import cleanup_job_temp_files
 from app.services.usage import (
     UsageExceeded,
     release_job_reservation,
-    reserve_free,
     usage_http_error,
 )
 from app.settings import Settings
@@ -55,9 +56,17 @@ def _quota(request: Request) -> JobQuota:
     return request.app.state.job_quota
 
 
-def _reserve_quota(request: Request, job_id: str) -> None:
+def _reserve_quota(request: Request, job_id: str, user: User | None = None) -> None:
     try:
-        _quota(request).reserve(job_id, client_quota_key(request, _settings(request)))
+        settings = _settings(request)
+        paid_access = False
+        if settings.paid_usage_enabled and user is not None:
+            with request.app.state.session_factory() as quota_session:
+                paid = current_paid_period(
+                    quota_session, user_id=user.id, environment=settings.billing_environment
+                )
+                paid_access = paid is not None and paid.status == "active"
+        _quota(request).reserve(job_id, client_quota_key(request, settings), paid=paid_access)
     except QuotaExceeded as error:
         raise HTTPException(
             status_code=429,
@@ -153,7 +162,7 @@ async def create_job(
     reserved = False
     intent_committed = False
     try:
-        _reserve_quota(request, job_id)
+        _reserve_quota(request, job_id, user)
         reserved = True
         await _write_upload(audio_file, temp_path)
         validated = validate_audio_file(temp_path, filename, audio_file.content_type)
@@ -183,7 +192,9 @@ async def create_job(
                 )
             if user is not None:
                 try:
-                    job.usage_reservation_id = reserve_free(session, user, job_id, settings)
+                    job.usage_reservation_id = reserve_job(
+                        session, user, job_id, settings, duration=clipped.duration
+                    )
                 except UsageExceeded as error:
                     raise usage_http_error(error) from error
         job.source_asset = SourceAsset(
@@ -261,6 +272,8 @@ def retry_job(
     session: Annotated[Session, Depends(get_session)],
     user: Annotated[User | None, Depends(optional_user)],
 ) -> JobResponse:
+    if request.app.state.settings.usage_enabled and user is not None:
+        lock_usage_user(session, user.id)
     job = get_accessible_job(session, job_id, request, user, for_update=True)
     if job.status != JobStatus.FAILED:
         raise HTTPException(status_code=409, detail="Only failed tasks can be retried")
@@ -270,12 +283,20 @@ def retry_job(
         raise HTTPException(status_code=409, detail="Retry limit reached")
     if request.app.state.settings.usage_enabled and user is not None:
         try:
-            job.usage_reservation_id = reserve_free(
-                session, user, job_id, request.app.state.settings
+            if job.source_asset is None:
+                raise HTTPException(409, detail="Source asset is unavailable")
+            release_job_reservation(session, job, reason="retry_failed_attempt")
+            job.usage_reservation_id = reserve_job(
+                session,
+                user,
+                job_id,
+                request.app.state.settings,
+                duration=job.source_asset.duration_sec,
+                attempt=job.attempt_count + 1,
             )
         except UsageExceeded as error:
             raise usage_http_error(error) from error
-    _reserve_quota(request, job_id)
+    _reserve_quota(request, job_id, user)
     job.attempt_count += 1
     job.status = JobStatus.QUEUED
     job.stage = JobStage.QUEUED
@@ -307,6 +328,7 @@ def delete_job(
     previous_status = job.status
     job.error_code = "DELETE_REQUESTED"
     job.error_message = "正在删除音频和任务数据"
+    release_job_reservation(session, job, reason="user_delete")
     session.commit()
     session.expire(job, ["artifacts", "source_asset"])
     try:

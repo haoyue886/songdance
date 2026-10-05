@@ -29,7 +29,8 @@ CHUNK_SIZE = 1024 * 1024
 
 @router.get("/config", response_model=YoutubeConfigResponse)
 def youtube_config(request: Request) -> YoutubeConfigResponse:
-    return YoutubeConfigResponse(enabled=request.app.state.settings.youtube_enabled)
+    settings = request.app.state.settings
+    return YoutubeConfigResponse(enabled=settings.youtube_enabled and not settings.usage_enabled)
 
 
 @router.post("/jobs", response_model=JobResponse, status_code=status.HTTP_201_CREATED)
@@ -40,7 +41,7 @@ def create_youtube_job(
     user: Annotated[User | None, Depends(optional_user)],
 ) -> JobResponse:
     settings = request.app.state.settings
-    if not settings.youtube_enabled:
+    if not settings.youtube_enabled or settings.usage_enabled:
         raise _http_error(503, "YOUTUBE_DISABLED", "YouTube 导入暂不可用，请改用本地上传")
     if not payload.rights_confirmed:
         raise _http_error(422, "RIGHTS_REQUIRED", "必须确认拥有处理该内容所需的权利")

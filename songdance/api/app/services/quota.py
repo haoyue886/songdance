@@ -20,7 +20,7 @@ class QuotaExceeded(Exception):
 
 
 class JobQuota(Protocol):
-    def reserve(self, job_id: str, client_key: str) -> None: ...
+    def reserve(self, job_id: str, client_key: str, *, paid: bool = False) -> None: ...
 
     def cancel(self, job_id: str) -> None: ...
 
@@ -59,7 +59,9 @@ class MemoryJobQuota(MemoryEventQuota):
         self._hourly: dict[str, int] = {}
         self._daily: dict[str, int] = {}
 
-    def reserve(self, job_id: str, client_key: str) -> None:
+    def reserve(self, job_id: str, client_key: str, *, paid: bool = False) -> None:
+        if paid:
+            client_key = f"paid:{client_key}"
         now = time.time()
         hour = time.strftime("%Y%m%d%H", time.gmtime(now))
         day = time.strftime("%Y%m%d", time.gmtime(now))
@@ -73,6 +75,7 @@ class MemoryJobQuota(MemoryEventQuota):
                 self._hourly.get(hour_key, 0),
                 self._daily.get(day, 0),
                 now,
+                paid=paid,
             )
             self._hourly[hour_key] = self._hourly.get(hour_key, 0) + 1
             self._daily[day] = self._daily.get(day, 0) + 1
@@ -100,15 +103,25 @@ class MemoryJobQuota(MemoryEventQuota):
         self._jobs = {key: value for key, value in self._jobs.items() if value[3] > now}
 
     def _check(
-        self, client_active: int, global_active: int, hourly: int, daily: int, now: float
+        self,
+        client_active: int,
+        global_active: int,
+        hourly: int,
+        daily: int,
+        now: float,
+        *,
+        paid: bool = False,
     ) -> None:
-        if hourly >= self.settings.hourly_job_limit:
+        hourly_limit = (
+            self.settings.paid_ip_hourly_job_limit if paid else self.settings.hourly_job_limit
+        )
+        if hourly >= hourly_limit:
             raise QuotaExceeded(
-                "HOURLY_LIMIT",
-                f"每小时最多创建 {self.settings.hourly_job_limit} 个任务",
+                "IP_SECURITY_LIMIT" if paid else "HOURLY_LIMIT",
+                f"每小时最多创建 {hourly_limit} 个任务",
                 _hour_retry(now),
             )
-        if client_active >= self.settings.client_active_job_limit:
+        if not paid and client_active >= self.settings.client_active_job_limit:
             raise QuotaExceeded("ACTIVE_JOB_LIMIT", "请等待当前任务结束后再提交", 30)
         if global_active >= self.settings.global_active_job_limit:
             raise QuotaExceeded("GLOBAL_CAPACITY", "服务当前已满，请稍后重试", 60)
@@ -121,7 +134,7 @@ local now = tonumber(ARGV[1])
 redis.call('ZREMRANGEBYSCORE', KEYS[1], '-inf', now)
 redis.call('ZREMRANGEBYSCORE', KEYS[2], '-inf', now)
 if tonumber(redis.call('GET', KEYS[3]) or '0') >= tonumber(ARGV[3]) then return 1 end
-if redis.call('ZCARD', KEYS[1]) >= tonumber(ARGV[4]) then return 2 end
+if tonumber(ARGV[4]) > 0 and redis.call('ZCARD', KEYS[1]) >= tonumber(ARGV[4]) then return 2 end
 if redis.call('ZCARD', KEYS[2]) >= tonumber(ARGV[5]) then return 3 end
 if tonumber(redis.call('GET', KEYS[4]) or '0') >= tonumber(ARGV[6]) then return 4 end
 redis.call('INCR', KEYS[3]); redis.call('EXPIRE', KEYS[3], tonumber(ARGV[7]))
@@ -156,7 +169,12 @@ class RedisJobQuota(RedisEventQuota):
     def __init__(self, settings: Settings) -> None:
         super().__init__(settings)
 
-    def reserve(self, job_id: str, client_key: str) -> None:
+    def reserve(self, job_id: str, client_key: str, *, paid: bool = False) -> None:
+        if paid:
+            client_key = f"paid:{client_key}"
+        hourly_limit = (
+            self.settings.paid_ip_hourly_job_limit if paid else self.settings.hourly_job_limit
+        )
         now = time.time()
         expires = now + self.settings.quota_active_ttl_seconds
         hour = time.strftime("%Y%m%d%H", time.gmtime(now))
@@ -176,8 +194,8 @@ class RedisJobQuota(RedisEventQuota):
                 *keys,
                 now,
                 expires,
-                self.settings.hourly_job_limit,
-                self.settings.client_active_job_limit,
+                hourly_limit,
+                0 if paid else self.settings.client_active_job_limit,
                 self.settings.global_active_job_limit,
                 self.settings.daily_job_limit,
                 3700,
@@ -188,8 +206,8 @@ class RedisJobQuota(RedisEventQuota):
         )
         errors = {
             1: QuotaExceeded(
-                "HOURLY_LIMIT",
-                f"每小时最多创建 {self.settings.hourly_job_limit} 个任务",
+                "IP_SECURITY_LIMIT" if paid else "HOURLY_LIMIT",
+                f"每小时最多创建 {hourly_limit} 个任务",
                 _hour_retry(now),
             ),
             2: QuotaExceeded("ACTIVE_JOB_LIMIT", "请等待当前任务结束后再提交", 30),

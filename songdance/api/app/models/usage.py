@@ -1,6 +1,6 @@
 from datetime import datetime
 
-from sqlalchemy import DateTime, ForeignKey, Integer, String, Text, UniqueConstraint
+from sqlalchemy import DateTime, ForeignKey, Index, Integer, String, Text, UniqueConstraint, text
 from sqlalchemy.orm import Mapped, mapped_column
 
 from app.models.base import Base, TimestampMixin
@@ -27,6 +27,13 @@ class UsageLedger(TimestampMixin, Base):
     __tablename__ = "usage_ledger"
     __table_args__ = (
         UniqueConstraint("reservation_id", "event_type", name="uq_usage_terminal_event"),
+        Index(
+            "uq_usage_single_terminal",
+            "reservation_id",
+            unique=True,
+            sqlite_where=text("event_type IN ('consume', 'release')"),
+            postgresql_where=text("event_type IN ('consume', 'release')"),
+        ),
     )
 
     id: Mapped[str] = mapped_column(String(64), primary_key=True)

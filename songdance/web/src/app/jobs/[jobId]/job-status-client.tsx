@@ -40,6 +40,7 @@ export function JobStatusClient({ jobId }: { jobId: string }) {
         window.clearTimeout(slowTimerRef.current);
         setSlow(false);
       } else {
+        terminalRef.current = false;
         const progress = `${job.status}:${job.stage}:${job.updated_at}`;
         if (progressRef.current !== progress) { progressRef.current = progress; restartSlowTimer(); }
       }
@@ -51,6 +52,8 @@ export function JobStatusClient({ jobId }: { jobId: string }) {
   }, [errors, jobId, restartSlowTimer]);
 
   useEffect(() => {
+    terminalRef.current = false;
+    progressRef.current = undefined;
     const controller = new AbortController();
     const initialLoad = window.setTimeout(() => void load(controller.signal), 0);
     const poll = window.setInterval(() => { if (!terminalRef.current) void load(controller.signal); }, POLL_MS);

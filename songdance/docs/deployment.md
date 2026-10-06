@@ -93,6 +93,39 @@ measured. Each worker process loads the transcription model.
 
 ## 5. Deploy the Web to Vercel
 
+### Optional reliable dispatch (migration 010)
+
+Keep `SONGDANCE_RELIABLE_QUEUE_ENABLED=false` until the isolated recovery checks pass.
+Before enabling it, migrate API/Worker/Cleanup together and add a private service using
+`infra/railway-dispatch.toml`, command `python -m app.jobs.dispatch --loop`.
+Give Dispatcher the same database, Redis queue/signing namespace, storage and limit settings.
+It needs no public domain and must continue running while any managed tasks remain,
+even if new reliable admissions are disabled. PostgreSQL must support session advisory
+locks on a direct/session-pooled connection; transaction-mode pooling is not suitable
+for the Worker execution guard. SQLite is only for local single-host development.
+
+Authenticated upload/retry requests in this mode require `Idempotency-Key`. Web sends
+one key per unchanged upload draft and reuses it after unknown HTTP outcomes; changing
+the source or clip starts a new request. API binds the key to the verified local user
+and content fingerprint. Deleted/expired tasks leave tombstones and return 410 on replay.
+Anonymous submissions get durable dispatch but do not yet have account-scoped replay.
+
+Dispatcher polls every five seconds. Incomplete uploads are checked after the configured
+upload-intent timeout using stored size/SHA-256; intact source files can be published,
+absent/incomplete files fail and release usage. A storage outage is retried until task
+expiry. Pending publishing retries with bounded backoff for
+`SONGDANCE_DISPATCH_WAIT_SECONDS` (default 900); expired attempts fail before releasing
+their reservation. Already running tasks get the RQ 900-second hard timeout plus a
+60-second callback margin; terminal/attempt checks reject late result writes.
+
+Queue acceptance uses atomic RQ uniqueness by job+attempt. Duplicate managed executions
+also use a process-lifetime PostgreSQL advisory lock (local SQLite uses a file lock).
+This does not restore Redis runtime admission counters after total Redis data loss;
+pause admissions and reconcile cost/capacity before resuming after such an incident.
+Do not downgrade 010 after submission/dispatch history exists. Keep the schema and drain
+managed tasks rather than deleting queue or audit records. No deployment is performed
+by adding this configuration file.
+
 1. Import the same private repository into Vercel.
 2. Set **Root Directory** to `web`.
 3. Keep Framework Preset as Next.js. `web/vercel.json` supplies the install command,

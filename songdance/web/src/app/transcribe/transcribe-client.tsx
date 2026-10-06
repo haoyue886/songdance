@@ -10,7 +10,7 @@ import { YoutubeInput } from "@/components/audio/youtube-input";
 import { clipDuration, createDefaultClip, type AudioClip } from "@/lib/audio/clip";
 import { createClipFile } from "@/lib/audio/clip-file";
 import { inspectAudioFile, type AudioInspection } from "@/lib/audio/validation";
-import { createJob, sendUploadStartedEvent } from "@/lib/api/jobs";
+import { createJob, JobsApiError, sendUploadStartedEvent } from "@/lib/api/jobs";
 import { Link, useRouter } from "@/i18n/navigation";
 import { localizeError } from "@/lib/i18n/errors";
 import { useUploadBilling } from "@/components/billing/use-upload-billing";
@@ -25,7 +25,14 @@ type InspectionState =
 type SubmitState =
   | { status: "idle" }
   | { status: "submitting" }
-  | { status: "error"; message: string };
+  | { status: "error"; message: string; canReplay: boolean };
+
+type SubmissionDraft = {
+  file: File;
+  clip: AudioClip;
+  key: string;
+  clippedFile?: File;
+};
 
 export function TranscribeClient() {
   const router = useRouter();
@@ -35,6 +42,8 @@ export function TranscribeClient() {
   const billing = useTranslations("billing");
   const usage = useUploadBilling();
   const requestIdRef = useRef(0);
+  const submissionRef = useRef<SubmissionDraft | null>(null);
+  const submittingRef = useRef(false);
   const [inspectionState, setInspectionState] = useState<InspectionState>({ status: "empty" });
   const [clip, setClip] = useState<AudioClip | null>(null);
   const [rightsConfirmed, setRightsConfirmed] = useState(false);
@@ -42,6 +51,8 @@ export function TranscribeClient() {
   const [inputMode, setInputMode] = useState<"upload" | "youtube">("upload");
 
   const selectFile = async (file: File) => {
+    if (submittingRef.current) return;
+    submissionRef.current = null;
     const requestId = ++requestIdRef.current;
     setInspectionState({ status: "loading", file });
     setClip(null);
@@ -58,33 +69,49 @@ export function TranscribeClient() {
   };
 
   const updateClip = useCallback((nextClip: AudioClip) => {
+    if (submittingRef.current) return;
+    const draft = submissionRef.current;
+    if (draft && draft.clip.start === nextClip.start && draft.clip.end === nextClip.end) return;
+    submissionRef.current = null;
     setClip(nextClip);
     setSubmitState({ status: "idle" });
   }, []);
 
   const showWaveformError = useCallback((message: string) => {
+    submissionRef.current = null;
     setInspectionState({ status: "error", message });
     setClip(null);
     setSubmitState({ status: "idle" });
   }, []);
 
   const submitJob = async () => {
-    if (inspectionState.status !== "ready" || !clip || !rightsConfirmed) return;
+    if (submittingRef.current || inspectionState.status !== "ready" || !clip || !rightsConfirmed) return;
+    submittingRef.current = true;
     setSubmitState({ status: "submitting" });
+    let createStarted = false;
     try {
-      const clippedFile = await createClipFile(inspectionState.file, clip);
+      const draft = submissionRef.current ??= {
+        file: inspectionState.file,
+        clip: { ...clip },
+        key: crypto.randomUUID(),
+      };
+      draft.clippedFile ??= await createClipFile(draft.file, draft.clip);
       await sendUploadStartedEvent().catch(() => undefined);
+      createStarted = true;
       const job = await createJob({
-        file: clippedFile,
+        file: draft.clippedFile,
+        submissionKey: draft.key,
         startSec: 0,
-        endSec: clipDuration(clip),
+        endSec: clipDuration(draft.clip),
         rightsConfirmed,
       });
       router.push(`/jobs/${job.id}`);
     } catch (error) {
+      submittingRef.current = false;
       setSubmitState({
         status: "error",
         message: localizeError(error, errors),
+        canReplay: createStarted && error instanceof JobsApiError && (error.status === 0 || error.status === 408 || error.status >= 500),
       });
       usage.refresh();
     }
@@ -99,6 +126,9 @@ export function TranscribeClient() {
   const exhausted = metered && summary?.enabled && (summary.remaining ?? 0) < (summary.unit === "seconds" ? estimate : 1);
   const suspended = summary?.sync_state === "review_required" || summary?.state === "frozen" || summary?.state === "revoked";
   const overLimit = length > usage.maxSeconds;
+  // Replaying the unchanged request can recover a job that already reserved quota.
+  // Any file/clip change clears this exception; the server still checks new jobs.
+  const canReplay = submitState.status === "error" && submitState.canReplay;
 
   return (
     <div className="mt-10 grid gap-6">
@@ -175,7 +205,7 @@ export function TranscribeClient() {
           <div>
             <button
               type="button"
-              disabled={!rightsConfirmed || submitting || usage.pending || usage.failed || overLimit || Boolean(exhausted || suspended)}
+              disabled={!rightsConfirmed || submitting || overLimit || Boolean(suspended) || (!canReplay && (usage.pending || usage.failed || Boolean(exhausted)))}
               aria-describedby={!rightsConfirmed ? "rights-required" : undefined}
               onClick={submitJob}
               className="w-full rounded-full bg-[#147d70] px-6 py-3.5 font-bold text-white transition hover:bg-[#075e55] disabled:cursor-not-allowed disabled:bg-[#9aaba6] sm:w-auto"

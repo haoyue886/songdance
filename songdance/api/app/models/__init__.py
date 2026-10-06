@@ -5,6 +5,7 @@ from app.models.billing import (
     BillingWebhookEvent,
     CheckoutSession,
 )
+from app.models.dispatch import JobDispatch, JobSubmission
 from app.models.job import (
     AnalyticsEvent,
     Artifact,
@@ -20,6 +21,8 @@ from app.models.usage import UsageLedger, UsagePeriod
 from app.models.user import AuthIdentity, User
 
 __all__ = [
+    "JobDispatch",
+    "JobSubmission",
     "BillingAccount",
     "BillingSubscription",
     "BillingWebhookEvent",

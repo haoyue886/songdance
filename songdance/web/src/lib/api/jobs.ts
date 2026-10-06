@@ -56,6 +56,7 @@ export type TranscriptionJob = {
 
 export type CreateJobInput = {
   file: File;
+  submissionKey?: string;
   startSec: number;
   endSec: number;
   rightsConfirmed: boolean;
@@ -128,10 +129,16 @@ async function request<T>(path: string, init?: RequestInit, contextJobId?: strin
     throw await responseError(response);
   }
 
-  const responseBody = await response.text();
-  if (!responseBody) return undefined as T;
-  const result = JSON.parse(responseBody);
-  if (typeof result.id === "string" && typeof result.guest_access_token === "string") rememberGuest(result.id, result.guest_access_token);
+  let result;
+  try {
+    const responseBody = await response.text();
+    if (!responseBody) return undefined as T;
+    result = JSON.parse(responseBody);
+  } catch {
+    // The server may already have committed even if its response body was lost.
+    throw new JobsApiError("Network error", 0, "NETWORK_ERROR");
+  }
+  if (result && typeof result.id === "string" && typeof result.guest_access_token === "string") rememberGuest(result.id, result.guest_access_token);
   return result as T;
 }
 
@@ -151,7 +158,14 @@ export function createJob(input: CreateJobInput): Promise<TranscriptionJob> {
   body.set("start_sec", String(input.startSec));
   body.set("end_sec", String(input.endSec));
   body.set("rights_confirmed", String(input.rightsConfirmed));
-  return request<TranscriptionJob>("/jobs", { method: "POST", body });
+  return request<TranscriptionJob>("/jobs", {
+    method: "POST",
+    body,
+    headers: input.submissionKey ? { "Idempotency-Key": input.submissionKey } : undefined,
+  }).then((job) => {
+    if (!job || typeof job.id !== "string" || !job.id) throw new JobsApiError("Network error", 0, "NETWORK_ERROR");
+    return job;
+  });
 }
 
 export function sendUploadStartedEvent(): Promise<void> {
@@ -179,10 +193,38 @@ export function getJob(jobId: string, signal?: AbortSignal): Promise<Transcripti
   return request<TranscriptionJob>(jobPath(jobId), { signal });
 }
 
+const retryKeys = new Map<string, string>();
+const pendingRetries = new Map<string, Promise<TranscriptionJob>>();
+
 export function retryJob(jobId: string): Promise<TranscriptionJob> {
-  return request<TranscriptionJob>(`${jobPath(jobId)}/retry`, {
+  const pending = pendingRetries.get(jobId);
+  if (pending) return pending;
+  const storageKey = `songdance-retry-key:${jobId}`;
+  let key = retryKeys.get(jobId);
+  try { key ??= sessionStorage.getItem(storageKey) ?? undefined; } catch { /* Keep the key in memory when storage is unavailable. */ }
+  if (!key || !/^[A-Za-z0-9_-]{8,128}$/.test(key)) key = crypto.randomUUID();
+  retryKeys.set(jobId, key);
+  try { sessionStorage.setItem(storageKey, key); } catch { /* Memory preserves retries in this document. */ }
+  const clearKey = () => {
+    retryKeys.delete(jobId);
+    try { sessionStorage.removeItem(storageKey); } catch { /* A retained key safely replays the previous attempt. */ }
+  };
+  const result = request<TranscriptionJob>(`${jobPath(jobId)}/retry`, {
     method: "POST",
+    headers: { "Idempotency-Key": key },
+  }).then((job) => {
+    if (!job || job.id !== jobId) throw new JobsApiError("Network error", 0, "NETWORK_ERROR");
+    clearKey();
+    return job;
+  }).catch((error: unknown) => {
+    // A missing response (including a truncated success body) may have committed.
+    if (error instanceof JobsApiError && error.status >= 400 && error.status < 500 && error.status !== 408) clearKey();
+    throw error;
+  }).finally(() => {
+    pendingRetries.delete(jobId);
   });
+  pendingRetries.set(jobId, result);
+  return result;
 }
 
 export function deleteJob(jobId: string): Promise<void> {

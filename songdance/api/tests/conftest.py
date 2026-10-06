@@ -51,6 +51,13 @@ class RecordingQueue:
         self.calls.append((job_id, attempt))
         return f"queued:{job_id}:{attempt}"
 
+    def enqueue_unique(self, job_id: str, attempt: int) -> str:
+        if self.error is not None:
+            raise self.error
+        if (job_id, attempt) not in self.calls:
+            self.calls.append((job_id, attempt))
+        return f"queued:{job_id}:{attempt}"
+
 
 @pytest.fixture
 def api_client(tmp_path: Path) -> Iterator[tuple[TestClient, RecordingQueue, Path]]:

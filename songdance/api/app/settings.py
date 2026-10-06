@@ -74,6 +74,8 @@ class Settings(BaseSettings):
     auth_session_max_age_seconds: int = 0
     auth_session_idle_seconds: int = 0
     usage_enabled: bool = False
+    reliable_queue_enabled: bool = False
+    dispatch_wait_seconds: int = 900
     free_monthly_job_limit: int = 1
     paid_usage_enabled: bool = False
     paid_ip_hourly_job_limit: int = 60
@@ -220,6 +222,7 @@ class Settings(BaseSettings):
         if self.environment == "production" and self.auto_create_schema:
             raise ValueError("auto_create_schema is forbidden in production")
         positive_fields = {
+            "dispatch_wait_seconds": self.dispatch_wait_seconds,
             "max_request_bytes": self.max_request_bytes,
             "hourly_job_limit": self.hourly_job_limit,
             "paid_ip_hourly_job_limit": self.paid_ip_hourly_job_limit,

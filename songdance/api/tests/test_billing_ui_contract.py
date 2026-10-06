@@ -15,6 +15,7 @@ def test_public_config_drives_disabled_and_test_commercial_contract(api_client):
     assert response.status_code == 200 and response.headers["cache-control"] == "no-store"
     assert response.json() == {
         "usage_enabled": False,
+        "reliable_queue_enabled": False,
         "checkout_enabled": False,
         "mode": "unavailable",
         "pro": {

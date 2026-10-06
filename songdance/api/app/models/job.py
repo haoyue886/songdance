@@ -1,7 +1,7 @@
 from datetime import datetime
 from enum import StrEnum
 
-from sqlalchemy import DateTime, Float, ForeignKey, Integer, String, Text
+from sqlalchemy import Boolean, DateTime, Float, ForeignKey, Integer, String, Text, false
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from app.models.base import Base, TimestampMixin
@@ -32,6 +32,7 @@ class TranscriptionJob(TimestampMixin, Base):
     )
     guest_secret_hash: Mapped[str | None] = mapped_column(String(64))
     usage_reservation_id: Mapped[str | None] = mapped_column(String(64), index=True)
+    dispatch_managed: Mapped[bool] = mapped_column(Boolean, default=False, server_default=false())
     status: Mapped[str] = mapped_column(String(24), default=JobStatus.QUEUED, nullable=False)
     stage: Mapped[str] = mapped_column(String(24), default=JobStage.QUEUED, nullable=False)
     source_type: Mapped[str] = mapped_column(String(24), default="upload", nullable=False)

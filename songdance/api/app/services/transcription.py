@@ -267,7 +267,8 @@ def _clear_previous_outputs(
             or job.error_code in DELETE_ERROR_CODES
             or job.attempt_count != expected_attempt
             or (
-                job.usage_reservation_id and job.status not in {JobStatus.QUEUED, JobStatus.RUNNING}
+                (job.usage_reservation_id or job.dispatch_managed)
+                and job.status not in {JobStatus.QUEUED, JobStatus.RUNNING}
             )
         ):
             return False

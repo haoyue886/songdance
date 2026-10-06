@@ -5,10 +5,11 @@ from pathlib import Path
 from typing import Annotated
 
 from fastapi import APIRouter, Depends, File, Form, HTTPException, Request, UploadFile, status
+from sqlalchemy import select
 from sqlalchemy.orm import Session
 
 from app.database import get_session
-from app.models import JobStage, JobStatus, SourceAsset, TranscriptionJob, User
+from app.models import JobStage, JobStatus, JobSubmission, SourceAsset, TranscriptionJob, User
 from app.observability import log_event
 from app.schemas import JobResponse
 from app.services.analytics import hash_job_id, record_event
@@ -21,6 +22,8 @@ from app.services.audio_validation import (
     validate_clip,
 )
 from app.services.auth import optional_user
+from app.services.dispatch import add_dispatch
+from app.services.durable_jobs import create_durable_job, try_dispatch
 from app.services.entitlements import lock_usage_user, reserve_job
 from app.services.job_access import get_accessible_job, get_available_job, new_guest_secret
 from app.services.lifecycle import delete_job_objects, remove_failed_upload_intent
@@ -28,6 +31,12 @@ from app.services.paid_periods import current_paid_period
 from app.services.queue import JobQueue
 from app.services.quota import JobQuota, QuotaExceeded, client_quota_key
 from app.services.storage import ObjectStorage
+from app.services.submissions import (
+    record_submission,
+    replay_submission,
+    submission_fingerprint,
+    validate_submission_key,
+)
 from app.services.temp_cleanup import cleanup_job_temp_files
 from app.services.usage import (
     UsageExceeded,
@@ -150,6 +159,20 @@ async def create_job(
         raise HTTPException(status_code=422, detail="The file name is not allowed")
 
     settings = _settings(request)
+    key = request.headers.get("Idempotency-Key")
+    old_submission = (
+        user is not None
+        and key is not None
+        and session.scalar(
+            select(JobSubmission.id).where(
+                JobSubmission.user_id == user.id, JobSubmission.submission_key == key
+            )
+        )
+    )
+    if settings.reliable_queue_enabled or old_submission:
+        return await create_durable_job(
+            request, session, user, audio_file, start_sec, end_sec, filename
+        )
     settings.temp_path.mkdir(parents=True, exist_ok=True)
     temp_path = settings.temp_path / f"{secrets.token_hex(16)}.{audio_extension(filename)}"
     clip_path = settings.temp_path / f"{secrets.token_hex(16)}.wav"
@@ -274,11 +297,22 @@ def retry_job(
 ) -> JobResponse:
     if request.app.state.settings.usage_enabled and user is not None:
         lock_usage_user(session, user.id)
+    key = request.headers.get("Idempotency-Key")
+    fingerprint = submission_fingerprint(job_id=job_id)
+    if key is not None and user is not None:
+        validate_submission_key(key, True)
+        previous = replay_submission(session, user, key, fingerprint, "retry")
+        if previous is not None:
+            return JobResponse.model_validate(previous)
     job = get_accessible_job(session, job_id, request, user, for_update=True)
+    if job.dispatch_managed:
+        validate_submission_key(key, user is not None)
     if job.status != JobStatus.FAILED:
         raise HTTPException(status_code=409, detail="Only failed tasks can be retried")
     if job.error_code == "DELETE_FAILED":
         raise HTTPException(status_code=409, detail="Task deletion must be retried")
+    if job.error_code == "UPLOAD_INCOMPLETE":
+        raise HTTPException(409, detail={"code": "UPLOAD_INCOMPLETE"})
     if job.attempt_count >= 3:
         raise HTTPException(status_code=409, detail="Retry limit reached")
     if request.app.state.settings.usage_enabled and user is not None:
@@ -302,7 +336,15 @@ def retry_job(
     job.stage = JobStage.QUEUED
     job.error_code = None
     job.error_message = None
+    if job.dispatch_managed:
+        if user is not None and key is not None:
+            record_submission(session, user, key, fingerprint, job, "retry")
+        add_dispatch(session, job, request.app.state.settings, uploading=False)
     session.commit()
+    if job.dispatch_managed:
+        try_dispatch(request, job_id, job.attempt_count)
+        session.expire_all()
+        return JobResponse.model_validate(get_available_job(session, job_id))
     try:
         _queue(request).enqueue(job.id, job.attempt_count)
     except Exception as error:

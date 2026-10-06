@@ -24,6 +24,16 @@ full object keys, signed URLs, Redis contents or credentials into tickets.
 
 ## Queue backlog or stuck jobs
 
+For migration-010 managed tasks, verify the private Dispatcher is logging `dispatch_cycle`.
+`dispatch_retry` means the accepted task is waiting for queue recovery, not a reason to
+upload again with a new key. After restoring Redis/storage, run
+`python -m app.jobs.dispatch` once or let `--loop` recover it. `DISPATCH_TIMEOUT`,
+`WORKER_LOST`, or `UPLOAD_INCOMPLETE` are fenced terminal outcomes; the original usage
+period receives the release exactly once. An incomplete source requires a fresh upload.
+Never remove `job_submissions` tombstones during media cleanup or force-enqueue an old
+attempt; an explicit retry creates a new attempt and reservation. If restoring after
+complete Redis loss, first pause new admissions and reconcile runtime quota counters.
+
 - Confirm the Worker is running one replica and listening on `SONGDANCE_QUEUE_NAME`.
 - Check Redis connectivity and RQ failed registries. A job retries at most twice.
 - If model memory exhaustion repeats, stop new submissions, restart the Worker, retain one

@@ -1,4 +1,4 @@
-import { act, render, screen, waitFor } from "@testing-library/react";
+import { act, fireEvent, render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import type { TranscriptionJob } from "@/lib/api/jobs";
@@ -151,6 +151,21 @@ describe("job status", () => {
 
     await waitFor(() => expect(mocks.retryJob).toHaveBeenCalledWith("secure-job-id"));
     expect(screen.getByText("第 2 次尝试")).toBeInTheDocument();
+  });
+
+  it("resumes polling when reload recovers an accepted retry after response loss", async () => {
+    vi.useFakeTimers();
+    try {
+      mocks.getJob.mockResolvedValueOnce({ ...queuedJob, status: "failed" }).mockResolvedValue({ ...queuedJob, status: "running", stage: "transcribing", attempt_count: 2 });
+      mocks.retryJob.mockRejectedValue(new Error("response lost"));
+      render(<JobStatusClient jobId="secure-job-id" />);
+      await act(() => vi.advanceTimersByTimeAsync(0));
+      await act(async () => fireEvent.click(screen.getByRole("button", { name: "重试任务" })));
+      await act(async () => fireEvent.click(screen.getByRole("button", { name: "重新加载" })));
+      expect(mocks.getJob).toHaveBeenCalledTimes(2);
+      await act(() => vi.advanceTimersByTimeAsync(2500));
+      expect(mocks.getJob).toHaveBeenCalledTimes(3);
+    } finally { vi.useRealTimers(); }
   });
 
   it("gives actionable input advice when no notes are detected", async () => {

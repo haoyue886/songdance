@@ -177,7 +177,10 @@ def _is_active_attempt(job: TranscriptionJob | None, expected_attempt: int | Non
     return (
         job is not None
         and job.error_code not in DELETE_ERROR_CODES
-        and (not job.usage_reservation_id or job.status in {JobStatus.QUEUED, JobStatus.RUNNING})
+        and (
+            not (job.usage_reservation_id or job.dispatch_managed)
+            or job.status in {JobStatus.QUEUED, JobStatus.RUNNING}
+        )
         and (expected_attempt is None or job.attempt_count == expected_attempt)
     )
 

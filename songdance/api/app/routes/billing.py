@@ -41,6 +41,7 @@ def billing_config(request: Request, response: Response) -> dict[str, object]:
     response.headers["Cache-Control"] = "no-store"
     return {
         "usage_enabled": settings.usage_enabled,
+        "reliable_queue_enabled": settings.reliable_queue_enabled,
         "checkout_enabled": enabled,
         "mode": "test" if enabled else "unavailable",
         "pro": {

@@ -45,6 +45,7 @@ def cleanup_expired_jobs(
                     or_(
                         TranscriptionJob.expires_at <= cutoff,
                         and_(
+                            TranscriptionJob.dispatch_managed.is_(False),
                             TranscriptionJob.stage == JobStage.UPLOAD,
                             TranscriptionJob.updated_at <= stale_upload_cutoff,
                         ),
@@ -64,7 +65,9 @@ def cleanup_expired_jobs(
             if job is None:
                 continue
             stale_upload = (
-                job.stage == JobStage.UPLOAD and _as_utc(job.updated_at) <= stale_upload_cutoff
+                not job.dispatch_managed
+                and job.stage == JobStage.UPLOAD
+                and _as_utc(job.updated_at) <= stale_upload_cutoff
             )
             if _as_utc(job.expires_at) > cutoff and not stale_upload:
                 continue

@@ -1,15 +1,18 @@
+from contextlib import nullcontext
 from types import TracebackType
 
 from redis import Redis
 from rq import get_current_job
 from rq.job import Job
 from rq.timeouts import JobTimeoutException
-from sqlalchemy.orm import Session
+from sqlalchemy.orm import Session, sessionmaker
 
 from app.database import create_db_engine, create_session_factory
 from app.models import JobStatus, TranscriptionJob
 from app.observability import log_event
 from app.services.analytics import hash_job_id, record_terminal_event
+from app.services.dispatch import begin_dispatch_run
+from app.services.execution_guard import execution_guard
 from app.services.lifecycle import delete_known_job_objects
 from app.services.quota import create_job_quota
 from app.services.storage import create_storage
@@ -30,15 +33,32 @@ def verify_source_job(job_id: str, attempt: int = 1) -> None:
     factory = create_session_factory(engine)
     storage = create_storage(settings)
     try:
-        run_transcription_job(job_id, settings, factory, storage, attempt=attempt)
         with factory() as session:
             job = session.get(TranscriptionJob, job_id)
             if job is None:
-                delete_known_job_objects(job_id, storage)
-            if job is None or job.attempt_count != attempt:
                 return
-        record_terminal_event(factory, settings, job_id)
-        _complete_quota(settings, job_id)
+            managed = job.dispatch_managed
+        guard = execution_guard(engine, settings, job_id, attempt) if managed else nullcontext(True)
+        with guard as acquired:
+            if not acquired:
+                return
+            with factory() as session:
+                job = locked_job(session, job_id)
+                if (
+                    job is None
+                    or job.attempt_count != attempt
+                    or not begin_dispatch_run(session, job, settings)
+                ):
+                    return
+            run_transcription_job(job_id, settings, factory, storage, attempt=attempt)
+            with factory() as session:
+                job = session.get(TranscriptionJob, job_id)
+                if job is None:
+                    delete_known_job_objects(job_id, storage)
+                if job is None or job.attempt_count != attempt:
+                    return
+            record_terminal_event(factory, settings, job_id)
+            _complete_attempt_quota(factory, settings, job_id, attempt)
     finally:
         engine.dispose()
 
@@ -86,7 +106,7 @@ def mark_job_failed(
             code, message = failure_details(_exception_type)
             _fail_job(session, job_id, code, message, attempt=attempt)
         record_terminal_event(factory, settings, job_id)
-        _complete_quota(settings, job_id)
+        _complete_attempt_quota(factory, settings, job_id, attempt)
     finally:
         engine.dispose()
 
@@ -102,3 +122,16 @@ def _complete_quota(settings: Settings, job_id: str) -> None:
         create_job_quota(settings).complete(job_id)
     except Exception:
         log_event("quota_release_failed", job_id_hash=hash_job_id(job_id, settings))
+
+
+def _complete_attempt_quota(
+    factory: sessionmaker[Session], settings: Settings, job_id: str, attempt: int
+) -> None:
+    with factory() as session:
+        job = locked_job(session, job_id)
+        if (
+            job is not None
+            and job.attempt_count == attempt
+            and job.status in {JobStatus.SUCCEEDED, JobStatus.FAILED}
+        ):
+            _complete_quota(settings, job_id)

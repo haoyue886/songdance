@@ -76,7 +76,8 @@ def write_and_store_artifact(
             or job.error_code in DELETE_ERROR_CODES
             or job.attempt_count != attempt
             or (
-                job.usage_reservation_id and job.status not in {JobStatus.QUEUED, JobStatus.RUNNING}
+                (job.usage_reservation_id or job.dispatch_managed)
+                and job.status not in {JobStatus.QUEUED, JobStatus.RUNNING}
             )
         ):
             return ArtifactOutcome(artifact_type, "failed", None, mime_type, 0, "JOB_UNAVAILABLE")

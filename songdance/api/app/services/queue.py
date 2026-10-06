@@ -3,7 +3,10 @@ import hmac
 from typing import Protocol
 
 from redis import Redis
+from redis.backoff import NoBackoff
+from redis.retry import Retry as RedisRetry
 from rq import Queue, Retry
+from rq.exceptions import DuplicateJobError
 from rq.job import Callback
 
 from app.settings import Settings
@@ -12,14 +15,32 @@ from app.settings import Settings
 class JobQueue(Protocol):
     def enqueue(self, job_id: str, attempt: int) -> str: ...
 
+    def enqueue_unique(self, job_id: str, attempt: int) -> str: ...
+
 
 class RedisJobQueue:
     def __init__(self, settings: Settings) -> None:
         self.settings = settings
-        connection = Redis.from_url(str(settings.redis_url))
+        connection = Redis.from_url(
+            str(settings.redis_url),
+            socket_connect_timeout=3,
+            socket_timeout=5,
+            # The outbox owns retries, including an uncertain response after Redis accepted a job.
+            retry=RedisRetry(NoBackoff(), 0),
+        )
         self.queue = Queue(settings.queue_name, connection=connection)
 
     def enqueue(self, job_id: str, attempt: int) -> str:
+        return self._enqueue(job_id, attempt, unique=False)
+
+    def enqueue_unique(self, job_id: str, attempt: int) -> str:
+        """Atomically enqueue an attempt once without replacing existing worker metadata."""
+        try:
+            return self._enqueue(job_id, attempt, unique=True)
+        except DuplicateJobError:
+            return queue_job_id(job_id, attempt, self.settings)
+
+    def _enqueue(self, job_id: str, attempt: int, *, unique: bool) -> str:
         queue_job = self.queue.enqueue_call(
             func="app.jobs.tasks.verify_source_job",
             args=(job_id, attempt),
@@ -30,6 +51,7 @@ class RedisJobQueue:
             timeout=900,
             result_ttl=3_600,
             failure_ttl=86_400,
+            unique=unique,
         )
         return queue_job.id
 

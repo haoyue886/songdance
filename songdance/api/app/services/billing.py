@@ -8,6 +8,7 @@ from sqlalchemy import select
 from sqlalchemy.orm import Session
 
 from app.models import BillingAccount, BillingSubscription, CheckoutSession, PaidPeriod, User
+from app.services.billing_plan import CURRENCY, MAX_CLIP_SECONDS, PAID_SECONDS, PRICE_MINOR
 from app.services.creem_client import CreemClient, validate_hosted_url
 from app.services.entitlements import lock_usage_user
 from app.settings import Settings
@@ -129,12 +130,13 @@ def create_checkout(
         idempotency_key=key,
         product_id=settings.creem_product_id,
         plan_version=settings.creem_plan_version,
-        amount_minor=990,
-        currency="USD",
-        limit_seconds=1800,
-        max_clip_seconds=90,
+        amount_minor=PRICE_MINOR,
+        currency=CURRENCY,
+        limit_seconds=PAID_SECONDS,
+        max_clip_seconds=MAX_CLIP_SECONDS,
         success_url=settings.creem_success_url,
         status="creating",
+        created_at=datetime.now(UTC),
     )
     session.add(checkout)
     customer_id = account.customer_id
@@ -210,13 +212,24 @@ def billing_state(session: Session, user_id: str) -> dict[str, object]:
         .limit(1)
     )
     state = "ready"
-    if recent is not None and recent.status in {"creating", "pending", "uncertain", "completed"}:
+    if recent is not None and recent.status in {"creating", "pending", "uncertain"}:
+        state = "payment_confirming"
+    elif recent is not None and recent.status == "completed":
+        linked_subscription = session.scalar(
+            select(BillingSubscription).where(
+                BillingSubscription.environment == "test",
+                BillingSubscription.checkout_id == recent.id,
+                BillingSubscription.user_id == user_id,
+            )
+        )
         paid = session.scalar(
             select(PaidPeriod.id)
             .where(
                 PaidPeriod.user_id == user_id,
                 PaidPeriod.environment == "test",
-                PaidPeriod.subscription_id == sub.provider_id if sub else PaidPeriod.id.is_(None),
+                PaidPeriod.subscription_id == linked_subscription.provider_id
+                if linked_subscription
+                else PaidPeriod.id.is_(None),
             )
             .limit(1)
         )
@@ -227,6 +240,7 @@ def billing_state(session: Session, user_id: str) -> dict[str, object]:
     return {
         "sync_state": state,
         "checkout_status": recent.status if recent else None,
+        "checkout_key": recent.idempotency_key if recent else None,
         "subscription_status": sub.status if sub else None,
         "portal_available": bool(account and account.customer_id),
     }

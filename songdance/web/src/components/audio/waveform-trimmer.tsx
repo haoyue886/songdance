@@ -11,23 +11,26 @@ type WaveformTrimmerProps = {
   duration: number;
   clip: AudioClip;
   disabled?: boolean;
+  maxClipSeconds?: number;
   onChange: (clip: AudioClip) => void;
   onError: (message: string) => void;
 };
 
-export function WaveformTrimmer({ file, duration, clip, disabled, onChange, onError }: WaveformTrimmerProps) {
+export function WaveformTrimmer({ file, duration, clip, disabled, maxClipSeconds = 90, onChange, onError }: WaveformTrimmerProps) {
   const t = useTranslations("audio");
   const formatTime = (value: number) => `${value.toFixed(2)} ${t("seconds")}`;
   const containerRef = useRef<HTMLDivElement>(null);
   const waveSurferRef = useRef<WaveSurfer | null>(null);
   const regionRef = useRef<Region | null>(null);
   const clipRef = useRef(clip);
+  const limitRef = useRef(maxClipSeconds);
   const [isReady, setIsReady] = useState(false);
   const [isPlaying, setIsPlaying] = useState(false);
 
   useEffect(() => {
     clipRef.current = clip;
-  }, [clip]);
+    limitRef.current = maxClipSeconds;
+  }, [clip, maxClipSeconds]);
 
   useEffect(() => {
     if (!containerRef.current) return;
@@ -54,7 +57,7 @@ export function WaveformTrimmer({ file, duration, clip, disabled, onChange, onEr
         start: initialClip.start,
         end: initialClip.end,
         minLength: 1,
-        maxLength: 90,
+        maxLength: limitRef.current,
         color: "rgba(20, 125, 112, 0.18)",
         drag: true,
         resize: true,
@@ -64,7 +67,7 @@ export function WaveformTrimmer({ file, duration, clip, disabled, onChange, onEr
     waveSurfer.on("pause", () => setIsPlaying(false));
     waveSurfer.on("finish", () => setIsPlaying(false));
     regions.on("region-updated", (region, side) => {
-      onChange(normalizeClip({ start: region.start, end: region.end }, duration, side ?? "end"));
+      onChange(normalizeClip({ start: region.start, end: region.end }, duration, side ?? "end", limitRef.current));
     });
     void waveSurfer.loadBlob(file).catch(() => undefined);
 
@@ -78,6 +81,8 @@ export function WaveformTrimmer({ file, duration, clip, disabled, onChange, onEr
   useEffect(() => {
     regionRef.current?.setOptions({ drag: !disabled, resize: !disabled });
   }, [disabled]);
+
+  useEffect(() => { if (regionRef.current) regionRef.current.maxLength = maxClipSeconds; }, [maxClipSeconds]);
 
   useEffect(() => {
     const region = regionRef.current;
@@ -125,14 +130,14 @@ export function WaveformTrimmer({ file, duration, clip, disabled, onChange, onEr
           value={clip.start}
           max={Math.max(0, duration - 1)}
           disabled={disabled}
-          onChange={(start) => onChange(normalizeClip({ start, end: clip.end }, duration, "start"))}
+          onChange={(start) => onChange(normalizeClip({ start, end: clip.end }, duration, "start", maxClipSeconds))}
         />
         <TimeInput
           label={t("endTime")}
           value={clip.end}
           max={duration}
           disabled={disabled}
-          onChange={(end) => onChange(normalizeClip({ start: clip.start, end }, duration, "end"))}
+          onChange={(end) => onChange(normalizeClip({ start: clip.start, end }, duration, "end", maxClipSeconds))}
         />
         <div className="rounded-xl bg-[#f3f6f3] px-4 py-3">
           <p className="text-xs font-bold uppercase text-[#75837f]">{t("duration")}</p>

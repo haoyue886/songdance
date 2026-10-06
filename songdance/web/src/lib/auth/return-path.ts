@@ -1,4 +1,4 @@
-const DESTINATION = /^(?:\/(?:zh|ja|ko|es|pt-br|fr|de))?(?:\/(?:transcribe|account)|\/jobs\/[A-Za-z0-9_-]{1,128})?\/?$/;
+const DESTINATION = /^(?:\/(?:zh|ja|ko|es|pt-br|fr|de))?(?:\/(?:transcribe|account|pricing)|\/billing\/return|\/jobs\/[A-Za-z0-9_-]{1,128})?\/?$/;
 
 export function safeReturnPath(value: unknown): string {
   if (typeof value !== "string" || value.length > 2048 || !value.startsWith("/")) return "/account";

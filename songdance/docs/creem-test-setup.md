@@ -1,12 +1,12 @@
 # Creem Test 后端接入
 
-2026-10-06：仅 Test 后端实现，默认关闭，拒绝 production/Live。没有真实商户凭据、测试卡付款或 Portal 取消实测；本地替身不替代供应商验收。
+2026-10-06：Test 后端与商业页面已有本地实现，默认关闭，拒绝 production/Live。没有真实商户凭据、测试卡付款或 Portal 取消实测；本地替身不替代供应商验收。
 
 ## 配置和运行
 
 先完成 auth-setup.md 的身份配置，在隔离数据库运行 `alembic upgrade head`（009）。参考 `../infra/env.creem.example`，密钥仅放到未提交环境文件。配置认证、用量和付费用量，再启用 CREEM_ENABLED。Test 商品须为 USD 990 cents、every-month、无 trial/usage_prices；1,800 秒和 90 秒单次为当前 Test 快照，不代表 5/10 分钟已验收。
 
-API 提供 `POST /billing/checkout`（空 JSON、已登录 Bearer、本站 Origin、8–128 位 Idempotency-Key）和 `POST /billing/portal`（空 JSON、同样身份/Origin）。服务端决定 product、customer、金额和回跳地址。`GET /billing/me` 包含 sync_state/checkout_status/subscription_status/portal_available。当前前端商业页未接入；success URL 可暂用本站 /account，回跳不授权。
+API 提供 `POST /billing/checkout`（空 JSON、已登录 Bearer、本站 Origin、8–128 位 Idempotency-Key）和 `POST /billing/portal`（空 JSON、同样身份/Origin）。服务端决定 product、customer、金额和回跳地址。公共 `GET /billing/config` 驱动页面数字；私有 `GET /billing/me` 提供状态及 owner_id/checkout_key，终态匹配才清除对应浏览器幂等键。前端 /pricing、/account、/billing/return、/refund、/contact 已接入。success URL 使用本站 /billing/return，已有 /account 配置也兼容；回跳不授权。`SONGDANCE_SUPPORT_EMAIL` 只有配置并核实可用后才显示邮箱。
 
 在 Creem Test 控制台配置精确 webhook URL `/webhooks/creem`，密钥与 Test 环境配套。仅此 POST 路径豁免 Origin；仍执行原始 body HMAC、256 KiB 限额及环境校验。代理需保留原始 body，转发链继续遵循部署手册。200 只表示 inbox 已提交，不表示权益已授予。
 

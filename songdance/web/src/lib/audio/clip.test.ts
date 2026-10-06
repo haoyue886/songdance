@@ -11,6 +11,11 @@ describe("audio clip rules", () => {
     expect(normalizeClip({ start: 10, end: 140 }, 180, "end")).toEqual({ start: 10, end: 100 });
   });
 
+  it("honors a server-derived guest limit without changing the default Free cap", () => {
+    expect(normalizeClip({ start: 10, end: 70 }, 180, "end", 30)).toEqual({ start: 10, end: 40 });
+    expect(normalizeClip({ start: 10, end: 70 }, 180, "end")).toEqual({ start: 10, end: 70 });
+  });
+
   it("keeps at least one second when either edge moves", () => {
     expect(normalizeClip({ start: 5, end: 5.2 }, 20, "end")).toEqual({ start: 5, end: 6 });
     expect(normalizeClip({ start: 8.8, end: 9 }, 20, "start")).toEqual({ start: 8, end: 9 });

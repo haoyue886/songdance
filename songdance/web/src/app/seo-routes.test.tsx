@@ -15,6 +15,7 @@ describe("SEO routes", () => {
     expect(paths).toContain("/examples");
     expect(paths).not.toContain("/audio-to-midi");
     expect(paths.some((path) => path.includes("/jobs/"))).toBe(false);
+    expect(paths.some((path) => /\/(account|login|billing\/return)(\/|$)/.test(path))).toBe(false);
     expect(new URL(String(robots().sitemap)).pathname).toBe("/sitemap.xml");
 
     const homeEntry = sitemap().find((entry) => new URL(entry.url).pathname === "/");

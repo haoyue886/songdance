@@ -21,6 +21,7 @@ export function normalizeClip(
   candidate: AudioClip,
   duration: number,
   changedEdge: "start" | "end" = "end",
+  maxSeconds: number = MAX_CLIP_SECONDS,
 ): AudioClip {
   if (!Number.isFinite(duration) || duration < MIN_CLIP_SECONDS) {
     throw new Error("音频时长必须至少为 1 秒");
@@ -39,11 +40,12 @@ export function normalizeClip(
     }
   }
 
-  if (end - start > MAX_CLIP_SECONDS) {
+  const limit = Number.isFinite(maxSeconds) ? Math.max(MIN_CLIP_SECONDS, Math.min(MAX_CLIP_SECONDS, maxSeconds)) : MAX_CLIP_SECONDS;
+  if (end - start > limit) {
     if (changedEdge === "start") {
-      start = end - MAX_CLIP_SECONDS;
+      start = end - limit;
     } else {
-      end = start + MAX_CLIP_SECONDS;
+      end = start + limit;
     }
   }
 

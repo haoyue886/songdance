@@ -110,4 +110,5 @@ describe("auth BFF", () => {
 describe("return destinations", () => {
   it.each(["https://evil.example", "//evil.example", "/\\evil.example", "/%2f%2fevil.example", "/api/auth/logout", "/account%0d%0aevil", "javascript:alert(1)"])("rejects %s", (input) => expect(safeReturnPath(input)).toBe("/account"));
   it("preserves valid task destinations and locale", () => expect(safeReturnPath("/zh/jobs/abc-123?view=score#play")).toBe("/zh/jobs/abc-123?view=score#play"));
+  it.each(["/pricing", "/zh/pricing", "/billing/return", "/de/billing/return"])("preserves a commercial login destination %s", (path) => expect(safeReturnPath(path)).toBe(path));
 });

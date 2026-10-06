@@ -3,7 +3,7 @@ import { type NextRequest, NextResponse } from "next/server";
 import { localeFromPathname, routing } from "@/i18n/routing";
 
 const handleI18nRouting = createMiddleware(routing);
-const STABLE_ROUTE = /^(?:\/(?:zh|ja|ko|es|pt-br|fr|de))?(?:\/(?:transcribe|examples|privacy|terms|login|account))?\/?$/;
+const STABLE_ROUTE = /^(?:\/(?:zh|ja|ko|es|pt-br|fr|de))?(?:\/(?:transcribe|examples|privacy|terms|login|account|pricing|refund|contact)|\/billing\/return)?\/?$/;
 const JOB_ROUTE = /^(?:\/(?:zh|ja|ko|es|pt-br|fr|de))?\/jobs\/[^/]+\/?$/;
 
 export default function proxy(request: NextRequest) {

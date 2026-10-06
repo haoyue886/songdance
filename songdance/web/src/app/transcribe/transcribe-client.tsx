@@ -11,8 +11,10 @@ import { clipDuration, createDefaultClip, type AudioClip } from "@/lib/audio/cli
 import { createClipFile } from "@/lib/audio/clip-file";
 import { inspectAudioFile, type AudioInspection } from "@/lib/audio/validation";
 import { createJob, sendUploadStartedEvent } from "@/lib/api/jobs";
-import { useRouter } from "@/i18n/navigation";
+import { Link, useRouter } from "@/i18n/navigation";
 import { localizeError } from "@/lib/i18n/errors";
+import { useUploadBilling } from "@/components/billing/use-upload-billing";
+import { estimatedSeconds } from "@/lib/api/billing";
 
 type InspectionState =
   | { status: "empty" }
@@ -30,6 +32,8 @@ export function TranscribeClient() {
   const locale = useLocale();
   const t = useTranslations("transcribe");
   const errors = useTranslations("errors");
+  const billing = useTranslations("billing");
+  const usage = useUploadBilling();
   const requestIdRef = useRef(0);
   const [inspectionState, setInspectionState] = useState<InspectionState>({ status: "empty" });
   const [clip, setClip] = useState<AudioClip | null>(null);
@@ -82,11 +86,19 @@ export function TranscribeClient() {
         status: "error",
         message: localizeError(error, errors),
       });
+      usage.refresh();
     }
   };
 
   const ready = inspectionState.status === "ready" && clip;
   const submitting = submitState.status === "submitting";
+  const length = clip ? clipDuration(clip) : 0;
+  const metered = usage.data?.config.usage_enabled;
+  const summary = usage.data?.summary;
+  const estimate = usage.data ? estimatedSeconds(length, usage.data.config) : 0;
+  const exhausted = metered && summary?.enabled && (summary.remaining ?? 0) < (summary.unit === "seconds" ? estimate : 1);
+  const suspended = summary?.sync_state === "review_required" || summary?.state === "frozen" || summary?.state === "revoked";
+  const overLimit = length > usage.maxSeconds;
 
   return (
     <div className="mt-10 grid gap-6">
@@ -124,6 +136,14 @@ export function TranscribeClient() {
 
       {ready && (
         <>
+          {(usage.pending || usage.failed) && <p role="status" className="text-sm text-[#64736f]">{billing(usage.failed ? "loadError" : "loading")}{usage.failed && <button type="button" className="ml-3 font-semibold underline" onClick={usage.refresh}>{billing("refresh")}</button>}</p>}
+          {metered && <div className="border-y border-[#dce3dc] py-4 text-sm leading-6">
+            <p className="font-semibold">{summary?.plan === "pro" ? billing("estimateSeconds", { seconds: estimate }) : summary ? billing("estimateJobs") : billing("clipLimit", { seconds: usage.maxSeconds })}</p>
+            {summary?.enabled && <p className="mt-1 text-[#64736f]">{summary.unit === "seconds" ? billing("remainingSeconds", { seconds: summary.remaining ?? 0 }) : billing("remainingJobs", { count: summary.remaining ?? 0 })}</p>}
+            <p className="mt-2 text-[#64736f]">{billing("partialFormats")}</p>
+            {!summary && <Link href={`/login?return_to=${encodeURIComponent(`${locale === "en" ? "" : `/${locale}`}/transcribe`)}`} className="mt-2 inline-block font-semibold text-[#075e55] underline">{billing("signIn")}</Link>}
+          </div>}
+          {(overLimit || exhausted || suspended) && <p role="alert" className="text-sm text-[#9a493f]">{billing(suspended ? "reviewRequired" : overLimit ? "clipLimit" : "balanceEmpty", { seconds: usage.maxSeconds })}</p>}
           <div className="flex flex-wrap gap-2 text-sm font-semibold text-[#52635f]">
             <span className="rounded-full bg-[#e5eee9] px-3 py-1.5">
               {inspectionState.inspection.format.toUpperCase()}
@@ -140,6 +160,7 @@ export function TranscribeClient() {
             duration={inspectionState.inspection.duration}
             clip={clip}
             disabled={submitting}
+            maxClipSeconds={usage.maxSeconds}
             onChange={updateClip}
             onError={showWaveformError}
           />
@@ -154,7 +175,7 @@ export function TranscribeClient() {
           <div>
             <button
               type="button"
-              disabled={!rightsConfirmed || submitting}
+              disabled={!rightsConfirmed || submitting || usage.pending || usage.failed || overLimit || Boolean(exhausted || suspended)}
               aria-describedby={!rightsConfirmed ? "rights-required" : undefined}
               onClick={submitJob}
               className="w-full rounded-full bg-[#147d70] px-6 py-3.5 font-bold text-white transition hover:bg-[#075e55] disabled:cursor-not-allowed disabled:bg-[#9aaba6] sm:w-auto"

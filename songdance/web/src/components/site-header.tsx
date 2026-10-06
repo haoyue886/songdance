@@ -6,10 +6,12 @@ import { AuthNav } from "./auth/auth-nav";
 
 export async function SiteHeader() {
   const t = await getTranslations("common");
+  const billing = await getTranslations("billing");
   const navItems = [
     { href: "/#features", label: t("features") },
     { href: "/#how-it-works", label: t("howItWorks") },
     { href: "/examples", label: t("examples") },
+    { href: "/pricing", label: billing("plans") },
     { href: "/privacy", label: t("privacy") },
   ] as const;
   return (

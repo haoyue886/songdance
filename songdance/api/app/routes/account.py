@@ -24,8 +24,11 @@ def billing_me(
 ) -> dict[str, object]:
     response.headers["Cache-Control"] = "private, no-store"
     result = usage_summary(session, user, request.app.state.settings)
+    if result.get("enabled"):
+        result["owner_id"] = user.id
     if request.app.state.settings.creem_enabled:
         result.update(billing_state(session, user.id))
+        result["owner_id"] = user.id
     return result
 
 

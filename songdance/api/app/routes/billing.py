@@ -11,6 +11,14 @@ from app.models import User
 from app.services.auth import required_user
 from app.services.billing import BillingMismatch, create_checkout, create_portal
 from app.services.billing_events import receive_event
+from app.services.billing_plan import (
+    CURRENCY,
+    MAX_CLIP_SECONDS,
+    MIN_CHARGE_SECONDS,
+    PAID_SECONDS,
+    PRICE_MINOR,
+    RETENTION_HOURS,
+)
 from app.services.creem_client import CreemClient, CreemError
 
 router = APIRouter(tags=["billing"])
@@ -19,6 +27,34 @@ MAX_WEBHOOK_BYTES = 256 * 1024
 
 class EmptyBody(BaseModel):
     model_config = ConfigDict(extra="forbid")
+
+
+@router.get("/billing/config")
+def billing_config(request: Request, response: Response) -> dict[str, object]:
+    settings = request.app.state.settings
+    enabled = bool(
+        settings.creem_enabled
+        and settings.paid_usage_enabled
+        and settings.billing_environment == "test"
+        and settings.environment != "production"
+    )
+    response.headers["Cache-Control"] = "no-store"
+    return {
+        "usage_enabled": settings.usage_enabled,
+        "checkout_enabled": enabled,
+        "mode": "test" if enabled else "unavailable",
+        "pro": {
+            "price_minor": PRICE_MINOR,
+            "currency": CURRENCY,
+            "seconds": PAID_SECONDS,
+            "max_clip_seconds": MAX_CLIP_SECONDS,
+            "min_charge_seconds": MIN_CHARGE_SECONDS,
+        },
+        "free": {"monthly_jobs": settings.free_monthly_job_limit, "max_clip_seconds": 90},
+        "guest": {"max_clip_seconds": 30 if settings.usage_enabled else 90},
+        "retention_hours": RETENTION_HOURS,
+        "support_email": settings.support_email or None,
+    }
 
 
 def _provider(request: Request) -> CreemClient:

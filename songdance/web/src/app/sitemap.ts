@@ -9,6 +9,9 @@ const ROUTE_SETTINGS = {
   "/examples": { changeFrequency: "monthly", priority: 0.7 },
   "/privacy": { changeFrequency: "yearly", priority: 0.2 },
   "/terms": { changeFrequency: "yearly", priority: 0.2 },
+  "/pricing": { changeFrequency: "monthly", priority: 0.5 },
+  "/refund": { changeFrequency: "yearly", priority: 0.2 },
+  "/contact": { changeFrequency: "yearly", priority: 0.2 },
 } as const;
 
 export default function sitemap(): MetadataRoute.Sitemap {

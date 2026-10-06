@@ -84,6 +84,7 @@ class Settings(BaseSettings):
     creem_product_id: str = ""
     creem_success_url: str = ""
     creem_plan_version: str = "pro-test-v1"
+    support_email: str = ""
 
     model_config = SettingsConfigDict(
         env_file=".env", env_prefix="SONGDANCE_", hide_input_in_errors=True
@@ -145,6 +146,13 @@ class Settings(BaseSettings):
 
     @model_validator(mode="after")
     def validate_service_configuration(self) -> "Settings":
+        if self.support_email:
+            import re
+
+            if len(self.support_email) > 254 or not re.fullmatch(
+                r"[A-Za-z0-9.!#$%&'*+/=?^_`{|}~-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}", self.support_email
+            ):
+                raise ValueError("Support email must be a valid address without controls")
         if self.creem_enabled:
             from urllib.parse import urlsplit
 

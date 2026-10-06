@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { languageTag, localePrefix, routing, type AppLocale } from "@/i18n/routing";
 
-const PUBLIC_PATHS = ["/", "/transcribe", "/examples", "/privacy", "/terms"] as const;
+const PUBLIC_PATHS = ["/", "/transcribe", "/examples", "/privacy", "/terms", "/pricing", "/refund", "/contact"] as const;
 
 export type PublicPath = (typeof PUBLIC_PATHS)[number];
 

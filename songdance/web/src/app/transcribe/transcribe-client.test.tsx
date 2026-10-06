@@ -26,6 +26,9 @@ vi.mock("@/lib/api/jobs", () => ({
 }));
 
 vi.mock("@/lib/audio/clip-file", () => ({ createClipFile: mocks.createClipFile }));
+vi.mock("@/components/billing/use-upload-billing", () => ({
+  useUploadBilling: () => ({ data: null, failed: false, pending: false, refresh: vi.fn(), maxSeconds: 90 }),
+}));
 
 vi.mock("@/lib/audio/validation", async (importOriginal) => {
   const original = await importOriginal<typeof import("@/lib/audio/validation")>();

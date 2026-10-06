@@ -124,6 +124,7 @@ export function TranscribeClient() {
   const summary = usage.data?.summary;
   const estimate = usage.data ? estimatedSeconds(length, usage.data.config) : 0;
   const exhausted = metered && summary?.enabled && (summary.remaining ?? 0) < (summary.unit === "seconds" ? estimate : 1);
+  const guestExhausted = usage.data?.guest?.remaining === 0;
   const suspended = summary?.sync_state === "review_required" || summary?.state === "frozen" || summary?.state === "revoked";
   const overLimit = length > usage.maxSeconds;
   // Replaying the unchanged request can recover a job that already reserved quota.
@@ -170,6 +171,7 @@ export function TranscribeClient() {
           {metered && <div className="border-y border-[#dce3dc] py-4 text-sm leading-6">
             <p className="font-semibold">{summary?.plan === "pro" ? billing("estimateSeconds", { seconds: estimate }) : summary ? billing("estimateJobs") : billing("clipLimit", { seconds: usage.maxSeconds })}</p>
             {summary?.enabled && <p className="mt-1 text-[#64736f]">{summary.unit === "seconds" ? billing("remainingSeconds", { seconds: summary.remaining ?? 0 }) : billing("remainingJobs", { count: summary.remaining ?? 0 })}</p>}
+            {usage.data?.guest && <p className="mt-1 text-[#64736f]">{billing("guestTrial", { count: usage.data.guest.remaining })}</p>}
             <p className="mt-2 text-[#64736f]">{billing("partialFormats")}</p>
             {!summary && <Link href={`/login?return_to=${encodeURIComponent(`${locale === "en" ? "" : `/${locale}`}/transcribe`)}`} className="mt-2 inline-block font-semibold text-[#075e55] underline">{billing("signIn")}</Link>}
           </div>}
@@ -205,7 +207,7 @@ export function TranscribeClient() {
           <div>
             <button
               type="button"
-              disabled={!rightsConfirmed || submitting || overLimit || Boolean(suspended) || (!canReplay && (usage.pending || usage.failed || Boolean(exhausted)))}
+              disabled={!rightsConfirmed || submitting || overLimit || Boolean(suspended) || (!canReplay && (usage.pending || usage.failed || Boolean(exhausted || guestExhausted)))}
               aria-describedby={!rightsConfirmed ? "rights-required" : undefined}
               onClick={submitJob}
               className="w-full rounded-full bg-[#147d70] px-6 py-3.5 font-bold text-white transition hover:bg-[#075e55] disabled:cursor-not-allowed disabled:bg-[#9aaba6] sm:w-auto"

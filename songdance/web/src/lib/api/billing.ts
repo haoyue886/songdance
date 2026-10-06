@@ -3,6 +3,7 @@ import { accessSession, AuthClientError } from "@/lib/auth/client";
 const API_URL = (process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:8000").replace(/\/$/, "");
 
 export type BillingConfig = {
+  guest_usage_enabled?: boolean;
   usage_enabled: boolean;
   checkout_enabled: boolean;
   mode: "test" | "unavailable";
@@ -22,6 +23,7 @@ export type BillingSummary = {
   remaining?: number;
   used?: number;
   reserved?: number;
+  task_summary?: { succeeded: number; failed: number; in_progress: number };
   period_start?: string;
   period_end?: string;
   max_clip_seconds?: number;
@@ -86,6 +88,8 @@ export async function getBillingSummary(signal?: AbortSignal): Promise<BillingSu
   if (typeof value.enabled !== "boolean" || !["free", "pro", null].includes(value.plan)) throw new BillingApiError("BILLING_UNAVAILABLE", 502);
   if (value.enabled && (![value.limit, value.remaining, value.reserved, value.used].every((number) => typeof number === "number" && Number.isSafeInteger(number) && number >= 0)
     || !["jobs", "seconds"].includes(value.unit ?? "") || !value.period_end || !Number.isFinite(Date.parse(value.period_end)))) throw new BillingApiError("BILLING_UNAVAILABLE", 502);
+  if (value.task_summary !== undefined && (!value.task_summary || typeof value.task_summary !== "object" || Array.isArray(value.task_summary)
+    || ![value.task_summary.succeeded, value.task_summary.failed, value.task_summary.in_progress].every((number) => Number.isSafeInteger(number) && number >= 0))) throw new BillingApiError("BILLING_UNAVAILABLE", 502);
   if (value.owner_id && value.checkout_key && ["completed", "failed", "expired"].includes(value.checkout_status ?? "")) clearCheckoutKey(value.owner_id, value.checkout_key);
   return value;
 }

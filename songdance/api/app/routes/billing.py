@@ -53,6 +53,7 @@ def billing_config(request: Request, response: Response) -> dict[str, object]:
         },
         "free": {"monthly_jobs": settings.free_monthly_job_limit, "max_clip_seconds": 90},
         "guest": {"max_clip_seconds": 30 if settings.usage_enabled else 90},
+        "guest_usage_enabled": settings.guest_usage_enabled,
         "retention_hours": RETENTION_HOURS,
         "support_email": settings.support_email or None,
     }

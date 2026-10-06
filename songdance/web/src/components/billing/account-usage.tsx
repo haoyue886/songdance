@@ -61,6 +61,15 @@ export function AccountUsage({ ownerId }: { ownerId: string }) {
           <div><dt className="text-[#64736f]">{t("used")}</dt><dd className="mt-1 font-semibold">{summary.unit === "seconds" ? t("secondsValue", { seconds: summary.used ?? 0 }) : summary.used}</dd></div>
           <div><dt className="text-[#64736f]">{t("reserved")}</dt><dd className="mt-1 font-semibold">{summary.unit === "seconds" ? t("secondsValue", { seconds: summary.reserved ?? 0 }) : summary.reserved}</dd></div>
         </dl>
+        {summary.task_summary && <section className="mt-5" aria-label={t("taskSummary")}>
+          <h3 className="text-sm font-semibold">{t("taskSummary")}</h3>
+          <dl className="mt-3 grid grid-cols-1 gap-3 text-sm sm:grid-cols-3">
+            <div><dt className="text-[#64736f]">{t("tasksSucceeded")}</dt><dd className="mt-1 font-semibold">{summary.task_summary.succeeded}</dd></div>
+            <div><dt className="text-[#64736f]">{t("tasksFailed")}</dt><dd className="mt-1 font-semibold">{summary.task_summary.failed}</dd></div>
+            <div><dt className="text-[#64736f]">{t("tasksInProgress")}</dt><dd className="mt-1 font-semibold">{summary.task_summary.in_progress}</dd></div>
+          </dl>
+          <p className="mt-3 text-sm leading-6 text-[#64736f]">{t("taskSummaryNote")}</p>
+        </section>}
         <p className="mt-4 text-sm leading-6 text-[#64736f]">{t("periodEnds")} {new Intl.DateTimeFormat(languageTag(locale), { year: "numeric", month: "short", day: "numeric", hour: "numeric", minute: "2-digit", timeZoneName: "short" }).format(new Date(summary.period_end!))}</p>
         <p className="mt-3 text-sm leading-6 text-[#64736f]">{summary.plan === "pro" ? t("paidRules", { minutes: (summary.limit ?? config.pro.seconds) / 60, seconds: summary.max_clip_seconds ?? config.pro.max_clip_seconds, min: config.pro.min_charge_seconds }) : t("freeRules", { count: summary.limit ?? config.free.monthly_jobs, seconds: summary.max_clip_seconds ?? config.free.max_clip_seconds })}</p>
         {(summary.remaining ?? 0) === 0 && <p role="status" className="mt-3 text-sm font-semibold text-[#9a493f]">{t("balanceEmpty")}</p>}

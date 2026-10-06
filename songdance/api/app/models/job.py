@@ -31,6 +31,8 @@ class TranscriptionJob(TimestampMixin, Base):
         ForeignKey("users.id", ondelete="RESTRICT"), index=True
     )
     guest_secret_hash: Mapped[str | None] = mapped_column(String(64))
+    guest_trial_id: Mapped[str | None] = mapped_column(String(64), index=True)
+    guest_reservation_id: Mapped[str | None] = mapped_column(String(64), index=True)
     usage_reservation_id: Mapped[str | None] = mapped_column(String(64), index=True)
     dispatch_managed: Mapped[bool] = mapped_column(Boolean, default=False, server_default=false())
     status: Mapped[str] = mapped_column(String(24), default=JobStatus.QUEUED, nullable=False)

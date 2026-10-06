@@ -1,4 +1,5 @@
 import { accessSession, guestToken, rememberGuest, forgetGuest } from "@/lib/auth/client";
+import { savedVisitor } from "@/lib/api/guest";
 
 export type JobStatus = "queued" | "running" | "succeeded" | "failed";
 
@@ -115,6 +116,8 @@ async function request<T>(path: string, init?: RequestInit, contextJobId?: strin
   const access = await accessSession();
   const headers = new Headers(init?.headers);
   if (access) headers.set("Authorization", `Bearer ${access.access_token}`);
+  const visitor = savedVisitor();
+  if (!access && visitor) headers.set("X-Visitor-Token", visitor);
   const jobId = contextJobId ?? path.match(/^\/jobs\/([^/]+)/)?.[1];
   const capability = jobId ? guestToken(decodeURIComponent(jobId)) : null;
   if (capability) headers.set("X-Job-Access", capability);

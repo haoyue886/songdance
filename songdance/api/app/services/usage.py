@@ -172,6 +172,10 @@ def _settle(session: Session, reservation_id: str, success: bool, reason: str) -
 def settle_job(
     session: Session, job: TranscriptionJob, *, success: bool, reason: str = "worker"
 ) -> bool:
+    if job.guest_reservation_id:
+        from app.services.guest_usage import settle_guest
+
+        return settle_guest(session, job, success, reason)
     if not job.usage_reservation_id:
         return False
     return _settle(session, job.usage_reservation_id, success, reason)

@@ -27,6 +27,7 @@ def test_public_config_drives_disabled_and_test_commercial_contract(api_client):
         },
         "free": {"monthly_jobs": 1, "max_clip_seconds": 90},
         "guest": {"max_clip_seconds": 90},
+        "guest_usage_enabled": False,
         "retention_hours": 24,
         "support_email": None,
     }

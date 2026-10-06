@@ -12,6 +12,7 @@ from app.routes.analytics import router as analytics_router
 from app.routes.auth_bridge import router as auth_bridge_router
 from app.routes.billing import router as billing_router
 from app.routes.downloads import router as downloads_router
+from app.routes.guest import router as guest_router
 from app.routes.jobs import router as jobs_router
 from app.routes.youtube import router as youtube_router
 from app.services.auth import SupabaseVerifier
@@ -62,6 +63,7 @@ def create_app(
         allow_credentials=False,
         allow_methods=["GET", "POST", "DELETE"],
         allow_headers=[
+            "X-Visitor-Token",
             "Content-Type",
             "X-Request-ID",
             "Authorization",
@@ -80,6 +82,7 @@ def create_app(
         networks=resolved_settings.trusted_proxy_networks,
     )
     app.include_router(jobs_router)
+    app.include_router(guest_router)
     app.include_router(account_router)
     app.include_router(billing_router)
     app.include_router(auth_bridge_router)

@@ -81,7 +81,7 @@ def write_and_store_artifact(
             )
         ):
             return ArtifactOutcome(artifact_type, "failed", None, mime_type, 0, "JOB_UNAVAILABLE")
-        if job.usage_reservation_id and artifact_type == "midi":
+        if (job.usage_reservation_id or job.guest_reservation_id) and artifact_type == "midi":
             try:
                 midi = pretty_midi.PrettyMIDI(str(path))
                 notes = [note for instrument in midi.instruments for note in instrument.notes]

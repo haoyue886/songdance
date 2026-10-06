@@ -91,6 +91,7 @@ export function PricingPanel() {
       </div>
 
       <p className="mt-5 text-sm leading-6 text-[#52635f]">{config.usage_enabled ? t("guestRules", { seconds: config.guest.max_clip_seconds }) : t("legacyNotice")}</p>
+      {config.guest_usage_enabled && <p className="mt-2 text-sm leading-6 text-[#52635f]">{t("guestTrial", { count: 1 })} {t("guestDayRule")}</p>}
       <section aria-labelledby="purchase-disclosure" className="mt-10 border-t border-[#dce3dc] pt-7">
         <h2 id="purchase-disclosure" className="text-lg font-bold">{t("disclosureTitle")}</h2>
         <div className="mt-4 grid gap-4 text-sm leading-7 text-[#52635f] md:grid-cols-2 md:gap-8">

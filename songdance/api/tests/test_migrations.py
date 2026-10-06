@@ -49,6 +49,10 @@ def test_alembic_upgrade_and_downgrade(tmp_path: Path) -> None:
         "billing_webhook_events",
         "job_dispatches",
         "job_submissions",
+        "guest_trials",
+        "guest_days",
+        "guest_submissions",
+        "guest_ledger",
     }
     source_asset_columns = {
         column["name"] for column in inspect(engine).get_columns("source_assets")

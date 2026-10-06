@@ -1,14 +1,14 @@
-import { act, fireEvent, render, screen, waitFor } from "@testing-library/react";
+import { act, fireEvent, render, screen, waitFor, within } from "@testing-library/react";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { AccountUsage } from "./account-usage";
 import { CheckoutButton } from "./checkout-button";
 import { PaymentReturn } from "./payment-return";
 import { BillingApiError, type BillingConfig, type BillingSummary } from "@/lib/api/billing";
 
-const mocks = vi.hoisted(() => ({ summary: vi.fn(), config: vi.fn(), checkout: vi.fn(), portal: vi.fn(), account: vi.fn(), push: vi.fn() }));
+const mocks = vi.hoisted(() => ({ summary: vi.fn(), config: vi.fn(), checkout: vi.fn(), portal: vi.fn(), account: vi.fn(), push: vi.fn(), session: vi.fn() }));
 vi.mock("@/lib/api/billing", async (original) => ({ ...await original<typeof import("@/lib/api/billing")>(), getBillingSummary: mocks.summary, getBillingConfig: mocks.config, createCheckout: mocks.checkout, createPortal: mocks.portal }));
 vi.mock("@/lib/api/jobs", () => ({ getAccount: mocks.account }));
-vi.mock("@/lib/auth/client", () => ({ authEnabled: true }));
+vi.mock("@/lib/auth/client", () => ({ authEnabled: true, accessSession: mocks.session }));
 vi.mock("@/i18n/navigation", () => ({ Link: ({ href, children, ...rest }: { href: string; children: React.ReactNode }) => <a href={href} {...rest}>{children}</a>, useRouter: () => ({ push: mocks.push }) }));
 const config: BillingConfig = { usage_enabled: true, checkout_enabled: true, mode: "test", pro: { price_minor: 990, currency: "USD", seconds: 1800, max_clip_seconds: 90, min_charge_seconds: 15 }, free: { monthly_jobs: 1, max_clip_seconds: 90 }, guest: { max_clip_seconds: 30 }, retention_hours: 24, support_email: null };
 const pending: BillingSummary = { enabled: true, plan: "free", unit: "jobs", state: "active", limit: 1, remaining: 1, reserved: 0, used: 0, period_end: "2026-11-01T00:00:00Z", sync_state: "payment_confirming", checkout_status: "uncertain" };
@@ -16,7 +16,28 @@ const pro: BillingSummary = { ...pending, plan: "pro", unit: "seconds", limit: 1
 beforeEach(() => {
   vi.clearAllMocks(); mocks.config.mockResolvedValue(config); mocks.summary.mockResolvedValue(pending); mocks.account.mockResolvedValue({ id: "owner" });
 });
-afterEach(() => vi.useRealTimers());
+afterEach(() => { vi.useRealTimers(); vi.unstubAllGlobals(); });
+
+describe("task summary response validation", () => {
+  it.each([null, [], { succeeded: -1, failed: 0, in_progress: 0 },
+    { succeeded: 1.5, failed: 0, in_progress: 0 }, { succeeded: 0, failed: 0 },
+    { succeeded: 0, failed: 0, in_progress: "1" }])("rejects malformed task counts: %j", async (task_summary) => {
+    const api = await vi.importActual<typeof import("@/lib/api/billing")>("@/lib/api/billing");
+    mocks.session.mockResolvedValue({ access_token: "test-token" });
+    vi.stubGlobal("fetch", vi.fn().mockResolvedValue(new Response(JSON.stringify({ ...pending, task_summary }))));
+    await expect(api.getBillingSummary()).rejects.toMatchObject({ code: "BILLING_UNAVAILABLE", status: 502 });
+  });
+  it("accepts zero counts without requiring task summaries from older servers", async () => {
+    const api = await vi.importActual<typeof import("@/lib/api/billing")>("@/lib/api/billing");
+    mocks.session.mockResolvedValue({ access_token: "test-token" });
+    const task_summary = { succeeded: 0, failed: 0, in_progress: 0 };
+    vi.stubGlobal("fetch", vi.fn()
+      .mockResolvedValueOnce(new Response(JSON.stringify({ ...pending, task_summary })))
+      .mockResolvedValueOnce(new Response(JSON.stringify(pending))));
+    expect((await api.getBillingSummary()).task_summary).toEqual(task_summary);
+    expect((await api.getBillingSummary()).task_summary).toBeUndefined();
+  });
+});
 
 describe("checkout controls", () => {
   it("keeps purchase disabled when the server hasn't opened checkout", () => {
@@ -83,6 +104,25 @@ describe("payment confirmation", () => {
 });
 
 describe("account usage", () => {
+  it("shows server task counts separately from paid seconds", async () => {
+    mocks.summary.mockResolvedValue({ ...pro, task_summary: { succeeded: 2, failed: 3, in_progress: 1 } });
+    render(<AccountUsage ownerId="owner" />);
+    const summary = within(await screen.findByRole("region", { name: "本用量周期任务" }));
+    expect(summary.getByText("已成功").nextElementSibling).toHaveTextContent("2");
+    expect(summary.getByText("未成功／已取消").nextElementSibling).toHaveTextContent("3");
+    expect(summary.getByText("进行中").nextElementSibling).toHaveTextContent("1");
+    expect(screen.getByText("1800 秒")).toBeInTheDocument();
+  });
+  it("shows an empty current period and clears its counts after an expired session", async () => {
+    mocks.summary.mockResolvedValueOnce({ ...pending, task_summary: { succeeded: 0, failed: 0, in_progress: 0 } })
+      .mockRejectedValueOnce(new BillingApiError("AUTH_EXPIRED", 401));
+    render(<AccountUsage ownerId="owner" />);
+    const summary = within(await screen.findByRole("region", { name: "本用量周期任务" }));
+    expect(summary.getAllByText("0")).toHaveLength(3);
+    fireEvent.click(screen.getByRole("button", { name: "刷新" }));
+    await screen.findByRole("alert");
+    expect(screen.queryByRole("region", { name: "本用量周期任务" })).not.toBeInTheDocument();
+  });
   it("shows consumed and reserved paid seconds without Free fallback", async () => {
     mocks.summary.mockResolvedValue(pro);
     render(<AccountUsage ownerId="owner" />);
@@ -91,6 +131,7 @@ describe("account usage", () => {
     expect(screen.getByText("1800 秒")).toBeInTheDocument();
     expect(screen.getByRole("button", { name: "管理账单" })).toBeInTheDocument();
     expect(screen.queryByText("Free（登录）")).not.toBeInTheDocument();
+    expect(screen.queryByRole("region", { name: "本用量周期任务" })).not.toBeInTheDocument();
   });
   it("shows a failed read instead of inventing allowance and supports retry", async () => {
     mocks.summary.mockRejectedValueOnce(new BillingApiError("NETWORK_ERROR")).mockResolvedValue(pro);

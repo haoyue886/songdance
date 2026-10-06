@@ -9,7 +9,15 @@ from sqlalchemy import select
 from sqlalchemy.orm import Session
 
 from app.database import get_session
-from app.models import JobStage, JobStatus, JobSubmission, SourceAsset, TranscriptionJob, User
+from app.models import (
+    GuestSubmission,
+    JobStage,
+    JobStatus,
+    JobSubmission,
+    SourceAsset,
+    TranscriptionJob,
+    User,
+)
 from app.observability import log_event
 from app.schemas import JobResponse
 from app.services.analytics import hash_job_id, record_event
@@ -24,7 +32,14 @@ from app.services.audio_validation import (
 from app.services.auth import optional_user
 from app.services.dispatch import add_dispatch
 from app.services.durable_jobs import create_durable_job, try_dispatch
-from app.services.entitlements import lock_usage_user, reserve_job
+from app.services.entitlements import ensure_no_active_job, lock_usage_user, reserve_job
+from app.services.guest_usage import (
+    record_guest_submission,
+    replay_guest,
+    reserve_trial,
+    settle_guest,
+    visitor_id,
+)
 from app.services.job_access import get_accessible_job, get_available_job, new_guest_secret
 from app.services.lifecycle import delete_job_objects, remove_failed_upload_intent
 from app.services.paid_periods import current_paid_period
@@ -169,9 +184,38 @@ async def create_job(
             )
         )
     )
-    if settings.reliable_queue_enabled or old_submission:
+    old_guest_submission = False
+    visitor_token = request.headers.get("X-Visitor-Token")
+    if user is None and key and visitor_token and not settings.guest_usage_enabled:
+        # Keep accepted visitor submissions recoverable while draining the feature.
+        # Retain the original secret for as long as these records can be replayed.
+        if not settings.guest_signing_secret.get_secret_value():
+            raise HTTPException(503, detail={"code": "GUEST_USAGE_DISABLED"})
+        trial_id = visitor_id(settings, visitor_token)
+        old_guest_submission = (
+            session.scalar(
+                select(GuestSubmission.id).where(
+                    GuestSubmission.trial_id == trial_id,
+                    GuestSubmission.submission_key == key,
+                )
+            )
+            is not None
+        )
+    if (
+        settings.reliable_queue_enabled
+        or settings.guest_usage_enabled
+        or old_submission
+        or old_guest_submission
+    ):
         return await create_durable_job(
-            request, session, user, audio_file, start_sec, end_sec, filename
+            request,
+            session,
+            user,
+            audio_file,
+            start_sec,
+            end_sec,
+            filename,
+            guest_replay=old_guest_submission,
         )
     settings.temp_path.mkdir(parents=True, exist_ok=True)
     temp_path = settings.temp_path / f"{secrets.token_hex(16)}.{audio_extension(filename)}"
@@ -307,6 +351,11 @@ def retry_job(
     job = get_accessible_job(session, job_id, request, user, for_update=True)
     if job.dispatch_managed:
         validate_submission_key(key, user is not None)
+    if job.guest_trial_id and user is None:
+        validate_submission_key(key, True)
+        previous = replay_guest(session, job.guest_trial_id, key, fingerprint, "retry")
+        if previous is not None:
+            return JobResponse.model_validate(previous)
     if job.status != JobStatus.FAILED:
         raise HTTPException(status_code=409, detail="Only failed tasks can be retried")
     if job.error_code == "DELETE_FAILED":
@@ -315,7 +364,12 @@ def retry_job(
         raise HTTPException(409, detail={"code": "UPLOAD_INCOMPLETE"})
     if job.attempt_count >= 3:
         raise HTTPException(status_code=409, detail="Retry limit reached")
-    if request.app.state.settings.usage_enabled and user is not None:
+    if job.guest_trial_id:
+        if user is not None and request.app.state.settings.usage_enabled:
+            ensure_no_active_job(session, user.id, job_id)
+        settle_guest(session, job, False, "retry_failed_attempt")
+        job.guest_reservation_id = reserve_trial(session, job.guest_trial_id, job_id)
+    elif request.app.state.settings.usage_enabled and user is not None:
         try:
             if job.source_asset is None:
                 raise HTTPException(409, detail="Source asset is unavailable")
@@ -339,6 +393,8 @@ def retry_job(
     if job.dispatch_managed:
         if user is not None and key is not None:
             record_submission(session, user, key, fingerprint, job, "retry")
+        elif job.guest_trial_id and key:
+            record_guest_submission(session, job.guest_trial_id, key, fingerprint, job.id, "retry")
         add_dispatch(session, job, request.app.state.settings, uploading=False)
     session.commit()
     if job.dispatch_managed:

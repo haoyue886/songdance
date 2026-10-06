@@ -68,9 +68,9 @@ def test_010_upgrade_preserves_legacy_jobs_and_default_false(tmp_path):
             )
             insert_legacy_job(connection, "post-upgrade")
         with Session(engine) as session:
-            jobs = session.scalars(select(TranscriptionJob)).all()
+            jobs = session.scalars(select(TranscriptionJob.dispatch_managed)).all()
             assert len(jobs) == 2
-            assert all(job.dispatch_managed is False for job in jobs)
+            assert all(managed is False for managed in jobs)
         run_alembic(url, "009")
         assert not TABLES.intersection(inspect(engine).get_table_names())
         assert "dispatch_managed" not in {
@@ -87,7 +87,10 @@ def test_010_schema_matches_models_and_empty_downgrade(migrated):
     with engine.connect() as connection:
         context = MigrationContext.configure(connection, opts={
             "include_object": lambda obj, name, kind, reflected, compare_to:
-                name in TABLES | {"transcription_jobs"} if kind == "table" else True,
+                name in TABLES | {"transcription_jobs"} if kind == "table" else
+                name not in {"guest_trial_id", "guest_reservation_id",
+                             "ix_transcription_jobs_guest_trial_id",
+                             "ix_transcription_jobs_guest_reservation_id"},
             "compare_server_default": True,
         })
         assert compare_metadata(context, Base.metadata) == []

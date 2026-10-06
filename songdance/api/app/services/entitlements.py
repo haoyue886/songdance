@@ -9,6 +9,7 @@ from sqlalchemy.orm import Session
 
 from app.models import BillingAccount, JobStatus, TranscriptionJob, UsagePeriod, User
 from app.services.paid_periods import current_paid_period
+from app.services.task_summary import task_summary
 from app.services.usage import UsageExceeded, _as_utc, reserve_free, reserve_period, utc_month
 from app.settings import Settings
 
@@ -90,10 +91,16 @@ def reserve_job(
                     "retry_after": error.retry_after,
                 },
             ) from error
+    ensure_no_active_job(session, user.id, job_id)
+    return reservation
+
+
+def ensure_no_active_job(session: Session, user_id: str, job_id: str) -> None:
+    """Caller holds the user's admission lock, including retries of claimed trials."""
     if session.scalar(
         select(TranscriptionJob.id)
         .where(
-            TranscriptionJob.owner_user_id == user.id,
+            TranscriptionJob.owner_user_id == user_id,
             TranscriptionJob.id != job_id,
             TranscriptionJob.status.in_([JobStatus.QUEUED, JobStatus.RUNNING]),
             TranscriptionJob.expires_at > datetime.now(UTC),
@@ -101,7 +108,6 @@ def reserve_job(
         .limit(1)
     ):
         raise _error("ACTIVE_JOB_EXISTS", "请等待当前任务完成")
-    return reservation
 
 
 def usage_summary(session: Session, user: User, settings: Settings) -> dict[str, object]:
@@ -131,6 +137,7 @@ def usage_summary(session: Session, user: User, settings: Settings) -> dict[str,
             "period_start": _as_utc(period.period_start),
             "period_end": _as_utc(period.period_end),
             "max_clip_seconds": min(90, paid.max_clip_seconds),
+            "task_summary": task_summary(session, user.id, period.id),
         }
     key, start, end = utc_month(now)
     period = session.scalar(
@@ -154,4 +161,5 @@ def usage_summary(session: Session, user: User, settings: Settings) -> dict[str,
         "period_start": start,
         "period_end": end,
         "max_clip_seconds": 90,
+        "task_summary": task_summary(session, user.id, period.id if period else None),
     }

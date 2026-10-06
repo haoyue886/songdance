@@ -1,5 +1,7 @@
 {
   "billing": {
+    "guestTrial": "Successful visitor trials remaining: {count}. Failed tasks can be retried within the task limit.",
+    "guestDayRule": "One new visitor task per IP per UTC day. Retrying the same failed task does not use another daily slot.",
     "accountTitle": "Your account",
     "plan": "Plan",
     "freeName": "Free",
@@ -9,6 +11,11 @@
     "secondsValue": "{seconds} seconds",
     "used": "Used",
     "reserved": "Reserved",
+    "taskSummary": "Tasks in this usage period",
+    "tasksSucceeded": "Succeeded",
+    "tasksFailed": "Unsuccessful / canceled",
+    "tasksInProgress": "In progress",
+    "taskSummaryNote": "Each task is counted once in its reserved usage period, including retries. Counts remain after audio and results expire.",
     "periodEnds": "Period ends",
     "freeRules": "Monthly successful-transcription allowance (UTC): {count}. Each excerpt can be up to {seconds} seconds. Failed tasks do not use the allowance. Unused jobs do not roll over.",
     "paidRules": "{minutes} minutes per paid period, up to {seconds} seconds per excerpt. Successful tasks use the rounded-up excerpt duration, with a {min}-second minimum. Failed tasks do not use the allowance. Unused seconds do not roll over.",
@@ -234,7 +241,7 @@
     "terms": "terms of use",
     "trimLabel": "Audio excerpt",
     "trimTitle": "Select the transcription excerpt",
-    "trimHelp": "Drag the green region or enter times. Maximum 90 seconds.",
+    "trimHelp": "Drag the green region or enter times. Maximum {seconds} seconds.",
     "pause": "Pause",
     "playSelection": "Play excerpt",
     "waveformLoading": "Generating waveform...",
@@ -437,7 +444,7 @@
     "section2P2": "Download links expire quickly. Object storage stays private and the browser does not receive a permanent public object address.",
     "section3Title": "Logs and events",
     "section3P1": "The service records request IDs, irreversible task ID hashes, stage timings, model versions and error codes for reliability and troubleshooting.",
-    "section3P2": "Logs and product events exclude audio content, original file names, full object keys and sensitive source URLs. Anonymous rate limiting briefly uses an encrypted IP digest.",
+    "section3P2": "Logs and product events exclude audio content, original file names, full object keys and sensitive source URLs. When visitor allowances are enabled, the browser stores a signed visitor identifier. The server retains HMAC identity and IP digests, daily admissions and trial usage to prevent repeated claims; it does not store raw IPs. These records are separate from 24-hour audio cleanup. Final retention periods must be confirmed before public launch.",
     "section4Title": "Your control",
     "section4P1": "Do not upload content you do not have the right to process. While a task is available, you can download its artifacts or delete all task data immediately.",
     "section4P2": "When sign-in is enabled, account records include an authenticated identifier, email and task ownership. When usage or Test billing is enabled, related usage and Test payment metadata are also kept. These records are separate from the 24-hour audio cleanup. Their final retention and account-deletion terms must be confirmed before real payments open."
@@ -476,6 +483,10 @@
     "guide": "Open transcription example"
   },
   "errors": {
+    "guestUsed": "The visitor trial has been used. Sign in for the monthly Free allowance.",
+    "guestActive": "A visitor task is already using this trial. Return to that task.",
+    "guestDaily": "This IP has already created a visitor task today. Retry the original failed task or sign in.",
+    "guestInvalid": "Visitor access is unavailable. Refresh the page and try again.",
     "authRequired": "Please sign in again to access this task.",
     "accountUnavailable": "This account is currently unavailable. Please contact support.",
     "network": "Unable to connect to the transcription service. Check your network and try again.",

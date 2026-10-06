@@ -109,7 +109,7 @@ export function WaveformTrimmer({ file, duration, clip, disabled, maxClipSeconds
       <div className="flex flex-wrap items-center justify-between gap-3">
         <div>
           <h2 className="text-lg font-bold">{t("trimTitle")}</h2>
-          <p className="mt-1 text-sm text-[#667772]">{t("trimHelp")}</p>
+          <p className="mt-1 text-sm text-[#667772]">{t("trimHelp", { seconds: maxClipSeconds })}</p>
         </div>
         <button
           type="button"

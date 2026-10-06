@@ -6,6 +6,7 @@ from app.models.billing import (
     CheckoutSession,
 )
 from app.models.dispatch import JobDispatch, JobSubmission
+from app.models.guest import GuestDay, GuestLedger, GuestSubmission, GuestTrial
 from app.models.job import (
     AnalyticsEvent,
     Artifact,
@@ -21,6 +22,10 @@ from app.models.usage import UsageLedger, UsagePeriod
 from app.models.user import AuthIdentity, User
 
 __all__ = [
+    "GuestDay",
+    "GuestLedger",
+    "GuestSubmission",
+    "GuestTrial",
     "JobDispatch",
     "JobSubmission",
     "BillingAccount",

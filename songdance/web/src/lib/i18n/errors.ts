@@ -1,6 +1,11 @@
 type Translate = (key: string, values?: Record<string, string | number>) => string;
 
 const ERROR_KEYS: Record<string, string> = {
+  GUEST_TRIAL_USED: "guestUsed",
+  GUEST_TRIAL_ACTIVE: "guestActive",
+  GUEST_DAILY_LIMIT: "guestDaily",
+  VISITOR_REQUIRED: "guestInvalid",
+  VISITOR_INVALID: "guestInvalid",
   AUTH_REQUIRED: "authRequired",
   AUTH_INVALID: "authRequired",
   AUTH_EXPIRED: "authRequired",

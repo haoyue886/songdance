@@ -11,6 +11,14 @@ class OriginEnforcementMiddleware:
         self.allowed_origins = frozenset(allowed_origins)
 
     async def __call__(self, scope: Scope, receive: Receive, send: Send) -> None:
+        if (
+            scope["type"] == "http"
+            and scope.get("method") == "POST"
+            and scope.get("path") == "/webhooks/creem"
+        ):
+            # Only this exact server-to-server endpoint uses raw-body HMAC instead of Origin.
+            await self.app(scope, receive, send)
+            return
         if scope["type"] == "http" and scope.get("method") in UNSAFE_METHODS:
             origin = Headers(scope=scope).get("origin")
             if origin is not None and origin not in self.allowed_origins:

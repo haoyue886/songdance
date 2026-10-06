@@ -68,6 +68,7 @@ def usage_postgres(postgres):
             legacy_user_id = legacy_user.id
             session.commit()
         migrate(database_url, "008")
+        migrate(database_url, "009")
         yield engine, settings, legacy_user_id, reservation
     finally:
         engine.dispose()
@@ -102,7 +103,7 @@ def grant(session, user_id, **overrides):
 def test_008_migration_preserves_free_ledger_and_enforces_single_terminal(usage_postgres):
     engine, _, user_id, reservation_id = usage_postgres
     with Session(engine) as session:
-        assert session.scalar(text("SELECT version_num FROM alembic_version")) == "008"
+        assert session.scalar(text("SELECT version_num FROM alembic_version")) == "009"
         assert session.scalar(text("SELECT to_regclass('public.paid_periods')")) == "paid_periods"
         period = session.scalars(select(UsagePeriod).where(UsagePeriod.user_id == user_id)).one()
         assert (period.limit_units, period.reserved_units, period.consumed_units) == (1, 1, 0)

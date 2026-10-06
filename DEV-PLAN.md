@@ -1841,14 +1841,14 @@ Phase 9 基线
 
 ## Phase 38：登录、Creem 月付与用量账本（2026-09-30 更新）
 
-状态：38.0 已完成，38.1 本地实现与隔离验证完成，38.2 的 Free/Pro 周期与用量已有默认关闭的本地实现；真实 Supabase/Google/SMTP 和生产 TLS Cookie 尚未联调，Creem checkout/webhook 与完整用量验收未完成。长音频链路另见 Phase 39。
+状态：38.0 已完成，38.1/38.2 本地认证与 Free/Pro 用量基础已实现，38.3 Test checkout/webhook 后端已实现并默认关闭。真实 Supabase/Google/SMTP、Creem Test 卡、商业页面和完整验收仍未完成。长音频链路另见 Phase 39。
 
 需求事实来源：`Product-Spec.md` §1.8 / SCOPE-025–028 与 `Billing-Auth-Spec.md` v0.2；不在此重复维护价格。新方案替代早期一次性 credits 和所有真实上传前登录；游客试用和 Free 月额度按子规范实施。
 
 - [x] 38.0 身份 ADR：选定 Supabase Auth；交付 `songdance/docs/adr/0001-supabase-auth.md`、`songdance/infra/env.auth.example` 及 `scripts/check_auth_config.py`。官方核验覆盖 OTP/Google、JWT 与 session_id 撤销、BFF/HttpOnly 限制和 SMTP；区域及实际邮件成本作为真实项目配置项保留，未冒充实测。模板只有空值，离线检查不验证账户权限或宣称生产可用。
 - [ ] 38.1 账号：迁移 006、Google/OTP 登录/登出/账号页、JWT 与 session 撤销查询、原子认领和跨用户门禁已本地实现。SQLite 路由、隔离 PostgreSQL 最小权限/迁移/认领竞争、Redis 跨实例刷新、真实 SDK + 本地协议替身浏览器流程已验证。仍待真实 Supabase/SMTP/Google、生产 TLS/会话策略联调才签收 BA-02/11；BA-13 的删除账号与停止续费依赖 38.3，不能提前勾选。
 - [ ] 38.2 用量：Free 每 UTC 自然月 1 次、90 秒；Pro paid_periods、交易去重、1,800 秒周期、15 秒起计、互斥终态、结果同事务结算、私有用量查询及独立 IP 安全节流已本地实现并默认关闭。SQLite/临时 PostgreSQL 并发、到期后旧期结算、历史交易撤销隔离有专项证据。仍待可靠入队/outbox、提交幂等、游客成功体验/IP 日额、全部跨周期和 BA-01/03–06/12 验收；Pro 仍限 90 秒，长音频另走 Phase 39。
-- [ ] 38.3 Creem Test：客户、checkout 幂等、原始体验签、持久 inbox、paid 授予与交易去重、Portal、取消/退款/争议和每日对账。BA-07–10/14。
+- [ ] 38.3 Creem Test：默认关闭的后端 checkout 意图、原始体验签/持久 inbox、权威交易核验与 paid 授予、Portal 和已知交易对账已本地实现；超时不重复 POST，退款定点撤销/争议冻结。真实商户 Test 卡/Portal、退款停续费、全历史对账和商业 UI 仍待验收，BA-07–10/14 不整体勾选。配置/恢复见 `songdance/docs/creem-test-setup.md`。
 - [ ] 38.4 商业 UI：pricing/login/account/return/refund/contact；八语言参数一致，Free 每月 1 次与失败/不结转说明、实际已验证 Pro 上限、MIDI 主要交付/格式部分失败、24 小时临时保存、付款确认中；退款不营销 7 天无条件，超 180 秒的故障/质量申请保留人工渠道，投诉不偷偷延长音频保留。BA-15/17。
 - [ ] 38.5 发布验收：隔离数据库测试、现有 API/Web 回归、安全与支付故障矩阵、包含免费流量/失败重试的容量成本、认证/商户/政策确认；完成 Phase 39 对实际售卖档位的 LA-01–LA-07、既有部署报告未验证事项和有效生产质量证据。BA-16。
 
@@ -1863,6 +1863,8 @@ Phase 9 基线
 2026-10-06 38.2 Free 账本本地实现批次：新增迁移 007、`usage_periods`/`usage_ledger`、任务预占关联及 Worker/上传失败/删除/过期清理释放路径，并用 attempt/reservation 栅栏防止迟到 Worker 结算新重试；默认 `SONGDANCE_USAGE_ENABLED=false`，不开放商业化额度。定向测试 22 passed，相关 API 回归 134 passed；独立代码审查对最终 diff 为 0 新 P1/P2。实现范围、命令、未覆盖的 Pro/Creem、outbox、游客账本、跨月并发和真实供应商见 `songdance/docs/reviews/2026-10-06-usage-ledger-implementation.md`；不勾选 38.2 或 BA 项。
 
 2026-10-06 Pro 用量基础：迁移 008、paid_periods 与秒级准入已实现；修复旧预占 release 后迟到 consume 可窃取其他预占的问题，结算改为调用者事务，结果成功/失败与扣量一次提交。Pro 共享 IP 不占免费 3 次业务预算，独立安全上限仍与全局熔断并用。下一步为 38.3 的官方 Creem 合同核验、持久 webhook inbox/付款核验与 checkout；本批没有付款入口或真实支付联调，证据见 `songdance/docs/reviews/2026-10-06-paid-usage-foundation.md`。
+
+2026-10-06 Creem Test 后端批次：迁移 009、checkout 意图/账户绑定、签名持久 inbox、权威交易核验与授额、Portal、取消/退款/争议及已知交易对账。186 项相关 API 与 13 项临时 PostgreSQL 测试通过；独立复审无遗留问题。默认关闭且拒绝 Live；真实供应商、商业 UI、全历史对账、退款自动停止续费仍待验收。交付记录 `songdance/docs/reviews/2026-10-06-creem-test-backend.md`。
 
 ## Phase 39：Pro 完整钢琴曲与长音频准入（2026-09-30）
 

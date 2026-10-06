@@ -10,6 +10,7 @@ from app.observability import RequestObservabilityMiddleware, configure_logging
 from app.routes.account import router as account_router
 from app.routes.analytics import router as analytics_router
 from app.routes.auth_bridge import router as auth_bridge_router
+from app.routes.billing import router as billing_router
 from app.routes.downloads import router as downloads_router
 from app.routes.jobs import router as jobs_router
 from app.routes.youtube import router as youtube_router
@@ -60,7 +61,13 @@ def create_app(
         allow_origins=resolved_settings.cors_origin_list,
         allow_credentials=False,
         allow_methods=["GET", "POST", "DELETE"],
-        allow_headers=["Content-Type", "X-Request-ID", "Authorization", "X-Job-Access"],
+        allow_headers=[
+            "Content-Type",
+            "X-Request-ID",
+            "Authorization",
+            "X-Job-Access",
+            "Idempotency-Key",
+        ],
         expose_headers=["X-Request-ID", "Retry-After"],
     )
     app.add_middleware(
@@ -74,6 +81,7 @@ def create_app(
     )
     app.include_router(jobs_router)
     app.include_router(account_router)
+    app.include_router(billing_router)
     app.include_router(auth_bridge_router)
     app.include_router(downloads_router)
     app.include_router(analytics_router)

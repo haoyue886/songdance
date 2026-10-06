@@ -78,6 +78,12 @@ class Settings(BaseSettings):
     paid_usage_enabled: bool = False
     paid_ip_hourly_job_limit: int = 60
     billing_environment: Literal["test", "live"] = "test"
+    creem_enabled: bool = False
+    creem_api_key: SecretStr = SecretStr("")
+    creem_webhook_secret: SecretStr = SecretStr("")
+    creem_product_id: str = ""
+    creem_success_url: str = ""
+    creem_plan_version: str = "pro-test-v1"
 
     model_config = SettingsConfigDict(
         env_file=".env", env_prefix="SONGDANCE_", hide_input_in_errors=True
@@ -139,6 +145,32 @@ class Settings(BaseSettings):
 
     @model_validator(mode="after")
     def validate_service_configuration(self) -> "Settings":
+        if self.creem_enabled:
+            from urllib.parse import urlsplit
+
+            if self.billing_environment != "test" or self.environment == "production":
+                raise ValueError("Creem integration is Test Mode only until release acceptance")
+            if not self.paid_usage_enabled:
+                raise ValueError("Creem requires paid usage")
+            if not self.creem_api_key.get_secret_value().strip():
+                raise ValueError("Creem Test key is required")
+            if len(self.creem_webhook_secret.get_secret_value()) < 16:
+                raise ValueError("Creem webhook secret is required")
+            if not self.creem_product_id.startswith("prod_") or len(self.creem_product_id) > 255:
+                raise ValueError("Creem Test product is required")
+            if not self.creem_plan_version or len(self.creem_plan_version) > 64:
+                raise ValueError("Creem plan version is required")
+            target = urlsplit(self.creem_success_url)
+            origin = f"{target.scheme}://{target.netloc}"
+            if (
+                origin not in self.cors_origin_list
+                or target.username
+                or target.password
+                or target.fragment
+                or target.query
+                or target.scheme not in {"http", "https"}
+            ):
+                raise ValueError("Creem success URL must be a configured site origin without query")
         if self.usage_enabled and not self.auth_enabled:
             raise ValueError("Usage ledger requires authentication")
         if self.paid_usage_enabled and not self.usage_enabled:

@@ -7,7 +7,7 @@ from fastapi import HTTPException
 from sqlalchemy import select, update
 from sqlalchemy.orm import Session
 
-from app.models import JobStatus, TranscriptionJob, UsagePeriod, User
+from app.models import BillingAccount, JobStatus, TranscriptionJob, UsagePeriod, User
 from app.services.paid_periods import current_paid_period
 from app.services.usage import UsageExceeded, _as_utc, reserve_free, reserve_period, utc_month
 from app.settings import Settings
@@ -42,6 +42,14 @@ def reserve_job(
     """Duration comes from the server-decoded source asset, never browser billing fields."""
     seconds = charge_seconds(duration)
     lock_usage_user(session, user.id)
+    if settings.paid_usage_enabled and session.scalar(
+        select(BillingAccount.id).where(
+            BillingAccount.user_id == user.id,
+            BillingAccount.environment == settings.billing_environment,
+            BillingAccount.blocked.is_(True),
+        )
+    ):
+        raise _error("BILLING_REVIEW_REQUIRED", "账单争议处理中，请联系支持", 403)
     paid = (
         current_paid_period(session, user_id=user.id, environment=settings.billing_environment)
         if settings.paid_usage_enabled

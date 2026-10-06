@@ -8,6 +8,7 @@ from app.database import get_session
 from app.models import TranscriptionJob, User
 from app.schemas import JobResponse
 from app.services.auth import required_user
+from app.services.billing import billing_state
 from app.services.entitlements import usage_summary
 from app.services.job_access import get_available_job, has_guest_access
 
@@ -22,7 +23,10 @@ def billing_me(
     session: Annotated[Session, Depends(get_session)],
 ) -> dict[str, object]:
     response.headers["Cache-Control"] = "private, no-store"
-    return usage_summary(session, user, request.app.state.settings)
+    result = usage_summary(session, user, request.app.state.settings)
+    if request.app.state.settings.creem_enabled:
+        result.update(billing_state(session, user.id))
+    return result
 
 
 @router.get("/me")

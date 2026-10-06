@@ -1,4 +1,10 @@
 from app.models.base import Base
+from app.models.billing import (
+    BillingAccount,
+    BillingSubscription,
+    BillingWebhookEvent,
+    CheckoutSession,
+)
 from app.models.job import (
     AnalyticsEvent,
     Artifact,
@@ -14,6 +20,10 @@ from app.models.usage import UsageLedger, UsagePeriod
 from app.models.user import AuthIdentity, User
 
 __all__ = [
+    "BillingAccount",
+    "BillingSubscription",
+    "BillingWebhookEvent",
+    "CheckoutSession",
     "PaidPeriod",
     "AuthIdentity",
     "User",

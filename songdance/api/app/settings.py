@@ -75,6 +75,7 @@ class Settings(BaseSettings):
     auth_session_idle_seconds: int = 0
     usage_enabled: bool = False
     guest_usage_enabled: bool = False
+    account_deletion_enabled: bool = False
     guest_signing_secret: SecretStr = SecretStr("")
     reliable_queue_enabled: bool = False
     dispatch_wait_seconds: int = 900
@@ -150,6 +151,10 @@ class Settings(BaseSettings):
 
     @model_validator(mode="after")
     def validate_service_configuration(self) -> "Settings":
+        if self.account_deletion_enabled and (
+            not self.auth_enabled or not self.usage_enabled or not self.reliable_queue_enabled
+        ):
+            raise ValueError("Account deletion requires auth, usage and reliable queue")
         if self.guest_usage_enabled:
             if not self.usage_enabled or not self.auth_enabled or not self.reliable_queue_enabled:
                 raise ValueError("Guest usage requires auth, usage and reliable queue")

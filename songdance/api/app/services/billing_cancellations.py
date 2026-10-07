@@ -167,6 +167,9 @@ def process_cancellations(
                     _retry(row, current)
             except Exception:
                 _retry(row, current)
+            from app.services.account_deletion_billing import persist_observed_obligations
+
+            persist_observed_obligations(session)
             session.commit()
             log_event("billing_cancellation", status=row.status, attempt=row.attempts)
             handled += 1

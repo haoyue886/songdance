@@ -10,7 +10,7 @@ from sqlalchemy.exc import IntegrityError
 from sqlalchemy.orm import Session
 
 from app.database import get_session
-from app.models import AuthIdentity, User
+from app.models import AccountDeletion, AuthIdentity, User
 from app.settings import Settings
 
 
@@ -26,6 +26,7 @@ class VerifiedIdentity:
     issuer: str
     subject: str
     email: str | None
+    session_id: str | None = None
 
 
 class SupabaseVerifier:
@@ -67,8 +68,30 @@ class SupabaseVerifier:
             raise auth_error(401, "AUTH_REVOKED")
         email = claims.get("email")
         return VerifiedIdentity(
-            self.issuer, subject, email if isinstance(email, str) and len(email) <= 254 else None
+            self.issuer,
+            subject,
+            email if isinstance(email, str) and len(email) <= 254 else None,
+            session_id,
         )
+
+    def reauthenticated_at(self, identity: VerifiedIdentity) -> datetime:
+        if identity.issuer != self.issuer or not identity.session_id:
+            raise auth_error(403, "REAUTH_REQUIRED")
+        try:
+            with self.engine.begin() as connection:
+                connection.execute(text("SET LOCAL statement_timeout = 3000"))
+                stamp = connection.scalar(
+                    text(
+                        "SELECT created_at FROM auth.sessions WHERE id = CAST(:sid AS uuid) "
+                        "AND user_id = CAST(:uid AS uuid)"
+                    ),
+                    {"sid": identity.session_id, "uid": identity.subject},
+                )
+        except Exception:
+            raise auth_error(503, "AUTH_UNAVAILABLE") from None
+        if stamp is None or not 0 <= (datetime.now(UTC) - stamp).total_seconds() <= 600:
+            raise auth_error(403, "REAUTH_REQUIRED")
+        return stamp
 
     def session_active(self, subject: str, session_id: str) -> bool:
         try:
@@ -105,7 +128,9 @@ class SupabaseVerifier:
         return True
 
 
-def find_or_create_user(session: Session, identity: VerifiedIdentity) -> User:
+def find_or_create_user(
+    session: Session, identity: VerifiedIdentity, *, deletion_status: bool = False
+) -> User:
     query = select(AuthIdentity).where(
         AuthIdentity.issuer == identity.issuer,
         AuthIdentity.subject == identity.subject,
@@ -131,9 +156,27 @@ def find_or_create_user(session: Session, identity: VerifiedIdentity) -> User:
             if stored is None:
                 raise auth_error(503, "AUTH_UNAVAILABLE") from None
     user = session.get(User, stored.user_id)
-    if user is None or not user.active:
+    if user is None or (
+        not user.active
+        and not (
+            deletion_status
+            and session.scalar(select(AccountDeletion.id).where(AccountDeletion.user_id == user.id))
+        )
+    ):
         raise auth_error(403, "ACCOUNT_UNAVAILABLE")
     return user
+
+
+def verified_identity(request: Request) -> VerifiedIdentity:
+    header = request.headers.get("authorization", "")
+    if not request.app.state.settings.auth_enabled:
+        raise auth_error(401, "AUTH_DISABLED")
+    parts = header.split()
+    if len(parts) != 2 or parts[0].lower() != "bearer" or len(parts[1]) > 16_384:
+        raise auth_error()
+    identity = request.app.state.auth_verifier.verify(parts[1])
+    request.state.verified_identity = identity
+    return identity
 
 
 def optional_user(
@@ -142,13 +185,20 @@ def optional_user(
     header = request.headers.get("authorization")
     if header is None:
         return None
-    if not request.app.state.settings.auth_enabled:
-        raise auth_error(401, "AUTH_DISABLED")
-    parts = header.split()
-    if len(parts) != 2 or parts[0].lower() != "bearer" or len(parts[1]) > 16_384:
-        raise auth_error()
-    identity = request.app.state.auth_verifier.verify(parts[1])
-    return find_or_create_user(session, identity)
+    user = find_or_create_user(session, verified_identity(request))
+    if request.method in {"POST", "DELETE"} and session.scalar(
+        select(AccountDeletion.id).where(AccountDeletion.user_id == user.id)
+    ):
+        raise auth_error(409, "ACCOUNT_DELETION_PENDING")
+    return user
+
+
+def account_status_user(
+    request: Request, session: Annotated[Session, Depends(get_session)]
+) -> User:
+    if not request.headers.get("authorization"):
+        raise auth_error(401, "AUTH_REQUIRED")
+    return find_or_create_user(session, verified_identity(request), deletion_status=True)
 
 
 def required_user(user: Annotated[User | None, Depends(optional_user)]) -> User:

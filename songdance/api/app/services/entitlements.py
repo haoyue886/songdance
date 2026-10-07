@@ -43,6 +43,9 @@ def reserve_job(
     """Duration comes from the server-decoded source asset, never browser billing fields."""
     seconds = charge_seconds(duration)
     lock_usage_user(session, user.id)
+    from app.services.account_deletion import assert_account_open
+
+    assert_account_open(session, user.id)
     if settings.paid_usage_enabled and session.scalar(
         select(BillingAccount.id).where(
             BillingAccount.user_id == user.id,

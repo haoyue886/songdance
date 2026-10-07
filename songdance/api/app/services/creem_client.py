@@ -161,6 +161,27 @@ class CreemClient:
             payload={"mode": "immediate"},
         )
 
+    def list_customer_subscriptions(
+        self, customer_id: str, *, page_number: int = 1, page_size: int = 100
+    ) -> dict:
+        if type(page_number) is not int or page_number < 1 or type(page_size) is not int:
+            raise CreemError("Invalid subscription pagination")
+        if not 1 <= page_size <= 100:
+            raise CreemError("Invalid subscription pagination")
+        result = self._request(
+            "GET",
+            f"/customers/{validate_identifier(customer_id)}/subscriptions",
+            params={"page_number": page_number, "page_size": page_size},
+            entity=False,
+        )
+        if not isinstance(result.get("items"), list) or len(result["items"]) > page_size:
+            raise CreemError("Invalid subscription list")
+        for item in result["items"]:
+            if not isinstance(item, dict):
+                raise CreemError("Invalid subscription list")
+            _validate_modes(item, entity=True)
+        return result
+
     def create_checkout(
         self,
         *,

@@ -251,6 +251,11 @@ async def create_job(
             attempt_count=1,
             expires_at=now + timedelta(hours=24),
         )
+        if user is not None:
+            from app.services.account_deletion import assert_account_open
+
+            lock_usage_user(session, user.id)
+            assert_account_open(session, user.id)
         if settings.usage_enabled:
             if user is None and end_sec - start_sec > 30:
                 raise HTTPException(
@@ -276,6 +281,10 @@ async def create_job(
         session.add(job)
         session.commit()
         intent_committed = True
+        # Cleanup must wait for this PUT or remove the intent before it starts.
+        current_job = get_available_job(session, job.id, for_update=True)
+        if current_job.stage != JobStage.UPLOAD or current_job.status != JobStatus.QUEUED:
+            raise HTTPException(409, detail={"code": "UPLOAD_NO_LONGER_ACTIVE"})
         storage.put_file(storage_key, clip_path, clipped.mime_type)
         try:
             _queue(request).enqueue(job.id, job.attempt_count)
@@ -339,8 +348,11 @@ def retry_job(
     session: Annotated[Session, Depends(get_session)],
     user: Annotated[User | None, Depends(optional_user)],
 ) -> JobResponse:
-    if request.app.state.settings.usage_enabled and user is not None:
+    if user is not None:
         lock_usage_user(session, user.id)
+        from app.services.account_deletion import assert_account_open
+
+        assert_account_open(session, user.id)
     key = request.headers.get("Idempotency-Key")
     fingerprint = submission_fingerprint(job_id=job_id)
     if key is not None and user is not None:

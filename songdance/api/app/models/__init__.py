@@ -1,3 +1,4 @@
+from app.models.account_deletion import AccountDeletion, AccountDeletionSubscription
 from app.models.base import Base
 from app.models.billing import (
     BillingAccount,
@@ -23,6 +24,8 @@ from app.models.usage import UsageLedger, UsagePeriod
 from app.models.user import AuthIdentity, User
 
 __all__ = [
+    "AccountDeletion",
+    "AccountDeletionSubscription",
     "GuestDay",
     "GuestLedger",
     "GuestSubmission",

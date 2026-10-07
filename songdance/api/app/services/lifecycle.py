@@ -44,6 +44,12 @@ def delete_job_objects(job: TranscriptionJob, storage: ObjectStorage) -> None:
     extra_keys = [
         artifact.storage_key for artifact in job.artifacts if artifact.storage_key is not None
     ]
+    # A Worker may die after PUT but before the artifact outcome is recorded.
+    extra_keys.extend(
+        f"jobs/{job.id}/artifacts/attempt-{attempt}/{filename}"
+        for attempt in range(1, job.attempt_count + 1)
+        for filename in ARTIFACT_FILENAMES
+    )
     delete_known_job_objects(job.id, storage, extra_keys)
 
 

@@ -83,6 +83,9 @@ def create_checkout(
     session: Session, user: User, key: str, settings: Settings, provider: CreemClient
 ) -> dict[str, object]:
     lock_usage_user(session, user.id)
+    from app.services.account_deletion import assert_account_open
+
+    assert_account_open(session, user.id)
     account = account_for(session, user.id)
     if account.blocked:
         raise HTTPException(409, detail={"code": "BILLING_REVIEW_REQUIRED"})

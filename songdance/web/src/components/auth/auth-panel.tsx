@@ -4,9 +4,10 @@ import { useEffect, useState, useSyncExternalStore } from "react";
 import { useLocale, useTranslations } from "next-intl";
 import { useRouter, Link } from "@/i18n/navigation";
 import { accessSession, authEnabled, authPost, AuthClientError, guestToken, subscribeGuest } from "@/lib/auth/client";
-import { claimJob, getAccount } from "@/lib/api/jobs";
+import { claimJob, getAccount, type Account } from "@/lib/api/jobs";
 import { safeReturnPath } from "@/lib/auth/return-path";
 import { AccountUsage } from "@/components/billing/account-usage";
+import { AccountDeletion } from "./account-deletion";
 
 const INPUT = "mt-2 w-full rounded-xl border border-[#c8d8d2] bg-white px-4 py-3 text-[#15332f]";
 const BUTTON = "w-full rounded-full bg-[#147d70] px-5 py-3 font-bold text-white hover:bg-[#075e55] disabled:opacity-50";
@@ -24,7 +25,9 @@ export function AuthPanel({ mode, returnTo, initialError = false }: { mode: "log
   const [error, setError] = useState(initialError ? t("invalid") : "");
   const [resendAt, setResendAt] = useState(0);
   const [now, setNow] = useState(0);
-  const [user, setUser] = useState<{ id: string; email: string | null } | null>(null);
+  const [user, setUser] = useState<Account | null>(null);
+  const [accountVersion, setAccountVersion] = useState(0);
+  const [blockedOwner, setBlockedOwner] = useState<string | null>(null);
   const [loading, setLoading] = useState(mode === "account");
   const target = safeReturnPath(returnTo ?? `${prefix}/account`);
   const jobId = target.match(/\/jobs\/([A-Za-z0-9_-]+)/)?.[1];
@@ -43,7 +46,7 @@ export function AuthPanel({ mode, returnTo, initialError = false }: { mode: "log
         .finally(() => { if (active) setLoading(false); });
     }
     return () => { active = false; };
-  }, [mode, jobId, t]);
+  }, [mode, jobId, accountVersion, t]);
 
   const explain = (reason: unknown) => reason instanceof AuthClientError
     ? t(reason.code === "AUTH_RATE_LIMITED" ? "rateLimited" : reason.code === "AUTH_INVALID" ? "invalid" : reason.code === "AUTH_EXPIRED" ? "expired" : "error") : t("error");
@@ -59,18 +62,25 @@ export function AuthPanel({ mode, returnTo, initialError = false }: { mode: "log
     window.location.assign(target);
   }
   if (!authEnabled) return <p role="status" className="mt-6">{t("unavailable")}</p>;
+  const deletionBlocked = Boolean(user && (user.deletion || blockedOwner === user.id));
   return <section className={mode === "account" ? "mt-8 max-w-2xl" : "mt-8 max-w-lg rounded-lg border border-[#dce3dc] bg-white/85 p-6 shadow-sm sm:p-8"}>
     {mode === "account" ? <>
       {loading ? <p role="status">{t("loading")}</p> : user ? <>
-        <p className="break-all font-semibold">{user.email}</p>
-        <p className="mt-3 text-sm leading-6 text-[#64736f]">{t("accountBody")}</p>
-        <AccountUsage key={user.id} ownerId={user.id} />
+        <p className="break-all font-semibold">{user.email ?? t("deletionCompletedAccount")}</p>
+        {!deletionBlocked && <>
+          <p className="mt-3 text-sm leading-6 text-[#64736f]">{t("accountBody")}</p>
+          <AccountUsage key={user.id} ownerId={user.id} />
+        </>}
         <div className="mt-6 flex flex-wrap gap-4">
-          <Link href="/transcribe" className="font-bold text-[#075e55] underline">{t("upload")}</Link>
+          {!deletionBlocked && <Link href="/transcribe" className="font-bold text-[#075e55] underline">{t("upload")}</Link>}
           <button disabled={busy} onClick={() => void run(async () => { await authPost("logout"); router.replace("/login"); router.refresh(); })} className="font-semibold underline disabled:opacity-50">{busy ? t("working") : t("signOut")}</button>
         </div>
-        {claimable && jobId && <button className={`${BUTTON} mt-5`} disabled={busy} onClick={() => void run(async () => { await claimJob(jobId); setNotice(t("claimed")); })}>{t("claim")}</button>}
-        {jobId && <Link href={target} className="mt-4 inline-block underline">{t("back")}</Link>}
+        {!deletionBlocked && claimable && jobId && <button className={`${BUTTON} mt-5`} disabled={busy} onClick={() => void run(async () => { await claimJob(jobId); setNotice(t("claimed")); })}>{t("claim")}</button>}
+        {!deletionBlocked && jobId && <Link href={target} className="mt-4 inline-block underline">{t("back")}</Link>}
+        <AccountDeletion key={user.id} ownerId={user.id} initial={{ enabled: user.account_deletion_enabled === true, deletion: user.deletion ?? null }}
+          onSnapshot={(snapshot) => setUser((current) => current?.id === user.id ? { ...current, email: snapshot.deletion?.status === "completed" ? null : current.email, deletion: snapshot.deletion, account_deletion_enabled: snapshot.enabled } : current)}
+          onBlocked={(blocked) => setBlockedOwner(blocked ? user.id : null)}
+          onIdentityChanged={() => { setUser(null); setBlockedOwner(null); setNotice(""); setError(""); setLoading(true); setAccountVersion((value) => value + 1); }} />
       </> : <Link href={`/login?return_to=${encodeURIComponent(target)}`} className="font-bold underline">{t("signIn")}</Link>}
     </> : <>
       <button className={BUTTON} disabled={busy} onClick={() => void run(async () => {

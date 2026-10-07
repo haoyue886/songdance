@@ -45,7 +45,10 @@ API 提供 `POST /billing/checkout`（空 JSON、已登录 Bearer、本站 Origi
 - https://docs.creem.io/api-reference/endpoint/get-transactions.md
 - https://docs.creem.io/api-reference/endpoint/cancel-subscription.md
 - https://docs.creem.io/features/subscriptions/refunds-and-cancellations.md
+- https://docs.creem.io/api-reference/endpoint/list-customer-subscriptions.md
 
 列表为 `GET /v1/transactions/search`，参数 `page_number/page_size`，返回 `items/pagination`（总记录/页数、当前/前后页）；取消为 `POST /v1/subscriptions/{id}/cancel`，显式 `mode=immediate`。原文读取不代表测试商户实际返回合同已验证。
+
+账户删除还使用 `GET /v1/customers/{id}/subscriptions` 的相同分页结构核对全部已绑定订阅，再停止未来续费；未知订阅不自动按邮箱归属或取消。流程与 Worker 配置见 [认证设置](auth-setup.md)。没有绑定完整证据或仍有未知 checkout 时，删除保留处理中/审查状态。
 
 API 固定 https://test-api.creem.io/v1，x-api-key；支付请求无重定向/自动 POST 重试，响应最多 1 MiB。签名 HMAC-SHA256(raw body)，eventType/id 防重放；订阅周期 ISO、transaction 样例为毫秒时间戳。退款样例旧值/环境 local 不作为放宽当前 API 枚举的依据。真实商户联调必须核实 Test 字段、金额税额口径和实际页面。

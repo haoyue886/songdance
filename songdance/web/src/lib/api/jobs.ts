@@ -1,5 +1,13 @@
 import { accessSession, guestToken, rememberGuest, forgetGuest } from "@/lib/auth/client";
 import { savedVisitor } from "@/lib/api/guest";
+import { validateAccountDeletion, type AccountDeletion } from "@/lib/api/account-deletion";
+
+export type Account = {
+  id: string;
+  email: string | null;
+  account_deletion_enabled?: boolean;
+  deletion?: AccountDeletion | null;
+};
 
 export type JobStatus = "queued" | "running" | "succeeded" | "failed";
 
@@ -151,8 +159,14 @@ export async function claimJob(jobId: string): Promise<TranscriptionJob> {
   return result;
 }
 
-export function getAccount(): Promise<{ id: string; email: string | null }> {
-  return request("/me");
+export async function getAccount(): Promise<Account> {
+  const account = await request<Account>("/me");
+  if (!account || typeof account.id !== "string" || !account.id || account.email !== null && typeof account.email !== "string"
+    || account.account_deletion_enabled !== undefined && typeof account.account_deletion_enabled !== "boolean") {
+    throw new JobsApiError("Invalid account response", 502, "ACCOUNT_UNAVAILABLE");
+  }
+  if (account.deletion !== undefined && account.deletion !== null) validateAccountDeletion(account.deletion, account.id);
+  return account;
 }
 
 export function createJob(input: CreateJobInput): Promise<TranscriptionJob> {

@@ -74,6 +74,7 @@ class FakeProvider:
         self.create_calls = []
         self.portal_calls = []
         self.list_calls = []
+        self.subscription_list_calls = []
         self.cancel_calls = []
         self.timeout = False
         self.fail_transaction = False
@@ -133,6 +134,22 @@ class FakeProvider:
         self.cancel_calls.append(subscription_id)
         self.subscription.update(status="canceled", updated_at=datetime.now(UTC).isoformat())
         return deepcopy(self.subscription)
+
+    def list_customer_subscriptions(self, customer_id, *, page_number=1, page_size=100):
+        self.subscription_list_calls.append((customer_id, page_number, page_size))
+        items = [self.subscription] if self.subscription["customer"] == customer_id else []
+        total_pages = (len(items) + page_size - 1) // page_size
+        start = (page_number - 1) * page_size
+        return {
+            "items": deepcopy(items[start : start + page_size]),
+            "pagination": {
+                "total_records": len(items),
+                "total_pages": total_pages,
+                "current_page": page_number,
+                "next_page": page_number + 1 if page_number < total_pages else None,
+                "prev_page": page_number - 1 if page_number > 1 else None,
+            },
+        }
 
     def create_portal(self, customer_id):
         self.portal_calls.append(customer_id)

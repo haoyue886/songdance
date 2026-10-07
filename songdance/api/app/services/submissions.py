@@ -35,6 +35,9 @@ def replay_submission(
 ) -> TranscriptionJob | None:
     # Also locks the first insert when there isn't a submission row yet.
     lock_usage_user(session, user.id)
+    from app.services.account_deletion import assert_account_open
+
+    assert_account_open(session, user.id)
     row = session.scalar(
         select(JobSubmission).where(
             JobSubmission.user_id == user.id,

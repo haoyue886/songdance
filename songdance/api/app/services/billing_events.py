@@ -4,6 +4,7 @@ import hashlib
 import hmac
 import json
 import secrets
+from collections.abc import Callable
 from datetime import UTC, datetime, timedelta
 
 from sqlalchemy import select
@@ -166,6 +167,9 @@ def sync_checkout(
         )
         session.add(binding)
     _sync_subscription(binding, sub)
+    from app.services.account_deletion_billing import note_subscription_change
+
+    note_subscription_change(session, binding.user_id, binding.status)
     local.status = "completed"
     local.error_code = None
     session.flush()
@@ -203,6 +207,9 @@ def checked_subscription(
     ):
         raise BillingMismatch("subscription_binding_conflict")
     _sync_subscription(binding, remote)
+    from app.services.account_deletion_billing import note_subscription_change
+
+    note_subscription_change(session, binding.user_id, binding.status)
     return remote
 
 
@@ -402,6 +409,9 @@ def process_pending(
                     seconds=min(3600, 30 * 2 ** min(event.attempts, 7))
                 )
                 log_event("billing_event_retry", attempt=event.attempts)
+            from app.services.account_deletion_billing import persist_observed_obligations
+
+            persist_observed_obligations(session)
             session.commit()
             processed += 1
     return processed
@@ -424,13 +434,12 @@ def reconcile_known(
         ).all()
     completed = failed = 0
     for checkout_id in checkouts:
-        try:
-            with factory() as session:
-                sync_checkout(session, provider, checkout_id)
-                session.commit()
-            completed += 1
-        except Exception:
-            failed += 1
+        ok = _reconcile_projection(
+            factory,
+            lambda session, checkout_id=checkout_id: sync_checkout(session, provider, checkout_id),
+        )
+        completed += int(ok)
+        failed += int(not ok)
     with factory() as session:
         subscriptions = session.scalars(
             select(BillingSubscription.provider_id).where(BillingSubscription.environment == "test")
@@ -439,20 +448,25 @@ def reconcile_known(
         try:
             remote = test_object(provider.get_subscription(sub_id))
             tx_id = remote.get("last_transaction_id")
-            with factory() as session:
-                sync_transaction(session, provider, sub_id, identifier(tx_id) if tx_id else None)
-                session.commit()
-            completed += 1
+            ok = _reconcile_projection(
+                factory,
+                lambda session, sub_id=sub_id, tx_id=tx_id: sync_transaction(
+                    session, provider, sub_id, identifier(tx_id) if tx_id else None
+                ),
+            )
+            completed += int(ok)
+            failed += int(not ok)
         except Exception:
             failed += 1
     for sub_id, tx_id in history:
-        try:
-            with factory() as session:
-                sync_transaction(session, provider, sub_id, tx_id)
-                session.commit()
-            completed += 1
-        except Exception:
-            failed += 1
+        ok = _reconcile_projection(
+            factory,
+            lambda session, sub_id=sub_id, tx_id=tx_id: sync_transaction(
+                session, provider, sub_id, tx_id
+            ),
+        )
+        completed += int(ok)
+        failed += int(not ok)
     from app.services.billing_reconciliation import scan_transactions
 
     report = {
@@ -462,3 +476,24 @@ def reconcile_known(
     }
     log_event("billing_reconciliation", **report)
     return report
+
+
+def _reconcile_projection(
+    factory: sessionmaker[Session], operation: Callable[[Session], object]
+) -> bool:
+    from app.services.account_deletion_billing import persist_observed_obligations
+
+    with factory() as session:
+        try:
+            operation(session)
+            session.commit()
+            return True
+        except Exception:
+            session.rollback()
+            try:
+                persist_observed_obligations(session)
+                session.commit()
+            except Exception:
+                session.rollback()
+                log_event("account_billing_observation_failed")
+            return False

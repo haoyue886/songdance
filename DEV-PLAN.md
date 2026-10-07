@@ -1876,6 +1876,8 @@ Phase 9 基线
 
 2026-10-07 账户删除/跨周期批次：013 新增持久删除与逐订阅核验；先最近登录确认和停止续费，再清理任务/邮箱，失败可恢复，原身份墓碑与账务保留。补 Free/Pro 原期结算、取消/到期、迟到重试及 30.1/90 秒选区运输检查。本地交付证据见 `songdance/docs/reviews/2026-10-07-account-deletion.md`；真实供应商、运营保留策略、完整 BA/音乐质量和长音频继续保留。
 
+2026-10-07 商业化整链本地验收：真实 BFF/SDK、FastAPI、PG/Redis/RQ 与 Basic Pitch，桌面/375px 完成购买等待→事件授权→提交/播放/三格式导出→Portal 取消→账户删除，含未知响应恢复、跨账号拒绝、Free 静音释放与月额耗尽。24 项流程通过；离线配置检查和中断/强杀资源恢复已有证据，未打开实际开关。交付 `songdance/docs/reviews/2026-10-07-commercial-journey.md`；真实项目准备见 `songdance/docs/commercial-readiness.md`。下一阶段为独立 Supabase/Google/SMTP 与 Creem Test 项目实际联调，容量、法律/客服、专业音乐质量和长音频门禁保留。
+
 ## Phase 39：Pro 完整钢琴曲与长音频准入（2026-09-30）
 
 状态：39.0 准备中；已用临时静音 WAV 实跑上传/时长限制探测，尚未建立代表性长钢琴录音固定集或执行模型/人工质量验证。5 分钟和 10 分钟均无本阶段发布通过证据。消费 `Product-Spec.md` SCOPE-028 与 `Billing-Auth-Spec.md` LONG-01–LONG-04 / LA-01–LA-07。既有短片段记录保留原受测范围。

@@ -13,6 +13,7 @@
     "test:e2e": "playwright test",
     "test:auth:ui": "node scripts/auth-ui-smoke.mjs",
     "test:billing:ui": "node scripts/billing-ui-smoke.mjs",
+    "test:commercial:e2e": "node scripts/commercial-journey-e2e.mjs",
     "test:submission:ui": "node scripts/submission-ui-smoke.mjs"
   },
   "dependencies": {

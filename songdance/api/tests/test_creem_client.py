@@ -109,6 +109,110 @@ def test_portal_contract(transport):
     assert transport.calls[0][2]["json"] == {"customer_id": "cust_1"}
 
 
+def test_transaction_search_uses_official_pagination_contract(transport):
+    body = {
+        "items": [{"id": "tx_1", "mode": "test"}],
+        "pagination": {
+            "total_records": 101,
+            "total_pages": 2,
+            "current_page": 2,
+            "next_page": None,
+            "prev_page": 1,
+        },
+    }
+    transport.body = json.dumps(body).encode()
+    assert client().list_transactions(page_number=2, page_size=100) == body
+    verb, url, options = transport.calls[0]
+    assert (verb, url) == ("GET", API_BASE + "/transactions/search")
+    assert options["params"] == {"page_number": 2, "page_size": 100}
+    assert options["json"] is None
+    assert options["timeout"] == REQUEST_TIMEOUT
+    assert options["allow_redirects"] is False
+    assert options["stream"] is True
+    assert transport.closed
+
+
+def test_empty_transaction_search_does_not_require_envelope_mode(transport):
+    transport.body = b'{"items":[],"pagination":{"total_records":0,"total_pages":0}}'
+    assert client().list_transactions()["items"] == []
+    assert transport.calls[0][2]["params"] == {"page_number": 1, "page_size": 100}
+
+
+@pytest.mark.parametrize(
+    "items",
+    [
+        None,
+        {},
+        [None],
+        [[{"id": "tx_1", "mode": "test"}]],
+        [{"id": "tx_1"}],
+        [{"id": "tx_1", "mode": "prod"}],
+        [{"id": "tx_1", "mode": "test", "subscription": {"id": "sub_1"}}],
+        [{"id": "tx_1", "mode": "test", "customer": {"id": "cust_1", "mode": "prod"}}],
+        [{"id": "tx_1", "mode": "test"}] * 101,
+    ],
+)
+def test_transaction_search_rejects_invalid_or_live_entities(transport, items):
+    transport.body = json.dumps({"items": items, "pagination": {}}).encode()
+    with pytest.raises(CreemError):
+        client().list_transactions()
+    assert transport.closed
+
+
+@pytest.mark.parametrize(
+    "page_number,page_size",
+    [
+        (0, 100),
+        (-1, 100),
+        (True, 100),
+        (1.0, 100),
+        ("1", 100),
+        (1, 0),
+        (1, 101),
+        (1, True),
+        (1, 1.0),
+        (1, "100"),
+    ],
+)
+def test_transaction_search_rejects_invalid_pagination_before_transport(
+    transport, page_number, page_size
+):
+    with pytest.raises(CreemError):
+        client().list_transactions(page_number=page_number, page_size=page_size)
+    assert transport.calls == []
+
+
+def test_cancel_subscription_posts_immediate_mode_to_identifier_path(transport):
+    transport.body = b'{"id":"sub_1","mode":"test","status":"canceled"}'
+    assert client().cancel_subscription("sub_1")["status"] == "canceled"
+    assert transport.calls[0][:2] == ("POST", API_BASE + "/subscriptions/sub_1/cancel")
+    assert transport.calls[0][2]["json"] == {"mode": "immediate"}
+    assert transport.calls[0][2]["params"] is None
+    assert transport.closed
+
+
+@pytest.mark.parametrize("identifier", ["", "../sub_1", "sub_1?mode=prod", "sub_1\n", None])
+def test_cancel_subscription_validates_path_before_transport(transport, identifier):
+    with pytest.raises(CreemError):
+        client().cancel_subscription(identifier)
+    assert transport.calls == []
+
+
+def test_cancel_subscription_timeout_is_sanitized_and_not_retried(transport):
+    transport.error = requests.Timeout("test_secret provider error")
+    with pytest.raises(CreemError) as error:
+        client().cancel_subscription("sub_1")
+    assert "test_secret" not in str(error.value)
+    assert len(transport.calls) == 1
+
+
+def test_cancel_subscription_rejects_live_response(transport):
+    transport.body = b'{"id":"sub_1","mode":"prod","status":"canceled"}'
+    with pytest.raises(CreemError):
+        client().cancel_subscription("sub_1")
+    assert transport.closed
+
+
 @pytest.mark.parametrize(
     "body",
     [

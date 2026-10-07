@@ -134,6 +134,33 @@ class CreemClient:
             params={"transaction_id": validate_identifier(transaction_id)},
         )
 
+    def list_transactions(self, *, page_number: int = 1, page_size: int = 100) -> dict:
+        if type(page_number) is not int or page_number < 1 or type(page_size) is not int:
+            raise CreemError("Invalid transaction pagination")
+        if not 1 <= page_size <= 100:
+            raise CreemError("Invalid transaction pagination")
+        result = self._request(
+            "GET",
+            "/transactions/search",
+            params={"page_number": page_number, "page_size": page_size},
+            entity=False,
+        )
+        items = result.get("items")
+        if not isinstance(items, list) or len(items) > page_size:
+            raise CreemError("Invalid transaction list")
+        for item in items:
+            if not isinstance(item, dict):
+                raise CreemError("Invalid transaction list")
+            _validate_modes(item, entity=True)
+        return result
+
+    def cancel_subscription(self, subscription_id: str) -> dict:
+        return self._request(
+            "POST",
+            f"/subscriptions/{validate_identifier(subscription_id)}/cancel",
+            payload={"mode": "immediate"},
+        )
+
     def create_checkout(
         self,
         *,

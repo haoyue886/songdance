@@ -61,7 +61,7 @@ def database(postgres):  # noqa: F811
     try:
         migrate(url, "upgrade", "head")
         with engine.connect() as connection:
-            assert connection.scalar(text("SELECT version_num FROM alembic_version")) == "011"
+            assert connection.scalar(text("SELECT version_num FROM alembic_version")) == "012"
         yield url, engine, sessionmaker(engine, expire_on_commit=False)
     finally:
         engine.dispose()

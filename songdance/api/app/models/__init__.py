@@ -1,6 +1,7 @@
 from app.models.base import Base
 from app.models.billing import (
     BillingAccount,
+    BillingCancellation,
     BillingSubscription,
     BillingWebhookEvent,
     CheckoutSession,
@@ -29,6 +30,7 @@ __all__ = [
     "JobDispatch",
     "JobSubmission",
     "BillingAccount",
+    "BillingCancellation",
     "BillingSubscription",
     "BillingWebhookEvent",
     "CheckoutSession",

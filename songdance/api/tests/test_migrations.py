@@ -47,6 +47,7 @@ def test_alembic_upgrade_and_downgrade(tmp_path: Path) -> None:
         "checkout_sessions",
         "billing_subscriptions",
         "billing_webhook_events",
+        "billing_cancellations",
         "job_dispatches",
         "job_submissions",
         "guest_trials",

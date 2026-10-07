@@ -91,3 +91,24 @@ class BillingWebhookEvent(TimestampMixin, Base):
     attempts: Mapped[int] = mapped_column(Integer, default=0)
     next_attempt_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), index=True)
     error_code: Mapped[str | None] = mapped_column(String(64))
+
+
+class BillingCancellation(TimestampMixin, Base):
+    """Durable cancellation intent created with the verified full-refund projection."""
+
+    __tablename__ = "billing_cancellations"
+    __table_args__ = (
+        UniqueConstraint("environment", "transaction_id", name="uq_billing_cancellation"),
+    )
+    id: Mapped[str] = mapped_column(String(64), primary_key=True)
+    user_id: Mapped[str] = mapped_column(ForeignKey("users.id", ondelete="RESTRICT"), index=True)
+    environment: Mapped[str] = mapped_column(String(8))
+    paid_period_id: Mapped[str] = mapped_column(
+        ForeignKey("paid_periods.id", ondelete="RESTRICT"), index=True
+    )
+    subscription_id: Mapped[str] = mapped_column(String(255))
+    transaction_id: Mapped[str] = mapped_column(String(255))
+    status: Mapped[str] = mapped_column(String(24), default="pending", index=True)
+    attempts: Mapped[int] = mapped_column(Integer, default=0)
+    next_attempt_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), index=True)
+    error_code: Mapped[str | None] = mapped_column(String(64))

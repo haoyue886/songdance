@@ -41,6 +41,8 @@ def receive_event(session: Session, raw: bytes, signature: str, secret: str) -> 
     kind = value.get("eventType")
     if not isinstance(kind, str) or not 1 <= len(kind) <= 64:
         raise BillingMismatch("invalid_event_type")
+    if kind == "reconciliation.transaction":
+        raise BillingMismatch("reserved_event_type")
     obj = test_object(value.get("object"))
     refs = {"object_id": identifier(obj)}
     # Keep only references needed to re-fetch facts. No full body, email, or address.
@@ -188,6 +190,22 @@ def _sync_subscription(binding: BillingSubscription, remote: dict) -> None:
         binding.provider_updated_at = updated
 
 
+def checked_subscription(
+    session: Session, provider: CreemClient, binding: BillingSubscription
+) -> dict:
+    checkout = session.get(CheckoutSession, binding.checkout_id)
+    remote = test_object(provider.get_subscription(binding.provider_id))
+    if (
+        checkout is None
+        or identifier(remote) != binding.provider_id
+        or identifier(remote.get("customer")) != binding.customer_id
+        or identifier(remote.get("product")) != checkout.product_id
+    ):
+        raise BillingMismatch("subscription_binding_conflict")
+    _sync_subscription(binding, remote)
+    return remote
+
+
 def sync_transaction(
     session: Session,
     provider: CreemClient,
@@ -195,6 +213,7 @@ def sync_transaction(
     transaction_id: str | None,
     *,
     event_kind: str | None = None,
+    expected_latest_transaction: str | None = None,
 ) -> bool:
     binding = session.scalar(
         select(BillingSubscription).where(
@@ -206,14 +225,12 @@ def sync_transaction(
     lock_usage_user(session, binding.user_id)
     session.refresh(binding, with_for_update=True)
     checkout = session.get(CheckoutSession, binding.checkout_id)
-    remote = test_object(provider.get_subscription(sub_id))
+    remote = checked_subscription(session, provider, binding)
     if (
-        identifier(remote) != sub_id
-        or identifier(remote.get("customer")) != binding.customer_id
-        or identifier(remote.get("product")) != checkout.product_id
+        expected_latest_transaction is not None
+        and remote.get("last_transaction_id") != expected_latest_transaction
     ):
-        raise BillingMismatch("subscription_binding_conflict")
-    _sync_subscription(binding, remote)
+        raise BillingMismatch("refund_newer_payment_review")
     if transaction_id is None:
         return False  # active/canceled/past_due events are state only, never grants.
     tx = test_object(provider.get_transaction(transaction_id))
@@ -281,6 +298,9 @@ def sync_transaction(
             transaction_id=paid.transaction_id,
             status="revoked",
         )
+        from app.services.billing_cancellations import request_refund_cancellation
+
+        request_refund_cancellation(session, paid)
     elif tx["status"] == "chargedBack":
         account_for(session, binding.user_id).blocked = True
         set_paid_period_status(
@@ -321,13 +341,13 @@ def apply_event(session: Session, event: BillingWebhookEvent, provider: CreemCli
             event.status = "review"
             event.error_code = "PARTIAL_REFUND_REVIEW"
             return
-    elif kind in {"refund.created", "dispute.created"}:
+    elif kind in {"refund.created", "dispute.created", "reconciliation.transaction"}:
         review = sync_transaction(
             session,
             provider,
             identifier(refs.get("subscription")),
             identifier(refs.get("transaction")),
-            event_kind=kind,
+            event_kind=kind if kind != "reconciliation.transaction" else None,
         )
         if review:
             event.status = "review"
@@ -387,20 +407,15 @@ def process_pending(
     return processed
 
 
-def reconcile_known(factory: sessionmaker[Session], provider: CreemClient) -> dict[str, int]:
-    """Recover known checkouts and latest payments; audit each known historical transaction.
-
-    Not a claim of complete provider transaction enumeration: missing historical cycles
-    without a known ID remain a dashboard/support reconciliation item.
-    """
+def reconcile_known(
+    factory: sessionmaker[Session], provider: CreemClient, *, max_pages: int = 100
+) -> dict[str, int | bool]:
+    """Recover bindings and known payments, then enumerate Test transaction history."""
     with factory() as session:
         checkouts = session.scalars(
             select(CheckoutSession.provider_id).where(
                 CheckoutSession.environment == "test", CheckoutSession.provider_id.is_not(None)
             )
-        ).all()
-        subscriptions = session.scalars(
-            select(BillingSubscription.provider_id).where(BillingSubscription.environment == "test")
         ).all()
         history = session.execute(
             select(PaidPeriod.subscription_id, PaidPeriod.transaction_id).where(
@@ -438,5 +453,12 @@ def reconcile_known(factory: sessionmaker[Session], provider: CreemClient) -> di
             completed += 1
         except Exception:
             failed += 1
-    log_event("billing_reconciliation", completed=completed, failed=failed)
-    return {"completed": completed, "failed": failed}
+    from app.services.billing_reconciliation import scan_transactions
+
+    report = {
+        "completed": completed,
+        "failed": failed,
+        **scan_transactions(factory, provider, max_pages=max_pages),
+    }
+    log_event("billing_reconciliation", **report)
+    return report

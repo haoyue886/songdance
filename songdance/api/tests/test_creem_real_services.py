@@ -51,7 +51,7 @@ def database(postgres):  # noqa: F811
     url = admin.rsplit("/", 1)[0] + "/" + name
     engine = create_engine(url.replace("postgresql://", "postgresql+psycopg://"))
     try:
-        migrate(url, "upgrade", "009")
+        migrate(url, "upgrade", "head")
         yield url, engine, sessionmaker(engine, expire_on_commit=False)
     finally:
         engine.dispose()
@@ -185,6 +185,7 @@ def test_competing_workers_grant_payment_once(database, tmp_path):
 
 def test_009_partial_unique_index_and_history_guard(database):
     url, _, factory = database
+    migrate(url, "downgrade", "009")
     user_id = owner(factory)
 
     def intent(status):
@@ -219,6 +220,7 @@ def test_009_partial_unique_index_and_history_guard(database):
 
 def test_empty_009_migration_round_trip(database):
     url, engine, _ = database
+    migrate(url, "downgrade", "009")
     migrate(url, "downgrade", "008")
     with engine.connect() as connection:
         assert connection.scalar(text("SELECT to_regclass('checkout_sessions')")) is None

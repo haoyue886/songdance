@@ -1,6 +1,6 @@
 # SongDance 登录与收费需求 v0.2
 
-日期：2026-10-07。状态：**认证、游客与 Free/Pro 账本、可靠派发、Creem Test 后端及商业页面已有默认关闭的本地实现，账户已接周期任务摘要。真实供应商联调、全历史对账、退款停续费、完整商业化验收及 5/10 分钟能力仍未完成。Pro 价格/额度仍为试行假设，不代表已批准真实收费。**
+日期：2026-10-07。状态：**认证、游客与 Free/Pro 账本、可靠派发、Creem Test 后端及商业页面已有默认关闭的本地实现，账户已接周期任务摘要；Test 历史交易扫描与全额退款后取消补偿已本地实现。真实供应商联调、全历史对账与退款停续费的供应商验收、完整商业化验收及 5/10 分钟能力仍未完成。Pro 价格/额度仍为试行假设，不代表已批准真实收费。**
 
 本文件是 `Product-Spec.md` 的商业化子规范，是账号、收费与权益的详细需求事实来源；开发顺序见 `DEV-PLAN.md` Phase 38（账号/计费）与 Phase 39（长音频）。既有算法质量门禁不变。2026-09-29 的评审包交付不等于生产质量验收；部署审计仍有指纹不一致和容器/线上验证缺口。
 
@@ -68,7 +68,7 @@
 
 ### BILL-01 支付创建
 
-实施状态：Test checkout/Portal、签名 inbox、交易核验、取消/退款/争议投影和已知交易对账已本地实现，配置与恢复见 [Creem Test 设置](songdance/docs/creem-test-setup.md)。API 固定 Test，禁止 production/Live。request_id 尚无官方 POST 去重承诺，创建结果未知时保留确认状态不自动重建；完整供应商验收仍待完成。
+实施状态：Test checkout/Portal、签名 inbox、交易核验、取消/退款/争议投影、已知交易对账及分页历史扫描已本地实现，配置与恢复见 [Creem Test 设置](songdance/docs/creem-test-setup.md)。012 追加全额退款后的持久取消补偿，必须查询确认停止；发现后续有效付款或陈旧快照转人工审查，保留原周期隔离。API 固定 Test，禁止 production/Live。request_id 尚无官方 POST 去重承诺，创建结果未知时保留确认状态不自动重建；完整供应商验收仍待完成。
 
 - Next.js 展示 UI；FastAPI 持有 Creem Secret、管理数据库和额度。Test Mode 按试行配置 USD 990 cents、monthly 实现；Live 使用最终确认的版本化价格/额度，product_id 只由服务端白名单取得。
 - Test/Live 的 API base、key、product、webhook secret、数据库事件命名空间隔离；生产禁止接受测试交易开权益。

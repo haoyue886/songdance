@@ -71,7 +71,7 @@ const api = createServer(async (req, res) => {
     }
     if (url.pathname === "/auth/v1/otp") { json({}); return; }
     if (url.pathname === "/auth/v1/verify") {
-      if (body.token !== "123456") { json({ msg: "Invalid token" }, 400); return; }
+      if (!["123456", "12345678"].includes(body.token)) { json({ msg: "Invalid token" }, 400); return; }
       const value = session(nextShort); nextShort = false; json(value); return;
     }
     if (url.pathname === "/auth/v1/authorize") {
@@ -139,12 +139,21 @@ try {
   assert.ok(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth), "375px page must not overflow");
   await page.getByLabel("Email address").fill(user.email);
   await page.getByRole("button", { name: "Send code", exact: true }).click();
-  await page.getByLabel("Six-digit code").waitFor();
+  const otpInput = page.getByLabel("Verification code");
+  await otpInput.waitFor();
+  assert.equal(await otpInput.getAttribute("maxlength"), "8");
+  await otpInput.fill("1234567");
+  assert.equal(await otpInput.evaluate(input => input.checkValidity()), false, "seven-digit OTP must fail HTML validation");
   assert.ok(await page.getByRole("button", { name: /Send another code/ }).isDisabled());
-  await page.getByLabel("Six-digit code").fill("000000");
+  await otpInput.fill("00000000");
+  assert.equal(await otpInput.evaluate(input => input.checkValidity()), true, "eight-digit OTP must pass HTML validation");
   await page.getByRole("button", { name: "Verify and sign in" }).click();
   await page.getByRole("alert").waitFor();
-  await page.getByLabel("Six-digit code").fill("123456");
+  await otpInput.fill("12345678");
+  await page.screenshot({ path: path.join(output, "otp-mobile.png"), fullPage: true });
+  await page.setViewportSize({ width: 1280, height: 900 });
+  await page.screenshot({ path: path.join(output, "otp-desktop.png"), fullPage: true });
+  await page.setViewportSize({ width: 375, height: 812 });
   await page.getByRole("button", { name: "Verify and sign in" }).click();
   await page.waitForURL("**/account");
   await page.getByText(user.email, { exact: true }).waitFor();
@@ -169,13 +178,13 @@ try {
   await page.goto(`${site}/login?return_to=/account`);
   await page.getByLabel("Email address").fill(user.email);
   await page.getByRole("button", { name: "Send code", exact: true }).click();
-  await page.getByLabel("Six-digit code").fill("123456");
+  await page.getByLabel("Verification code").fill("123456");
   await page.getByRole("button", { name: "Verify and sign in" }).click();
   await page.waitForURL("**/account");
   await page.getByText(user.email, { exact: true }).waitFor();
   assert.ok(refreshCount >= 1, "expired session must refresh through bridge");
   assert.deepEqual(external, []);
-  console.log(JSON.stringify({ status: "passed", scope: "browser_and_real_sdk_against_local_protocol_doubles", real_provider_verified: false, checks: ["desktop/mobile", "OTP failure/success", "HttpOnly/no refresh JSON", "logout", "Google PKCE callback + locale", "refresh bridge"], refreshCount, screenshots: output }));
+  console.log(JSON.stringify({ status: "passed", scope: "browser_and_real_sdk_against_local_protocol_doubles", real_provider_verified: false, checks: ["desktop/mobile", "8-digit OTP failure/success", "6-digit OTP compatibility", "7-digit OTP rejected", "HttpOnly/no refresh JSON", "logout", "Google PKCE callback + locale", "refresh bridge"], refreshCount, screenshots: output }));
 } catch (error) {
   console.error(error.stack ?? String(error)); console.error(logs); process.exitCode = 1;
 } finally {

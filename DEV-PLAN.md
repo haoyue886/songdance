@@ -1841,12 +1841,13 @@ Phase 9 基线
 
 ## Phase 38：登录、Creem 月付与用量账本（2026-09-30 更新）
 
-状态：38.0 已完成，38.1/38.2 本地认证与 Free/Pro 用量基础已实现，38.3 Test 后端及 38.4 商业页面已有默认关闭的本地实现。真实 Supabase/Google/SMTP、Creem Test 卡和完整商业化验收仍未完成。长音频链路另见 Phase 39。
+状态：38.0 已完成，38.1/38.2 本地认证与 Free/Pro 用量基础已实现，38.3 Test 后端及 38.4 商业页面已有默认关闭的本地实现。真实 Supabase/Google/邮件、Creem Test 卡和完整商业化验收仍未完成。长音频链路另见 Phase 39。
 
 需求事实来源：`Product-Spec.md` §1.8 / SCOPE-025–028 与 `Billing-Auth-Spec.md` v0.2；不在此重复维护价格。新方案替代早期一次性 credits 和所有真实上传前登录；游客试用和 Free 月额度按子规范实施。
 
 - [x] 38.0 身份 ADR：选定 Supabase Auth；交付 `songdance/docs/adr/0001-supabase-auth.md`、`songdance/infra/env.auth.example` 及 `scripts/check_auth_config.py`。官方核验覆盖 OTP/Google、JWT 与 session_id 撤销、BFF/HttpOnly 限制和 SMTP；区域及实际邮件成本作为真实项目配置项保留，未冒充实测。模板只有空值，离线检查不验证账户权限或宣称生产可用。
-- [ ] 38.1 账号：Google/OTP、JWT/session 门禁、原子认领及账户已有本地实现；013 补默认关闭的最近登录确认、持久删除与逐订阅核验后清理，必要身份/账务墓碑保留。仍待真实 Supabase/SMTP/Google、生产 TLS/会话策略与删除/停止续费的供应商实测，BA-02/11/13 不整体勾选。
+- [ ] 38.1 账号：Google/OTP、JWT/session 门禁、原子认领及账户已有本地实现；013 补默认关闭的最近登录确认、持久删除与逐订阅核验后清理，必要身份/账务墓碑保留。仍待真实 Supabase/邮件/Google、生产 TLS/会话策略与删除/停止续费的供应商实测，BA-02/11/13 不整体勾选。
+- [ ] 38.1 邮件增量：按 AUTH-04 采用 Resend 免费层与 Supabase Send Email Hook/API，替代原自有 SMTP 主路径。先完成账户/实际域名与客服收信，再实现默认关闭的签名 Hook、幂等发送/有界重试/脱敏日志与签名去重的退信投诉回调；最后验收 MAIL-01–06 和真实 BA-02。SMTP 不是 API Hook 的额外并行步骤。具体记录见 `songdance/docs/resend-setup.md`，当前未创建 Resend 密钥、修改 DNS 或部署 Hook。
 - [ ] 38.2 用量：Free/Pro、outbox、游客账本及匿名幂等已有默认关闭的本地实现；新增跨月/跨付款周期、取消/到期后的原期结算与迟到重试检查，以及 30.1/90 秒完整裁剪运输验证。真实模型完整区间、跨周期供应商联调与全部 BA-01/03–06/12 仍待签收；Pro 仍限 90 秒。
 - [ ] 38.3 Creem Test：默认关闭的 checkout 意图、签名/内部对账 inbox、权威交易核验、Portal、已知交易对账及 Test 历史分页扫描已本地实现；012 补全额退款的持久取消/查询确认，后续付款与陈旧快照转审查。真实商户 Test 卡/Portal、全历史/退款取消实际行为和完整商业化流程仍待验收，BA-07–10/14 不整体勾选。配置/恢复见 `songdance/docs/creem-test-setup.md`。
 - [ ] 38.4 商业 UI：pricing/account/return/refund/contact、登录回跳、导航、上传前用量/上限及周期任务摘要已本地实现；参数统一来自 API，付款确认轮询有界，未知状态不诱导重新购买。八语言参数对齐，六语商业文本明确英文回退。剩余实际客服/法律条款与真实购买→提交→导出→取消验收；BA-15/17 不整体勾选。
@@ -1877,6 +1878,10 @@ Phase 9 基线
 2026-10-07 账户删除/跨周期批次：013 新增持久删除与逐订阅核验；先最近登录确认和停止续费，再清理任务/邮箱，失败可恢复，原身份墓碑与账务保留。补 Free/Pro 原期结算、取消/到期、迟到重试及 30.1/90 秒选区运输检查。本地交付证据见 `songdance/docs/reviews/2026-10-07-account-deletion.md`；真实供应商、运营保留策略、完整 BA/音乐质量和长音频继续保留。
 
 2026-10-07 商业化整链本地验收：真实 BFF/SDK、FastAPI、PG/Redis/RQ 与 Basic Pitch，桌面/375px 完成购买等待→事件授权→提交/播放/三格式导出→Portal 取消→账户删除，含未知响应恢复、跨账号拒绝、Free 静音释放与月额耗尽。24 项流程通过；离线配置检查和中断/强杀资源恢复已有证据，未打开实际开关。交付 `songdance/docs/reviews/2026-10-07-commercial-journey.md`；真实项目准备见 `songdance/docs/commercial-readiness.md`。下一阶段为独立 Supabase/Google/SMTP 与 Creem Test 项目实际联调，容量、法律/客服、专业音乐质量和长音频门禁保留。
+
+2026-10-07 测试控制台与 OTP 兼容：已创建 Free Supabase `songdance-test` 与 Creem Test 月付 USD 9.90 商品，用户确认精确本地回跳并要求保留供应商 8 位 OTP。已核对 ECC 签名、保存 600 秒/8 位参数，并修复应用 6 位硬编码，保留旧 6 位兼容。54 项定向与 313 项全量 Web 测试、tsc、ESLint、隔离认证浏览器回归和独立审查完成，证据见 `songdance/docs/reviews/2026-10-07-otp-compatibility.md`。本地配置骨架受忽略且开关关闭；当前未启用 Hook 时默认邮件仍为链接，后续已选 Resend API 主路径。OAuth/会话权限、邮件运行代码、Creem 密钥/webhook 和供应商实测继续待办，不勾选 BA 或宣布正式收费就绪。
+
+2026-10-07 Resend 准备增量：用户明确采用免费层、`mail.<主域名>` 与 API 集成，局部同步 AUTH-04/MAIL-01–06、身份 ADR 和 38.1 邮件待办。已登录账户 Usage/Domains 实际核对 Free 3,000 封/月、100 封/日、3 域名/10 req/s，自动超额付费关闭且无域名；添加域名表单已打开，未创建密钥、修改 DNS、发信或部署。主域名/DNS 管理方与客服收信未提供，后续步骤及官方原文证据见 `songdance/docs/resend-setup.md`。
 
 ## Phase 39：Pro 完整钢琴曲与长音频准入（2026-09-30）
 

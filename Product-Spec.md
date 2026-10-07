@@ -763,7 +763,7 @@ Pro 目标为单次最长 10 分钟的完整钢琴录音；若只验证到 5 分
 
 ## 7. 外部依赖与建议技术路线
 
-商业化身份选型采用 [ADR 0001](songdance/docs/adr/0001-supabase-auth.md) 的 Supabase Auth；仅作为身份供应商，现有业务数据库/存储保留。真实 SMTP、Google 回调与会话撤销验收仍待执行。
+商业化身份选型采用 [ADR 0001](songdance/docs/adr/0001-supabase-auth.md) 的 Supabase Auth；仅作为身份供应商，现有业务数据库/存储保留。2026-10-07 邮件交付选定 Resend 免费层、`mail.<主域名>` 与 Supabase Send Email Hook 调用 Resend API；OTP 仍由 Supabase 生成/验证，测试项目保留 8 位、应用兼容旧 6 位。邮件身份、DNS、幂等重试/日志、退信投诉回调和验收见子规范 AUTH-04 / MAIL-01–06；Hook/API 尚未实现，真实邮件、Google 回调与会话撤销验收仍待执行。
 
 | 编号 | 依赖 | 用途 | 是否必需 | 备注 |
 |---|---|---|---:|---|

@@ -1,6 +1,6 @@
 # 认证测试环境接入
 
-状态：本地代码已实现，真实供应商尚未配置或联调。先在隔离 staging 验证，不直接开启正式网站的登录或收费。
+状态：本地代码已实现，测试 Supabase 项目及本地回跳、OTP 参数已有部分配置；真实 Google/SMTP、会话只读连接与登录联调尚未完成。先在隔离 staging 验证，不直接开启正式网站的登录或收费。
 
 ## 1. 应用与数据库
 
@@ -12,7 +12,8 @@
 
 - 为本环境创建/选择独立项目，采用非对称 JWT 签名。使用 project URL 与现代 publishable key；不复制 JWT shared secret、service_role 或管理员 key 到浏览器。
 - 启用 Google，配置 Google 的 Supabase callback 与 Supabase 的本站回跳 allowlist。本站回跳固定 `/api/auth/callback`；测试/生产域名分别配置，return path 由应用白名单控制。
-- 配置自有 SMTP 与 OTP 邮件模板 `{{ .Token }}`，有效期 600 秒；真实验证发码、错误/过期/复用、送达和重发预算。默认 SMTP 不能被当成正式公众邮件服务。
+- 邮件交付按 [Resend 接入准备](resend-setup.md) 的 Supabase Send Email Hook/API 主路径实施，OTP 有效期 600 秒；真实验证发码、错误/过期/复用、送达和重发预算。Hook 尚未实现和启用时，当前项目仍为默认 SMTP/链接模板；若改用 SMTP 才需自有 SMTP 与 `{{ .Token }}` 模板，不能同时要求或启用两套发信。
+- 本测试项目保留供应商默认的 8 位 OTP；应用仅接受 6 或 8 位 ASCII 数字，保留旧 6 位项目兼容，不截断、去空白或转换成数字。输入框和 BFF 共用格式，最终由供应商验证；应用接受 6 位格式不代表能通过配置为 8 位的供应商验证。2026-10-07 控制台显示默认模板发送登录链接、配置自有 SMTP 后才能编辑模板，不能仅配置位数就宣称已支持真实邮箱验证码登录。
 - 按 `../infra/supabase-session-reader.sql` 给专用 LOGIN 角色授予只读会话字段权限；角色名称本身不证明最小权限，实际测试禁止读取密码列或修改数据。其 TLS 连接只配置到 FastAPI。
 - 如开启 provider time-box/inactivity，必须同步 `SONGDANCE_AUTH_SESSION_MAX_AGE_SECONDS` / `SONGDANCE_AUTH_SESSION_IDLE_SECONDS` 并实测到期；默认 0 表示未开启该额外策略。
 

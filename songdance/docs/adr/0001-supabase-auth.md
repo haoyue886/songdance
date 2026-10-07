@@ -32,7 +32,8 @@ Supabase 是此前讨论的候选，已核对官方的 Google、邮箱 OTP、JWT
 
 - Google 仅请求身份所需的 openid/email/profile。Google 控制台的授权回调指向 Supabase 项目 callback，Supabase 的回跳 allowlist 再指向本站 `/api/auth/callback`；两层 URL 不能混填。PKCE、OAuth state/nonce 使用供应商/SDK 受支持流程并由 BA-02 验证，不手写简化流程。
 - 邮箱 OTP 通过供应商发送和验证。官方 `signInWithOtp` 默认模板可能发链接，需要把邮件模板改为 `{{ .Token }}` 才是界面的数字验证码；设置有效期 600 秒。供应商后台配置与应用的 60 秒重发、每邮箱每小时 5 次、每挑战最多 5 次尝试分别验证，不能认为 SDK 自动提供了全部产品限额。
-- 使用自有 SMTP 配置；默认 SMTP 仅适合项目团队测试地址，不作为公众发码方案。发送凭据、Google Client Secret 存在供应商后台，应用模板不收集这些秘密。
+- 2026-10-07 邮件交付增量：用户选定 Resend 免费层与 API 集成。采用 Supabase Send Email Hook 调用 Resend API，保留 Supabase 的 OTP 生成/验证；此主路径替代原自有 SMTP 方案，启用 Hook 时不再并行使用 SMTP。Hook/API 代码和实际域名尚未配置验证，准备见 `../resend-setup.md`。发送密钥和 Hook secret 仅放在受控服务端，不进入浏览器、聊天或普通日志；Google Client Secret 仍只用于供应商后台。
+- 默认 SMTP 仅适合项目团队测试地址，不作为公众发码方案。原 `{{ .Token }}` SMTP 模板要求只适用于未启用 Hook 的路径；API 路径由签名 Hook 中的 OTP 渲染邮件，不能把 SMTP 模板编辑和 API Hook 双重列为前置条件。
 - 应用侧按邮箱摘要、可信客户端 IP 和全局配额限流，统一错误响应避免邮箱枚举；还需启用供应商侧保护，不能假设经过 BFF 就无法绕过。服务器聚合 IP 的供应商限额须实测，调整只按官方支持的配置执行，不转发未经验证的 X-Forwarded-For。
 
 ## 接口合同（已本地实现，真实供应商待验）

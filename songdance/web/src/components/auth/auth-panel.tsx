@@ -6,6 +6,7 @@ import { useRouter, Link } from "@/i18n/navigation";
 import { accessSession, authEnabled, authPost, AuthClientError, guestToken, subscribeGuest } from "@/lib/auth/client";
 import { claimJob, getAccount, type Account } from "@/lib/api/jobs";
 import { safeReturnPath } from "@/lib/auth/return-path";
+import { EMAIL_OTP_MAX_LENGTH, EMAIL_OTP_PATTERN } from "@/lib/auth/otp";
 import { AccountUsage } from "@/components/billing/account-usage";
 import { AccountDeletion } from "./account-deletion";
 
@@ -95,7 +96,7 @@ export function AuthPanel({ mode, returnTo, initialError = false }: { mode: "log
         });
       }}>
         <label className="block text-sm font-semibold">{t("email")}<input className={INPUT} type="email" autoComplete="email" required maxLength={254} value={email} disabled={busy || sent} onChange={(event) => setEmail(event.target.value)} /></label>
-        {sent && <label className="block text-sm font-semibold">{t("code")}<input className={INPUT} required inputMode="numeric" autoComplete="one-time-code" pattern="[0-9]{6}" maxLength={6} value={code} disabled={busy} onChange={(event) => setCode(event.target.value)} /></label>}
+        {sent && <label className="block text-sm font-semibold">{t("code")}<input className={INPUT} required inputMode="numeric" autoComplete="one-time-code" pattern={EMAIL_OTP_PATTERN} maxLength={EMAIL_OTP_MAX_LENGTH} value={code} disabled={busy} onChange={(event) => setCode(event.target.value)} /></label>}
         <button className={BUTTON} disabled={busy} type="submit">{busy ? t("working") : sent ? t("verify") : t("sendCode")}</button>
         {sent && <button type="button" disabled={busy || waitSeconds > 0} onClick={() => void run(async () => { await authPost("email/start", { email }); const stamp = Date.now(); setNow(stamp); setResendAt(stamp + 60_000); setNotice(t("sent")); })} className="text-sm underline disabled:opacity-50">{t("resend")}{waitSeconds > 0 ? ` (${waitSeconds}s)` : ""}</button>}
       </form>

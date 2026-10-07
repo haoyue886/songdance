@@ -52,10 +52,31 @@ chmod 600 ../.env.commercial-test.local
 
 ## 3. 隔离项目的实际联调顺序
 
-1. 按认证设置配置真实 Google callback、本站 allowlist、自有 SMTP 和 600 秒 OTP；实际验证送达、过期/复用、重发预算、Cookie、撤销与最近新登录。离线 publishable key/DSN 格式不能证明项目存在或权限最小化。
+1. 按认证设置配置真实 Google callback、本站 allowlist、Resend Send Email Hook/API 和 600 秒 OTP；该 API 主路径的准备见 [Resend 接入](resend-setup.md)，不另行并发配置 SMTP。实际验证送达、过期/复用、重发预算、Cookie、撤销与最近新登录。离线 publishable key/DSN 格式不能证明项目存在或权限最小化。
 2. 在隔离业务数据库执行 `alembic upgrade head`，核对存储/Redis/队列一致。准备 API/Web、转录 Worker、Dispatcher、Billing Worker、账户删除 Worker 与清理任务；派发与删除恢复命令见现有设置和恢复手册。离线检查不会启动或探测这些服务。
 3. 按 Creem Test 设置创建并核对 Test 商品、签名 webhook 和 Portal。实际执行测试卡付款、重复/乱序通知、查询授权、取消、退款、历史对账与删除前完整订阅核验。价格、币种、周期/税额字段及取消后状态需要供应商证据，不以本地替身代替。
 4. 启用隔离 Test 开关后重建 Web，跑游客体验、Free 成功/失败与月边界、Pro 购买/扣量/导出/取消、幂等恢复、撤销、跨用户拒绝及账户删除闭环；保留测试标识、版本与不含敏感值的结果。
 5. 另行完成 BA/LA、真实音乐固定集/专业复评、容量成本、实际客服地址、法律/隐私退款条款与商户审核。当前未完成项继续保留，不把 Test 配置合格、本地 E2E 或账户删除实现当作正式发布批准。
 
 关闭新准入开关后继续用兼容后台进程排空已接受的任务、通知与删除申请；保留账本、幂等/身份墓碑和签名密钥，不能通过删历史或降级绕开权限和恢复要求。
+
+## 4. 2026-10-07 控制台创建记录
+
+用户明确确认当前 Test 方案为 US$9.90/月、每已付款周期 30 分钟，不再沿用早期一次性 credits 方案。本轮仅创建测试资源，未修改 Live 商品或开启真实收费。
+
+- Supabase：Free 组织 `SongDance Test`，项目 `songdance-test`，项目 ID `amnsavenqfmmvnauyqzi`，区域 `ap-southeast-1`。数据库密码由用户自行输入并提交创建；项目设置页已可访问，名称与区域已核对。
+- 项目地址：`https://amnsavenqfmmvnauyqzi.supabase.co`；控制台为 `https://supabase.com/dashboard/project/amnsavenqfmmvnauyqzi`。创建表单关闭 Data API，仅用于 Auth；尚未从创建后的设置页复核此开关。
+- Creem：已在明确显示不处理真实支付的 Test Mode 创建并核对 `SongDance Pro Test`；Product ID 为 `prod_6VunYruwAmrEXb70DJdNrl`，状态 Active，USD 9.90/月，无 trial 或额外按量费用，税额默认另加。
+- 商品描述注明每已付款周期 30 分钟、当前单次最长 90 秒及仅用于测试。额度仍须应用根据核验通过的付款授予，不由描述或回跳页授予。
+- 创建资源时未获取或创建 API key、webhook secret、SMTP/OAuth 凭据和最小权限会话连接；未创建填好凭据的本地环境文件，未启动真实供应商联调。后续本地骨架与认证参数进展见第 5 节。
+
+下一步按第 3 节配置登录回跳、Google/邮件/OTP 与会话只读权限，再准备配套 Creem Test key 和签名 webhook。邮件主路径已选定 Resend API Hook，详见 [邮件准备](resend-setup.md)。创建凭据或扩展权限前需用户确认；新认证密码的输入、确认与提交由用户完成。项目和商品存在不代表真实登录、测试卡付款、30 分钟授额或取消/退款已验收。
+
+## 5. 2026-10-07 认证参数与 OTP 兼容
+
+- 用户确认后，已保存测试项目 Site URL `http://127.0.0.1:3002`，回跳白名单仅一条 `http://127.0.0.1:3002/api/auth/callback`；页面重新读取核对，不添加通配符或线上域名。
+- 当前 JWT 签名为 ECC（P-256），仅核对、未轮换或撤销密钥。邮箱 provider 已启用，OTP 有效期保存并复核为 600 秒，长度按用户要求保留 8 位；未更改 Google、密码或匿名登录开关。
+- 新建 `songdance/.env.commercial-test.local` 配置骨架，权限 0600，已核对 Git ignore。填入已创建的 Supabase URL/Test Product ID、Web 3002/API 8001 与独立 Redis 6381/命名空间/存储路径；凭据和业务数据库留空，所有功能开关关闭，未启动这些服务，未修改现有 3001 预览。
+- 实跑 `scripts.check_commercial_config`：格式有效、顶层错误为空，但商业化配置未完成，退出 2；缺少凭据/数据库和关闭开关的结果符合当前阶段，不据此开启功能。
+- 已修复应用只接受 6 位 OTP 的不兼容：输入框与 BFF 共用严格 6/8 位格式，八语言标签不再限定六位。回归、截图和独立审查证据见 [OTP 兼容记录](reviews/2026-10-07-otp-compatibility.md)。
+- 当前未启用 Hook 时默认邮件预览仍为登录链接，Source/Save 不可编辑，控制台要求自有 SMTP 才能编辑该路径。用户随后选定 Resend API Hook 主路径；Resend 已登录 Free 账户与额度已核验，域名列表为空。实际主域名/DNS、验证码 Hook/API、客服收信、Google OAuth、publishable key 和会话只读连接仍待准备；Creem Test key/webhook、隔离数据库迁移及真实供应商联调也未完成。

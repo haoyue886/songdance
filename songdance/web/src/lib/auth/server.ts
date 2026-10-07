@@ -2,6 +2,7 @@ import { createServerClient, type CookieOptions } from "@supabase/ssr";
 import { randomBytes, timingSafeEqual } from "node:crypto";
 import { isIP } from "node:net";
 import { NextRequest, NextResponse } from "next/server";
+import { isEmailOtp } from "./otp";
 import { safeReturnPath } from "./return-path";
 
 const MARKER = "songdance-auth-present";
@@ -124,7 +125,7 @@ export async function handleAuth(request: NextRequest, action: string): Promise<
     if (action === "email/verify") {
       const body = await readBody(request);
       const email = normalizeEmail(body.email);
-      if (typeof body.token !== "string" || !/^\d{6}$/.test(body.token)) throw new AuthFailure(400, "AUTH_INVALID");
+      if (!isEmailOtp(body.token)) throw new AuthFailure(400, "AUTH_INVALID");
       const challenge = request.cookies.get(OTP)?.value;
       if (!challenge) throw new AuthFailure(401, "AUTH_INVALID");
       await bridgeData("otp-attempt", { challenge, email });

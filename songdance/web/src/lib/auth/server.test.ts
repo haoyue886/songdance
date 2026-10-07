@@ -81,6 +81,22 @@ describe("auth BFF", () => {
     const calls = vi.mocked(fetch).mock.calls.map(([url]) => String(url));
     expect(calls).toEqual(["https://api.example/auth/bridge/otp-attempt", "https://api.example/auth/bridge/otp-consume"]);
   });
+  it.each(["123456", "12345678", "00001234"])("forwards the supported OTP %s unchanged", async (token) => {
+    sdk.verifyOtp.mockResolvedValue({ data: { user: { id: "a" }, session: {} }, error: null });
+    const response = await handleAuth(request("email/verify", { email: "a@example.test", token }, `songdance-otp-challenge=${"a".repeat(43)}`), "email/verify");
+    expect(response.status).toBe(200);
+    expect(sdk.verifyOtp).toHaveBeenCalledWith({ email: "a@example.test", token, type: "email" });
+    expect(vi.mocked(fetch).mock.calls.map(([url]) => String(url))).toEqual([
+      "https://api.example/auth/bridge/otp-attempt", "https://api.example/auth/bridge/otp-consume",
+    ]);
+  });
+  it.each(["", "12345", "1234567", "123456789", "1234567a", " 123456", "12345678 ", "123456\n", "12345678\n", "１２３４５６７８", 12345678, null])("rejects malformed OTP %j before spending an attempt", async (token) => {
+    const response = await handleAuth(request("email/verify", { email: "a@example.test", token }, `songdance-otp-challenge=${"a".repeat(43)}`), "email/verify");
+    expect(response.status).toBe(400);
+    expect(await response.json()).toEqual({ code: "AUTH_INVALID" });
+    expect(sdk.verifyOtp).not.toHaveBeenCalled();
+    expect(fetch).not.toHaveBeenCalled();
+  });
   it("does not consume a failed OTP or echo its upstream error", async () => {
     sdk.verifyOtp.mockResolvedValue({ data: {}, error: { message: "PRIVATE_UPSTREAM_DETAILS" } });
     const response = await handleAuth(request("email/verify", { email: "a@example.test", token: "123456" }, `songdance-otp-challenge=${"a".repeat(43)}`), "email/verify");

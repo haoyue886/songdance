@@ -80,3 +80,9 @@ chmod 600 ../.env.commercial-test.local
 - 实跑 `scripts.check_commercial_config`：格式有效、顶层错误为空，但商业化配置未完成，退出 2；缺少凭据/数据库和关闭开关的结果符合当前阶段，不据此开启功能。
 - 已修复应用只接受 6 位 OTP 的不兼容：输入框与 BFF 共用严格 6/8 位格式，八语言标签不再限定六位。回归、截图和独立审查证据见 [OTP 兼容记录](reviews/2026-10-07-otp-compatibility.md)。
 - 当前未启用 Hook 时默认邮件预览仍为登录链接，Source/Save 不可编辑，控制台要求自有 SMTP 才能编辑该路径。用户随后选定 Resend API Hook 主路径；Resend 已登录 Free 账户与额度已核验，域名列表为空。实际主域名/DNS、验证码 Hook/API、客服收信、Google OAuth、publishable key 和会话只读连接仍待准备；Creem Test key/webhook、隔离数据库迁移及真实供应商联调也未完成。
+
+## 6. 2026-10-12 notavue.io 发信 DNS 准备
+
+用户确认 `notavue.io` 与 Cloudflare Free，并分别确认资源创建及“只准备 Cloudflare 记录”。已创建 Resend `mail.notavue.io` 和 Cloudflare 免费区域，保存实际 DKIM TXT、两条发信 CNAME、子域 DMARC；保留两条原网站 A 的 IP，代理均关闭。直接查询分配的 Cloudflare 域名服务器返回正确邮件/A 记录，区域 UI 仍为 Pending；公开 NS 仍是 Spaceship、旧 DNSSEC DS 仍存在，尚未迁移或完成 Resend 验证。
+
+设置证据与完整待办见 [DNS 准备记录](reviews/2026-10-12-resend-dns-preparation.md) 和 [Resend 接入](resend-setup.md)。客服目标地址为 `support@notavue.io`，当前未配置收信，不写入应用已核实客服配置。API key/Hook/webhook/真实邮件及完整供应商验收继续待办，未开启登录或收费。

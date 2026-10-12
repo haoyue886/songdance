@@ -1,6 +1,6 @@
 # Resend 邮件接入准备
 
-2026-10-07：用户选定 Resend 免费层、`mail.<主域名>`、API 集成与 `support@<主域名>`。已核验可访问的 Resend 已登录控制台与 Free 额度，尚无发信域名。以下是待完成的准备与实施合同，不是已经运行的邮件服务；实际主域名、DNS 管理方及客服收信账户尚未提供。认证要求见 [AUTH-04](../../Billing-Auth-Spec.md)，开发归属为 [Phase 38.1](../../DEV-PLAN.md)。
+2026-10-12：用户确认主域名 `notavue.io` 与 Cloudflare 免费 DNS。已创建 Resend 发信子域 `mail.notavue.io`、Cloudflare 免费区域，并在尚未生效的区域保存四条邮件记录与两条原网站 A 记录（DNS only）；公开 NS 仍为 Spaceship、旧 DNSSEC DS 仍存在，未切换。实际记录与验证见 [DNS 准备证据](reviews/2026-10-12-resend-dns-preparation.md)。API/Hook、域名验证与客服收信仍待完成，不是已经运行的邮件服务。认证要求见 [AUTH-04](../../Billing-Auth-Spec.md)，开发归属为 [Phase 38.1](../../DEV-PLAN.md)。
 
 ## 1. 账户与域名
 
@@ -14,9 +14,9 @@
 
 | 用途 | 地址 | 准备条件 |
 |---|---|---|
-| 登录验证码 | `auth@mail.<主域名>` | 验证发信子域名；服务端固定 From |
-| 账务通知身份 | `billing@mail.<主域名>` | 同一发信子域名；先准备身份，不重复发送 Creem 收据 |
-| 用户回复/客服 | `support@<主域名>` | 另行配置真实邮箱或转发，并测试收信/回复 |
+| 登录验证码 | `auth@mail.notavue.io` | 发信子域已创建、尚未验证；服务端固定 From |
+| 账务通知身份 | `billing@mail.notavue.io` | 同一发信子域名；先准备身份，不重复发送 Creem 收据 |
+| 用户回复/客服 | `support@notavue.io` | 另行配置真实邮箱或转发，并测试收信/回复；当前根域未查到 MX |
 
 只验证 `mail.<主域名>` 不授权从根域 `auth@<主域名>` 发信。所有应用邮件可固定 Reply-To 为客服地址。Resend 发信身份不是自动创建可登录的客服邮箱；客服收信不能以“From 能发送”代替。
 
@@ -45,11 +45,12 @@ Supabase 的 `signInWithOtp` 仍产生 OTP 并负责 `verifyOtp`、过期与单�
 ## 5. 当前完成与下一步
 
 - 已完成：Supabase Test 项目、Creem Pro Test 商品；精确本地回跳，8 位/600 秒参数；OTP 兼容回归、独立审查与受忽略的本地配置骨架。
-- 已核验 Resend 已登录控制台、Free 用量限制和空域名列表；添加域名表单已打开，未填写或提交未知域名，未创建 API key、发送邮件或开启付费功能。
-- 未完成：实际主域名/DNS、发信域名与客服收信、API key/签名 secrets、Hook/API/日志/回调代码、公开测试地址与三家邮箱测试。
+- 已核验 Resend 已登录控制台与 Free 用量限制；2026-10-12 按用户确认创建 `mail.notavue.io`（Ireland / eu-west-1），收信关闭，尚未验证。未创建 API key、发送邮件或开启付费功能。
+- 已按用户确认创建 Cloudflare `notavue.io` Free 区域，关闭附加 robots.txt 偏好同步，在 Pending 区域配置 DKIM TXT、两条发信 CNAME、`_dmarc.mail` TXT；两条现有 A 记录改为 DNS only，IP 未变。实际 SPF/Return-Path 配置采用账户生成的 CNAME，不照搬官方文档的旧 MX/TXT 示例。
+- 未完成：Spaceship 完整 DNS 清单核对、DNSSEC 安全迁移与域名服务器切换、Resend 验证、客服收信、API key/签名 secrets、Hook/API/日志/回调代码、公开测试地址与三家邮箱测试。当前公开 DS 不能直接留到新域名服务器上；删除/暂停旧 DNSSEC、实际切换与随后恢复签名须另行确认并实测。
 - Resend 开户页面最初显示加载错误，随后已恢复为可访问的 onboarding/Usage/Domains；已登录状态由实际控制台核对，不凭跳转 URL 推断。
 
-先提供主域名与 DNS 服务商，核验 Resend 注册及账户免费层，再取得真实 DNS 记录。需要新密码/认证凭据、接受条款、创建密钥或扩展公开访问时交由用户完成或在操作时确认。无这些信息时不修改 DNS、不投递真实邮件、不打开登录/收费。
+本轮授权只准备 Cloudflare 记录，未操作 Spaceship，也未点选“已更新域名服务器”或“已添加记录”冒充生效。后续先核对现有完整 DNS 与 DNSSEC，再执行经确认的迁移；需要新密码/认证凭据、接受条款、创建密钥或扩展公开访问时交由用户完成或在操作时确认。域名与发信尚未验收，不投递真实邮件、不打开登录/收费。
 
 ## 官方核验
 
@@ -61,5 +62,7 @@ Supabase 的 `signInWithOtp` 仍产生 OTP 并负责 `verifyOtp`、过期与单�
 - https://resend.com/docs/api-reference/emails/send-email.md ：From/To/Reply-To、HTML/text 和 24 小时幂等键合同。
 - https://resend.com/docs/webhooks/introduction.md ：事件回调、重放和投递状态。
 - https://resend.com/docs/webhooks/verify-webhooks-requests.md ：raw body 与 Svix 签名头。
+
+2026-10-12 补读 https://resend.com/docs/knowledge-base/cloudflare.md ：人工配置需按实际账户记录、邮件 CNAME 为 DNS only；文档的旧 MX/TXT 示例与本账户生成的两条 CNAME 不同，以实际记录为准。Cloudflare DNSSEC 迁移网页两次读取因解析超时/失败未取得正文；其控制台明确提示迁移前确保旧 DNSSEC 关闭，与公开旧 DS 风险核对一致，不将未读到的原文列为核验通过。
 
 公开价格读取代理超时，实际 Free 限额另从已登录 Usage 页核对；Hook 超时/重试、Resend 真实权限与发送结果尚待核验。本文件不承诺未来免费价格、投递率、合法退款条件或生产发布完成。

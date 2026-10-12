@@ -1847,7 +1847,7 @@ Phase 9 基线
 
 - [x] 38.0 身份 ADR：选定 Supabase Auth；交付 `songdance/docs/adr/0001-supabase-auth.md`、`songdance/infra/env.auth.example` 及 `scripts/check_auth_config.py`。官方核验覆盖 OTP/Google、JWT 与 session_id 撤销、BFF/HttpOnly 限制和 SMTP；区域及实际邮件成本作为真实项目配置项保留，未冒充实测。模板只有空值，离线检查不验证账户权限或宣称生产可用。
 - [ ] 38.1 账号：Google/OTP、JWT/session 门禁、原子认领及账户已有本地实现；013 补默认关闭的最近登录确认、持久删除与逐订阅核验后清理，必要身份/账务墓碑保留。仍待真实 Supabase/邮件/Google、生产 TLS/会话策略与删除/停止续费的供应商实测，BA-02/11/13 不整体勾选。
-- [ ] 38.1 邮件增量：按 AUTH-04 采用 Resend 免费层与 Supabase Send Email Hook/API，替代原自有 SMTP 主路径。先完成账户/实际域名与客服收信，再实现默认关闭的签名 Hook、幂等发送/有界重试/脱敏日志与签名去重的退信投诉回调；最后验收 MAIL-01–06 和真实 BA-02。SMTP 不是 API Hook 的额外并行步骤。具体记录见 `songdance/docs/resend-setup.md`，当前未创建 Resend 密钥、修改 DNS 或部署 Hook。
+- [ ] 38.1 邮件增量：按 AUTH-04 采用 Resend 免费层与 Supabase Send Email Hook/API，替代原自有 SMTP 主路径。先完成账户/实际域名与客服收信，再实现默认关闭的签名 Hook、幂等发送/有界重试/脱敏日志与签名去重的退信投诉回调；最后验收 MAIL-01–06 和真实 BA-02。SMTP 不是 API Hook 的额外并行步骤。具体记录见 `songdance/docs/resend-setup.md`；Cloudflare Pending 区域邮件记录已准备，公开 NS/DS 未迁移，Resend 尚未 Verified、客服收信未配置，未创建密钥或实现/部署 Hook。
 - [ ] 38.2 用量：Free/Pro、outbox、游客账本及匿名幂等已有默认关闭的本地实现；新增跨月/跨付款周期、取消/到期后的原期结算与迟到重试检查，以及 30.1/90 秒完整裁剪运输验证。真实模型完整区间、跨周期供应商联调与全部 BA-01/03–06/12 仍待签收；Pro 仍限 90 秒。
 - [ ] 38.3 Creem Test：默认关闭的 checkout 意图、签名/内部对账 inbox、权威交易核验、Portal、已知交易对账及 Test 历史分页扫描已本地实现；012 补全额退款的持久取消/查询确认，后续付款与陈旧快照转审查。真实商户 Test 卡/Portal、全历史/退款取消实际行为和完整商业化流程仍待验收，BA-07–10/14 不整体勾选。配置/恢复见 `songdance/docs/creem-test-setup.md`。
 - [ ] 38.4 商业 UI：pricing/account/return/refund/contact、登录回跳、导航、上传前用量/上限及周期任务摘要已本地实现；参数统一来自 API，付款确认轮询有界，未知状态不诱导重新购买。八语言参数对齐，六语商业文本明确英文回退。剩余实际客服/法律条款与真实购买→提交→导出→取消验收；BA-15/17 不整体勾选。
@@ -1882,6 +1882,8 @@ Phase 9 基线
 2026-10-07 测试控制台与 OTP 兼容：已创建 Free Supabase `songdance-test` 与 Creem Test 月付 USD 9.90 商品，用户确认精确本地回跳并要求保留供应商 8 位 OTP。已核对 ECC 签名、保存 600 秒/8 位参数，并修复应用 6 位硬编码，保留旧 6 位兼容。54 项定向与 313 项全量 Web 测试、tsc、ESLint、隔离认证浏览器回归和独立审查完成，证据见 `songdance/docs/reviews/2026-10-07-otp-compatibility.md`。本地配置骨架受忽略且开关关闭；当前未启用 Hook 时默认邮件仍为链接，后续已选 Resend API 主路径。OAuth/会话权限、邮件运行代码、Creem 密钥/webhook 和供应商实测继续待办，不勾选 BA 或宣布正式收费就绪。
 
 2026-10-07 Resend 准备增量：用户明确采用免费层、`mail.<主域名>` 与 API 集成，局部同步 AUTH-04/MAIL-01–06、身份 ADR 和 38.1 邮件待办。已登录账户 Usage/Domains 实际核对 Free 3,000 封/月、100 封/日、3 域名/10 req/s，自动超额付费关闭且无域名；添加域名表单已打开，未创建密钥、修改 DNS、发信或部署。主域名/DNS 管理方与客服收信未提供，后续步骤及官方原文证据见 `songdance/docs/resend-setup.md`。
+
+2026-10-12 发信 DNS 准备：用户确认 `notavue.io` / Cloudflare Free，并确认仅准备区域记录。已创建 Resend `mail.notavue.io`（Ireland）和 Cloudflare 免费区域，四条邮件 DNS 与两条原 A（DNS only）在分配域名服务器上的只读查询通过；区域仍 Pending、公开 NS/DS 仍为 Spaceship/旧签名。未改域名服务器/DNSSEC、未发邮件或创建密钥，MAIL-01 不勾选。证据见 `songdance/docs/reviews/2026-10-12-resend-dns-preparation.md`；后续先核对完整旧 DNS 清单与 DNSSEC 安全迁移，再做 Resend 验证、客服收信和 Hook/API 实施。
 
 ## Phase 39：Pro 完整钢琴曲与长音频准入（2026-09-30）
 

@@ -47,10 +47,12 @@ Supabase 的 `signInWithOtp` 仍产生 OTP 并负责 `verifyOtp`、过期与单�
 - 已完成：Supabase Test 项目、Creem Pro Test 商品；精确本地回跳，8 位/600 秒参数；OTP 兼容回归、独立审查与受忽略的本地配置骨架。
 - 已核验 Resend 已登录控制台与 Free 用量限制；2026-10-12 按用户确认创建 `mail.notavue.io`（Ireland / eu-west-1），收信关闭，尚未验证。未创建 API key、发送邮件或开启付费功能。
 - 已按用户确认创建 Cloudflare `notavue.io` Free 区域，关闭附加 robots.txt 偏好同步，在 Pending 区域配置 DKIM TXT、两条发信 CNAME、`_dmarc.mail` TXT；两条现有 A 记录改为 DNS only，IP 未变。实际 SPF/Return-Path 配置采用账户生成的 CNAME，不照搬官方文档的旧 MX/TXT 示例。
-- 未完成：供应商支持的无中断 DNSSEC 迁移方式与域名服务器切换、Resend 验证、客服收信、API key/签名 secrets、Hook/API/日志/回调代码、公开测试地址与三家邮箱测试。当前新 DS 32322 不能直接留到 Cloudflare NS 上；本次旧区停止签名导致的故障已经恢复，不能再把注册商禁用按钮等同只撤 DS。任何新的暂停/切换/恢复须另行确认并实测。
+- 未完成：用户确认后的 DNS/迁移方案、Resend 验证、客服收信、API key/签名 secrets、Hook/API/日志/回调代码、公开测试地址与三家邮箱测试。支持已确认现有自助 UI 无法单独撤 DS 并保留旧签名；当前新 DS 32322 不能直接留到 Cloudflare NS 上。可先保留 Spaceship DNS、经确认在那里添加发信记录完成验证，或由用户明确接受维护窗口中断风险后再迁移；未选定前不替用户改方案。任何新的暂停/切换/恢复须另行确认并实测。
 - Resend 开户页面最初显示加载错误，随后已恢复为可访问的 onboarding/Usage/Domains；已登录状态由实际控制台核对，不凭跳转 URL 推断。
 
 2026-10-12 的授权边界只准备 Cloudflare 记录，当日未操作 Spaceship，也未点选“已更新域名服务器”或“已添加记录”冒充生效。2026-10-13 用户另行确认禁用旧 DNSSEC，出现故障后再次确认恢复；当前新 DS 32322 验证链已恢复、NS 未改、迁移暂停。后续安全迁移仍须具体确认；需要新密码/认证凭据、接受条款、创建密钥或扩展公开访问时交由用户完成或在操作时确认。域名发信尚未验收，不投递真实邮件、不打开登录/收费。
+
+用户重申目标为注册与续费留 Spaceship、DNS 迁 Cloudflare Free、Web 按既有方案部署 Vercel、HTTPS 由平台签发；不转移注册商。当前保留 Spaceship NS 是迁移暂停状态，不是更换最终方案；接受维护窗口中断风险及新的 DNSSEC/NS 操作仍待具体确认。支持聊天编号为 `SPS-YGU-3557`。
 
 ### 2026-10-13 迁移前只读复核
 

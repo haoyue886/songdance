@@ -89,4 +89,4 @@ chmod 600 ../.env.commercial-test.local
 
 ## 7. 2026-10-13 DNSSEC 故障恢复与迁移暂停
 
-用户完成 Spaceship 登录后已核对账户内域名、0 条自定义 DNS 和重定向。经单独确认禁用旧 DNSSEC，原签名提前停止但父区仍有旧 DS，导致公开解析失败；另经确认恢复，生成新 DS 32322，并在 10:48:29 核对四个 `.io` 父区及两家公共解析器的匹配/NOERROR + AD。受测解析和验证链已恢复，NS 仍为 Spaceship，Cloudflare 仍未生效。已获授权联系支持，等待保留旧签名/单独撤 DS 的可执行方法，不重复同一禁用按钮或宣称无中断；事实与查询见 [恢复记录](reviews/2026-10-13-dnssec-recovery.md)。未完成 Resend Verified 或 MAIL-01，未开放真实登录、邮件或收费。
+用户完成 Spaceship 登录后已核对账户内域名、0 条自定义 DNS 和重定向。经单独确认禁用旧 DNSSEC，原签名提前停止但父区仍有旧 DS，导致公开解析失败；另经确认恢复，生成新 DS 32322，并在 10:48:29 核对四个 `.io` 父区及两家公共解析器的匹配/NOERROR + AD，11:06:37 复查稳定。受测解析和验证链已恢复，NS 仍为 Spaceship，Cloudflare 仍未生效。已获授权联系支持，11:07–11:08 明确确认现有自助 UI 不支持单独撤 DS/保签；等待用户选择保留现 DNS 验证发信或接受维护窗口再迁移，不重复同一禁用按钮承诺无中断。事实与查询见 [恢复记录](reviews/2026-10-13-dnssec-recovery.md)。未完成 Resend Verified 或 MAIL-01，未开放真实登录、邮件或收费。

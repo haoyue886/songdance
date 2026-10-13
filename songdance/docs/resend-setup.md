@@ -52,6 +52,14 @@ Supabase 的 `signInWithOtp` 仍产生 OTP 并负责 `verifyOtp`、过期与单�
 
 本轮授权只准备 Cloudflare 记录，未操作 Spaceship，也未点选“已更新域名服务器”或“已添加记录”冒充生效。后续先核对现有完整 DNS 与 DNSSEC，再执行经确认的迁移；需要新密码/认证凭据、接受条款、创建密钥或扩展公开访问时交由用户完成或在操作时确认。域名与发信尚未验收，不投递真实邮件、不打开登录/收费。
 
+### 2026-10-13 迁移前只读复核
+
+- Cloudflare 控制台仍为 Pending，六条记录与既有准备一致。`dig @1.1.1.1` / `@8.8.8.8` 查询公开 NS/DS 均仍为 Spaceship 与原 DS；查询原/新权威服务器的根域 A 仍为两个相同 IP。
+- 直接向四个 `.io` 父区服务器 `a0/a2/b0/c0.nic.io` 查询，均发布原 DS（64580 / 13 / 2），TTL 3600；父区 NS 仍为 `launch1/launch2.spaceship.net`，TTL 3600。这是迁移前基线，不是旧 DS 已撤下或缓存已过期的证据。
+- `whois notavue.io` 返回注册商 `Spaceship, Inc.`（IANA 3862）、原两个 Spaceship NS 和 `DNSSEC: signedDelegation`，已确认注册商，不仅按 NS 猜测登录目的地；账户归属及完整记录仍须登录后核验。
+- 原 DNSSEC 迁移网址返回 404；已读取官方 DNSSEC 总览及 Full setup 原文。普通迁移顺序为移除旧 DS→从父区确认撤下并等待旧 TTL 缓存退出→切换 NS→等待原 NS 缓存退出→启用 Cloudflare 新签名并提交匹配的新 DS。不能从本次查询时刻开始固定等一小时就切换，也不能只关旧区签名而保留父区 DS。
+- Spaceship 当前未完成登录，不能核对完整旧 DNS 清单/账户控制权，不能操作 DNSSEC 或 NS。已请用户在浏览器自行完成登录，未重试已填写的密码、重置凭据、修改任何解析或发送邮件。登录后须先核对/备份完整记录，再在具体安全变更前请求确认。
+
 ## 官方核验
 
 2026-10-07 使用 agent-reach 网页读取路径，代理超时后直接读取公开官方 Markdown；获取原文不等于账户联调通过。
@@ -64,5 +72,7 @@ Supabase 的 `signInWithOtp` 仍产生 OTP 并负责 `verifyOtp`、过期与单�
 - https://resend.com/docs/webhooks/verify-webhooks-requests.md ：raw body 与 Svix 签名头。
 
 2026-10-12 补读 https://resend.com/docs/knowledge-base/cloudflare.md ：人工配置需按实际账户记录、邮件 CNAME 为 DNS only；文档的旧 MX/TXT 示例与本账户生成的两条 CNAME 不同，以实际记录为准。Cloudflare DNSSEC 迁移网页两次读取因解析超时/失败未取得正文；其控制台明确提示迁移前确保旧 DNSSEC 关闭，与公开旧 DS 风险核对一致，不将未读到的原文列为核验通过。
+
+2026-10-13 使用 agent-reach 网页路由，读取代理超时后直接以 `Accept: text/markdown` 获取 https://developers.cloudflare.com/dns/dnssec/ 与 https://developers.cloudflare.com/dns/zone-setups/full-setup/setup/ 完整原文；已核对上述迁移/恢复顺序。官方也提供多签名持续 DNSSEC 迁移，但依赖旧供应商外部 DNSKEY 能力，当前未确认，不据此跳过旧 DS 处理。
 
 公开价格读取代理超时，实际 Free 限额另从已登录 Usage 页核对；Hook 超时/重试、Resend 真实权限与发送结果尚待核验。本文件不承诺未来免费价格、投递率、合法退款条件或生产发布完成。

@@ -1885,6 +1885,8 @@ Phase 9 基线
 
 2026-10-12 发信 DNS 准备：用户确认 `notavue.io` / Cloudflare Free，并确认仅准备区域记录。已创建 Resend `mail.notavue.io`（Ireland）和 Cloudflare 免费区域，四条邮件 DNS 与两条原 A（DNS only）在分配域名服务器上的只读查询通过；区域仍 Pending、公开 NS/DS 仍为 Spaceship/旧签名。未改域名服务器/DNSSEC、未发邮件或创建密钥，MAIL-01 不勾选。证据见 `songdance/docs/reviews/2026-10-12-resend-dns-preparation.md`；后续先核对完整旧 DNS 清单与 DNSSEC 安全迁移，再做 Resend 验证、客服收信和 Hook/API 实施。
 
+2026-10-13 DNSSEC 迁移前复核：Cloudflare 六条准备记录仍在/Pending，两家公共解析器和四个 `.io` 父区仍发布旧 Spaceship NS/DS；父区原 DS 与 NS TTL 均 3600。补读官方 DNSSEC/Full setup 当前原文，明确从确认旧 DS 撤下后等待缓存退出再切 NS，后续恢复匹配的新 DS。Spaceship 尚未完成登录，完整旧区/权限未核验；已交接用户浏览器登录，未变更 DNSSEC、NS 或发信。续接见 `songdance/docs/resend-setup.md` 的 10 月 13 日复核段，待登录后先核对全量记录及具体操作确认。
+
 ## Phase 39：Pro 完整钢琴曲与长音频准入（2026-09-30）
 
 状态：39.0 准备中；已用临时静音 WAV 实跑上传/时长限制探测，尚未建立代表性长钢琴录音固定集或执行模型/人工质量验证。5 分钟和 10 分钟均无本阶段发布通过证据。消费 `Product-Spec.md` SCOPE-028 与 `Billing-Auth-Spec.md` LONG-01–LONG-04 / LA-01–LA-07。既有短片段记录保留原受测范围。

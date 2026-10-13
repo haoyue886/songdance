@@ -14,6 +14,7 @@ from app.routes.billing import router as billing_router
 from app.routes.downloads import router as downloads_router
 from app.routes.guest import router as guest_router
 from app.routes.jobs import router as jobs_router
+from app.routes.mail import router as mail_router
 from app.routes.youtube import router as youtube_router
 from app.services.auth import SupabaseVerifier
 from app.services.auth_coordination import AuthCoordinator
@@ -86,6 +87,7 @@ def create_app(
     app.include_router(account_router)
     app.include_router(billing_router)
     app.include_router(auth_bridge_router)
+    app.include_router(mail_router)
     app.include_router(downloads_router)
     app.include_router(analytics_router)
     app.include_router(youtube_router)

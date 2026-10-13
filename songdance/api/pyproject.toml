@@ -9,6 +9,7 @@ dependencies = [
   "boto3==1.43.57",
   "cryptography==50.0.1",
   "fastapi==0.140.7",
+  "httpx==0.28.1",
   "librosa==0.11.0",
   "music21==10.5.0",
   "onnxruntime==1.28.0",
@@ -22,6 +23,7 @@ dependencies = [
   "rq==2.10.0",
   "scikit-learn==1.5.1",
   "sqlalchemy==2.0.51",
+  "standardwebhooks==1.1.0",
   "uvicorn[standard]==0.41.0",
   "yt-dlp==2026.7.4",
   "yt-dlp-ejs==0.8.0",
@@ -29,7 +31,6 @@ dependencies = [
 
 [dependency-groups]
 dev = [
-  "httpx==0.28.1",
   "pytest==8.4.2",
   "ruff==0.15.22",
 ]

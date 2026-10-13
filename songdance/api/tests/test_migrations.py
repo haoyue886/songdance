@@ -32,6 +32,9 @@ def test_alembic_upgrade_and_downgrade(tmp_path: Path) -> None:
     engine = create_engine(database_url)
     assert set(inspect(engine).get_table_names()) == {
         "alembic_version",
+        "mail_deliveries",
+        "mail_events",
+        "mail_suppressions",
         "analytics_events",
         "artifacts",
         "source_assets",

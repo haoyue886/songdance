@@ -19,11 +19,15 @@ from app.models.job import (
     TranscriptionQualityReport,
     TranscriptionResult,
 )
+from app.models.mail import MailDelivery, MailEvent, MailSuppression
 from app.models.paid_period import PaidPeriod
 from app.models.usage import UsageLedger, UsagePeriod
 from app.models.user import AuthIdentity, User
 
 __all__ = [
+    "MailDelivery",
+    "MailEvent",
+    "MailSuppression",
     "AccountDeletion",
     "AccountDeletionSubscription",
     "GuestDay",

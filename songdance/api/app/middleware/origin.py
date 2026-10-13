@@ -14,9 +14,11 @@ class OriginEnforcementMiddleware:
         if (
             scope["type"] == "http"
             and scope.get("method") == "POST"
-            and scope.get("path") == "/webhooks/creem"
+            and scope.get("path") in {
+                "/webhooks/creem", "/webhooks/supabase/email", "/webhooks/resend",
+            }
         ):
-            # Only this exact server-to-server endpoint uses raw-body HMAC instead of Origin.
+            # Only these exact server-to-server routes authenticate signed raw bodies.
             await self.app(scope, receive, send)
             return
         if scope["type"] == "http" and scope.get("method") in UNSAFE_METHODS:

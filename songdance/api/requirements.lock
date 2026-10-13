@@ -20,7 +20,9 @@ fastapi==0.140.7
 flatbuffers==25.12.19
 fonttools==4.63.0
 h11==0.16.0
+httpcore==1.0.9
 httptools==0.8.0
+httpx==0.28.1
 idna==3.18
 importlib_resources==7.1.0
 jmespath==1.1.0
@@ -71,6 +73,7 @@ six==1.17.0
 soundfile==0.14.0
 soxr==1.1.0
 SQLAlchemy==2.0.51
+standardwebhooks==1.1.0
 starlette==1.3.1
 threadpoolctl==3.6.0
 typing-inspection==0.4.2

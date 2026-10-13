@@ -90,6 +90,16 @@ class Settings(BaseSettings):
     creem_success_url: str = ""
     creem_plan_version: str = "pro-test-v1"
     support_email: str = ""
+    mail_enabled: bool = False
+    mail_site_url: str = ""
+    mail_project_ref: str = ""
+    mail_from: str = "auth@mail.notavue.io"
+    mail_test_recipients: str = ""
+    mail_support_verified: bool = False
+    resend_api_key: SecretStr = SecretStr("")
+    supabase_email_hook_secret: SecretStr = SecretStr("")
+    resend_webhook_secret: SecretStr = SecretStr("")
+    mail_digest_secret: SecretStr = SecretStr("")
 
     model_config = SettingsConfigDict(
         env_file=".env", env_prefix="SONGDANCE_", hide_input_in_errors=True
@@ -151,6 +161,10 @@ class Settings(BaseSettings):
 
     @model_validator(mode="after")
     def validate_service_configuration(self) -> "Settings":
+        if self.mail_enabled:
+            from app.services.mail_contract import validate_mail_settings
+
+            validate_mail_settings(self)
         if self.account_deletion_enabled and (
             not self.auth_enabled or not self.usage_enabled or not self.reliable_queue_enabled
         ):

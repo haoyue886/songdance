@@ -91,10 +91,14 @@ chmod 600 ../.env.commercial-test.local
 
 用户完成 Spaceship 登录后已核对账户内域名、0 条自定义 DNS 和重定向。经单独确认禁用旧 DNSSEC，原签名提前停止但父区仍有旧 DS，导致公开解析失败；另经确认恢复，生成新 DS 32322，并在 10:48:29 核对四个 `.io` 父区及两家公共解析器的匹配/NOERROR + AD，11:06:37 复查稳定。受测解析和验证链已恢复，NS 仍为 Spaceship，Cloudflare 仍未生效。已获授权联系支持，11:07–11:08 明确确认现有自助 UI 不支持单独撤 DS/保签；等待用户选择保留现 DNS 验证发信或接受维护窗口再迁移，不重复同一禁用按钮承诺无中断。事实与查询见 [恢复记录](reviews/2026-10-13-dnssec-recovery.md)。未完成 Resend Verified 或 MAIL-01，未开放真实登录、邮件或收费。
 
-## 8. 2026-10-13 维护窗口迁移进行中
+## 8. 2026-10-13 维护窗口迁移（DNS/DNSSEC 受测验收已完成）
 
 用户随后接受维护窗口暂时中断风险，11:39 复核四个父区、两家公共解析器及 Cloudflare 两台新权威记录一致；约 11:44–11:45 在现场再次确认后关闭 Spaceship 自动 DNSSEC。11:45 父区仍发布 DS 32322、旧区已停止签名，公共 A 暂时 SERVFAIL；11:53:28 首次确认四个父区均无 DS，至少 12:53:28 后再复核旧 TTL 缓存退出并现场确认切 NS。11:53 公共 A 一家恢复、另一家尚为 SERVFAIL，原 NS 未改。用户另行确认每 5 分钟只读自动跟进，已创建 `notavue-dns`，不自动跳过安全确认。不反复开关或宣布无中断；新委派稳定后再恢复新 DNSSEC。实时证据/安全条件见 [维护迁移记录](reviews/2026-10-13-cloudflare-migration.md)；本段更新第 7 节的历史暂停状态，不标记域名迁移、Resend 或正式上线已完成。
 
 13:10 更新：旧 DS 等待和 12:54 复核完成，用户确认后于 13:07 在 Spaceship 保存 gannon/romina 两个 Cloudflare NS；UI 为“在传播中”、DS 0 条。四个父区暂仍返回旧 NS；两家公共 A 在 13:07 返回 NOERROR 但无地址答案，不能标记解析可用。已触发一次 Cloudflare NS 检查；继续等待父区/公共委派、旧缓存退出及新 DNSSEC 验证。注册商未转移、Cloudflare 保持 Free，未部署应用或验证邮件。
 
 13:14 更新：四个父区全部更新为 Cloudflare NS 的首次确认时刻为 13:14:27；两家公共 NS 已更新、A 返回原两个 IP、无 AD，受测解析恢复。最早 14:14:27 后再复核旧 NS 缓存退出及恢复新 DNSSEC。Cloudflare 页面刷新和跟进提示更新遇审批服务 403，动作未执行；原 5 分钟只读跟进仍保留，控制台 Active 尚未复核，不将公共委派更新等同 DNSSEC 或邮件验收完成。
+
+14:35 更新：旧委派等待、门槛后 DNS/记录与 Cloudflare 接管状态已复核。用户确认后已启用新签名，两台权威 DNSKEY/RRSIG 可见；用实际 KSK 复算 DS 2371 / 13 / 2 摘要与 UI 匹配后，在 Spaceship 保存唯一一条新 DS。父区暂仍无 DS、公共 A 正常但无 AD，完整验证链尚未恢复；原只读跟进继续核对。Resend、客服与真实登录支付验收继续待办。
+
+14:50 最终更新：四个父区的新 DS 一致，两家公共 DS/A 均 NOERROR + AD、A 为原两个 IP；Cloudflare 控制台显示 DNSSEC Success。本次受测迁移范围已完成，按用户约定将临时自动跟进 `notavue-dns` 设为 PAUSED。注册商仍为 Spaceship、Cloudflare Free；Resend Verified、真实邮件、客服及登录支付联调仍未签收，Phase 38/39 和生产发布状态不因此完成。

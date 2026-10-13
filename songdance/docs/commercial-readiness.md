@@ -86,3 +86,7 @@ chmod 600 ../.env.commercial-test.local
 用户确认 `notavue.io` 与 Cloudflare Free，并分别确认资源创建及“只准备 Cloudflare 记录”。已创建 Resend `mail.notavue.io` 和 Cloudflare 免费区域，保存实际 DKIM TXT、两条发信 CNAME、子域 DMARC；保留两条原网站 A 的 IP，代理均关闭。直接查询分配的 Cloudflare 域名服务器返回正确邮件/A 记录，区域 UI 仍为 Pending；公开 NS 仍是 Spaceship、旧 DNSSEC DS 仍存在，尚未迁移或完成 Resend 验证。
 
 设置证据与完整待办见 [DNS 准备记录](reviews/2026-10-12-resend-dns-preparation.md) 和 [Resend 接入](resend-setup.md)。客服目标地址为 `support@notavue.io`，当前未配置收信，不写入应用已核实客服配置。API key/Hook/webhook/真实邮件及完整供应商验收继续待办，未开启登录或收费。
+
+## 7. 2026-10-13 DNSSEC 故障恢复与迁移暂停
+
+用户完成 Spaceship 登录后已核对账户内域名、0 条自定义 DNS 和重定向。经单独确认禁用旧 DNSSEC，原签名提前停止但父区仍有旧 DS，导致公开解析失败；另经确认恢复，生成新 DS 32322，并在 10:48:29 核对四个 `.io` 父区及两家公共解析器的匹配/NOERROR + AD。受测解析和验证链已恢复，NS 仍为 Spaceship，Cloudflare 仍未生效。已获授权联系支持，等待保留旧签名/单独撤 DS 的可执行方法，不重复同一禁用按钮或宣称无中断；事实与查询见 [恢复记录](reviews/2026-10-13-dnssec-recovery.md)。未完成 Resend Verified 或 MAIL-01，未开放真实登录、邮件或收费。

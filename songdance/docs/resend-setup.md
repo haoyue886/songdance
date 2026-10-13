@@ -1,6 +1,6 @@
 # Resend 邮件接入准备
 
-2026-10-13 11:53 更新：用户已接受维护窗口中断风险，旧 DNSSEC 已关闭；四个父区于 11:53:28 确认撤下 DS 32322，至少 12:53:28 后再复核切 NS 条件。NS 仍在 Spaceship，Cloudflare Free 和 Resend `mail.notavue.io` 记录已准备，尚未完成迁移或发信验证；公共 A 一家恢复、另一家尚有失败缓存，不宣称全部解析恢复。见 [维护迁移记录](reviews/2026-10-13-cloudflare-migration.md)，历史事件见 [DNS 准备](reviews/2026-10-12-resend-dns-preparation.md) 与 [故障恢复](reviews/2026-10-13-dnssec-recovery.md)。API/Hook 与客服收信仍待完成，不是已经运行的邮件服务。认证要求见 [AUTH-04](../../Billing-Auth-Spec.md)，开发归属为 [Phase 38.1](../../DEV-PLAN.md)。
+2026-10-13 13:14 更新：旧 DS 撤销后的等待及复核已完成，用户确认后于 13:07 在 Spaceship 保存 gannon/romina 两个 Cloudflare NS。13:14:27 四个父区已全部更新，两家公共 NS/A 已恢复到新委派与原 IP；最早 14:14:27 后再复核旧委派缓存退出及新 DNSSEC 条件。Cloudflare Active 页面复核遇审批服务故障，尚未确认；新 DNSSEC、Resend 验证、API/Hook 与客服收信仍待完成。见 [维护迁移记录](reviews/2026-10-13-cloudflare-migration.md)，历史事件见 [DNS 准备](reviews/2026-10-12-resend-dns-preparation.md) 与 [故障恢复](reviews/2026-10-13-dnssec-recovery.md)。认证要求见 [AUTH-04](../../Billing-Auth-Spec.md)，开发归属为 [Phase 38.1](../../DEV-PLAN.md)。
 
 ## 1. 账户与域名
 
@@ -47,12 +47,12 @@ Supabase 的 `signInWithOtp` 仍产生 OTP 并负责 `verifyOtp`、过期与单�
 - 已完成：Supabase Test 项目、Creem Pro Test 商品；精确本地回跳，8 位/600 秒参数；OTP 兼容回归、独立审查与受忽略的本地配置骨架。
 - 已核验 Resend 已登录控制台与 Free 用量限制；2026-10-12 按用户确认创建 `mail.notavue.io`（Ireland / eu-west-1），收信关闭，尚未验证。未创建 API key、发送邮件或开启付费功能。
 - 已按用户确认创建 Cloudflare `notavue.io` Free 区域，关闭附加 robots.txt 偏好同步，在 Pending 区域配置 DKIM TXT、两条发信 CNAME、`_dmarc.mail` TXT；两条现有 A 记录改为 DNS only，IP 未变。实际 SPF/Return-Path 配置采用账户生成的 CNAME，不照搬官方文档的旧 MX/TXT 示例。
-- 未完成：Cloudflare 维护窗口迁移、Resend 验证、客服收信、API key/签名 secrets、Hook/API/日志/回调代码、公开测试地址与三家邮箱测试。用户已选择接受中断风险继续迁移，约 11:44–11:45 经现场确认关闭旧 DNSSEC；11:53:28 四个父区已撤下 DS 32322，至少 12:53:28 后再复核旧缓存/公共解析退出并确认切 NS。当前 NS 尚未切，不反复开关；实际进度见 [维护迁移记录](reviews/2026-10-13-cloudflare-migration.md)。
+- 未完成：旧委派缓存退出及新 DNSSEC、Cloudflare Active 复核、Resend 验证、客服收信、API key/签名 secrets、Hook/API/日志/回调代码、公开测试地址与三家邮箱测试。用户确认切 NS，13:07 已在注册商保存；四个父区全部更新的起算点为 13:14:27，至少 14:14:27 后再复核缓存和 DNSSEC 恢复条件。实际进度见 [维护迁移记录](reviews/2026-10-13-cloudflare-migration.md)。
 - Resend 开户页面最初显示加载错误，随后已恢复为可访问的 onboarding/Usage/Domains；已登录状态由实际控制台核对，不凭跳转 URL 推断。
 
 2026-10-12 的授权边界只准备 Cloudflare 记录，当日未操作 Spaceship，也未点选“已更新域名服务器”或“已添加记录”冒充生效。2026-10-13 10:48 的恢复阶段，用户另行确认禁用旧 DNSSEC，出现故障后再次确认恢复，生成 DS 32322，NS 未改、迁移暂停；这是历史状态。随后用户选择维护迁移并现场确认关闭旧 DNSSEC，11:53 已确认 DS 撤销，等待缓存退出。后续安全操作仍须具体确认；需要新密码/认证凭据、接受条款、创建密钥或扩展公开访问时交由用户完成或在操作时确认。域名发信尚未验收，不投递真实邮件、不打开登录/收费。
 
-用户重申目标为注册与续费留 Spaceship、DNS 迁 Cloudflare Free、Web 按既有方案部署 Vercel、HTTPS 由平台签发；不转移注册商。随后明确接受维护窗口中断风险，并在现场确认关闭旧 DNSSEC。当前原 NS 是缓存退出等待状态，尚未完成切换；支持聊天编号为 `SPS-YGU-3557`。
+用户重申目标为注册与续费留 Spaceship、DNS 迁 Cloudflare Free、Web 按既有方案部署 Vercel、HTTPS 由平台签发；不转移注册商。随后明确接受维护窗口中断风险、确认关闭旧 DNSSEC，并确认切 NS。当前注册商和四个受测父区均为 Cloudflare NS，等待旧缓存退出及恢复新 DNSSEC；支持聊天编号为 `SPS-YGU-3557`。
 
 ### 2026-10-13 迁移前只读复核
 

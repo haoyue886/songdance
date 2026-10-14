@@ -71,7 +71,8 @@ def mail(tmp_path):
 def payload(**overrides):
     return {
         "user": {"id": "00000000-0000-0000-0000-000000000001", "email": "test@example.invalid"},
-        "email_data": {"site_url": "http://127.0.0.1:3002", "token": "18493726",
+        "email_data": {"site_url": "https://abcdefghijklmnopqrst.supabase.co/auth/v1",
+                       "token": "18493726",
                        "token_hash": "private-hash", "redirect_to": "https://evil.invalid/",
                        "email_action_type": "magiclink", **overrides},
     }
@@ -163,6 +164,44 @@ def test_raw_body_mismatch_and_wrong_provider_headers(mail):
 def test_contract_rejects_invalid_otp_or_unsupported_flow(mail, fields):
     client, provider, _ = mail
     assert post(client, payload(**fields)).status_code == 400
+    assert not provider.calls
+
+
+def test_failure_diagnostics_contain_only_fixed_fields(mail, monkeypatch):
+    client, provider, _ = mail
+    logs = []
+    monkeypatch.setattr("app.routes.mail.log_event", lambda name, **fields: logs.append(
+        (name, fields),
+    ))
+    assert post(client, payload(site_url="https://private.invalid")).status_code == 400
+    assert logs == [("mail_hook_rejected", {"provider": "supabase",
+                    "error_code": "MAIL_PROVIDER_URL_MISMATCH", "status_code": 400})]
+    assert not provider.calls
+
+
+@pytest.mark.parametrize("site", ["https://abcdefghijklmnopqrst.supabase.co",
+                                  "https://abcdefghijklmnopqrst.supabase.co/auth/v1"])
+def test_provider_url_is_distinct_from_server_owned_template_links(mail, site):
+    client, provider, _ = mail
+    assert post(client, payload(site_url=site)).status_code == 200
+    message = json.loads(provider.calls[0].content)
+    assert "http://127.0.0.1:3002/privacy" in message["text"]
+    assert "http://127.0.0.1:3002/refund" in message["html"]
+    assert ".supabase.co" not in message["text"] + message["html"]
+
+
+@pytest.mark.parametrize("site", [None, [], "http://127.0.0.1:3002",
+    "https://otherproject.supabase.co/auth/v1",
+    "https://abcdefghijklmnopqrst.supabase.co.evil.invalid/auth/v1",
+    "https://abcdefghijklmnopqrst.supabase.co@evil.invalid/auth/v1",
+    "https://abcdefghijklmnopqrst.supabase.co/auth/v1?redirect_to=https://evil.invalid",
+    "https://abcdefghijklmnopqrst.supabase.co/auth/v1/verify",
+])
+def test_hook_rejects_unbound_provider_urls(mail, site):
+    client, provider, _ = mail
+    result = post(client, payload(site_url=site))
+    assert result.status_code == 400
+    assert result.json()["error"]["message"] == "MAIL_PROVIDER_URL_MISMATCH"
     assert not provider.calls
 
 

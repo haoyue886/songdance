@@ -130,8 +130,11 @@ def otp_message(settings: "Settings", payload: dict, delivery_id: str) -> tuple[
     recipient = address(user.get("email"))
     if recipient not in {address(v.strip()) for v in settings.mail_test_recipients.split(",")}:
         raise MailError("MAIL_RECIPIENT_NOT_ALLOWED")
-    if data.get("site_url") != settings.mail_site_url:
-        raise MailError("MAIL_SITE_MISMATCH")
+    # Supabase Auth sends API.ExternalURL here, not the application's Site URL.
+    # Pin the project origin and its auth mount; never use this field for template links.
+    provider_origin = settings.supabase_url.rstrip("/")
+    if data.get("site_url") not in (provider_origin, provider_origin + "/auth/v1"):
+        raise MailError("MAIL_PROVIDER_URL_MISMATCH")
     action = data.get("email_action_type")
     if not isinstance(action, str) or action not in {"signup", "magiclink", "reauthentication"}:
         # The hook replaces ALL Supabase email. Unsupported types must never be acknowledged.
@@ -142,14 +145,14 @@ def otp_message(settings: "Settings", payload: dict, delivery_id: str) -> tuple[
     # All URLs and wording are server-owned. redirect_to, metadata and token_hash are ignored.
     links = [("Privacy", "/privacy"), ("Refund policy", "/refund"), ("Contact", "/contact")]
     text = (
-        f"Your SongDance verification code is {token}.\n"
+        f"Your Notavue verification code is {token}.\n"
         "It expires 10 minutes after your request. Do not share this code.\n"
         "If you did not request this code, you can ignore this email.\n"
         + "\n".join(f"{label}: {settings.mail_site_url}{path}" for label, path in links)
         + f"\nSupport: {settings.support_email}\n"
     )
     html = (
-        "<h1>SongDance verification code</h1>"
+        "<h1>Notavue verification code</h1>"
         f"<p style=\"font-size:28px;letter-spacing:4px\">{token}</p>"
         "<p>It expires 10 minutes after your request. Do not share this code.</p>"
         "<p>If you did not request this code, you can ignore this email.</p><p>"
@@ -159,7 +162,7 @@ def otp_message(settings: "Settings", payload: dict, delivery_id: str) -> tuple[
     )
     return {
         "from": settings.mail_from, "to": [recipient],
-        "reply_to": settings.support_email, "subject": "Your SongDance verification code",
+        "reply_to": settings.support_email, "subject": "Your Notavue verification code",
         "text": text, "html": html,
         "tags": [{"name": "songdance_delivery", "value": delivery_id}],
     }, action

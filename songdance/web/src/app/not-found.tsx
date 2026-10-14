@@ -4,8 +4,8 @@ import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
 
 export const metadata: Metadata = {
-  title: { absolute: "Page not found | SongDance" },
-  description: "The requested SongDance page could not be found.",
+  title: { absolute: "Page not found | Notavue" },
+  description: "The requested Notavue page could not be found.",
   openGraph: null,
   twitter: null,
 };

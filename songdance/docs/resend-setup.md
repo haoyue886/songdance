@@ -1,6 +1,6 @@
 # Resend 邮件接入准备
 
-2026-10-13 更新：Cloudflare DNS/NS 与受测 DNSSEC 恢复已于 14:50 验收，临时跟进已停止。Resend `mail.notavue.io` 控制台于 15:04 显示 DNS verified、15:05 显示 Domain verified，DKIM 与两条发信 CNAME 均 Verified，Sending on / Receiving off。客服采用免费转发，但目标邮箱由用户标为“待创建”，尚未配置。邮件本地代码和 014 迁移已补入，默认关闭，尚未创建真实密钥、部署 Hook 或发信。见 [维护记录](reviews/2026-10-13-cloudflare-migration.md)、[邮件交付记录](reviews/2026-10-13-mail-delivery.md)；历史事件见 [DNS 准备](reviews/2026-10-12-resend-dns-preparation.md) 与 [故障恢复](reviews/2026-10-13-dnssec-recovery.md)。认证要求见 [AUTH-04](../../Billing-Auth-Spec.md)，开发归属为 [Phase 38.1](../../DEV-PLAN.md)。
+2026-10-13 更新：Cloudflare DNS/NS 与受测 DNSSEC 恢复已于 14:50 验收，临时跟进已停止。Resend `mail.notavue.io` 控制台于 15:04 显示 DNS verified、15:05 显示 Domain verified，DKIM 与两条发信 CNAME 均 Verified，Sending on / Receiving off。晚间用户确认客服收件目标为已可收发的 `hello@notavue.io`；只读核对根域 MX 已由飞书承接，后台域名已启用、邮箱成员正常。随后经用户明确授权，已添加并保存 `support@notavue.io` 企业邮箱别名，刷新后在成员详情复核可见；现有 `SD-20261013-01` 测试线程的来信与回复已在飞书/外部 QQ 两端核对；保留飞书 MX，不能直接沿用早先 Cloudflare 根域转发设想。邮件本地代码和 014 迁移已补入，默认关闭；独立审查已补齐且未发现可行动问题，Resend 受限发送 key 已创建并存入私密配置，四事件回调已保存；两路隔离 HTTPS、签名 secrets 与 Supabase Hook 已接通并启用受限测试发送，2026-10-14 真实 OTP 发码/收件/供应商验证与复用拒绝通过。真实 600 秒过期拒绝、专用私有视图连接、应用 BFF/账户页及退出撤销已通过；本轮已禁用两家回调、限额页面恢复 2/h 并关闭本机测试服务，三家邮箱仍待验；最新现场见 [OTP 联调](reviews/2026-10-14-mail-otp-integration.md)。见 [维护记录](reviews/2026-10-13-cloudflare-migration.md)、[邮件交付记录](reviews/2026-10-13-mail-delivery.md)、[审查与客服核对续接](reviews/2026-10-13-mail-review-followup.md)；历史事件见 [DNS 准备](reviews/2026-10-12-resend-dns-preparation.md) 与 [故障恢复](reviews/2026-10-13-dnssec-recovery.md)。认证要求见 [AUTH-04](../../Billing-Auth-Spec.md)，开发归属为 [Phase 38.1](../../DEV-PLAN.md)。
 
 ## 1. 账户与域名
 
@@ -16,7 +16,7 @@
 |---|---|---|
 | 登录验证码 | `auth@mail.notavue.io` | 发信子域已 Verified；服务端固定 From，尚未真实发送 |
 | 账务通知身份 | `billing@mail.notavue.io` | 同一发信子域名；先准备身份，不重复发送 Creem 收据 |
-| 用户回复/客服 | `support@notavue.io` | 用户选择 Cloudflare 免费转发，回复显示目标现有邮箱；目标邮箱待创建，未配置 MX/转发或验证收信 |
+| 用户回复/客服 | `support@notavue.io` | 收件目标 `hello@notavue.io` 已由飞书托管，成员正常；`support@` 企业邮箱别名已获授权添加并保存，刷新后复核可见，现有 QQ 测试来信/主邮箱回复两端已核对；保留现有 MX |
 
 只验证 `mail.<主域名>` 不授权从根域 `auth@<主域名>` 发信。所有应用邮件可固定 Reply-To 为客服地址。Resend 发信身份不是自动创建可登录的客服邮箱；客服收信不能以“From 能发送”代替。
 
@@ -33,22 +33,22 @@ Supabase 的 `signInWithOtp` 仍产生 OTP 并负责 `verifyOtp`、过期与单�
 - 密钥只在受控服务端：Resend 最小发信权限 key、Supabase Hook secret、Resend webhook secret 各自独立。尚未把任何真实密钥放进本地文件或平台。
 - 普通发送日志保存消息 ID、类型、状态、错误分类和必要收件地址带密钥摘要；不保存验证码、密钥、完整 hook payload/邮件正文。若可靠恢复需要保存敏感内容，需加密、有界保留并排除普通日志。
 
-本地已实现默认关闭的 Hook/API、持久发送记录和退信回调，但未部署。公开 HTTPS Hook 地址与目标测试服务尚未准备，不能把 `127.0.0.1` 当 Supabase 云端可访问回调。
+本地已实现默认关闭的 Hook/API、持久发送记录和退信回调。专用 listener 和 Cloudflare Quick Tunnel 已获授权准备并实测 HTTPS 路由边界；临时地址见 [现场记录](reviews/2026-10-13-mail-test-connection.md)，本轮受限测试已取得供应商 OTP、真实过期拒绝和应用 BFF/账户页/退出证据；收尾已禁用 Hook 与事件回调并停止 Tunnel/listener，MAIL_ENABLED 恢复 false。不能把 `127.0.0.1` 当 Supabase 云端可访问回调。
 
 ### 本地实现与配置边界
 
 配置骨架为 [env.mail.example](../infra/env.mail.example)，运行库采用 `standardwebhooks==1.1.0` 验签，`httpx==0.28.1` 做有总时限的异步发送。安装使用 `api/requirements.lock`；本地 `uv.lock` 不作为交付锁文件。
 
 - 先对隔离数据库执行 `alembic upgrade head`（014），随后按私密配置启用 `SONGDANCE_MAIL_ENABLED`。启动检查要求非 production、匹配 Supabase 项目/本站 origin、1–10 个明确测试收件人、独立三组密钥和已验证客服收信；客服仍待创建时保持关闭，不假填验证标记。
-- `POST /webhooks/supabase/email`，原始 body 上限 20 KiB。使用 `webhook-*` 签名头，SDK 校验正负 5 分钟时间窗；独立 Hook secret 是项目来源凭证，payload 没有可信的项目 ID，不靠浏览器声明来源。固定 `email_data.site_url` 与服务端项目配置，只接受 6/8 位 ASCII OTP 和 signup/magiclink/reauthentication。
+- `POST /webhooks/supabase/email`，原始 body 上限 20 KiB。使用 `webhook-*` 签名头，SDK 校验正负 5 分钟时间窗；独立 Hook secret 是项目来源凭证，payload 没有可信的项目 ID，不靠浏览器声明来源。固定 `email_data.site_url` 为该 Supabase 项目 API origin 或 `/auth/v1`；官方 Auth 实现该字段来自 `API.ExternalURL`，不能与应用首页比较。模板链接独立使用服务端 `mail_site_url`，只接受 6/8 位 ASCII OTP 和 signup/magiclink/reauthentication。
 - Hook 替代 Supabase 所有邮件；当前不支持 invite/recovery/email_change/security notification，明确失败而不静默丢信。接入测试项目时必须限制这些流程。Google OAuth 不通过这个邮件 Hook。OTP 到期仍由 Supabase 的 600 秒设置负责。
-- Supabase 官方 HTTP Hook 总预算 5 秒。本应用请求等待上限 4 秒、Resend 单次尝试上限 3 秒；底层 HTTPX 超时 2 秒，不重定向、不自行循环发送。暂时失败回 503 + 非空 Retry-After；根据供应商重试重新进入。同请求数据库 CAS/4 秒租约控制并发，每个 ID 最多 3 次发送尝试、首次接收后最多 120 秒。
+- Supabase 官方 HTTP Hook 总预算 5 秒。本应用请求等待上限 4 秒、Resend 单次尝试上限 3 秒；底层 HTTPX 超时 2 秒，不重定向、不自行循环发送。暂时失败回 503 + 非空 Retry-After；Supabase 整个调用（含重试）仍只有 5 秒，当前只检查该头非空、不按数值调度；本地 next_attempt_at 继续强制退避，实际重试时序待联调。同请求数据库 CAS/4 秒租约控制并发，每个 ID 最多 3 次发送尝试、首次接收后最多 120 秒；这只是同请求再次到达的处理上界，不表示 Supabase 会重投 120 秒。
 - 稳定发送 key 为项目和 Hook ID 的摘要；请求体和完整渲染正文另存 HMAC 摘要，重试修改正文/模板/配置会失败关闭，不换 key 重发。超时状态为 unknown，提交 accepted 后才返回成功；accepted 不表示投递或登录成功。服务重启可从同一签名重投恢复，没有保存明文 OTP 的后台 outbox。超过窗口、永久错误、配额耗尽不自动再试，需用户按原发码预算重新请求新验证码。
 - `POST /webhooks/resend`，原始 body 上限 64 KiB；适配 `svix-*` 到 Standard Webhooks 相同签名算法，SDK 验签后再处理。事件和抑制同事务，已签名事件通过发送时附带的 `songdance_delivery` tag、From、收件摘要及已知 message ID 关联本地发送；其它邮件不影响应用。硬退信 Permanent、投诉和 provider suppressed 均抑制后续发送；Temporary 不永久抑制；迟到 delivered 不解除抑制。已在途的发送不能撤回。
 - 日志/表只保留必要消息 ID、HMAC 摘要、类型、状态、尝试、固定错误码和时间；不保存收件明文、OTP/token/hash、正文、完整事件或 SMTP 诊断。HMAC secret 不可直接替换，否则已有抑制无法匹配；轮换和生产保留/清理政策另行审查。历史存在时 014 拒绝破坏性 downgrade，回退采用关闭发送并保留表。
 - 模板英文回退，只使用服务端固定本站 `/privacy`、`/refund`、`/contact`，不写未经确认的退款承诺、不读取客户端 redirect/metadata。`billing@` 不额外发 Creem 收据。没有添加跟踪像素；控制台的 Configure 打开的是 New tracking subdomain 表单（未提交，默认 click 选中/open 未选中），不据此宣称已实测关闭所有账户跟踪。TLS 当时为 Opportunistic，未修改。
 
-真实接入前仍需：目标客服邮箱与转发验收；用户受控填写 Resend 最小发信权限 key、Supabase Hook secret、Resend callback secret 和独立 HMAC secret；确认公开 HTTPS 测试服务并部署；配置两条 Hook，至少订阅 bounced/complained/suppressed/delivered；用指定 Gmail/Outlook/Yahoo 地址验收。未完成这些步骤不勾选 MAIL-01–06。
+客服收发已通过；真实接入仍需：用户受控填写 Resend 最小发信权限 key、Supabase Hook secret、Resend callback secret 和独立 HMAC secret；确认公开 HTTPS 测试服务并部署；配置两条 Hook，至少订阅 bounced/complained/suppressed/delivered；用指定 Gmail/Outlook/Yahoo 地址验收。未完成这些步骤不勾选 MAIL-01–06。
 
 ## 4. 退信、投诉与模板
 
@@ -60,9 +60,9 @@ Supabase 的 `signInWithOtp` 仍产生 OTP 并负责 `verifyOtp`、过期与单�
 ## 5. 当前完成与下一步
 
 - 已完成：Supabase Test 项目、Creem Pro Test 商品；精确本地回跳，8 位/600 秒参数；OTP 兼容回归、独立审查与受忽略的本地配置骨架。
-- 已核验 Resend 已登录控制台与 Free 用量限制；2026-10-12 按用户确认创建 `mail.notavue.io`（Ireland / eu-west-1），2026-10-13 已 Verified，收信关闭。未创建 API key、发送邮件或开启付费功能。
+- 已核验 Resend 已登录控制台与 Free 用量限制；2026-10-12 按用户确认创建 `mail.notavue.io`（Ireland / eu-west-1），2026-10-13 已 Verified，收信关闭。本轮已按授权创建 `SongDance Auth Test`（Sending access、仅该域）；已用其完成一封真实测试 OTP，不启用付费功能。
 - 已按用户确认创建 Cloudflare `notavue.io` Free 区域，关闭附加 robots.txt 偏好同步，在 Pending 区域配置 DKIM TXT、两条发信 CNAME、`_dmarc.mail` TXT；两条现有 A 记录改为 DNS only，IP 未变。实际 SPF/Return-Path 配置采用账户生成的 CNAME，不照搬官方文档的旧 MX/TXT 示例。
-- 未完成：客服收信、API key/签名 secrets、公开测试地址/部署和真实 Hook/三家邮箱测试。已补本地 Hook/API/日志/回调代码，实际测试与限制见 [邮件交付记录](reviews/2026-10-13-mail-delivery.md)。DNS/NS/DNSSEC 迁移已于 14:50 通过受测验收。
+- 本轮现场已补客服两端收发证据、专用两路 HTTPS listener、受限发送 key 和 Resend 四事件回调；已补签名 secrets/Supabase Hook 与真实供应商 OTP 证据；已补私有视图会话 DSN、BFF/账户页和退出撤销，测试服务已关闭；未完成：三家邮箱头部与收件验收、完整 MAIL/BA 签收。已补本地 Hook/API/日志/回调代码，实际测试与限制见 [邮件交付记录](reviews/2026-10-13-mail-delivery.md)。DNS/NS/DNSSEC 迁移已于 14:50 通过受测验收。
 - Resend 开户页面最初显示加载错误，随后已恢复为可访问的 onboarding/Usage/Domains；已登录状态由实际控制台核对，不凭跳转 URL 推断。
 
 2026-10-12 的授权边界只准备 Cloudflare 记录，当日未操作 Spaceship，也未点选“已更新域名服务器”或“已添加记录”冒充生效。2026-10-13 10:48 的恢复阶段，用户另行确认禁用旧 DNSSEC，出现故障后再次确认恢复，生成 DS 32322，NS 未改、迁移暂停；这是历史状态。随后用户选择维护迁移并现场确认关闭旧 DNSSEC，11:53 已确认 DS 撤销，等待缓存退出。后续安全操作仍须具体确认；需要新密码/认证凭据、接受条款、创建密钥或扩展公开访问时交由用户完成或在操作时确认。域名发信尚未验收，不投递真实邮件、不打开登录/收费。

@@ -75,7 +75,7 @@ async function expectPageReady(page: Page, path: string): Promise<void> {
           : path === "/fr" || path.startsWith("/fr/") ? "Langue"
             : path === "/de" || path.startsWith("/de/") ? "Sprache" : "Language";
   await expect(page.getByLabel(languageLabel)).toBeVisible();
-  await expect(page.getByText("Loading SongDance...")).toHaveCount(0);
+  await expect(page.getByText("Loading Notavue...")).toHaveCount(0);
 }
 
 async function expectNoHorizontalOverflow(page: Page): Promise<void> {

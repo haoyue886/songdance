@@ -1,6 +1,6 @@
 # Vercel deployment guide
 
-SongDance uses Vercel for the public Next.js website and Railway for the stateful,
+Notavue uses Vercel for the public Next.js website and Railway for the stateful,
 long-running Python services. Do not deploy the transcription pipeline as a Vercel
 Function: it needs FFmpeg, Basic Pitch, a persistent RQ worker and a scheduled cleanup
 process.

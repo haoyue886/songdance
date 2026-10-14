@@ -1,6 +1,9 @@
-# SongDance
+# Notavue
 
 Public Web MVP that turns a short piano recording into editable MIDI, MusicXML and sheet music.
+
+The public brand is Notavue. Existing `songdance/` paths, `SONGDANCE_` configuration names,
+and persistent identifiers remain unchanged for compatibility.
 
 ## Current phase
 

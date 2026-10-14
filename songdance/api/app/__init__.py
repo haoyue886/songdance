@@ -1,1 +1,1 @@
-"""SongDance API package."""
+"""Notavue API package."""

@@ -111,7 +111,7 @@ class ScoredTranscription:
 
 def build_score(
     events: list[NoteEvent],
-    title: str = "SongDance Transcription",
+    title: str = "Notavue Transcription",
     analysis: StructureAnalysis | None = None,
     sustain_evidence: SustainEvidence | None = None,
     harmonic_evidence: HarmonicEvidence | None = None,

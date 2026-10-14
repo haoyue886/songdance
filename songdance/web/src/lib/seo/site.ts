@@ -7,7 +7,7 @@ function configuredSiteUrl(): string {
   return vercelDomain ? `https://${vercelDomain}` : LOCAL_SITE_URL;
 }
 
-export const SITE_NAME = "SongDance";
+export const SITE_NAME = "Notavue";
 export const SITE_URL = new URL(configuredSiteUrl());
 export const SITE_DESCRIPTION =
   "Convert piano recordings to editable MIDI, MusicXML and readable sheet music.";

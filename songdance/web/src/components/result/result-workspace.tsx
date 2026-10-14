@@ -134,7 +134,7 @@ export function ResultWorkspace({
         );
       } else {
         if (!scoreContainer) throw new Error("Score unavailable");
-        const pdf = await createScorePdf("SongDance Piano Transcription", scoreContainer);
+        const pdf = await createScorePdf("Notavue Piano Transcription", scoreContainer);
         downloadBytes(pdf, "application/pdf", fileName(job.id, "pdf"));
       }
       if (trackEvents) trackEvent(job.id, "format_downloaded", { format: kind });
@@ -293,7 +293,7 @@ function ViewTab({ active, disabled = false, icon, label, onClick }: {
 }
 
 function fileName(jobId: string, extension: string): string {
-  return `songdance-${jobId.slice(0, 8)}.${extension}`;
+  return `notavue-${jobId.slice(0, 8)}.${extension}`;
 }
 
 function formatDate(value: string, locale: string): string {

@@ -18,7 +18,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const locale: AppLocale = isAppLocale(value) ? value : "en";
   const t = await getTranslations({ locale, namespace: "home" });
   return {
-    title: { absolute: `${t("title")} | SongDance` },
+    title: { absolute: `${t("title")} | Notavue` },
     description: t("description"),
     alternates: localeAlternates(locale, "/"),
     openGraph: { url: localePath(locale, "/"), title: t("title"), description: t("description") },

@@ -47,7 +47,7 @@
 | Phase 35 | 计划中（P1） | 中国五声、日本都节与布鲁斯调式家族研究门禁 |
 | Phase 36 | 已完成 | `07-soft` 三项专业缺陷修复；人工复评 `minor_edits`，自动门禁通过 |
 | Phase 37 | 开发中 | `14-hand-crossing` 60 BPM 均匀八分音符与交汇同音保留；不生成最终评审包 |
-| Phase 38 | 38.1 本地实现与验证完成，真实联调待验 | Google/OTP BFF、JWT/session、006 迁移、任务归属/认领已实现且默认关闭；用量/Creem 未实现，不代表 Live 准入 |
+| Phase 38 | 38.1 邮箱/Google 真实登录通过，完整验收待补 | Google/OTP BFF、JWT/session、006 迁移、任务归属/认领已实现且默认关闭；完整商业化与 Live 准入仍待验 |
 | Phase 39 | 39.0 准备中 | 已实跑 30/90/180/300/600 秒临时 WAV 限制探测；真实长音频集、性能成本与人工质量未验证，不代表 5/10 分钟可用 |
 
 ## 功能依赖图
@@ -1841,13 +1841,17 @@ Phase 9 基线
 
 ## Phase 38：登录、Creem 月付与用量账本（2026-09-30 更新）
 
-状态：38.0 已完成，38.1/38.2 本地认证与 Free/Pro 用量基础已实现，38.3 Test 后端及 38.4 商业页面已有默认关闭的本地实现。真实 Supabase/Google/邮件、Creem Test 卡和完整商业化验收仍未完成。长音频链路另见 Phase 39。
+状态：38.0 已完成，38.1/38.2 本地认证与 Free/Pro 用量基础已实现，38.3 Test 后端及 38.4 商业页面已有默认关闭的本地实现。真实 Supabase 邮件与 Google BFF/账户/退出闭环已通过；Creem Test 卡和完整商业化验收仍未完成。长音频链路另见 Phase 39。
 
 需求事实来源：`Product-Spec.md` §1.8 / SCOPE-025–028 与 `Billing-Auth-Spec.md` v0.2；不在此重复维护价格。新方案替代早期一次性 credits 和所有真实上传前登录；游客试用和 Free 月额度按子规范实施。
 
+- [x] 2026-10-14 品牌统一（应用与当前文档）：用户可见品牌已由 SongDance 改为 Notavue，覆盖品牌组件、8 套语言、标题/SEO/结构化数据、登录/账户/政策/客服文案、验证码邮件 HTML/纯文本、新下载文件名前缀、PDF 标题与 Creator、MusicXML 回退标题，以及当前产品规范和使用文档。域名与邮箱沿用 notavue.io；目录、SONGDANCE_、Cookie/localStorage、Redis/队列、数据库角色/schema、供应商资源 ID 与历史冻结材料保留兼容。Web 313 项、API 118 项定向回归和 3 项浏览器场景通过，lint/typecheck/Ruff/生产构建通过，fresh 独立审查未发现可行动问题。交付与边界见 `songdance/docs/reviews/2026-10-14-notavue-brand-unification.md`。
+- [ ] Notavue 外部展示名：Google 测试 OAuth 应用名已设为 Notavue；实际选择器仍显示默认 Supabase 认证域名，正式品牌审核/呈现待生产准备。Creem 商品与结账名称待对应 Test 实测；已有资源 ID 沿用，此项仍未整体完成。
+- [x] 2026-10-14 Google 测试登录：Notavue Auth Test 项目与 Web 客户端已按用户授权创建，External/Testing、单一测试用户、仅 openid/email/profile，Supabase Google Enabled，nonce/email 安全选项保持。真实 Chrome 完成 PKCE 回跳、账户页、退出和同一会话由有效转为删除/失效；本轮本机服务已关闭。fresh 独立审查未发现可行动问题，审查者报告 API 47 项、BFF 39 项定向测试通过。证据和未验项见 `songdance/docs/reviews/2026-10-14-google-oauth-integration.md`，原审查结论见 `songdance/docs/reviews/2026-10-14-google-oauth-review.md`。
+
 - [x] 38.0 身份 ADR：选定 Supabase Auth；交付 `songdance/docs/adr/0001-supabase-auth.md`、`songdance/infra/env.auth.example` 及 `scripts/check_auth_config.py`。官方核验覆盖 OTP/Google、JWT 与 session_id 撤销、BFF/HttpOnly 限制和 SMTP；区域及实际邮件成本作为真实项目配置项保留，未冒充实测。模板只有空值，离线检查不验证账户权限或宣称生产可用。
-- [ ] 38.1 账号：Google/OTP、JWT/session 门禁、原子认领及账户已有本地实现；013 补默认关闭的最近登录确认、持久删除与逐订阅核验后清理，必要身份/账务墓碑保留。仍待真实 Supabase/邮件/Google、生产 TLS/会话策略与删除/停止续费的供应商实测，BA-02/11/13 不整体勾选。
-- [ ] 38.1 邮件增量：按 AUTH-04 采用 Resend 免费层与 Supabase Send Email Hook/API，SMTP 不并行。Cloudflare DNS/NS/DNSSEC 迁移已验收并停止临时跟进；Resend `mail.notavue.io` 于 2026-10-13 15:05 Verified。已补默认关闭、禁止 production、限定测试收件人的签名 Hook、014 持久记录、稳定幂等/有界重试与签名去重的退信投诉抑制。客服采用免费转发、目标邮箱待创建；未创建真实密钥、部署 Hook 或发送邮件。下一步为客服收信、受控凭据、公开 HTTPS 测试服务与 MAIL-01–06 / BA-02 真实验收，不因本地测试勾选。具体记录见 `songdance/docs/resend-setup.md` 和 `songdance/docs/reviews/2026-10-13-mail-delivery.md`，DNS 证据保留在 `songdance/docs/reviews/2026-10-13-cloudflare-migration.md`。
+- [ ] 38.1 账号：Google/OTP、JWT/session 门禁、原子认领及账户已有本地实现；013 补默认关闭的最近登录确认、持久删除与逐订阅核验后清理，必要身份/账务墓碑保留。真实 Supabase 邮件和 Google 登录、账户页与退出撤销已通过；仍待生产 TLS/会话策略、Google 品牌审核与删除/停止续费的供应商实测，BA-02/11/13 不整体勾选。
+- [ ] 38.1 邮件增量：按 AUTH-04 采用 Resend 免费层与 Supabase Send Email Hook/API，SMTP 不并行。Cloudflare DNS/NS/DNSSEC 迁移已验收并停止临时跟进；Resend `mail.notavue.io` 于 2026-10-13 15:05 Verified。已补默认关闭、禁止 production、限定测试收件人的签名 Hook、014 持久记录、稳定幂等/有界重试与签名去重的退信投诉抑制。用户已指定可收发的 `hello@notavue.io`，晚间只读核对根域由飞书 MX 承接、后台域名启用且成员正常；随后经用户授权已添加并保存 `support@notavue.io` 企业邮箱别名，刷新后复核可见；既有 `SD-20261013-01` 客服来信/回复两端已核对，保留飞书 MX。新增只提供两条签名回调的 test-only listener，76 项测试与 fresh 审查通过，临时 HTTPS 探测通过。2026-10-14 签名 secrets 已落盘并启用受限测试 Hook；修复真实回调 site_url 的 API 外部地址语义后，真实 OTP 发码/收件/验证200、复用403、退出204与 delivered 回调通过，87 项回归及 fresh 复审通过。专用 session reader 已按用户授权完成 TLS/只读验证；托管 auth schema 不可转授的问题已用同 9 字段私有视图修复，77 项普通回归、4 项隔离服务测试及 fresh 审查通过；真实应用 BFF/账户页、错误码拒绝、退出及同 session_id 撤销查询已通过。本轮两家回调已禁用、限额页面恢复 2/h、本机测试服务关闭；真实 600 秒过期403/otp_expired 已通过，三家邮箱仍未签收。现场续接见 `songdance/docs/reviews/2026-10-14-mail-otp-integration.md`。独立审查中断后已恢复并取得完整报告，未发现可行动问题；主 Agent 和审查者分别重跑 73 项定向测试通过。下一步为 Creem Test、三家邮箱与 MAIL-01–06 / BA-02 其余条款逐项真实验收，不因本地测试勾选。续接证据见 `songdance/docs/reviews/2026-10-13-mail-review-followup.md`。具体记录见 `songdance/docs/resend-setup.md` 和 `songdance/docs/reviews/2026-10-13-mail-delivery.md`，DNS 证据保留在 `songdance/docs/reviews/2026-10-13-cloudflare-migration.md`。
 - [ ] 38.2 用量：Free/Pro、outbox、游客账本及匿名幂等已有默认关闭的本地实现；新增跨月/跨付款周期、取消/到期后的原期结算与迟到重试检查，以及 30.1/90 秒完整裁剪运输验证。真实模型完整区间、跨周期供应商联调与全部 BA-01/03–06/12 仍待签收；Pro 仍限 90 秒。
 - [ ] 38.3 Creem Test：默认关闭的 checkout 意图、签名/内部对账 inbox、权威交易核验、Portal、已知交易对账及 Test 历史分页扫描已本地实现；012 补全额退款的持久取消/查询确认，后续付款与陈旧快照转审查。真实商户 Test 卡/Portal、全历史/退款取消实际行为和完整商业化流程仍待验收，BA-07–10/14 不整体勾选。配置/恢复见 `songdance/docs/creem-test-setup.md`。
 - [ ] 38.4 商业 UI：pricing/account/return/refund/contact、登录回跳、导航、上传前用量/上限及周期任务摘要已本地实现；参数统一来自 API，付款确认轮询有界，未知状态不诱导重新购买。八语言参数对齐，六语商业文本明确英文回退。剩余实际客服/法律条款与真实购买→提交→导出→取消验收；BA-15/17 不整体勾选。

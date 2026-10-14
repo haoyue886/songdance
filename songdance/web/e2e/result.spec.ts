@@ -163,7 +163,7 @@ async function setRangeValue(
 
 async function verifyPdf(pdfPath: string, renderBase: string): Promise<void> {
   const { stdout } = await execFileAsync("pdfinfo", [pdfPath]);
-  expect(stdout).toMatch(/Title:\s+SongDance Piano Transcription/);
+  expect(stdout).toMatch(/Title:\s+Notavue Piano Transcription/);
   expect(stdout).toMatch(/Pages:\s+1/);
   expect(stdout).toMatch(/Page size:\s+595(?:\.\d+)? x 841(?:\.\d+)? pts \(A4\)/);
   await execFileAsync("pdftoppm", [

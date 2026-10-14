@@ -1,6 +1,6 @@
 # 认证测试环境接入
 
-状态：本地代码已实现，测试 Supabase 项目及本地回跳、OTP 参数已有部分配置；真实 Google/SMTP、会话只读连接与登录联调尚未完成。先在隔离 staging 验证，不直接开启正式网站的登录或收费。
+状态：指定测试项目已通过真实邮件 OTP 和 Google 登录、Next.js BFF、FastAPI 会话查询、账户页及退出撤销联调。本机测试服务与临时邮件入口已关闭，Google 测试 provider 保留；完整 MAIL/BA、Google 品牌审核和生产验收继续待补。现场证据见 [OTP 联调记录](reviews/2026-10-14-mail-otp-integration.md) 与 [Google 联调记录](reviews/2026-10-14-google-oauth-integration.md)。
 
 ## 1. 应用与数据库
 
@@ -11,10 +11,11 @@
 ## 2. Supabase 项目
 
 - 为本环境创建/选择独立项目，采用非对称 JWT 签名。使用 project URL 与现代 publishable key；不复制 JWT shared secret、service_role 或管理员 key 到浏览器。
-- 启用 Google，配置 Google 的 Supabase callback 与 Supabase 的本站回跳 allowlist。本站回跳固定 `/api/auth/callback`；测试/生产域名分别配置，return path 由应用白名单控制。
-- 邮件交付按 [Resend 接入准备](resend-setup.md) 的 Supabase Send Email Hook/API 主路径实施，OTP 有效期 600 秒；真实验证发码、错误/过期/复用、送达和重发预算。Hook 尚未实现和启用时，当前项目仍为默认 SMTP/链接模板；若改用 SMTP 才需自有 SMTP 与 `{{ .Token }}` 模板，不能同时要求或启用两套发信。
+- 启用 Google，配置 Google 的 Supabase callback 与 Supabase 的本站回跳 allowlist。本站回跳固定 `/api/auth/callback`；测试/生产域名分别配置，return path 由应用白名单控制。2026-10-14 已创建 Notavue Auth Test / Notavue Web Test，以三项基本身份 scope 和单一测试用户取得真实登录/退出证据；应用保持 Testing，Client Secret 仅配置在 Supabase。选择器仍显示默认 Supabase 认证域名，正式品牌呈现另行验证。
+- 邮件交付按 [Resend 接入准备](resend-setup.md) 的 Supabase Send Email Hook/API 主路径实施，OTP 有效期 600 秒；真实验证发码、错误/过期/复用、送达和重发预算。Hook 未启用时，供应商仍走其默认邮件配置；2026-10-14 测试项目已取得真实供应商 OTP、BFF/账户页与退出撤销证据，本轮 Hook 已禁用、限额页面恢复 2/h；完整邮件验收仍待补齐，见 [联调记录](reviews/2026-10-14-mail-otp-integration.md)。若改用 SMTP 才需自有 SMTP 与 `{{ .Token }}` 模板，不能同时要求或启用两套发信。
 - 本测试项目保留供应商默认的 8 位 OTP；应用仅接受 6 或 8 位 ASCII 数字，保留旧 6 位项目兼容，不截断、去空白或转换成数字。输入框和 BFF 共用格式，最终由供应商验证；应用接受 6 位格式不代表能通过配置为 8 位的供应商验证。2026-10-07 控制台显示默认模板发送登录链接、配置自有 SMTP 后才能编辑模板，不能仅配置位数就宣称已支持真实邮箱验证码登录。
-- 按 `../infra/supabase-session-reader.sql` 给专用 LOGIN 角色授予只读会话字段权限；角色名称本身不证明最小权限，实际测试禁止读取密码列或修改数据。其 TLS 连接只配置到 FastAPI。
+- 会话读取只允许 sessions 的 id/user_id/created_at/refreshed_at/not_after、users 的 id/email_confirmed_at/banned_until/deleted_at，共 9 个字段。可以转授 `auth` schema USAGE 的环境使用 `../infra/supabase-session-reader.sql`。若托管 Supabase 的 `postgres` 没有该 schema 的 GRANT OPTION，单条 GRANT 可能只警告而无实际授权；改用 `../infra/supabase-session-reader-views.sql`，由已有迁移角色创建私有 `songdance_auth` schema 的两张视图，并设置 `SONGDANCE_AUTH_SESSION_SCHEMA=songdance_auth`。视图保留默认由所有者检查底层权限的语义，专用账号仅有这两张视图的 SELECT，无需加入 anon/authenticated/service_role/admin。不要把私有 schema 加入 Data API exposed schemas。原 `auth` 直读仍为兼容默认。
+- 把 `songdance_auth_reader` 授予专用 LOGIN 角色；不在 SQL 文件中创建或保存密码。角色名称本身不证明最小权限，实际连接应验证 TLS、9 个字段可读、密码列和写操作被拒绝，以及真实会话撤销立即生效；私有视图方案另需确认 reader 无底层 auth schema USAGE。其 TLS 连接只配置到 FastAPI。
 - 如开启 provider time-box/inactivity，必须同步 `SONGDANCE_AUTH_SESSION_MAX_AGE_SECONDS` / `SONGDANCE_AUTH_SESSION_IDLE_SECONDS` 并实测到期；默认 0 表示未开启该额外策略。
 
 ## 3. 环境变量和打开顺序
@@ -29,6 +30,7 @@
 | SONGDANCE_SUPABASE_URL / SONGDANCE_SUPABASE_PUBLISHABLE_KEY | Next.js 服务端与 API |
 | SONGDANCE_AUTH_BRIDGE_SECRET | Next.js 服务端与 API；独立随机 32–128 字符 base64url/hex，不能加 NEXT_PUBLIC 前缀 |
 | SONGDANCE_AUTH_SESSION_DATABASE_URL | 仅 API；最小权限 Supabase 会话连接，不是业务数据库连接 |
+| SONGDANCE_AUTH_SESSION_SCHEMA | 仅 API；`auth`（兼容默认）或 `songdance_auth`（私有视图），不接受任意 schema |
 | SESSION_MAX_AGE / SESSION_IDLE（完整键名见模板） | 仅 API；与 provider 策略一致 |
 | SONGDANCE_REDIS_URL / SONGDANCE_QUOTA_NAMESPACE | API 沿用现有 Redis，隔离环境命名空间 |
 
@@ -63,14 +65,14 @@ pnpm test:auth:ui
 
 账户摘要只计当前权益预占周期中的任务，重试按 job 合并，失败/取消单独标明；24 小时清理不删除摘要与额度记录。已认领游客任务不转入 Free/Pro 周期。游客长期防滥用摘要与账务保留政策须在生产隐私审查中确定，当前不自动清除这些防重复记录。
 
-## 6. SongDance 账户删除（本地实现）
+## 6. Notavue 账户删除（本地实现）
 
 迁移 013 新增删除申请和逐订阅核验记录。`SONGDANCE_ACCOUNT_DELETION_ENABLED=false` 默认关闭，启用要求 auth/usage/reliable queue 一起开启。账户页面按服务端开关展示删除确认；`DELETE /me` 要求本站 Origin、Bearer 和 JSON `{"confirmation":"DELETE"}`，按本人账户幂等保存。近期确认以已验签 `session_id` 对应的 Supabase `auth.sessions.created_at` 为准，最近 10 分钟内的新登录会话可申请；JWT 刷新时间和浏览器时间不能替代。现有只读身份连接已经具备该列权限，无需增加管理员凭据。
 
 运行独立 `python -m app.jobs.account_deletion --loop`，每 15 秒处理持久申请。先核对未决 checkout 和完整顾客订阅列表，所有订阅必须与该用户的合法 Test 绑定一致；逐一取消并 GET 确认停止未来续费。未核实的付款、订阅或环境转重试/审查，邮箱及账户暂保留。核验通过后持久切换 cleanup 并停用业务访问，下一批清理临时任务、源文件/导出及邮箱。清理失败保留终态栅栏与额度释放，可继续恢复；不会复活已清理账户。
 
-申请后暂停新任务、重试、认领与购买；进度可通过已验证原身份的 `GET /me`、`GET /me/deletion` 查询。尚有退款/其他必要账务记录不等于自动退款，账号删除不返还已经消费额度。必要身份映射、交易、用量、删除审计继续保留，避免重新登录或换邮箱重获额度。此流程停用 SongDance 业务账户，不删除 Google 账户，也不物理删除 Supabase 用户。生产保留期限及最终匿名化规则仍待运营确认。
+申请后暂停新任务、重试、认领与购买；进度可通过已验证原身份的 `GET /me`、`GET /me/deletion` 查询。尚有退款/其他必要账务记录不等于自动退款，账号删除不返还已经消费额度。必要身份映射、交易、用量、删除审计继续保留，避免重新登录或换邮箱重获额度。此流程停用 Notavue 业务账户，不删除 Google 账户，也不物理删除 Supabase 用户。生产保留期限及最终匿名化规则仍待运营确认。
 
 请求结果未知时先 GET 查进度，前端不自动重复删除请求。8 次连续故障后转 review，成功批次不消耗故障预算；排除原因后本人可重新登录并确认，或管理员用 `python -m app.jobs.account_deletion --once --replay-id=LOCAL_ID` 继续原申请，累计 attempts 保留并重置连续故障预算。参数使用等号兼容前导短横线。关闭新申请开关后继续运行兼容 Worker 排空，不降级删除历史。
 
-取消完成到清理之间的平台外部重新激活或迟到绑定，收到并核实状态后会重新进入 billing，不恢复业务访问。供应商取消/订阅枚举没有本地数据库事务能力，真实 Test 仍须核验竞态、列表字段及取消后状态。Supabase/Google/邮件的真实重新登录和后台撤销也尚未配置验证。
+取消完成到清理之间的平台外部重新激活或迟到绑定，收到并核实状态后会重新进入 billing，不恢复业务访问。供应商取消/订阅枚举没有本地数据库事务能力，真实 Test 仍须核验竞态、列表字段及取消后状态。Google/邮件基础真实登录与退出撤销已验证；跨设备重新登录、后台撤销及完整生产策略继续待验。

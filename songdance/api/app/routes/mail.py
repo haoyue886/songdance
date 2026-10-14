@@ -7,6 +7,7 @@ from sqlalchemy.exc import SQLAlchemyError
 from starlette.concurrency import run_in_threadpool
 from starlette.responses import JSONResponse
 
+from app.observability import log_event
 from app.services.mail_contract import (
     MailError,
     event_key,
@@ -69,6 +70,8 @@ async def handle(request: Request, *, resend: bool) -> JSONResponse:
         error = MailError("MAIL_TEMPORARILY_UNAVAILABLE", 503, 2)
     except MailError as failure:
         error = failure
+    log_event("mail_hook_rejected", provider="resend" if resend else "supabase",
+              error_code=error.code, status_code=error.status)
     headers = {"Cache-Control": "no-store"}
     if error.retry_after is not None:
         headers["Retry-After"] = str(error.retry_after)

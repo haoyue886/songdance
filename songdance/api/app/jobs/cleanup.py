@@ -125,7 +125,7 @@ def _release_quota(job_quota: JobQuota | None, settings: Settings, job_id: str) 
 
 
 def main() -> None:
-    parser = argparse.ArgumentParser(description="Delete expired SongDance jobs and objects")
+    parser = argparse.ArgumentParser(description="Delete expired Notavue jobs and objects")
     parser.add_argument("--loop", action="store_true", help="run continuously")
     args = parser.parse_args()
     configure_logging()

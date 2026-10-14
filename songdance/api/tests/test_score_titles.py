@@ -48,7 +48,7 @@ def test_legacy_job_without_filename_uses_fallback_score_title(
 
     score_path = storage_path / f"jobs/{job_id}/artifacts/attempt-1/score.musicxml"
     document = score_path.read_text(encoding="utf-8")
-    assert "<movement-title>SongDance Transcription</movement-title>" in document
+    assert "<movement-title>Notavue Transcription</movement-title>" in document
 
 
 def test_extension_only_filename_completes_with_fallback_score_title(
@@ -71,7 +71,7 @@ def test_extension_only_filename_completes_with_fallback_score_title(
 
     score_path = storage_path / f"jobs/{job_id}/artifacts/attempt-1/score.musicxml"
     document = score_path.read_text(encoding="utf-8")
-    assert "<movement-title>SongDance Transcription</movement-title>" in document
+    assert "<movement-title>Notavue Transcription</movement-title>" in document
 
 
 @pytest.mark.parametrize(
@@ -79,9 +79,9 @@ def test_extension_only_filename_completes_with_fallback_score_title(
     [
         ("piece.wav", "piece"),
         ("archive.take.m4a", "archive.take"),
-        (".wav", "SongDance Transcription"),
-        (" .wav", "SongDance Transcription"),
-        (None, "SongDance Transcription"),
+        (".wav", "Notavue Transcription"),
+        (" .wav", "Notavue Transcription"),
+        (None, "Notavue Transcription"),
     ],
 )
 def test_score_title_uses_filename_stem_with_legacy_fallback(

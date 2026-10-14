@@ -31,6 +31,12 @@ def test_valid_shape_is_not_a_production_or_provider_readiness_claim() -> None:
     assert result["database_permissions_verified"] is False
 
 
+@pytest.mark.parametrize("schema", ["auth", "songdance_auth"])
+def test_supported_session_schema_is_accepted(schema: str) -> None:
+    values = {**valid_values(), "SONGDANCE_AUTH_SESSION_SCHEMA": schema}
+    assert check(values)["configuration_format_valid"] is True
+
+
 @pytest.mark.parametrize("secret", ["", "short", "a" * 129, "密" * 40])
 def test_enabled_auth_requires_transport_safe_bridge_secret(secret: str) -> None:
     values = {
@@ -50,6 +56,7 @@ def test_enabled_auth_requires_transport_safe_bridge_secret(secret: str) -> None
     "field,value,code",
     [
         ("SONGDANCE_ENVIRONMENT", "typo", "INVALID_ENVIRONMENT"),
+        ("SONGDANCE_AUTH_SESSION_SCHEMA", "public", "EXPECTED_SESSION_SCHEMA"),
         ("NEXT_PUBLIC_SITE_URL", "http://songdance.example", "INVALID_ORIGIN"),
         ("NEXT_PUBLIC_SITE_URL", "https://evil.example/path", "INVALID_ORIGIN"),
         ("SONGDANCE_SUPABASE_URL", "https://user:secret@host.example", "INVALID_ORIGIN"),

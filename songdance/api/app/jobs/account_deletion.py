@@ -17,7 +17,7 @@ from app.settings import get_settings
 
 
 def main() -> None:
-    parser = argparse.ArgumentParser(description="Process SongDance account deletion requests")
+    parser = argparse.ArgumentParser(description="Process Notavue account deletion requests")
     mode = parser.add_mutually_exclusive_group()
     mode.add_argument("--once", action="store_true")
     mode.add_argument("--loop", action="store_true")

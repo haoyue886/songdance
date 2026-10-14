@@ -12,7 +12,7 @@ export async function createScorePdf(
   const pages = [...scoreContainer.querySelectorAll("svg")];
   if (pages.length === 0) throw new Error("五线谱尚未完成渲染。");
   const pdf = new jsPDF({ unit: "pt", format: "a4", orientation: "portrait", compress: true });
-  pdf.setProperties({ title, creator: "SongDance" });
+  pdf.setProperties({ title, creator: "Notavue" });
 
   for (const [index, svg] of pages.entries()) {
     if (index > 0) pdf.addPage("a4", "portrait");

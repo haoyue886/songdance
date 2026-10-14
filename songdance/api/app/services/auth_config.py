@@ -41,6 +41,8 @@ def check(values: dict[str, str]) -> dict[str, object]:
     if environment not in {"development", "test", "production"}:
         reject("SONGDANCE_ENVIRONMENT", "INVALID_ENVIRONMENT")
     production = environment == "production"
+    if values.get("SONGDANCE_AUTH_SESSION_SCHEMA", "auth") not in {"auth", "songdance_auth"}:
+        reject("SONGDANCE_AUTH_SESSION_SCHEMA", "EXPECTED_SESSION_SCHEMA")
     if values.get("SONGDANCE_AUTH_ENABLED") == "true":
         bridge = values.get("SONGDANCE_AUTH_BRIDGE_SECRET", "")
         if not re.fullmatch(r"[A-Za-z0-9_-]{32,128}", bridge):

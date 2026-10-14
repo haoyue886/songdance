@@ -1,6 +1,6 @@
-# SongDance Web
+# Notavue Web
 
-Next.js frontend for SongDance. Use pnpm; other package managers are not supported by this repository.
+Next.js frontend for Notavue. Use pnpm; other package managers are not supported by this repository.
 
 ## Run locally
 

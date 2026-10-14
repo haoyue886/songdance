@@ -8,6 +8,6 @@ Attribution 3.0 Unported license.
 - Compressed sample mirror: https://github.com/Tonejs/audio/tree/master/salamander
 - License: https://creativecommons.org/licenses/by/3.0/
 
-The samples are used by SongDance for local, in-browser transcription
+The samples are used by Notavue for local, in-browser transcription
 playback. Tone.js pitch-shifts the nearest sampled key for notes between the
 included sample points.

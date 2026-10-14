@@ -27,7 +27,7 @@ describe("support contact", () => {
     vi.mocked(getBillingConfig).mockResolvedValue({ ...CONFIG, support_email: "support+test@example.com" });
     render(<SupportPanel mode="contact" />);
     const link = await screen.findByRole("link", { name: "邮件联系支持" });
-    expect(link).toHaveAttribute("href", `mailto:support%2Btest@example.com?subject=${encodeURIComponent("SongDance 支持咨询")}`);
+    expect(link).toHaveAttribute("href", `mailto:support%2Btest@example.com?subject=${encodeURIComponent("Notavue 支持咨询")}`);
     expect(screen.getByText("support+test@example.com")).toBeInTheDocument();
   });
 

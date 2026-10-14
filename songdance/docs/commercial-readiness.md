@@ -102,3 +102,10 @@ chmod 600 ../.env.commercial-test.local
 14:35 更新：旧委派等待、门槛后 DNS/记录与 Cloudflare 接管状态已复核。用户确认后已启用新签名，两台权威 DNSKEY/RRSIG 可见；用实际 KSK 复算 DS 2371 / 13 / 2 摘要与 UI 匹配后，在 Spaceship 保存唯一一条新 DS。父区暂仍无 DS、公共 A 正常但无 AD，完整验证链尚未恢复；原只读跟进继续核对。Resend、客服与真实登录支付验收继续待办。
 
 14:50 最终更新：四个父区的新 DS 一致，两家公共 DS/A 均 NOERROR + AD、A 为原两个 IP；Cloudflare 控制台显示 DNSSEC Success。本次受测迁移范围已完成，按用户约定将临时自动跟进 `notavue-dns` 设为 PAUSED。注册商仍为 Spaceship、Cloudflare Free；Resend Verified、真实邮件、客服及登录支付联调仍未签收，Phase 38/39 和生产发布状态不因此完成。
+
+
+## 9. 2026-10-14 Google 测试 OAuth 与应用闭环
+
+Notavue Auth Test / Notavue Web Test 已在用户授权后创建，OAuth 应用为 Notavue、External/Testing、三项基本身份 scope 和单一测试用户；客户端凭据仅配置到 Supabase songdance-test Google provider，未开通计费服务。真实 Chrome 已完成 Google PKCE、账户页及退出，同一会话退出后从数据库移除并被应用撤销查询拒绝。本机测试服务现已关闭，Google provider 保留供下一阶段使用。
+
+完整配置/事实与未验项见 [Google 联调记录](reviews/2026-10-14-google-oauth-integration.md)。正式 Google 品牌呈现、HTTPS Cookie、完整 BA、Creem Test、容量/法律/音乐质量验收继续待补；不因本次 Google 测试完成而开放生产。

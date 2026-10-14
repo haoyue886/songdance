@@ -32,6 +32,9 @@ class VerifiedIdentity:
 class SupabaseVerifier:
     def __init__(self, settings: Settings) -> None:
         self.settings = settings
+        self.session_schema = {"auth": "auth", "songdance_auth": "songdance_auth"}[
+            settings.auth_session_schema
+        ]
         self.issuer = settings.supabase_url.rstrip("/") + "/auth/v1"
         self.jwks = jwt.PyJWKClient(
             self.issuer + "/.well-known/jwks.json",
@@ -82,7 +85,8 @@ class SupabaseVerifier:
                 connection.execute(text("SET LOCAL statement_timeout = 3000"))
                 stamp = connection.scalar(
                     text(
-                        "SELECT created_at FROM auth.sessions WHERE id = CAST(:sid AS uuid) "
+                        f"SELECT created_at FROM {self.session_schema}.sessions "
+                        "WHERE id = CAST(:sid AS uuid) "
                         "AND user_id = CAST(:uid AS uuid)"
                     ),
                     {"sid": identity.session_id, "uid": identity.subject},
@@ -102,7 +106,8 @@ class SupabaseVerifier:
                         text(
                             "SELECT s.created_at, s.refreshed_at, s.not_after, "
                             "u.email_confirmed_at, u.banned_until, u.deleted_at "
-                            "FROM auth.sessions s JOIN auth.users u ON u.id = s.user_id "
+                            f"FROM {self.session_schema}.sessions s "
+                            f"JOIN {self.session_schema}.users u ON u.id = s.user_id "
                             "WHERE s.id = CAST(:sid AS uuid) AND s.user_id = CAST(:uid AS uuid)"
                         ),
                         {"sid": session_id, "uid": subject},

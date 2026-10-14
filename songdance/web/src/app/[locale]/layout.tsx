@@ -22,7 +22,7 @@ export async function generateMetadata({ params }: Omit<LayoutProps, "children">
   const messages = getAppMessages(locale);
   const isEnglish = locale === "en";
   const description = isEnglish ? SITE_DESCRIPTION : messages.home.description;
-  const title = `${messages.home.title} | SongDance`;
+  const title = `${messages.home.title} | Notavue`;
   const openGraphLocales: Record<string, string> = {
     en: "en_US",
     zh: "zh_CN",
@@ -35,7 +35,7 @@ export async function generateMetadata({ params }: Omit<LayoutProps, "children">
   };
   return {
     metadataBase: SITE_URL,
-    title: { default: title, template: "%s | SongDance" },
+    title: { default: title, template: "%s | Notavue" },
     description,
     applicationName: SITE_NAME,
     keywords: [messages.home.title, "MIDI", "MusicXML", "piano transcription"],

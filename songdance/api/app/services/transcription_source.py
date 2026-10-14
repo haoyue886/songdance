@@ -37,4 +37,4 @@ def score_title(original_filename: str | None) -> str:
         title = "" if not path.suffix and original_filename.startswith(".") else path.stem.strip()
         if title and title not in {".", ".."}:
             return title
-    return "SongDance Transcription"
+    return "Notavue Transcription"

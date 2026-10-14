@@ -14,7 +14,7 @@ CALIBRATED_MODEL_THRESHOLDS = (0.5, 0.3)
 
 
 class Settings(BaseSettings):
-    app_name: str = "SongDance API"
+    app_name: str = "Notavue API"
     environment: Literal["development", "test", "production"] = "development"
     cors_origins: str = (
         "http://localhost:3000,http://localhost:3001,http://127.0.0.1:3000,http://127.0.0.1:3001"
@@ -70,6 +70,7 @@ class Settings(BaseSettings):
     supabase_url: str = ""
     supabase_publishable_key: SecretStr = SecretStr("")
     auth_session_database_url: SecretStr = SecretStr("")
+    auth_session_schema: Literal["auth", "songdance_auth"] = "auth"
     auth_bridge_secret: SecretStr = SecretStr("")
     auth_session_max_age_seconds: int = 0
     auth_session_idle_seconds: int = 0

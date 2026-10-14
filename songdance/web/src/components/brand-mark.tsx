@@ -5,7 +5,7 @@ type BrandMarkProps = {
 
 export function BrandMark({ compact = false, compactOnMobile = false }: BrandMarkProps) {
   return (
-    <span className="inline-flex items-center gap-2.5" aria-label="SongDance">
+    <span className="inline-flex items-center gap-2.5" aria-label="Notavue">
       <span className="grid size-9 place-items-center rounded-xl bg-[#147d70] text-white shadow-[0_8px_22px_rgba(20,125,112,0.22)]">
         <svg
           aria-hidden="true"
@@ -21,7 +21,7 @@ export function BrandMark({ compact = false, compactOnMobile = false }: BrandMar
       </span>
       {!compact && (
         <span className={`${compactOnMobile ? "hidden sm:inline" : ""} text-[1.05rem] font-bold tracking-[-0.025em]`}>
-          SongDance
+          Notavue
         </span>
       )}
     </span>

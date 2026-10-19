@@ -49,6 +49,29 @@ def test_config_matches_checkout_snapshot_without_exposing_provider_secrets(bill
     assert client.get("/billing/config").json()["checkout_enabled"] is False
 
 
+@pytest.mark.parametrize("path,method,headers,body,expected", [
+    ("/billing/me", "GET", {}, None, 401),
+    ("/billing/portal", "POST", {}, {}, 401),
+    ("/billing/checkout", "POST", {}, {}, 401),
+    ("/billing/portal", "POST", {
+        "Authorization": "Bearer bob", "Origin": "http://localhost:3000",
+    }, {}, 409),
+    ("/billing/portal", "POST", {
+        "Authorization": "Bearer bob", "Origin": "http://localhost:3000",
+    }, {"customer_id": "cust_alice"}, 422),
+    ("/billing/checkout", "POST", {
+        "Authorization": "Bearer bob", "Origin": "http://localhost:3000",
+        "Idempotency-Key": "private-error-test",
+    }, {"user_id": "alice"}, 422),
+])
+def test_private_billing_errors_are_never_cacheable(billing, path, method, headers, body, expected):
+    client, provider = billing
+    response = client.request(method, path, headers=headers, json=body)
+    assert response.status_code == expected
+    assert response.headers.get("cache-control") == "private, no-store"
+    assert provider.portal_calls == provider.create_calls == []
+
+
 def test_new_pending_checkout_does_not_inherit_old_paid_confirmation(billing):
     client, provider = billing
     pay(client, provider)

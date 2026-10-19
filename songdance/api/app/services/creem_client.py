@@ -18,6 +18,10 @@ class CreemError(Exception):
     """Safe to report without disclosing provider bodies or credentials."""
 
 
+class CreemCheckoutRejected(CreemError):
+    """The provider explicitly rejected checkout input before creating a session."""
+
+
 def validate_identifier(value: object) -> str:
     if not isinstance(value, str) or not re.fullmatch(r"[A-Za-z0-9_-]{1,200}", value):
         raise CreemError("Invalid payment identifier")
@@ -93,6 +97,10 @@ class CreemClient:
                     allow_redirects=False,
                     stream=True,
                 ) as response:
+                    if method == "POST" and path == "/checkouts" and response.status_code == 400:
+                        # Creem documents 400 as invalid checkout input. Keep the body private;
+                        # timeouts, other statuses and invalid success bodies remain uncertain.
+                        raise CreemCheckoutRejected("Checkout request was rejected")
                     if not 200 <= response.status_code < 300:
                         raise CreemError("Payment provider request failed")
                     body = bytearray()

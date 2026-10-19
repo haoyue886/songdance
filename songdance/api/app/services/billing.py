@@ -9,7 +9,7 @@ from sqlalchemy.orm import Session
 
 from app.models import BillingAccount, BillingSubscription, CheckoutSession, PaidPeriod, User
 from app.services.billing_plan import CURRENCY, MAX_CLIP_SECONDS, PAID_SECONDS, PRICE_MINOR
-from app.services.creem_client import CreemClient, validate_hosted_url
+from app.services.creem_client import CreemCheckoutRejected, CreemClient, validate_hosted_url
 from app.services.entitlements import lock_usage_user
 from app.settings import Settings
 
@@ -157,7 +157,10 @@ def create_checkout(
             )
         )
         if (
-            response.get("request_id") != checkout.id
+            # The synchronous create response may omit this optional field. Its
+            # provider ID still belongs to this request; GET/webhook binding
+            # continues to require the provider's stored request_id.
+            ("request_id" in response and response["request_id"] != checkout.id)
             or identifier(response.get("product")) != checkout.product_id
             or response.get("status") not in {"pending", "processing", "completed"}
         ):
@@ -171,12 +174,14 @@ def create_checkout(
             checkout.status = "pending"
             checkout.checkout_url = link
         session.commit()
-    except Exception:
+    except Exception as error:
         session.rollback()
         session.refresh(checkout, with_for_update=True)
         if checkout.status == "creating":
-            checkout.status = "uncertain" if post_started else "failed"
+            rejected = isinstance(error, CreemCheckoutRejected)
+            checkout.status = "uncertain" if post_started and not rejected else "failed"
             checkout.error_code = (
+                "CHECKOUT_REQUEST_REJECTED" if rejected else
                 "CHECKOUT_CONFIRMATION_REQUIRED" if post_started else "PRODUCT_VERIFICATION_FAILED"
             )
         session.commit()

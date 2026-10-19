@@ -9,6 +9,7 @@ from app.services.creem_client import (
     API_BASE,
     MAX_RESPONSE_BYTES,
     REQUEST_TIMEOUT,
+    CreemCheckoutRejected,
     CreemClient,
     CreemError,
     validate_hosted_url,
@@ -100,6 +101,25 @@ def test_checkout_payload(transport, customer):
     assert payload["units"] == 1
     assert "cancel_url" not in payload
     assert payload.get("customer") == ({"id": customer} if customer else None)
+
+
+@pytest.mark.parametrize("status", [400, 401, 403, 404, 409, 422, 429, 500, 503])
+def test_only_documented_invalid_checkout_input_is_definitely_rejected(transport, status):
+    transport.status = status
+    transport.body = b'{"message":"private-provider-body"}'
+    with pytest.raises(CreemError) as error:
+        client().create_checkout(product_id="prod_1", request_id="request_1",
+                                 success_url="http://localhost:3002/billing/return")
+    assert isinstance(error.value, CreemCheckoutRejected) == (status == 400)
+    assert "private-provider-body" not in str(error.value)
+    assert len(transport.calls) == 1 and transport.closed
+
+
+def test_non_checkout_bad_request_is_not_checkout_rejection(transport):
+    transport.status = 400
+    with pytest.raises(CreemError) as error:
+        client().cancel_subscription("sub_1")
+    assert not isinstance(error.value, CreemCheckoutRejected)
 
 
 def test_portal_contract(transport):

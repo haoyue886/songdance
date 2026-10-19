@@ -57,6 +57,6 @@ Google Auth Platform 应用名已保存为 Notavue；实际 Google 账户选择�
 
 ## 下一步
 
-进入 Creem Test：更新并核对 Notavue 对外商品名、测试凭据/回调，验证测试付款、额度到账、转谱与导出、取消及退款。Google 品牌/生产配置、完整邮件验收、法律政策、容量和专业音乐质量门槛保留在既有发布计划。
+后续 Creem Test 一笔付款、额度到账、转谱与导出、取消及退款已完成，见 [Creem 联调记录](2026-10-14-creem-test-integration.md)。该批为兼容 Creem 的返回 URL 校验，按用户授权将 Supabase Site URL 改为 localhost:3002，并增加 localhost 的精确 callback；本记录上文是 Google 批次当时的 127.0.0.1 事实。Google 品牌/生产配置、完整 MAIL/BA、法律政策、容量和专业音乐质量门槛保留在既有发布计划。
 
 官方依据：https://supabase.com/docs/guides/auth/social-login/auth-google （经 agent-reach 网页读取路径核对）。

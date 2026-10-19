@@ -49,7 +49,9 @@ class RequestObservabilityMiddleware(BaseHTTPMiddleware):
             response = await call_next(request)
             status_code = response.status_code
             response.headers["X-Request-ID"] = request_id
-            if request.url.path.startswith(("/auth/", "/jobs/")) or request.url.path == "/me":
+            if request.url.path.startswith(("/auth/", "/jobs/")) or request.url.path in {
+                "/me", "/billing/me", "/billing/checkout", "/billing/portal",
+            }:
                 response.headers["Cache-Control"] = "private, no-store"
             return response
         finally:

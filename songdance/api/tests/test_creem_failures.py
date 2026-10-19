@@ -8,7 +8,7 @@ from sqlalchemy import select
 
 from app.models import BillingWebhookEvent, CheckoutSession, PaidPeriod
 from app.services.billing_events import receive_event, reconcile_known
-from app.services.creem_client import CreemError
+from app.services.creem_client import CreemCheckoutRejected, CreemError
 from app.settings import Settings
 from tests.test_auth_ownership import auth_settings
 from tests.test_creem_billing import (
@@ -34,6 +34,82 @@ def test_product_lookup_failure_can_retry_without_duplicate_post(billing, monkey
     monkeypatch.setattr(provider, "get_product", original)
     assert checkout(client, key="recovery_key_12").json()["status"] == "pending"
     assert len(provider.create_calls) == 1
+
+
+def test_explicit_invalid_checkout_input_is_failed_and_requires_a_new_key(billing, monkeypatch):
+    client, provider = billing
+    original = provider.create_checkout
+    calls = []
+
+    def rejected(**payload):
+        calls.append(payload)
+        raise CreemCheckoutRejected("Checkout request was rejected")
+
+    monkeypatch.setattr(provider, "create_checkout", rejected)
+    response = checkout(client)
+    assert response.json()["status"] == "failed"
+    assert response.json()["checkout_url"] is None
+    assert checkout(client).json() == response.json()
+    assert len(calls) == 1
+    with client.app.state.session_factory() as session:
+        row = session.scalar(select(CheckoutSession))
+        assert row.error_code == "CHECKOUT_REQUEST_REJECTED" and row.provider_id is None
+        assert session.scalar(select(PaidPeriod)) is None
+    monkeypatch.setattr(provider, "create_checkout", original)
+    assert checkout(client, key="fixed_config_new_key").json()["status"] == "pending"
+    assert len(provider.create_calls) == 1
+
+
+def test_create_response_can_omit_request_id_but_binding_uses_retrieved_correlation(
+    billing, monkeypatch,
+):
+    client, provider = billing
+    original = provider.create_checkout
+
+    def without_optional_request_id(**payload):
+        result = original(**payload)
+        result.pop("request_id")
+        return result
+
+    monkeypatch.setattr(provider, "create_checkout", without_optional_request_id)
+    response = checkout(client)
+    assert response.json()["status"] == "pending"
+    assert checkout(client).json() == response.json()
+    assert len(provider.create_calls) == 1
+    with client.app.state.session_factory() as session:
+        row = session.scalar(select(CheckoutSession))
+        assert row.provider_id == "ch_test" and row.status == "pending"
+        assert session.scalar(select(PaidPeriod)) is None
+    provider.checkout["status"] = "completed"
+    assert event(client, "checkout.completed", "evt_optional_request_id",
+                 {"id": "ch_test", "mode": "test"}).status_code == 200
+    process(client, provider)
+    assert event(client, "subscription.paid", "evt_optional_paid").status_code == 200
+    process(client, provider)
+    with client.app.state.session_factory() as session:
+        assert session.scalar(select(CheckoutSession)).status == "completed"
+        assert session.scalar(select(PaidPeriod)).transaction_id == "tx_test"
+
+
+@pytest.mark.parametrize("correlation", ["different_intent", "", None, {}, []])
+def test_create_response_with_conflicting_correlation_stays_uncertain(
+    billing, monkeypatch, correlation,
+):
+    client, provider = billing
+    original = provider.create_checkout
+
+    def conflicting(**payload):
+        result = original(**payload)
+        result["request_id"] = correlation
+        return result
+
+    monkeypatch.setattr(provider, "create_checkout", conflicting)
+    assert checkout(client).json()["status"] == "uncertain"
+    assert checkout(client, key="another_key_123").json()["status"] == "uncertain"
+    assert len(provider.create_calls) == 1
+    with client.app.state.session_factory() as session:
+        assert session.scalar(select(CheckoutSession)).provider_id is None
+        assert session.scalar(select(PaidPeriod)) is None
 
 
 def test_expired_subscription_still_blocks_until_provider_cancels(billing):

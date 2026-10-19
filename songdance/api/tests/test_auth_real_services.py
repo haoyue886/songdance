@@ -8,6 +8,7 @@ import time
 from concurrent.futures import ThreadPoolExecutor
 from datetime import UTC, datetime
 from pathlib import Path
+from threading import Barrier
 from types import SimpleNamespace
 from uuid import uuid4
 
@@ -16,8 +17,10 @@ import pytest
 from fastapi.testclient import TestClient
 from pydantic import SecretStr
 from redis import Redis
+from sqlalchemy import event
 
 from app.main import create_app
+from app.models import TranscriptionJob
 from app.services.auth import SupabaseVerifier, VerifiedIdentity
 from app.services.auth_coordination import AuthCoordinator
 from app.services.quota import MemoryJobQuota
@@ -235,24 +238,63 @@ def test_real_postgres_claim_race_has_one_owner(postgres, tmp_path):
     app.state.auth_verifier = FakeVerifier({"alice": str(uuid4()), "bob": str(uuid4())})
     try:
         with TestClient(app) as client:
+            owners = {}
             for who in ("alice", "bob"):
-                assert (
-                    client.get("/me", headers={"Authorization": f"Bearer {who}"}).status_code == 200
-                )
-            job = create_job(client).json()
+                response = client.get("/me", headers={"Authorization": f"Bearer {who}"})
+                assert response.status_code == 200
+                owners[who] = response.json()["id"]
+            assert owners["alice"] != owners["bob"]
+            for order in (("alice", "bob"), ("bob", "alice"), ("alice", "bob")):
+                created = create_job(client)
+                assert created.status_code == 201
+                job = created.json()
+                path = f"/jobs/{job['id']}"
+                guest = {"X-Job-Access": job["guest_access_token"]}
+                barrier = Barrier(2)
+                reached = []
 
-            def claim(who):
-                return client.post(
-                    f"/jobs/{job['id']}/claim",
-                    headers={
-                        "Authorization": f"Bearer {who}",
-                        "X-Job-Access": job["guest_access_token"],
-                    },
-                ).status_code
+                def synchronize_job_locks(
+                    conn, cursor, statement, parameters, context, many,
+                    *, reached=reached, barrier=barrier,
+                ):
+                    if (
+                        statement.startswith("SELECT transcription_jobs.")
+                        and "FOR UPDATE" in statement
+                    ):
+                        reached.append(1)
+                        barrier.wait(timeout=15)
 
-            with ThreadPoolExecutor(max_workers=2) as pool:
-                outcomes = list(pool.map(claim, ["alice", "bob"]))
-            assert sorted(outcomes) == [200, 404]
+                def claim(who, *, path=path, guest=guest):
+                    with TestClient(app) as parallel:
+                        return parallel.post(path + "/claim", headers={
+                            **guest, "Authorization": f"Bearer {who}",
+                        }).status_code
+
+                event.listen(app.state.engine, "before_cursor_execute", synchronize_job_locks)
+                try:
+                    with ThreadPoolExecutor(max_workers=2) as pool:
+                        outcomes = list(pool.map(claim, order))
+                finally:
+                    event.remove(app.state.engine, "before_cursor_execute", synchronize_job_locks)
+                assert reached == [1, 1]
+                assert sorted(outcomes) == [200, 404]
+                winner, loser = order[outcomes.index(200)], order[outcomes.index(404)]
+                winner_headers = {"Authorization": f"Bearer {winner}"}
+                loser_headers = {"Authorization": f"Bearer {loser}"}
+                with app.state.session_factory() as session:
+                    stored = session.get(TranscriptionJob, job["id"])
+                    assert stored.owner_user_id == owners[winner]
+                    assert stored.guest_secret_hash is None
+                    assert stored.attempt_count == 1 and stored.status == "queued"
+                    assert stored.source_asset is not None
+                assert client.get(path, headers=winner_headers).status_code == 200
+                assert client.get(path, headers=loser_headers).status_code == 404
+                assert client.get(path, headers=guest).status_code == 404
+                assert client.post(path + "/claim", headers={
+                    **guest, **loser_headers,
+                }).status_code == 404
+                assert client.post(path + "/claim", headers=winner_headers).status_code == 200
+                assert app.state.storage.exists(f"jobs/{job['id']}/source.wav")
     finally:
         app.state.engine.dispose()
         original.engine.dispose()

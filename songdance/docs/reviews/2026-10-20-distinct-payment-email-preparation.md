@@ -1,8 +1,8 @@
-# 2026-10-20 不同付款客户的真实隔离验收与退款受阻
+# 2026-10-20 不同付款客户的真实隔离验收与退款收尾
 
-**指定双客户账单/Portal矩阵通过，真实全额退款闭环未完成。** 原Google付款客户与本轮邮箱账户的新付款客户ID不同；两身份各6条隔离请求、各1次本人Portal共14个编号结果符合预期，Portal前后财务快照未变。本轮Test实付USD11.78，首次退款因余额不足失败；用户先取消订阅，随后自行重试退款。最新权威GET为partialRefund、已退USD9.90、尚有USD1.88差额，新订阅仍canceled。本地已进入PARTIAL_REFUND_REVIEW，PaidPeriod保留active及1800/used0/reserved0，没有伪造全额退款或按比例扣量。后续处理见文末。
+**指定双客户账单/Portal矩阵、原交易全额退款及重复对账均通过，测试环境已收尾。** 原Google付款客户与本轮邮箱账户的新付款客户ID不同；两身份各6条隔离请求、各1次本人Portal共14个编号结果符合预期，Portal前后财务快照未变。本轮实付USD11.78，经历余额不足和部分退款后，用户已退回剩余USD1.88；最新权威GET确认refunded、累计退款1178分等于实付额，新订阅canceled。原后台已撤销本轮PaidPeriod并核实停费，重复对账处理取消0次、邮箱七财务表不变。历史失败/部分退款审查记录保留，完整BA-10/11/13仍不整体签收，后续见文末。
 
-所有本轮服务已停止，临时页面已移除，五端口实测关闭。原六份来源PG库、来源mail和Google七张财务表摘要未变。BA-11/13不整体勾选，两个同时active客户、完整付费删除和本轮真实退款/repeat继续待验。
+所有本轮服务已停止，临时页面已移除，五端口实测关闭。原六份来源PG库、来源mail和Google七张财务表摘要未变。BA-10/11/13不整体勾选，两个同时active客户、完整真实付费删除和本次退款后的新UI/HTTP准入复验继续待验。
 
 ## 授权、身份与隔离
 
@@ -52,13 +52,13 @@ Portal后及补矩阵后两次只读integrity确认：六来源库/来源mail/Go
 
 用户单独取消该新订阅并确认停止续费，后续GET确认status=canceled、future_renewal_stopped=true，交易仍paid、未退款。已独立复审的stopped分支仅用供应商GET同步本轮新库：PaidPeriod active、额度1800/0/0保持、subscription canceled，未运行process_cancellations或真实refund/repeat，无供应商退款/取消POST。取消不撤销已付款周期符合既定合同；没有为了通过验收手改revoked或清除交易。
 
-停服前integrity-stopped.json再次确认六来源库、来源mail及Google七财务表不变。本轮身份、已付记录和独立客户绑定保留；真实全额退款、退款后revoked/准入和repeat验收仍受阻，不能用4项离线回归替代。私密refund-blocker.json及两份refund-blocked-status时间戳报告保留错误和前后状态。本地已准备未发送的 `creem-support-draft.zh.md`，由用户自行提交Creem官方支持，询问Test余额/测试结算规则或环境恢复方法；不发送凭据、完整账本或.env。没有创建等待/监控自动化，也不承诺退款何时可用。
+停服前integrity-stopped.json再次确认六来源库、来源mail及Google七财务表不变。本轮身份、已付记录和独立客户绑定保留；当时真实全额退款、退款后revoked/准入和repeat验收仍受阻，不能用4项离线回归替代。私密refund-blocker.json及两份refund-blocked-status时间戳报告保留错误和前后状态。本地已准备未发送的 `creem-support-draft.zh.md`，由用户自行提交Creem官方支持，询问Test余额/测试结算规则或环境恢复方法；不发送凭据、完整账本或.env。没有创建等待/监控自动化，也不承诺退款何时可用。
 
 ## 最终收尾与后续
 
 用户确认两Notavue会话均退出并返回登录页、无痕窗口关闭，管理员会话保留。按PID及命令核对停止本轮API/Web/Redis和隔离PG，移除临时public验收页；mail/Tunnel此前已停止。3002/8002/8024/58781/58776五端口实测关闭，两份私密配置0600且全部10开关关闭，数据/次数门闩/证据保留。用户确认Supabase邮件Hook Disabled，Creem webhook全程保持关闭。最终检查存在一条Pydantic实例model_fields弃用警告，断言通过，没有更改生产依赖。
 
-当前交付仅签收两个不同真实客户下的指定summary/query/body/Portal矩阵及新订阅停费。完整BA-11/13、两同时active客户、真实付费删除、云端多实例等仍待验。本轮退款由供应商Test余额阻断，后续取得支持答复后再决定是否恢复只读核验或重新申请退款；不自动新建checkout/邮件/Portal，不修改原客户或旧账本。最终证据为final-shutdown-verification.json、shutdown.json及integrity-stopped.json。
+当前交付仅签收两个不同真实客户下的指定summary/query/body/Portal矩阵及新订阅停费。完整BA-11/13、两同时active客户、真实付费删除、云端多实例等仍待验。该次收尾时退款由供应商Test余额阻断，随后部分/全额退款的续接记录见下文；不自动新建checkout/邮件/Portal，不修改原客户或旧账本。最终证据为final-shutdown-verification.json、shutdown.json及integrity-stopped.json。
 
 最终三份文档及私密证据独立复审无可行动问题：逐条核对14编号各一次、两个退款受阻GET状态、stopped权益保留、provider审计20成功GET及仅3次成功写（1 checkout、2 Portal）、私密配置全部开关关闭/0600、PG pid及临时页不存在，来源mail SHA不变。审查者未启动服务、触网或访问PG，六来源库/Google摘要和五端口沿用主Agent实际执行证据，用户退出/第三方Hook禁用保留为用户反馈；真实退款/repeat无证据文件且未冒称通过。
 
@@ -71,3 +71,17 @@ Portal后及补矩阵后两次只读integrity确认：六来源库/来源mail/Go
 执行前独立审查发现临时脚本提交入队后失败无法恢复的P2，已按原财务指纹定位精确本轮事件，允许其既有pending/retry恢复或review补证，拒绝其他待处理事件；既有证据只读精确比较不覆盖。临时离线回归共7项通过（原付款/退款/重放/取消4项，加含税部分退款/外来客户拒绝/处理器GET失败后到期恢复3项），独立7项通过及复审无可行动问题。只对测试中的retry时间显式置为已到期，真实投影未提前重置退避或审查状态。生产代码未改；wrapper启动/停机失败路径本轮为静态审查，正常路径已实际执行。
 
 主Agent实际partial投影两次、邮箱七表重放比对及六来源PG库/来源mail/Google七表完整性核验通过；仅新副本增加部分退款审查事件，没有修改原库。wrapper在finally停止PG，Web/API/Redis/mail/Tunnel均未启动，五端口再次实测关闭，两配置0600且全部10开关False、临时页仍不存在，供应商写调用仍仅原1 checkout+2 Portal。此前paid未退的阻断记录与final-shutdown均保留，新增partial-refund-projection.json、partial-repeat-verification.json、integrity-partial-refund.json、partial-final-shutdown-verification.json；部分退款重放不冒称完整退款repeat通过。
+
+## 续接：累计全额退款、撤销与重复对账通过
+
+用户确认页面仅退USD9.90后，Agent请其只在同一Test交易明确显示剩余USD1.88时退回该差额；用户反馈累计USD11.78且页面为全额退款。受限GET再次核对原不可变交易/客户/订阅引用：status=refunded，amount_paid=refunded_amount=1178，currency=USD，新订阅canceled。未新建交易、改客户归属或操作Google旧记录，不将已退差额解释为经验证的税务规则。
+
+仅临时恢复固定本机隔离PG，供应商仍由ReadOnlyProvider拒绝全部非GET。原sync_checkout/sync_transaction将本轮PaidPeriod变为revoked，process_cancellations对早已取消的新订阅只GET核验、取消意图verified，首轮handled1；repeat再核对处理0次，邮箱七财务表逐字段摘要与首轮退款后快照完全相同。UsagePeriod的1800/0/0计量历史保留，权益可用性取revoked，不把计量上限冒充剩余可用额度；未再次打开浏览器/BFF或做新的真实登录，故本次不额外宣称退款后真实UI/HTTP准入复验。
+
+执行前fresh复审发现wrapper不允许阶段证据已落盘后恢复的P2，已按相同原引用/语义结果允许继续，原成功证据不覆盖。首次refund处理取消1次的历史记录可与恢复时0次结果比较，其余字段须完全一致；baseline、verification、完整性报告已有时也须精确相同。临时离线投影最终主Agent/独立各9项通过，包括partial→full→repeat保留旧partial review/attempts、停费verified及revoked；refund成功后repeat GET失败再恢复，首次handled1证据不变。复审无可行动问题，真实wrapper启动/停止异常路径仅静态审查，正常路径已实际成功。
+
+实际命令 `/tmp/notavue-distinct-refund-completion-20261020.py` 成功完成refund、repeat、邮箱七表比对及完整性检查；仅六份来源PG库读取，来源mail SHA、原Google七张财务表摘要均不变。新证据reconcile-refund.json、reconcile-repeat.json、email-financial-after-refund-before-repeat.json、refund-repeat-verification.json、integrity-refund.json及user-full-refund-confirmation.json保留在私密目录；旧余额不足/partial审查及相关报告不删除、不伪造已处理。
+
+wrapper finally已停止PG，Web/API/Redis/mail/Tunnel未启动，临时页不存在；五端口再次实测关闭，两配置0600且全部10功能开关False。受限provider审计累计48次成功GET，Agent侧写请求仍仅原1 checkout+2 Portal，没有新增退款/取消POST。用户在第三方页面完成的退款/取消与Agent API审计分开记录。支持工单草稿标记原阻断已解除、保留历史，Agent未发送消息，无需为原余额错误继续提交请求。完整BA-10/11/13、两同时active客户、真实付费删除及其余门槛保留；本轮不新建付款、Portal或验证码。最终证据full-refund-final-shutdown-verification.json，历史收尾报告保留。
+
+最终四文档及私密全退证据经独立复核一致；发现文首遗留“退款/repeat待验”的状态冲突已改为实际未覆盖的退款后新UI/HTTP准入。审查者只读核对48次GET/原3次API写、revoked/canceled、首轮1/repeat0及历史报告保留，未重测、触网或访问PG；实际端口/六库与Google摘要沿用主Agent执行证据。

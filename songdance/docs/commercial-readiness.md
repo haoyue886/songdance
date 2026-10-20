@@ -191,3 +191,7 @@ Notavue Pro Test 已完成一次无真实扣款的 Test 卡付款。德国测试
 ### 2026-10-20 退款重试的最新状态：部分退款人工对账
 
 用户自行重试后反馈退款成功，受限权威GET实际为partialRefund、实付1178分/已退990分，USD1.88差额及页面税额/处理中状态尚待用户核对，新订阅仍canceled。未宣称全额退款，未再次退款或新建付款。临时恢复仅隔离PG，原内部对账inbox持久review/PARTIAL_REFUND_REVIEW，active1800/0/0保留、不按比例扣量、不建全退取消补偿；相同指纹重放不复位审查，七财务表不变。主Agent及独立临时离线7项、复审通过；实际六源库/来源mail/Google七表仍未变，PG再停、五端口关闭，其他服务未启动。真实全额退款/repeat和完整BA仍未签收。[最新事实](reviews/2026-10-20-distinct-payment-email-preparation.md)。
+
+### 2026-10-20 剩余退款到账，全额退款与重放核验完成
+
+用户在同一原Test交易退回剩余USD1.88，原引用的受限GET确认累计退款1178分等于实付额、status=refunded、新订阅canceled。仅临时启动隔离PG，原后台将本轮PaidPeriod revoked、核验停费意图verified（首轮handled1、repeat0），邮箱七财务表退款后重复对账不变；六来源PG库、来源mail及Google七财务表摘要不变。旧部分退款review及失败证据保留，Agent未新增供应商写操作。临时离线9项及独立复审通过，正常真实GET投影和finally停机通过，五端口关闭/配置全部禁用。未重开站点或重新登录，不宣称新增退款后UI准入实测；完整BA-10/11/13等门槛继续保留。原退款阻断已解除，无需继续提交支持草稿。[累计退款及收尾](reviews/2026-10-20-distinct-payment-email-preparation.md)。

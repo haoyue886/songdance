@@ -183,3 +183,7 @@ Notavue Pro Test 已完成一次无真实扣款的 Test 卡付款。德国测试
 新隔离副本中邮箱应用身份使用Gmail付款，实际Creem新customer与Google原hello@付款客户不同；唯一Test实付USD11.78，原后台对账授1800秒/used0。两身份各6条summary/query/body拒绝及各1Portal共14编号通过，用户确认两matrix complete/passed和Portal客户邮箱；provider owner各成功一次，Portal前后邮箱七财务表不变。六来源PG库、来源mail、Google七财务表摘要未变。生产代码未改，临时受限provider9项与投影4项离线检查、独立复审无可行动问题；第三方UI由用户操作，状态/内容证据边界保留。
 
 用户全额退款被Creem Test“余额不足”拒绝，GET确认交易仍paid、未退款；随后用户单独取消新订阅，GET与本地投影确认canceled，PaidPeriod active及1800秒保留，取消不等于退款。真实refund/repeat未通过，未充值或新增付款，不勾完整BA-11/13、两同时active客户或真实付费删除。两应用会话用户确认退出、Hook禁用；本轮全部服务停止、临时页移除、五端口关闭。支持草稿仅本地保存、未发送；需用户向Creem核实Test余额规则后再推进退款。详见[验收与退款阻断记录](reviews/2026-10-20-distinct-payment-email-preparation.md)。
+
+### 2026-10-20 两期完整账本的本地付费删除恢复
+
+一次性PG/离线身份与支付下，两相邻非重叠PaidPeriod、旧期30秒consume、当前15秒预占及另一付费客户任务/账本验证通过。停费前失败与取消成功响应丢失均保留billing/retry及文件；恢复核实后先停用再清理，不重复取消，原期release一次、旧consume/付款/身份墓碑保留，同subject换邮箱不新建用户/Free周期；另一客户各表全字段及源字节不变。新增2项、PG组合20项、64普通回归/1opt-in skip、Ruff通过，fresh审查与独立PG2项通过。初次测试存储API误用及审查发现的他人任务快照缺口已修正，生产未改，临时测试资源由fixture清理。此为本地指定分支，不解除真实Test退款阻塞或签收真实付费删除/完整BA-13。[记录](reviews/2026-10-20-paid-history-deletion-local.md)。

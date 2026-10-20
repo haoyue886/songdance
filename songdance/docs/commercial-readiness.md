@@ -195,3 +195,7 @@ Notavue Pro Test 已完成一次无真实扣款的 Test 卡付款。德国测试
 ### 2026-10-20 剩余退款到账，全额退款与重放核验完成
 
 用户在同一原Test交易退回剩余USD1.88，原引用的受限GET确认累计退款1178分等于实付额、status=refunded、新订阅canceled。仅临时启动隔离PG，原后台将本轮PaidPeriod revoked、核验停费意图verified（首轮handled1、repeat0），邮箱七财务表退款后重复对账不变；六来源PG库、来源mail及Google七财务表摘要不变。旧部分退款review及失败证据保留，Agent未新增供应商写操作。临时离线9项及独立复审通过，正常真实GET投影和finally停机通过，五端口关闭/配置全部禁用。未重开站点或重新登录，不宣称新增退款后UI准入实测；完整BA-10/11/13等门槛继续保留。原退款阻断已解除，无需继续提交支持草稿。[累计退款及收尾](reviews/2026-10-20-distinct-payment-email-preparation.md)。
+
+### 2026-10-20 干净全退账户真实删除及OTP重登录通过
+
+新独立副本的hello@目标仅一份真实revoked付费期/canceled订阅，用户明确确认后原UI先403、重新认证46秒内202，专用GET-only Worker1/1/0先核停费并停用、再清目标1复制任务/6存储1tmp/邮箱。退出后真实新OTP登录仍指向同completed墓碑，没有新账户/身份/用量周期/任务，completed精确快照不变；保护Google14表/6文件、目标8身份财务表及全部账单事件、原七库/来源mail不变。目标复制夹具无reservation，仅验证空流水保留，不冒称音乐或真实consume/release。77相关回归、18临时边界检查与fresh专项/证据审查通过，生产未改。验证码失败/过频后额外授权总4次、各独立门闩及2/h等待保留，未提额/重置。最终四次授权全部用完，用户确认Hook Disabled/退出，全部本轮服务与五端口关闭、配置禁用；无新付款/Portal或供应商身份删除。仅已退款/已取消分支，active停费及完整多周期/BA-13仍待验。[完整记录](reviews/2026-10-20-refunded-account-deletion-preparation.md)。

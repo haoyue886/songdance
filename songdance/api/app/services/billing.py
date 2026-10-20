@@ -13,6 +13,8 @@ from app.services.creem_client import CreemCheckoutRejected, CreemClient, valida
 from app.services.entitlements import lock_usage_user
 from app.settings import Settings
 
+CUSTOMER_BINDING_CONFLICT = "CUSTOMER_BINDING_CONFLICT"
+
 
 class BillingMismatch(ValueError):
     """Provider facts conflict with the server's stored commercial contract."""
@@ -71,11 +73,17 @@ def account_for(session: Session, user_id: str) -> BillingAccount:
 
 
 def checkout_response(checkout: CheckoutSession) -> dict[str, object]:
+    review = checkout.error_code == CUSTOMER_BINDING_CONFLICT
     return {
         "id": checkout.id,
         "status": checkout.status,
-        "checkout_url": checkout.checkout_url if checkout.status == "pending" else None,
-        "sync_state": "payment_confirming" if checkout.status != "expired" else "expired",
+        "checkout_url": (
+            checkout.checkout_url if checkout.status == "pending" and not review else None
+        ),
+        "sync_state": (
+            "review_required" if review else
+            "payment_confirming" if checkout.status != "expired" else "expired"
+        ),
     }
 
 
@@ -170,7 +178,10 @@ def create_checkout(
         if checkout.provider_id not in {None, response["id"]}:
             raise BillingMismatch("checkout_identity_conflict")
         checkout.provider_id = response["id"]
-        if checkout.status not in {"completed", "expired"}:
+        if (
+            checkout.status not in {"completed", "expired"}
+            and checkout.error_code != CUSTOMER_BINDING_CONFLICT
+        ):
             checkout.status = "pending"
             checkout.checkout_url = link
         session.commit()

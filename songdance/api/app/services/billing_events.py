@@ -12,6 +12,7 @@ from sqlalchemy.exc import IntegrityError
 from sqlalchemy.orm import Session, sessionmaker
 
 from app.models import (
+    BillingAccount,
     BillingSubscription,
     BillingWebhookEvent,
     CheckoutSession,
@@ -19,6 +20,7 @@ from app.models import (
 )
 from app.observability import log_event
 from app.services.billing import (
+    CUSTOMER_BINDING_CONFLICT,
     BillingMismatch,
     account_for,
     check_product,
@@ -107,6 +109,32 @@ def transaction_time(value: object) -> datetime:
     return datetime.fromtimestamp(value / 1000, UTC)
 
 
+def _bind_customer(session: Session, account: BillingAccount, customer_id: str) -> bool:
+    """Claim the unique customer without aborting the enclosing event transaction."""
+    def other_owner() -> bool:
+        return session.scalar(
+            select(BillingAccount.id).where(
+                BillingAccount.environment == "test",
+                BillingAccount.customer_id == customer_id,
+                BillingAccount.user_id != account.user_id,
+            )
+        ) is not None
+
+    if account.customer_id not in {None, customer_id} or other_owner():
+        return False
+    try:
+        # Different users hold different admission locks. The unique index is
+        # the authority if both observe an unbound customer simultaneously.
+        with session.begin_nested():
+            account.customer_id = customer_id
+            session.flush([account])
+    except IntegrityError:
+        if not other_owner():
+            raise
+        return False
+    return True
+
+
 def sync_checkout(
     session: Session, provider: CreemClient, provider_id: str
 ) -> BillingSubscription | None:
@@ -126,6 +154,10 @@ def sync_checkout(
     ):
         raise BillingMismatch("checkout_contract_mismatch")
     local.provider_id = provider_id
+    # A verified conflict is sticky until explicit review, including after a
+    # refund/expiry. Account deletion separately checks this durable marker.
+    if local.error_code == CUSTOMER_BINDING_CONFLICT:
+        return None
     if remote.get("status") == "expired":
         if local.status != "completed":
             local.status = "expired"
@@ -134,9 +166,19 @@ def sync_checkout(
         return None
     customer_id = identifier(remote.get("customer"))
     account = account_for(session, local.user_id)
-    if account.customer_id not in {None, customer_id}:
-        raise BillingMismatch("customer_binding_conflict")
-    account.customer_id = customer_id
+    if not _bind_customer(session, account, customer_id):
+        account.blocked = True
+        from app.services.account_deletion_billing import note_customer_binding_conflict
+
+        note_customer_binding_conflict(session, local.user_id)
+        # A historical terminal checkout may coexist with a newer open intent.
+        # Reopening it would violate uq_checkout_open and roll back the review.
+        if local.status in {"creating", "pending", "uncertain"}:
+            local.status = "uncertain"
+        local.error_code = CUSTOMER_BINDING_CONFLICT
+        local.checkout_url = None
+        session.flush()
+        return None
     sub_id = identifier(remote.get("subscription"))
     sub = test_object(provider.get_subscription(sub_id))
     if (
@@ -329,6 +371,17 @@ def apply_event(session: Session, event: BillingWebhookEvent, provider: CreemCli
     kind = event.event_type
     if kind == "checkout.completed":
         sync_checkout(session, provider, refs["object_id"])
+        conflict = session.scalar(
+            select(CheckoutSession.id).where(
+                CheckoutSession.environment == "test",
+                CheckoutSession.provider_id == refs["object_id"],
+                CheckoutSession.error_code == CUSTOMER_BINDING_CONFLICT,
+            )
+        )
+        if conflict:
+            event.status = "review"
+            event.error_code = CUSTOMER_BINDING_CONFLICT
+            return
     elif kind in {
         "subscription.paid",
         "subscription.active",

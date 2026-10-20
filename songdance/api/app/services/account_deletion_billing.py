@@ -14,7 +14,12 @@ from app.models import (
     CheckoutSession,
     PaidPeriod,
 )
-from app.services.billing import BillingMismatch, identifier, test_object
+from app.services.billing import (
+    CUSTOMER_BINDING_CONFLICT,
+    BillingMismatch,
+    identifier,
+    test_object,
+)
 from app.services.billing_events import checked_subscription, iso_time, sync_checkout
 from app.services.billing_reconciliation import _pagination
 from app.services.creem_client import CreemClient
@@ -24,6 +29,17 @@ from app.services.usage import _as_utc
 def verify_stopped_billing(
     session: Session, deletion: AccountDeletion, provider: CreemClient | None
 ) -> None:
+    # Terminal historical checkouts can still carry unresolved ownership
+    # conflicts; their financial obligations must survive account cleanup.
+    if session.scalar(
+        select(CheckoutSession.id)
+        .where(
+            CheckoutSession.user_id == deletion.user_id,
+            CheckoutSession.error_code == CUSTOMER_BINDING_CONFLICT,
+        )
+        .limit(1)
+    ):
+        raise BillingMismatch("DELETION_CUSTOMER_CONFLICT")
     checkouts = session.scalars(
         select(CheckoutSession).where(
             CheckoutSession.user_id == deletion.user_id,
@@ -134,6 +150,17 @@ def note_subscription_change(
         deletion.phase, deletion.status = "billing", "pending"
         deletion.completed_at = None
         deletion.error_code = "DELETION_NEW_BILLING"
+        deletion.next_attempt_at = datetime.now(UTC)
+
+
+def note_customer_binding_conflict(session: Session, user_id: str) -> None:
+    deletion = session.scalar(select(AccountDeletion).where(AccountDeletion.user_id == user_id))
+    if deletion is None:
+        return
+    if deletion.phase == "cleanup" or deletion.status == "completed":
+        deletion.phase, deletion.status = "billing", "review"
+        deletion.error_code = "DELETION_CUSTOMER_CONFLICT"
+        deletion.completed_at = None
         deletion.next_attempt_at = datetime.now(UTC)
 
 

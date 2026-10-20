@@ -173,3 +173,7 @@ Notavue Pro Test 已完成一次无真实扣款的 Test 卡付款。德国测试
 ## 19. 2026-10-19 认领与删除竞争本地集成
 
 两个app/独立engine以本机签名JWT、原验签/私有会话SQL验证两种同user操作顺序，pg_blocking_pids确认实际锁等待。认领先行200→删除202，任务纳入Worker清理；删除先行202→认领409，未归属guest保留。两个app的后续门禁、两批停用/清理、必要身份墓碑与他人源文件保持、重复Worker handled0通过。新增2项、删除PG组合16项、67普通回归及Ruff通过；fresh独立审查无问题、独立PG2项通过。仅合成无账单账户，测试资源已清理，生产未改；真实active停费、多进程删除竞争、付费消费/退款与完整BA-11/13仍待验。[记录](reviews/2026-10-19-claim-account-deletion-race.md)。
+
+### 2026-10-20 双客户补验受阻与客户归属冲突修复
+
+唯一新授权USD9.90 Creem Test付款返回Google既有customer，无法建立第二份独立客户，真实双付费客户验收未通过，两份Portal均未调用。唯一新交易已全额模拟退款、新订阅canceled，未改原Google绑定，原五库与Google七张财务表逐字段摘要不变。现场发现冲突事务回滚使用户永久payment_confirming，已修复为持久review_required/blocked且不串绑、不授额、不许重购；补齐历史终态与新pending共存、PG并发唯一绑定、cleanup/completed删除单迟到冲突重开billing/review门禁。主Agent171 passed/1 skipped、PG聚焦12 passed与Ruff通过，fresh独立复审无可行动问题；真实隔离库及邮箱账户页待审状态复验通过。两会话退出、临时页面移除、五端口实测关闭、私密配置flags禁用，证据保留。未新增第二笔付款或绕过唯一约束；BA-11/13及两个同时active客户仍未整体签收。详见[冲突、退款及修复记录](reviews/2026-10-20-provider-customer-conflict.md)。

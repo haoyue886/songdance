@@ -203,3 +203,10 @@ Notavue Pro Test 已完成一次无真实扣款的 Test 卡付款。德国测试
 ### 2026-10-20 删除后保留账本的退款/争议修复
 
 准备active订阅删除时离线复现：用户已停用导致既有退款事件无法投影、持续retry。修复将存在用户行锁与新授期active要求分开；精确既有交易可继续核对并记录refunded/partialRefund/chargedBack，新账期仍禁止，身份和额度不复活。普通193项、PG组合20项和新PG专项7项及Ruff通过，独立普通193项审查通过；真实active停费删除尚未执行，不作为BA13签收。[修复记录](reviews/2026-10-20-deleted-account-refund.md)。
+
+
+### 2026-10-20 active订阅真实删除与停用账户全退通过
+
+Google目标在新隔离库完成唯一Test付款，新support@客户与旧两客户不同，实付USD11.78、授1800/0/0；首次商品GET失败意图保留。用户最终确认后原UI重新认证约36秒202，原Worker对新active订阅自动取消恰1次并GET核canceled，先提交停用、保留任务与精确6storage1tmp，再清理邮箱/任务/文件，重复处理0。保护账户14表/7文件与原8库/storage全摘要不变，身份及付款用量保留；取消时PaidPeriod仍active。
+
+用户随后对同一交易全额模拟退款1178分，受限GET确认refunded/1178==1178，原后台成功撤销inactive账户的既有PaidPeriod为revoked，不复活账户或授新期。退款补偿一次GET失败保留原retry，按退避到期只读恢复verified，repeat0及退款后完整快照不变，没有再次供应商取消。本批29离线项、独立脚本/恢复检查通过；用户页面确认删除完成/退出，所有测试服务和五端口关闭、临时页移除，10API开关及Web Auth关闭。OTP/Hook/Tunnel/Portal均未用，供应商POST仅1checkout+1自动取消，退款由用户操作；不整体签收BA-13或多周期/争议/竞态。[限定范围及失败证据](reviews/2026-10-20-active-account-deletion-preparation.md)。

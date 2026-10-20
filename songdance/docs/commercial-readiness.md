@@ -199,3 +199,7 @@ Notavue Pro Test 已完成一次无真实扣款的 Test 卡付款。德国测试
 ### 2026-10-20 干净全退账户真实删除及OTP重登录通过
 
 新独立副本的hello@目标仅一份真实revoked付费期/canceled订阅，用户明确确认后原UI先403、重新认证46秒内202，专用GET-only Worker1/1/0先核停费并停用、再清目标1复制任务/6存储1tmp/邮箱。退出后真实新OTP登录仍指向同completed墓碑，没有新账户/身份/用量周期/任务，completed精确快照不变；保护Google14表/6文件、目标8身份财务表及全部账单事件、原七库/来源mail不变。目标复制夹具无reservation，仅验证空流水保留，不冒称音乐或真实consume/release。77相关回归、18临时边界检查与fresh专项/证据审查通过，生产未改。验证码失败/过频后额外授权总4次、各独立门闩及2/h等待保留，未提额/重置。最终四次授权全部用完，用户确认Hook Disabled/退出，全部本轮服务与五端口关闭、配置禁用；无新付款/Portal或供应商身份删除。仅已退款/已取消分支，active停费及完整多周期/BA-13仍待验。[完整记录](reviews/2026-10-20-refunded-account-deletion-preparation.md)。
+
+### 2026-10-20 删除后保留账本的退款/争议修复
+
+准备active订阅删除时离线复现：用户已停用导致既有退款事件无法投影、持续retry。修复将存在用户行锁与新授期active要求分开；精确既有交易可继续核对并记录refunded/partialRefund/chargedBack，新账期仍禁止，身份和额度不复活。普通193项、PG组合20项和新PG专项7项及Ruff通过，独立普通193项审查通过；真实active停费删除尚未执行，不作为BA13签收。[修复记录](reviews/2026-10-20-deleted-account-refund.md)。

@@ -341,3 +341,42 @@ def test_database_enforces_transaction_and_period_uniqueness(session: Session) -
         with pytest.raises(IntegrityError):
             session.flush()
         session.rollback()
+
+
+def test_inactive_owner_can_reconcile_exact_history_but_never_receive_new_credit(
+    session: Session,
+) -> None:
+    paid = grant(session)
+    usage = session.get(UsagePeriod, paid.usage_period_id)
+    usage.consumed_units, usage.reserved_units = 30, 15
+    session.get(User, "alice").active = False
+    session.commit()
+    assert grant(session).id == paid.id
+    set_paid_period_status(
+        session, user_id="alice", environment="test", transaction_id="txn_1", status="revoked"
+    )
+    session.commit()
+    assert grant(session).status == "revoked"
+    assert (usage.consumed_units, usage.reserved_units) == (30, 15)
+    with pytest.raises(ValueError, match="active user"):
+        grant(
+            session, transaction_id="txn_new", period_start=END,
+            period_end=END + timedelta(days=30),
+        )
+    assert session.scalar(select(func.count()).select_from(UsagePeriod)) == 1
+    assert session.scalar(select(func.count()).select_from(PaidPeriod)) == 1
+    assert not session.get(User, "alice").active
+
+
+def test_inactive_owner_conflicting_history_remains_rejected(session: Session) -> None:
+    paid = grant(session)
+    session.get(User, "alice").active = False
+    session.commit()
+    with pytest.raises(PaidPeriodConflict):
+        grant(session, product_id="different_product")
+    assert paid.product_id == "prod_1" and paid.status == "active"
+    with pytest.raises(PaidPeriodConflict):
+        set_paid_period_status(
+            session, user_id="bob", environment="test", transaction_id="txn_1", status="revoked"
+        )
+    assert paid.status == "active"

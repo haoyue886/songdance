@@ -54,14 +54,18 @@ def _stored_utc(value: datetime) -> datetime:
     return value.replace(tzinfo=UTC) if value.tzinfo is None else value.astimezone(UTC)
 
 
-def _lock_user(session: Session, user_id: str) -> None:
+def _lock_user(session: Session, user_id: str) -> User:
     _text(user_id, "user_id", 36)
     if session.get_bind().dialect.name == "sqlite":
         # SQLite ignores FOR UPDATE. Acquire its writer lock before reading grants.
         session.execute(update(User).where(User.id == user_id).values(active=User.active))
-    user = session.scalar(select(User).where(User.id == user_id).with_for_update(key_share=True))
-    if user is None or not user.active:
-        raise ValueError("payment user must exist and be active")
+    user = session.scalar(
+        select(User).where(User.id == user_id).with_for_update(key_share=True)
+        .execution_options(populate_existing=True)
+    )
+    if user is None:
+        raise ValueError("payment user must exist")
+    return user
 
 
 def grant_paid_period(
@@ -97,7 +101,7 @@ def grant_paid_period(
     start, end = _utc(period_start), _utc(period_end)
     if end <= start:
         raise ValueError("period_end must be after period_start")
-    _lock_user(session, user_id)
+    user = _lock_user(session, user_id)
     if session.get_bind().dialect.name == "postgresql":
         # Two different users have different row locks. Serialize the first binding
         # of a provider subscription as well, including non-overlapping renewals.
@@ -131,6 +135,10 @@ def grant_paid_period(
         if not same:
             raise PaidPeriodConflict("transaction conflicts with its existing grant")
         return existing
+    # Erasure keeps payment tombstones for later refunds/disputes. An exact
+    # historical transaction may be reconciled, but never grant a new period.
+    if not user.active:
+        raise ValueError("new payment requires an active user")
     subscription_owner = session.scalar(
         select(PaidPeriod.user_id)
         .where(

@@ -177,3 +177,9 @@ Notavue Pro Test 已完成一次无真实扣款的 Test 卡付款。德国测试
 ### 2026-10-20 双客户补验受阻与客户归属冲突修复
 
 唯一新授权USD9.90 Creem Test付款返回Google既有customer，无法建立第二份独立客户，真实双付费客户验收未通过，两份Portal均未调用。唯一新交易已全额模拟退款、新订阅canceled，未改原Google绑定，原五库与Google七张财务表逐字段摘要不变。现场发现冲突事务回滚使用户永久payment_confirming，已修复为持久review_required/blocked且不串绑、不授额、不许重购；补齐历史终态与新pending共存、PG并发唯一绑定、cleanup/completed删除单迟到冲突重开billing/review门禁。主Agent171 passed/1 skipped、PG聚焦12 passed与Ruff通过，fresh独立复审无可行动问题；真实隔离库及邮箱账户页待审状态复验通过。两会话退出、临时页面移除、五端口实测关闭、私密配置flags禁用，证据保留。未新增第二笔付款或绕过唯一约束；BA-11/13及两个同时active客户仍未整体签收。详见[冲突、退款及修复记录](reviews/2026-10-20-provider-customer-conflict.md)。
+
+### 2026-10-20 两个不同真实付款客户的指定矩阵通过，退款受阻
+
+新隔离副本中邮箱应用身份使用Gmail付款，实际Creem新customer与Google原hello@付款客户不同；唯一Test实付USD11.78，原后台对账授1800秒/used0。两身份各6条summary/query/body拒绝及各1Portal共14编号通过，用户确认两matrix complete/passed和Portal客户邮箱；provider owner各成功一次，Portal前后邮箱七财务表不变。六来源PG库、来源mail、Google七财务表摘要未变。生产代码未改，临时受限provider9项与投影4项离线检查、独立复审无可行动问题；第三方UI由用户操作，状态/内容证据边界保留。
+
+用户全额退款被Creem Test“余额不足”拒绝，GET确认交易仍paid、未退款；随后用户单独取消新订阅，GET与本地投影确认canceled，PaidPeriod active及1800秒保留，取消不等于退款。真实refund/repeat未通过，未充值或新增付款，不勾完整BA-11/13、两同时active客户或真实付费删除。两应用会话用户确认退出、Hook禁用；本轮全部服务停止、临时页移除、五端口关闭。支持草稿仅本地保存、未发送；需用户向Creem核实Test余额规则后再推进退款。详见[验收与退款阻断记录](reviews/2026-10-20-distinct-payment-email-preparation.md)。

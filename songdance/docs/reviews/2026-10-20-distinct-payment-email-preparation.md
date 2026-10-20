@@ -1,6 +1,6 @@
 # 2026-10-20 不同付款客户的真实隔离验收与退款受阻
 
-**指定双客户账单/Portal矩阵通过，真实全额退款闭环未完成。** 原Google付款客户与本轮邮箱账户的新付款客户ID不同；两身份各6条隔离请求、各1次本人Portal共14个编号结果符合预期，Portal前后财务快照未变。本轮Test实付USD11.78，用户申请全额退款被Creem“余额不足”拒绝；用户随后单独取消，权威GET确认新订阅canceled、交易仍paid且尚无退款金额。本地PaidPeriod保留active及1800/used0/reserved0，没有伪造退款或撤销权益。
+**指定双客户账单/Portal矩阵通过，真实全额退款闭环未完成。** 原Google付款客户与本轮邮箱账户的新付款客户ID不同；两身份各6条隔离请求、各1次本人Portal共14个编号结果符合预期，Portal前后财务快照未变。本轮Test实付USD11.78，首次退款因余额不足失败；用户先取消订阅，随后自行重试退款。最新权威GET为partialRefund、已退USD9.90、尚有USD1.88差额，新订阅仍canceled。本地已进入PARTIAL_REFUND_REVIEW，PaidPeriod保留active及1800/used0/reserved0，没有伪造全额退款或按比例扣量。后续处理见文末。
 
 所有本轮服务已停止，临时页面已移除，五端口实测关闭。原六份来源PG库、来源mail和Google七张财务表摘要未变。BA-11/13不整体勾选，两个同时active客户、完整付费删除和本轮真实退款/repeat继续待验。
 
@@ -61,3 +61,13 @@ Portal后及补矩阵后两次只读integrity确认：六来源库/来源mail/Go
 当前交付仅签收两个不同真实客户下的指定summary/query/body/Portal矩阵及新订阅停费。完整BA-11/13、两同时active客户、真实付费删除、云端多实例等仍待验。本轮退款由供应商Test余额阻断，后续取得支持答复后再决定是否恢复只读核验或重新申请退款；不自动新建checkout/邮件/Portal，不修改原客户或旧账本。最终证据为final-shutdown-verification.json、shutdown.json及integrity-stopped.json。
 
 最终三份文档及私密证据独立复审无可行动问题：逐条核对14编号各一次、两个退款受阻GET状态、stopped权益保留、provider审计20成功GET及仅3次成功写（1 checkout、2 Portal）、私密配置全部开关关闭/0600、PG pid及临时页不存在，来源mail SHA不变。审查者未启动服务、触网或访问PG，六来源库/Google摘要和五端口沿用主Agent实际执行证据，用户退出/第三方Hook禁用保留为用户反馈；真实退款/repeat无证据文件且未冒称通过。
+
+## 续接：用户重试后为部分退款，待核对差额
+
+用户先反馈“已有答复”，随后说明重新尝试后退款成功，尚未提供官方支持答复正文。Agent没有发送支持消息或再次请求退款。立即使用原不可变交易/客户/订阅引用受限GET核对：status=partialRefund、amount_paid=1178、refunded_amount=990、currency=USD，新订阅仍canceled。明确告知用户USD1.88差额并请其只读查看页面退款金额、税额或处理中记录，不推断差额已退/必定稍后退，也不把本轮partialRefund当作全额refunded。尚未执行全额退款/repeat脚本。
+
+按既定BILL-03部分退款人工对账规则，仅临时启动固定隔离PG，以GET-only provider再次核验相同事实，再通过原内部_queue_transaction及process_pending写入持久reconciliation.transaction：review/PARTIAL_REFUND_REVIEW，PaidPeriod active、额度1800/0/0、新订阅canceled，无退款取消意图。相同财务指纹重复入队false、处理0，review及attempts不复位；邮箱七财务表在重复前后完全一致。
+
+执行前独立审查发现临时脚本提交入队后失败无法恢复的P2，已按原财务指纹定位精确本轮事件，允许其既有pending/retry恢复或review补证，拒绝其他待处理事件；既有证据只读精确比较不覆盖。临时离线回归共7项通过（原付款/退款/重放/取消4项，加含税部分退款/外来客户拒绝/处理器GET失败后到期恢复3项），独立7项通过及复审无可行动问题。只对测试中的retry时间显式置为已到期，真实投影未提前重置退避或审查状态。生产代码未改；wrapper启动/停机失败路径本轮为静态审查，正常路径已实际执行。
+
+主Agent实际partial投影两次、邮箱七表重放比对及六来源PG库/来源mail/Google七表完整性核验通过；仅新副本增加部分退款审查事件，没有修改原库。wrapper在finally停止PG，Web/API/Redis/mail/Tunnel均未启动，五端口再次实测关闭，两配置0600且全部10开关False、临时页仍不存在，供应商写调用仍仅原1 checkout+2 Portal。此前paid未退的阻断记录与final-shutdown均保留，新增partial-refund-projection.json、partial-repeat-verification.json、integrity-partial-refund.json、partial-final-shutdown-verification.json；部分退款重放不冒称完整退款repeat通过。

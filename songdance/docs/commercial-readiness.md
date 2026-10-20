@@ -187,3 +187,7 @@ Notavue Pro Test 已完成一次无真实扣款的 Test 卡付款。德国测试
 ### 2026-10-20 两期完整账本的本地付费删除恢复
 
 一次性PG/离线身份与支付下，两相邻非重叠PaidPeriod、旧期30秒consume、当前15秒预占及另一付费客户任务/账本验证通过。停费前失败与取消成功响应丢失均保留billing/retry及文件；恢复核实后先停用再清理，不重复取消，原期release一次、旧consume/付款/身份墓碑保留，同subject换邮箱不新建用户/Free周期；另一客户各表全字段及源字节不变。新增2项、PG组合20项、64普通回归/1opt-in skip、Ruff通过，fresh审查与独立PG2项通过。初次测试存储API误用及审查发现的他人任务快照缺口已修正，生产未改，临时测试资源由fixture清理。此为本地指定分支，不解除真实Test退款阻塞或签收真实付费删除/完整BA-13。[记录](reviews/2026-10-20-paid-history-deletion-local.md)。
+
+### 2026-10-20 退款重试的最新状态：部分退款人工对账
+
+用户自行重试后反馈退款成功，受限权威GET实际为partialRefund、实付1178分/已退990分，USD1.88差额及页面税额/处理中状态尚待用户核对，新订阅仍canceled。未宣称全额退款，未再次退款或新建付款。临时恢复仅隔离PG，原内部对账inbox持久review/PARTIAL_REFUND_REVIEW，active1800/0/0保留、不按比例扣量、不建全退取消补偿；相同指纹重放不复位审查，七财务表不变。主Agent及独立临时离线7项、复审通过；实际六源库/来源mail/Google七表仍未变，PG再停、五端口关闭，其他服务未启动。真实全额退款/repeat和完整BA仍未签收。[最新事实](reviews/2026-10-20-distinct-payment-email-preparation.md)。

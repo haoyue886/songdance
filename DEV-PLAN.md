@@ -1887,6 +1887,7 @@ Phase 9 基线
 - [ ] 38.4 商业 UI：pricing/account/return/refund/contact、登录回跳、导航、上传前用量/上限及周期任务摘要已实现；参数统一来自 API，付款确认轮询有界，未知状态不诱导重新购买。八语言参数对齐，六语商业文本明确英文回退。真实购买→提交→导出→取消已通过一次，退款后暂停提示和退出已补验，完整矩阵及法律条款待验；BA-15/17 不整体勾选。
 - [x] 2026-10-21 部署安全本地预检：用户未找到Creem周期模拟入口，真实月付分支保留。配置/部署合同121项及proxy/CORS5项通过、pip check通过；真人质量门禁8过1既有指纹失败。Docker daemon/Compose不可用，容器未构建运行，漏洞扫描/平台配置未验。修正deployment当前仓库布局为songdance/web并明确API构建上下文api、Railway root/config/context须现场核，不改生产或部署；记录 `songdance/docs/reviews/2026-10-21-deployment-security-preflight.md`。
 - [x] 2026-10-21 容器构建局部预检：Docker Server29.5.2/linux-arm64可用，完整API构建因PyPI约17.6KB/s/Redis镜像两次Hub超时主动停止（exit137非OOM结论），无API运行验收。排除无关api/dist和experiments后上下文1.094GB降846.8KB，runtime-tools stage实际构建/Node22.23.1+tini0.19运行通过；仅局部stage不当完整API。自有中间容器已移除、未建业务/联调资源。待网络恢复再完整构建，记录 `songdance/docs/reviews/2026-10-21-container-build-preflight.md`。
+- [x] 2026-10-21 ARM64容器运行指定分支：既有代理仅临时pip RUN，完整镜像4a1594c构建成功；获明确授权后官方Redis逐层校验导入，导出config/layers与官方相同（inspect ID差异如实保留）。internal网络/一次性volume下迁移014/空库/health200/Redis/空库cleanup/空队列Worker优雅退出通过，标签资源全部清理；87锁包一致，ONNX静音实际推理完成。镜像pip check缺TensorFlow声明失败保留，不冒称全依赖或质量通过；PG/S3/amd64/漏洞与生产仍待验。见 `songdance/docs/reviews/2026-10-21-container-runtime-acceptance.md`。
 - [ ] 38.5 发布验收：隔离数据库测试、现有 API/Web 回归、安全与支付故障矩阵、包含免费流量/失败重试的容量成本、认证/商户/政策确认；完成 Phase 39 对实际售卖档位的 LA-01–LA-07、既有部署报告未验证事项和有效生产质量证据。BA-16。
 
 依赖：38.0 → 38.1 → 38.2/38.3 → 38.4；38.5 同时依赖 Phase 39 的实际售卖档位验收。Phase 38 的账号/账本/Creem Test 与 Phase 39 长音频验证可并行，协作时分开业务账本与音乐流水线文件，集成点由主 Agent 协调。可先完成 Test Mode，不以账户未审核为理由伪造 Live 测试；生产产品创建/开收费/部署沿用实际授权边界。

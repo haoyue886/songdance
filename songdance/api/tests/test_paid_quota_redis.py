@@ -125,7 +125,7 @@ def test_free_ip_exhaustion_does_not_block_multiple_paid_reservations(quota_fact
     assert_blocked(quota, "shared-ip", "HOURLY_LIMIT", paid=False)
 
 
-def test_paid_hourly_limit_is_atomic_independent_and_cancel_refunds_once(quota_factory):
+def test_paid_hourly_limit_is_atomic_independent_and_cancel_preserves_charge(quota_factory):
     quota = quota_factory(paid_ip_hourly_job_limit=1)
     other = quota_factory(
         quota_namespace=quota.settings.quota_namespace, paid_ip_hourly_job_limit=1
@@ -150,7 +150,6 @@ def test_paid_hourly_limit_is_atomic_independent_and_cancel_refunds_once(quota_f
     winner = job_ids[results.index(True)]
     quota.cancel(winner)
     quota.cancel(winner)
-    quota.reserve(uuid4().hex, "shared-ip", paid=True)
     assert_blocked(quota, "shared-ip", "IP_SECURITY_LIMIT")
 
 
@@ -178,7 +177,7 @@ def test_free_and_paid_share_global_capacity_and_cancel_releases_slot(quota_fact
     assert_blocked(quota, "third-ip", "GLOBAL_CAPACITY")
 
 
-def test_daily_capacity_is_shared_and_only_cancel_refunds_it(quota_factory):
+def test_daily_capacity_is_shared_and_cancel_cannot_refund_it(quota_factory):
     quota = quota_factory(daily_job_limit=2, paid_ip_hourly_job_limit=10)
     free_job, paid_job = uuid4().hex, uuid4().hex
     quota.reserve(free_job, "free-ip")
@@ -188,11 +187,8 @@ def test_daily_capacity_is_shared_and_only_cancel_refunds_it(quota_factory):
     assert_blocked(quota, "other-free-ip", "DAILY_CAPACITY", paid=False)
     quota.cancel(paid_job)
     quota.cancel(paid_job)
-    replacement = uuid4().hex
-    quota.reserve(replacement, "paid-ip", paid=True)
-    quota.complete(replacement)
-    quota.cancel(replacement)
     assert_blocked(quota, "other-paid-ip", "DAILY_CAPACITY")
+    assert_blocked(quota, "other-free-ip", "DAILY_CAPACITY", paid=False)
 
 
 def test_complete_releases_active_capacity_but_preserves_paid_hourly_charge(quota_factory):

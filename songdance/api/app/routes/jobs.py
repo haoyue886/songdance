@@ -7,6 +7,7 @@ from typing import Annotated
 from fastapi import APIRouter, Depends, File, Form, HTTPException, Request, UploadFile, status
 from sqlalchemy import select
 from sqlalchemy.orm import Session
+from starlette.concurrency import run_in_threadpool
 
 from app.database import get_session
 from app.models import (
@@ -232,9 +233,13 @@ async def create_job(
         _reserve_quota(request, job_id, user)
         reserved = True
         await _write_upload(audio_file, temp_path)
-        validated = validate_audio_file(temp_path, filename, audio_file.content_type)
+        validated = await run_in_threadpool(
+            validate_audio_file, temp_path, filename, audio_file.content_type
+        )
         validate_clip(start_sec, end_sec, validated.duration)
-        clipped = extract_clip_to_wav(temp_path, clip_path, start_sec, end_sec)
+        clipped = await run_in_threadpool(
+            extract_clip_to_wav, temp_path, clip_path, start_sec, end_sec
+        )
         size_bytes, sha256 = _fingerprint(clip_path)
         storage_key = f"jobs/{job_id}/source.wav"
 

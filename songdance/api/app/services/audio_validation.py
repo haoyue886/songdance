@@ -1,7 +1,10 @@
 import json
+import math
 import subprocess
 from dataclasses import dataclass
 from pathlib import Path
+
+from app.services.media_process import run_media
 
 MAX_AUDIO_BYTES = 25 * 1024 * 1024
 MIN_CLIP_SECONDS = 1
@@ -51,28 +54,49 @@ def _sniff_format(path: Path) -> str | None:
     return None
 
 
-def _probe(path: Path) -> tuple[float, list[str]]:
+def _input_options(detected: str) -> list[str]:
+    return [
+        "-protocol_whitelist",
+        "file",
+        "-format_whitelist",
+        "wav,mp3,mov",
+        "-f",
+        "mov" if detected == "m4a" else detected,
+        "-threads",
+        "1",
+    ]
+
+
+def _probe(path: Path, detected: str) -> tuple[float, list[str]]:
     try:
-        completed = subprocess.run(
+        output = run_media(
             [
                 "ffprobe",
                 "-v",
                 "error",
+                *_input_options(detected),
                 "-show_entries",
                 "format=duration:stream=codec_type",
                 "-of",
                 "json",
                 str(path),
             ],
-            check=True,
-            capture_output=True,
-            text=True,
             timeout=15,
         )
-        payload = json.loads(completed.stdout)
+        payload = json.loads(output)
+        if (
+            not isinstance(payload, dict)
+            or not isinstance(payload.get("format"), dict)
+            or not isinstance(payload.get("streams"), list)
+        ):
+            raise ValueError("Invalid probe output")
         duration = float(payload.get("format", {}).get("duration", 0))
+        if not math.isfinite(duration):
+            raise ValueError("Invalid audio duration")
+        if any(not isinstance(stream, dict) for stream in payload["streams"]):
+            raise ValueError("Invalid stream metadata")
         stream_types = [str(stream.get("codec_type")) for stream in payload.get("streams", [])]
-    except (subprocess.SubprocessError, ValueError, json.JSONDecodeError) as error:
+    except (OSError, subprocess.SubprocessError, TypeError, ValueError) as error:
         raise AudioValidationError("AUDIO_DECODE_FAILED", "服务器无法解码这个音频文件") from error
     return duration, stream_types
 
@@ -91,7 +115,7 @@ def validate_audio_file(path: Path, filename: str, declared_mime: str | None) ->
         if normalized_mime not in MIME_TYPES[detected]:
             raise AudioValidationError("MIME_MISMATCH", "文件 MIME 类型与实际内容不一致")
 
-    duration, stream_types = _probe(path)
+    duration, stream_types = _probe(path, detected)
     if "video" in stream_types:
         raise AudioValidationError("VIDEO_NOT_ALLOWED", "文件包含视频轨，请上传纯音频")
     if "audio" not in stream_types or duration < MIN_CLIP_SECONDS:
@@ -111,12 +135,17 @@ def extract_clip_to_wav(
     source: Path, destination: Path, start_sec: float, end_sec: float
 ) -> ValidatedAudio:
     try:
-        subprocess.run(
+        detected = _sniff_format(source)
+        if detected is None:
+            raise ValueError("Unrecognized source format")
+        run_media(
             [
                 "ffmpeg",
                 "-hide_banner",
                 "-loglevel",
                 "error",
+                "-nostdin",
+                *_input_options(detected),
                 "-ss",
                 str(start_sec),
                 "-i",
@@ -130,15 +159,14 @@ def extract_clip_to_wav(
                 "44100",
                 "-c:a",
                 "pcm_s16le",
+                "-threads",
+                "1",
                 "-y",
                 str(destination),
             ],
-            check=True,
-            capture_output=True,
-            text=True,
             timeout=120,
         )
-    except subprocess.SubprocessError as error:
+    except (OSError, subprocess.SubprocessError, ValueError) as error:
         raise AudioValidationError(
             "CLIP_EXTRACTION_FAILED", "服务器无法提取所选音频片段"
         ) from error

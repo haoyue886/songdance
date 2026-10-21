@@ -126,9 +126,11 @@ async def create_durable_job(
         if trial_id:
             guest_reservation = reserve_trial(session, trial_id, job_id)
             reserve_guest_day(session, settings, client_quota_key(request, settings), job_id)
-        validated = validate_audio_file(temp, filename, audio_file.content_type)
+        validated = await run_in_threadpool(
+            validate_audio_file, temp, filename, audio_file.content_type
+        )
         validate_clip(start_sec, end_sec, validated.duration)
-        clipped = extract_clip_to_wav(temp, clip, start_sec, end_sec)
+        clipped = await run_in_threadpool(extract_clip_to_wav, temp, clip, start_sec, end_sec)
         size, digest = _fingerprint(clip)
         guest_token, guest_hash = (
             new_guest_secret() if settings.auth_enabled and user is None else (None, None)

@@ -314,7 +314,10 @@ def test_pro_quota_separates_free_ip_budget_and_preserves_security_limits():
         quota.reserve("free-blocked", "shared-ip")
     assert error.value.code == "HOURLY_LIMIT"
     quota.cancel("paid-0")
-    quota.reserve("replacement", "shared-ip", paid=True)
+    with pytest.raises(QuotaExceeded) as error:
+        quota.reserve("replacement", "shared-ip", paid=True)
+    assert error.value.code == "IP_SECURITY_LIMIT"
+    quota.reserve("other-ip", "different-ip", paid=True)
 
 
 def test_paid_route_does_not_take_free_quota_path(protected_client):

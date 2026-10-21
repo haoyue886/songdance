@@ -87,13 +87,8 @@ class MemoryJobQuota(MemoryEventQuota):
             )
 
     def cancel(self, job_id: str) -> None:
-        with self._lock:
-            item = self._jobs.pop(job_id, None)
-            if item is None:
-                return
-            _, hour_key, day, _ = item
-            self._hourly[hour_key] = max(0, self._hourly.get(hour_key, 0) - 1)
-            self._daily[day] = max(0, self._daily.get(day, 0) - 1)
+        # Admission attempts are safety budgets; only business ledgers refund failures.
+        self.complete(job_id)
 
     def complete(self, job_id: str) -> None:
         with self._lock:
@@ -151,8 +146,6 @@ local raw = redis.call('GET', KEYS[1])
 if not raw then return 0 end
 local value = cjson.decode(raw)
 redis.call('ZREM', value.client, ARGV[1]); redis.call('ZREM', KEYS[2], ARGV[1])
-if tonumber(redis.call('GET', value.hour) or '0') > 0 then redis.call('DECR', value.hour) end
-if tonumber(redis.call('GET', value.day) or '0') > 0 then redis.call('DECR', value.day) end
 redis.call('DEL', KEYS[1]); return 1
 """
 

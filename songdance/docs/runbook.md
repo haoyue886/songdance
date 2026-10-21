@@ -68,6 +68,24 @@ jobs/day. Review Railway CPU/memory, Redis usage, database size and bucket bytes
 the first week. Raise one limit at a time; a higher Worker replica count multiplies model
 memory and compute cost.
 
+These hourly/daily counters count admitted attempts, including rejected media and failed
+queue/storage submissions. Cancellation releases the active slot but never refunds these
+safety counters. Free/Pro/guest business reservations still release on failure through
+their own ledgers. Honor `Retry-After`; do not clear Redis counters to retry invalid media.
+
+Uploaded-file probing and clip extraction run off the API event loop in bounded media
+processes. On Linux each process has a 512 MiB address-space limit and an 8 MiB stack
+limit; CPU limits are 10 seconds for ffprobe and 60 seconds for ffmpeg, with wall limits
+of 15/120 seconds. Output files are capped at 512 KiB/16 MiB, captured stdout at 64 KiB,
+open files at 64, and core dumps are disabled. Input formats are restricted to WAV/MP3/MOV
+and protocols to local files. Child environments exclude application credentials.
+
+Repeated `AUDIO_DECODE_FAILED`/`CLIP_EXTRACTION_FAILED` can mean malformed input or a
+resource limit. Check the exact image and normal-file regression before changing limits.
+The process shares the API UID/filesystem, limits apply per process, and macOS does not
+enforce the Linux memory/stack limits. This is not a security sandbox or an FFmpeg patch;
+parser vulnerabilities and aggregate container capacity still require separate validation.
+
 If cost rises unexpectedly, set the daily limit to `1`, keep YouTube disabled, let current
 jobs finish and inspect event counts before changing infrastructure.
 

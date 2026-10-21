@@ -35,3 +35,7 @@ S3探针在任何写入前要求Test环境、本轮随机命名MinIO endpoint和
 ## 同日续接：PostgreSQL已解除阻塞
 
 后续有界诊断确认PostgreSQL官方manifest可访问，完成全部层摘要校验、导入及独立PostgreSQL-only隔离运行：迁移014、空库、health200、Redis、cleanup及空队列Worker退出均通过，自建资源已清除。MinIO匿名token未取得目标仓库pull scope、manifest401，S3仍未运行。此节更新前文历史阻塞状态；不将整栈准备视为整栈验收。实际命令、镜像摘要和限制见[PostgreSQL运行记录](2026-10-21-postgres-container-acceptance.md)。
+
+## 同日续接：S3源码测试镜像已通过
+
+用户另行选择固定同版本官方源码构建临时镜像。源码commit/Go工具链/模块和镜像内二进制完成核验后，真实S3往返、存在/删除、精确key的未完成分片上传中止及同前缀保护通过；联合PG/API/Worker检查通过，本轮容器、私网和三卷清除。旧Docker Hub/Quay镜像取得仍受阻，但隔离S3测试已通过该源码方案完成，未测试真实云存储。详见[S3源码容器验收](2026-10-21-s3-source-container-acceptance.md)。

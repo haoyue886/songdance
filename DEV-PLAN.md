@@ -1885,6 +1885,7 @@ Phase 9 基线
 - [x] 2026-10-21 真实月付周期控制资料核对：官方目录/Test Mode/订阅介绍/sitemap读取成功，所读资料未说明test clock/advance time；日付/custom账期有文档但不满足本项目every-month合同，不放宽商品校验冒充月付续费。CLI公开读取被审批服务403阻断，控制台/支持提供的模拟入口未核实，下一步用户只读核入口或询问官方；无商户访问/新付款/原服务恢复。记录 `songdance/docs/reviews/2026-10-21-creem-cycle-capabilities.md`。
 - [ ] 38.3 Creem Test：默认关闭的 checkout 意图、签名/内部对账 inbox、权威交易核验、Portal、已知交易对账及 Test 历史分页扫描已实现；真实 Test 基础闭环、单页两笔历史/漏通知恢复和 active 全额退款自动取消已通过。仍待多页历史/跨付款周期、失败卡、部分退款/争议、退款续费竞态和完整商业化验收，BA-07–10/14 不整体勾选。配置/恢复见 `songdance/docs/creem-test-setup.md`。
 - [ ] 38.4 商业 UI：pricing/account/return/refund/contact、登录回跳、导航、上传前用量/上限及周期任务摘要已实现；参数统一来自 API，付款确认轮询有界，未知状态不诱导重新购买。八语言参数对齐，六语商业文本明确英文回退。真实购买→提交→导出→取消已通过一次，退款后暂停提示和退出已补验，完整矩阵及法律条款待验；BA-15/17 不整体勾选。
+- [x] 2026-10-21 部署安全本地预检：用户未找到Creem周期模拟入口，真实月付分支保留。配置/部署合同121项及proxy/CORS5项通过、pip check通过；真人质量门禁8过1既有指纹失败。Docker daemon/Compose不可用，容器未构建运行，漏洞扫描/平台配置未验。修正deployment当前仓库布局为songdance/web并明确API构建上下文api、Railway root/config/context须现场核，不改生产或部署；记录 `songdance/docs/reviews/2026-10-21-deployment-security-preflight.md`。
 - [ ] 38.5 发布验收：隔离数据库测试、现有 API/Web 回归、安全与支付故障矩阵、包含免费流量/失败重试的容量成本、认证/商户/政策确认；完成 Phase 39 对实际售卖档位的 LA-01–LA-07、既有部署报告未验证事项和有效生产质量证据。BA-16。
 
 依赖：38.0 → 38.1 → 38.2/38.3 → 38.4；38.5 同时依赖 Phase 39 的实际售卖档位验收。Phase 38 的账号/账本/Creem Test 与 Phase 39 长音频验证可并行，协作时分开业务账本与音乐流水线文件，集成点由主 Agent 协调。可先完成 Test Mode，不以账户未审核为理由伪造 Live 测试；生产产品创建/开收费/部署沿用实际授权边界。

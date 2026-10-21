@@ -23,9 +23,26 @@ short-lived signed download paths, never permanent object URLs.
 ## Accounts and repository
 
 You need Vercel, Railway, an S3-compatible provider such as Cloudflare R2, and a private
-Git repository accessible to Vercel and Railway. Push the contents of the `songdance/`
-directory as the repository root. Do not commit `.env`, credentials, database files,
-audio uploads, or `api/uv.lock`.
+Git repository accessible to Vercel and Railway. The current repository contains the
+application under `songdance/`; retain that layout and its tracked dependency locks.
+Do not commit `.env`, credentials, database files or audio uploads.
+
+Set the Vercel Root Directory to `songdance/web`. The Railway paths below are relative
+to the application directory, not the repository root. Before importing a service,
+verify its root directory, config-file path and Docker build context together in the
+platform. The current Railway configuration has not been exercised against this
+repository layout; it is not a verified deployment recipe.
+
+For a local API image, the Dockerfile expects `songdance/api` as its build context:
+
+```sh
+# From the repository root; requires an available Docker daemon.
+docker build -f songdance/api/Dockerfile songdance/api
+```
+
+Its `COPY requirements.lock`, `COPY app` and `COPY docker-entrypoint.sh` statements
+must resolve within that context. A Dockerfile path alone does not establish the
+correct build context. Keep database/Redis credentials and bucket access private.
 
 ## 1. Create private object storage
 
@@ -127,7 +144,7 @@ managed tasks rather than deleting queue or audit records. No deployment is perf
 by adding this configuration file.
 
 1. Import the same private repository into Vercel.
-2. Set **Root Directory** to `web`.
+2. Set **Root Directory** to `songdance/web` for the current repository layout.
 3. Keep Framework Preset as Next.js. `web/vercel.json` supplies the install command,
    build command and response security headers.
 4. Add `NEXT_PUBLIC_API_URL=https://API_DOMAIN` and `NEXT_PUBLIC_SITE_URL=https://WEB_DOMAIN`

@@ -1,5 +1,37 @@
 # 变更记录
 
+## 维护约定
+
+- 本文件继续维护，记录 [Product-Spec.md](Product-Spec.md) 及 [Billing-Auth-Spec.md](Billing-Auth-Spec.md) 等子规范的实质需求、行为、范围和验收标准变化；与受影响的规范在同一批次更新，说明变化前后、影响条目和依据。
+- 当前有效需求以规范正文为准；实现进度和剩余工作记入 [DEV-PLAN.md](DEV-PLAN.md)，测试证据记入 `songdance/docs/reviews/`，商业化就绪状态记入 [商业化验收记录](songdance/docs/commercial-readiness.md)。仅恢复既定行为的修复、测试补充、配置验证和进度更新，不单独新增需求版本。
+- 延续现有 v1.x 需求记录编号，它不代表软件发布版本或验收通过。条目日期沿用原需求变更提交日期；补录注明实际补录日及来源，不把历史决策写成新需求。
+- 2026-10-21 补录 v1.55–v1.57，并明确上述分工。v1.54 及更早条目保留原文，包括历史上混入的实现与验证状态，不追溯重写。
+
+## [v1.57] - 2026-10-14
+
+### 对外品牌统一（2026-10-21 补录）
+
+- 对外名称由 SongDance 改为 Notavue，沿用现有域名与邮箱；用户可见页面、邮件和新生成导出产物使用新名。AC-084 的缺失/空文件名回退标题由 `SongDance Transcription` 改为 `Notavue Transcription`，用户原文件名标题保留。
+- 工程目录、配置前缀、会话/存储键、数据库角色和供应商资源 ID 保持兼容；历史审查、固定集和冻结产物不因改名重写。Google/Creem 对外展示名按各自真实联调核对，应用内改名不等于外部验收通过。
+- 影响：Product-Spec §1.1、AC-084、Billing-Auth-Spec 对外名称及相关页面、邮件与导出约定。来源提交：`afd28c4`；详情见 [品牌统一记录](songdance/docs/reviews/2026-10-14-notavue-brand-unification.md)。
+
+## [v1.56] - 2026-10-14
+
+### 客服收件方案确定（2026-10-21 补录）
+
+- AUTH-04 将早期“免费转发到待定邮箱”的设想改为保留现有飞书根域 MX；`support@notavue.io` 作为 `hello@notavue.io` 的企业邮箱别名，共用收件箱，不按早期 Cloudflare 转发设想切换收信服务。
+- Resend 仍负责 `mail.notavue.io` 子域的 API 发信，客服收信与发信职责分开；Reply-To 指向可收信的 `support@notavue.io`。客服收发证据不替代三家邮箱送达、邮件头认证及完整 MAIL 验收。
+- 影响：Billing-Auth-Spec AUTH-04、MAIL-01、MAIL-06。方案对比来源：`23d2a60` 与 `afd28c4` 的 AUTH-04 差异；10 月 13 日晚间核对及后续别名确认在 10 月 14 日提交入库，详见 [邮件交付约定](Billing-Auth-Spec.md) AUTH-04。
+
+## [v1.55] - 2026-10-07
+
+### 验证码兼容与邮件交付约定（2026-10-21 补录）
+
+- 邮箱验证码由仅适配 6 位扩展为兼容 6/8 位 ASCII 数字；测试项目保留供应商默认 8 位，验证码原样交给 Supabase 验证，不截断、不丢前导零，也不降低供应商位数。
+- 邮件交付选定 Resend 免费层与 `mail.<主域名>` 子域，通过 Supabase Send Email Hook 调用 Resend API；OTP 的生成、验证、过期和会话仍由 Supabase 负责。Hook 与 SMTP 二选一，客服收信需独立验证，`billing@` 先准备且不替代 Creem 官方收据。
+- 新增 AUTH-04 与 MAIL-01–06，覆盖域名认证/客服收信、OTP、发信幂等重试/日志脱敏、回调验签/去重/抑制、三家邮箱送达及模板一致性；事件不得改变付费权益，API 返回消息 ID 不等于送达。以上为当时确定的要求，不表示本次补录通过了供应商或生产验收。
+- 影响：Product-Spec §7、Billing-Auth-Spec AUTH-01、AUTH-04、MAIL-01–06。来源提交：`d9f626d`；详情见 [验证码兼容记录](songdance/docs/reviews/2026-10-07-otp-compatibility.md)。
+
 ## [v1.54] - 2026-10-07
 
 - 增加可重跑的商业化整链本地验收入口：实际登录校验、付款事件、账本、队列与 Basic Pitch、三格式导出、取消/删除；桌面与移动端覆盖未知响应恢复、跨账号拒绝和 Free 失败释放/耗尽。外部身份与支付为本地协议服务，真实音乐质量及供应商验收不据此放行。

@@ -1891,6 +1891,8 @@ Phase 9 基线
 - [x] 2026-10-21 PG/S3隔离入口本地准备：唯一internal网络及临时卷凭据，固定已验证ARM64镜像ID和迁移014，离线5项通过；真实镜像仍TLS EOF/401，未导入或运行，不签收PG/S3。详见同日受阻记录续记。
 - [x] 2026-10-21 PostgreSQL ARM64容器补验：官方PG16镜像逐层校验/导入后，导出config和11层与官方摘要一致（inspect ID差异保留）；一次性internal网络/两卷中迁移014、空users、health200、Redis、空库cleanup及Worker优雅退出通过，所有自建资源清除。离线5项及独立证据复核通过，业务/备份/生产未验。见 `songdance/docs/reviews/2026-10-21-postgres-container-acceptance.md`。
 - [x] 2026-10-21 S3隔离容器补验：用户选择同版本官方MinIO源码，固定commit0d7408f/Go1.24.2，源码/工具链/模块及镜像内binary校验通过；本地ARM64源码镜像c051262a中真实S3字节往返、exists/delete、精确key未完成multipart中止及同前缀保护通过。联合PG014/空库/health/cleanup/Worker通过，私网三卷和容器均清除；6项离线检查及独立复审通过。不是官方预编译镜像或真实云存储验收，大文件/生产/漏洞仍待验。见 `songdance/docs/reviews/2026-10-21-s3-source-container-acceptance.md`。
+- [x] 2026-10-21 依赖漏洞核验与修复：Next16.3.8/相关传递依赖及API certifi/Pillow/urllib3定向升级，Web生产审计0、API88锁包0，开发braces无修复high1保留；Web313/API277、类型检查、Webpack构建及隔离浏览器通过。候选ARM64镜像764c2eef复扫/PG-S3冒烟通过，三锁包告警消失，系统告警未处置，不签收容器安全。见 `songdance/docs/reviews/2026-10-21-dependency-vulnerability-audit.md`。
+- [ ] 2026-10-21 容器安全阻塞处置：Debian1235包/漏洞匹配记录、543唯一ID仍在，独立审查确认原始ffprobe同步阻塞与失败退还安全计数的P1。下一批将失败请求预算与业务额度分离、原始探测隔离和资源限制，并处置FFmpeg/基础系统风险后重建重扫；不忽略无修复公告或放开生产。
 - [ ] 38.5 发布验收：隔离数据库测试、现有 API/Web 回归、安全与支付故障矩阵、包含免费流量/失败重试的容量成本、认证/商户/政策确认；完成 Phase 39 对实际售卖档位的 LA-01–LA-07、既有部署报告未验证事项和有效生产质量证据。BA-16。
 
 依赖：38.0 → 38.1 → 38.2/38.3 → 38.4；38.5 同时依赖 Phase 39 的实际售卖档位验收。Phase 38 的账号/账本/Creem Test 与 Phase 39 长音频验证可并行，协作时分开业务账本与音乐流水线文件，集成点由主 Agent 协调。可先完成 Test Mode，不以账户未审核为理由伪造 Live 测试；生产产品创建/开收费/部署沿用实际授权边界。

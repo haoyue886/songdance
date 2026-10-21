@@ -1888,6 +1888,7 @@ Phase 9 基线
 - [x] 2026-10-21 部署安全本地预检：用户未找到Creem周期模拟入口，真实月付分支保留。配置/部署合同121项及proxy/CORS5项通过、pip check通过；真人质量门禁8过1既有指纹失败。Docker daemon/Compose不可用，容器未构建运行，漏洞扫描/平台配置未验。修正deployment当前仓库布局为songdance/web并明确API构建上下文api、Railway root/config/context须现场核，不改生产或部署；记录 `songdance/docs/reviews/2026-10-21-deployment-security-preflight.md`。
 - [x] 2026-10-21 容器构建局部预检：Docker Server29.5.2/linux-arm64可用，完整API构建因PyPI约17.6KB/s/Redis镜像两次Hub超时主动停止（exit137非OOM结论），无API运行验收。排除无关api/dist和experiments后上下文1.094GB降846.8KB，runtime-tools stage实际构建/Node22.23.1+tini0.19运行通过；仅局部stage不当完整API。自有中间容器已移除、未建业务/联调资源。待网络恢复再完整构建，记录 `songdance/docs/reviews/2026-10-21-container-build-preflight.md`。
 - [x] 2026-10-21 ARM64容器运行指定分支：既有代理仅临时pip RUN，完整镜像4a1594c构建成功；获明确授权后官方Redis逐层校验导入，导出config/layers与官方相同（inspect ID差异如实保留）。internal网络/一次性volume下迁移014/空库/health200/Redis/空库cleanup/空队列Worker优雅退出通过，标签资源全部清理；87锁包一致，ONNX静音实际推理完成。镜像pip check缺TensorFlow声明失败保留，不冒称全依赖或质量通过；PG/S3/amd64/漏洞与生产仍待验。见 `songdance/docs/reviews/2026-10-21-container-runtime-acceptance.md`。
+- [x] 2026-10-21 PG/S3隔离入口本地准备：唯一internal网络及临时卷凭据，固定已验证ARM64镜像ID和迁移014，离线5项通过；真实镜像仍TLS EOF/401，未导入或运行，不签收PG/S3。详见同日受阻记录续记。
 - [ ] 2026-10-21 PostgreSQL／S3容器补验：直接拉取官方PG16/固定MinIO镜像均Hub超时，获用户明确授权后代理校验下载首次TLS EOF/401、各重试仍TLS EOF，未取得完整镜像或导入。未创建本轮容器/网络/卷，S3草稿仅编译，整栈入口尚未完成，不重复以SQLite结果签收。待网络恢复后继续同一授权范围，记录 `songdance/docs/reviews/2026-10-21-pg-s3-container-blocked.md`。
 - [ ] 38.5 发布验收：隔离数据库测试、现有 API/Web 回归、安全与支付故障矩阵、包含免费流量/失败重试的容量成本、认证/商户/政策确认；完成 Phase 39 对实际售卖档位的 LA-01–LA-07、既有部署报告未验证事项和有效生产质量证据。BA-16。
 

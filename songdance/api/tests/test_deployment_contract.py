@@ -1,9 +1,61 @@
 import json
+import re
+import shlex
 import tomllib
 from pathlib import Path
 
 PROJECT_ROOT = Path(__file__).resolve().parents[2]
 INFRA_ROOT = PROJECT_ROOT / "infra"
+
+
+def _has_fail_closed_apt_upgrade(stage: str) -> bool:
+    runs = re.findall(r"(?m)^RUN\s+((?:[^\n]*\\\n)*[^\n]*)", stage)
+    expected = shlex.split(
+        "apt-get -o APT::Update::Error-Mode=any update"
+        " && apt-get upgrade -y --no-install-recommends"
+        " && apt-get install -y --no-install-recommends"
+    )
+    for run in runs:
+        command = re.sub(r"\\\n\s*", " ", run)
+        # Keep quotes so echoed separators cannot become shell operators.
+        lexer = shlex.shlex(command, posix=False, punctuation_chars=";&|()")
+        lexer.whitespace_split = True
+        tokens = list(lexer)
+        if any(token in {"||", ";", "|", "&", "(", ")"} for token in tokens):
+            continue
+        for index in range(len(tokens) - len(expected) + 1):
+            if (index == 0 or tokens[index - 1] == "&&") and (
+                tokens[index : index + len(expected)] == expected
+            ):
+                return True
+    return False
+
+
+def test_image_refreshes_security_packages_in_both_runtime_stages() -> None:
+    dockerfile = (PROJECT_ROOT / "api/Dockerfile").read_text(encoding="utf-8")
+    stages = dockerfile.split("\nFROM ")[1:]
+    assert len(stages) == 2
+    assert all(_has_fail_closed_apt_upgrade(stage) for stage in stages)
+
+
+def test_apt_security_contract_rejects_ignored_or_split_update_commands() -> None:
+    strict_update = "apt-get -o APT::Update::Error-Mode=any update"
+    upgrade = "apt-get upgrade -y --no-install-recommends"
+    install = "apt-get install -y --no-install-recommends tini"
+
+    assert not _has_fail_closed_apt_upgrade(
+        f"RUN {strict_update} || true && {upgrade} && {install}"
+    )
+    assert not _has_fail_closed_apt_upgrade(f"RUN echo '{strict_update} && {upgrade} && {install}'")
+    assert not _has_fail_closed_apt_upgrade(
+        f"RUN echo 'noop && {strict_update} && {upgrade} && {install}'"
+    )
+    assert not _has_fail_closed_apt_upgrade(
+        f"RUN echo noop '&&' {strict_update} '&&' {upgrade} '&&' {install}"
+    )
+    assert not _has_fail_closed_apt_upgrade(f"RUN {strict_update} && {upgrade} && {install}; true")
+    assert not _has_fail_closed_apt_upgrade(f"# RUN {strict_update} && {upgrade} && {install}")
+    assert not _has_fail_closed_apt_upgrade(f"RUN {strict_update} && {upgrade}\nRUN {install}")
 
 
 def _env_keys(path: Path) -> set[str]:

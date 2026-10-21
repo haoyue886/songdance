@@ -1893,7 +1893,8 @@ Phase 9 基线
 - [x] 2026-10-21 S3隔离容器补验：用户选择同版本官方MinIO源码，固定commit0d7408f/Go1.24.2，源码/工具链/模块及镜像内binary校验通过；本地ARM64源码镜像c051262a中真实S3字节往返、exists/delete、精确key未完成multipart中止及同前缀保护通过。联合PG014/空库/health/cleanup/Worker通过，私网三卷和容器均清除；6项离线检查及独立复审通过。不是官方预编译镜像或真实云存储验收，大文件/生产/漏洞仍待验。见 `songdance/docs/reviews/2026-10-21-s3-source-container-acceptance.md`。
 - [x] 2026-10-21 依赖漏洞核验与修复：Next16.3.8/相关传递依赖及API certifi/Pillow/urllib3定向升级，Web生产审计0、API88锁包0，开发braces无修复high1保留；Web313/API277、类型检查、Webpack构建及隔离浏览器通过。候选ARM64镜像764c2eef复扫/PG-S3冒烟通过，三锁包告警消失，系统告警未处置，不签收容器安全。见 `songdance/docs/reviews/2026-10-21-dependency-vulnerability-audit.md`。
 - [x] 2026-10-22 原始音频预处理/节流修复：失败释放active但保留小时/日安全数，业务账本退款不变；legacy/durable媒体工作移出事件循环，独立解释器设资源限制、限制输入协议/格式、清除凭据环境和超时杀进程组。20项focused、真实Redis7项、相关168项通过；ARM64候选d7fdcc0d中10项Linux内核/真实格式检查通过，独立审查无新增P1/P2。全量1652过/94跳过/10失败/3错误，浏览器相关重跑8过，余7指纹+1旧评级不放宽。见 `songdance/docs/reviews/2026-10-22-audio-preprocessing-security.md`。
-- [ ] 容器系统库与解析器风险处置：Debian1235包/漏洞匹配记录、543唯一ID仍在；预处理和安全节流已修，但rlimit不是OS沙箱或FFmpeg补丁。下一步确定FFmpeg/基础系统更新或更强隔离方案，重建重扫及真实容量验收后再评估发布；不忽略无修复公告或放开生产。
+- [x] 2026-10-22 Debian容器系统包更新：API Dockerfile两运行阶段采用严格APT索引错误处理并升级系统包；不可达索引默认返回0、严格模式返回100。仓库Dockerfile构建出的ARM64 API镜像中，Trivy Debian匹配由1235/543唯一ID降至1069/414；Python包扫描保持11/10。Linux资源限制10项与PG/Redis/S3联合smoke通过，部署契约5项及音频安全20项通过。FFmpeg仍为5.1.9且CVE-2026-107678未修复，不宣称容器风险解除。见 `songdance/docs/reviews/2026-10-22-system-security-update.md`。
+- [ ] 容器系统库与解析器风险处置：Debian当前镜像仍有1069条包/漏洞匹配记录、414个唯一ID，FFmpeg 5.1.9的CVE-2026-107678仍未修复；预处理rlimit不是OS沙箱或补丁。下一步取得真实FFmpeg修复或完成独立更强隔离，按目标架构重建、更新库复扫并完成真实容量验收后再评估发布；不忽略无修复公告或放开生产。
 - [ ] 38.5 发布验收：隔离数据库测试、现有 API/Web 回归、安全与支付故障矩阵、包含免费流量/失败重试的容量成本、认证/商户/政策确认；完成 Phase 39 对实际售卖档位的 LA-01–LA-07、既有部署报告未验证事项和有效生产质量证据。BA-16。
 
 依赖：38.0 → 38.1 → 38.2/38.3 → 38.4；38.5 同时依赖 Phase 39 的实际售卖档位验收。Phase 38 的账号/账本/Creem Test 与 Phase 39 长音频验证可并行，协作时分开业务账本与音乐流水线文件，集成点由主 Agent 协调。可先完成 Test Mode，不以账户未审核为理由伪造 Live 测试；生产产品创建/开收费/部署沿用实际授权边界。

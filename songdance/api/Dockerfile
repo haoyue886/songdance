@@ -5,7 +5,8 @@ FROM node:22-slim AS runtime-tools
 ARG DEBIAN_MIRROR
 
 RUN sed -i "s|deb.debian.org|${DEBIAN_MIRROR}|g" /etc/apt/sources.list.d/debian.sources \
-    && apt-get update \
+    && apt-get -o APT::Update::Error-Mode=any update \
+    && apt-get upgrade -y --no-install-recommends \
     && apt-get install -y --no-install-recommends tini \
     && rm -rf /var/lib/apt/lists/*
 
@@ -16,7 +17,8 @@ ENV PYTHONDONTWRITEBYTECODE=1 \
 
 WORKDIR /app
 
-RUN apt-get update \
+RUN apt-get -o APT::Update::Error-Mode=any update \
+    && apt-get upgrade -y --no-install-recommends \
     && apt-get install -y --no-install-recommends ffmpeg curl libsndfile1 \
     && rm -rf /var/lib/apt/lists/*
 

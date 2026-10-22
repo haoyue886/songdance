@@ -108,6 +108,12 @@ service runs once every 15 minutes and must log `cleanup_cycle` with `failed=0`.
 Do not scale the Worker above one replica until model memory and queue behavior have been
 measured. Each worker process loads the transcription model.
 
+The local ARM64 [90-second capacity experiment](reviews/2026-10-22-90s-capacity-acceptance.md)
+completed three synthetic jobs in 33–39 seconds with about 790–801 MiB peak memory per
+Worker and no OOM. This small local sample does not approve production P95, real music
+quality, sustained concurrency or a replica increase; keep the production Worker at one
+replica until the target environment and workload are accepted.
+
 ## 5. Deploy the Web to Vercel
 
 ### Optional reliable dispatch (migration 010)

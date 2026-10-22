@@ -119,6 +119,12 @@ completed six short synthetic jobs and three silence attempts with two bounded W
 It verified idempotent submissions, duplicate dispatch and guest settlements, but does
 not approve sustained load, the authenticated Free/Pro matrix or production scaling.
 
+The [real-recording load check](reviews/2026-10-22-real-recording-load.md) processed
+ten licensed 30-second piano recordings twice through two closed-loop clients: 20 tasks
+in about 142 seconds, with approximately 694/676 MiB peak memory per Worker and no OOM.
+This bounded local run adds real input coverage; it does not approve long-running load,
+production P95, music quality, cloud cost or a replica increase.
+
 ## 5. Deploy the Web to Vercel
 
 ### Optional reliable dispatch (migration 010)

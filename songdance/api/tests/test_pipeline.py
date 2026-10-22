@@ -1,5 +1,8 @@
+import io
 import json
+import os
 import subprocess
+import sys
 import wave
 from dataclasses import replace
 from pathlib import Path
@@ -67,7 +70,7 @@ def test_ffmpeg_failure_and_timeout_have_preprocess_error_codes(
     assert invalid_error.value.code == "AUDIO_PREPROCESS_FAILED"
 
     monkeypatch.setattr(
-        "app.pipeline.audio.subprocess.run",
+        "app.pipeline.audio.run_media",
         lambda *args, **kwargs: (_ for _ in ()).throw(
             subprocess.TimeoutExpired(cmd="ffmpeg", timeout=1)
         ),
@@ -84,13 +87,126 @@ def test_ffmpeg_preprocess_disables_terminal_input(
     destination = tmp_path / "normalized.wav"
     source.write_bytes(b"audio")
 
-    def run(command: list[str], **_kwargs: object) -> None:
+    def run(command: list[str], **kwargs: object) -> None:
         assert command[:2] == ["ffmpeg", "-nostdin"]
-        destination.write_bytes(b"0" * 45)
+        assert kwargs["readable_paths"] == (source,)
+        assert kwargs["writable_paths"] == (Path(command[-1]),)
+        Path(command[-1]).write_bytes(b"0" * 45)
 
-    monkeypatch.setattr("app.pipeline.audio.subprocess.run", run)
+    monkeypatch.setattr("app.pipeline.audio.run_media", run)
 
     preprocess_audio(source, destination)
+
+
+def test_normalization_preserves_pcm_and_accepts_a_90_second_clip(tmp_path: Path) -> None:
+    source = tmp_path / "source.wav"
+    reference = tmp_path / "reference.wav"
+    destination = tmp_path / "normalized.wav"
+    # Repeat one synthetic second without allocating a long Python float array.
+    one_second = wav_bytes(duration=1, sample_rate=44_100, frequency=440)
+    with wave.open(io.BytesIO(one_second), "rb") as tone:
+        samples = tone.readframes(tone.getnframes())
+    with wave.open(str(source), "wb") as audio:
+        audio.setparams((1, 2, 44_100, 0, "NONE", "not compressed"))
+        for _ in range(90):
+            audio.writeframes(samples)
+    subprocess.run(
+        [
+            "ffmpeg",
+            "-nostdin",
+            "-hide_banner",
+            "-loglevel",
+            "error",
+            "-i",
+            str(source),
+            "-vn",
+            "-ac",
+            "1",
+            "-ar",
+            "22050",
+            "-af",
+            "loudnorm=I=-16:LRA=11:TP=-1.5",
+            "-c:a",
+            "pcm_s16le",
+            "-y",
+            str(reference),
+        ],
+        check=True,
+        timeout=120,
+    )
+
+    preprocess_audio(source, destination)
+
+    with wave.open(str(destination), "rb") as actual, wave.open(str(reference), "rb") as old:
+        assert actual.getparams() == old.getparams()
+        assert actual.getnframes() / actual.getframerate() == pytest.approx(90, abs=0.02)
+        assert actual.readframes(actual.getnframes()) == old.readframes(old.getnframes())
+    assert destination.stat().st_size < 16 * 1024 * 1024
+    assert not list(tmp_path.glob("normalize-*"))
+
+
+@pytest.mark.skipif(sys.platform != "linux", reason="Linux media policy is required")
+def test_worker_normalization_restricts_files_and_sockets_on_linux(tmp_path, monkeypatch):
+    source = tmp_path / "source.wav"
+    source.write_bytes(wav_bytes())
+    protected = tmp_path / "another-job.wav"
+    protected.write_bytes(b"protected sibling")
+    tool = tmp_path / "ffmpeg"
+    tool.write_text(
+        f"#!{sys.executable}\n"
+        "import os,socket,sys,wave\n"
+        "source=sys.argv[sys.argv.index('-i')+1]\n"
+        "assert open(source,'rb').read(4)==b'RIFF'\n"
+        "try: open('/etc/passwd','rb'); raise AssertionError('read outside policy')\n"
+        "except PermissionError: pass\n"
+        "try: socket.socket(socket.AF_INET,socket.SOCK_DGRAM); "
+        "raise AssertionError('socket allowed')\n"
+        "except PermissionError: pass\n"
+        f"try: os.chmod({str(protected)!r},0); raise AssertionError('chmod allowed')\n"
+        "except PermissionError: pass\n"
+        "with wave.open(sys.argv[-1],'wb') as output:\n"
+        " output.setparams((1,2,22050,0,'NONE','not compressed'))\n"
+        " output.writeframes(bytes(44100))\n"
+    )
+    tool.chmod(0o700)
+    monkeypatch.setenv("PATH", str(tmp_path) + os.pathsep + os.defpath)
+
+    destination = tmp_path / "normalized.wav"
+    preprocess_audio(source, destination)
+
+    with wave.open(str(destination), "rb") as audio:
+        assert audio.getnframes() == 22_050 and audio.getframerate() == 22_050
+    assert protected.read_bytes() == b"protected sibling"
+    assert protected.stat().st_mode & 0o400
+    assert not list(tmp_path.glob("normalize-*"))
+
+
+@pytest.mark.parametrize("failure", ["policy", "timeout", "process", "output"])
+def test_normalization_failure_preserves_old_output_and_cleans_partial_file(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch, failure: str
+) -> None:
+    source = tmp_path / "source.wav"
+    source.write_bytes(wav_bytes())
+    destination = tmp_path / "normalized.wav"
+    destination.write_bytes(b"previous normalized result")
+
+    def fail(command, **kwargs):
+        output = Path(command[-1])
+        output.write_bytes(b"partial")
+        if failure == "policy":
+            raise PermissionError("synthetic isolation unavailable")
+        if failure == "timeout":
+            raise subprocess.TimeoutExpired("ffmpeg", kwargs["timeout"])
+        if failure == "process":
+            raise subprocess.CalledProcessError(1, "ffmpeg")
+
+    monkeypatch.setattr("app.pipeline.audio.run_media", fail)
+    expected = "AUDIO_PREPROCESS_TIMEOUT" if failure == "timeout" else "AUDIO_PREPROCESS_FAILED"
+    with pytest.raises((AudioPreprocessError, AudioPreprocessTimeoutError)) as error:
+        preprocess_audio(source, destination)
+    assert error.value.code == expected
+    assert destination.read_bytes() == b"previous normalized result"
+    assert not list(tmp_path.glob("normalize-*"))
 
 
 def test_basic_pitch_transcribes_a_real_a4_tone(tmp_path: Path) -> None:

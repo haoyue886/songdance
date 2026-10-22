@@ -73,12 +73,15 @@ queue/storage submissions. Cancellation releases the active slot but never refun
 safety counters. Free/Pro/guest business reservations still release on failure through
 their own ledgers. Honor `Retry-After`; do not clear Redis counters to retry invalid media.
 
-Uploaded-file probing and clip extraction run off the API event loop in bounded media
-processes. On Linux each process has a 512 MiB address-space limit and an 8 MiB stack
+Uploaded-file probing/clip extraction run off the API event loop, and Worker normalization
+uses the same bounded media subprocess wrapper. On Linux each process has a 512 MiB
+address-space limit and an 8 MiB stack
 limit; CPU limits are 10 seconds for ffprobe and 60 seconds for ffmpeg, with wall limits
 of 15/120 seconds. Output files are capped at 512 KiB/16 MiB, captured stdout at 64 KiB,
 open files at 64, and core dumps are disabled. Input formats are restricted to WAV/MP3/MOV
-and protocols to local files. Child environments exclude application credentials.
+for uploads; Worker normalization accepts WAV only. Protocols are restricted to local files,
+decoder/encoder threads to one, and Worker normalization also uses one filter thread.
+Child environments exclude application credentials.
 
 On Linux, media children also require Landlock ABI 4 or newer. They can read the packaged
 runtime tree and the exact input file, write only the exact clip output file, and cannot
@@ -89,8 +92,11 @@ Ioctl is limited to the FIOCLEX/FIONCLEX descriptor flags; inode/device operatio
 The output file is created exclusively before sandboxing.
 If Landlock setup fails, media processing fails closed; do not disable it to recover uploads.
 
-Repeated `AUDIO_DECODE_FAILED`/`CLIP_EXTRACTION_FAILED` can mean malformed input or a
+Repeated `AUDIO_DECODE_FAILED`/`CLIP_EXTRACTION_FAILED`/`AUDIO_PREPROCESS_FAILED` can mean malformed input or a
 resource limit. Check the exact image and normal-file regression before changing limits.
+Worker wall-clock expiration remains `AUDIO_PREPROCESS_TIMEOUT`. Normalization writes to
+a private temporary output and replaces the final path only on success; failed or empty
+output cannot overwrite a previous result, and its private directory is removed.
 Landlock and seccomp limit filesystem and socket access but do not isolate CPU/memory across
 processes or remove FFmpeg parser vulnerabilities. The process still shares the API UID,
 limits apply per process, and macOS does not enforce Linux resource/Landlock limits.
@@ -98,9 +104,9 @@ Same-UID signals and process control are still available; malicious descendants 
 create a new session outside the original process group. Aggregate container capacity
 and parent-process containment still require separate validation. Keep credentials and
 business data outside the read-only runtime library tree.
-These controls apply to uploaded-file validation and clip extraction through run_media.
-Worker normalization and yt-dlp use separate subprocess paths and are not covered by this
-policy. Keep YouTube disabled; those paths and total process capacity still need acceptance.
+These controls apply to uploaded-file validation, clip extraction and Worker normalization
+through run_media. yt-dlp still uses a separate subprocess path and is not covered by this
+policy. Keep YouTube disabled; that path and total process capacity still need acceptance.
 
 If cost rises unexpectedly, set the daily limit to `1`, keep YouTube disabled, let current
 jobs finish and inspect event counts before changing infrastructure.

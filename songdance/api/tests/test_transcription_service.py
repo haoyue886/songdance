@@ -63,6 +63,30 @@ def test_real_pipeline_creates_parseable_private_artifacts(api_client) -> None:
         assert job.result.model_version == MODEL_VERSION
 
 
+def test_worker_isolation_failure_stops_before_model_and_cleans_files(
+    api_client, monkeypatch
+) -> None:
+    client, _queue, _storage_path = api_client
+    job_id = create_job(client).json()["id"]
+
+    def deny_media(*_args, **_kwargs):
+        raise PermissionError("synthetic isolation setup failure")
+
+    def no_model(*_args, **_kwargs):
+        pytest.fail("Model ran after media isolation failed")
+
+    monkeypatch.setattr("app.pipeline.audio.run_media", deny_media)
+    monkeypatch.setattr("app.services.transcription.transcribe_audio", no_model)
+    run_service(client, job_id)
+
+    result = client.get(f"/jobs/{job_id}").json()
+    assert result["status"] == "failed"
+    assert result["stage"] == "preprocessing"
+    assert result["error_code"] == "AUDIO_PREPROCESS_FAILED"
+    assert result["artifacts"] == []
+    assert not list(client.app.state.settings.temp_path.iterdir())
+
+
 def test_musicxml_failure_does_not_block_midi_and_retry_is_idempotent(
     api_client, monkeypatch
 ) -> None:

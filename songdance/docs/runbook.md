@@ -142,6 +142,15 @@ have an RQ FINISHED execution; inspect both states and the matching reservation'
 consume/release. Business failure releases its allowance but retains hourly safety
 counters. Never reset those counters to make a retry pass.
 
+For a lost managed Worker, keep Dispatcher running: the current running deadline is
+960 seconds. It fences the application attempt as WORKER_LOST before releasing its
+reservation; the user can then explicitly retry the same job with an idempotency key.
+An old RQ STARTED record is separate from application state. Do not requeue or overwrite
+the old attempt to bypass its deadline, or mark it FINISHED manually. The local
+[SIGKILL exercise](reviews/2026-10-22-worker-loss-recovery.md) tested this fence and a
+replacement Worker with a controlled deadline clock; it did not validate RQ's own
+abandoned-job maintenance timing or a real 960-second wait.
+
 After any incident or rollback, require: `/health` 200, one anonymous upload, refresh
 recovery, score and piano-roll rendering, three valid downloads, immediate delete, one
 successful Cleanup cycle, and a clean browser console at desktop and 375 px widths.

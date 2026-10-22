@@ -82,6 +82,7 @@ def _probe(path: Path, detected: str) -> tuple[float, list[str]]:
                 str(path),
             ],
             timeout=15,
+            readable_paths=(path,),
         )
         payload = json.loads(output)
         if (
@@ -165,6 +166,8 @@ def extract_clip_to_wav(
                 str(destination),
             ],
             timeout=120,
+            readable_paths=(source,),
+            writable_paths=(destination,),
         )
     except (OSError, subprocess.SubprocessError, ValueError) as error:
         raise AudioValidationError(

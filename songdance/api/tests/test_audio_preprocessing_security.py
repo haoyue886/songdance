@@ -191,6 +191,182 @@ print(json.dumps({'cpu':resource.getrlimit(resource.RLIMIT_CPU),
     assert "SONGDANCE_S3_SECRET_KEY" not in data["env"]
 
 
+@pytest.mark.parametrize("failure", ["old_abi", "restrict_self", "seccomp"])
+def test_linux_isolation_failure_never_executes_media(tmp_path, monkeypatch, failure):
+    from unittest.mock import Mock
+
+    from app.services import _media_limits as limits
+
+    executable = tmp_path / "ffprobe"
+    executable.touch()
+    monkeypatch.setattr(sys, "platform", "linux")
+    monkeypatch.setattr(limits.platform, "machine", lambda: "aarch64")
+    monkeypatch.setattr(sys, "argv", ["helper", "ffprobe", "[]", "[]"])
+    monkeypatch.setattr(limits.shutil, "which", lambda _tool: str(executable))
+    monkeypatch.setattr(limits.resource, "setrlimit", Mock())
+    monkeypatch.setattr(limits.resource, "getrlimit", lambda _kind: (-1, -1))
+    libc = Mock()
+    libc.prctl.return_value = 0
+    monkeypatch.setattr(limits.ctypes, "CDLL", lambda *_a, **_kw: libc)
+
+    def fake_syscall(_libc, number, *arguments):
+        if number == 444:
+            return (3 if failure == "old_abi" else 4) if arguments[-1] == 1 else 42
+        if number == 446 and failure == "restrict_self":
+            raise PermissionError("synthetic restrict_self failure")
+        return 0
+
+    monkeypatch.setattr(limits, "_syscall", fake_syscall)
+    monkeypatch.setattr(limits, "_add_path_rule", Mock())
+    monkeypatch.setattr(limits, "_allow_path", Mock())
+    monkeypatch.setattr(limits.os, "close", Mock())
+    if failure == "seccomp":
+        monkeypatch.setattr(
+            limits,
+            "_install_no_socket_filter",
+            Mock(side_effect=PermissionError("synthetic seccomp failure")),
+        )
+    execute = Mock()
+    monkeypatch.setattr(limits.os, "execv", execute)
+    with pytest.raises(OSError):
+        limits.main()
+    execute.assert_not_called()
+
+
+@pytest.mark.parametrize(
+    ("machine", "architecture", "blocked"),
+    [
+        ("aarch64", 0xC00000B7, (5, 52, 88, 198, 199, 29, 117)),
+        ("x86_64", 0xC000003E, (90, 92, 188, 280, 41, 53, 16, 101)),
+    ],
+)
+def test_seccomp_program_rejects_network_metadata_and_abi_bypasses(
+    monkeypatch, machine, architecture, blocked
+):
+    import ctypes
+
+    from app.services import _media_limits as limits
+
+    instructions = []
+
+    class Libc:
+        def prctl(self, option, mode, address):
+            assert option == limits.PR_SET_SECCOMP and mode == limits.SECCOMP_MODE_FILTER
+            program = ctypes.cast(address, ctypes.POINTER(limits.SockFprog)).contents
+            instructions.extend(
+                (row.code, row.jt, row.jf, row.k) for row in program.filter[: program.length]
+            )
+            return 0
+
+    monkeypatch.setattr(limits.platform, "machine", lambda: machine)
+    limits._install_no_socket_filter(Libc())
+
+    def evaluate(number, arch=architecture, ioctl_request=0):
+        index, value = 0, 0
+        while index < len(instructions):
+            code, yes, no, operand = instructions[index]
+            if code == limits.BPF_LD_W_ABS:
+                value = {0: number, 4: arch, 24: ioctl_request}[operand]
+            elif code == limits.BPF_JMP_JEQ_K:
+                index += yes if value == operand else no
+            elif code == limits.BPF_JMP_JSET_K:
+                index += yes if value & operand else no
+            elif code == limits.BPF_RET_K:
+                return operand
+            else:
+                pytest.fail("Unexpected seccomp instruction")
+            index += 1
+        pytest.fail("Seccomp program did not return")
+
+    for number in (*blocked, 425, 426, 427, 438, 452, 463, 466, 469):
+        assert evaluate(number) == limits.SECCOMP_RET_ERRNO | 1
+    assert evaluate(63 if machine == "aarch64" else 0) == limits.SECCOMP_RET_ALLOW
+    ioctl = 29 if machine == "aarch64" else 16
+    assert evaluate(ioctl, ioctl_request=0x5451) == limits.SECCOMP_RET_ALLOW
+    assert evaluate(ioctl, ioctl_request=0x5450) == limits.SECCOMP_RET_ALLOW
+    assert evaluate(ioctl, ioctl_request=0x40086602) == limits.SECCOMP_RET_ERRNO | 1
+    assert evaluate(0, arch=0x40000003) == limits.SECCOMP_RET_KILL_PROCESS
+    if machine == "x86_64":
+        assert evaluate(0x40000000 | 41) == limits.SECCOMP_RET_KILL_PROCESS
+
+
+def test_output_allowlist_never_overwrites_existing_file_or_symlink(tmp_path):
+    destination = tmp_path / "clip.wav"
+    destination.write_bytes(b"existing output")
+    with pytest.raises(FileExistsError):
+        run_media(["ffmpeg"], timeout=1, writable_paths=(destination,))
+    assert destination.read_bytes() == b"existing output"
+    link = tmp_path / "link.wav"
+    link.symlink_to(destination)
+    with pytest.raises(FileExistsError):
+        run_media(["ffmpeg"], timeout=1, writable_paths=(link,))
+    assert destination.read_bytes() == b"existing output"
+
+
+@pytest.mark.skipif(sys.platform != "linux", reason="Landlock is Linux-only")
+def test_landlock_limits_media_files_and_blocks_network_sockets(tmp_path, monkeypatch):
+    readable = tmp_path / "input.wav"
+    readable.write_bytes(wav_bytes())
+    writable = tmp_path / "output.wav"
+    blocked = tmp_path / "other-job.wav"
+    blocked.write_bytes(b"protected sibling")
+    protected_stat = blocked.stat()
+    fake_probe(
+        tmp_path,
+        monkeypatch,
+        """
+import ctypes,errno,json,os,socket,sys
+read_ok = open(sys.argv[1], 'rb').read(4) == b'RIFF'
+open(sys.argv[2], 'wb').write(b'allowed')
+try:
+ open(sys.argv[3], 'rb')
+ secret_read_blocked = False
+except PermissionError:
+ secret_read_blocked = True
+try:
+ open(sys.argv[4], 'wb').write(b'blocked')
+ sibling_write_blocked = False
+except PermissionError:
+ sibling_write_blocked = True
+try:
+ socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+ sockets_blocked = False
+except PermissionError:
+ sockets_blocked = True
+metadata_blocked = True
+for operation in (lambda:os.chmod(sys.argv[4],0), lambda:os.utime(sys.argv[4],(0,0)),
+                  lambda:os.setxattr(sys.argv[4],'user.test',b'blocked')):
+ try: operation(); metadata_blocked = False
+ except PermissionError: pass
+libc=ctypes.CDLL(None,use_errno=True)
+new_metadata_api_blocked = libc.syscall(469,0,0,0,0) == -1 and ctypes.get_errno() == errno.EPERM
+print(json.dumps({'read_ok':read_ok,'secret_read_blocked':secret_read_blocked,
+ 'sibling_write_blocked':sibling_write_blocked,'sockets_blocked':sockets_blocked,
+ 'metadata_blocked':metadata_blocked,'new_metadata_api_blocked':new_metadata_api_blocked}))
+""",
+    )
+    result = json.loads(
+        run_media(
+            ["ffprobe", str(readable), str(writable), "/etc/passwd", str(blocked)],
+            timeout=3,
+            readable_paths=(readable,),
+            writable_paths=(writable,),
+        )
+    )
+    assert result == {
+        "read_ok": True,
+        "secret_read_blocked": True,
+        "sibling_write_blocked": True,
+        "sockets_blocked": True,
+        "metadata_blocked": True,
+        "new_metadata_api_blocked": True,
+    }
+    assert writable.read_bytes() == b"allowed"
+    assert blocked.read_bytes() == b"protected sibling"
+    assert blocked.stat().st_mode == protected_stat.st_mode
+    assert blocked.stat().st_mtime_ns == protected_stat.st_mtime_ns
+
+
 def test_child_output_is_bounded_before_loading_into_parent(tmp_path, monkeypatch):
     fake_probe(tmp_path, monkeypatch, f"print('x' * {MAX_CAPTURE_BYTES + 1})\n")
     with pytest.raises(subprocess.SubprocessError, match="output exceeded"):
@@ -209,7 +385,7 @@ with open(sys.argv[1], 'wb') as f:
 """,
     )
     with pytest.raises(subprocess.CalledProcessError):
-        run_media(["ffprobe", str(destination)], timeout=3)
+        run_media(["ffprobe", str(destination)], timeout=3, writable_paths=(destination,))
     assert destination.stat().st_size <= 512 * 1024
 
 
@@ -226,7 +402,7 @@ time.sleep(30)
 """,
     )
     with pytest.raises(subprocess.TimeoutExpired):
-        run_media(["ffprobe", str(pid_file)], timeout=0.5)
+        run_media(["ffprobe", str(pid_file)], timeout=0.5, writable_paths=(pid_file,))
     parent, child = map(int, pid_file.read_text().split())
     with pytest.raises(ProcessLookupError):
         os.kill(parent, 0)

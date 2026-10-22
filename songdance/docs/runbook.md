@@ -80,11 +80,27 @@ of 15/120 seconds. Output files are capped at 512 KiB/16 MiB, captured stdout at
 open files at 64, and core dumps are disabled. Input formats are restricted to WAV/MP3/MOV
 and protocols to local files. Child environments exclude application credentials.
 
+On Linux, media children also require Landlock ABI 4 or newer. They can read the packaged
+runtime tree and the exact input file, write only the exact clip output file, and cannot
+create network sockets. A seccomp filter enforces the socket restriction for TCP and UDP.
+It also denies io_uring, importing other processes' descriptors, ptrace, and file
+permission/owner/timestamp/xattr changes; these are outside Landlock's file-content rules.
+Ioctl is limited to the FIOCLEX/FIONCLEX descriptor flags; inode/device operations are denied.
+The output file is created exclusively before sandboxing.
+If Landlock setup fails, media processing fails closed; do not disable it to recover uploads.
+
 Repeated `AUDIO_DECODE_FAILED`/`CLIP_EXTRACTION_FAILED` can mean malformed input or a
 resource limit. Check the exact image and normal-file regression before changing limits.
-The process shares the API UID/filesystem, limits apply per process, and macOS does not
-enforce the Linux memory/stack limits. This is not a security sandbox or an FFmpeg patch;
-parser vulnerabilities and aggregate container capacity still require separate validation.
+Landlock and seccomp limit filesystem and socket access but do not isolate CPU/memory across
+processes or remove FFmpeg parser vulnerabilities. The process still shares the API UID,
+limits apply per process, and macOS does not enforce Linux resource/Landlock limits.
+Same-UID signals and process control are still available; malicious descendants may also
+create a new session outside the original process group. Aggregate container capacity
+and parent-process containment still require separate validation. Keep credentials and
+business data outside the read-only runtime library tree.
+These controls apply to uploaded-file validation and clip extraction through run_media.
+Worker normalization and yt-dlp use separate subprocess paths and are not covered by this
+policy. Keep YouTube disabled; those paths and total process capacity still need acceptance.
 
 If cost rises unexpectedly, set the daily limit to `1`, keep YouTube disabled, let current
 jobs finish and inspect event counts before changing infrastructure.

@@ -136,6 +136,12 @@ Fresh Redis does not retain runtime admission counters: reconcile capacity/cost 
 before admitting new work. Publish recovered jobs only through the original Dispatcher;
 check RQ FINISHED and one business settlement, rather than forcing a second attempt.
 
+The [guest batch exercise](reviews/2026-10-22-durable-batch-acceptance.md) checked
+six successful jobs and three failed silence attempts. A failed business job may still
+have an RQ FINISHED execution; inspect both states and the matching reservation's
+consume/release. Business failure releases its allowance but retains hourly safety
+counters. Never reset those counters to make a retry pass.
+
 After any incident or rollback, require: `/health` 200, one anonymous upload, refresh
 recovery, score and piano-roll rendering, three valid downloads, immediate delete, one
 successful Cleanup cycle, and a clean browser console at desktop and 375 px widths.

@@ -114,6 +114,11 @@ Worker and no OOM. This small local sample does not approve production P95, real
 quality, sustained concurrency or a replica increase; keep the production Worker at one
 replica until the target environment and workload are accepted.
 
+The local [guest durable-batch check](reviews/2026-10-22-durable-batch-acceptance.md)
+completed six short synthetic jobs and three silence attempts with two bounded Workers.
+It verified idempotent submissions, duplicate dispatch and guest settlements, but does
+not approve sustained load, the authenticated Free/Pro matrix or production scaling.
+
 ## 5. Deploy the Web to Vercel
 
 ### Optional reliable dispatch (migration 010)

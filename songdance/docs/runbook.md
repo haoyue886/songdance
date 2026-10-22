@@ -136,6 +136,12 @@ Fresh Redis does not retain runtime admission counters: reconcile capacity/cost 
 before admitting new work. Publish recovered jobs only through the original Dispatcher;
 check RQ FINISHED and one business settlement, rather than forcing a second attempt.
 
+The local [Redis outage exercise](reviews/2026-10-22-redis-outage-recovery.md) stopped
+the only API before losing the test Redis contents, then recovered one queued attempt
+through the original Dispatcher and Worker using real polling/backoff. PostgreSQL and
+source bytes survived, but active/hour counters did not. The API stayed stopped through
+cleanup: this exercise does not approve reopening admissions or rebuilding safety budgets.
+
 The [guest batch exercise](reviews/2026-10-22-durable-batch-acceptance.md) checked
 six successful jobs and three failed silence attempts. A failed business job may still
 have an RQ FINISHED execution; inspect both states and the matching reservation's

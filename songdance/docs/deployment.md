@@ -187,6 +187,12 @@ Run these checks after deployment; they are not proven until run against the rea
 
 ## Rollback
 
+Database/object restore is a separate operation from rolling back an image. Rehearse it
+against isolated new targets and follow the [recovery runbook](runbook.md#recovery-verification).
+The [local logical restore exercise](reviews/2026-10-22-backup-restore-rehearsal.md) retained
+synthetic account/usage tombstones and recovered one durable job from fresh Redis; cloud
+permissions, scheduled encrypted backups, point-in-time recovery and RTO/RPO remain unverified.
+
 1. In Vercel, promote the previous successful deployment.
 2. In Railway, roll API and Worker back to the same previous Git commit. Never roll only
    one of them when queue payload or model code changed.

@@ -119,6 +119,23 @@ back to local upload. Never add cookies, browser profiles, proxy bypasses or log
 
 ## Recovery verification
 
+Before restoring a database/object snapshot, close public write ingress and stop Workers,
+Dispatcher, billing/deletion processors and email jobs. Restore into an isolated new
+database and private bucket; verify backup hashes and compare table rows, tombstones,
+usage/paid history, object bytes and metadata before starting writers. A database-only
+restore is insufficient when media lives in object storage. Do not reset expiry dates or
+recreate deleted accounts from an old snapshot; reconcile deletions and provider facts
+that occurred after the backup before reopening access.
+
+Use pg_dump custom format and pg_restore with --exit-on-error --single-transaction for
+the rehearsed logical restore. Roles, grants, extensions, encrypted/remote backups and
+provider PITR need their own production procedure. The local
+[restore rehearsal](reviews/2026-10-22-backup-restore-rehearsal.md) verified a synthetic
+snapshot and one durable job with fresh Redis; it does not approve production RTO/RPO.
+Fresh Redis does not retain runtime admission counters: reconcile capacity/cost protection
+before admitting new work. Publish recovered jobs only through the original Dispatcher;
+check RQ FINISHED and one business settlement, rather than forcing a second attempt.
+
 After any incident or rollback, require: `/health` 200, one anonymous upload, refresh
 recovery, score and piano-roll rendering, three valid downloads, immediate delete, one
 successful Cleanup cycle, and a clean browser console at desktop and 375 px widths.

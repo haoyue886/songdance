@@ -1898,7 +1898,8 @@ Phase 9 基线
 - [x] 2026-10-22 Worker规范化限制：preprocess_audio接入同一run_media，WAV/file输入、解码/滤镜/编码单线程，保留22.05k单声道loudnorm及原错误码；私有输出成功后原子替换，失败清理且保留旧结果。148项过/2 Linux-only跳过，26固定案例新旧PCM全同；ARM64镜像6f986ec0中90秒及Linux权限用例通过。真实RQ在隔离PG/Redis/S3、2CPU/2GiB/128pids下完成2秒合成A4→ONNX→5类产物，临时目录及本轮服务清理；不当作90秒完整推理或聚合容量通过。见 `songdance/docs/reviews/2026-10-22-worker-media-isolation.md`。
 - [x] 2026-10-22 90秒完整推理/双Worker本地观测：固定合成30秒输入各重复3次，ARM64/真实API-RQ-PG-Redis-S3及analysis开启；单Worker2CPU/2GiB任务32.808秒，双Worker各1CPU/2GiB两任务38.799/38.828秒，均5产物成功且raw/clean MIDI/时间线末段约89.4秒、三窗有音符。Worker内核峰值约799/801/790MiB，无OOM/PID峰值<=28；两transcribing重叠，第三客户端429 GLOBAL_CAPACITY。自建资源清理；仅3次合成实测，不签生产P95/质量/成本或扩大副本。见 `songdance/docs/reviews/2026-10-22-90s-capacity-acceptance.md`。
 - [ ] 容器系统库与解析器风险处置：上一批Debian仍有1069条包/漏洞匹配记录、414个唯一ID，FFmpeg 5.1.9的CVE-2026-107678仍未修复；上传及Worker已接文件/网络限制，yt-dlp独立调用仍待验。90秒完整链/并发仅有ARM64三次合成观测，须继续验证整体进程隔离、真实曲目持续并发与失败重试成本，确认目标内核Landlock ABI4、目标架构及更新库复扫后再评估发布，不忽略无修复公告或放开生产。
-- [ ] 38.5 发布验收：隔离数据库测试、现有 API/Web 回归、安全与支付故障矩阵、包含免费流量/失败重试的容量成本、认证/商户/政策确认；完成 Phase 39 对实际售卖档位的 LA-01–LA-07、既有部署报告未验证事项和有效生产质量证据。BA-16。
+- [x] 2026-10-22 本地逻辑备份恢复：隔离PG16 pg_dump custom→新空库single-transaction恢复，28表/26行合成数据逐字段一致、一个源对象字节/类型/metadata一致；源API/PG/Redis停止，新桶/空Redis经原dispatcher重复发布仅1队列任务。真实RQ恢复5产物/FINISHED/attempt1与一次consume，历史usage、付费撤销、删除/身份/提交/游客墓碑不变；首轮PG初始化就绪竞态保留失败，修后第二轮通过，两轮7卷含Redis匿名均精确清理。仅本机合成逻辑恢复，不签云备份/PITR/角色ACL/RTO/RPO。见 `songdance/docs/reviews/2026-10-22-backup-restore-rehearsal.md`。
+- [ ] 38.5 发布验收：隔离数据库测试、现有 API/Web 回归、安全与支付故障矩阵、包含免费流量/失败重试的容量成本、生产备份/权限与RTO/RPO、认证/商户/政策确认；完成 Phase 39 对实际售卖档位的 LA-01–LA-07、既有部署报告未验证事项和有效生产质量证据。BA-16。
 
 依赖：38.0 → 38.1 → 38.2/38.3 → 38.4；38.5 同时依赖 Phase 39 的实际售卖档位验收。Phase 38 的账号/账本/Creem Test 与 Phase 39 长音频验证可并行，协作时分开业务账本与音乐流水线文件，集成点由主 Agent 协调。可先完成 Test Mode，不以账户未审核为理由伪造 Live 测试；生产产品创建/开收费/部署沿用实际授权边界。
 
